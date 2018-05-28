@@ -1,0 +1,52 @@
+{
+  "name": "@folio/cataloging",
+  "version": "0.1.0",
+  "description": "cataloging",
+  "main": "src/index.js",
+  "repository": "",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "scripts": {
+    "start": "stripes serve",
+    "build": "stripes build --output ./output",
+    "test": "stripes test nightmare --run demo --show",
+    "lint": "eslint src"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.3",
+    "eslint": "^4.8.0",
+    "@folio/eslint-config-stripes": "^1.1.0"
+  },
+  "dependencies": {
+    "@folio/stripes-components": "^2.0.0",
+    "prop-types": "^15.6.0",
+    "react-router-dom": "^4.1.1"
+  },
+  "peerDependencies": {
+    "react": "*"
+  },
+  "stripes": {
+    "type": "app",
+    "displayName": "ui-cataloging",
+    "route": "/cataloging",
+    "hasSettings": true,
+    "okapiInterfaces": {},
+    "permissionSets": [
+      {
+        "permissionName": "module.cataloging.enabled",
+        "displayName": "UI: ui-cataloging module is enabled",
+        "visible": true
+      },
+      {
+        "permissionName": "settings.cataloging.enabled",
+        "displayName": "Settings (cataloging): display list of settings pages",
+        "subPermissions": [
+          "settings.enabled"
+        ],
+        "visible": true
+      }
+    ]
+  }
+}

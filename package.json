@@ -12,7 +12,7 @@
     "prestart": "echo 'app partita con successo!!!!'",
     "start": "stripes serve config/js/stripes.config.js",
     "build": "stripes build --output ./dist/ui-cataloging-build",
-    "build:analizer": "stripes build config/js/stripes.config.js ui-cataloging-build --analyze",
+    "build:analizer": "stripes build config/js/stripes.config.js ./dist/analyze/ui-cataloging-analyze --analyze",
     "test": "stripes test nightmare --run demo --show",
     "lint": "eslint src",
     "module:descriptor": "node ./config/js/module.descriptor.js package.json > config/json/ModuleDescriptor.json",

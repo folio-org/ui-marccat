@@ -9,10 +9,14 @@
     "node": ">=6.0.0"
   },
   "scripts": {
-    "start": "stripes serve",
-    "build": "stripes build --output ./output",
+    "prestart": "echo 'app partita con successo!!!!'",
+    "start": "stripes serve config/js/stripes.config.js",
+    "build": "stripes build --output ./dist/ui-cataloging-build",
+    "build:analizer": "stripes build config/js/stripes.config.js ui-cataloging-build --analyze",
     "test": "stripes test nightmare --run demo --show",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "module:descriptor": "node ./config/js/module.descriptor.js package.json > config/json/ModuleDescriptor.json",
+    "clean": "rimraf node_modules "
   },
   "devDependencies": {
     "babel-eslint": "^8.0.3",
@@ -21,7 +25,9 @@
   },
   "dependencies": {
     "@folio/stripes-components": "^2.0.0",
+    "@folio/stripes-core": "^2.9.0",
     "prop-types": "^15.6.0",
+    "react-intl": "^2.4.0",
     "react-router-dom": "^4.1.1"
   },
   "peerDependencies": {
@@ -29,7 +35,7 @@
   },
   "stripes": {
     "type": "app",
-    "displayName": "ui-cataloging",
+    "displayName": "cataloging",
     "route": "/cataloging",
     "hasSettings": true,
     "okapiInterfaces": {},

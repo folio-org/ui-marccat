@@ -7,6 +7,7 @@ import { stripesShape } from '@folio/stripes-core/src/Stripes';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
+import Select from '@folio/stripes-components/lib/Select';
 
 
 class TemplateView extends React.Component {
@@ -21,6 +22,16 @@ class TemplateView extends React.Component {
             GET: {
                 params: {lang: 'ita', type: 'B'}
             },                      
+        },
+        logicalView: {
+            type: 'rest',
+            root: 'http://localhost:8080/cataloging',       
+            path: 'logical-views', 
+            headers: { 'x-okapi-tenant': 'tnx'},
+            records: 'views',
+            GET: {
+                params: {lang: 'ita'}
+            },                      
         }
     });
 
@@ -29,12 +40,14 @@ class TemplateView extends React.Component {
     }
     render(){
         const { resources: { recordTemplate } } = this.props;
+        const { resources: { logicalView } } = this.props;
         if (!recordTemplate || !recordTemplate.hasLoaded) return <div />;
         const templates = recordTemplate.records;
         const formatter = {
             'Id: id': x => _.get(x, ['id']),
             'name: name': x => _.get(x, ['name']),
         };                
+        const views = logicalView.records;
 				          
 		return (
             <Paneset static>            
@@ -50,6 +63,7 @@ class TemplateView extends React.Component {
                         containerRef={(ref) => { this.resultsList = ref; }}
                         rowFormatter={this.anchoredRowFormatter}
                 />
+                <Select dataOptions={views} fullWidth={false} /> 
                 </div>
             </Pane>
       </Paneset>

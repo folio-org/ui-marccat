@@ -9,29 +9,39 @@
     "node": ">=6.0.0"
   },
   "scripts": {
-    "prestart": "echo 'app partita con successo!!!!'",
+    "postinstall": "yarn setup:ci",
     "start": "stripes serve config/js/stripes.config.js",
     "build": "stripes build --output ./dist/ui-cataloging-build",
     "build:analizer": "stripes build config/js/stripes.config.js ./dist/analyze/ui-cataloging-analyze --analyze",
     "test": "stripes test nightmare --run demo --show",
     "lint": "eslint src",
+    "stylelint": "stylelint \"src/**/*.css\"",
+    "setup:ci": ". ./script/ci/setup.sh",
     "module:descriptor": "node ./config/js/module.descriptor.js package.json > config/json/ModuleDescriptor.json",
-    "clean": "rimraf node_modules "
+    "clean:all": "rimraf node_modules/ dist/ .circleci/"
   },
   "devDependencies": {
+    "@folio/eslint-config-stripes": "^1.1.0",
     "babel-eslint": "^8.0.3",
     "eslint": "^4.8.0",
-    "@folio/eslint-config-stripes": "^1.1.0"
+    "pre-commit": "^1.2.2",
+    "rimraf": "^2.6.2"
   },
   "dependencies": {
     "@folio/stripes-components": "^2.0.0",
     "@folio/stripes-core": "^2.9.0",
+    "dotenv": "^5.0.1",
     "prop-types": "^15.6.0",
     "react-intl": "^2.4.0",
-    "react-router-dom": "^4.1.1"
+    "react-router-dom": "^4.1.1",
+    "stylelint": "^9.2.1",
+    "stylelint-config-standard": "^18.2.0"
   },
   "peerDependencies": {
     "react": "*"
+  },
+  "pre-commit": {
+    "run": "lint, stylelint"
   },
   "stripes": {
     "type": "app",

@@ -1,14 +1,30 @@
-#
-build/
-.idea
-local.properties
-*.iml
-
-# node.js
-#
-node_modules/
-dist/
-npm-debug.log
-yarn-error.log
-
+## general
+*.log
 yarn.lock
+yarn-error.log
+ModuleDescriptor.json
+
+## macos
+*.DS_Store
+
+## maven
+target/
+
+## gradle
+.gradle/
+build/
+
+## node
+node_modules/
+
+## vim
+*~
+.*.sw?
+*.swp
+*.swo
+
+## folio
+.vertx/
+# Until each mod-* has addressed RMB-130:
+**/src/main/java/org/folio/rest/jaxrs/
+**/src/main/java/org/folio/rest/client/

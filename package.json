@@ -1,9 +1,12 @@
 {
   "name": "@folio/cataloging",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "cataloging",
+  "repository": "folio-org/ui-cataloging",
+  "publishConfig": {
+    "registry": "https://repository.folio.org/repository/npm-folio/"
+  },
   "main": "src/index.js",
-  "repository": "",
   "license": "Apache-2.0",
   "engines": {
     "node": ">=6.0.0"
@@ -51,6 +54,13 @@
     "route": "/cataloging",
     "hasSettings": true,
     "okapiInterfaces": {},
+    "icons": [
+      {
+        "name": "app",
+        "alt": "Create, view and manage catalog",
+        "title": "Cataloging"
+      }
+    ],
     "permissionSets": [
       {
         "permissionName": "module.cataloging.enabled",

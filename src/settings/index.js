@@ -3,22 +3,16 @@ import Settings from '@folio/stripes-components/lib/Settings';
 import GeneralSettings from './general-settings';
 import SomeFeatureSettings from './some-feature-settings';
 
-/*
-  STRIPES-NEW-APP
-  Your app's settings pages are defined here.
-  The pages "general" and "some feature" are examples. Name them however you like.
-*/
-
 export default class CatalogingSettings extends React.Component {
   pages = [
     {
       route: 'general',
-      label: this.props.stripes.intl.formatMessage({ id: 'ui-cataloging.settings.general' }),
+      label: this.props.stripes.intl.formatMessage({ id: 'ui-cataloging.settings.general' }), // eslint-disable-line react/prop-types
       component: GeneralSettings,
     },
     {
       route: 'somefeature',
-      label: this.props.stripes.intl.formatMessage({ id: 'ui-cataloging.settings.some-feature' }),
+      label: this.props.stripes.intl.formatMessage({ id: 'ui-cataloging.settings.some-feature' }), // eslint-disable-line react/prop-types
       component: SomeFeatureSettings,
     },
   ];

@@ -11,6 +11,7 @@
   "scripts": {
     "postinstall": "yarn setup:ci",
     "start": "stripes serve config/js/stripes.config.js",
+    "start:vagrant": "stripes serve-vagrant config/js/stripes.config.js",
     "build": "stripes build --output ./dist/ui-cataloging-build",
     "build:analizer": "stripes build config/js/stripes.config.js ./dist/analyze/ui-cataloging-analyze --analyze",
     "test": "stripes test nightmare --run demo --show",
@@ -34,6 +35,7 @@
     "prop-types": "^15.6.0",
     "react-intl": "^2.4.0",
     "react-router-dom": "^4.1.1",
+    "redux-devtools": "^3.4.1",
     "stylelint": "^9.2.1",
     "stylelint-config-standard": "^18.2.0"
   },

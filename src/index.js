@@ -4,6 +4,7 @@ import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 import TemplateView from './module/template/components/TemplateView';
 import Settings from './settings';
+import Navigator from './module/navigator';
 
 class Cataloging extends React.Component {
   static propTypes = {
@@ -37,17 +38,20 @@ class Cataloging extends React.Component {
       return <Settings {...this.props} />;
     }
     return (
-      <Switch>
-        <Route
-          path={`${this.props.match.path}`}
-          render={() => <this.connectedApp {...this.props} />}
-        />
-        <Route
-          component={() => {
-            this.NoMatch();
-          }}
-        />
-      </Switch>
+      <div>
+        <Navigator />
+        <Switch>
+          <Route
+            path={`${this.props.match.path}`}
+            render={() => <this.connectedApp {...this.props} />}
+          />
+          <Route
+            component={() => {
+              this.NoMatch();
+            }}
+          />
+        </Switch>
+      </div>
     );
   }
 }

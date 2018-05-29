@@ -28,7 +28,6 @@
     "@folio/eslint-config-stripes": "^1.1.0",
     "babel-eslint": "^8.0.3",
     "eslint": "^4.8.0",
-    "pre-commit": "^1.2.2",
     "rimraf": "^2.6.2"
   },
   "dependencies": {
@@ -44,9 +43,6 @@
   },
   "peerDependencies": {
     "react": "*"
-  },
-  "pre-commit": {
-    "run": "lint, stylelint"
   },
   "stripes": {
     "type": "app",

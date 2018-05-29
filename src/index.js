@@ -4,6 +4,7 @@ import Switch from 'react-router-dom/Switch';
 import Route from 'react-router-dom/Route';
 import Application from './routes/application';
 import Settings from './settings';
+import TemplateView from './module/template/components/TemplateView'
 
 class Cataloging extends React.Component {
   static propTypes = {
@@ -16,27 +17,34 @@ class Cataloging extends React.Component {
     showSettings: PropTypes.bool,
   }
 
-  NotFound() {
-    return (
-      <div>
-        <h2>{this.props.stripes.intl.formatMessage({ id: 'ui-cataloging.errors.notFound.title' })}</h2>
-        <p>{this.props.stripes.intl.formatMessage({ id: 'ui-cataloging.errors.notFound.suggest' }, { location: <tt>{this.props.location.pathname}</tt> })}</p>
-      </div>
-    );
+  constructor(props) {
+    super(props);    
+    this.connectedApp = props.stripes.connect(TemplateView);      
   }
-
-
-  render() {
-    if (this.props.showSettings) {
-      return <Settings {...this.props} />;
+  
+  NoMatch() {
+      return (
+        <div>
+          <h2>Uh-oh!</h2>
+          <p>How did you get to <tt>{this.props.location.pathname}</tt>?</p>
+        </div>
+      );
     }
-    return (
-      <Switch>
-        <Route path={`${this.props.match.path}`} exact component={Application} />
-        <Route component={() => { this.NotFound(); }} />
-      </Switch>
-    );
-  }
-}
+  
+    render() {
+      if (this.props.showSettings) {
+        return <Settings {...this.props} />;
+      }
+      return (
+        <Switch>
+          <Route
+            path={`${this.props.match.path}`}
+            render={() => <this.connectedApp {...this.props} />}
+          />
+          <Route component={() => { this.NoMatch(); }} />
+        </Switch>
+      );
+    } 
+} 
 
 export default Cataloging;

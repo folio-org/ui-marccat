@@ -6,7 +6,7 @@
   "publishConfig": {
     "registry": "https://repository.folio.org/repository/npm-folio/"
   },
-  "main": "src/index.js",
+  "main": "index.js",
   "license": "Apache-2.0",
   "engines": {
     "node": ">=6.0.0"
@@ -17,11 +17,12 @@
     "start:vagrant": "stripes serve-vagrant config/js/stripes.config.js",
     "build": "stripes build --output ./dist/ui-cataloging-build",
     "build:analizer": "stripes build config/js/stripes.config.js ./dist/analyze/ui-cataloging-analyze --analyze",
-    "test": "stripes test nightmare --run demo --show",
+    "test": "stripes test nightmare --run App.spec --show",
     "lint": "eslint src",
     "stylelint": "stylelint \"src/**/*.css\"",
     "setup:ci": ". ./script/ci/setup.sh",
-    "module:descriptor": "node ./config/js/module.descriptor.js package.json > config/json/ModuleDescriptor.json",
+    "prepublish": "node ./config/js/module.descriptor.js package.json > config/json/ModuleDescriptor.json",
+    "publish":"yarn publish;npm publish",
     "clean:all": "rimraf node_modules/ dist/ .circleci/"
   },
   "devDependencies": {

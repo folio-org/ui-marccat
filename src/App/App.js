@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
-import TemplateView from './module/template/components/TemplateView';
-import Settings from './settings';
+import TemplateView from '../Template/TemplateView';
+import Settings from '../Settings';
 
 class Cataloging extends React.Component {
   static propTypes = {

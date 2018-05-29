@@ -23,6 +23,9 @@ node_modules/
 *.swp
 *.swo
 
+#CI
+.circleci/
+
 ## folio
 .vertx/
 # Until each mod-* has addressed RMB-130:

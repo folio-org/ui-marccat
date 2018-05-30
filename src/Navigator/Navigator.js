@@ -7,7 +7,6 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import Switch from 'react-router-dom/Switch';
 import Route from 'react-router-dom/Route';
 
-
 class Navigator extends React.Component {
   render() {
     return (

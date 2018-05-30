@@ -1,0 +1,9 @@
+{
+  "configFile": "stripes.config.js.local",
+  "port": 3000,
+  "aliases": {
+    "@folio/users": "/Users/christian/stripes/ui-users",
+    "@folio/trivial": "/Users/christian/stripes/ui-trivial",
+    "@folio/inventory": "/Users/christian/stripes/ui-inventory"
+  }
+}

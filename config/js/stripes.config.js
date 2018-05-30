@@ -11,6 +11,8 @@ module.exports = {
     softLogout: true
   },
   modules: {
-    '@folio/cataloging': {}
-  },
+    '@folio/trivial': {},
+    '@folio/users': {},
+    '@folio/inventory': {}
+  }
 };

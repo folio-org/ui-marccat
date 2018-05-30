@@ -1,7 +1,6 @@
 import React from 'react';
 import Settings from '@folio/stripes-components/lib/Settings';
-import GeneralSettings from './general-settings';
-import SomeFeatureSettings from './some-feature-settings';
+import GeneralSettings from './GeneralSettings';
 
 export default class CatalogingSettings extends React.Component {
   pages = [
@@ -9,12 +8,7 @@ export default class CatalogingSettings extends React.Component {
       route: 'general',
       label: this.props.stripes.intl.formatMessage({ id: 'ui-cataloging.settings.general' }), // eslint-disable-line react/prop-types
       component: GeneralSettings,
-    },
-    {
-      route: 'somefeature',
-      label: this.props.stripes.intl.formatMessage({ id: 'ui-cataloging.settings.some-feature' }), // eslint-disable-line react/prop-types
-      component: SomeFeatureSettings,
-    },
+    }
   ];
 
   render() {

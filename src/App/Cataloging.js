@@ -2,12 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
-import Settings from './Search';
-import Navigator from './Navigator';
-
-const temp = () => {
-  return (<div><h1>ciao</h1></div>);
-};
+import Settings from '../Settings';
+import Navigator from '../Navigator';
 
 class Cataloging extends React.Component {
   static propTypes = {
@@ -19,12 +15,6 @@ class Cataloging extends React.Component {
     match: PropTypes.object.isRequired,
     showSettings: PropTypes.bool,
   };
-
-
-  constructor(props) {
-    super(props);
-    this.connectedApp = props.stripes.connect(temp);
-  }
 
   NoMatch() {
     return (

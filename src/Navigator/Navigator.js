@@ -8,7 +8,7 @@ import Switch from 'react-router-dom/Switch';
 import Route from 'react-router-dom/Route';
 
 
-class Menu extends React.Component {
+class Navigator extends React.Component {
   render() {
     return (
       <Paneset>
@@ -35,4 +35,4 @@ class Menu extends React.Component {
     );
   }
 }
-export default Menu;
+export default Navigator;

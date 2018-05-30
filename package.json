@@ -17,11 +17,12 @@
     "start:vagrant": "stripes serve-vagrant config/js/stripes.config.js",
     "build": "stripes build --output ./dist/ui-cataloging-build",
     "build:analizer": "stripes build config/js/stripes.config.js ./dist/analyze/ui-cataloging-analyze --analyze",
-    "test": "stripes test nightmare --run demo --show",
+    "test": "stripes test nightmare --run App.spec --show",
     "lint": "eslint src",
     "stylelint": "stylelint \"src/**/*.css\"",
     "setup:ci": ". ./script/ci/setup.sh",
-    "module:descriptor": "node ./config/js/module.descriptor.js package.json > config/json/ModuleDescriptor.json",
+    "prepublish": "node ./config/js/module.descriptor.js package.json > config/json/ModuleDescriptor.json",
+    "publish": "yarn publish;npm publish",
     "clean:all": "rimraf node_modules/ dist/ .circleci/"
   },
   "devDependencies": {
@@ -35,6 +36,7 @@
     "@folio/stripes-components": "^2.0.0",
     "@folio/stripes-core": "^2.9.0",
     "dotenv": "^5.0.1",
+    "lodash": "^4.17.10",
     "prop-types": "^15.6.0",
     "react-intl": "^2.4.0",
     "react-router-dom": "^4.1.1",

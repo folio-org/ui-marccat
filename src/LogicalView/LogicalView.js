@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset'; // eslint-disable-line import/no-extraneous-dependencies
-import { ENDPOINT, RESOURCE_TYPE } from '../constant';
 import Selection from '@folio/stripes-components/lib/Selection';
+import { ENDPOINT, RESOURCE_TYPE } from '../constant';
 
 class LogicalView extends React.Component {
     static manifest = Object.freeze({

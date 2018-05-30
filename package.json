@@ -18,7 +18,7 @@
     "build": "stripes build --output ./dist/ui-cataloging-build",
     "build:analizer": "stripes build config/js/stripes.config.js ./dist/analyze/ui-cataloging-analyze --analyze",
     "test": "stripes test nightmare --run App.spec --show",
-    "lint": "eslint src",
+    "lint": "eslint --fix src",
     "stylelint": "stylelint \"src/**/*.css\"",
     "setup:ci": ". ./script/ci/setup.sh",
     "prepublish": "node ./config/js/module.descriptor.js package.json > config/json/ModuleDescriptor.json",

@@ -12,5 +12,5 @@ module.exports = {
   },
   modules: {
     '@folio/cataloging': {}
-  },
+  }
 };

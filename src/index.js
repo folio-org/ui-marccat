@@ -3,13 +3,10 @@ import React from 'react';
 import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 import Settings from './Search';
+import Cataloging from './App/Cataloging';
 import Navigator from './Navigator';
 
-const temp = () => {
-  return (<div><h1>ciao</h1></div>);
-};
-
-class Cataloging extends React.Component {
+class CatalogingRouting extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
@@ -23,7 +20,7 @@ class Cataloging extends React.Component {
 
   constructor(props) {
     super(props);
-    this.connectedApp = props.stripes.connect(temp);
+    this.connectedApp = props.stripes.connect(Cataloging);
   }
 
   NoMatch() {
@@ -43,7 +40,7 @@ class Cataloging extends React.Component {
     }
     return (
       <div>
-        <Navigator />
+        <Navigator {...this.props} />
         <Switch>
           <Route
             path={`${this.props.match.path}`}
@@ -60,4 +57,4 @@ class Cataloging extends React.Component {
   }
 }
 
-export default Cataloging;
+export default CatalogingRouting;

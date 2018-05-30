@@ -6,30 +6,47 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Switch from 'react-router-dom/Switch';
 import Route from 'react-router-dom/Route';
+import { FormattedMessage } from 'react-intl';
+import PropTypes from 'prop-types';
 
 
 class Navigator extends React.Component {
+  static propTypes = {
+    stripes: PropTypes.shape({
+      intl: PropTypes.object.isRequired,
+    }).isRequired,
+  };
   render() {
+    const formatMsg = this.props.stripes.intl.formatMessage;
+
     return (
       <Paneset>
-        <Pane defaultWidth="20%" paneTitle="Menu">
+        <Pane defaultWidth="20%" paneTitle={formatMsg({ id: 'ui-cataloging.navigator.title' })}>
           <NavList>
-            <NavListSection label="Templates" activeLink="/active-link-here">
-              <NavListItem to="/cataloging/newTemplate">New template</NavListItem>
-              <NavListItem to="/cataloging/templateList">Template list</NavListItem>
+            <NavListSection label={formatMsg({ id: 'ui-cataloging.navigator.template' })} activeLink="/active-link-here">
+              <NavListItem to="/cataloging/templateList">
+                <FormattedMessage id="ui-cataloging.navigator.templateList" />
+              </NavListItem>
             </NavListSection>
             <br />
-            <NavListSection label="Search" activeLink="/active-link-here">
-              <NavListItem to="/cataloging/simpleSearch">Simple Search</NavListItem>
-              <NavListItem to="/cataloging/advancedSearch">Advanced Search</NavListItem>
+            <NavListSection label={formatMsg({ id: 'ui-cataloging.navigator.search' })} activeLink="/active-link-here">
+              <NavListItem to="/cataloging/simpleSearch">
+                <FormattedMessage id="ui-cataloging.navigator.simpleSearch" />
+              </NavListItem>
+              <NavListItem to="/cataloging/advancedSearch">
+                <FormattedMessage id="ui-cataloging.navigator.advancedSearch" />
+              </NavListItem>
+              <NavListItem to="/cataloging/externalSearch">
+                <FormattedMessage id="ui-cataloging.navigator.externalSearch" />
+              </NavListItem>
             </NavListSection>
           </NavList>
         </Pane>
         <Switch>
-          <Route path="/cataloging/newTemplate" />
           <Route path="/cataloging/templateList" />
           <Route path="/cataloging/simpleSearch" />
           <Route path="/cataloging/advancedSearch" />
+          <Route path="/cataloging/externalSearch" />
         </Switch>
       </Paneset>
     );

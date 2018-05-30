@@ -1,1 +1,1 @@
-export { default } from './CatalogingRouting';
+export { default } from './Cataloging';

@@ -4,6 +4,7 @@ import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 import Settings from './Search';
 import Cataloging from './App/Cataloging';
+import Navigator from './Navigator';
 
 class CatalogingRouting extends React.Component {
   static propTypes = {
@@ -39,6 +40,7 @@ class CatalogingRouting extends React.Component {
     }
     return (
       <div>
+        <Navigator {...this.props} />
         <Switch>
           <Route
             path={`${this.props.match.path}`}

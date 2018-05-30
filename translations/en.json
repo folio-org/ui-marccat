@@ -7,6 +7,14 @@
   "settings.some-feature.message": "These are your settings for some app feature.",
   
   "errors.notFound.title": "Uh-oh!",
-  "errors.notFound.suggest": "How did you get to {location}?"
+  "errors.notFound.suggest": "How did you get to {location}?",
+
+  "navigator.title": "Menu",
+  "navigator.template": "Template",
+  "navigator.templateList": "Template List",
+  "navigator.search": "Search",
+  "navigator.simpleSearch": "Simple search",
+  "navigator.advancedSearch": "Advanced search",
+  "navigator.externalSearch": "External search"
 
 }

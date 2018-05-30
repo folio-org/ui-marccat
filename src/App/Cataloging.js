@@ -1,50 +1,56 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'; // eslint-disable-line no-unused-vars
 import React from 'react';
-import Route from 'react-router-dom/Route';
-import Switch from 'react-router-dom/Switch';
-import Settings from '../Settings';
 import Navigator from '../Navigator';
 
-class Cataloging extends React.Component {
-  static propTypes = {
-    stripes: PropTypes.shape({
-      connect: PropTypes.func.isRequired,
-      intl: PropTypes.object.isRequired,
-    }).isRequired,
-    location: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired,
-    showSettings: PropTypes.bool,
-  };
+import {
+  ENDPOINT,
+  RESOURCE_TYPE,
+  INITIAL_RESULT_COUNT,
+} from '../constant';
 
-  NoMatch() {
-    return (
-      <div>
-        <h2>Uh-oh!</h2>
-        <p>
-          How did you get to <tt>{this.props.location.pathname}</tt>?
-        </p>
-      </div>
-    );
-  }
+
+class Cataloging extends React.Component {
+  // static propTypes = {
+  //   stripes: PropTypes.shape({
+  //     intl: PropTypes.object.isRequired,
+  //   }).isRequired,
+  //   resources: PropTypes.shape({ // eslint-disable-line no-unused-vars
+  //   }).isRequired,
+  //   mutator: PropTypes.shape({ // eslint-disable-line no-unused-vars
+  //     initializedFilterConfig: PropTypes.shape({
+  //       replace: PropTypes.func.isRequired,
+  //     }),
+  //     records: PropTypes.shape({
+  //       POST: PropTypes.func.isRequired,
+  //     }),
+  //   }).isRequired,
+  //   onSelectRow: PropTypes.func, // eslint-disable-line no-unused-vars
+  //   onComponentWillUnmount: PropTypes.func, // eslint-disable-line no-unused-vars
+  //   visibleColumns: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line no-unused-vars
+  //   disableRecordCreation: PropTypes.bool, // eslint-disable-line no-unused-vars
+  //   browseOnly: PropTypes.bool, // eslint-disable-line no-unused-vars
+  // };
+
+  static manifest = Object.freeze({
+    query: { initialValue: {} },
+    resultCount: { initialValue: INITIAL_RESULT_COUNT },
+    records: {
+      type: RESOURCE_TYPE,
+      root: ENDPOINT.BASE_URL,
+      path: ENDPOINT.TEMPLATE_URL,
+      headers: { 'x-okapi-tenant': 'tnx' },
+      records: 'recordTemplates',
+      GET: {
+        params: { lang: 'ita', type: 'B' },
+      },
+    }
+  });
+
 
   render() {
-    if (this.props.showSettings) {
-      return <Settings {...this.props} />;
-    }
     return (
       <div>
         <Navigator />
-        <Switch>
-          <Route
-            path={`${this.props.match.path}`}
-            render={() => <this.connectedApp {...this.props} />}
-          />
-          <Route
-            component={() => {
-              this.NoMatch();
-            }}
-          />
-        </Switch>
       </div>
     );
   }

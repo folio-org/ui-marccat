@@ -50,7 +50,7 @@ class Cataloging extends React.Component {
   render() {
     return (
       <div>
-        <Navigator />
+        <Navigator {...this.props} />
       </div>
     );
   }

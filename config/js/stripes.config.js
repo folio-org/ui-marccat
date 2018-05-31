@@ -10,7 +10,5 @@ module.exports = {
     hasAllPerms: true,
     softLogout: true
   },
-  modules: {
-    '@folio/cataloging': {}
-  }
+  modules: {}
 };

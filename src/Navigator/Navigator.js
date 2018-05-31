@@ -9,15 +9,13 @@ import Route from 'react-router-dom/Route';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import TemplateViewLink from '../Template/TemplateViewLink';
-import { LogicalViewLink } from '../LogicalView/';
+import LogicalViewLink from '../LogicalView/LogicalViewLink';
 
 
 class Navigator extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
       intl: PropTypes.object.isRequired,
-    }).isRequired,
-    resources: PropTypes.shape({
     }).isRequired,
   };
   render() {

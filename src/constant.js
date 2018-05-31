@@ -4,7 +4,9 @@ export const ENDPOINT = {
   HEADER: { 'x-okapi-tenant': 'tnx' },
   BASE_URL: 'http://192.168.0.43:8080/cataloging',
   TEMPLATE_URL: 'record-templates',
-  LOGICAL_VIEW_URL: ''
+  TEMPLATE_MANDATORY: 'bibliographic/fields/mandatory',
+  LOGICAL_VIEW_URL: 'logical-views',
+  DEFAULT_LANG: 'eng'
 };
 export const API_RESULT_JSON_KEY = {};
 

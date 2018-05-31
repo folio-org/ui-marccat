@@ -2,11 +2,11 @@ import PropTypes from 'prop-types'; // eslint-disable-line no-unused-vars
 import React from 'react';
 import Navigator from '../Navigator';
 
-import {
+/* import {
   ENDPOINT,
   RESOURCE_TYPE,
   INITIAL_RESULT_COUNT,
-} from '../constant';
+} from '../constant'; */
 
 
 class Cataloging extends React.Component {
@@ -31,7 +31,7 @@ class Cataloging extends React.Component {
   //   browseOnly: PropTypes.bool, // eslint-disable-line no-unused-vars
   // };
 
-  static manifest = Object.freeze({
+  /* static manifest = Object.freeze({
     query: { initialValue: {} },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     records: {
@@ -44,7 +44,7 @@ class Cataloging extends React.Component {
         params: { lang: 'ita', type: 'B' },
       },
     }
-  });
+  }); */
 
 
   render() {

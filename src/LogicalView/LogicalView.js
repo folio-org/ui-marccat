@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import Pane from '@folio/stripes-components/lib/Pane';
-import Paneset from '@folio/stripes-components/lib/Paneset'; // eslint-disable-line import/no-extraneous-dependencies
-import Selection from '@folio/stripes-components/lib/Selection';
+import Select from '@folio/stripes-components/lib/Select';
 import { ENDPOINT, RESOURCE_TYPE } from '../constant';
+import css from './LogicalView.css';
 
 class LogicalView extends React.Component {
     static manifest = Object.freeze({
@@ -11,7 +10,7 @@ class LogicalView extends React.Component {
         type: RESOURCE_TYPE,
         root: ENDPOINT.BASE_URL,
         path: ENDPOINT.LOGICAL_VIEW_URL,
-        headers: ENDPOINT.HEADER,
+        headers: { 'x-okapi-tenant': 'tnx' },
         records: 'views',
         GET: {
           params: { lang: 'ita' },
@@ -25,19 +24,13 @@ class LogicalView extends React.Component {
       const logicalViews = views.records;
 
       return (
-        <Paneset static>
-          <Pane defaultWidth="80%" paneTitle="Some Stripes Components">
-            <div>
-              <Selection
-                name="SelectionViews"
-                label="Views"
-                id="viewsSelect"
-                placeholder="Select view"
-                dataOptions={logicalViews}
-              />
-            </div>
-          </Pane>
-        </Paneset>
+        <div className={css.div}>
+          <Select
+            id="viewsSelect"
+            dataOptions={logicalViews}
+            value="0"
+          />
+        </div>
       );
     }
 }

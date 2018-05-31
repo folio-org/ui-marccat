@@ -15,6 +15,11 @@
   "navigator.search": "Search",
   "navigator.simpleSearch": "Simple search",
   "navigator.advancedSearch": "Advanced search",
-  "navigator.externalSearch": "External search"
+  "navigator.externalSearch": "External search",
+
+  "button.new": "+ New",
+  "templates.title": "Bibliographic templates",
+  "template.column.id": "Id",
+  "template.column.name": "Name"
 
 }

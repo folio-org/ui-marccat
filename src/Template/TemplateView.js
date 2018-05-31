@@ -4,25 +4,36 @@ import React from 'react';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset'; // eslint-disable-line import/no-extraneous-dependencies
+import TemplateAddButton from './TemplateAddButton';
+import {
+  ENDPOINT,
+  RESOURCE_TYPE,
+  INITIAL_RESULT_COUNT,
+} from '../constant';
 
 class TemplateView extends React.Component {
   static manifest = Object.freeze({
-    recordTemplate: {
-      type: 'rest',
-      root: 'http://localhost:8080/cataloging',
-      path: 'record-templates',
+    query: { initialValue: {} },
+    resultCount: { initialValue: INITIAL_RESULT_COUNT },
+    records: {
+      type: RESOURCE_TYPE,
+      root: ENDPOINT.BASE_URL,
+      path: ENDPOINT.TEMPLATE_URL,
       headers: { 'x-okapi-tenant': 'tnx' },
       records: 'recordTemplates',
       GET: {
         params: { lang: 'ita', type: 'B' },
       },
-    },
+    }
   });
 
+
   render() {
-    const { resources: { recordTemplate } } = this.props; // eslint-disable-line react/prop-types
-    if (!recordTemplate || !recordTemplate.hasLoaded) return <div />;
-    const templates = recordTemplate.records;
+    const formatMsg = this.props.stripes.intl.formatMessage;
+
+    const { resources: { records } } = this.props; // eslint-disable-line react/prop-types
+    if (!records || !records.hasLoaded) return <div />;
+    const templates = records.records;
     const formatter = {
       'Id: id': x => _.get(x, ['id']),
       'name: name': x => _.get(x, ['name']),
@@ -30,7 +41,10 @@ class TemplateView extends React.Component {
 
     return (
       <Paneset static>
-        <Pane defaultWidth="80%" paneTitle="Some Stripes Components">
+        <Pane paneTitle={formatMsg({ id: 'ui-cataloging.templates.title' })}>
+          <div>
+            <TemplateAddButton {...this.props} />
+          </div>
           <div>
             <MultiColumnList
               id="list-templates"

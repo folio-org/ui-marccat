@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 class Root extends Component {
   render() {
@@ -9,8 +8,5 @@ class Root extends Component {
   }
 }
 
-Root.propTypes = {
-
-};
 
 export default Root;

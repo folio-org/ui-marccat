@@ -5,7 +5,7 @@
   "settings.general.message": "These are your general app settings.",
   "settings.some-feature": "Some Feature",
   "settings.some-feature.message": "These are your settings for some app feature.",
-  
+
   "errors.notFound.title": "Uh-oh!",
   "errors.notFound.suggest": "How did you get to {location}?",
 

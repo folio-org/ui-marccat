@@ -13,7 +13,7 @@ export default class CatalogingSettings extends React.Component {
 
   render() {
     return (
-      <Settings {...this.props} pages={this.pages} paneTitle="ui-cataloging" />
+      <Settings {...this.props} pages={this.pages} paneTitle={this.props.stripes.intl.formatMessage({ id: 'ui-cataloging.settings.general' })} />
     );
   }
 }

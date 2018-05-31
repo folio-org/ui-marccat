@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import LogicalView from './LogicalView';
+import { LogicalView } from './';
 
 class LogicalViewLink extends React.Component {
   static propTypes = {

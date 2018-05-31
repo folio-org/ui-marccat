@@ -76,7 +76,7 @@
   "config": {
     "ghooks": {
       "commit-msg": "validate-commit-msg",
-      "post-merge": "yarn install",
+      "post-merge": "clean:all && yarn install",
       "post-rewrite": "yarn install"
     },
     "commitizen": {

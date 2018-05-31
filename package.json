@@ -8,9 +8,30 @@
   },
   "main": "src/index.js",
   "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://issues.folio.org/projects/CATUI",
+    "email": "christian.chiama@atcult.it"
+  },
   "engines": {
     "node": ">=6.0.0"
   },
+  "contributors": [
+    {
+      "name": "Christian Chiama",
+      "email": "christian.chiama@atcult.it",
+      "url": "http://www.atcult.it"
+    },
+    {
+      "name": "Natascia Bianchini",
+      "email": "natascia.bianchini@atcult.it",
+      "url": "http://www.atcult.it"
+    },
+    {
+      "name": "Alice Guercio",
+      "email": "alice.guercio@atcult.it",
+      "url": "http://www.atcult.it"
+    }
+  ],
   "scripts": {
     "postinstall": "yarn setup:ci",
     "start": "stripes serve config/js/stripes.config.js",
@@ -18,7 +39,7 @@
     "build": "stripes build --output ./dist/ui-cataloging-build",
     "build:analizer": "stripes build config/js/stripes.config.js ./dist/analyze/ui-cataloging-analyze --analyze",
     "test": "stripes test nightmare --run App.spec --show",
-    "lint": "eslint src",
+    "lint": "eslint --fix src",
     "stylelint": "stylelint \"src/**/*.css\"",
     "setup:ci": ". ./script/ci/setup.sh",
     "prepublish": "node ./config/js/module.descriptor.js package.json > config/json/ModuleDescriptor.json",
@@ -30,7 +51,9 @@
     "babel-eslint": "^8.0.3",
     "eslint": "^4.8.0",
     "pre-commit": "^1.2.2",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.1.0",
   },
   "dependencies": {
     "@folio/stripes-components": "^2.0.0",
@@ -50,10 +73,23 @@
   "pre-commit": {
     "run": "lint, stylelint"
   },
+  "config": {
+    "ghooks": {
+      "commit-msg": "validate-commit-msg",
+      "post-merge": "clean:all && yarn install",
+      "post-rewrite": "yarn install"
+    },
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
   "stripes": {
     "type": "app",
     "displayName": "cataloging",
     "route": "/cataloging",
+    "defaultPopoverSize": "400px",
+    "defaultPreviewWidth": "40%",
+    "helpPage": "https://wiki.folio.org/pages/",
     "hasSettings": true,
     "okapiInterfaces": {},
     "icons": [
@@ -80,3 +116,4 @@
     ]
   }
 }
+

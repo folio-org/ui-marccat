@@ -10,7 +10,7 @@
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://issues.folio.org/projects/CATUI",
-    "email": "christian.chiama@atcult.it"
+    "email": "info@atcult.it"
   },
   "engines": {
     "node": ">=6.0.0"
@@ -34,17 +34,18 @@
   ],
   "scripts": {
     "postinstall": "yarn setup:ci",
-    "start": "stripes serve config/js/stripes.config.js",
-    "start:vagrant": "stripes serve-vagrant config/js/stripes.config.js",
+    "start": "stripes serve config/stripes.config.js",
+    "start:vagrant": "stripes serve-vagrant config/stripes.config.js",
     "build": "stripes build --output ./dist/ui-cataloging-build",
-    "build:analizer": "stripes build config/js/stripes.config.js ./dist/analyze/ui-cataloging-analyze --analyze",
-    "test": "stripes test nightmare --run App.spec --show",
-    "lint": "eslint --fix src",
+    "build:analizer": "stripes build config/stripes.config.js ./dist/analyze/ui-cataloging-analyze --analyze",
+    "test": "stripes test nightmare --run test/ --show",
+    "lint": "yarn eslint && stylelint \"src/**/*.css\"",
+    "eslint": "eslint --fix ./",
     "stylelint": "stylelint \"src/**/*.css\"",
     "setup:ci": ". ./script/ci/setup.sh",
-    "prepublish": "node ./config/js/module.descriptor.js package.json > config/json/ModuleDescriptor.json",
+    "prepublish": "mkdir config/json; node node_modules/@folio/stripes-core/util/package2md.js package.json > config/json/ModuleDescriptor.json",
     "publish": "yarn publish;npm publish",
-    "clean:all": "rimraf node_modules/ dist/ .circleci/"
+    "clean:all": "rimraf node_modules/ dist/ .circleci/ config/json"
   },
   "devDependencies": {
     "@folio/eslint-config-stripes": "^1.1.0",
@@ -91,7 +92,9 @@
     "defaultPreviewWidth": "40%",
     "helpPage": "https://wiki.folio.org/pages/",
     "hasSettings": true,
-    "okapiInterfaces": {},
+    "okapiInterfaces": {
+      "cataloging": "1.0.0"
+    },
     "icons": [
       {
         "name": "app",
@@ -116,4 +119,3 @@
     ]
   }
 }
-

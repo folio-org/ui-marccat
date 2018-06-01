@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TemplateView from './TemplateView';
+import { TemplateView } from './';
 
 class TemplateViewLink extends React.Component {
   static propTypes = {

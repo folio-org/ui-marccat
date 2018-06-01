@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Switch from 'react-router-dom/Switch';
 import Route from 'react-router-dom/Route';
 import Link from 'react-router-dom/Link';
-import TemplateNewContainer from './TemplateNewContainer';
+import { TemplateNewContainer } from './';
 
 class TemplateAddButton extends React.Component {
   static propTypes = {

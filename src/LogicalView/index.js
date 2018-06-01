@@ -1,4 +1,2 @@
-import LogicalView from './LogicalView';
-import LogicalViewLink from './LogicalViewLink';
-
-export { LogicalView, LogicalViewLink };
+export { default as LogicalView } from './LogicalView';
+export { default as LogicalViewLink } from './LogicalViewLink';

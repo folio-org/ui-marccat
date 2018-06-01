@@ -1,0 +1,5 @@
+@import '../Theme/variable.css';
+
+.root section{
+  border-right: 1px solid var(--color-border)!important;
+}

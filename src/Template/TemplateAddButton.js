@@ -10,6 +10,7 @@ import TemplateNewContainer from './TemplateNewContainer';
 class TemplateAddButton extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
+      connect: PropTypes.func.isRequired,
       intl: PropTypes.object.isRequired,
     }).isRequired,
   };

@@ -18,6 +18,7 @@
   "navigator.externalSearch": "External search",
 
   "button.new": "+ New",
+  "button.new.tag": "+ Tag",
   "templates.title": "Bibliographic templates",
   "template.column.id": "Id",
   "template.column.name": "Name"

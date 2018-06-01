@@ -6,11 +6,13 @@ export const ENDPOINT = {
   TEMPLATE_URL: 'record-templates',
   TEMPLATE_MANDATORY: 'bibliographic/fields/mandatory',
   LOGICAL_VIEW_URL: 'logical-views',
+  CATEGORY_URL: 'marc-categories',
   DEFAULT_LANG: 'eng'
 };
 export const API_RESULT_JSON_KEY = {
   TEMPLATES: 'recordTemplates',
-  LOGICAL_VIEW: 'views'
+  LOGICAL_VIEW: 'views',
+  CATEGORIES: 'categories'
 };
 
 export const INITIAL_RESULT_COUNT = 30;

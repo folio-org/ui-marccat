@@ -27,6 +27,7 @@ class LogicalView extends React.Component {
           id={C.LOGICAL_VIEW_SELECT.ID}
           dataOptions={[C.LOGICAL_VIEW_SELECT.EMPTY_VALUE]}
           value={C.LOGICAL_VIEW_SELECT.INITIAL_VALUE}
+          onChange={()=>{}}
         />
       </div>;
     const { resources: { views } } = this.props;
@@ -41,6 +42,7 @@ class LogicalView extends React.Component {
           id={C.LOGICAL_VIEW_SELECT.ID}
           dataOptions={remapCodeLongDescription(logicalViews)}
           value={C.LOGICAL_VIEW_SELECT.INITIAL_VALUE}
+          onChange={()=>{}}
         />
       </div>
     );

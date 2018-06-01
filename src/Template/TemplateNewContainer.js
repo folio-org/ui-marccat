@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TemplateNewMandatory from './TemplateNewMandatory';
+import { TemplateNewMandatory } from './';
 
 class TemplateNewContainer extends React.Component {
   static propTypes = {

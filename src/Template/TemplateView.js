@@ -4,7 +4,7 @@ import React from 'react';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset'; // eslint-disable-line import/no-extraneous-dependencies
-import TemplateAddButton from './TemplateAddButton';
+import { TemplateAddButton } from './';
 import * as C from '../constant';
 
 import css from './styles/TemplateView.css';
@@ -39,7 +39,7 @@ class TemplateView extends React.Component {
 
     return (
       <Paneset static style={css.root}>
-        <Pane paneTitle={formatMsg({ id: 'ui-cataloging.templates.title' })}>
+        <Pane defaultWidth="100%" paneTitle={formatMsg({ id: 'ui-cataloging.templates.title' })}>
           <div>
             <TemplateAddButton {...this.props} />
           </div>

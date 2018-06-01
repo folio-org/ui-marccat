@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import TemplateName from './TemplateName';
+import { TemplateName } from './';
 
 class TemplateNameLink extends React.Component {
   static propTypes = {

@@ -38,19 +38,18 @@ class CatalogingRouting extends React.Component {
       return <Settings {...this.props} />;
     }
     return (
-      <div>
-        <Switch>
-          <Route
-            path={`${this.props.match.path}`}
-            render={() => <this.connectedApp {...this.props} />}
-          />
-          <Route
-            component={() => {
-              this.NoMatch();
-            }}
-          />
-        </Switch>
-      </div>
+      <Switch>
+        <Route
+          path={`${this.props.match.path}`}
+          render={() => <this.connectedApp {...this.props} />}
+        />
+        <Route
+          component={() => {
+            this.NoMatch();
+          }}
+        />
+        <div>hhhh</div>
+      </Switch>
     );
   }
 }

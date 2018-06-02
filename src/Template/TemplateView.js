@@ -6,8 +6,12 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset'; // eslint-disable-line import/no-extraneous-dependencies
 import { TemplateAddButton } from './';
 import * as C from '../constant';
-
+import Icon from '@folio/stripes-components/lib/Icon';
+import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
+import IconButton from '@folio/stripes-components/lib/IconButton';
 import css from './styles/TemplateView.css';
+import PaneHeader from './Pane/TemplateViewPane';
+import CatalogingLoader from '../Loader';
 
 class TemplateView extends React.Component {
   static manifest = Object.freeze({
@@ -37,26 +41,63 @@ class TemplateView extends React.Component {
       'name: name': x => _.get(x, ['name']),
     };
 
+    const searchMenu = (
+      <PaneMenu>
+        <IconButton key="icon-search" icon="search" />
+      </PaneMenu>
+    );
+
+    const lastMenu = (
+      <PaneMenu>
+        <IconButton key="icon-comment" icon="comment" />
+        <IconButton key="icon-edit" icon="edit" />
+        <IconButton key="icon-user" icon="comment" />
+        <IconButton key="icon-edit" icon="edit" />
+      </PaneMenu>
+    );
+
+
+    const actionMenuItems = [
+      {
+        label: 'New',
+        onClick: () => {
+          console.log('click!');
+        },
+      },
+      {
+        label: 'edit',
+        href: '/cataloging/template/new',
+      },
+      {
+        label: 'delete',
+        href: '#export',
+      },
+    ];
+
     return (
       <Paneset static style={css.root}>
-        <Pane defaultWidth="100%" paneTitle={formatMsg({ id: 'ui-cataloging.templates.title' })}>
-          <div>
-            <TemplateAddButton {...this.props} />
-          </div>
-          <div>
-            <MultiColumnList
-              id="list-templates"
-              contentData={templates}
-              rowMetadata={['id', 'id']}
-              formatter={formatter}
-              visibleColumns={['id', 'name']}
-              ariaLabel="TemplateView"
-              containerRef={ref => {
-                this.resultsList = ref;
-              }}
-              rowFormatter={this.anchoredRowFormatter}
-            />
-          </div>
+        <Pane
+          actionMenuItems={actionMenuItems}
+          firstMenu={searchMenu}
+          lastMenu={lastMenu}
+          defaultWidth="fill"
+          paneTitle={formatMsg({ id: 'ui-cataloging.templates.title' })}
+          paneSub={recordsTemplates.records.length + ' result found'}
+          appIcon={{ app: 'cataloging' }}
+        >
+          <MultiColumnList
+            id="list-templates"
+            contentData={templates}
+            rowMetadata={['id', 'id']}
+            formatter={formatter}
+            visibleColumns={['id', 'name']}
+            ariaLabel="TemplateView"
+            containerRef={ref => {
+              this.resultsList = ref;
+            }}
+            rowFormatter={this.anchoredRowFormatter}
+          />
+          <CatalogingLoader />
         </Pane>
       </Paneset>
     );

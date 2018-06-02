@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'; // eslint-disable-line no-unused-vars
 import React from 'react';
 import Navigator from '../Navigator';
-import Root from '../Root';
+import css from './Cataloging.css';
 
 class Cataloging extends React.Component {
   static propTypes = {
@@ -25,10 +25,16 @@ class Cataloging extends React.Component {
     query: { initialValue: {} }
   });
 
+  constructor(props) {
+    super(props);
+    this.store = props.stripes.store;
+    this.state = { loading: true };
+  }
+
 
   render() {
     return (
-      <div>
+      <div className={css.cataloging}>
         <Navigator {...this.props} />
       </div>
     );

@@ -9,6 +9,7 @@
   "errors.notFound.title": "Uh-oh!",
   "errors.notFound.suggest": "How did you get to {location}?",
 
+  "empty.title": "Cataloging",
   "navigator.title": "Menu",
   "navigator.template": "Template",
   "navigator.templateList": "Template List",

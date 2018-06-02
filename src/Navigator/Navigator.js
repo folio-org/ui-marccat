@@ -10,7 +10,10 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { TemplateViewLink } from '../Template/';
 import { LogicalViewLink } from '../LogicalView/';
+import NavigatorEmpty from './NavigatorEmpty';
+import { Accordion, AccordionSet } from '@folio/stripes-components/lib/Accordion';
 
+import css from './Navigator.css';
 
 class Navigator extends React.Component {
   static propTypes = {
@@ -18,13 +21,15 @@ class Navigator extends React.Component {
       intl: PropTypes.object.isRequired,
     }).isRequired,
   };
+
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
 
     return (
       <Paneset>
-        <Pane defaultWidth="20%" paneTitle={formatMsg({ id: 'ui-cataloging.navigator.title' })}>
-          <LogicalViewLink {...this.props} id="logical_view_link"/>
+        <Pane dismissible={true} onClose={(()=>{})} defaultWidth="20%" paneTitle={formatMsg({ id: 'ui-cataloging.navigator.title' })}>
+          <LogicalViewLink {...this.props} id="logical_view_link" />
+          <Accordion open label="Template">
           <NavList>
             <NavListSection label={formatMsg({ id: 'ui-cataloging.navigator.template' })} activeLink="/active-link-here">
               <NavListItem to="/cataloging/templateList">
@@ -44,14 +49,24 @@ class Navigator extends React.Component {
               </NavListItem>
             </NavListSection>
           </NavList>
+          </Accordion>
         </Pane>
         <Switch>
           <Route path="/cataloging/templateList">
-            <TemplateViewLink {...this.props} id="template_view_link"/>
+            <TemplateViewLink {...this.props} id="template_view_link" />
           </Route>
-          <Route path="/cataloging/simpleSearch" />
-          <Route path="/cataloging/advancedSearch" />
-          <Route path="/cataloging/externalSearch" />
+          <Route path="/cataloging/simpleSearch" >
+            <NavigatorEmpty {...this.props} id="empty_container" />
+          </Route>
+          <Route path="/cataloging/advancedSearch" >
+            <NavigatorEmpty {...this.props} id="empty_container" />
+          </Route>
+          <Route path="/cataloging/externalSearch" >
+            <NavigatorEmpty {...this.props} id="empty_container" />
+          </Route>
+          <Route path="/cataloging">
+            <NavigatorEmpty {...this.props} id="empty_container" />
+          </Route>
         </Switch>
       </Paneset>
     );

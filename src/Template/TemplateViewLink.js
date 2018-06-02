@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { TemplateView } from './';
 
+
 class TemplateViewLink extends React.Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
@@ -10,6 +11,7 @@ class TemplateViewLink extends React.Component {
     }).isRequired,
   };
 
+
   constructor(props) {
     super(props);
     this.connectedTemplateView = props.stripes.connect(TemplateView);
@@ -17,9 +19,7 @@ class TemplateViewLink extends React.Component {
 
   render() {
     return (
-      <div>
-        <this.connectedTemplateView {...this.props} />
-      </div>
+      <this.connectedTemplateView {...this.props} />
     );
   }
 }

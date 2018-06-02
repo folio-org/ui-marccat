@@ -10,15 +10,24 @@ import { TemplateNewContainer } from './';
 class TemplateAddButton extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
+      connect: PropTypes.func.isRequired,
       intl: PropTypes.object.isRequired,
     }).isRequired,
   };
 
   render() {
+    const div = { height: '100%' };
+    const style = {
+      backgroundColor: '#2b75bb',
+      border: '1px solid #2b75bb',
+      fontWeight: 600,
+      color: '#fff',
+      marginRight: '15px'
+    };
     return (
-      <div>
+      <div style={div}>
         <Link to="/cataloging/template/new">
-          <Button>
+          <Button style={style}>
             <FormattedMessage id="ui-cataloging.button.new" />
           </Button>
         </Link>

@@ -44,20 +44,18 @@ class TemplateNewMandatory extends React.Component {
       return (
         <Paneset static>
           <Pane paneTitle={formatMsg({ id: 'ui-cataloging.templates.title' })}>
-            <div>
-              <MultiColumnList
-                id="fields"
-                contentData={fields}
-                rowMetadata={['code', 'code']}
-                formatter={formatter}
-                visibleColumns={['code', 'descr']}
-                ariaLabel="TemplateNewMandatory"
-                containerRef={ref => {
+            <MultiColumnList
+              id="fields"
+              contentData={fields}
+              rowMetadata={['code', 'code']}
+              formatter={formatter}
+              visibleColumns={['code', 'descr']}
+              ariaLabel="TemplateNewMandatory"
+              containerRef={ref => {
                     this.resultsList = ref;
                   }}
-                rowFormatter={this.anchoredRowFormatter}
-              />
-            </div>
+              rowFormatter={this.anchoredRowFormatter}
+            />
           </Pane>
         </Paneset>
       );

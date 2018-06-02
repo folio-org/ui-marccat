@@ -5,10 +5,11 @@
   "settings.general.message": "These are your general app settings.",
   "settings.some-feature": "Some Feature",
   "settings.some-feature.message": "These are your settings for some app feature.",
-  
+
   "errors.notFound.title": "Uh-oh!",
   "errors.notFound.suggest": "How did you get to {location}?",
 
+  "empty.title": "Cataloging",
   "navigator.title": "Menu",
   "navigator.template": "Template",
   "navigator.templateList": "Template List",
@@ -18,6 +19,7 @@
   "navigator.externalSearch": "External search",
 
   "button.new": "+ New",
+  "button.new.tag": "+ Tag",
   "templates.title": "Bibliographic templates",
   "template.column.id": "Id",
   "template.column.name": "Name"

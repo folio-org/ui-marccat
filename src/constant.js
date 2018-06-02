@@ -1,15 +1,18 @@
 // API
 export const RESOURCE_TYPE = 'rest';
 export const ENDPOINT = {
-  HEADER: { 'x-okapi-tenant': 'tnx' },
+  HEADER: { KEY: 'x-okapi-tenant', VALUE: 'tnx' },
   BASE_URL: 'http://127.0.0.1:8080/cataloging',
   TEMPLATE_URL: 'record-templates',
   TEMPLATE_MANDATORY: 'bibliographic/fields/mandatory',
   LOGICAL_VIEW_URL: 'logical-views',
+  CATEGORY_URL: 'marc-categories',
   DEFAULT_LANG: 'eng'
 };
 export const API_RESULT_JSON_KEY = {
-  LOGICAL_VIEW: 'views'
+  TEMPLATES: 'recordTemplates',
+  LOGICAL_VIEW: 'views',
+  CATEGORIES: 'categories'
 };
 
 export const INITIAL_RESULT_COUNT = 30;

@@ -17,9 +17,7 @@ class LogicalViewLink extends React.Component {
 
   render() {
     return (
-      <div>
-        <this.connectedLogicalView {...this.props} />
-      </div>
+      <this.connectedLogicalView {...this.props} />
     );
   }
 }

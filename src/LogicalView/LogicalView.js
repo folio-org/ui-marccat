@@ -27,20 +27,21 @@ class LogicalView extends React.Component {
           id={C.LOGICAL_VIEW_SELECT.ID}
           dataOptions={[C.LOGICAL_VIEW_SELECT.EMPTY_VALUE]}
           value={C.LOGICAL_VIEW_SELECT.INITIAL_VALUE}
+          onChange={() => {}}
         />
       </div>;
     const { resources: { views } } = this.props;
     if (!views || !views.hasLoaded) return emptySelect;
     const logicalViews = views.records;
-
     /** utilizzare l operatore ternario per visualizzare la select in base alla presenza di redords* */
     return (
       <div className={css.root}>
         <label htmlFor={C.LOGICAL_VIEW_SELECT.ID}>Database</label>
         <Select
           id={C.LOGICAL_VIEW_SELECT.ID}
-          dataOptions={remapCodeLongDescription(logicalViews)}
+          dataOptions={(!views.records) ? emptySelect : remapCodeLongDescription(logicalViews)}
           value={C.LOGICAL_VIEW_SELECT.INITIAL_VALUE}
+          onChange={() => {}}
         />
       </div>
     );

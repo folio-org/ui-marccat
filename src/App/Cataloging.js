@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types'; // eslint-disable-line no-unused-vars
 import React from 'react';
 import Navigator from '../Navigator';
-import Root from '../Root';
+import css from './Cataloging.css';
 
 class Cataloging extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
       intl: PropTypes.object.isRequired,
-      connect: PropTypes.func
+      locale: PropTypes.string.isRequired,
+      connect: PropTypes.func,
+      store: PropTypes.object,
     }).isRequired,
     resources: PropTypes.shape({ // eslint-disable-line no-unused-vars
     }).isRequired,
@@ -25,10 +27,15 @@ class Cataloging extends React.Component {
     query: { initialValue: {} }
   });
 
+  constructor(props) {
+    super(props);
+    this.store = props.stripes.store;
+  }
+
 
   render() {
     return (
-      <div>
+      <div className={css.cataloging}>
         <Navigator {...this.props} />
       </div>
     );

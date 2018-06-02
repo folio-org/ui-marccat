@@ -20,11 +20,9 @@ class TemplateNewContainer extends React.Component {
     return (
       <Paneset static style={css.root}>
         <Pane paneTitle={formatMsg({ id: 'ui-cataloging.templates.title' })}>
-          <div>
-            {/* mandatory fields */}
-            <AddTagButton {...this.props} />
-            <NewTagContainer {...this.props} />
-          </div>
+          {/* mandatory fields */}
+          <AddTagButton {...this.props} />
+          <NewTagContainer {...this.props} />
         </Pane>
       </Paneset>
     );

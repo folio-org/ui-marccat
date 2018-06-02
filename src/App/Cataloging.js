@@ -7,7 +7,9 @@ class Cataloging extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
       intl: PropTypes.object.isRequired,
-      connect: PropTypes.func
+      locale: PropTypes.string.isRequired,
+      connect: PropTypes.func,
+      store: PropTypes.object,
     }).isRequired,
     resources: PropTypes.shape({ // eslint-disable-line no-unused-vars
     }).isRequired,
@@ -28,7 +30,6 @@ class Cataloging extends React.Component {
   constructor(props) {
     super(props);
     this.store = props.stripes.store;
-    this.state = { loading: true };
   }
 
 

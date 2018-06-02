@@ -4,13 +4,10 @@ import React from 'react';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset'; // eslint-disable-line import/no-extraneous-dependencies
-import { TemplateAddButton } from './';
-import * as C from '../constant';
-import Icon from '@folio/stripes-components/lib/Icon';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
+import * as C from '../constant';
 import css from './styles/TemplateView.css';
-import PaneHeader from './Pane/TemplateViewPane';
 import CatalogingLoader from '../Loader';
 
 class TemplateView extends React.Component {
@@ -61,7 +58,7 @@ class TemplateView extends React.Component {
       {
         label: 'New',
         onClick: () => {
-          console.log('click!');
+        // console.log('click!');
         },
       },
       {

@@ -8,12 +8,10 @@ import Switch from 'react-router-dom/Switch';
 import Route from 'react-router-dom/Route';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
+import { Accordion } from '@folio/stripes-components/lib/Accordion';
+import NavigatorEmpty from './NavigatorEmpty';
 import { TemplateViewLink } from '../Template/';
 import { LogicalViewLink } from '../LogicalView/';
-import NavigatorEmpty from './NavigatorEmpty';
-import { Accordion, AccordionSet } from '@folio/stripes-components/lib/Accordion';
-
-import css from './Navigator.css';
 
 class Navigator extends React.Component {
   static propTypes = {
@@ -27,28 +25,28 @@ class Navigator extends React.Component {
 
     return (
       <Paneset>
-        <Pane dismissible={true} onClose={(()=>{})} defaultWidth="20%" paneTitle={formatMsg({ id: 'ui-cataloging.navigator.title' })}>
+        <Pane dismissible onClose={(() => {})} defaultWidth="20%" paneTitle={formatMsg({ id: 'ui-cataloging.navigator.title' })}>
           <LogicalViewLink {...this.props} id="logical_view_link" />
           <Accordion open label="Template">
-          <NavList>
-            <NavListSection label={formatMsg({ id: 'ui-cataloging.navigator.template' })} activeLink="/active-link-here">
-              <NavListItem to="/cataloging/templateList">
-                <FormattedMessage id="ui-cataloging.navigator.templateList" />
-              </NavListItem>
-            </NavListSection>
-            <br />
-            <NavListSection label={formatMsg({ id: 'ui-cataloging.navigator.search' })} activeLink="/active-link-here">
-              <NavListItem to="/cataloging/simpleSearch">
-                <FormattedMessage id="ui-cataloging.navigator.simpleSearch" />
-              </NavListItem>
-              <NavListItem to="/cataloging/advancedSearch">
-                <FormattedMessage id="ui-cataloging.navigator.advancedSearch" />
-              </NavListItem>
-              <NavListItem to="/cataloging/externalSearch">
-                <FormattedMessage id="ui-cataloging.navigator.externalSearch" />
-              </NavListItem>
-            </NavListSection>
-          </NavList>
+            <NavList>
+              <NavListSection label={formatMsg({ id: 'ui-cataloging.navigator.template' })} activeLink="/active-link-here">
+                <NavListItem to="/cataloging/templateList">
+                  <FormattedMessage id="ui-cataloging.navigator.templateList" />
+                </NavListItem>
+              </NavListSection>
+              <br />
+              <NavListSection label={formatMsg({ id: 'ui-cataloging.navigator.search' })} activeLink="/active-link-here">
+                <NavListItem to="/cataloging/simpleSearch">
+                  <FormattedMessage id="ui-cataloging.navigator.simpleSearch" />
+                </NavListItem>
+                <NavListItem to="/cataloging/advancedSearch">
+                  <FormattedMessage id="ui-cataloging.navigator.advancedSearch" />
+                </NavListItem>
+                <NavListItem to="/cataloging/externalSearch">
+                  <FormattedMessage id="ui-cataloging.navigator.externalSearch" />
+                </NavListItem>
+              </NavListSection>
+            </NavList>
           </Accordion>
         </Pane>
         <Switch>

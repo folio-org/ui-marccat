@@ -53,4 +53,4 @@ LogicalView.propTypes = {
   resources: PropTypes.object.isRequired
 };
 
-export default connect(LogicalView, 'ui-cataloging');
+export default connect(LogicalView, C.META.MODULE_NAME);

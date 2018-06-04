@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Select from '@folio/stripes-components/lib/Select';
 import { connect } from '@folio/stripes-connect';
 import * as C from '../../constant';
-import { remapCodeDescription } from '../../Utils/Mapper';
+import { remapCodeLongDescription } from '../../Utils/Mapper';
 import css from './Tag.css';
 
 class AddTagButton extends React.Component {
@@ -41,7 +41,7 @@ class AddTagButton extends React.Component {
         <label htmlFor={C.CATEGORY_SELECT.ID}>Categories</label>
         <Select
           id={C.CATEGORY_SELECT.ID}
-          dataOptions={(!records.records) ? emptySelect : remapCodeDescription(categories)}
+          dataOptions={(!records.records) ? emptySelect : remapCodeLongDescription(categories)}
           value={C.CATEGORY_SELECT.INITIAL_VALUE}
           onChange={() => {}}
         />

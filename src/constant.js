@@ -1,13 +1,23 @@
+// CATALOGING UI APP METADADA
+export const META = {
+  MODULE_NAME: 'ui-cataloging'
+};
+
 // API
 export const RESOURCE_TYPE = 'rest';
 export const ENDPOINT = {
-  HEADER: { KEY: 'x-okapi-tenant', VALUE: 'tnx' },
+  HEADER: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'x-okapi-tenant': 'tnx'
+  },
   BASE_URL: 'http://127.0.0.1:8080/cataloging',
   TEMPLATE_URL: 'record-templates',
   TEMPLATE_MANDATORY: 'bibliographic/fields/mandatory',
   LOGICAL_VIEW_URL: 'logical-views',
   CATEGORY_URL: 'marc-categories',
-  DEFAULT_LANG: 'eng'
+  DEFAULT_LANG: 'eng',
+  DEFAULT_PAGINATION: 20
 };
 export const API_RESULT_JSON_KEY = {
   TEMPLATES: 'recordTemplates',

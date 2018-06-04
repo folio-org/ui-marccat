@@ -108,4 +108,4 @@ TemplateView.propTypes = {
   }).isRequired
 };
 
-export default connect(TemplateView, 'ui-cataloging');
+export default connect(TemplateView, C.META.MODULE_NAME);

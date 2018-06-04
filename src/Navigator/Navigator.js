@@ -10,8 +10,8 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import NavigatorEmpty from './NavigatorEmpty';
-import { TemplateViewLink } from '../Template/';
-import { LogicalViewLink } from '../LogicalView/';
+import { TemplateView } from '../Template/';
+import { LogicalView } from '../LogicalView/';
 
 class Navigator extends React.Component {
   static propTypes = {
@@ -26,7 +26,7 @@ class Navigator extends React.Component {
     return (
       <Paneset>
         <Pane dismissible onClose={(() => {})} defaultWidth="20%" paneTitle={formatMsg({ id: 'ui-cataloging.navigator.title' })}>
-          <LogicalViewLink {...this.props} id="logical_view_link" />
+          <LogicalView {...this.props} id="logical_view_link" />
           <Accordion open label="Template">
             <NavList>
               <NavListSection label={formatMsg({ id: 'ui-cataloging.navigator.template' })} activeLink="/active-link-here">
@@ -51,7 +51,7 @@ class Navigator extends React.Component {
         </Pane>
         <Switch>
           <Route path="/cataloging/templateList">
-            <TemplateViewLink {...this.props} id="template_view_link" />
+            <TemplateView {...this.props} id="template_view_link" />
           </Route>
           <Route path="/cataloging/simpleSearch" >
             <NavigatorEmpty {...this.props} id="empty_container" />

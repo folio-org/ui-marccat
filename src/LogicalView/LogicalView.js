@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Select from '@folio/stripes-components/lib/Select';
-import * as C from '../constant';/** utilizziamo C come namespace per tutte le costanti* */
+import { connect } from '@folio/stripes-connect';
+import * as C from '../constant';
 import css from './LogicalView.css';
 import { remapCodeLongDescription } from '../Utils/Mapper';
 
@@ -52,4 +53,4 @@ LogicalView.propTypes = {
   resources: PropTypes.object.isRequired
 };
 
-export default LogicalView;
+export default connect(LogicalView, 'ui-cataloging');

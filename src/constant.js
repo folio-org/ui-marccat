@@ -1,12 +1,19 @@
 // API
 export const RESOURCE_TYPE = 'rest';
 export const ENDPOINT = {
-  HEADER: { 'x-okapi-tenant': 'tnx' },
-  BASE_URL: 'http://192.168.0.43:8080/cataloging',
+  HEADER: { KEY: 'x-okapi-tenant', VALUE: 'tnx' },
+  BASE_URL: 'http://127.0.0.1:8080/cataloging',
   TEMPLATE_URL: 'record-templates',
-  LOGICAL_VIEW_URL: ''
+  TEMPLATE_MANDATORY: 'bibliographic/fields/mandatory',
+  LOGICAL_VIEW_URL: 'logical-views',
+  CATEGORY_URL: 'marc-categories',
+  DEFAULT_LANG: 'eng'
 };
-export const API_RESULT_JSON_KEY = {};
+export const API_RESULT_JSON_KEY = {
+  TEMPLATES: 'recordTemplates',
+  LOGICAL_VIEW: 'views',
+  CATEGORIES: 'categories'
+};
 
 export const INITIAL_RESULT_COUNT = 30;
 export const RESULT_COUNT_INCREMENT = 30;
@@ -16,5 +23,11 @@ export const filterConfig = [{}];
 // Navigator
 
 
-// Seleect Logical View
+// Select Logical View
+export const LOGICAL_VIEW_SELECT = {
+  ID: 'id_logicalView',
+  LABEL: 'Database',
+  EMPTY_VALUE: { value: '----------', label: '----------' },
+  INITIAL_VALUE: '0'
+};
 

@@ -18,7 +18,7 @@ const convertValueToLabel = (resourcesPath) => {
     // Convert value to label & id to value
     Object.keys(arr).map((key) => {
       const obj = {
-        label: arr[key].value,
+        label: arr[key].name,
         value: arr[key].id
       };
       newArray.push(obj);
@@ -28,4 +28,15 @@ const convertValueToLabel = (resourcesPath) => {
   return newArray;
 };
 
-export { arrayToObject, convertValueToLabel };
+
+const remapCodeLongDescription = (logicalViews) => {
+  return (logicalViews.length > 0) ? // verificare che il servizio risponda [] non [{}], altrimenti mettere > 1
+    logicalViews.map(view => ({
+      value: view.code,
+      label: view.longDescription
+    }))
+    : false;
+};
+
+
+export { arrayToObject, convertValueToLabel, remapCodeLongDescription };

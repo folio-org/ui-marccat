@@ -1,50 +1,100 @@
-import _ from 'lodash'; // eslint-disable-line  import/no-extraneous-dependencies
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset'; // eslint-disable-line import/no-extraneous-dependencies
+import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
+import IconButton from '@folio/stripes-components/lib/IconButton';
+import { connect } from '@folio/stripes-connect';
+import * as C from '../constant';
+import css from './styles/TemplateView.css';
+import CatalogingLoader from '../Loader';
 
 class TemplateView extends React.Component {
   static manifest = Object.freeze({
-    recordTemplate: {
-      type: 'rest',
-      root: 'http://localhost:8080/cataloging',
-      path: 'record-templates',
+    query: { initialValue: {} },
+    resultCount: { initialValue: C.INITIAL_RESULT_COUNT },
+    recordsTemplates: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      path: C.ENDPOINT.TEMPLATE_URL,
       headers: { 'x-okapi-tenant': 'tnx' },
-      records: 'recordTemplates',
+      records: C.API_RESULT_JSON_KEY.TEMPLATES,
       GET: {
         params: { lang: 'ita', type: 'B' },
       },
-    },
+    }
   });
 
+
   render() {
-    const { resources: { recordTemplate } } = this.props; // eslint-disable-line react/prop-types
-    if (!recordTemplate || !recordTemplate.hasLoaded) return <div />;
-    const templates = recordTemplate.records;
+    const formatMsg = this.props.stripes.intl.formatMessage;
+
+    const { resources: { recordsTemplates } } = this.props; // eslint-disable-line react/prop-types
+    if (!recordsTemplates || !recordsTemplates.hasLoaded) return <div />;
+    const templates = recordsTemplates.records;
     const formatter = {
       'Id: id': x => _.get(x, ['id']),
       'name: name': x => _.get(x, ['name']),
     };
 
+    const searchMenu = (
+      <PaneMenu>
+        <IconButton key="icon-search" icon="search" />
+      </PaneMenu>
+    );
+
+    const lastMenu = (
+      <PaneMenu>
+        <IconButton key="icon-comment" icon="comment" />
+        <IconButton key="icon-edit" icon="edit" />
+        <IconButton key="icon-edit" icon="profile" />
+      </PaneMenu>
+    );
+
+
+    const actionMenuItems = [
+      {
+        label: 'New',
+        onClick: () => {
+        // console.log('click!');
+        },
+      },
+      {
+        label: 'edit',
+        href: '/cataloging/template/new',
+      },
+      {
+        label: 'delete',
+        href: '#export',
+      },
+    ];
+
     return (
-      <Paneset static>
-        <Pane defaultWidth="80%" paneTitle="Some Stripes Components">
-          <div>
-            <MultiColumnList
-              id="list-templates"
-              contentData={templates}
-              rowMetadata={['id', 'id']}
-              formatter={formatter}
-              visibleColumns={['id', 'name']}
-              ariaLabel="TemplateView"
-              containerRef={ref => {
-                this.resultsList = ref;
-              }}
-              rowFormatter={this.anchoredRowFormatter}
-            />
-          </div>
+      <Paneset static style={css.root}>
+        <Pane
+          actionMenuItems={actionMenuItems}
+          firstMenu={searchMenu}
+          lastMenu={lastMenu}
+          defaultWidth="fill"
+          paneTitle={formatMsg({ id: 'ui-cataloging.templates.title' })}
+          paneSub={recordsTemplates.records.length + ' result found'}
+          appIcon={{ app: 'cataloging' }}
+        >
+          <MultiColumnList
+            id="list-templates"
+            contentData={templates}
+            rowMetadata={['id', 'id']}
+            formatter={formatter}
+            visibleColumns={['id', 'name']}
+            ariaLabel="TemplateView"
+            containerRef={ref => {
+              this.resultsList = ref;
+            }}
+            rowFormatter={this.anchoredRowFormatter}
+          />
+          <CatalogingLoader />
         </Pane>
       </Paneset>
     );
@@ -58,4 +108,4 @@ TemplateView.propTypes = {
   }).isRequired
 };
 
-export default TemplateView;
+export default connect(TemplateView, 'ui-cataloging');

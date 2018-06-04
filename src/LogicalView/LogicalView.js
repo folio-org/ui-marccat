@@ -1,52 +1,56 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import Pane from '@folio/stripes-components/lib/Pane';
-import Paneset from '@folio/stripes-components/lib/Paneset'; // eslint-disable-line import/no-extraneous-dependencies
-import Selection from '@folio/stripes-components/lib/Selection';
-import { ENDPOINT, RESOURCE_TYPE } from '../constant';
+import Select from '@folio/stripes-components/lib/Select';
+import { connect } from '@folio/stripes-connect';
+import * as C from '../constant';
+import css from './LogicalView.css';
+import { remapCodeLongDescription } from '../Utils/Mapper';
 
 class LogicalView extends React.Component {
-    static manifest = Object.freeze({
-      views: {
-        type: RESOURCE_TYPE,
-        root: ENDPOINT.BASE_URL,
-        path: ENDPOINT.LOGICAL_VIEW_URL,
-        headers: ENDPOINT.HEADER,
-        records: 'views',
-        GET: {
-          params: { lang: 'ita' },
-        },
+  static manifest = Object.freeze({
+    views: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      path: C.ENDPOINT.LOGICAL_VIEW_URL,
+      headers: { 'x-okapi-tenant': 'tnx' },
+      records: C.API_RESULT_JSON_KEY.LOGICAL_VIEW,
+      GET: {
+        params: { lang: 'ita' },
       },
-    });
+    },
+  });
 
-    render() {
-      const { resources: { views } } = this.props; // eslint-disable-line react/prop-types
-      if (!views || !views.hasLoaded) return <div />;
-      const logicalViews = views.records;
-
-      return (
-        <Paneset static>
-          <Pane defaultWidth="80%" paneTitle="Some Stripes Components">
-            <div>
-              <Selection
-                name="SelectionViews"
-                label="Views"
-                id="viewsSelect"
-                placeholder="Select view"
-                dataOptions={logicalViews}
-              />
-            </div>
-          </Pane>
-        </Paneset>
-      );
-    }
+  render() {
+    const emptySelect =
+      <div className={css.root}>
+        <label htmlFor={C.LOGICAL_VIEW_SELECT.ID}>{C.LOGICAL_VIEW_SELECT.LABEL}</label>
+        <Select
+          id={C.LOGICAL_VIEW_SELECT.ID}
+          dataOptions={[C.LOGICAL_VIEW_SELECT.EMPTY_VALUE]}
+          value={C.LOGICAL_VIEW_SELECT.INITIAL_VALUE}
+          onChange={() => {}}
+        />
+      </div>;
+    const { resources: { views } } = this.props;
+    if (!views || !views.hasLoaded) return emptySelect;
+    const logicalViews = views.records;
+    /** utilizzare l operatore ternario per visualizzare la select in base alla presenza di redords* */
+    return (
+      <div className={css.root}>
+        <label htmlFor={C.LOGICAL_VIEW_SELECT.ID}>Database</label>
+        <Select
+          id={C.LOGICAL_VIEW_SELECT.ID}
+          dataOptions={(!views.records) ? emptySelect : remapCodeLongDescription(logicalViews)}
+          value={C.LOGICAL_VIEW_SELECT.INITIAL_VALUE}
+          onChange={() => {}}
+        />
+      </div>
+    );
+  }
 }
 
 LogicalView.propTypes = {
-  stripes: PropTypes.shape({ // eslint-disable-line react/no-unused-prop-types
-    connect: PropTypes.func.isRequired,
-    intl: PropTypes.object.isRequired,
-  }).isRequired
+  resources: PropTypes.object.isRequired
 };
 
-export default LogicalView;
+export default connect(LogicalView, 'ui-cataloging');

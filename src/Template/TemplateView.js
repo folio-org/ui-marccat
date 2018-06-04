@@ -6,6 +6,7 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset'; // eslint-disable-line import/no-extraneous-dependencies
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
+import { connect } from '@folio/stripes-connect';
 import * as C from '../constant';
 import css from './styles/TemplateView.css';
 import CatalogingLoader from '../Loader';
@@ -108,4 +109,4 @@ TemplateView.propTypes = {
   }).isRequired
 };
 
-export default TemplateView;
+export default connect(TemplateView, 'ui-cataloging');

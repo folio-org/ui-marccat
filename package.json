@@ -50,14 +50,15 @@
   "devDependencies": {
     "@folio/eslint-config-stripes": "^1.1.0",
     "babel-eslint": "^8.0.3",
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.1.0",
     "eslint": "^4.8.0",
     "pre-commit": "^1.2.2",
-    "rimraf": "^2.6.2",
-    "commitizen": "^2.9.6",
-    "cz-conventional-changelog": "^2.1.0"
+    "rimraf": "^2.6.2"
   },
   "dependencies": {
     "@folio/stripes-components": "^2.0.0",
+    "@folio/stripes-connect": "^3.1.300041",
     "@folio/stripes-core": "^2.9.0",
     "dotenv": "^5.0.1",
     "lodash": "^4.17.10",

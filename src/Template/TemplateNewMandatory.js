@@ -38,7 +38,6 @@ class TemplateNewMandatory extends React.Component {
         'cat: cat': x => _.get(x, ['categoryCode']),
         'hdrNum: hdrNum': x => _.get(x, ['headerTypeCode']),
         'descr: descr': x => _.get(x, ['description'])
-
       };
 
       return (

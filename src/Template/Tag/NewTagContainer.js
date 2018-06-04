@@ -1,5 +1,4 @@
 import React from 'react';
-import * as C from '../../constant';
 
 class NewTagContainer extends React.Component {
   /* static propTypes = {

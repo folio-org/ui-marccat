@@ -49,8 +49,7 @@ class TemplateView extends React.Component {
       <PaneMenu>
         <IconButton key="icon-comment" icon="comment" />
         <IconButton key="icon-edit" icon="edit" />
-        <IconButton key="icon-user" icon="comment" />
-        <IconButton key="icon-edit" icon="edit" />
+        <IconButton key="icon-edit" icon="profile" />
       </PaneMenu>
     );
 
@@ -109,4 +108,4 @@ TemplateView.propTypes = {
   }).isRequired
 };
 
-export default connect(TemplateView, 'template-view');
+export default connect(TemplateView, 'ui-cataloging');

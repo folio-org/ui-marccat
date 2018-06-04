@@ -42,9 +42,8 @@
     "lint": "yarn eslint && stylelint \"src/**/*.css\"",
     "eslint": "eslint --fix ./",
     "stylelint": "stylelint \"src/**/*.css\"",
-    "setup:ci": ". ./script/ci/setup.sh",
     "prepublish": "mkdir config/json; node node_modules/@folio/stripes-core/util/package2md.js package.json > config/json/ModuleDescriptor.json",
-    "publish": "yarn publish;npm publish",
+    "publish": "yarn prepublish;npm publish",
     "clean:all": "node script/clean.js"
   },
   "devDependencies": {

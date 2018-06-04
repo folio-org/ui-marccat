@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from '@folio/stripes-connect';
 
 class TemplateName extends React.Component {
   static propTypes = {
@@ -26,4 +27,4 @@ class TemplateName extends React.Component {
   }
 }
 
-export default TemplateName;
+export default connect(TemplateName,'ui-cataloging');

@@ -3,16 +3,10 @@ import PropTypes from 'prop-types';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset'; // eslint-disable-line import/no-extraneous-dependencies
 import css from './styles/TemplateView.css';
-// import TemplateNewMandatory from './TemplateNewMandatory'; // deve connettersi al servizio /fields
 import AddTagButton from './Tag/AddTagButton';
 import NewTagContainer from './Tag/NewTagContainer';
 
 class TemplateNewContainer extends React.Component {
-  /* constructor(props) {
-    super(props);
-    // this.connectedTemplateNewContainer = props.stripes.connect(TemplateNewMandatory);
-  } */
-
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;

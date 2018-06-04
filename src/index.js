@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
-import Settings from './Settings';
+import Settings from './Ssettings';
 import Cataloging from './App/Cataloging';
 
 class CatalogingRouting extends React.Component {

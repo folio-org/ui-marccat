@@ -38,5 +38,13 @@ const remapCodeLongDescription = (logicalViews) => {
     : false;
 };
 
+const remapCodeDescription = (jsonObj) => {
+  return (jsonObj.length > 0) ? // verificare che il servizio risponda [] non [{}], altrimenti mettere > 1
+    jsonObj.map(item => ({
+      value: item.code,
+      label: item.description
+    }))
+    : false;
+};
 
 export { arrayToObject, convertValueToLabel, remapCodeLongDescription };

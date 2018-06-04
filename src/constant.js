@@ -31,3 +31,10 @@ export const LOGICAL_VIEW_SELECT = {
   INITIAL_VALUE: '0'
 };
 
+// Select Categories
+export const CATEGORY_SELECT = {
+  ID: 'id_category',
+  LABEL: 'Categories',
+  EMPTY_VALUE: { value: '----------', label: '----------' },
+  INITIAL_VALUE: '0'
+};

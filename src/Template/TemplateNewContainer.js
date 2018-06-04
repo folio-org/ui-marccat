@@ -6,6 +6,7 @@ import css from './styles/TemplateView.css';
 // import TemplateNewMandatory from './TemplateNewMandatory'; // deve connettersi al servizio /fields
 import AddTagButton from './Tag/AddTagButton';
 import NewTagContainer from './Tag/NewTagContainer';
+import * as C from '../constant';
 
 class TemplateNewContainer extends React.Component {
   /* constructor(props) {

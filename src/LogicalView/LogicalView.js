@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Select from '@folio/stripes-components/lib/Select';
+import { connect } from '@folio/stripes-connect';
 import * as C from '../constant';/** utilizziamo C come namespace per tutte le costanti* */
 import css from './LogicalView.css';
 import { remapCodeLongDescription } from '../Utils/Mapper';
@@ -14,7 +15,7 @@ class LogicalView extends React.Component {
       headers: { 'x-okapi-tenant': 'tnx' },
       records: C.API_RESULT_JSON_KEY.LOGICAL_VIEW,
       GET: {
-        params: { lang: 'ita' },
+        params: { lang: C.ENDPOINT.DEFAULT_LANG },
       },
     },
   });
@@ -52,4 +53,4 @@ LogicalView.propTypes = {
   resources: PropTypes.object.isRequired
 };
 
-export default LogicalView;
+export default connect(LogicalView, 'list-view');

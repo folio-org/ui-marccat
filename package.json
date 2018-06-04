@@ -33,7 +33,7 @@
     }
   ],
   "scripts": {
-    "postinstall": "yarn setup:ci",
+    "preinstall": "yarn clean:all",
     "start": "stripes serve config/stripes.config.js",
     "start:vagrant": "stripes serve-vagrant config/stripes.config.js",
     "build": "stripes build --output ./dist/ui-cataloging-build",
@@ -45,20 +45,22 @@
     "setup:ci": ". ./script/ci/setup.sh",
     "prepublish": "mkdir config/json; node node_modules/@folio/stripes-core/util/package2md.js package.json > config/json/ModuleDescriptor.json",
     "publish": "yarn publish;npm publish",
-    "clean:all": "rimraf node_modules/ dist/ .circleci/ config/json"
+    "clean:all": "node script/clean.js"
   },
   "devDependencies": {
     "@folio/eslint-config-stripes": "^1.1.0",
     "babel-eslint": "^8.0.3",
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.1.0",
     "eslint": "^4.8.0",
     "pre-commit": "^1.2.2",
-    "rimraf": "^2.6.2",
-    "commitizen": "^2.9.6",
-    "cz-conventional-changelog": "^2.1.0"
+    "rimraf": "^2.6.2"
   },
   "dependencies": {
     "@folio/stripes-components": "^2.0.0",
     "@folio/stripes-core": "^2.9.0",
+    "@folio/stripes-smart-components": "^1.4.15000179",
+    "classnames": "^2.2.5",
     "dotenv": "^5.0.1",
     "lodash": "^4.17.10",
     "prop-types": "^15.6.0",

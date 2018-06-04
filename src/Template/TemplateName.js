@@ -27,4 +27,4 @@ class TemplateName extends React.Component {
   }
 }
 
-export default connect(TemplateName,'ui-cataloging');
+export default connect(TemplateName, 'ui-cataloging');

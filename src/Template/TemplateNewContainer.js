@@ -7,7 +7,6 @@ import AddTagButton from './Tag/AddTagButton';
 import NewTagContainer from './Tag/NewTagContainer';
 
 class TemplateNewContainer extends React.Component {
-
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
 

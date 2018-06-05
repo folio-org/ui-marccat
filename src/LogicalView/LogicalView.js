@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Select from '@folio/stripes-components/lib/Select';
 import { connect } from '@folio/stripes-connect';
-import * as C from '../constant';
+import * as C from '../Utils/';
 import css from './LogicalView.css';
 import { remapCodeLongDescription } from '../Utils/Mapper';
 

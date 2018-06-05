@@ -6,7 +6,7 @@ ModuleDescriptor.json
 
 ## macos
 *.DS_Store
-
+*.icloud
 ## maven
 target/
 

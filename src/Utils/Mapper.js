@@ -38,13 +38,14 @@ const remapCodeLongDescription = (logicalViews) => {
     : false;
 };
 
-const remapCodeDescription = (jsonObj) => {
-  return (jsonObj.length > 0) ? // verificare che il servizio risponda [] non [{}], altrimenti mettere > 1
-    jsonObj.map(item => ({
-      value: item.code,
-      label: item.description
-    }))
-    : false;
+const remapMultiArray = (multiArray) => {
+  let obj = [];
+  multiArray.forEach((el, index) => {
+    if (multiArray[index]['fixed-field'] !== undefined) {
+      obj.push(multiArray[index]['fixed-field']);
+    }
+  });
+  return obj;
 };
 
-export { arrayToObject, convertValueToLabel, remapCodeLongDescription };
+export { arrayToObject, convertValueToLabel, remapCodeLongDescription, remapMultiArray };

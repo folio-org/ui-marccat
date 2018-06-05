@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types'; // eslint-disable-line no-unused-vars
 import React from 'react';
+import { connect } from '@folio/stripes-connect';
 import Navigator from '../Navigator';
-
 import css from './Cataloging.css';
+import * as C from '../Utils/';
 
 class Cataloging extends React.Component {
   static propTypes = {
@@ -43,4 +44,4 @@ class Cataloging extends React.Component {
   }
 }
 
-export default Cataloging;
+export default connect(Cataloging, C.META.MODULE_NAME);

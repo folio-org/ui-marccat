@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import Route from 'react-router-dom/Route';
-import Switch from 'react-router-dom/Switch';
+import { Route, Switch, Redirect } from './router';
 import Settings from './Settings';
 import Cataloging from './App/Cataloging';
+import NavigatorEmpty from './Navigator';
+import { TemplateView, TemplateNewMandatory, TemplateNewContainer } from './Template/';
 
 class CatalogingRouting extends React.Component {
   static propTypes = {
@@ -16,40 +17,38 @@ class CatalogingRouting extends React.Component {
     showSettings: PropTypes.bool,
   };
 
-
-  constructor(props) {
-    super(props);
-    this.connectedApp = props.stripes.connect(Cataloging);
+  static childContextTypes = {
+    intl: PropTypes.object,
+    locale: PropTypes.string
   }
 
-  NoMatch() {
-    return (
-      <div>
-        <h2>Uh-oh!</h2>
-        <p>
-          How did you get to <tt>{this.props.location.pathname}</tt>?
-        </p>
-      </div>
-    );
+  getChildContext() {
+    return {
+      intl: this.props.stripes.intl,
+      locale: this.props.stripes.locale
+    };
   }
+
 
   render() {
-    if (this.props.showSettings) {
-      return <Settings {...this.props} />;
-    }
-    return (
-      <Switch>
-        <Route
-          path={`${this.props.match.path}`}
-          render={() => <this.connectedApp {...this.props} />}
-        />
-        <Route
-          component={() => {
-            this.NoMatch();
-          }}
-        />
-      </Switch>
-    );
+    let { showSettings, match: { path: rootPath } } = this.props;
+    return showSettings ? (
+      <Settings {...this.props} />
+    ) : (
+      <Route path={rootPath} component={Cataloging}>
+        <Switch>
+          <Route path={`${rootPath}/cataloging/templateList`} exact component={TemplateView} />
+          <Route path={`${rootPath}/cataloging/templateList/:id`} exact component={NavigatorEmpty} />
+          <Route path={`${rootPath}/cataloging/templateList/:id/edit`} exact component={NavigatorEmpty} />
+          <Route path={`${rootPath}/cataloging/templateList/:id/delete`} exact component={NavigatorEmpty} />
+          <Route path={`${rootPath}/cataloging/templateList/create`} exact component={TemplateNewMandatory} />
+          <Route path={`${rootPath}/cataloging/cataloging/simpleSearch`} exact component={NavigatorEmpty} />
+          <Route path={`${rootPath}/cataloging/cataloging/advancedSearch`} exact component={NavigatorEmpty} />
+          <Route path={`${rootPath}/cataloging/cataloging/externalSearch`} exact component={NavigatorEmpty} />
+          <Route render={() => (<Redirect to={`${rootPath}`} />)} />
+        </Switch>
+        </Route>
+      );
   }
 }
 

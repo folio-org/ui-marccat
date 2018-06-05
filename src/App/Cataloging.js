@@ -4,6 +4,8 @@ import Navigator from '../Navigator';
 
 import css from './Cataloging.css';
 
+import css from './Cataloging.css';
+
 class Cataloging extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({

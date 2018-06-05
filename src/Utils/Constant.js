@@ -22,7 +22,8 @@ export const ENDPOINT = {
 export const API_RESULT_JSON_KEY = {
   TEMPLATES: 'recordTemplates',
   LOGICAL_VIEW: 'views',
-  CATEGORIES: 'categories'
+  CATEGORIES: 'categories',
+  FIELDS: 'fields'
 };
 
 export const INITIAL_RESULT_COUNT = 30;

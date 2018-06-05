@@ -7,6 +7,7 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import { TemplateAddButton } from './';
+import Toaster from '../Toaster';
 import * as C from '../Utils';
 
 class TemplateView extends React.Component {
@@ -87,6 +88,9 @@ class TemplateView extends React.Component {
           }}
           rowFormatter={this.anchoredRowFormatter}
         />
+        <div>
+          <Toaster toasts={[{ message: 'an error!', id: 'my-toast-id', type: 'error' }]} />
+        </div>
       </Pane>
     );
   }

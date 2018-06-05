@@ -5,6 +5,7 @@ import { connect } from '@folio/stripes-connect';
 import * as C from '../Utils/';
 import css from './LogicalView.css';
 import { remapCodeLongDescription } from '../Utils/Mapper';
+import CatalogingLoader from '../Loader';
 
 class LogicalView extends React.Component {
   static manifest = Object.freeze({
@@ -20,10 +21,12 @@ class LogicalView extends React.Component {
     },
   });
 
+
   render() {
     const emptySelect =
       <div className={css.root}>
         <label htmlFor={C.LOGICAL_VIEW_SELECT.ID}>{C.LOGICAL_VIEW_SELECT.LABEL}</label>
+        <CatalogingLoader />
         <Select
           id={C.LOGICAL_VIEW_SELECT.ID}
           dataOptions={[C.LOGICAL_VIEW_SELECT.EMPTY_VALUE]}

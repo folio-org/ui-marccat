@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset'; // eslint-disable-line import/no-extraneous-dependencies
+import { connect } from '@folio/stripes-connect';
+import * as C from '../Utils';
+
 import css from './styles/TemplateView.css';
-import AddTagButton from './Tag/AddTagButton';
-import NewTagContainer from './Tag/NewTagContainer';
 
 class TemplateNewContainer extends React.Component {
   render() {
@@ -13,9 +14,7 @@ class TemplateNewContainer extends React.Component {
     return (
       <Paneset static style={css.root}>
         <Pane paneTitle={formatMsg({ id: 'ui-cataloging.templates.title' })}>
-          {/* mandatory fields */}
-          <AddTagButton {...this.props} />
-          <NewTagContainer {...this.props} />
+          <h1>fewfewefwewrewewerwq</h1>,
         </Pane>
       </Paneset>
     );
@@ -29,4 +28,4 @@ TemplateNewContainer.propTypes = {
   }).isRequired
 };
 
-export default TemplateNewContainer;
+export default connect(TemplateNewContainer, C.META.MODULE_NAME);

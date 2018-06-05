@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types'; // eslint-disable-line no-unused-vars
 import React from 'react';
 import Navigator from '../Navigator';
+
+import css from './Cataloging.css';
+
 import css from './Cataloging.css';
 
 class Cataloging extends React.Component {
@@ -35,7 +38,7 @@ class Cataloging extends React.Component {
 
   render() {
     return (
-      <div className={css.cataloging}>
+      <div className={css.root}>
         <Navigator {...this.props} />
       </div>
     );

@@ -9,6 +9,7 @@ import Route from 'react-router-dom/Route';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { AccordionSet, Accordion } from '@folio/stripes-components/lib/Accordion';
+import Icon from '@folio/stripes-components/lib/Icon';
 import NavigatorEmpty from './NavigatorEmpty';
 import { TemplateView, TemplateNewMandatory, TemplateNewContainer } from '../Template/';
 import { LogicalView } from '../LogicalView/';
@@ -32,6 +33,11 @@ class Navigator extends React.Component {
               <Accordion label={formatMsg({ id: 'ui-cataloging.navigator.template' })} id="ex-1">
                 <NavListSection activeLink="/active-link-here">
                   <NavListItem to="/cataloging/templateList">
+                    <Icon
+                      icon="archive"
+                      size="small"
+                      iconClassName="myClass"
+                    />
                     <FormattedMessage id="ui-cataloging.navigator.templateList" />
                   </NavListItem>
                 </NavListSection>
@@ -40,12 +46,27 @@ class Navigator extends React.Component {
               <Accordion label={formatMsg({ id: 'ui-cataloging.navigator.search' })} id="ex-2">
                 <NavListSection activeLink="/active-link-here">
                   <NavListItem to="/cataloging/simpleSearch">
+                    <Icon
+                      icon="search"
+                      size="small"
+                      iconClassName="myClass"
+                    />
                     <FormattedMessage id="ui-cataloging.navigator.simpleSearch" />
                   </NavListItem>
                   <NavListItem to="/cataloging/advancedSearch">
+                    <Icon
+                      icon="search"
+                      size="small"
+                      iconClassName="myClass"
+                    />
                     <FormattedMessage id="ui-cataloging.navigator.advancedSearch" />
                   </NavListItem>
                   <NavListItem to="/cataloging/externalSearch">
+                    <Icon
+                      icon="search"
+                      size="small"
+                      iconClassName="myClass"
+                    />
                     <FormattedMessage id="ui-cataloging.navigator.externalSearch" />
                   </NavListItem>
                 </NavListSection>

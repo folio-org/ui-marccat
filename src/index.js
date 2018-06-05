@@ -4,13 +4,14 @@ import { Route, Switch, Redirect } from './router';
 import Settings from './Settings';
 import Cataloging from './App/Cataloging';
 import NavigatorEmpty from './Navigator';
-import { TemplateView, TemplateNewMandatory, TemplateNewContainer } from './Template/';
+import { TemplateView, TemplateNewMandatory } from './Template/';
 
 class CatalogingRouting extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
       intl: PropTypes.object.isRequired,
+      locale: PropTypes.object.isRequired
     }).isRequired,
     location: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
@@ -47,8 +48,8 @@ class CatalogingRouting extends React.Component {
           <Route path={`${rootPath}/cataloging/cataloging/externalSearch`} exact component={NavigatorEmpty} />
           <Route render={() => (<Redirect to={`${rootPath}`} />)} />
         </Switch>
-        </Route>
-      );
+      </Route>
+    );
   }
 }
 

@@ -81,7 +81,7 @@ class Navigator extends React.Component {
           <Route path="/cataloging/simpleSearch" >
             <TemplateNewMandatory {...this.props} id="template_view_link" />
           </Route>
-          <Route path="/cataloging/template/new">
+          <Route path="/cataloging/template/create">
             <TemplateNewContainer {...this.props} />
           </Route>
           <Route path="/cataloging/advancedSearch" >

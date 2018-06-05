@@ -4,26 +4,22 @@ import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import { connect } from '@folio/stripes-connect';
 import Pane from '@folio/stripes-components/lib/Pane';
-import {
-  ENDPOINT,
-  RESOURCE_TYPE,
-  INITIAL_RESULT_COUNT,
-} from '../Utils';
 import { remapMultiArray } from '../Utils/Mapper';
+import * as C from '../Utils';
 
 
 class TemplateNewMandatory extends React.Component {
   static manifest = Object.freeze({
     query: { initialValue: {} },
-    resultCount: { initialValue: INITIAL_RESULT_COUNT },
+    resultCount: { initialValue: C.INITIAL_RESULT_COUNT },
     records: {
-      type: RESOURCE_TYPE,
-      root: ENDPOINT.BASE_URL,
-      path: ENDPOINT.TEMPLATE_MANDATORY,
-      headers: { 'x-okapi-tenant': 'tnx' },
-      records: 'fields',
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      path: C.ENDPOINT.TEMPLATE_MANDATORY,
+      headers: C.ENDPOINT.HEADER,
+      records: C.API_RESULT_JSON_KEY.FIELDS,
       GET: {
-        params: { lang: ENDPOINT.DEFAULT_LANG },
+        params: { lang: C.ENDPOINT.DEFAULT_LANG },
       },
     }
   });
@@ -40,7 +36,7 @@ class TemplateNewMandatory extends React.Component {
       <Paneset static>
         <Pane paneTitle={formatMsg({ id: 'ui-cataloging.templates.title' })}>
           <MultiColumnList
-            id="fields"
+            id={C.API_RESULT_JSON_KEY.FIELDS}
             contentData={obj}
             onRowClick={() => { }}
             visibleColumns={['categoryCode', 'headerTypeCode', 'code', 'displayValue', 'description']}
@@ -59,4 +55,4 @@ TemplateNewMandatory.propTypes = {
   }).isRequired
 };
 
-export default connect(TemplateNewMandatory, 'ui.cataloging');
+export default connect(TemplateNewMandatory, C.META.MODULE_NAME);

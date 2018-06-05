@@ -5,6 +5,7 @@ import { connect } from '@folio/stripes-connect';
 import * as C from '../Utils/';
 import css from './LogicalView.css';
 import { remapCodeLongDescription } from '../Utils/Mapper';
+import CatalogingLoader from '../Loader';
 
 class LogicalView extends React.Component {
   static manifest = Object.freeze({
@@ -15,15 +16,17 @@ class LogicalView extends React.Component {
       headers: { 'x-okapi-tenant': 'tnx' },
       records: C.API_RESULT_JSON_KEY.LOGICAL_VIEW,
       GET: {
-        params: { lang: 'ita' },
+        params: { lang: C.ENDPOINT.DEFAULT_LANG },
       },
     },
   });
+
 
   render() {
     const emptySelect =
       <div className={css.root}>
         <label htmlFor={C.LOGICAL_VIEW_SELECT.ID}>{C.LOGICAL_VIEW_SELECT.LABEL}</label>
+        <CatalogingLoader />
         <Select
           id={C.LOGICAL_VIEW_SELECT.ID}
           dataOptions={[C.LOGICAL_VIEW_SELECT.EMPTY_VALUE]}
@@ -53,4 +56,4 @@ LogicalView.propTypes = {
   resources: PropTypes.object.isRequired
 };
 
-export default connect(LogicalView, 'ui-cataloging');
+export default connect(LogicalView, C.META.MODULE_NAME);

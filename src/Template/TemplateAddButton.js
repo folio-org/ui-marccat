@@ -24,7 +24,7 @@ class TemplateAddButton extends React.Component {
     };
     return (
       <div style={root}>
-        <Link to="/cataloging/template/new">
+        <Link to="/cataloging/template/create">
           <Button style={style}>
             <FormattedMessage id="ui-cataloging.button.new" />
           </Button>

@@ -46,7 +46,7 @@ class TemplateView extends React.Component {
       <PaneMenu>
         <IconButton key="icon-comment" icon="comment" />
         <IconButton key="icon-edit" icon="edit" />
-        <IconButton key="icon-edit" icon="profile" />
+        <IconButton key="icon-profile" icon="profile" />
       </PaneMenu>
     );
 

@@ -38,5 +38,14 @@ const remapCodeLongDescription = (logicalViews) => {
     : false;
 };
 
+const remapMultiArray = (multiArray) => {
+  let obj = [];
+  multiArray.forEach((el, index) => {
+    if (multiArray[index]['fixed-field'] !== undefined) {
+      obj.push(multiArray[index]['fixed-field']);
+    }
+  });
+  return obj;
+};
 
-export { arrayToObject, convertValueToLabel, remapCodeLongDescription };
+export { arrayToObject, convertValueToLabel, remapCodeLongDescription, remapMultiArray };

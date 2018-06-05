@@ -8,7 +8,7 @@ import {
   ENDPOINT,
   RESOURCE_TYPE,
   INITIAL_RESULT_COUNT,
-} from '../constant';
+} from '../Utils';
 import { remapMultiArray } from '../Utils/Mapper';
 
 

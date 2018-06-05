@@ -10,9 +10,7 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import NavigatorEmpty from './NavigatorEmpty';
-import { TemplateView } from '../Template/'; // eslint-disable-line import/no-duplicates
-import { TemplateNewMandatory } from '../Template/';// eslint-disable-line import/no-duplicates
-
+import { TemplateView, TemplateNewMandatory } from '../Template/';
 import { LogicalView } from '../LogicalView/';
 
 class Navigator extends React.Component {
@@ -53,13 +51,13 @@ class Navigator extends React.Component {
         </Pane>
         <Switch>
           <Route path="/cataloging/templateList">
-            <TemplateView {...this.props} id="template_view_link" /> {/* eslint-disable-line react/jsx-no-undef */}
+            <TemplateView {...this.props} id="template_view_link" />
           </Route>
           <Route path="/cataloging/simpleSearch" >
-            <NavigatorEmpty {...this.props} id="empty_container" />
+            <TemplateNewMandatory {...this.props} id="template_view_link" />
           </Route>
           <Route path="/cataloging/advancedSearch" >
-            <TemplateNewMandatory {...this.props} id="empty_container" />
+            <NavigatorEmpty {...this.props} id="empty_container" />
           </Route>
           <Route path="/cataloging/externalSearch" >
             <NavigatorEmpty {...this.props} id="empty_container" />

@@ -1,5 +1,5 @@
 import React from 'react';
-import * as C from '../../constant';
+import * as C from '../../Utils';
 
 class NewTagContainer extends React.Component {
     static manifest = Object.freeze({

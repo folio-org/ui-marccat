@@ -3,13 +3,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import Pane from '@folio/stripes-components/lib/Pane';
-import Paneset from '@folio/stripes-components/lib/Paneset'; // eslint-disable-line import/no-extraneous-dependencies
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import { connect } from '@folio/stripes-connect';
-import * as C from '../constant';
-import css from './styles/TemplateView.css';
-import CatalogingLoader from '../Loader';
+import * as C from '../Utils';
 
 class TemplateView extends React.Component {
   static manifest = Object.freeze({
@@ -72,31 +69,28 @@ class TemplateView extends React.Component {
     ];
 
     return (
-      <Paneset static style={css.root}>
-        <Pane
-          actionMenuItems={actionMenuItems}
-          firstMenu={searchMenu}
-          lastMenu={lastMenu}
-          defaultWidth="fill"
-          paneTitle={formatMsg({ id: 'ui-cataloging.templates.title' })}
-          paneSub={recordsTemplates.records.length + ' result found'}
-          appIcon={{ app: 'cataloging' }}
-        >
-          <MultiColumnList
-            id="list-templates"
-            contentData={templates}
-            rowMetadata={['id', 'id']}
-            formatter={formatter}
-            visibleColumns={['id', 'name']}
-            ariaLabel="TemplateView"
-            containerRef={ref => {
+      <Pane
+        actionMenuItems={actionMenuItems}
+        firstMenu={searchMenu}
+        lastMenu={lastMenu}
+        defaultWidth="fill"
+        paneTitle={formatMsg({ id: 'ui-cataloging.templates.title' })}
+        paneSub={recordsTemplates.records.length + ' result found'}
+        appIcon={{ app: 'cataloging' }}
+      >
+        <MultiColumnList
+          id="list-templates"
+          contentData={templates}
+          rowMetadata={['id', 'id']}
+          formatter={formatter}
+          visibleColumns={['id', 'name']}
+          ariaLabel="TemplateView"
+          containerRef={ref => {
               this.resultsList = ref;
             }}
-            rowFormatter={this.anchoredRowFormatter}
-          />
-          <CatalogingLoader />
-        </Pane>
-      </Paneset>
+          rowFormatter={this.anchoredRowFormatter}
+        />
+      </Pane>
     );
   }
 }

@@ -48,7 +48,6 @@ class CatalogingRouting extends React.Component {
             this.NoMatch();
           }}
         />
-        <div>hhhh</div>
       </Switch>
     );
   }

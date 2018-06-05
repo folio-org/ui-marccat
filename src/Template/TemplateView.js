@@ -6,6 +6,7 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import { connect } from '@folio/stripes-connect';
+import { TemplateAddButton } from './';
 import * as C from '../Utils';
 
 class TemplateView extends React.Component {
@@ -16,7 +17,7 @@ class TemplateView extends React.Component {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
       path: C.ENDPOINT.TEMPLATE_URL,
-      headers: { 'x-okapi-tenant': 'tnx' },
+      headers: C.ENDPOINT.HEADER,
       records: C.API_RESULT_JSON_KEY.TEMPLATES,
       GET: {
         params: { lang: 'ita', type: 'B' },
@@ -43,11 +44,7 @@ class TemplateView extends React.Component {
     );
 
     const lastMenu = (
-      <PaneMenu>
-        <IconButton key="icon-comment" icon="comment" />
-        <IconButton key="icon-edit" icon="edit" />
-        <IconButton key="icon-profile" icon="profile" />
-      </PaneMenu>
+      <TemplateAddButton />
     );
 
 
@@ -55,7 +52,7 @@ class TemplateView extends React.Component {
       {
         label: 'New',
         onClick: () => {
-        // console.log('click!');
+          // console.log('click!');
         },
       },
       {
@@ -86,8 +83,8 @@ class TemplateView extends React.Component {
           visibleColumns={['id', 'name']}
           ariaLabel="TemplateView"
           containerRef={ref => {
-              this.resultsList = ref;
-            }}
+            this.resultsList = ref;
+          }}
           rowFormatter={this.anchoredRowFormatter}
         />
       </Pane>

@@ -1,10 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Select from '@folio/stripes-components/lib/Select';
-import { connect } from '@folio/stripes-connect';
 import * as C from '../../Utils';
-import { remapCodeLongDescription } from '../../Utils/Mapper';
-import css from './Tag.css';
 
 class AddTagButton extends React.Component {
   static manifest = Object.freeze({
@@ -23,35 +18,10 @@ class AddTagButton extends React.Component {
   });
 
   render() {
-    const emptySelect =
-      <div className={css.root}>
-        <label htmlFor={C.LOGICAL_VIEW_SELECT.ID}>{C.LOGICAL_VIEW_SELECT.LABEL}</label>
-        <Select
-          id={C.LOGICAL_VIEW_SELECT.ID}
-          dataOptions={[C.LOGICAL_VIEW_SELECT.EMPTY_VALUE]}
-          value={C.LOGICAL_VIEW_SELECT.INITIAL_VALUE}
-          onChange={() => {}}
-        />
-      </div>;
-    const { resources: { records } } = this.props;
-    if (!records || !records.hasLoaded) return emptySelect;
-    const categories = records.records;
     return (
-      <div className={css.root}>
-        <label htmlFor={C.CATEGORY_SELECT.ID}>Categories</label>
-        <Select
-          id={C.CATEGORY_SELECT.ID}
-          dataOptions={(!records.records) ? emptySelect : remapCodeLongDescription(categories)}
-          value={C.CATEGORY_SELECT.INITIAL_VALUE}
-          onChange={() => {}}
-        />
-      </div>
+      <div />
     );
   }
 }
 
-AddTagButton.propTypes = {
-  resources: PropTypes.object.isRequired
-};
-
-export default connect(AddTagButton, 'template-add-tag');
+export default AddTagButton;

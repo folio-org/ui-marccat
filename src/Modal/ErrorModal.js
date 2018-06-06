@@ -12,14 +12,14 @@ class ErrorModal extends React.Component {
     open: PropTypes.bool,
     onClose: PropTypes.func,
     message: PropTypes.string,
+    type: PropTypes.bool,
   };
 
   render() {
-    const { open, message, onClose } = this.props;
+    const { open, message, onClose, type } = this.props;
     const { translate } = this.context;
-
     return (
-      <Modal onClose={onClose} open={open} size="small" label={translate('itemNotCheckedOut')} dismissible>
+      <Modal onClose={onClose} open={open} data-type={type} size="small" label={translate('itemNotCheckedOut')} dismissible>
         <p>{message}</p>
         <Button onClick={onClose}>{translate('okay')}</Button>
       </Modal>

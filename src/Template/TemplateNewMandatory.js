@@ -1,18 +1,30 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
-import Paneset from '@folio/stripes-components/lib/Paneset';
 import Icon from '@folio/stripes-components/lib/Icon';
 import { connect } from '@folio/stripes-connect';
-import Pane from '@folio/stripes-components/lib/Pane';
-import Button from '@folio/stripes-components/lib/Pane';
 import { remapMultiArray } from '../Utils/Mapper';
 import NewTemplateForm from './form/NewTemplateForm';
 import * as C from '../Utils';
-import Link from 'react-router-dom/Link';
-import css from './styles/TemplateView.css';
 
 class TemplateNewMandatory extends React.Component {
+  static propTypes = {
+    stripes: PropTypes.shape({ // eslint-disable-line react/no-unused-prop-types
+      connect: PropTypes.func.isRequired,
+      intl: PropTypes.object.isRequired,
+    }).isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        id: PropTypes.string.isRequired
+      }).isRequired
+    }).isRequired,
+    router: PropTypes.shape({// eslint-disable-line react/no-unused-prop-types
+      history: PropTypes.shape({
+        replace: PropTypes.func.isRequired
+      }).isRequired
+    }).isRequired
+  };
+
   static manifest = Object.freeze({
     query: { initialValue: {} },
     resultCount: { initialValue: C.INITIAL_RESULT_COUNT },
@@ -35,6 +47,7 @@ class TemplateNewMandatory extends React.Component {
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
+
 
     const { resources: { records } } = this.props; // eslint-disable-line react/prop-types
     if (!records || !records.hasLoaded) return <div />;
@@ -64,6 +77,5 @@ class TemplateNewMandatory extends React.Component {
     );
   }
 }
-
 
 export default connect(TemplateNewMandatory, C.META.MODULE_NAME);

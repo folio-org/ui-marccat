@@ -11,15 +11,10 @@ import Toaster from '../Toaster';
 import * as C from '../Utils';
 
 class TemplateView extends React.Component {
-  static propTypes = {
+  static propTypes = {// eslint-disable-line react/no-unused-prop-types
     stripes: PropTypes.shape({ // eslint-disable-line react/no-unused-prop-types
       connect: PropTypes.func.isRequired,
       intl: PropTypes.object.isRequired,
-    }).isRequired,
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        id: PropTypes.string.isRequired
-      }).isRequired
     }).isRequired,
     router: PropTypes.shape({// eslint-disable-line react/no-unused-prop-types
       history: PropTypes.shape({
@@ -112,6 +107,5 @@ class TemplateView extends React.Component {
     );
   }
 }
-
 
 export default connect(TemplateView, C.META.MODULE_NAME);

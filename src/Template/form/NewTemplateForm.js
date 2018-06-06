@@ -1,30 +1,17 @@
-import _ from 'lodash';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-import Paneset from '@folio/stripes-components/lib/Paneset';
-import Pane from '@folio/stripes-components/lib/Pane';
-import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
-import Button from '@folio/stripes-components/lib/Button';
-import IconButton from '@folio/stripes-components/lib/IconButton';
 import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
 import RadioButton from '@folio/stripes-components/lib/RadioButton';
-import { Field, reduxForm, reset, getFormSubmitErrors } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import TextField from '@folio/stripes-components/lib/TextField';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import * as C from '../../Utils';
-import { ErrorModal } from '../../Modal';
 
 class NewTemplateForm extends React.Component {
-  static propTypes = {
-    stripes: PropTypes.shape({
+  static propTypes = { // eslint-disable-line react/no-unused-prop-types
+    stripes: PropTypes.shape({ // eslint-disable-line react/no-unused-prop-types
       intl: PropTypes.object.isRequired,
     }).isRequired,
   };
-
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (

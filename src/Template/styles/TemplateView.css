@@ -1,7 +1,8 @@
 /* TemplateView */
 .root {
- 
+  background-color: darkgrey;
 }
+
 .form {
-  background-color: darkgrey
+  background-color: darkgrey;
 }

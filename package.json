@@ -49,11 +49,8 @@
   "devDependencies": {
     "@folio/eslint-config-stripes": "^1.1.0",
     "babel-eslint": "^8.0.3",
-    "commitizen": "^2.9.6",
-    "cz-conventional-changelog": "^2.1.0",
     "eslint": "^4.8.0",
-    "pre-commit": "^1.2.2",
-    "rimraf": "^2.6.2"
+    "pre-commit": "^1.2.2"
   },
   "dependencies": {
     "@folio/stripes-components": "^2.0.0",
@@ -62,11 +59,11 @@
     "@folio/stripes-smart-components": "^1.4.15000179",
     "classnames": "^2.2.5",
     "dotenv": "^5.0.1",
+    "font-awesome": "^4.7.0",
     "lodash": "^4.17.10",
     "prop-types": "^15.6.0",
     "react-intl": "^2.4.0",
     "react-router-dom": "^4.1.1",
-    "redux-devtools": "^3.4.1",
     "stylelint": "^9.2.1",
     "stylelint-config-standard": "^18.2.0"
   },
@@ -75,16 +72,6 @@
   },
   "pre-commit": {
     "run": "lint, stylelint"
-  },
-  "config": {
-    "ghooks": {
-      "commit-msg": "validate-commit-msg",
-      "post-merge": "clean:all && yarn install",
-      "post-rewrite": "yarn install"
-    },
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   },
   "stripes": {
     "type": "app",

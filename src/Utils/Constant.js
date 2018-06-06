@@ -6,7 +6,7 @@ export const META = {
   // API
 export const RESOURCE_TYPE = 'rest';
 export const ENDPOINT = {
-  HEADER: {
+  HEADERS: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
     'x-okapi-tenant': 'tnx'

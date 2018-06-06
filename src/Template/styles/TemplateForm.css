@@ -1,0 +1,12 @@
+@import '../../Theme/variables.css';
+
+.radiobutton #input-radio {
+  margin-top: 10px;
+}
+
+.multilist {
+  padding-top: '30px';
+  padding-bottom: '30px';
+  width: '100%';
+  height: '100%';
+}

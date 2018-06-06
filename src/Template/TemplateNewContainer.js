@@ -6,7 +6,7 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import { connect } from '@folio/stripes-connect';
 import * as C from '../Utils';
-
+import TemplateNewMandatory from './TemplateNewMandatory';
 import css from './styles/TemplateView.css';
 
 class TemplateNewContainer extends React.Component {
@@ -34,7 +34,9 @@ class TemplateNewContainer extends React.Component {
           defaultWidth="fill"
           paneTitle={formatMsg({ id: 'ui-cataloging.template.create' })}
           appIcon={{ app: 'cataloging' }}
-        />
+        >
+          <TemplateNewMandatory {...this.props} />
+        </Pane>
       </Paneset>
     );
   }

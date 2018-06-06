@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'; // eslint-disable-line no-unused-vars
 import React from 'react';
 import { connect } from '@folio/stripes-connect';
-import Navigator from '../Navigator';
+import { Navigator } from '../Navigator';
 import css from './Cataloging.css';
 import * as C from '../Utils/';
 
@@ -28,11 +28,6 @@ class Cataloging extends React.Component {
   static manifest = Object.freeze({
     query: { initialValue: {} }
   });
-
-  constructor(props) {
-    super(props);
-    this.store = props.stripes.store;
-  }
 
 
   render() {

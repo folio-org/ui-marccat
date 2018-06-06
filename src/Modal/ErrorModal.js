@@ -12,10 +12,11 @@ class ErrorModal extends React.Component {
     open: PropTypes.bool,
     onClose: PropTypes.func,
     message: PropTypes.string,
+    type: PropTypes.bool,
   };
 
   render() {
-    const { open, message, onClose } = this.props;
+    const { open, message, onClose, type } = this.props;
     const { translate } = this.context;
 
     return (

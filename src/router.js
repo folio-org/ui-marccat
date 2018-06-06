@@ -1,44 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route as RouterRoute } from 'react-router-dom';
+import { WrapRouter, Route, Switch, Redirect } from './wraprouter';
+import Settings from './Settings';
+import Cataloging from './App';
+import NavigatorEmpty from './Navigator/NavigatorEmpty';
+import { TemplateView, TemplateNewMandatory } from './Template/';
 
-export { Switch, Redirect } from 'react-router-dom';
+class Router extends React.Component {
+  constructor(props, context) {
+    super(props);
+    this.context = context;
+    const stripes = context.stripes;
+  }
 
-/**
- * Pass the children of a Route to the component that is responsible for rendering it.
- * This allows us to have a single route hierarchy, where the routing
- * components are responsible for marshalling data, and providing high
- * level layout:
- *
- *   // routes.js
- *   <Route component={ParentRoute}>
- *     <Route component={ChildRoute}/>
- *   </Route>
- *
- *   //parent-route.js
- *   import Layout from './layout';
- *   export default class ParentRoute extends Component {
- *     render() {
- *       return (<Layout>{children}</Layout>);
- *     }
- *   }
- *
- * will take all of the children of the top level `Route` component,
- * and pass them as the children of the `ParentRoute` component.
- */
-export function Route({ component: Component, children, ...props }) {
-  // we currently always provide a component
-  /* istanbul ignore else */
-  if (Component) {
-    return (
-      <RouterRoute {...props} render={props => (<Component {...props}>{children}</Component>)} /> // eslint-disable-line no-shadow
-    );
-  } else {
-    return (<RouterRoute {...props}>{children}</RouterRoute>);
+  render() {
+    const rootPath = 'http://localhost:3000/cataloging';
+      <WrapRouter path={`${rootPath}`} component={Cataloging}>
+        <Switch>
+          <Route path={`${rootPath}/templateList`} exact component={TemplateView} />
+          <Route path={`${rootPath}/templateList/:id`} exact component={NavigatorEmpty} />
+          <Route path={`${rootPath}/templateList/:id/edit`} exact component={NavigatorEmpty} />
+          <Route path={`${rootPath}/templateList/:id/delete`} exact component={NavigatorEmpty} />
+          <Route path={`${rootPath}/templateList/create`} exact component={TemplateNewMandatory} />
+          <Route path={`${rootPath}/simpleSearch`} exact component={NavigatorEmpty} />
+          <Route path={`${rootPath}/advancedSearch`} exact component={NavigatorEmpty} />
+          <Route path={`${rootPath}/externalSearch`} exact component={NavigatorEmpty} />
+          <Route render={() => (<Redirect to={`${rootPath}`} />)} />
+        </Switch>
+      </WrapRouter>;
   }
 }
 
-Route.propTypes = {
-  component: PropTypes.func,
-  children: PropTypes.node
-};
+export default Router;

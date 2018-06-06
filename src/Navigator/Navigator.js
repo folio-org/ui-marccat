@@ -54,16 +54,11 @@ class Navigator extends React.Component {
                     <FormattedMessage id="ui-cataloging.navigator.templateList" />
                   </NavListItem>
                 </NavListSection>
-                <br />
               </Accordion>
               <Accordion label={formatMsg({ id: 'ui-cataloging.navigator.search' })} id="ex-2">
                 <NavListSection activeLink="/active-link-here">
                   <NavListItem to="/cataloging/simpleSearch">
-                    <Icon
-                      icon="search"
-                      size="small"
-                      iconClassName="myClass"
-                    />
+
                     <FormattedMessage id="ui-cataloging.navigator.simpleSearch" />
                   </NavListItem>
                   <NavListItem to="/cataloging/advancedSearch">
@@ -87,6 +82,8 @@ class Navigator extends React.Component {
             </AccordionSet>
           </NavList>
         </Pane>}
+
+
         <Switch>
           <Route path="/cataloging/templateList">
             <TemplateView {...this.props} id="template_view_link" />

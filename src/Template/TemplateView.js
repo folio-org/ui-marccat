@@ -11,6 +11,23 @@ import Toaster from '../Toaster';
 import * as C from '../Utils';
 
 class TemplateView extends React.Component {
+  static propTypes = {
+    stripes: PropTypes.shape({ // eslint-disable-line react/no-unused-prop-types
+      connect: PropTypes.func.isRequired,
+      intl: PropTypes.object.isRequired,
+    }).isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        id: PropTypes.string.isRequired
+      }).isRequired
+    }).isRequired,
+    router: PropTypes.shape({// eslint-disable-line react/no-unused-prop-types
+      history: PropTypes.shape({
+        replace: PropTypes.func.isRequired
+      }).isRequired
+    }).isRequired
+  };
+
   static manifest = Object.freeze({
     query: { initialValue: {} },
     resultCount: { initialValue: C.INITIAL_RESULT_COUNT },
@@ -96,11 +113,5 @@ class TemplateView extends React.Component {
   }
 }
 
-TemplateView.propTypes = {
-  stripes: PropTypes.shape({ // eslint-disable-line react/no-unused-prop-types
-    connect: PropTypes.func.isRequired,
-    intl: PropTypes.object.isRequired,
-  }).isRequired
-};
 
 export default connect(TemplateView, C.META.MODULE_NAME);

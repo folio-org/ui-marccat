@@ -3,8 +3,10 @@ import IconButton from '@folio/stripes-components/lib/IconButton';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
+import { connect } from '@folio/stripes-connect';
 import css from './Navigator.css';
 import CatalogingLoader from '../Loader';
+import * as C from '../Utils';
 
 class NavigatorEmpty extends React.Component {
   render() {
@@ -42,4 +44,4 @@ class NavigatorEmpty extends React.Component {
 }
 
 
-export default NavigatorEmpty;
+export default connect(NavigatorEmpty, C.META.MODULE_NAME);

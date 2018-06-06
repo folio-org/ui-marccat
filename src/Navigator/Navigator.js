@@ -21,12 +21,25 @@ class Navigator extends React.Component {
     }).isRequired,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      navigatorFixed: true,
+    };
+  }
+
+  handleClose() {
+    this.setState({ navigatorFixed: false });
+  }
+
+
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
 
     return (
       <Paneset>
-        <Pane dismissible onClose={(() => {})} defaultWidth="20%" paneTitle={formatMsg({ id: 'ui-cataloging.navigator.title' })}>
+        {this.state.navigatorFixed &&
+        <Pane dismissible onClose={this.handleClose} defaultWidth="20%" paneTitle={formatMsg({ id: 'ui-cataloging.navigator.title' })}>
           <LogicalView {...this.props} id="logical_view_link" />
           <NavList>
             <AccordionSet>
@@ -41,16 +54,11 @@ class Navigator extends React.Component {
                     <FormattedMessage id="ui-cataloging.navigator.templateList" />
                   </NavListItem>
                 </NavListSection>
-                <br />
               </Accordion>
               <Accordion label={formatMsg({ id: 'ui-cataloging.navigator.search' })} id="ex-2">
                 <NavListSection activeLink="/active-link-here">
                   <NavListItem to="/cataloging/simpleSearch">
-                    <Icon
-                      icon="search"
-                      size="small"
-                      iconClassName="myClass"
-                    />
+
                     <FormattedMessage id="ui-cataloging.navigator.simpleSearch" />
                   </NavListItem>
                   <NavListItem to="/cataloging/advancedSearch">
@@ -73,7 +81,9 @@ class Navigator extends React.Component {
               </Accordion>
             </AccordionSet>
           </NavList>
-        </Pane>
+        </Pane>}
+
+
         <Switch>
           <Route path="/cataloging/templateList">
             <TemplateView {...this.props} id="template_view_link" />

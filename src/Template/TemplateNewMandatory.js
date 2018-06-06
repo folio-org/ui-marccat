@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
-import Icon from '@folio/stripes-components/lib/Icon';
 import { connect } from '@folio/stripes-connect';
 import { remapMultiArray } from '../Utils/Mapper';
-import NewTemplateForm from './form/NewTemplateForm';
+import { TemplateForm } from './';
 import * as C from '../Utils';
+
+import css from './styles/TemplateView.css';
 
 class TemplateNewMandatory extends React.Component {
   static propTypes = {
@@ -22,7 +22,7 @@ class TemplateNewMandatory extends React.Component {
       history: PropTypes.shape({
         replace: PropTypes.func.isRequired
       }).isRequired
-    }).isRequired
+    }).isRequired,
   };
 
   static manifest = Object.freeze({
@@ -32,7 +32,7 @@ class TemplateNewMandatory extends React.Component {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
       path: C.ENDPOINT.TEMPLATE_MANDATORY,
-      headers: C.ENDPOINT.HEADER,
+      headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.FIELDS,
       GET: {
         params: { lang: C.ENDPOINT.DEFAULT_LANG },
@@ -40,39 +40,15 @@ class TemplateNewMandatory extends React.Component {
     }
   });
 
-  constructor(props) {
-    super(props);
-    this.state = { loading: true };
-  }
-
   render() {
-    const formatMsg = this.props.stripes.intl.formatMessage;
-
-
     const { resources: { records } } = this.props; // eslint-disable-line react/prop-types
     if (!records || !records.hasLoaded) return <div />;
     const fields = records.records;
     let obj = remapMultiArray(fields);
 
-    const style = {
-      marginTop: '30px',
-      width: '100%',
-      height: '100%',
-    };
-
     return (
-      <div >
-        <NewTemplateForm {...this.props} />
-        <div style={style}>
-          <MultiColumnList
-            id={C.API_RESULT_JSON_KEY.FIELDS}
-            contentData={obj}
-            onRowClick={() => { }}
-            visibleColumns={['categoryCode', 'headerTypeCode', 'code', 'displayValue', 'description']}
-            ariaLabel="TemplateNewMandatory"
-          />
-        </div>
-        {this.state.loading && <Icon icon="spinner-ellipsis" width="10px" />}
+      <div className={css.form}>
+        <TemplateForm {...this.props} field={obj} />
       </div>
     );
   }

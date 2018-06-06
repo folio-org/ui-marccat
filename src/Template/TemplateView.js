@@ -6,21 +6,16 @@ import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
-import { TemplateAddButton } from './';
+import { AddTemplate } from './';
 import Toaster from '../Toaster';
 import * as C from '../Utils';
 
 class TemplateView extends React.Component {
   static propTypes = {// eslint-disable-line react/no-unused-prop-types
     stripes: PropTypes.shape({ // eslint-disable-line react/no-unused-prop-types
-      connect: PropTypes.func.isRequired,
-      intl: PropTypes.object.isRequired,
-    }).isRequired,
-    router: PropTypes.shape({// eslint-disable-line react/no-unused-prop-types
-      history: PropTypes.shape({
-        replace: PropTypes.func.isRequired
-      }).isRequired
-    }).isRequired
+      connect: PropTypes.func,
+      intl: PropTypes.object,
+    })
   };
 
   static manifest = Object.freeze({
@@ -30,7 +25,7 @@ class TemplateView extends React.Component {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
       path: C.ENDPOINT.TEMPLATE_URL,
-      headers: C.ENDPOINT.HEADER,
+      headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.TEMPLATES,
       GET: {
         params: { lang: 'ita', type: 'B' },
@@ -38,6 +33,18 @@ class TemplateView extends React.Component {
     }
   });
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      showToaster: false
+    };
+  }
+
+  showToaster(message) { // eslint-disable-line   no-unused-vars
+    this.setState({
+      showToaster: true
+    });
+  }
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
@@ -57,7 +64,7 @@ class TemplateView extends React.Component {
     );
 
     const lastMenu = (
-      <TemplateAddButton />
+      <AddTemplate />
     );
 
 
@@ -100,9 +107,9 @@ class TemplateView extends React.Component {
           }}
           rowFormatter={this.anchoredRowFormatter}
         />
-        <div>
+        {this.state.showToaster &&
           <Toaster toasts={[{ message: 'an error!', id: 'my-toast-id', type: 'error' }]} />
-        </div>
+        }
       </Pane>
     );
   }

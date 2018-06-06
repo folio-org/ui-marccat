@@ -13,7 +13,7 @@ class CatalogingRouting extends React.Component {
     }).isRequired,
     location: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
-    showSettings: PropTypes.bool,
+    showSettings: PropTypes.bool
   };
 
 
@@ -34,7 +34,10 @@ class CatalogingRouting extends React.Component {
   }
 
   render() {
-    if (this.props.showSettings) {
+    let {
+      showSettings
+    } = this.props;
+    if (showSettings) {
       return <Settings {...this.props} />;
     }
     return (

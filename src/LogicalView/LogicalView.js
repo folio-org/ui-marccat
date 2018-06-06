@@ -13,7 +13,7 @@ class LogicalView extends React.Component {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
       path: C.ENDPOINT.LOGICAL_VIEW_URL,
-      headers: { 'x-okapi-tenant': 'tnx' },
+      headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.LOGICAL_VIEW,
       GET: {
         params: { lang: C.ENDPOINT.DEFAULT_LANG },

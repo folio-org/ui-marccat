@@ -20,9 +20,15 @@
 
   "button.new": "+ New",
   "button.new.tag": "+ Tag",
+  "button.backto": "Close",
   "templates.title": "Bibliographic templates",
   "template.column.id": "Id",
   "template.column.name": "Name",
-  "template.create":"Create Template"
+  "template.create":"Create Template",
+
+  "template.form.name":"Name",
+  "template.form.code":"Code",
+  "template.form.primary.address":"Primary Address",
+  "template.form.secondary.address":"Secondary Address"
 
 }

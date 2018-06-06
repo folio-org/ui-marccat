@@ -10,13 +10,6 @@ import TemplateNewMandatory from './TemplateNewMandatory';
 import css from './styles/TemplateView.css';
 
 class TemplateNewContainer extends React.Component {
-  announce() {
-    this.callout.sendCallout({
-      type: 'success',
-      message: (<span><strong>Hey!!</strong> This is a <strong>callout!</strong></span>)
-    });
-  }
-
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
 
@@ -30,6 +23,7 @@ class TemplateNewContainer extends React.Component {
       <Paneset static style={css.root}>
         <Pane
           dismissable
+          onClose={this.handleClose}
           firstMenu={closeMenu}
           defaultWidth="fill"
           paneTitle={formatMsg({ id: 'ui-cataloging.template.create' })}

@@ -3,5 +3,24 @@
 :root {
   --background-gray: rgba(0, 0, 0, 0.62);
   --color-border: rgba(0, 0, 0, 0.2);
+  --color-white: #fff;
+  --button-color: #2b75bb;
+  --button-small: 24px;
+  --button-medium: 36px;
+  --button-large: 48px;
+  --font-weight-small: font-weight 100;
+  --font-weight-medium: font-weight 400;
+  --font-weight-large: font-weight 600;
+  --primary: #2b75bb;
+  --secondary: #999;
+  --error: #900;
+  --danger: #900;
+  --warn: #e27c3e;
+  --success: #070;
+  --controlMarginBottom: 12px;
+  --controlHeight: 44px;
+  --radius: 6px;
+  --gutter: 15px;
+  --controlHeightSmall: 44px;
+  --controlHeightTouch: var(--controlHeightSmall);
 }
-

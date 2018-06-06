@@ -1,0 +1,18 @@
+/* TemplateAddButton */
+.root {
+  display: flex;
+  flex-direction: row;
+  height: '100%';
+  width: 100%;
+}
+
+.addteplate_button {
+  background-color: '#2b75bb';
+  border: '1px solid #2b75bb';
+  font-weight: 600;
+  margin-bottom: 0;
+  color: '#fff';
+  margin-right: '15px';
+  height: 36px;
+  min-height: 36px;
+}

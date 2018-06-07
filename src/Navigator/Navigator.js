@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import NavList from '@folio/stripes-components/lib/NavList';
 import NavListSection from '@folio/stripes-components/lib/NavListSection';
 import NavListItem from '@folio/stripes-components/lib/NavListItem';
@@ -29,13 +30,25 @@ class Navigator extends React.Component {
     super(props);
     this.state = {
       navigatorFixed: true,
-      showToaster: false
+      showToaster: false,
+      subSections: {
+        searchSection: true,
+        reportSection: true,
+        templateSection: true,
+      },
     };
+    this.onToggleSubSection = this.onToggleSubSection.bind(this);
   }
 
-  handleClose() {
-    this.setState({ navigatorFixed: false });
+  onToggleSubSection(newAccordionStatus) {
+    this.setState((curState) => {
+      const newState = _.cloneDeep(curState);
+      newState.subSections = newAccordionStatus;
+      return newState;
+    });
   }
+
+  
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
@@ -44,11 +57,13 @@ class Navigator extends React.Component {
       <div className={css.container}>
         <Paneset static>
           {this.state.navigatorFixed &&
-            <Pane dismissible onClose={this.handleClose} defaultWidth="20%" paneTitle={formatMsg({ id: 'ui-cataloging.navigator.title' })}>
+            <Pane dismissible defaultWidth="20%" paneTitle={formatMsg({ id: 'ui-cataloging.navigator.title' })}>
               <LogicalView {...this.props} id="logical_view_link" />
               <NavList>
-                <AccordionSet>
-                   <Accordion label={formatMsg({ id: 'ui-cataloging.navigator.search' })} id="ex-2">
+                <AccordionSet accordionStatus={this.state.subSections} onToggle={this.onToggleSubSection}>
+                   <Accordion 
+                     id="searchSection"
+                     label={formatMsg({ id: 'ui-cataloging.navigator.search' })}>
                     <NavListSection activeLink="/active-link-here">
                       <NavListItem to="/cataloging/simpleSearch">
 
@@ -72,7 +87,39 @@ class Navigator extends React.Component {
                       </NavListItem>
                     </NavListSection>
                   </Accordion>
-                  <Accordion label={formatMsg({ id: 'ui-cataloging.navigator.template' })} id="ex-1">
+
+
+                  <Accordion 
+                     id="reportSection"
+                     label={formatMsg({ id: 'ui-cataloging.navigator.reportistics' })}>
+                    <NavListSection activeLink="/active-link-here">
+                      <NavListItem to="/cataloging/simpleSearch">
+
+                        <FormattedMessage id="ui-cataloging.navigator.report" />
+                      </NavListItem>
+                      <NavListItem to="/cataloging/advancedSearch">
+                        <Icon
+                          icon="search"
+                          size="small"
+                          iconClassName="myClass"
+                        />
+                        <FormattedMessage id="ui-cataloging.navigator.advancedSearch" />
+                      </NavListItem>
+                      <NavListItem to="/cataloging/externalSearch">
+                        <Icon
+                          icon="search"
+                          size="small"
+                          iconClassName="myClass"
+                        />
+                        <FormattedMessage id="ui-cataloging.navigator.externalSearch" />
+                      </NavListItem>
+                    </NavListSection>
+                  </Accordion>
+
+
+                  <Accordion 
+                    id="templateSection"
+                    label={formatMsg({ id: 'ui-cataloging.navigator.template' })}>
                     <NavListSection activeLink="/active-link-here">
                       <NavListItem to="/cataloging/templateList">
                         <Icon

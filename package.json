@@ -33,18 +33,18 @@
     }
   ],
   "scripts": {
-    "preinstall": "yarn clean:all",
+    "preinstall": "yarn clean",
     "start": "stripes serve config/stripes.config.js",
     "start:vagrant": "stripes serve-vagrant config/stripes.config.js",
     "build": "stripes build --output ./dist/ui-cataloging-build",
     "build:analizer": "stripes build config/stripes.config.js ./dist/analyze/ui-cataloging-analyze --analyze",
     "test": "stripes test nightmare --run test/ --show",
-    "lint": "yarn eslint && stylelint --fix \"src/**/*.css\"",
+    "lint": "yarn eslint && yarn stylelint",
     "eslint": "eslint --fix ./",
-    "stylelint": "stylelint \"src/**/*.css\"",
+    "stylelint": "stylelint --fix \"src/**/*.css\"",
     "prepublish": "mkdir config/json; node node_modules/@folio/stripes-core/util/package2md.js package.json > config/json/ModuleDescriptor.json",
     "publish": "yarn prepublish;npm publish",
-    "clean:all": "node script/clean.js"
+    "clean": "node script/clean.js"
   },
   "devDependencies": {
     "@folio/eslint-config-stripes": "^1.1.0",

@@ -17,6 +17,8 @@
   "navigator.simpleSearch": "Simple search",
   "navigator.advancedSearch": "Advanced search",
   "navigator.externalSearch": "External search",
+  "navigator.reportistics": "Reporting",
+  "navigator.report": "Report",
 
   "button.new": "+ New",
   "button.new.tag": "+ Tag",

@@ -48,19 +48,7 @@ class Navigator extends React.Component {
               <LogicalView {...this.props} id="logical_view_link" />
               <NavList>
                 <AccordionSet>
-                  <Accordion label={formatMsg({ id: 'ui-cataloging.navigator.template' })} id="ex-1">
-                    <NavListSection activeLink="/active-link-here">
-                      <NavListItem to="/cataloging/templateList">
-                        <Icon
-                          icon="archive"
-                          size="small"
-                          iconClassName="myClass"
-                        />
-                        <FormattedMessage id="ui-cataloging.navigator.templateList" />
-                      </NavListItem>
-                    </NavListSection>
-                  </Accordion>
-                  <Accordion label={formatMsg({ id: 'ui-cataloging.navigator.search' })} id="ex-2">
+                   <Accordion label={formatMsg({ id: 'ui-cataloging.navigator.search' })} id="ex-2">
                     <NavListSection activeLink="/active-link-here">
                       <NavListItem to="/cataloging/simpleSearch">
 
@@ -81,6 +69,18 @@ class Navigator extends React.Component {
                           iconClassName="myClass"
                         />
                         <FormattedMessage id="ui-cataloging.navigator.externalSearch" />
+                      </NavListItem>
+                    </NavListSection>
+                  </Accordion>
+                  <Accordion label={formatMsg({ id: 'ui-cataloging.navigator.template' })} id="ex-1">
+                    <NavListSection activeLink="/active-link-here">
+                      <NavListItem to="/cataloging/templateList">
+                        <Icon
+                          icon="archive"
+                          size="small"
+                          iconClassName="myClass"
+                        />
+                        <FormattedMessage id="ui-cataloging.navigator.templateList" />
                       </NavListItem>
                     </NavListSection>
                   </Accordion>

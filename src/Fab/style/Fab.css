@@ -8,11 +8,11 @@ h3 {
   height: 120px;
   padding: 20px;
   margin: auto;
-  background: #FFF;
+  background: #fff;
   margin-top: 10px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); 
   transition: all 0.3s; 
- border-radius: 3px;
+  border-radius: 3px;
 }
 
 #presentation:hover {
@@ -29,7 +29,7 @@ h3 {
   position: fixed;
   bottom: 30px;
   right: 30px; cursor: pointer;
-  box-shadow: 0px 2px 5px #666;
+  box-shadow: 0 2px 5px #666;
 }
 
 .plus {
@@ -98,6 +98,7 @@ h3 {
   from {
     opacity: 0; 
     transform: rotateZ(-70deg);}
+
   to {
     opacity: 1; 
     transform: rotateZ(0deg);}
@@ -107,6 +108,7 @@ h3 {
   from {
     opacity: 1; 
     transform: rotateZ(0deg);}
+
   to {
     opacity: 0; 
     transform: rotateZ(-70deg);}
@@ -117,6 +119,7 @@ h3 {
     opacity: 1; 
     transform: rotateZ(0deg);
   }
+
   to {
     opacity: 0; 
     transform: rotateZ(180deg);}
@@ -126,6 +129,7 @@ h3 {
   from {
     opacity: 0; 
     transform: rotateZ(180deg);}
+
   to {
     opacity: 1; 
     transform: rotateZ(0deg);}
@@ -196,9 +200,11 @@ h3 {
 #container-floating:hover .nd3 {
   animation-delay: 0.08s;
 }
+
 #container-floating:hover .nd4 {
   animation-delay: 0.15s;
 }
+
 #container-floating:hover .nd5 {
   animation-delay: 0.2s;
 }

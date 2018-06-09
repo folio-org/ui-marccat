@@ -1,99 +1,55 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import TextField from '@folio/stripes-components/lib/TextField';
+import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
+import RadioButton from '@folio/stripes-components/lib/RadioButton';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
-
-const EditTemplateInfo = ({ parentResources, initialValues, expanded, onToggle, accordionId, stripes: { intl } }) => {
-  const patronGroups = (parentResources.patronGroups || {}).records || [];
-  const patronGroupOptions = (patronGroups || []).map(g => ({ label: g.group.concat(g.desc ? ` (${g.desc})` : ''), value: g.id, selected: initialValues.patronGroup === g.id }));
-  const statusOptions = [
-    { label: intl.formatMessage({ id: 'ui-users.active' }), value: true },
-    { label: intl.formatMessage({ id: 'ui-users.inactive' }), value: false },
-  ].map(s => ({ ...s, selected: (initialValues.active === s.value || s.value === true) }));
+import css from '../EditTemplate.css';
 
 
+class EditTemplateInfo extends React.Component {
+  render() {
+    const formatMsg = this.props.stripes.intl.formatMessage;
+    const template = this.props.selectedTemplate;
+    const { expanded, onToggle, accordionId } = this.props;
 
-  return (
-    <Accordion
-      label={intl.formatMessage({ id: 'ui-cataloging.template.detail.information.title' })}
-      open={expanded}
-      id={accordionId}
-      onToggle={onToggle}
-    >
-      <Row>
-        <Col xs={8}>
-          <Row>
-            <Col xs={3}>
-              <Field label={`${intl.formatMessage({ id: 'ui-users.information.lastName' })} *`} name="personal.lastName" id="adduser_lastname" component={TextField} required fullWidth />
-            </Col>
-            <Col xs={3}>
-              <Field label={intl.formatMessage({ id: 'ui-users.information.firstName' })} name="personal.firstName" id="adduser_firstname" component={TextField} fullWidth />
-            </Col>
-            <Col xs={3}>
-              <Field label={intl.formatMessage({ id: 'ui-users.information.middleName' })} name="personal.middleName" id="adduser_middlename" component={TextField} fullWidth />
-            </Col>
-            <Col xs={3}>
-              <Field label={intl.formatMessage({ id: 'ui-users.information.barcode' })} name="barcode" id="adduser_barcode" component={TextField} fullWidth />
-            </Col>
-          </Row>
+    return (
+      <Accordion
+        label={formatMsg({ id: 'ui-cataloging.template.detail.information.title' })}
+        open={expanded}
+        id={accordionId}
+        onToggle={onToggle}
+      >
+        <Row id="section-name">
+          <Col xs={6}>
+            <TextField
+              label={formatMsg({ id: 'ui-cataloging.template.form.name' })}
+              name="name"
+              aria-label={formatMsg({ id: 'ui-cataloging.template.form.name' })}
+              fullWidth
+              id="input-template-name"
+            />
+          </Col>
+          <Col xs={6} className={css.radiobutton}>
+            <Field name="subGroup" component={RadioButtonGroup} label="Group" style={{ marginTop: '10px' }}>
+              <RadioButton label="W" id="radio_1" value="W" inline />
+              <RadioButton label="E" id="radio_2" value="E" inline />
+              <RadioButton label="M" id="radio_3" value="M" inline />
+            </Field>
+          </Col>
+        </Row>
+      </Accordion>
+    );
+  }
+}
 
-          <Row>
-            <Col xs={3}>
-              <Field
-                label={`${intl.formatMessage({ id: 'ui-users.information.patronGroup' })} *`}
-                name="patronGroup"
-                id="adduser_group"
-                component={Select}
-                fullWidth
-                dataOptions={[{ label: intl.formatMessage({ id: 'ui-users.information.selectPatronGroup' }), value: '' }, ...patronGroupOptions]}
-              />
-            </Col>
-            <Col xs={3}>
-              <Field
-                label={`${intl.formatMessage({ id: 'ui-users.information.status' })} *`}
-                name="active"
-                id="useractive"
-                component={Select}
-                fullWidth
-                dataOptions={statusOptions}
-                disabled={isStatusFieldDisabled()}
-              />
-              {isUserExpired() && (
-                <span style={{ 'color': '#900', 'position': 'relative', 'top': '-10px', 'fontSize': '0.9em' }}>
-                  {`${intl.formatMessage({ id: 'ui-users.errors.userExpired' })}`}
-                </span>
-              )}
-            </Col>
-            <Col xs={3}>
-              <Field
-                component={Datepicker}
-                label={intl.formatMessage({ id: 'ui-users.expirationDate' })}
-                dateFormat="YYYY-MM-DD"
-                name="expirationDate"
-                id="adduser_expirationdate"
-              />
-            </Col>
-            <Col xs={3}>
-              <Field label={`${intl.formatMessage({ id: 'ui-users.information.username' })}`} name="username" id="adduser_username" component={TextField} fullWidth validStylesEnabled />
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-    </Accordion>
-  );
-};
 
-EditUserInfo.propTypes = {
+EditTemplateInfo.propTypes = {
   stripes: PropTypes.shape({
     intl: PropTypes.object.isRequired,
-  }).isRequired,
-  parentResources: PropTypes.object,
-  initialValues: PropTypes.object,
-  expanded: PropTypes.bool,
-  onToggle: PropTypes.func,
-  accordionId: PropTypes.string.isRequired,
+  }).isRequired
 };
 
 export default EditTemplateInfo;

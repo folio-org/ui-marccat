@@ -44,3 +44,13 @@ button:active svg {
 section.pane {
   transition: all 0.25s ease-in-out !important;
 }
+
+section {
+  transition: all .25s ease-in-out;
+
+  &.pane {
+    transition: all .25s ease-in-out;
+  }
+}
+
+

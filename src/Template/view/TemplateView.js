@@ -7,7 +7,6 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import IconButton from '@folio/stripes-components/lib/IconButton';
-import { CSSTransition } from 'react-transition-group';
 import { EditTemplate } from '../';
 import Toaster from '../../Toaster';
 import * as C from '../../Utils';
@@ -26,19 +25,19 @@ class TemplateView extends React.Component {
     })
   };
 
-  static manifest = Object.freeze({
-    query: { initialValue: {} },
-    recordsTemplates: {
-      type: C.RESOURCE_TYPE,
-      root: C.ENDPOINT.BASE_URL,
-      path: C.ENDPOINT.TEMPLATE_URL,
-      headers: C.ENDPOINT.HEADERS,
-      records: C.API_RESULT_JSON_KEY.TEMPLATES,
-      GET: {
-        params: { lang: 'ita', type: 'B' },
-      },
-    }
-  });
+  // static manifest = Object.freeze({
+  //   query: { initialValue: {} },
+  //   recordsTemplates: {
+  //     type: C.RESOURCE_TYPE,
+  //     root: C.ENDPOINT.BASE_URL,
+  //     path: C.ENDPOINT.TEMPLATE_URL,
+  //     headers: C.ENDPOINT.HEADERS,
+  //     records: C.API_RESULT_JSON_KEY.TEMPLATES,
+  //     GET: {
+  //       params: { lang: 'ita', type: 'B' },
+  //     },
+  //   }
+  // });
 
   constructor(props) {
     super(props);
@@ -80,9 +79,9 @@ class TemplateView extends React.Component {
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
 
-    const { resources: { recordsTemplates } } = this.props; // eslint-disable-line react/prop-types
-    if (!recordsTemplates || !recordsTemplates.hasLoaded) return <div />;
-    const templates = recordsTemplates.records;
+    // const { resources: { recordsTemplates } } = this.props; // eslint-disable-line react/prop-types
+    // if (!recordsTemplates || !recordsTemplates.hasLoaded) return <div />;
+    const templates = this.props.datas.recordTemplates;
 
 
     const searchMenu = (
@@ -94,19 +93,35 @@ class TemplateView extends React.Component {
     const deleteMenu = (
       <PaneMenu>
         <IconButton key="icon-trash" icon="trashBin" />
+        <IconButton key="icon-edit" icon="edit" />
       </PaneMenu>
     );
 
     const lastMenu = (
       <PaneMenu className={css.icon_plus} {...this.props}>
-        <IconButton key="icon-plus-sign" icon="gear" />
-        <IconButton key="icon-edit" icon="plus-sign" onClick={this.handleAddTemplate} className={css.icon_plus} />
+        <IconButton key="icon-gear" icon="gear" />
+        <IconButton key="icon-plus-sign" icon="plus-sign" onClick={this.handleAddTemplate} className={css.icon_plus} />
       </PaneMenu>
     );
 
     const actionMenuItems = [
       {
         label: formatMsg({ id: 'ui-cataloging.template.create' }),
+        onClick: () => {
+          this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE);
+        },
+      }
+    ];
+
+    const actionMenuItemsDetail = [
+      {
+        label: formatMsg({ id: 'ui-cataloging.template.create' }),
+        onClick: () => {
+          this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE);
+        },
+      },
+      {
+        label: formatMsg({ id: 'ui-cataloging.template.tag.create' }),
         onClick: () => {
           this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE);
         },
@@ -121,7 +136,7 @@ class TemplateView extends React.Component {
           lastMenu={lastMenu}
           defaultWidth="fill"
           paneTitle={formatMsg({ id: 'ui-cataloging.templates.title' })}
-          paneSub={recordsTemplates.records.length + ' Result found'}
+          paneSub={templates.length + ' Result found'}
           appIcon={{ app: 'cataloging' }}
         >
           <MultiColumnList
@@ -132,7 +147,7 @@ class TemplateView extends React.Component {
             ariaLabel="TemplateView"
             sortedColumn="name"
             sortOrder="ascending"
-            onRowClick={(context, object) => {
+            onRowClick={(c, object) => {
               this.setState({
                 showTemplateDetail: true,
                 selectedTemplate: object
@@ -144,31 +159,22 @@ class TemplateView extends React.Component {
           />
         </Pane>
         {this.state.showTemplateDetail &&
-          <CSSTransition
-            in
-            timeout={300}
-            classNames="message"
-            unmountOnExit
-            onExited={() => {}}
-          >
-            <Pane
-              id="pippo"
-              defaultWidth="fill"
-              paneTitle={this.state.selectedTemplate.name}
-              paneSub={'Id ' + this.state.selectedTemplate.id}
-              appIcon={{ app: 'cataloging' }}
-              transition
-              dismissible
-              onClose={this.handleClose}
-              actionMenuItems={actionMenuItems}
-              lastMenu={deleteMenu}
-            >
-              <this.connectedEditTemplateView
-                {...this.props}
-                selectedTemplate={this.state.selectedTemplate}
-              />
-            </Pane>
-          </CSSTransition>}
+        <Pane
+          defaultWidth="fill"
+          paneTitle={this.state.selectedTemplate.name}
+          paneSub={'Id ' + this.state.selectedTemplate.id}
+          appIcon={{ app: 'cataloging' }}
+          dismissible
+          onClose={this.handleClose}
+          actionMenuItems={actionMenuItemsDetail}
+          lastMenu={deleteMenu}
+        >
+          <this.connectedEditTemplateView
+            {...this.props}
+            selectedTemplate={this.state.selectedTemplate}
+          />
+        </Pane>
+          }
         {this.state.showToaster &&
           <Toaster
             position="bottom"

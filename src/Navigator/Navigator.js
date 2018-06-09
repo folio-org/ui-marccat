@@ -16,6 +16,9 @@ import { TemplateView, CreateTemplate } from '../Template/';
 import { LogicalView } from '../LogicalView/';
 import css from './Navigator.css';
 import * as C from '../Utils';
+import logical from '../Api/logical-views';
+import record from '../Api/template';
+import mandatory from '../Api/mandatory';
 
 class Navigator extends React.Component {
   static propTypes = {
@@ -76,7 +79,7 @@ class Navigator extends React.Component {
               defaultWidth="20%"
               paneTitle={formatMsg({ id: 'ui-cataloging.navigator.title' })}
             >
-              <LogicalView {...this.props} id="logical_view_link" />
+              <LogicalView {...this.props} id="logical_view_link" datas={logical} />
               <NavList>
                 <AccordionSet accordionStatus={this.state.subSections} onToggle={this.onToggleSubSection}>
                   <Accordion
@@ -161,13 +164,13 @@ class Navigator extends React.Component {
             </Pane>}
           <Switch>
             <Route path={`${rootPath}/templateList`}>
-              <TemplateView {...this.props} id="templrate_view_link" />
+              <TemplateView {...this.props} id="templrate_view_link" datas={record} />
             </Route>
             <Route path={`${rootPath}/simpleSearch`}>
               <NavigatorEmpty {...this.props} id="temprlate_view_link" />
             </Route>
             <Route path={`${rootPath}/template/create`}>
-              <CreateTemplate {...this.props} />
+              <CreateTemplate {...this.props} datas={mandatory} />
             </Route>
             <Route path={`${rootPath}/advancedSearch`}>
               <NavigatorEmpty {...this.props} id="empty_crntainer" />

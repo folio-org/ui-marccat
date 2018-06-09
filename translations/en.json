@@ -37,6 +37,6 @@
   "template.form.primary.address": "Primary Address",
   "template.form.secondary.address": "Secondary Address",
 
-  "template.detail.information.title": "Template Information"
-
+  "template.detail.information.title": "Template Information",
+  "template.detail.information.mandatory.table": "Template Mandatory Table"
 }

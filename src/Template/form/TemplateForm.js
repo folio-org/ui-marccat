@@ -7,7 +7,7 @@ import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import TextField from '@folio/stripes-components/lib/TextField';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import css from './TemplateForm.css';
-
+import stripesForm from '@folio/stripes-form';
 
 class TemplateForm extends React.Component {
   static propTypes = {
@@ -110,6 +110,6 @@ class TemplateForm extends React.Component {
   }
 }
 
-export default reduxForm({
+export default stripesForm({
   form: 'templateForm',
 })(TemplateForm);

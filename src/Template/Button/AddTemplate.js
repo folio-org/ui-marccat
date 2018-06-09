@@ -1,9 +1,7 @@
 import React from 'react';
 import Button from '@folio/stripes-components/lib/Button';
 import { FormattedMessage } from 'react-intl';
-import { connect } from '@folio/stripes-connect';
 import Link from 'react-router-dom/Link';
-import * as C from '../../Utils';
 import css from '../styles/TemplateButton.css';
 
 class AddTemplate extends React.Component {
@@ -20,4 +18,4 @@ class AddTemplate extends React.Component {
   }
 }
 
-export default connect(AddTemplate, C.META.MODULE_NAME);
+export default AddTemplate;

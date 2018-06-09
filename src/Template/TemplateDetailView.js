@@ -1,6 +1,6 @@
 import React from 'react';
 
-class CatalogingFooter extends React.Component {
+class TemplateDetailView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -8,10 +8,12 @@ class CatalogingFooter extends React.Component {
 
   render() {
     return (
-      <div><span /></div>
+      <div />
     );
   }
 }
 
-export default CatalogingFooter;
+TemplateDetailView.propTypes = {};
+
+export default TemplateDetailView;
 

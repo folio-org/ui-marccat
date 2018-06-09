@@ -27,7 +27,7 @@ class Cataloging extends React.Component {
   };
 
   static manifest = Object.freeze({
-    query: { initialValue: {} }
+    query: { initialValue: {} },
   });
 
 

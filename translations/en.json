@@ -1,4 +1,5 @@
 {
+  "resultCount": "{count, number} {count, plural, one {Record found} other {Records found}}",
   "new-app.greeting": "Congratulations!",
   "new-app.message": "Your Stripes app is running.",
   "settings.general": "General",
@@ -26,11 +27,13 @@
   "templates.title": "Bibliographic templates",
   "template.column.id": "Id",
   "template.column.name": "Name",
-  "template.create":"Create Template",
+  "template.create": "Create New Template",
+  "template.save": "Save Template",
+  "template.tag.create": "Create New Tag",
 
-  "template.form.name":"Name",
-  "template.form.code":"Code",
-  "template.form.primary.address":"Primary Address",
-  "template.form.secondary.address":"Secondary Address"
+  "template.form.name": "Name",
+  "template.form.code": "Code",
+  "template.form.primary.address": "Primary Address",
+  "template.form.secondary.address": "Secondary Address"
 
 }

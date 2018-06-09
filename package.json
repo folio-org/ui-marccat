@@ -36,8 +36,8 @@
     "preinstall": "yarn clean",
     "start": "stripes serve config/stripes.config.js",
     "start:vagrant": "stripes serve-vagrant config/stripes.config.js",
-    "build": "stripes build --output ./dist/ui-cataloging-build",
-    "build:analizer": "stripes build config/stripes.config.js ./dist/analyze/ui-cataloging-analyze --analyze",
+    "build": "stripes build --output ./dist/ui-cataloging-build --sourcemap",
+    "build:analizer": "stripes build config/stripes.config.js ./dist/analyze/ui-cataloging-analyze --analyze --sourcemap",
     "test": "stripes test nightmare --run test/ --show",
     "lint": "yarn eslint && yarn stylelint",
     "eslint": "eslint --fix ./",
@@ -63,6 +63,7 @@
     "lodash": "^4.17.10",
     "prop-types": "^15.6.0",
     "react-intl": "^2.4.0",
+    "react-mfb": "^0.6.0",
     "react-router-dom": "^4.1.1",
     "stylelint": "^9.2.1",
     "stylelint-config-standard": "^18.2.0"

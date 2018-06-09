@@ -76,7 +76,7 @@ class Toast extends Component {
         unmountOnExit
         classNames={{
           enter: style[`slideIn${capitalize(animationPosition)}`],
-          exit: style[`slideOut${capitalize(animationPosition)}`]   
+          exit: style[`slideOut${capitalize(animationPosition)}`]
         }}
       >
         <div className={toastClass} aria-live="assertive" toast={type}>

@@ -1,4 +1,5 @@
-@import '@folio/stripes-components/lib/variables';
+@import 'http://nobitagit.github.io/react-material-floating-button/mfb.min.css';
+@import 'http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css';
 
 :root {
   --background-gray: rgba(0, 0, 0, 0.62);
@@ -18,9 +19,28 @@
   --warn: #e27c3e;
   --success: #070;
   --controlMarginBottom: 12px;
-  --controlHeight: 44px;
+  --controlHeight: 24px;
   --radius: 6px;
   --gutter: 15px;
   --controlHeightSmall: 44px;
   --controlHeightTouch: var(--controlHeightSmall);
+  --icons-size-small: 18px;
+  --icons-size-medium: 24px;
+  --icons-size-large: 36px;
+}
+
+i {
+  font-size: var(--icons-size-medium) !important;
+}
+
+button svg {
+  fill: rgba(0, 0, 0, 0.61) !important;
+}
+
+button:active svg {
+  fill: #fff !important;
+}
+
+section.pane {
+  transition: all 0.25s ease-in-out !important;
 }

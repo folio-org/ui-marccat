@@ -1,9 +1,7 @@
-@import "../../../node_modules/font-awesome/css/font-awesome.min.css";
-
-header {
+/* header {
   position: relative;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
-}
+} */
 
 .addbutton {
   position: absolute;
@@ -40,7 +38,7 @@ header {
   width: 28px;
   height: 28px;
   line-height: 48px;
-  font-family: "FontAwesome", sans-serif;
+  font-family: "Ionicons", sans-serif;
   font-size: 12px;
   -webkit-transition:
 

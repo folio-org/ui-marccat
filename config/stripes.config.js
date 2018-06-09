@@ -12,7 +12,7 @@ module.exports = {
   okapi: { url, tenant: 'diku' },
   config: {
     logCategories: 'core,redux,connect,connect-fetch,substitute,path,mpath,mquery,action,event,perm,interface,xhr',
-    logPrefix: 'stripes',
+    logPrefix: 'CATUI--',
     logTimestamp: true,
     showPerms: true,
     showHomeLink: true,
@@ -21,6 +21,6 @@ module.exports = {
     softLogout: true
   },
   modules: {
-    '@folio/cataloging': {},
+    '@folio/cataloging': {}
   }
 };

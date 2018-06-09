@@ -12,17 +12,25 @@ import { FormattedMessage } from 'react-intl';
 import { AccordionSet, Accordion } from '@folio/stripes-components/lib/Accordion';
 import Icon from '@folio/stripes-components/lib/Icon';
 import NavigatorEmpty from './NavigatorEmpty';
-import { TemplateView, TemplateNewMandatory, TemplateNewContainer } from '../Template/';
+import { TemplateView, TemplateCreation } from '../Template/';
 import { LogicalView } from '../LogicalView/';
-import { CatalogingFooter } from '../Common/Footer';
+import { FabMenu } from '../Fab';
 import css from './Navigator.css';
+import * as C from '../Utils';
 import Toaster from '../Toaster/Toaster';
 
 class Navigator extends React.Component {
-  static propTypes = {// eslint-disable-line react/no-unused-prop-types
-    stripes: PropTypes.shape({ // eslint-disable-line react/no-unused-prop-types
+  static propTypes = {
+    stripes: PropTypes.shape({
       connect: PropTypes.func,
       intl: PropTypes.object,
+    }),
+    match: PropTypes.shape({
+      path: PropTypes.string,
+      id: PropTypes.string,
+    }),
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
     })
   };
 
@@ -38,6 +46,7 @@ class Navigator extends React.Component {
       },
     };
     this.onToggleSubSection = this.onToggleSubSection.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   onToggleSubSection(newAccordionStatus) {
@@ -48,28 +57,44 @@ class Navigator extends React.Component {
     });
   }
 
-  
+  handleClose() {
+    this.setState((curState) => {
+      const newState = _.cloneDeep(curState);
+      newState.navigatorFixed = !this.state.navigatorFixed;
+      return newState;
+    });
+  }
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-
+    const rootPath = this.props.match.path;
     return (
       <div className={css.container}>
         <Paneset static>
           {this.state.navigatorFixed &&
-            <Pane dismissible defaultWidth="20%" paneTitle={formatMsg({ id: 'ui-cataloging.navigator.title' })}>
+            <Pane
+              dismissible
+              onClose={this.handleClose}
+              defaultWidth="20%"
+              paneTitle={formatMsg({ id: 'ui-cataloging.navigator.title' })}
+            >
               <LogicalView {...this.props} id="logical_view_link" />
               <NavList>
                 <AccordionSet accordionStatus={this.state.subSections} onToggle={this.onToggleSubSection}>
-                   <Accordion 
-                     id="searchSection"
-                     label={formatMsg({ id: 'ui-cataloging.navigator.search' })}>
-                    <NavListSection activeLink="/active-link-here">
-                      <NavListItem to="/cataloging/simpleSearch">
-
+                  <Accordion
+                    id="searchSection"
+                    label={formatMsg({ id: 'ui-cataloging.navigator.search' })}
+                  >
+                    <NavListSection activeLink={`${this.props.location.pathname}`}>
+                      <NavListItem to={`${rootPath}/simpleSearch`}>
+                        <Icon
+                          icon="search"
+                          size="small"
+                          iconClassName="myClass"
+                        />
                         <FormattedMessage id="ui-cataloging.navigator.simpleSearch" />
                       </NavListItem>
-                      <NavListItem to="/cataloging/advancedSearch">
+                      <NavListItem to={`${rootPath}/advancedSearch`}>
                         <Icon
                           icon="search"
                           size="small"
@@ -77,7 +102,7 @@ class Navigator extends React.Component {
                         />
                         <FormattedMessage id="ui-cataloging.navigator.advancedSearch" />
                       </NavListItem>
-                      <NavListItem to="/cataloging/externalSearch">
+                      <NavListItem to={`${rootPath}/externalSearch`}>
                         <Icon
                           icon="search"
                           size="small"
@@ -87,17 +112,20 @@ class Navigator extends React.Component {
                       </NavListItem>
                     </NavListSection>
                   </Accordion>
-
-
-                  <Accordion 
-                     id="reportSection"
-                     label={formatMsg({ id: 'ui-cataloging.navigator.reportistics' })}>
-                    <NavListSection activeLink="/active-link-here">
-                      <NavListItem to="/cataloging/simpleSearch">
-
+                  <Accordion
+                    id="reportSection"
+                    label={formatMsg({ id: 'ui-cataloging.navigator.reportistics' })}
+                  >
+                    <NavListSection activeLink={`${this.props.location.pathname}`}>
+                      <NavListItem to={`${rootPath}/reportistics`}>
+                        <Icon
+                          icon="search"
+                          size="small"
+                          iconClassName="myClass"
+                        />
                         <FormattedMessage id="ui-cataloging.navigator.report" />
                       </NavListItem>
-                      <NavListItem to="/cataloging/advancedSearch">
+                      <NavListItem to={`${rootPath}/advancedSearch`}>
                         <Icon
                           icon="search"
                           size="small"
@@ -115,13 +143,12 @@ class Navigator extends React.Component {
                       </NavListItem>
                     </NavListSection>
                   </Accordion>
-
-
-                  <Accordion 
+                  <Accordion
                     id="templateSection"
-                    label={formatMsg({ id: 'ui-cataloging.navigator.template' })}>
-                    <NavListSection activeLink="/active-link-here">
-                      <NavListItem to="/cataloging/templateList">
+                    label={formatMsg({ id: 'ui-cataloging.navigator.template' })}
+                  >
+                    <NavListSection activeLink={`${this.props.location.pathname}`}>
+                      <NavListItem to={`${rootPath}/templateList`}>
                         <Icon
                           icon="archive"
                           size="small"
@@ -135,29 +162,36 @@ class Navigator extends React.Component {
               </NavList>
             </Pane>}
           <Switch>
-            <Route path="/cataloging/templateList">
-              <TemplateView {...this.props} id="template_view_link" />
+            <Route path={`${rootPath}/templateList`}>
+              <TemplateView {...this.props} id="templrate_view_link" />
             </Route>
-            <Route path="/cataloging/simpleSearch" >
-              <TemplateNewMandatory {...this.props} id="template_view_link" />
+            <Route path={`${rootPath}/simpleSearch`}>
+              <NavigatorEmpty {...this.props} id="temprlate_view_link" />
             </Route>
-            <Route path="/cataloging/template/create">
-              <TemplateNewContainer {...this.props} />
+            <Route path={`${rootPath}/template/create`}>
+              <TemplateCreation {...this.props} />
             </Route>
-            <Route path="/cataloging/advancedSearch" >
-              <NavigatorEmpty {...this.props} id="empty_container" />
+            <Route path={`${rootPath}/advancedSearch`}>
+              <NavigatorEmpty {...this.props} id="empty_crntainer" />
             </Route>
-            <Route path="/cataloging/externalSearch" >
-              <NavigatorEmpty {...this.props} id="empty_container" />
+            <Route path={`${rootPath}/externalSearch`}>
+              <NavigatorEmpty {...this.props} id="empty_crontainer" />
             </Route>
-            <Route path="/cataloging">
-              <NavigatorEmpty {...this.props} id="empty_container" />
+            <Route path={`${rootPath}`}>
+              <NavigatorEmpty {...this.props} id="empty_corntainer" />
             </Route>
           </Switch>
         </Paneset>
         {this.state.showToaster &&
-        <Toaster toasts={[{ message: 'rest call with success {is a test}!', id: 'my-toast-id', type: 'success' }]} />}
-        <CatalogingFooter id="clickable-done-footer" />
+          <Toaster toasts={[{ message: 'rest call with success {is a test}!', id: 'my-toast-id', type: 'success' }]} />}
+        {!this.state.navigatorFixed &&
+        <FabMenu
+          effect={C.ANIMATION.SLIDEIN}
+          event={C.EVENT.HOVER}
+          position={C.POSITION.BOTTOM_LEFT}
+          isChildrenVisible={false}
+        />}
+
       </div>
     );
   }

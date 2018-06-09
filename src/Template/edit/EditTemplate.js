@@ -1,6 +1,6 @@
 import React from 'react';
 
-class TemplateDetailView extends React.Component {
+class EditTemplate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -13,7 +13,7 @@ class TemplateDetailView extends React.Component {
   }
 }
 
-TemplateDetailView.propTypes = {};
+EditTemplate.propTypes = {};
 
-export default TemplateDetailView;
+export default EditTemplate;
 

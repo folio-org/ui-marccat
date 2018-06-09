@@ -5,13 +5,13 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import { connect } from '@folio/stripes-connect';
-import { remapMultiArray } from '../Utils/Mapper';
-import { TemplateForm } from './';
-import * as C from '../Utils';
+import { remapMultiArray } from '../../Utils/Mapper';
+import { TemplateForm } from '../';
+import * as C from '../../Utils';
 
-import css from './styles/TemplateView.css';
+import css from './CreateTemplate.css';
 
-class TemplateNewMandatory extends React.Component {
+class CreateTemplate extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
@@ -99,4 +99,4 @@ class TemplateNewMandatory extends React.Component {
   }
 }
 
-export default connect(TemplateNewMandatory, C.META.MODULE_NAME);
+export default connect(CreateTemplate, C.META.MODULE_NAME);

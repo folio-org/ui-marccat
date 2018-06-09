@@ -8,10 +8,10 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import { CSSTransition } from 'react-transition-group';
-import { TemplateDetailView } from './';
-import Toaster from '../Toaster';
-import * as C from '../Utils';
-import css from './styles/TemplateView.css';
+import { EditTemplate } from '../';
+import Toaster from '../../Toaster';
+import * as C from '../../Utils';
+import css from '../styles/TemplateView.css';
 
 class TemplateView extends React.Component {
   static propTypes = {// eslint-disable-line react/no-unused-prop-types
@@ -47,7 +47,7 @@ class TemplateView extends React.Component {
       showTemplateDetail: false,
       selectedTemplate: {}
     };
-    this.connectedTemplateDetailView = props.stripes.connect(TemplateDetailView);
+    this.connectedEditTemplateView = props.stripes.connect(EditTemplate);
     this.handleAddTemplate = this.handleAddTemplate.bind(this);
     this.handleRowClick = this.handleRowClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -163,7 +163,7 @@ class TemplateView extends React.Component {
               actionMenuItems={actionMenuItems}
               lastMenu={deleteMenu}
             >
-              <this.connectedTemplateDetailView
+              <this.connectedEditTemplateView
                 {...this.props}
                 selectedTemplate={this.state.selectedTemplate}
               />

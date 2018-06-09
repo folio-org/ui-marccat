@@ -12,12 +12,10 @@ import { FormattedMessage } from 'react-intl';
 import { AccordionSet, Accordion } from '@folio/stripes-components/lib/Accordion';
 import Icon from '@folio/stripes-components/lib/Icon';
 import NavigatorEmpty from './NavigatorEmpty';
-import { TemplateView, TemplateCreation } from '../Template/';
+import { TemplateView, CreateTemplate } from '../Template/';
 import { LogicalView } from '../LogicalView/';
-import { FabMenu } from '../Fab';
 import css from './Navigator.css';
 import * as C from '../Utils';
-import Toaster from '../Toaster/Toaster';
 
 class Navigator extends React.Component {
   static propTypes = {
@@ -169,7 +167,7 @@ class Navigator extends React.Component {
               <NavigatorEmpty {...this.props} id="temprlate_view_link" />
             </Route>
             <Route path={`${rootPath}/template/create`}>
-              <TemplateCreation {...this.props} />
+              <CreateTemplate {...this.props} />
             </Route>
             <Route path={`${rootPath}/advancedSearch`}>
               <NavigatorEmpty {...this.props} id="empty_crntainer" />
@@ -182,16 +180,6 @@ class Navigator extends React.Component {
             </Route>
           </Switch>
         </Paneset>
-        {this.state.showToaster &&
-          <Toaster toasts={[{ message: 'rest call with success {is a test}!', id: 'my-toast-id', type: 'success' }]} />}
-        {!this.state.navigatorFixed &&
-        <FabMenu
-          effect={C.ANIMATION.SLIDEIN}
-          event={C.EVENT.HOVER}
-          position={C.POSITION.BOTTOM_LEFT}
-          isChildrenVisible={false}
-        />}
-
       </div>
     );
   }

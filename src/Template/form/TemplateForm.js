@@ -6,7 +6,7 @@ import { Field, reduxForm } from 'redux-form';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import TextField from '@folio/stripes-components/lib/TextField';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import css from './styles/TemplateForm.css';
+import css from './TemplateForm.css';
 
 
 class TemplateForm extends React.Component {

@@ -31,9 +31,12 @@
   "template.save": "Save Template",
   "template.tag.create": "Create New Tag",
 
+
   "template.form.name": "Name",
   "template.form.code": "Code",
   "template.form.primary.address": "Primary Address",
-  "template.form.secondary.address": "Secondary Address"
+  "template.form.secondary.address": "Secondary Address",
+
+  "template.detail.information.title": "Template Information"
 
 }

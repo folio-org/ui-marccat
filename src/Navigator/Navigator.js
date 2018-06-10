@@ -15,10 +15,12 @@ import NavigatorEmpty from './NavigatorEmpty';
 import { TemplateView, CreateTemplate } from '../Template/';
 import { LogicalView } from '../LogicalView/';
 import css from './Navigator.css';
-import * as C from '../Utils';
 import logical from '../Api/logical-views';
 import record from '../Api/template';
 import mandatory from '../Api/mandatory';
+import * as C from '../Utils/';
+import QuadFabMenu from '../Fab/QuadFabMenu';
+import RightFabMenu from '../Fab/RightFabMenu';
 
 class Navigator extends React.Component {
   static propTypes = {
@@ -183,6 +185,8 @@ class Navigator extends React.Component {
             </Route>
           </Switch>
         </Paneset>
+        <RightFabMenu {...this.props}
+        />
       </div>
     );
   }

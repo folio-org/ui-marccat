@@ -5,7 +5,6 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 
-import css from '../EditTemplate.css';
 
 
 class EditTemplateTag extends React.Component {

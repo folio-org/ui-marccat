@@ -4,29 +4,49 @@ import { MainButton, Menu, ChildButton } from 'react-mfb';
 import PropTypes from 'prop-types';
 
 class FabMenu extends React.Component {
-    static propTypes = {
-      effect: PropTypes.string.isRequired,
-      event: PropTypes.string.isRequired,
-      position: PropTypes.string.isRequired,
-      isChildrenVisible: PropTypes.bool.isRequired,
-    };
+  static propTypes = {
+    effect: PropTypes.string.isRequired,
+    event: PropTypes.string.isRequired,
+    position: PropTypes.string.isRequired,
+    isChildrenVisible: PropTypes.bool.isRequired,
+  };
 
-    render() {
-      return this.props.isChildrenVisible ? (
-        <Menu effect={this.props.effect} method={this.props.event} position={this.props.position}>
-          <MainButton iconResting="ion-android-menu" iconActive="ion-android-arrow-forward" />
-          <ChildButton
-            icon="ion-social-github"
-            label={this.props.isChildrenVisible}
-            href="https://github.com/nobitagit/react-material-floating-button/"
-          />
-        </Menu>
-      ) : (
-        <Menu effect={this.props.effect} method={this.props.event} position={this.props.position}>
-          <MainButton iconResting="ion-android-menu" iconActive="ion-android-arrow-forward" />
-        </Menu>
-      );
-    }
+  render() {
+    const { effect, event, position, isChildrenVisible } = this.props;
+    return (
+      <Menu effect={effect} method={event} position={position}>
+        <MainButton iconResting="ion-android-menu" iconActive="ion-android-arrow-forward" />
+        <ChildButton
+          icon="ion-social-github"
+          label="ion-social-github"
+          href="https://github.com/nobitagit/react-material-floating-button/"
+        />
+        <ChildButton
+          icon="ion-social-github"
+          label="ion-social-github"
+          href="https://github.com/nobitagit/react-material-floating-button/"
+        />
+        <ChildButton
+          icon="ion-social-github"
+          label={this.props.isChildrenVisible}
+          href="https://github.com/nobitagit/react-material-floating-button/"
+        />
+      </Menu>)
+    // return this.props.isChildrenVisible ? (
+    //   <Menu effect={this.props.effect} method={this.props.event} position={this.props.position}>
+    //     <MainButton iconResting="ion-android-menu" iconActive="ion-android-arrow-forward" />
+    //     <ChildButton
+    //       icon="ion-social-github"
+    //       label={this.props.isChildrenVisible}
+    //       href="https://github.com/nobitagit/react-material-floating-button/"
+    //     />
+    //   </Menu>
+    // ) : (
+    //   <Menu effect={this.props.effect} method={this.props.event} position={this.props.position}>
+    //     <MainButton iconResting="ion-android-menu" iconActive="ion-android-arrow-forward" />
+    //   </Menu>
+    // );
+  }
 }
 
 

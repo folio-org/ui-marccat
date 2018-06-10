@@ -1,6 +1,8 @@
 @import 'http://nobitagit.github.io/react-material-floating-button/mfb.min.css';
 @import 'http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css';
 
+@import '../Fab/style/RightFabMenu.css';
+
 :root {
   --background-gray: rgba(0, 0, 0, 0.62);
   --color-border: rgba(0, 0, 0, 0.2);

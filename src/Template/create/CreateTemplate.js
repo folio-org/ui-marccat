@@ -99,4 +99,5 @@ class CreateTemplate extends React.Component {
   }
 }
 
+
 export default connect(CreateTemplate, C.META.MODULE_NAME);

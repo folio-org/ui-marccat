@@ -81,7 +81,7 @@ class Navigator extends React.Component {
               defaultWidth="20%"
               paneTitle={formatMsg({ id: 'ui-cataloging.navigator.title' })}
             >
-              <LogicalView {...this.props} id="logical_view_link" datas={logical} />
+              <LogicalView {...this.props} id="logical_view_link" />
               <NavList>
                 <AccordionSet accordionStatus={this.state.subSections} onToggle={this.onToggleSubSection}>
                   <Accordion
@@ -166,13 +166,13 @@ class Navigator extends React.Component {
             </Pane>}
           <Switch>
             <Route path={`${rootPath}/templateList`}>
-              <TemplateView {...this.props} id="templrate_view_link" datas={record} />
+              <TemplateView {...this.props} id="templrate_view_link" />
             </Route>
             <Route path={`${rootPath}/simpleSearch`}>
               <NavigatorEmpty {...this.props} id="temprlate_view_link" />
             </Route>
             <Route path={`${rootPath}/template/create`}>
-              <CreateTemplate {...this.props} datas={mandatory} />
+              <CreateTemplate {...this.props} />
             </Route>
             <Route path={`${rootPath}/advancedSearch`}>
               <NavigatorEmpty {...this.props} id="empty_crntainer" />

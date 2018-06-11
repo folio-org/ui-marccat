@@ -25,19 +25,20 @@ class TemplateView extends React.Component {
     })
   };
 
-  // static manifest = Object.freeze({
-  //   query: { initialValue: {} },
-  //   recordsTemplates: {
-  //     type: C.RESOURCE_TYPE,
-  //     root: C.ENDPOINT.BASE_URL,
-  //     path: C.ENDPOINT.TEMPLATE_URL,
-  //     headers: C.ENDPOINT.HEADERS,
-  //     records: C.API_RESULT_JSON_KEY.TEMPLATES,
-  //     GET: {
-  //       params: { lang: 'ita', type: 'B' },
-  //     },
-  //   }
-  // });
+  static manifest = Object.freeze({
+    query: { initialValue: {} },
+    resultCount: { initialValue: C.INITIAL_RESULT_COUNT },
+    recordsTemplates: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      path: C.ENDPOINT.TEMPLATE_URL,
+      headers: { 'x-okapi-tenant': 'tnx' },
+      records: C.API_RESULT_JSON_KEY.TEMPLATES,
+      GET: {
+        params: { lang: 'ita', type: 'B' },
+      },
+    }
+  });
 
   constructor(props) {
     super(props);
@@ -79,9 +80,15 @@ class TemplateView extends React.Component {
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
 
-    // const { resources: { recordsTemplates } } = this.props; // eslint-disable-line react/prop-types
-    // if (!recordsTemplates || !recordsTemplates.hasLoaded) return <div />;
-    const templates = this.props.datas.recordTemplates;
+    const { resources: { recordsTemplates } } = this.props; // eslint-disable-line react/prop-types
+    if (!recordsTemplates || !recordsTemplates.hasLoaded) return <div />;
+    const templates = recordsTemplates.records;
+   
+    const formatter = {
+      'Id: id': x => _.get(x, ['id']),
+      'name: name': x => _.get(x, ['name']),
+    };
+
 
 
     const searchMenu = (
@@ -142,8 +149,8 @@ class TemplateView extends React.Component {
           <MultiColumnList
             id="list-templates"
             contentData={templates}
-            rowMetadata={['id', 'name']}
-            visibleColumns={['id', 'name']}
+            rowMetadata={['id', 'id']}
+            formatter={formatter}
             ariaLabel="TemplateView"
             sortedColumn="name"
             sortOrder="ascending"

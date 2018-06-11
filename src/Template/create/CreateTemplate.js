@@ -24,25 +24,22 @@ class CreateTemplate extends React.Component {
     })
   };
 
-  // static manifest = Object.freeze({
-  //   query: { initialValue: {} },
-  //   resultCount: { initialValue: C.INITIAL_RESULT_COUNT },
-  //   records: {
-  //     type: C.RESOURCE_TYPE,
-  //     root: C.ENDPOINT.BASE_URL,
-  //     path: C.ENDPOINT.TEMPLATE_MANDATORY,
-  //     headers: C.ENDPOINT.HEADERS,
-  //     records: C.API_RESULT_JSON_KEY.FIELDS,
-  //     GET: {
-  //       params: { lang: C.ENDPOINT.DEFAULT_LANG },
-  //     },
-  //   }
-  // });
+  static manifest = Object.freeze({
+    query: { initialValue: {} },
+    resultCount: { initialValue: C.INITIAL_RESULT_COUNT },
+    records: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      path: C.ENDPOINT.TEMPLATE_MANDATORY,
+      headers: C.ENDPOINT.HEADER,
+      records: 'fields',
+      GET: {
+        params: { lang: C.ENDPOINT.DEFAULT_LANG },
+      },
+    }
+  });
 
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+
 
   preparePaneMenu() {
     return (
@@ -53,11 +50,11 @@ class CreateTemplate extends React.Component {
   }
 
   render() {
-    const formatMsg = this.props.stripes.intl.formatMessage;
+   const formatMsg = this.props.stripes.intl.formatMessage;
 
-    // const { resources: { records } } = this.props; // eslint-disable-line react/prop-types
-    // if (!records || !records.hasLoaded) return <div />;
-    const fields = this.props.datas.fields;
+    const { resources: { records } } = this.props; // eslint-disable-line react/prop-types
+    if (!records || !records.hasLoaded) return <div />;
+    const fields = records.records;
     let obj = remapMultiArray(fields);
 
     const actionMenuItems = [

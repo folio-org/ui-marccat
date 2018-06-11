@@ -21,6 +21,7 @@ import mandatory from '../Api/mandatory';
 import * as C from '../Utils/';
 import QuadFabMenu from '../Fab/QuadFabMenu';
 import RightFabMenu from '../Fab/RightFabMenu';
+import FabMenu from '../Fab/FabMenu';
 
 class Navigator extends React.Component {
   static propTypes = {
@@ -185,8 +186,10 @@ class Navigator extends React.Component {
             </Route>
           </Switch>
         </Paneset>
-        <RightFabMenu {...this.props}
-        />
+        <FabMenu  {...this.props}
+          effect={'slidein'}
+          position={'br'}
+          event={'hover'} />
       </div>
     );
   }

@@ -12,7 +12,7 @@ class FabMenu extends React.Component {
   };
 
   render() {
-    const { effect, event, position, isChildrenVisible } = this.props;
+    const { effect, event, position } = this.props;
     return (
       <Menu effect={effect} method={event} position={position}>
         <MainButton iconResting="ion-android-menu" iconActive="ion-android-arrow-forward" />

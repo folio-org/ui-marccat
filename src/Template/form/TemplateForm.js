@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
 import RadioButton from '@folio/stripes-components/lib/RadioButton';
-import { Field, reduxForm } from 'redux-form';
+import { Field } from 'redux-form';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import TextField from '@folio/stripes-components/lib/TextField';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';

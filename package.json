@@ -70,7 +70,6 @@
     "react-intl": "^2.4.0",
     "react-mfb": "^0.6.0",
     "react-router-dom": "^4.1.1",
-    "rmwc": "^1.6.4",
     "stylelint": "^9.2.1",
     "stylelint-config-standard": "^18.2.0"
   },

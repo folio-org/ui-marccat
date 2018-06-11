@@ -1,17 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm } from 'redux-form';
+import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
-import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
-
+import * as C from '../../../Utils';
+import { connect } from '@folio/stripes-connect';
+import {remapMultiArray} from '../../../Utils/Mapper';
 
 
 class EditTemplateTag extends React.Component {
+  static manifest = Object.freeze({
+    query: { initialValue: {} },
+    resultCount: { initialValue: C.INITIAL_RESULT_COUNT },
+    records: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      path: C.ENDPOINT.TEMPLATE_MANDATORY,
+      headers: C.ENDPOINT.HEADERS,
+      records: 'fields',
+      GET: {
+        params: { lang: C.ENDPOINT.DEFAULT_LANG },
+      },
+    }
+  });
+
+
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const template = this.props.selectedTemplate;
-    const { expanded, onToggle, accordionId, mandatoryFields } = this.props;
+
+    const { resources: { records } } = this.props; // eslint-disable-line react/prop-types
+    if (!records || !records.hasLoaded) return <div />;
+    const fields = records.records;
+    let obj = remapMultiArray(fields);
+
+    const { expanded, onToggle, accordionId } = this.props;
     return (
       <Accordion
         label={formatMsg({ id: 'ui-cataloging.template.detail.information.title' })}
@@ -23,7 +45,7 @@ class EditTemplateTag extends React.Component {
           <Col xs={12}>
             <MultiColumnList
               loading
-              contentData={[]}
+              contentData={obj}
               onRowClick={() => { }}
               visibleColumns={
                                 ['categoryCode', 'headerTypeCode', 'code', 'displayValue', 'description']}
@@ -43,4 +65,4 @@ EditTemplateTag.propTypes = {
   }).isRequired
 };
 
-export default EditTemplateTag;
+export default connect(EditTemplateTag,C.META.MODULE_NAME);

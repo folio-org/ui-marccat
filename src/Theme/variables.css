@@ -33,6 +33,10 @@ i {
   font-size: var(--icons-size-medium) !important;
 }
 
+:global  i {
+  color:white
+}
+
 button svg {
   fill: rgba(0, 0, 0, 0.61) !important;
 }

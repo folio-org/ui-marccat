@@ -3,12 +3,18 @@ import PropTypes from 'prop-types';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
-import * as C from '../../../Utils';
 import { connect } from '@folio/stripes-connect';
-import {remapMultiArray} from '../../../Utils/Mapper';
+import * as C from '../../../Utils';
+import { remapMultiArray } from '../../../Utils/Mapper';
 
 
 class EditTemplateTag extends React.Component {
+  static propTypes = {
+    onToggle: PropTypes.object.isRequired,
+    accordionId: PropTypes.object.isRequired,
+    expanded: PropTypes.object.isRequired,
+  };
+
   static manifest = Object.freeze({
     query: { initialValue: {} },
     resultCount: { initialValue: C.INITIAL_RESULT_COUNT },
@@ -65,4 +71,4 @@ EditTemplateTag.propTypes = {
   }).isRequired
 };
 
-export default connect(EditTemplateTag,C.META.MODULE_NAME);
+export default connect(EditTemplateTag, C.META.MODULE_NAME);

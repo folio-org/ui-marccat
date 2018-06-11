@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
 import RadioButton from '@folio/stripes-components/lib/RadioButton';
 import { Field } from 'redux-form';
+import stripesForm from '@folio/stripes-form';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import TextField from '@folio/stripes-components/lib/TextField';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import css from './TemplateForm.css';
-import stripesForm from '@folio/stripes-form';
 
 class TemplateForm extends React.Component {
   static propTypes = {

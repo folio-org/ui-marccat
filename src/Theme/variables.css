@@ -33,8 +33,8 @@ i {
   font-size: var(--icons-size-medium) !important;
 }
 
-:global  i {
-  color:white
+:global i { /* stylelint-disable-line selector-pseudo-class-no-unknown */
+  color: #fff;
 }
 
 button svg {
@@ -45,16 +45,10 @@ button:active svg {
   fill: #fff !important;
 }
 
-section.pane {
-  transition: all 0.25s ease-in-out !important;
-}
-
 section {
-  transition: all .25s ease-in-out;
+  transition: all 0.25s ease-in-out;
 
   &.pane {
-    transition: all .25s ease-in-out;
+    transition: all 0.25s ease-in-out;
   }
 }
-
-

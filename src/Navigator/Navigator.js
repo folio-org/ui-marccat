@@ -15,12 +15,6 @@ import NavigatorEmpty from './NavigatorEmpty';
 import { TemplateView, CreateTemplate } from '../Template/';
 import { LogicalView } from '../LogicalView/';
 import css from './Navigator.css';
-import logical from '../Api/logical-views';
-import record from '../Api/template';
-import mandatory from '../Api/mandatory';
-import * as C from '../Utils/';
-import QuadFabMenu from '../Fab/QuadFabMenu';
-import RightFabMenu from '../Fab/RightFabMenu';
 import FabMenu from '../Fab/FabMenu';
 
 class Navigator extends React.Component {
@@ -42,7 +36,6 @@ class Navigator extends React.Component {
     super(props);
     this.state = {
       navigatorFixed: true,
-      showToaster: false,
       subSections: {
         searchSection: true,
         reportSection: true,
@@ -186,10 +179,12 @@ class Navigator extends React.Component {
             </Route>
           </Switch>
         </Paneset>
-        <FabMenu  {...this.props}
-          effect={'slidein'}
-          position={'br'}
-          event={'hover'} />
+        <FabMenu
+          {...this.props}
+          effect="slidein"
+          position="br"
+          event="hover"
+        />
       </div>
     );
   }

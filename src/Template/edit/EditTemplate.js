@@ -1,5 +1,7 @@
 import React from 'react';
+import _ from 'lodash';
 import stripesForm from '@folio/stripes-form';
+import PropTypes from 'prop-types';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
 import EditTemplateInfo from './section/EditTemplateInfo';
@@ -7,6 +9,9 @@ import EditTemplateTag from './section/EditTemplateTag';
 import * as C from '../../Utils';
 
 class EditTemplate extends React.Component {
+  static propTypes = {
+    selectedTemplate: PropTypes.object.isRequired
+  };
 
   static manifest = Object.freeze({
     query: { initialValue: {} },
@@ -67,7 +72,6 @@ class EditTemplate extends React.Component {
   }
 }
 
-EditTemplate.propTypes = {};
 
 export default stripesForm({
   form: 'EditTemplateForm',

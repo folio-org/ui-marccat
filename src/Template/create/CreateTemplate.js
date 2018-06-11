@@ -40,7 +40,6 @@ class CreateTemplate extends React.Component {
   });
 
 
-
   preparePaneMenu() {
     return (
       <PaneMenu {...this.props}>
@@ -50,7 +49,7 @@ class CreateTemplate extends React.Component {
   }
 
   render() {
-   const formatMsg = this.props.stripes.intl.formatMessage;
+    const formatMsg = this.props.stripes.intl.formatMessage;
 
     const { resources: { records } } = this.props; // eslint-disable-line react/prop-types
     if (!records || !records.hasLoaded) return <div />;

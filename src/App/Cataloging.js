@@ -33,7 +33,7 @@ class Cataloging extends React.Component<PropTypes> {
 
   render() {
     return (
-      <Navigator {...this.props}/>
+      <Navigator {...this.props} />
     );
   }
 }

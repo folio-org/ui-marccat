@@ -4,7 +4,7 @@ import { connect } from '@folio/stripes-connect';
 import { Navigator } from '../Navigator';
 import * as C from '../Utils/';
 
-class Cataloging extends React.Component {
+class Cataloging extends React.Component<PropTypes> {
   static propTypes = {
     stripes: PropTypes.shape({
       intl: PropTypes.object.isRequired,
@@ -27,7 +27,7 @@ class Cataloging extends React.Component {
   };
 
   static manifest = Object.freeze({
-    query: { initialValue: {} }
+    query: { initialValue: {} },
   });
 
 

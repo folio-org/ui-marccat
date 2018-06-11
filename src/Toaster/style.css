@@ -61,6 +61,12 @@
   animation-fill-mode: both;
 }
 
+.slideInRight {
+  animation-name: slideInRight;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
 .isOpen {
   display: flex;
 }
@@ -79,6 +85,14 @@
 
 .closeIcon {
   fill: white;
+}
+
+@-webkit-keyframes slide {
+  100% { margin-left: auto; }
+}
+
+@keyframes slide {
+  100% { margin-left: auto; }
 }
 
 @keyframes slideInBottom {

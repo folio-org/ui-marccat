@@ -1,18 +1,17 @@
 /* TemplateAddButton */
+
 .root {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   height: '100%';
   width: 100%;
+  margin-top: 20px;
 }
 
-.addteplate_button {
-  background-color: '#2b75bb';
-  border: '1px solid #2b75bb';
-  font-weight: 600;
-  margin-bottom: 0;
-  color: '#fff';
-  margin-right: '15px';
-  height: 36px;
-  min-height: 36px;
+.root button {
+  max-width: 200px;
+}
+
+.root hr {
+  width: 100%;
 }

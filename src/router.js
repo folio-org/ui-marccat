@@ -1,6 +1,6 @@
 import React from 'react';
 
-class CatalogingFooter extends React.Component {
+class Router extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -8,10 +8,11 @@ class CatalogingFooter extends React.Component {
 
   render() {
     return (
-      <div><span /></div>
+      <div />
     );
   }
 }
 
-export default CatalogingFooter;
+Router.propTypes = {};
 
+export default Router;

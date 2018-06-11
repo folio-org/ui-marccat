@@ -1,7 +1,7 @@
 import React from 'react';
 import css from './style/QuadFab.css';
 
-class QuadFab extends React.Component {
+class QuadFabMenu extends React.Component {
     static propTypes = {};
 
     constructor(props) {
@@ -23,6 +23,6 @@ class QuadFab extends React.Component {
     }
 }
 
-QuadFab.propTypes = {};
+QuadFabMenu.propTypes = {};
 
-export default QuadFab;
+export default QuadFabMenu;

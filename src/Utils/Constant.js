@@ -4,6 +4,7 @@ export const META = {
 };
 
   // API
+
 export const RESOURCE_TYPE = 'rest';
 export const ENDPOINT = {
   HEADERS: {
@@ -13,12 +14,29 @@ export const ENDPOINT = {
   },
   BASE_URL: 'http://127.0.0.1:8080/cataloging',
   TEMPLATE_URL: 'record-templates',
+  TEMPLATE_URL_ID: 'record-template/:{id}',
   TEMPLATE_MANDATORY: 'bibliographic/fields/mandatory',
   LOGICAL_VIEW_URL: 'logical-views',
   CATEGORY_URL: 'marc-categories',
   DEFAULT_LANG: 'eng',
   DEFAULT_PAGINATION: 20
 };
+
+export const COMMON_MANIFEST = {
+  type: RESOURCE_TYPE,
+  root: ENDPOINT.BASE_URL,
+  path: ENDPOINT.TEMPLATE_URL_ID,
+  headers: ENDPOINT.HEADERS,
+};
+
+export const INTERNAL_URL = {
+  VIEW_TEMPLATE: '/cataloging/templateList/',
+  ADD_TEMPLATE: '/cataloging/template/create',
+  EDIT_TEMPLATE: '/cataloging/template/edit/:id',
+  DELETE_TEMPLATE: '/cataloging/template/delete/:id',
+  VIEW_LOGICAL_VIEW: '/cataloging/logicalview/',
+};
+
 export const API_RESULT_JSON_KEY = {
   TEMPLATES: 'recordTemplates',
   LOGICAL_VIEW: 'views',
@@ -38,6 +56,30 @@ export const TOASTER_MESSAGE = {
   INVALID_TEMPLATE: 'INVALID_TEMPLATE',
   SAVE_FAILURE: 'SAVE_FAILURE',
   SAVE_SUCCESS: 'SAVE_SUCCESS',
+};
+
+// ANIMATIONS
+export const ANIMATION = {
+  ZOOMIN: 'zoomin',
+  SLIDEIN: 'slidein',
+  SLIDEOUT: 'slideout',
+  FADE: 'fade',
+  SLIDEIN_SPRING: 'slidein-spring',
+  FOUNTAIN: 'fountain'
+};
+
+// POSITION
+export const POSITION = {
+  TOP_RIGHT: 'tr',
+  TOP_LEFT: 'tl',
+  BOTTOM_RIGHT: 'br',
+  BOTTOM_LEFT: 'bl'
+};
+
+// EVENT
+export const EVENT = {
+  HOVER: 'hover',
+  CLICK: 'click'
 };
 
 // ERROR MEESSAGE

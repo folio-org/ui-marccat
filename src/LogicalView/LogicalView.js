@@ -2,10 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Select from '@folio/stripes-components/lib/Select';
 import { connect } from '@folio/stripes-connect';
-import * as C from '../Utils/';
+import * as C from '../Utils';
 import css from './LogicalView.css';
 import { remapCodeLongDescription } from '../Utils/Mapper';
-import CatalogingLoader from '../Loader';
 
 class LogicalView extends React.Component {
   static manifest = Object.freeze({
@@ -13,20 +12,18 @@ class LogicalView extends React.Component {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
       path: C.ENDPOINT.LOGICAL_VIEW_URL,
-      headers: C.ENDPOINT.HEADERS,
+      headers: { 'x-okapi-tenant': 'tnx' },
       records: C.API_RESULT_JSON_KEY.LOGICAL_VIEW,
       GET: {
-        params: { lang: C.ENDPOINT.DEFAULT_LANG },
+        params: { lang: 'ita' },
       },
     },
   });
-
 
   render() {
     const emptySelect =
       <div className={css.root}>
         <label htmlFor={C.LOGICAL_VIEW_SELECT.ID}>{C.LOGICAL_VIEW_SELECT.LABEL}</label>
-        <CatalogingLoader />
         <Select
           id={C.LOGICAL_VIEW_SELECT.ID}
           dataOptions={[C.LOGICAL_VIEW_SELECT.EMPTY_VALUE]}
@@ -56,4 +53,4 @@ LogicalView.propTypes = {
   resources: PropTypes.object.isRequired
 };
 
-export default connect(LogicalView, C.META.MODULE_NAME);
+export default connect(LogicalView, 'ui-cataloging');

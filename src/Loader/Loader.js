@@ -9,6 +9,7 @@ class CatalogingLoader extends React.Component {
       <div className={css.contentLoadingRow}>
         <div className={css.contentLoading}>
           <Icon icon="spinner-ellipsis" width="35px" />
+          <span className={css.noResultsMessageLabel}>Loadin...</span>
         </div>
       </div>
     );

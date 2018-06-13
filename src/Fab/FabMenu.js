@@ -15,20 +15,20 @@ class FabMenu extends React.Component {
     const { effect, event, position } = this.props;
     return (
       <Menu effect={effect} method={event} position={position}>
-        <MainButton iconResting="ion-android-menu" iconActive="ion-android-arrow-forward" />
+        <MainButton iconResting="share" iconActive="ion-android-arrow-forward" />
         <ChildButton
           icon="ion-social-github"
           label="ion-social-github"
           href="https://github.com/nobitagit/react-material-floating-button/"
         />
         <ChildButton
-          icon="ion-social-github"
-          label="ion-social-github"
+          icon="ion-social-facebook"
+          label="ion-social-facebook"
           href="https://github.com/nobitagit/react-material-floating-button/"
         />
         <ChildButton
-          icon="ion-social-github"
-          label={this.props.isChildrenVisible}
+          icon="ion-social-twitter"
+          label="ion-social-twitter"
           href="https://github.com/nobitagit/react-material-floating-button/"
         />
       </Menu>);

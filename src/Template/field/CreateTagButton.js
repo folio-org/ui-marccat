@@ -4,7 +4,7 @@ import { connect } from '@folio/stripes-connect';
 import * as C from '../../Utils';
 import css from '../styles/TemplateButton.css';
 
-class CreateTag extends React.Component {
+class CreateTagButton extends React.Component {
   render() {
     return (
       <div className={css.root}>
@@ -15,4 +15,4 @@ class CreateTag extends React.Component {
   }
 }
 
-export default connect(CreateTag, C.META.MODULE_NAME);
+export default connect(CreateTagButton, C.META.MODULE_NAME);

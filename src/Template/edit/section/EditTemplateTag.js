@@ -42,7 +42,7 @@ class EditTemplateTag extends React.Component {
     const { expanded, onToggle, accordionId } = this.props;
     return (
       <Accordion
-        label={formatMsg({ id: 'ui-cataloging.template.detail.information.title' })}
+        label={formatMsg({ id: 'ui-cataloging.template.detail.information.mandatory.table' })}
         open={expanded}
         id={accordionId}
         onToggle={onToggle}
@@ -50,7 +50,6 @@ class EditTemplateTag extends React.Component {
         <Row>
           <Col xs={12}>
             <MultiColumnList
-              loading
               contentData={obj}
               onRowClick={() => { }}
               visibleColumns={

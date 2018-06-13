@@ -1,13 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Field, reduxForm } from 'redux-form';
 import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
 import RadioButton from '@folio/stripes-components/lib/RadioButton';
-import { Field } from 'redux-form';
-import stripesForm from '@folio/stripes-form';
+import Button from '@folio/stripes-components/lib/Button';
+import { FormattedMessage } from 'react-intl';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import TextField from '@folio/stripes-components/lib/TextField';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
+import TagForm from '../form/TagForm';
+import { CreateTemplateButton } from '../';
 import css from './TemplateForm.css';
+
+function validate(values) {
+  const errors = {};
+  errors.name = {};
+
+  if (!values.name) {
+    errors.name = <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />;
+  }
+  return errors;
+}
 
 class TemplateForm extends React.Component {
   static propTypes = {
@@ -15,88 +28,69 @@ class TemplateForm extends React.Component {
       intl: PropTypes.object.isRequired,
     }).isRequired,
     field: PropTypes.array.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    pristine: PropTypes.bool,
+    submitting: PropTypes.bool,
+    onCancel: PropTypes.func,
+    initialValues: PropTypes.object,
   };
 
   constructor(props) {
     super(props);
     this.mandatoryField = this.props.field;
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
+  validate(values, props) {
+    const errors = {};
+    errors.name = {};
 
-  saveFields() {
-    return this.props.field;
+    if (!values.name) {
+      errorss.name = <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />;
+    }
+
+
+    return errors;
   }
 
-
-  getFormErrors() {
-    return null;
+  // eslint-disable-next-line class-methods-use-this
+  handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
   }
-
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-
+    const { handleSubmit, reset, submitting, pristine, handleKeyDown, stripes: { intl } } = this.props;
     return (
-      <div>
-        <form id="template-form">
-          <Row id="section-name">
-            <Col xs={6}>
-              <Field
-                label={formatMsg({ id: 'ui-cataloging.template.form.name' })}
-                name="name"
-                placeholder={formatMsg({ id: 'ui-cataloging.template.form.name' })}
-                aria-label={formatMsg({ id: 'ui-cataloging.template.form.name' })}
-                fullWidth
-                id="input-template-name"
-                component={TextField}
-                withRef
-                validationEnabled={false}
-              />
-            </Col>
-            <Col xs={6} className={css.radiobutton}>
-              <Field name="subGroup" component={RadioButtonGroup} label="Group" style={{ marginTop: '10px' }}>
-                <RadioButton label="W" id="actingSponsor001" value="W" inline />
-                <RadioButton label="E" id="actingSponsor002" value="E" inline />
-                <RadioButton label="M" id="actingSponsor003" value="M" inline />
-              </Field>
-            </Col>
-          </Row>
-          <Row id="section-info">
-            <Col xs={4}>
-              <Field
-                label={formatMsg({ id: 'ui-cataloging.template.form.code' })}
-                name="code"
-                placeholder={formatMsg({ id: 'ui-cataloging.template.form.code' })}
-                aria-label={formatMsg({ id: 'ui-cataloging.template.form.code' })}
-                fullWidth
-                id="input-template-code"
-                component={TextField}
-              />
-            </Col>
-            <Col xs={4}>
-              <Field
-                label={formatMsg({ id: 'ui-cataloging.template.form.primary.address' })}
-                name="ind1"
-                placeholder={formatMsg({ id: 'ui-cataloging.template.form.primary.address' })}
-                aria-label={formatMsg({ id: 'ui-cataloging.template.form.primary.address' })}
-                fullWidth
-                id="input-template-primary-address"
-                component={TextField}
-              />
-            </Col>
-            <Col xs={4}>
-              <Field
-                label={formatMsg({ id: 'ui-cataloging.template.form.secondary.address' })}
-                name="ind2"
-                placeholder={formatMsg({ id: 'ui-cataloging.template.form.secondary.address' })}
-                aria-label={formatMsg({ id: 'ui-cataloging.template.form.secondary.address' })}
-                fullWidth
-                id="input-template-secondary-address"
-                component={TextField}
-              />
-            </Col>
-          </Row>
-        </form>
+      <form id="template-form" onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
+        <Row id="section-name">
+          <Col xs={6}>
+            <Field
+              style={{
+              width: 100 + '%',
+              marginTop: 25
+          }}
+              label={formatMsg({ id: 'ui-cataloging.template.form.name' })}
+              name="name"
+              placeholder={formatMsg({ id: 'ui-cataloging.template.form.name' })}
+              aria-label={formatMsg({ id: 'ui-cataloging.template.form.name' })}
+              fullWidth
+              id="input-template-name"
+              withRef
+              validationEnabled={false}
+              component="input"
+            />
+          </Col>
+          <Col xs={6} className={css.radiobutton}>
+            <Field name="subGroup" component={RadioButtonGroup} label="Group" style={{ marginTop: '10px' }}>
+              <RadioButton label="W" id="actingSponsor001" value="W" inline />
+              <RadioButton label="E" id="actingSponsor002" value="E" inline />
+              <RadioButton label="M" id="actingSponsor003" value="M" inline />
+            </Field>
+          </Col>
+        </Row>
         <Row id="section-table" className={css.multilist}>
           <MultiColumnList
             contentData={this.mandatoryField}
@@ -105,11 +99,31 @@ class TemplateForm extends React.Component {
             ariaLabel="TemplateNewMandatory"
           />
         </Row>
-      </div>
+        <Row>
+          <Col xs={12}>
+            <TagForm {...this.props} />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <CreateTemplateButton disabled={pristine || submitting} />
+            <Button
+              {...this.props}
+              type="submit"
+              disabled={pristine || submitting}
+              onClick={reset}
+              buttonStyle="primary"
+              style={{ 'minHeight': '36px' }}
+            >Clear
+            </Button>
+          </Col>
+        </Row>
+      </form>
     );
   }
 }
 
-export default stripesForm({
-  form: 'templateForm',
+export default reduxForm({
+  form: 'templateForms', // a unique identifier for this form
+  validate
 })(TemplateForm);

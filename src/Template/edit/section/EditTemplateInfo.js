@@ -29,6 +29,7 @@ class EditTemplateInfo extends React.Component {
         <Row id="section-name">
           <Col xs={6}>
             <TextField
+              value={this.props.selectedTemplate.name}
               label={formatMsg({ id: 'ui-cataloging.template.form.name' })}
               name="name"
               aria-label={formatMsg({ id: 'ui-cataloging.template.form.name' })}

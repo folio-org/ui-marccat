@@ -26,6 +26,7 @@ class NavigatorEmpty extends React.Component {
     return (
       <Paneset static style={css.root}>
         <Pane
+          loading
           firstMenu={searchMenu}
           lastMenu={lastMenu}
           defaultWidth="fill"
@@ -33,10 +34,7 @@ class NavigatorEmpty extends React.Component {
           paneSub="0 result found"
           onClose={() => { }}
           appIcon={{ app: 'cataloging' }}
-        >
-          <CatalogingLoader />
-          <h1>No result found</h1>
-        </Pane>
+        />
       </Paneset>
 
     );

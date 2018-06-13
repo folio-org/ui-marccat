@@ -151,6 +151,8 @@ class TemplateView extends React.Component {
             rowMetadata={['id', 'id']}
             formatter={formatter}
             ariaLabel="TemplateView"
+            visibleColumns={
+              ['id', 'name']}
             sortedColumn="name"
             sortOrder="ascending"
             onRowClick={(c, object) => {
@@ -181,15 +183,6 @@ class TemplateView extends React.Component {
           />
         </Pane>
           }
-        {this.state.showToaster &&
-          <Toaster
-            position="bottom"
-            toasts={[{
-              message: 'rest call with success {is a test}!',
-              id: 'my-toast-id',
-              type: 'success'
-            }]}
-          />}
       </Paneset>
     );
   }

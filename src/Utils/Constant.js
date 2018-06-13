@@ -14,12 +14,17 @@ export const ENDPOINT = {
   },
   BASE_URL: 'http://127.0.0.1:8080/cataloging',
   TEMPLATE_URL: 'record-templates',
-  TEMPLATE_URL_ID: 'record-template/:{id}',
+  TEMPLATE_URL_ID: 'record-template/123',
   TEMPLATE_MANDATORY: 'bibliographic/fields/mandatory',
+  CREATE_TEMPLATE: 'record-template/:{id}',
   LOGICAL_VIEW_URL: 'logical-views',
   CATEGORY_URL: 'marc-categories',
   DEFAULT_LANG: 'eng',
   DEFAULT_PAGINATION: 20
+};
+
+export const REGEX = {
+  TAG_NAME: /^(?:\d{3})?$/
 };
 
 export const COMMON_MANIFEST = {
@@ -79,7 +84,8 @@ export const POSITION = {
 // EVENT
 export const EVENT = {
   HOVER: 'hover',
-  CLICK: 'click'
+  CLICK: 'click',
+  FOCUS: 'focus'
 };
 
 // ERROR MEESSAGE

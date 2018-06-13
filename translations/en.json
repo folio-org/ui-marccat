@@ -33,10 +33,17 @@
 
 
   "template.form.name": "Name",
-  "template.form.code": "Code",
+  "template.form.tag.code": "Code",
+  "template.form.tag.ind1": "Ind2",
+  "template.form.tag.ind2": "Ind2",
+
   "template.form.primary.address": "Primary Address",
   "template.form.secondary.address": "Secondary Address",
 
   "template.detail.information.title": "Template Information",
-  "template.detail.information.mandatory.table": "Template Mandatory Table"
+  "template.detail.information.mandatory.table": "Template Mandatory Table",
+
+  "errors.missingRequiredField": "Please fill this in to continue",
+  "errors.missingRequiredName": "Please provide a username when a password is given",
+  "errors.missingRequiredTagName": "Please provide a password when a username is given"
 }

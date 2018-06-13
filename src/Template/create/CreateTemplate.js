@@ -6,7 +6,7 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import { connect } from '@folio/stripes-connect';
 import { remapMultiArray } from '../../Utils/Mapper';
-import { TemplateForm } from '../';
+import TemplateForm from '../form/TemplateForm';
 import * as C from '../../Utils';
 
 import css from './CreateTemplate.css';
@@ -21,7 +21,13 @@ class CreateTemplate extends React.Component {
       goBack: PropTypes.func,
       pop: PropTypes.func,
       push: PropTypes.func
-    })
+    }),
+    mutator: PropTypes.shape({
+      createUser: PropTypes.shape({
+        POST: PropTypes.func.isRequired,
+      }),
+      query: PropTypes.object.isRequired,
+    }),
   };
 
   static manifest = Object.freeze({
@@ -31,13 +37,57 @@ class CreateTemplate extends React.Component {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
       path: C.ENDPOINT.TEMPLATE_MANDATORY,
-      headers: C.ENDPOINT.HEADER,
+      headers: C.ENDPOINT.HEADERS,
       records: 'fields',
       GET: {
         params: { lang: C.ENDPOINT.DEFAULT_LANG },
       },
-    }
+    },
+    createUser: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      path: C.ENDPOINT.CREATE_TEMPLATE,
+      clear: false,
+    },
   });
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      lastUpdate: null
+    };
+
+    this.create = this.create.bind(this);
+  }
+
+
+  create(template) {
+    const json = {
+      json: JSON.stringify({
+        'name': template.name,
+      }),
+      delay: 3
+    };
+
+    fetch('http://localhost:8080/cataloging/record-templates/123?type=B&lang=ita', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'x-okapi-tenant': 'tnx'
+      },
+      body: json.json
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        alert(result);
+      })
+      .catch((error) => {
+        console.log('Request failed', error);
+      });
+  }
 
 
   preparePaneMenu() {
@@ -51,7 +101,7 @@ class CreateTemplate extends React.Component {
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
 
-    const { resources: { records } } = this.props; // eslint-disable-line react/prop-types
+    const { stripes, resources: { records } } = this.props; // eslint-disable-line react/prop-types
     if (!records || !records.hasLoaded) return <div />;
     const fields = records.records;
     let obj = remapMultiArray(fields);
@@ -87,7 +137,7 @@ class CreateTemplate extends React.Component {
           appIcon={{ app: 'cataloging' }}
         >
           <div className={css.form}>
-            <TemplateForm {...this.props} field={obj} />
+            <TemplateForm {...this.props} field={obj} initialValues={{}} onSubmit={(template) => this.create(template)} />
           </div>
         </Pane>
       </Paneset>

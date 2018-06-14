@@ -36,6 +36,18 @@ class SimpleSelect extends React.Component {
     this.setState({ open: true });
   };
 
+  renderOptions() {
+    return this.props.data.map((dt) => {
+      return (
+        <MenuItem
+          value={dt.code}
+        >
+          {dt.description}
+        </MenuItem>
+      );
+    });
+  }
+
   render() {
     const { classes, title, data } = this.props;
     const item = this.props.data.map((key, i) => {
@@ -58,11 +70,7 @@ class SimpleSelect extends React.Component {
               id: 'demo-controlled-open-select',
             }}
           >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={7}>Name</MenuItem>
-            <MenuItem value={2}>Title</MenuItem>
+            {item}
           </Select>
         </FormControl>
       </form>

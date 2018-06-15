@@ -50,7 +50,7 @@ class SimpleSelect extends React.Component {
 
   render() {
     const { classes, title } = this.props;
-    const item = this.props.category;
+    const item = this.props.data;
     let options = <MenuItem>vuoto</MenuItem>;
     if (item) {
       options = item.map((element) => {
@@ -85,7 +85,7 @@ class SimpleSelect extends React.Component {
 SimpleSelect.propTypes = {
   classes: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
-  category: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
   resources: PropTypes.object.isRequired
 };
 

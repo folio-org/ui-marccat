@@ -22,9 +22,8 @@ class Category extends React.Component {
       const emptySelect = <div>Vuoto</div>;
       const { resources: { categories } } = this.props;
       if (!categories || !categories.hasLoaded) return emptySelect;
-      const data = categories.records;
       return (
-        <SimpleSelect {...this.props} category={data} title="Category" />
+        <SimpleSelect {...this.props} data={categories.records} title="Category" />
       );
     }
 }

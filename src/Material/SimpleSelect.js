@@ -37,7 +37,7 @@ class SimpleSelect extends React.Component {
   };
 
   renderOptions() {
-    return this.props.data.map((dt) => {
+    return this.props.resources.records.map((dt) => {
       return (
         <MenuItem
           value={dt.code}
@@ -49,12 +49,16 @@ class SimpleSelect extends React.Component {
   }
 
   render() {
-    const { classes, title, data } = this.props;
-    const item = this.props.data.map((key, i) => {
-      return (
-        <MenuItem value={i.key}>{i.key}</MenuItem>
-      );
-    });
+    const { classes, title } = this.props;
+    const item = this.props.category;
+    let options = <MenuItem>vuoto</MenuItem>;
+    if (item) {
+      options = item.map((element) => {
+        return (
+          <MenuItem value={element.code}>{element.description}</MenuItem>
+        );
+      });
+    }
     return (
       <form autoComplete="off">
         <FormControl className={classes.formControl}>
@@ -70,7 +74,7 @@ class SimpleSelect extends React.Component {
               id: 'demo-controlled-open-select',
             }}
           >
-            {item}
+            {options}
           </Select>
         </FormControl>
       </form>
@@ -81,7 +85,8 @@ class SimpleSelect extends React.Component {
 SimpleSelect.propTypes = {
   classes: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
-  data: PropTypes.array.isRequired
+  category: PropTypes.array.isRequired,
+  resources: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(SimpleSelect);

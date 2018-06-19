@@ -14,6 +14,7 @@ import Icon from '@folio/stripes-components/lib/Icon';
 import NavigatorEmpty from './NavigatorEmpty';
 import { TemplateView, CreateTemplate } from '../Template/';
 import { LogicalView } from '../LogicalView/';
+import { AdvancedSearch } from '../Search/';
 import css from './Navigator.css';
 import FabMenu from '../Fab/FabMenu';
 import * as C from '../Utils';
@@ -123,7 +124,7 @@ class Navigator extends React.Component {
                         />
                         <FormattedMessage id="ui-cataloging.navigator.report" />
                       </NavListItem>
-                      <NavListItem to={`${rootPath}/advancedSearch`}>
+                      <NavListItem to={`${rootPath}/report-advancedSearch`}>
                         <Icon
                           icon="search"
                           size="small"
@@ -131,7 +132,7 @@ class Navigator extends React.Component {
                         />
                         <FormattedMessage id="ui-cataloging.navigator.advancedSearch" />
                       </NavListItem>
-                      <NavListItem to="/cataloging/externalSearch">
+                      <NavListItem to="/cataloging/report-externalSearch">
                         <Icon
                           icon="search"
                           size="small"
@@ -170,7 +171,7 @@ class Navigator extends React.Component {
               <CreateTemplate {...this.props} />
             </Route>
             <Route path={`${rootPath}/advancedSearch`}>
-              <NavigatorEmpty {...this.props} id="empty_crntainer" />
+              <AdvancedSearch {...this.props} id="advanced_search" />
             </Route>
             <Route path={`${rootPath}/externalSearch`}>
               <NavigatorEmpty {...this.props} id="empty_crontainer" />

@@ -45,5 +45,10 @@
 
   "errors.missingRequiredField": "Please fill this in to continue",
   "errors.missingRequiredName": "Please provide a username when a password is given",
-  "errors.missingRequiredTagName": "Please provide a password when a username is given"
+  "errors.missingRequiredTagName": "Please provide a password when a username is given",
+
+  "search.primary": "Primary",
+  "search.secondary": "Secondary",
+  "search.indexes" : "Indexes",
+  "search.searchButton" : "Search"
 }

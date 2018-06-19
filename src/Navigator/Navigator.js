@@ -15,8 +15,7 @@ import NavigatorEmpty from './NavigatorEmpty';
 import { TemplateView, CreateTemplate } from '../Template/';
 import { LogicalView } from '../LogicalView/';
 import css from './Navigator.css';
-import FabMenu from '../Fab/FabMenu';
-import * as C from '../Utils';
+
 
 class Navigator extends React.Component {
   static propTypes = {
@@ -180,12 +179,6 @@ class Navigator extends React.Component {
             </Route>
           </Switch>
         </Paneset>
-        {/* <FabMenu
-          {...this.props}
-          effect={C.ANIMATION.SLIDEIN}
-          position={C.POSITION.BOTTOM_RIGHT}
-          event={C.EVENT.HOVER}
-          isChildrenVisible={true} */}
       </div>
     );
   }

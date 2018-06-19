@@ -5,8 +5,6 @@ import Switch from 'react-router-dom/Switch';
 import Settings from './Settings';
 import Cataloging from './App/Cataloging';
 
-import jQuery from 'jquery';
-
 
 class CatalogingRouting extends React.Component {
   static propTypes = {

@@ -4,6 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 import Button from '@folio/stripes-components/lib/Button';
 import { Row, Col } from 'react-flexbox-grid';
 import { FormattedMessage } from 'react-intl';
+import _ from 'lodash';
 import TextField from '@folio/stripes-components/lib/TextField';
 import SimpleSelect from '../../Material/SimpleSelect';
 import Category from '../../Category';
@@ -34,7 +35,9 @@ class TagForm extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
       intl: PropTypes.object.isRequired,
-    }).isRequired
+    }).isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+
   }
 
   constructor(props) {
@@ -66,13 +69,13 @@ class TagForm extends React.Component {
       name: 'rrr'
     }];
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const { handleSubmit, pristine, reset, submitting } = this.props;
+    const { handleSubmit } = this.props;
     const { isTagInputVisible } = this.state;
-    const title = this.props;
 
     return (
       <form onSubmit={handleSubmit} style={{ paddingTop: '30px' }}>
-        {isTagInputVisible && <Row>
+        {isTagInputVisible &&
+        <Row>
           <Col xs={8}>
             <Row>
               <Col xs={4}>
@@ -142,5 +145,5 @@ class TagForm extends React.Component {
 }
 export default reduxForm({
   form: 'tagForm',
-  validate // a unique identifier for this form
+  validate
 })(TagForm);

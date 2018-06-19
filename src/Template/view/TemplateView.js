@@ -8,7 +8,6 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import { EditTemplate } from '../';
-import Toaster from '../../Toaster';
 import * as C from '../../Utils';
 import css from '../styles/TemplateView.css';
 
@@ -43,7 +42,6 @@ class TemplateView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showToaster: false,
       showTemplateDetail: false,
       selectedTemplate: {}
     };
@@ -63,7 +61,6 @@ class TemplateView extends React.Component {
 
   handleRowClick() {
     this.setState({
-      showToaster: true
     });
   }
 
@@ -71,9 +68,8 @@ class TemplateView extends React.Component {
     this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE);
   }
 
-  showToaster(message) { // eslint-disable-line   no-unused-vars
+  showToaster() {
     this.setState({
-      showToaster: true
     });
   }
 

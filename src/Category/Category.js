@@ -32,4 +32,4 @@ Category.propTypes = {
   resources: PropTypes.object.isRequired
 };
 
-export default connect(Category, 'ui-cataloging');
+export default connect(Category, C.META.MODULE_NAME);

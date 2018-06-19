@@ -14,6 +14,7 @@ class EditTemplateInfo extends React.Component {
     onToggle: PropTypes.object.isRequired,
     accordionId: PropTypes.object.isRequired,
     expanded: PropTypes.object.isRequired,
+    selectedTemplate: PropTypes.object.isRequired,
   };
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;

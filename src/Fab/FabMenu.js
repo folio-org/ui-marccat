@@ -7,8 +7,7 @@ class FabMenu extends React.Component {
   static propTypes = {
     effect: PropTypes.string.isRequired,
     event: PropTypes.string.isRequired,
-    position: PropTypes.string.isRequired,
-    isChildrenVisible: PropTypes.bool.isRequired,
+    position: PropTypes.string.isRequired
   };
 
   render() {

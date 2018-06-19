@@ -186,7 +186,6 @@ class Navigator extends React.Component {
           position={C.POSITION.BOTTOM_RIGHT}
           event={C.EVENT.HOVER}
           isChildrenVisible={true} */}
-        />
       </div>
     );
   }

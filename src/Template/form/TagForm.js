@@ -6,6 +6,7 @@ import { Row, Col } from 'react-flexbox-grid';
 import { FormattedMessage } from 'react-intl';
 import TextField from '@folio/stripes-components/lib/TextField';
 import SimpleSelect from '../../Material/SimpleSelect';
+import Category from '../../Category';
 
 function validate(values) {
   const errors = {
@@ -118,7 +119,7 @@ class TagForm extends React.Component {
           <Row>
             <Row>
               <Col xs={3}>
-                <SimpleSelect {...this.props} data={data} title="Category" />
+                <Category {...this.props} title="Category" />
               </Col>
             </Row>
             <Row>

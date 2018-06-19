@@ -122,22 +122,6 @@ class Navigator extends React.Component {
                         />
                         <FormattedMessage id="ui-cataloging.navigator.report" />
                       </NavListItem>
-                      <NavListItem to={`${rootPath}/advancedSearch`}>
-                        <Icon
-                          icon="search"
-                          size="small"
-                          iconClassName="myClass"
-                        />
-                        <FormattedMessage id="ui-cataloging.navigator.advancedSearch" />
-                      </NavListItem>
-                      <NavListItem to="/cataloging/externalSearch">
-                        <Icon
-                          icon="search"
-                          size="small"
-                          iconClassName="myClass"
-                        />
-                        <FormattedMessage id="ui-cataloging.navigator.externalSearch" />
-                      </NavListItem>
                     </NavListSection>
                   </Accordion>
                   <Accordion

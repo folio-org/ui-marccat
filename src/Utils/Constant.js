@@ -19,6 +19,7 @@ export const ENDPOINT = {
   CREATE_TEMPLATE: 'record-template/:{id}',
   LOGICAL_VIEW_URL: 'logical-views',
   CATEGORY_URL: 'marc-categories',
+  INDEX_CATEGORY: 'index-categories',
   DEFAULT_LANG: 'eng',
   DEFAULT_PAGINATION: 20
 };

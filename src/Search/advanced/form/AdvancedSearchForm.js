@@ -81,5 +81,8 @@ class AdvancedSearchForm extends React.Component {
 }
 export default reduxForm({
   form: 'advancedSearchForms', // a unique identifier for this form
+  initialValues: {
+    subGroup: 'P'
+  },
   validate
 })(AdvancedSearchForm);

@@ -8,6 +8,8 @@ import { FormattedMessage } from 'react-intl';
 import TextArea from '@folio/stripes-components/lib/TextArea';
 import Button from '@folio/stripes-components/lib/Button';
 import AdvancedSearchButton from './AdvancedSearchButton';
+import ScanButton from './ScanButton';
+import IndexCategory from '../../advanced/IndexCategory';
 
 function validate(values) {
   const errors = {};
@@ -53,6 +55,7 @@ class AdvancedSearchForm extends React.Component {
             </Field>
           </Col>
           <Col xs={6}>
+            <IndexCategory {...this.props} initialValues={{}} />
           </Col>
         </Row>
         <Row>
@@ -63,6 +66,7 @@ class AdvancedSearchForm extends React.Component {
         <Row>
           <Col xs={12}>
             <AdvancedSearchButton disabled={pristine || submitting} />
+            <ScanButton disabled={pristine || submitting} />
             <Button
               {...this.props}
               type="submit"

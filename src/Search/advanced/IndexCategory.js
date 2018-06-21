@@ -5,7 +5,6 @@ import * as C from '../../Utils';
 import SimpleSelect from '../../Material/SimpleSelect';
 
 class IndexCategory extends React.Component {
-
   /* manifest with dynamic parameter. It works (as I can see on net tab) but it doesn't force re-render */
   /*
   static manifest = Object.freeze({
@@ -30,10 +29,8 @@ class IndexCategory extends React.Component {
   });
 
   render() {
-    const recordType = 'P';
-    const language = C.ENDPOINT.DEFAULT_LANG;
     const emptySelect = <div>Vuoto</div>;
-    const { resources: { categories }, mutator } = this.props;
+    const { resources: { categories } } = this.props;
     if (!categories || !categories.hasLoaded) return emptySelect;
     return (
       <SimpleSelect {...this.props} data={categories.records} title="Category" />

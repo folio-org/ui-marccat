@@ -8,6 +8,8 @@ import { FormattedMessage } from 'react-intl';
 import TextArea from '@folio/stripes-components/lib/TextArea';
 import Button from '@folio/stripes-components/lib/Button';
 import AdvancedSearchButton from './AdvancedSearchButton';
+import ScanButton from './ScanButton';
+import IndexCategory from '../../advanced/IndexCategory';
 
 function validate(values) {
   const errors = {};
@@ -29,22 +31,16 @@ class AdvancedSearchForm extends React.Component {
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
     onCancel: PropTypes.func,
-    handleKeyDown: PropTypes.func,
+    reset: PropTypes.func,
     initialValues: PropTypes.object,
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  handleKeyDown(e) {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-    }
-  }
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const { handleSubmit, reset, submitting, pristine, handleKeyDown, stripes: { intl } } = this.props;
+    const { handleSubmit, reset, submitting, pristine } = this.props;
     return (
-      <form id="search-form" onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
+      <form id="search-form" onSubmit={handleSubmit}>
         <Row>
           <Col xs={6}>
             <Field name="subGroup" component={RadioButtonGroup} label={formatMsg({ id: 'ui-cataloging.search.indexes' })}>
@@ -53,6 +49,7 @@ class AdvancedSearchForm extends React.Component {
             </Field>
           </Col>
           <Col xs={6}>
+            <IndexCategory {...this.props} initialValues={{}} />
           </Col>
         </Row>
         <Row>
@@ -63,6 +60,7 @@ class AdvancedSearchForm extends React.Component {
         <Row>
           <Col xs={12}>
             <AdvancedSearchButton disabled={pristine || submitting} />
+            <ScanButton disabled={pristine || submitting} />
             <Button
               {...this.props}
               type="submit"
@@ -81,5 +79,8 @@ class AdvancedSearchForm extends React.Component {
 }
 export default reduxForm({
   form: 'advancedSearchForms', // a unique identifier for this form
+  initialValues: {
+    subGroup: 'P'
+  },
   validate
 })(AdvancedSearchForm);

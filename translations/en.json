@@ -50,5 +50,6 @@
   "search.primary": "Primary",
   "search.secondary": "Secondary",
   "search.indexes" : "Indexes",
-  "search.searchButton" : "Search"
+  "search.searchButton" : "Search",
+  "search.scanButton" : "Scan"
 }

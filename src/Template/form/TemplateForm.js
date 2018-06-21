@@ -6,7 +6,6 @@ import RadioButton from '@folio/stripes-components/lib/RadioButton';
 import Button from '@folio/stripes-components/lib/Button';
 import { FormattedMessage } from 'react-intl';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
-import TextField from '@folio/stripes-components/lib/TextField';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import TagForm from '../form/TagForm';
 import { CreateTemplateButton } from '../';
@@ -32,6 +31,7 @@ class TemplateForm extends React.Component {
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
     onCancel: PropTypes.func,
+    reset: PropTypes.func,
     initialValues: PropTypes.object,
   };
 
@@ -41,30 +41,21 @@ class TemplateForm extends React.Component {
     this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
-  validate(values, props) {
+  validate(values) {
     const errors = {};
     errors.name = {};
 
     if (!values.name) {
-      errorss.name = <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />;
+      errors.name = <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />;
     }
-
-
     return errors;
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  handleKeyDown(e) {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-    }
   }
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const { handleSubmit, reset, submitting, pristine, handleKeyDown, stripes: { intl } } = this.props;
+    const { handleSubmit, reset, submitting, pristine } = this.props;
     return (
-      <form id="template-form" onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
+      <form id="template-form" onSubmit={handleSubmit}>
         <Row id="section-name">
           <Col xs={6}>
             <Field

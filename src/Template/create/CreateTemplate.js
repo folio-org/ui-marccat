@@ -53,9 +53,7 @@ class CreateTemplate extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      lastUpdate: null
-    };
+    this.state = {};
 
     this.create = this.create.bind(this);
   }
@@ -81,11 +79,9 @@ class CreateTemplate extends React.Component {
       .then((response) => {
         return response.json();
       })
-      .then((result) => {
-        alert(result);
+      .then(() => {
       })
-      .catch((error) => {
-        console.log('Request failed', error);
+      .catch(() => {
       });
   }
 
@@ -101,7 +97,7 @@ class CreateTemplate extends React.Component {
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
 
-    const { stripes, resources: { records } } = this.props; // eslint-disable-line react/prop-types
+    const { resources: { records } } = this.props; // eslint-disable-line react/prop-types
     if (!records || !records.hasLoaded) return <div />;
     const fields = records.records;
     let obj = remapMultiArray(fields);

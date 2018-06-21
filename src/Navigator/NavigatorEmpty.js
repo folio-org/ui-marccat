@@ -5,7 +5,6 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import { connect } from '@folio/stripes-connect';
 import css from './Navigator.css';
-import CatalogingLoader from '../Loader';
 import * as C from '../Utils';
 
 class NavigatorEmpty extends React.Component {

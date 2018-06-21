@@ -16,8 +16,6 @@ import { TemplateView, CreateTemplate } from '../Template/';
 import { LogicalView } from '../LogicalView/';
 import { AdvancedSearch } from '../Search/';
 import css from './Navigator.css';
-import FabMenu from '../Fab/FabMenu';
-import * as C from '../Utils';
 
 class Navigator extends React.Component {
   static propTypes = {
@@ -124,22 +122,6 @@ class Navigator extends React.Component {
                         />
                         <FormattedMessage id="ui-cataloging.navigator.report" />
                       </NavListItem>
-                      <NavListItem to={`${rootPath}/report-advancedSearch`}>
-                        <Icon
-                          icon="search"
-                          size="small"
-                          iconClassName="myClass"
-                        />
-                        <FormattedMessage id="ui-cataloging.navigator.advancedSearch" />
-                      </NavListItem>
-                      <NavListItem to="/cataloging/report-externalSearch">
-                        <Icon
-                          icon="search"
-                          size="small"
-                          iconClassName="myClass"
-                        />
-                        <FormattedMessage id="ui-cataloging.navigator.externalSearch" />
-                      </NavListItem>
                     </NavListSection>
                   </Accordion>
                   <Accordion
@@ -181,12 +163,6 @@ class Navigator extends React.Component {
             </Route>
           </Switch>
         </Paneset>
-        {/* <FabMenu
-          {...this.props}
-          effect={C.ANIMATION.SLIDEIN}
-          position={C.POSITION.BOTTOM_RIGHT}
-          event={C.EVENT.HOVER}
-          isChildrenVisible={true} */}
       </div>
     );
   }

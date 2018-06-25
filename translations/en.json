@@ -45,5 +45,24 @@
 
   "errors.missingRequiredField": "Please fill this in to continue",
   "errors.missingRequiredName": "Please provide a username when a password is given",
-  "errors.missingRequiredTagName": "Please provide a password when a username is given"
+  "errors.missingRequiredTagName": "Please provide a password when a username is given",
+
+  "search.primary": "Primary",
+  "search.secondary": "Secondary",
+  "search.indexes" : "Indexes",
+  "search.searchButton" : "Search",
+  "search.scanButton" : "Scan",
+  "search.andButton" : "AND",
+  "search.orButton" : "OR",
+  "search.notButton" : "NOT",
+  "search.nearButton" : "NEAR",
+  "search.wildCard" : "Wild cards",
+
+  "search.simple.NT" : "NT Note Keyword",
+  "search.simple.PW" : "PW Publ. Name Keyword",
+  "search.simple.SW" : "SW Subject Keyword",
+  "search.simple.NW" : "NW Name Keyword",
+  "search.simple.TW" : "TW Title Keyword",
+  "search.simple.AW" : "AW Any Keyword"
+
 }

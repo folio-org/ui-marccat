@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
+import _ from 'lodash';
 import Button from '@folio/stripes-components/lib/Button';
 import { Row, Col } from 'react-flexbox-grid';
 import { FormattedMessage } from 'react-intl';
-import _ from 'lodash';
 import TextField from '@folio/stripes-components/lib/TextField';
 import SimpleSelect from '../../Material/SimpleSelect';
 import Category from '../../Category';
@@ -37,7 +37,6 @@ class TagForm extends React.Component {
       intl: PropTypes.object.isRequired,
     }).isRequired,
     handleSubmit: PropTypes.func.isRequired,
-
   }
 
   constructor(props) {

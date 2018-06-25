@@ -81,7 +81,8 @@ class CreateTemplate extends React.Component {
       })
       .then(() => {
       })
-      .catch(() => {});
+      .catch(() => {
+      });
   }
 
 

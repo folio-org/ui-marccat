@@ -1,10 +1,11 @@
 import React from 'react';
 import Button from '@folio/stripes-components/lib/Button';
-import { PropTypes } from 'prop-types';
 import { connect } from '@folio/stripes-connect';
-import * as C from '../../Utils';
+import { PropTypes } from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+import * as C from '../../../Utils';
 
-class CreateTemplateButton extends React.Component {
+class ScanButton extends React.Component {
   static propTypes = {
     onClick: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,
@@ -18,10 +19,11 @@ class CreateTemplateButton extends React.Component {
         disabled={this.props.disabled}
         buttonStyle="primary"
         style={{ 'minHeight': '36px' }}
-      >Create Template
+      >
+        <FormattedMessage id="ui-cataloging.search.scanButton" />
       </Button>
     );
   }
 }
 
-export default connect(CreateTemplateButton, C.META.MODULE_NAME);
+export default connect(ScanButton, C.META.MODULE_NAME);

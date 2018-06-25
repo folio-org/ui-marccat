@@ -31,20 +31,6 @@ class FabMenu extends React.Component {
           href="https://github.com/nobitagit/react-material-floating-button/"
         />
       </Menu>);
-    // return this.props.isChildrenVisible ? (
-    //   <Menu effect={this.props.effect} method={this.props.event} position={this.props.position}>
-    //     <MainButton iconResting="ion-android-menu" iconActive="ion-android-arrow-forward" />
-    //     <ChildButton
-    //       icon="ion-social-github"
-    //       label={this.props.isChildrenVisible}
-    //       href="https://github.com/nobitagit/react-material-floating-button/"
-    //     />
-    //   </Menu>
-    // ) : (
-    //   <Menu effect={this.props.effect} method={this.props.event} position={this.props.position}>
-    //     <MainButton iconResting="ion-android-menu" iconActive="ion-android-arrow-forward" />
-    //   </Menu>
-    // );
   }
 }
 

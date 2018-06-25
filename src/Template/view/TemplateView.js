@@ -68,7 +68,7 @@ class TemplateView extends React.Component {
     this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE);
   }
 
-  showToaster() {
+  showToaster() { // eslint-disable-line   no-unused-vars
     this.setState({
     });
   }

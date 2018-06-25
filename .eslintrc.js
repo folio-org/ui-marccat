@@ -24,6 +24,7 @@ module.exports = {
     "jsx-quotes": "off",
     "no-console": "warn",
     "prefer-const": "off",
+    "react/sort-comp":"off",
     "react/no-deprecated": "off",
     "react/forbid-prop-types": "off"
   }

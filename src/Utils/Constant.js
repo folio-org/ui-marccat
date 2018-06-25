@@ -19,7 +19,8 @@ export const ENDPOINT = {
   CREATE_TEMPLATE: 'record-template/:{id}',
   LOGICAL_VIEW_URL: 'logical-views',
   CATEGORY_URL: 'marc-categories',
-  DEFAULT_LANG: 'eng',
+  INDEX_CATEGORY: 'index-categories',
+  DEFAULT_LANG: 'ita',
   DEFAULT_PAGINATION: 20
 };
 
@@ -46,7 +47,8 @@ export const API_RESULT_JSON_KEY = {
   TEMPLATES: 'recordTemplates',
   LOGICAL_VIEW: 'views',
   CATEGORIES: 'categories',
-  FIELDS: 'fields'
+  FIELDS: 'fields',
+  INDEX_CATEGORIES: 'categories',
 };
 
 export const INITIAL_RESULT_COUNT = 30;

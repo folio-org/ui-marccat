@@ -31,9 +31,9 @@ class TemplateForm extends React.Component {
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
     onCancel: PropTypes.func,
+    reset: PropTypes.func,
     initialValues: PropTypes.object,
     handleKeyDown: PropTypes.func,
-    reset: PropTypes.func
   };
 
   constructor(props) {
@@ -49,23 +49,14 @@ class TemplateForm extends React.Component {
     if (!values.name) {
       errors.name = <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />;
     }
-
-
     return errors;
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  handleKeyDown(e) {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-    }
   }
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const { handleSubmit, reset, submitting, pristine, handleKeyDown } = this.props;
+    const { handleSubmit, reset, submitting, pristine } = this.props;
     return (
-      <form id="template-form" onSubmit={handleSubmit} onKeyDown={handleKeyDown}> {/* eslint-disable-line jsx-a11y/no-noninteractive-element-interactions */}
+      <form id="template-form" onSubmit={handleSubmit}>
         <Row id="section-name">
           <Col xs={6}>
             <Field

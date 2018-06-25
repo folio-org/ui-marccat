@@ -1,13 +1,53 @@
 [ignore]
+; We fork some components by platform
+.*/*[.]android.js
+
+; Ignore "BUCK" generated dirs
+<PROJECT_ROOT>/\.buckd/
+
+; Ignore unexpected extra "@providesModule"
+.*/node_modules/.*/node_modules/fbjs/.*
+
+; Ignore duplicate module providers
+; For RN Apps installed via npm, "Libraries" folder is inside
+node_modules/react-native
+.*/Libraries/react-native/React.js
+
+; Ignore react-native
+
+.<PROJECT_ROOT>/node_modules/react-native/.*
+
+; Ignore polyfills
+.*/Libraries/polyfills/.*
+
+; Ignore metro
+.<PROJECT_ROOT>/node_modules/metro/.*
 
 [include]
 
 [libs]
-
-[lints]
+node_modules/react-native/flow/
+node_modules/react-native/flow-github/
 
 [options]
-module.name_mapper='^ui-cataloging\/\(.*\)$' -> '<PROJECT_ROOT>/\1'
-module.name_mapper='^ui-cataloging$' -> '<PROJECT_ROOT>'
+emoji=true
 
-[strict]
+munge_underscores=true
+module.name_mapper='^[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> 'RelativeImageStub'
+
+module.file_ext=.js
+module.file_ext=.jsx
+module.file_ext=.json
+
+suppress_type=$FlowIssue
+suppress_type=$FlowFixMe
+suppress_type=$FlowFixMeProps
+suppress_type=$FlowFixMeState
+
+suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe\\($\\|[^(]\\|(\\(<VERSION>\\)? *\\(site=[a-z,_]*react[a-z,_]*\\)?)\\)
+suppress_comment=\\(.\\|\n\\)*\\$FlowIssue\\((\\(<VERSION>\\)? *\\(site=[a-z,_]*react_native[a-z,_]*\\)?)\\)?:? #[0-9]+
+suppress_comment=\\(.\\|\n\\)*\\$FlowFixedInNextDeploy
+suppress_comment=\\(.\\|\n\\)*\\$FlowExpectedError
+
+[version]
+^0.75.0

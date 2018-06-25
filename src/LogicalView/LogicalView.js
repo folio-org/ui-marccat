@@ -4,7 +4,6 @@ import Select from '@folio/stripes-components/lib/Select';
 import { connect } from '@folio/stripes-connect';
 import * as C from '../Utils';
 import css from './LogicalView.css';
-import { remapCodeLongDescription } from '../Utils/Mapper';
 
 class LogicalView extends React.Component {
   static manifest = Object.freeze({
@@ -40,7 +39,7 @@ class LogicalView extends React.Component {
         <label htmlFor={C.LOGICAL_VIEW_SELECT.ID}>Database</label>
         <Select
           id={C.LOGICAL_VIEW_SELECT.ID}
-          dataOptions={(!views.records) ? emptySelect : remapCodeLongDescription(logicalViews)}
+          dataOptions={(!views.records) ? emptySelect : logicalViews}
           value={C.LOGICAL_VIEW_SELECT.INITIAL_VALUE}
           onChange={() => {}}
         />

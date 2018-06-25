@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import _ from 'lodash';
 import NavList from '@folio/stripes-components/lib/NavList';
@@ -6,7 +7,6 @@ import NavListItem from '@folio/stripes-components/lib/NavListItem';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Switch from 'react-router-dom/Switch';
-import PropTypes from 'prop-types';
 import Route from 'react-router-dom/Route';
 import { FormattedMessage } from 'react-intl';
 import { AccordionSet, Accordion } from '@folio/stripes-components/lib/Accordion';
@@ -14,25 +14,36 @@ import Icon from '@folio/stripes-components/lib/Icon';
 import NavigatorEmpty from './NavigatorEmpty';
 import { TemplateView, CreateTemplate } from '../Template/';
 import { LogicalView } from '../LogicalView/';
-import { AdvancedSearch } from '../Search/';
+import { AdvancedSearch, SimpleSearch } from '../Search/';
 import css from './Navigator.css';
 
-class Navigator extends React.Component {
-  static propTypes = {
-    stripes: PropTypes.shape({
-      connect: PropTypes.func,
-      intl: PropTypes.object,
-    }),
-    match: PropTypes.shape({
-      path: PropTypes.string,
-      id: PropTypes.string,
-    }),
-    location: PropTypes.shape({
-      pathname: PropTypes.string,
-    })
-  };
+type NavigationProps = {|
+  stripes: {
+  connect: Function,
+    intl: Object
+  },
+  match: {
+    path: string,
+      id: string
+  },
+  location: {
+    pathname: string
+  },
+  onToggleSubSection: Function,
+  handleClose: Function;
+|}
 
-  constructor(props) {
+export type NavigationState = {
+  navigatorFixed: boolean,
+  subSections: {
+    searchSection:boolean,
+    reportSection: boolean,
+    templateSection: boolean
+  }
+};
+
+class Navigator extends React.Component<NavigationProps, NavigationState> {
+  constructor(props:NavigationProps) {
     super(props);
     this.state = {
       navigatorFixed: true,
@@ -42,11 +53,11 @@ class Navigator extends React.Component {
         templateSection: true,
       },
     };
-    this.onToggleSubSection = this.onToggleSubSection.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+    (this: any).onToggleSubSection = this.onToggleSubSection.bind(this);
+    (this: any).handleClose = this.handleClose.bind(this);
   }
 
-  onToggleSubSection(newAccordionStatus) {
+  onToggleSubSection(newAccordionStatus:NavigationState) {
     this.setState((curState) => {
       const newState = _.cloneDeep(curState);
       newState.subSections = newAccordionStatus;
@@ -55,7 +66,7 @@ class Navigator extends React.Component {
   }
 
   handleClose() {
-    this.setState((curState) => {
+    this.setState((curState:NavigationState) => {
       const newState = _.cloneDeep(curState);
       newState.navigatorFixed = !this.state.navigatorFixed;
       return newState;
@@ -147,7 +158,7 @@ class Navigator extends React.Component {
               <TemplateView {...this.props} id="templrate_view_link" />
             </Route>
             <Route path={`${rootPath}/simpleSearch`}>
-              <NavigatorEmpty {...this.props} id="temprlate_view_link" />
+              <SimpleSearch {...this.props} id="simple_search" />
             </Route>
             <Route path={`${rootPath}/template/create`}>
               <CreateTemplate {...this.props} />

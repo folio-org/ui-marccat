@@ -14,7 +14,7 @@ import Icon from '@folio/stripes-components/lib/Icon';
 import NavigatorEmpty from './NavigatorEmpty';
 import { TemplateView, CreateTemplate } from '../Template/';
 import { LogicalView } from '../LogicalView/';
-import { AdvancedSearch } from '../Search/';
+import { AdvancedSearch, SimpleSearch } from '../Search/';
 import css from './Navigator.css';
 
 type NavigationProps = {|
@@ -158,7 +158,7 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
               <TemplateView {...this.props} id="templrate_view_link" />
             </Route>
             <Route path={`${rootPath}/simpleSearch`}>
-              <NavigatorEmpty {...this.props} id="temprlate_view_link" />
+              <SimpleSearch {...this.props} id="simple_search" />
             </Route>
             <Route path={`${rootPath}/template/create`}>
               <CreateTemplate {...this.props} />

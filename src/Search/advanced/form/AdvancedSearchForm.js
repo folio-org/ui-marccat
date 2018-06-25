@@ -9,6 +9,11 @@ import TextArea from '@folio/stripes-components/lib/TextArea';
 import Button from '@folio/stripes-components/lib/Button';
 import AdvancedSearchButton from './AdvancedSearchButton';
 import ScanButton from './ScanButton';
+import AndButton from './AndButton';
+import OrButton from './OrButton';
+import NotButton from './NotButton';
+import NearButton from './NearButton';
+import WildCardCheckbox from './WildCardCheckbox';
 import IndexCategory from '../../advanced/IndexCategory';
 
 function validate(values) {
@@ -35,6 +40,13 @@ class AdvancedSearchForm extends React.Component {
     initialValues: PropTypes.object,
   }
 
+  constructor() {
+    super();
+    this.state = {
+      selectedIndexType: 'P'
+    };
+  }
+
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
@@ -42,10 +54,33 @@ class AdvancedSearchForm extends React.Component {
     return (
       <form id="search-form" onSubmit={handleSubmit}>
         <Row>
-          <Col xs={6}>
+          <Col xs={3}>
             <Field name="subGroup" component={RadioButtonGroup} label={formatMsg({ id: 'ui-cataloging.search.indexes' })}>
-              <RadioButton label={formatMsg({ id: 'ui-cataloging.search.primary' })} id="actingSponsor001" value="P" inline />
-              <RadioButton label={formatMsg({ id: 'ui-cataloging.search.secondary' })} id="actingSponsor002" value="S" inline />
+              <RadioButton
+                label={formatMsg({ id: 'ui-cataloging.search.primary' })}
+                id="actingSponsor001"
+                value="P"
+                input={
+                    {
+                      checked: this.state.selectedIndexType === 'P',
+                      onChange: () => { this.setState({ selectedIndexType: 'P' }); },
+
+                    }
+                  }
+                inline
+              />
+              <RadioButton
+                label={formatMsg({ id: 'ui-cataloging.search.secondary' })}
+                id="actingSponsor002"
+                value="S"
+                input={
+                  {
+                    checked: this.state.selectedIndexType === 'S',
+                    onChange: () => { this.setState({ selectedIndexType: 's' }); },
+                  }
+                }
+                inline
+              />
             </Field>
           </Col>
           <Col xs={6}>
@@ -53,12 +88,19 @@ class AdvancedSearchForm extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={8}>
-            <TextArea />
+          <Col xs={11}>
+            <TextArea rows='8' />
           </Col>
         </Row>
         <Row>
-          <Col xs={12}>
+          <Col xs={6}>
+            <AndButton />
+            <NotButton />
+            <OrButton />
+            <NearButton />
+            <WildCardCheckbox {...this.props} />
+          </Col>
+          <Col xs={6}>
             <AdvancedSearchButton disabled={pristine || submitting} />
             <ScanButton disabled={pristine || submitting} />
             <Button
@@ -80,7 +122,6 @@ class AdvancedSearchForm extends React.Component {
 export default reduxForm({
   form: 'advancedSearchForms', // a unique identifier for this form
   initialValues: {
-    subGroup: 'P'
   },
   validate
 })(AdvancedSearchForm);

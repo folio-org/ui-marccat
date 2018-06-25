@@ -34,7 +34,7 @@
   ],
   "scripts": {
     "preinstall": "yarn clean",
-    "start": "stripes serve config/stripes.config.js",
+    "start": "yarn lint && stripes serve config/stripes.config.js",
     "start:vagrant": "stripes serve-vagrant config/stripes.config.js",
     "build": "stripes build --output ./dist/ui-cataloging-build --sourcemap",
     "build:analizer": "stripes build config/stripes.config.js ./dist/analyze/ui-cataloging-analyze --analyze --sourcemap",
@@ -44,7 +44,7 @@
     "stylelint": "stylelint --fix \"src/**/*.css\"",
     "prepublish": "mkdir config/json; node node_modules/@folio/stripes-core/util/package2md.js package.json > config/json/ModuleDescriptor.json",
     "publish": "yarn prepublish;npm publish",
-    "flow": "flow",
+    "flow": "flow src/",
     "version": "npm run changelog && git add CHANGELOG.md",
     "clean": "node script/clean.js"
   },
@@ -65,7 +65,8 @@
     "@material-ui/icons": "^1.1.0",
     "dotenv": "^5.0.1",
     "es6-promise": "^4.2.4",
-    "flow-bin": "^0.74.0",
+    "flow": "^0.2.3",
+    "flow-bin": "^0.75.0",
     "font-awesome": "^4.7.0",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.10",

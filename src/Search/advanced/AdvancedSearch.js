@@ -1,18 +1,17 @@
+/* @flow */
+import _ from 'lodash';
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from '@folio/stripes-connect';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
+import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
+import IconButton from '@folio/stripes-components/lib/IconButton';
 import AdvancedSearchForm from './form/AdvancedSearchForm';
+import { SearchProps, SearchState } from '../type';
+import css from '../Search.css';
 import * as C from '../../Utils';
 
-class AdvancedSearch extends React.Component {
-  static propTypes = {
-    stripes: PropTypes.shape({
-      connect: PropTypes.func.isRequired,
-      intl: PropTypes.object.isRequired,
-    }).isRequired,
-  };
+class AdvancedSearch extends React.Component<SearchProps, SearchState> {
 
   static manifest = Object.freeze({
     query: { initialValue: {} },
@@ -28,12 +27,39 @@ class AdvancedSearch extends React.Component {
       },
     }
   });
+
+  handleClose() {
+    this.props.history.goBack();
+  }
+
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
+
+    const lastMenu = (
+      <PaneMenu className={css.icon_plus} {...this.props}>
+        <IconButton key="icon-gear" icon="gear" />
+        <IconButton key="icon-plus-sign" icon="plus-sign" className={css.icon_plus} />
+      </PaneMenu>
+    );
+
+    const actionMenuItems = [
+      {
+        label: formatMsg({ id: 'ui-cataloging.template.create' }),
+        onClick: () => {
+          this.props.history.goBack();
+        },
+      }
+    ];
     return (
       <Paneset static>
         <Pane
+          dismissible
+          onClose={() => { return this.props.history.goBack(); }}
+          actionMenuItems={actionMenuItems}
+          lastMenu={lastMenu}
           defaultWidth="fill"
+          paneSub="search result"
+          appIcon={{ app: 'cataloging' }}
           paneTitle={formatMsg({ id: 'ui-cataloging.navigator.search' })}
         >
           <AdvancedSearchForm {...this.props} initialValues={{}} />

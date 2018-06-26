@@ -1,18 +1,16 @@
+/* @flow */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from '@folio/stripes-connect';
 import Pane from '@folio/stripes-components/lib/Pane';
+import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import Paneset from '@folio/stripes-components/lib/Paneset';
+import IconButton from '@folio/stripes-components/lib/IconButton';
 import * as C from '../../Utils';
 import SimpleSearchForm from './form/SimpleSearchForm';
+import type { SearchProps, SearchState } from '../type';
+import css from '../Search.css';
 
-class SimpleSearch extends React.Component {
-  static propTypes = {
-    stripes: PropTypes.shape({
-      connect: PropTypes.func.isRequired,
-      intl: PropTypes.object.isRequired,
-    }).isRequired
-  };
+class SimpleSearch extends React.Component<SearchProps, SearchState> {
 
   /* TO-DO fill this empty manifest */
   static manifest = Object.freeze({
@@ -22,12 +20,33 @@ class SimpleSearch extends React.Component {
     recordsSearch: {
     }
   });
+
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
+
+    const lastMenu = (
+      <PaneMenu className={css.icon_plus} {...this.props}>
+        <IconButton key="icon-gear" icon="gear" />
+        <IconButton key="icon-plus-sign" icon="plus-sign" className={css.icon_plus} />
+      </PaneMenu>
+    );
+
+    const actionMenuItems = [
+      {
+        label: formatMsg({ id: 'ui-cataloging.template.create' }),
+        onClick: () => {
+          this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE);
+        },
+      }
+    ];
     return (
       <Paneset static>
         <Pane
+          actionMenuItems={actionMenuItems}
+          lastMenu={lastMenu}
           defaultWidth="fill"
+          paneSub="search result"
+          appIcon={{ app: 'cataloging' }}
           paneTitle={formatMsg({ id: 'ui-cataloging.navigator.simpleSearch' })}
         >
           <SimpleSearchForm {...this.props} initialValues={{}} />

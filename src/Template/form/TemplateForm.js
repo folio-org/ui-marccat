@@ -33,12 +33,12 @@ class TemplateForm extends React.Component {
     onCancel: PropTypes.func,
     reset: PropTypes.func,
     initialValues: PropTypes.object,
+    handleKeyDown: PropTypes.func,
   };
 
   constructor(props) {
     super(props);
     this.mandatoryField = this.props.field;
-    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   validate(values) {

@@ -18,6 +18,7 @@ module.exports = {
     Promise: true
   },
   rules: {
+    "padded-blocks":"off",
     "arrow-body-style": "off",
     "comma-dangle": "off",
     "import/no-extraneous-dependencies": "off",

@@ -39,7 +39,6 @@ class TemplateForm extends React.Component {
   constructor(props) {
     super(props);
     this.mandatoryField = this.props.field;
-    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   validate(values) {

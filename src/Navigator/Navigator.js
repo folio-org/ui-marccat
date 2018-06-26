@@ -19,9 +19,9 @@ import { NavigationProps, NavigationState } from './type';
 import css from './Navigator.css';
 
 export class Nav {
-  static registerScreen(props) {
+  static registerScreen(props, rootPath) {
     return (
-      <Route path="cataloging/templateList">
+      <Route path={`${rootPath}/templateList`}>
         <TemplateView {...props} id="templrate_view_link" />
       </Route>);
   }
@@ -140,7 +140,7 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
               </NavList>
             </Pane>}
           <Switch>
-            {Nav.registerScreen(this.props)}
+            {Nav.registerScreen(this.props, rootPath)}
 
             <Route path={`${rootPath}/simpleSearch`}>
               <SimpleSearch {...this.props} id="simple_search" />

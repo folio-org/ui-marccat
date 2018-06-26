@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '@folio/stripes-components/lib/Button';
-import { connect } from '@folio/stripes-connect';
 import { PropTypes } from 'prop-types';
+import { connect } from '@folio/stripes-connect';
 import * as C from '../../Utils';
 
 class CreateTemplateButton extends React.Component {

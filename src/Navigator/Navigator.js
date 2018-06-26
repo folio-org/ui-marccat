@@ -15,37 +15,23 @@ import NavigatorEmpty from './NavigatorEmpty';
 import { TemplateView, CreateTemplate } from '../Template/';
 import { LogicalView } from '../LogicalView/';
 import { AdvancedSearch, SimpleSearch } from '../Search/';
+import { NavigationProps, NavigationState } from './type';
 import css from './Navigator.css';
 
-type NavigationProps = {|
-  stripes: {
-  connect: Function,
-    intl: Object
-  },
-  match: {
-    path: string,
-      id: string
-  },
-  location: {
-    pathname: string
-  },
-  onToggleSubSection: Function,
-  handleClose: Function;
-|}
-
-export type NavigationState = {
-  navigatorFixed: boolean,
-  subSections: {
-    searchSection:boolean,
-    reportSection: boolean,
-    templateSection: boolean
+export class Nav {
+  static registerScreen(props) {
+    return (
+      <Route path="cataloging/templateList">
+        <TemplateView {...props} id="templrate_view_link" />
+      </Route>);
   }
-};
+}
 
 class Navigator extends React.Component<NavigationProps, NavigationState> {
+
   constructor(props:NavigationProps) {
     super(props);
-    this.state = {
+    (this:NavigationState).state = {
       navigatorFixed: true,
       subSections: {
         searchSection: true,
@@ -58,7 +44,7 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
   }
 
   onToggleSubSection(newAccordionStatus:NavigationState) {
-    this.setState((curState) => {
+    this.setState((curState:NavigationState) => {
       const newState = _.cloneDeep(curState);
       newState.subSections = newAccordionStatus;
       return newState;
@@ -79,7 +65,7 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
     return (
       <div className={css.container}>
         <Paneset static>
-          {this.state.navigatorFixed &&
+          {(this:NavigationState).state.navigatorFixed &&
             <Pane
               dismissible
               onClose={this.handleClose}
@@ -154,9 +140,8 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
               </NavList>
             </Pane>}
           <Switch>
-            <Route path={`${rootPath}/templateList`}>
-              <TemplateView {...this.props} id="templrate_view_link" />
-            </Route>
+            {Nav.registerScreen(this.props)}
+
             <Route path={`${rootPath}/simpleSearch`}>
               <SimpleSearch {...this.props} id="simple_search" />
             </Route>

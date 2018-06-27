@@ -15,7 +15,6 @@ import NavigatorEmpty from './NavigatorEmpty';
 import { TemplateView, CreateTemplate } from '../Template/';
 import { LogicalView } from '../LogicalView/';
 import { AdvancedSearch, SimpleSearch } from '../Search/';
-import SearchResults from '../Search/SearchResults';
 import { NavigationProps, NavigationState } from './type';
 import css from './Navigator.css';
 
@@ -112,7 +111,7 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
                     label={formatMsg({ id: 'ui-cataloging.navigator.reportistics' })}
                   >
                     <NavListSection activeLink={`${this.props.location.pathname}`}>
-                      <NavListItem to={`${rootPath}/searchResults`}>
+                      <NavListItem to={`${rootPath}/reportistics`}>
                         <Icon
                           icon="search"
                           size="small"
@@ -157,10 +156,6 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
             </Route>
             <Route path={`${rootPath}`}>
               <NavigatorEmpty {...this.props} id="empty_corntainer" />
-            </Route>
-
-            <Route path={`${rootPath}/searchResults`}>
-              <SearchResults {...this.props} id="search_results" />
             </Route>
           </Switch>
         </Paneset>

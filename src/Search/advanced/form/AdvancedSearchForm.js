@@ -50,9 +50,9 @@ class AdvancedSearchForm extends React.Component {
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const { reset, submitting, pristine } = this.props;
+    const { handleSubmit, reset, submitting, pristine } = this.props;
     return (
-      <form id="search-form">
+      <form id="search-form" onSubmit={handleSubmit}>
         <Row>
           <Col xs={3}>
             <Field name="subGroup" component={RadioButtonGroup} label={formatMsg({ id: 'ui-cataloging.search.indexes' })}>
@@ -101,7 +101,7 @@ class AdvancedSearchForm extends React.Component {
             <WildCardCheckbox {...this.props} />
           </Col>
           <Col xs={6}>
-            <AdvancedSearchButton />
+            <AdvancedSearchButton disabled={pristine || submitting} />
             <ScanButton disabled={pristine || submitting} />
             <Button
               {...this.props}

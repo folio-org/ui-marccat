@@ -1,5 +1,5 @@
 /* @flow */
-type NavigationProps = {|
+export type NavigationProps = {|
   stripes: {
   connect: Function,
     intl: Object

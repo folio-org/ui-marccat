@@ -1,0 +1,2 @@
+type RestricionProps = {||};
+type RestricionRouterState = {||};

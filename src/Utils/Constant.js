@@ -41,6 +41,7 @@ export const INTERNAL_URL = {
   EDIT_TEMPLATE: '/cataloging/template/edit/:id',
   DELETE_TEMPLATE: '/cataloging/template/delete/:id',
   VIEW_LOGICAL_VIEW: '/cataloging/logicalview/',
+  SEARCH: '/cataloging/searchResults',
 };
 
 export const API_RESULT_JSON_KEY = {

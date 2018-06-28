@@ -101,7 +101,7 @@ class AdvancedSearchForm extends React.Component {
             <WildCardCheckbox {...this.props} />
           </Col>
           <Col xs={6}>
-            <AdvancedSearchButton disabled={pristine || submitting} />
+            <AdvancedSearchButton {...this.props} />
             <ScanButton disabled={pristine || submitting} />
             <Button
               {...this.props}

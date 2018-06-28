@@ -14,7 +14,7 @@ import Icon from '@folio/stripes-components/lib/Icon';
 import NavigatorEmpty from './NavigatorEmpty';
 import { TemplateView, CreateTemplate } from '../Template/';
 import { LogicalView } from '../LogicalView/';
-import { AdvancedSearch, SimpleSearch } from '../Search/';
+import { AdvancedSearch, SimpleSearch, SearchResults } from '../Search/';
 import type { NavigationProps, NavigationState } from './type';
 import Router from '../router';
 import css from './Navigator.css';
@@ -159,6 +159,9 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
             </Route>
             <Route path={`${rootPath}/advancedSearch`}>
               <AdvancedSearch {...this.props} id="advanced_search" />
+            </Route>
+            <Route path={`${rootPath}/searchResults`}>
+              <SearchResults {...this.props} id="search_result" />
             </Route>
             <Route path={`${rootPath}/externalSearch`}>
               <NavigatorEmpty {...this.props} id="empty_crontainer" />

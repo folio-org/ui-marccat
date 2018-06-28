@@ -23,7 +23,6 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
 
   constructor(props: NavigationProps) {
     super(props);
-    r;
     this.state = {
       navigatorFixed: true,
       subSections: {
@@ -125,7 +124,7 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
                           size="small"
                           iconClassName="myClass"
                         />
-                        {'Loade from file'}
+                        {'Loade from file'} 
                       </NavListItem>
                       <NavListItem to={`${rootPath}/templateList`}>
                         <Icon

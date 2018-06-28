@@ -31,7 +31,7 @@ class TemplateView extends React.Component {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
       path: C.ENDPOINT.TEMPLATE_URL,
-      headers: { 'x-okapi-tenant': 'tnx' },
+      headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.TEMPLATES,
       GET: {
         params: { lang: 'ita', type: 'B' },
@@ -79,7 +79,6 @@ class TemplateView extends React.Component {
     const { resources: { recordsTemplates } } = this.props; // eslint-disable-line react/prop-types
     if (!recordsTemplates || !recordsTemplates.hasLoaded) return <div />;
     const templates = recordsTemplates.records;
-
     const formatter = {
       'Id: id': x => _.get(x, ['id']),
       'name: name': x => _.get(x, ['name']),

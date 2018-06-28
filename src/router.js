@@ -7,12 +7,8 @@
 import React from 'react';
 import Route from 'react-router-dom/Route';
 
-export type RouterEvent = {|
-  registerScreen: (path:string, component:React.Component<any>)=> void;
-|};
-
-export type RouterProps = {||};
-export type RouterState = {||};
+type RouterProps = {||};
+type RouterState = {||};
 
 export default class Router<P: RouterProps, S: RouterState, Z: *> {
   static registerScreen(path:string, props, comp:React.StatelessFunctionalComponent<any>, id:string) :React.Component<any> {

@@ -1,5 +1,5 @@
-@import 'http://nobitagit.github.io/react-material-floating-button/mfb.min.css';
-@import 'http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css';
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+@import 'https://fonts.googleapis.com/css?family=Roboto:300,400,500';
 
 :root {
   --background-gray: rgba(0, 0, 0, 0.62);

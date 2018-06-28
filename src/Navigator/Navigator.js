@@ -13,19 +13,10 @@ import { AccordionSet, Accordion } from '@folio/stripes-components/lib/Accordion
 import Icon from '@folio/stripes-components/lib/Icon';
 import NavigatorEmpty from './NavigatorEmpty';
 import { TemplateView, CreateTemplate } from '../Template/';
-import { LogicalView } from '../LogicalView/';
 import { AdvancedSearch, SimpleSearch } from '../Search/';
 import { NavigationProps, NavigationState } from './type';
 import css from './Navigator.css';
 
-export class Nav {
-  static registerScreen(props) {
-    return (
-      <Route path="cataloging/templateList">
-        <TemplateView {...props} id="templrate_view_link" />
-      </Route>);
-  }
-}
 
 class Navigator extends React.Component<NavigationProps, NavigationState> {
 
@@ -72,7 +63,6 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
               defaultWidth="20%"
               paneTitle={formatMsg({ id: 'ui-cataloging.navigator.title' })}
             >
-              <LogicalView {...this.props} id="logical_view_link" />
               <NavList>
                 <AccordionSet accordionStatus={this.state.subSections} onToggle={this.onToggleSubSection}>
                   <Accordion
@@ -126,7 +116,7 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
                     label={formatMsg({ id: 'ui-cataloging.navigator.template' })}
                   >
                     <NavListSection activeLink={`${this.props.location.pathname}`}>
-                      <NavListItem to={`${rootPath}/templateList`}>
+                      <NavListItem to={`${rootPath}/templatelist`}>
                         <Icon
                           icon="archive"
                           size="small"
@@ -140,8 +130,6 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
               </NavList>
             </Pane>}
           <Switch>
-            {Nav.registerScreen(this.props)}
-
             <Route path={`${rootPath}/simpleSearch`}>
               <SimpleSearch {...this.props} id="simple_search" />
             </Route>
@@ -152,7 +140,10 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
               <AdvancedSearch {...this.props} id="advanced_search" />
             </Route>
             <Route path={`${rootPath}/externalSearch`}>
-              <NavigatorEmpty {...this.props} id="empty_crontainer" />
+              <TemplateView {...this.props} id="template_view" />
+            </Route>
+            <Route path={`${rootPath}/templatelist`}>
+              <TemplateView {...this.props} id="empty_crontainer" />
             </Route>
             <Route path={`${rootPath}`}>
               <NavigatorEmpty {...this.props} id="empty_corntainer" />

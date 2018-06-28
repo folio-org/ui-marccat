@@ -36,7 +36,9 @@ export const COMMON_MANIFEST = {
 };
 
 export const INTERNAL_URL = {
-  VIEW_TEMPLATE: '/cataloging/templateList/',
+  SETTINGS_GENERAL: '/settings/',
+  SETTINGS_LOGICAL_VIEW: '/logicalview',
+  VIEW_TEMPLATE: '/cataloging/templatelist/',
   ADD_TEMPLATE: '/cataloging/template/create',
   EDIT_TEMPLATE: '/cataloging/template/edit/:id',
   DELETE_TEMPLATE: '/cataloging/template/delete/:id',

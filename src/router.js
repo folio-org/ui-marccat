@@ -2,11 +2,6 @@
 import React from 'react';
 import Route from 'react-router-dom/Route';
 
-
-type RouterEvent = {|
-  registerScreen: (path:string, component:React.Component<any>)=> void;
-|};
-
 type RouterProps = {||};
 type RouterState = {||};
 

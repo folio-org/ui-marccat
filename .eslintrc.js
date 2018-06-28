@@ -19,6 +19,7 @@ module.exports = {
   },
   rules: {
     "padded-blocks":"off",
+    "import/prefer-default-export":"off",
     "arrow-body-style": "off",
     "comma-dangle": "off",
     "import/no-extraneous-dependencies": "off",

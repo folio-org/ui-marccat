@@ -14,24 +14,16 @@ import Icon from '@folio/stripes-components/lib/Icon';
 import NavigatorEmpty from './NavigatorEmpty';
 import { TemplateView, CreateTemplate } from '../Template/';
 import { LogicalView } from '../LogicalView/';
-import { AdvancedSearch, SimpleSearch } from '../Search/';
-import { NavigationProps, NavigationState } from './type';
+import { AdvancedSearch, SimpleSearch, SearchResults } from '../Search/';
+import type { NavigationProps, NavigationState } from './type';
+import Router from '../router';
 import css from './Navigator.css';
-
-export class Nav {
-  static registerScreen(props) {
-    return (
-      <Route path="cataloging/templateList">
-        <TemplateView {...props} id="templrate_view_link" />
-      </Route>);
-  }
-}
 
 class Navigator extends React.Component<NavigationProps, NavigationState> {
 
-  constructor(props:NavigationProps) {
+  constructor(props: NavigationProps) {
     super(props);
-    (this:NavigationState).state = {
+    this.state = {
       navigatorFixed: true,
       subSections: {
         searchSection: true,
@@ -43,8 +35,8 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
     (this: any).handleClose = this.handleClose.bind(this);
   }
 
-  onToggleSubSection(newAccordionStatus:NavigationState) {
-    this.setState((curState:NavigationState) => {
+  onToggleSubSection(newAccordionStatus: NavigationState) {
+    this.setState((curState: NavigationState) => {
       const newState = _.cloneDeep(curState);
       newState.subSections = newAccordionStatus;
       return newState;
@@ -52,7 +44,7 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
   }
 
   handleClose() {
-    this.setState((curState:NavigationState) => {
+    this.setState((curState: NavigationState) => {
       const newState = _.cloneDeep(curState);
       newState.navigatorFixed = !this.state.navigatorFixed;
       return newState;
@@ -65,7 +57,7 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
     return (
       <div className={css.container}>
         <Paneset static>
-          {(this:NavigationState).state.navigatorFixed &&
+          {(this: NavigationState).state.navigatorFixed &&
             <Pane
               dismissible
               onClose={this.handleClose}
@@ -132,6 +124,22 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
                           size="small"
                           iconClassName="myClass"
                         />
+                        {'Loade from file'}
+                      </NavListItem>
+                      <NavListItem to={`${rootPath}/templateList`}>
+                        <Icon
+                          icon="archive"
+                          size="small"
+                          iconClassName="myClass"
+                        />
+                        {'Show Template Loaded'}
+                      </NavListItem>
+                      <NavListItem to={`${rootPath}/templateList`}>
+                        <Icon
+                          icon="archive"
+                          size="small"
+                          iconClassName="myClass"
+                        />
                         <FormattedMessage id="ui-cataloging.navigator.templateList" />
                       </NavListItem>
                     </NavListSection>
@@ -140,8 +148,9 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
               </NavList>
             </Pane>}
           <Switch>
-            {Nav.registerScreen(this.props)}
-
+            <Route path={`${rootPath}/templateView`}>
+              <TemplateView {...this.props} id="template_biew" />
+            </Route>
             <Route path={`${rootPath}/simpleSearch`}>
               <SimpleSearch {...this.props} id="simple_search" />
             </Route>
@@ -150,6 +159,9 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
             </Route>
             <Route path={`${rootPath}/advancedSearch`}>
               <AdvancedSearch {...this.props} id="advanced_search" />
+            </Route>
+            <Route path={`${rootPath}/searchResults`}>
+              <SearchResults {...this.props} id="search_result" />
             </Route>
             <Route path={`${rootPath}/externalSearch`}>
               <NavigatorEmpty {...this.props} id="empty_crontainer" />

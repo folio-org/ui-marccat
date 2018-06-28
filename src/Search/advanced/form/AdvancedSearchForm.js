@@ -40,13 +40,20 @@ class AdvancedSearchForm extends React.Component {
     initialValues: PropTypes.object,
   }
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      selectedIndexType: 'P'
+      indexTypeP: true,
     };
+    this.handleRadio = this.handleRadio.bind(this);
   }
 
+  handleRadio(e) {
+    const value = (e.target.value === 'P');
+    this.setState({
+      indexTypeP: value,
+    });
+  }
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
@@ -55,30 +62,21 @@ class AdvancedSearchForm extends React.Component {
       <form id="search-form" onSubmit={handleSubmit}>
         <Row>
           <Col xs={3}>
-            <Field name="subGroup" component={RadioButtonGroup} label={formatMsg({ id: 'ui-cataloging.search.indexes' })}>
+            <Field name="indexRadio" component={RadioButtonGroup} label={formatMsg({ id: 'ui-cataloging.search.indexes' })}>
               <RadioButton
                 label={formatMsg({ id: 'ui-cataloging.search.primary' })}
                 id="actingSponsor001"
                 value="P"
-                input={
-                    {
-                      checked: this.state.selectedIndexType === 'P',
-                      onChange: () => { this.setState({ selectedIndexType: 'P' }); },
-
-                    }
-                  }
+                checked={this.state.indexTypeP}
+                onChange={this.handleRadio}
                 inline
               />
               <RadioButton
                 label={formatMsg({ id: 'ui-cataloging.search.secondary' })}
                 id="actingSponsor002"
                 value="S"
-                input={
-                  {
-                    checked: this.state.selectedIndexType === 'S',
-                    onChange: () => { this.setState({ selectedIndexType: 's' }); },
-                  }
-                }
+                checked={!this.state.indexTypeP}
+                onChange={this.handleRadio}
                 inline
               />
             </Field>
@@ -101,7 +99,7 @@ class AdvancedSearchForm extends React.Component {
             <WildCardCheckbox {...this.props} />
           </Col>
           <Col xs={6}>
-            <AdvancedSearchButton disabled={pristine || submitting} />
+            <AdvancedSearchButton {...this.props} />
             <ScanButton disabled={pristine || submitting} />
             <Button
               {...this.props}
@@ -122,6 +120,7 @@ class AdvancedSearchForm extends React.Component {
 export default reduxForm({
   form: 'advancedSearchForms', // a unique identifier for this form
   initialValues: {
+    name: 'indexRadio', value: 'P'
   },
   validate
 })(AdvancedSearchForm);

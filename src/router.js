@@ -1,26 +1,38 @@
-// @flow
+/**
+ * @flow
+ * author: Christian Chiama
+ * comapany: @Cult
+ * project: Folio Project
+ */
 import React from 'react';
 import Route from 'react-router-dom/Route';
 
-
-type RouterEvent = {|
+export type RouterEvent = {|
   registerScreen: (path:string, component:React.Component<any>)=> void;
 |};
 
-type RouterProps = {||};
-type RouterState = {||};
+export type RouterProps = {||};
+export type RouterState = {||};
 
-export default class Router extends React.Component<RouterProps, RouterState> {
-  render() {
-    const comp = <div />;
-    return (
-      this.registerScreen('', {}, comp, 'rr')
-    );
-  }
-  registerScreen(path:string, props, component:React.Component<any>, id:string) :React.Component<any> {
+export default class Router<P: RouterProps, S: RouterState, Z: *> {
+  static registerScreen(path:string, props, comp:React.StatelessFunctionalComponent<any>, id:string) :React.Component<any> {
     return (
       <Route path={path}>
         <component {...props} id={id} />
       </Route>);
+  }
+
+
+  /**
+  *
+  * @param {*} path
+  * @param {*} props
+  * @param {*} Component
+  * @param {*} id
+  */
+  static registerView(path?:string, props, Component:React.StatelessFunctionalComponent<any>, id:string) :React.Component<any> {
+    return (
+      <div />
+    );
   }
 }

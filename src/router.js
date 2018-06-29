@@ -1,21 +1,32 @@
-// @flow
+/**
+ * @flow
+ * author: Christian Chiama
+ * comapany: @Cult
+ * project: Folio Project
+ */
 import React from 'react';
 import Route from 'react-router-dom/Route';
 
-type RouterProps = {||};
-type RouterState = {||};
 
-export default class Router extends React.Component<RouterProps, RouterState> {
-  render() {
-    const comp = <div />;
-    return (
-      this.registerScreen('', {}, comp, 'rr')
-    );
-  }
-  registerScreen(path:string, props, component:React.Component<any>, id:string) :React.Component<any> {
+export default class Router<P = {}, S = {}> {
+  static registerScreen(path:string, props:P, state: S, comp:React.StatelessFunctionalComponent<any>) :React.Component<any> { // eslint-disable-line no-unused-vars
     return (
       <Route path={path}>
-        <component {...props} id={id} />
+        <component {...props} />
       </Route>);
+  }
+
+
+  /**
+  *
+  * @param {*} path
+  * @param {*} props
+  * @param {*} Component
+  * @param {*} id
+  */
+  static registerView(path?:string, props, Component:React.StatelessFunctionalComponent<any>) :React.Component<any> { // eslint-disable-line no-unused-vars
+    return (
+      <div />
+    );
   }
 }

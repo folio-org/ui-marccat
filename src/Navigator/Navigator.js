@@ -12,6 +12,7 @@ import { FormattedMessage } from 'react-intl';
 import { AccordionSet, Accordion } from '@folio/stripes-components/lib/Accordion';
 import Icon from '@folio/stripes-components/lib/Icon';
 import NavigatorEmpty from './NavigatorEmpty';
+import SearchResults from '../Search/SearchResults';
 import { TemplateView, CreateTemplate } from '../Template/';
 import { AdvancedSearch, SimpleSearch } from '../Search/';
 import { NavigationProps, NavigationState } from './type';
@@ -20,9 +21,9 @@ import css from './Navigator.css';
 
 class Navigator extends React.Component<NavigationProps, NavigationState> {
 
-  constructor(props:NavigationProps) {
+  constructor(props: NavigationProps) {
     super(props);
-    (this:NavigationState).state = {
+    this.state = {
       navigatorFixed: true,
       subSections: {
         searchSection: true,
@@ -34,8 +35,8 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
     (this: any).handleClose = this.handleClose.bind(this);
   }
 
-  onToggleSubSection(newAccordionStatus:NavigationState) {
-    this.setState((curState:NavigationState) => {
+  onToggleSubSection(newAccordionStatus: NavigationState) {
+    this.setState((curState: NavigationState) => {
       const newState = _.cloneDeep(curState);
       newState.subSections = newAccordionStatus;
       return newState;
@@ -43,7 +44,7 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
   }
 
   handleClose() {
-    this.setState((curState:NavigationState) => {
+    this.setState((curState: NavigationState) => {
       const newState = _.cloneDeep(curState);
       newState.navigatorFixed = !this.state.navigatorFixed;
       return newState;
@@ -56,7 +57,7 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
     return (
       <div className={css.container}>
         <Paneset static>
-          {(this:NavigationState).state.navigatorFixed &&
+          {(this: NavigationState).state.navigatorFixed &&
             <Pane
               dismissible
               onClose={this.handleClose}
@@ -122,6 +123,22 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
                           size="small"
                           iconClassName="myClass"
                         />
+                        {'Loaded from file'}
+                      </NavListItem>
+                      <NavListItem to={`${rootPath}/templateLoaded`}>
+                        <Icon
+                          icon="archive"
+                          size="small"
+                          iconClassName="myClass"
+                        />
+                        {'Show Template Loaded'}
+                      </NavListItem>
+                      <NavListItem to={`${rootPath}/templateList`}>
+                        <Icon
+                          icon="archive"
+                          size="small"
+                          iconClassName="myClass"
+                        />
                         <FormattedMessage id="ui-cataloging.navigator.templateList" />
                       </NavListItem>
                     </NavListSection>
@@ -138,6 +155,9 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
             </Route>
             <Route path={`${rootPath}/advancedSearch`}>
               <AdvancedSearch {...this.props} id="advanced_search" />
+            </Route>
+            <Route path={`${rootPath}/searchResults`}>
+              <SearchResults {...this.props} id="search_result" />
             </Route>
             <Route path={`${rootPath}/externalSearch`}>
               <TemplateView {...this.props} id="template_view" />

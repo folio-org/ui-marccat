@@ -15,14 +15,8 @@ type VersionState = {||};
 
 class Version extends React.Component<VersionProps, VersionState> {
 
-  constructor(props) {
-    super(props);
-  }
-
-
   render() {
     const { id, appTitle, version, onClose, isOpen = false } = this.props;
-    console.log(this.props);
     return (
       <Modal id={id} onClose={onClose} open={isOpen} size="small" label={appTitle} dismissible>
         <p>{appTitle}</p>

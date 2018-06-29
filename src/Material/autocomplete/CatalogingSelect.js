@@ -13,16 +13,16 @@ import ClearIcon from '@material-ui/icons/Clear';
 import Chip from '@material-ui/core/Chip';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
-import styles from '../Material/autocomplete/Style';
+import styles from './Style';
 
 
 class Option extends React.Component {
   handleClick = event => {
-    this.props.onSelect(this.props.option, event);
+    this.props.onSelect(this.props.option, event); // eslint-disable-line react/prop-types
   };
 
   render() {
-    const { children, isFocused, isSelected, onFocus } = this.props;
+    const { children, isFocused, isSelected, onFocus } = this.props; // eslint-disable-line react/prop-types
 
     return (
       <MenuItem
@@ -41,7 +41,7 @@ class Option extends React.Component {
 }
 
 function SelectWrapped(props) {
-  const { classes, ...other } = props;
+  const { classes, ...other } = props; // eslint-disable-line react/prop-types
   return (
     <Select
       optionComponent={Option}
@@ -80,8 +80,8 @@ function SelectWrapped(props) {
 
 class CatalogingSelect extends React.Component {
   state = {
-    single: null,
-    multi: null,
+    single: null, // eslint-disable-line react/no-unused-state
+    multi: null, // eslint-disable-line react/no-unused-state
     multiLabel: null,
   };
 
@@ -92,7 +92,7 @@ class CatalogingSelect extends React.Component {
   };
 
   render() {
-    const { classes, options, label = 'Database' } = this.props;
+    const { classes, options, label = 'Database' } = this.props; // eslint-disable-line react/prop-types
 
     return (
       <div className={classes.root}>
@@ -124,8 +124,7 @@ class CatalogingSelect extends React.Component {
 }
 
 CatalogingSelect.propTypes = {
-  classes: PropTypes.object.isRequired,
-  pippo: PropTypes.object
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(CatalogingSelect);

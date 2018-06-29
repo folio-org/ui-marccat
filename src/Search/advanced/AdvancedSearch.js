@@ -7,7 +7,7 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import AdvancedSearchForm from './form/AdvancedSearchForm';
 import { SearchProps, SearchState } from '../type';
-import IntegrationReactSelect from '../../LogicalView/Select';
+import { RestrictionView } from '../restriction/';
 import css from '../Search.css';
 import * as C from '../../Utils';
 
@@ -28,8 +28,33 @@ class AdvancedSearch extends React.Component<SearchProps, SearchState> {
     }
   });
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      showRestrictionSettings: false,
+    };
+    this.connectedRestrictionSettingsView = props.stripes.connect(RestrictionView);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleCloseRestrictionPanel = this.handleCloseRestrictionPanel.bind(this);
+  }
+
+  // RICORDARSI DI EFFETTUARE IL BIND NEL COSTRUTTORE DEI METODI
+  // this.handleClick = this.handleClick.bind(this);
+  // ALTRIMENTI NON VENGONO AGGANCIATI
   handleClose() {
     this.props.history.goBack();
+  }
+
+  handleCloseRestrictionPanel() {
+    this.setState({
+      showRestrictionSettings: false
+    });
+  }
+
+  handleClick() {
+    this.setState({
+      showRestrictionSettings: true
+    });
   }
 
   render() {
@@ -37,7 +62,7 @@ class AdvancedSearch extends React.Component<SearchProps, SearchState> {
 
     const lastMenu = (
       <PaneMenu className={css.icon_plus} {...this.props}>
-        <IconButton key="icon-gear" icon="gear" />
+        <IconButton key="icon-gear" icon="gear" onClick={this.handleClick} />
         <IconButton key="icon-plus-sign" icon="plus-sign" className={css.icon_plus} />
       </PaneMenu>
     );
@@ -63,8 +88,21 @@ class AdvancedSearch extends React.Component<SearchProps, SearchState> {
           paneTitle={formatMsg({ id: 'ui-cataloging.navigator.search' })}
         >
           <AdvancedSearchForm {...this.props} initialValues={{}} />
-          <IntegrationReactSelect />
         </Pane>
+        {this.state.showRestrictionSettings &&
+          <Pane
+            defaultWidth="fill"
+            paneTitle="Search Settings"
+            paneSub="restriction"
+            appIcon={{ app: 'cataloging' }}
+            dismissible
+            onClose={this.handleCloseRestrictionPanel}
+          >
+            <this.connectedRestrictionSettingsView
+              {...this.props}
+            />
+          </Pane>
+            }
       </Paneset>
     );
   }

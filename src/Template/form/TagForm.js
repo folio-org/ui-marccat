@@ -126,10 +126,11 @@ class TagForm extends React.Component {
             </Row>
             <Row>
               <Col xs={3}>
-                <SimpleSelect {...this.props} data={data} title="Cataloging Source" />
+                <SimpleSelect {...this.props} data={data} title="source" />
               </Col>
             </Row>
-          </Row>}
+          </Row>
+        }
         <Button
           type="button"
           onClick={this.handleForm}

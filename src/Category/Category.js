@@ -16,6 +16,16 @@ class Category extends React.Component {
           params: { lang: 'ita' },
         },
       },
+      heading: {
+        type: C.RESOURCE_TYPE,
+        root: C.ENDPOINT.BASE_URL,
+        path: C.ENDPOINT.HEADING_TYPES,
+        headers: { 'x-okapi-tenant': 'tnx' },
+        records: C.API_RESULT_JSON_KEY.HEADING_TYPES,
+        GET: {
+          params: { type: 'P', lang: 'ita', marcCategory: '1' },
+        },
+      }
     });
 
     render() {

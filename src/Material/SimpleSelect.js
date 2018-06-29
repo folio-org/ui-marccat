@@ -25,7 +25,7 @@ class SimpleSelect extends React.Component {
   };
 
   handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({ title: event.target.value });
   };
 
   handleClose = () => {

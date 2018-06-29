@@ -13,6 +13,10 @@ class AdvancedSearchButton extends React.Component {
       pop: PropTypes.func,
       push: PropTypes.func
     }),
+    match: {
+      path: PropTypes.string,
+      url: PropTypes.string
+    }
   }
 
   onClick() {
@@ -20,8 +24,9 @@ class AdvancedSearchButton extends React.Component {
   }
 
   render() {
+    const rootPath = this.props.match.path || this.props.match.url;
     return (
-      <Link to="/cataloging/searchResults" >
+      <Link to={`${rootPath}/searchResults`} >
         <Button
           onClick={this.onClick}
           type="button"

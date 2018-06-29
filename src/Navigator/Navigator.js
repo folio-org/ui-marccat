@@ -12,6 +12,7 @@ import { FormattedMessage } from 'react-intl';
 import { AccordionSet, Accordion } from '@folio/stripes-components/lib/Accordion';
 import Icon from '@folio/stripes-components/lib/Icon';
 import NavigatorEmpty from './NavigatorEmpty';
+import SearchResults from '../Search/SearchResults';
 import { TemplateView, CreateTemplate } from '../Template/';
 import { AdvancedSearch, SimpleSearch } from '../Search/';
 import { NavigationProps, NavigationState } from './type';
@@ -122,9 +123,9 @@ class Navigator extends React.Component<NavigationProps, NavigationState> {
                           size="small"
                           iconClassName="myClass"
                         />
-                        {'Loade from file'}
+                        {'Loaded from file'}
                       </NavListItem>
-                      <NavListItem to={`${rootPath}/templateList`}>
+                      <NavListItem to={`${rootPath}/templateLoaded`}>
                         <Icon
                           icon="archive"
                           size="small"

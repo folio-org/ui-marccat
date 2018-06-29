@@ -8,7 +8,7 @@ import { connect } from '@folio/stripes-connect';
 import { remapMultiArray } from '../../Utils/Mapper';
 import TemplateForm from '../form/TemplateForm';
 import * as C from '../../Utils';
-
+import { DialogSelect } from '../../Material/';
 import css from './CreateTemplate.css';
 
 class CreateTemplate extends React.Component {
@@ -135,6 +135,7 @@ class CreateTemplate extends React.Component {
           <div className={css.form}>
             <TemplateForm {...this.props} field={obj} initialValues={{}} onSubmit={(template) => this.create(template)} />
           </div>
+          <DialogSelect />
         </Pane>
       </Paneset>
     );

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Pane from '@folio/stripes-components/lib/Pane';
 import * as C from '../Utils';
-import CatalogingSelect from '../LogicalView/Select';
+import { CatalogingSelect } from '../Material/Autocomplete/';
 
 type LogicalViewProps = {|
     resources: Object,

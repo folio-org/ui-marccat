@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { FormattedMessage } from 'react-intl';
 
-export default class GeneralSettings extends Component {
+type GeneralSettingsProps = {|
+  label:string;
+|}
+
+export default class GeneralSettings extends Component<GeneralSettingsProps, {}> {
   render() {
     return (
       <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label}>

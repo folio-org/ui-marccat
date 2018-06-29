@@ -3,8 +3,7 @@ export const META = {
   MODULE_NAME: 'ui-cataloging'
 };
 
-  // API
-
+// API
 export const RESOURCE_TYPE = 'rest';
 export const ENDPOINT = {
   HEADERS: {
@@ -18,6 +17,7 @@ export const ENDPOINT = {
   TEMPLATE_MANDATORY: 'bibliographic/fields/mandatory',
   CREATE_TEMPLATE: 'record-template/:{id}',
   LOGICAL_VIEW_URL: 'logical-views',
+  HEADING_TYPES: 'heading-types',
   CATEGORY_URL: 'marc-categories',
   INDEX_CATEGORY: 'index-categories',
   DEFAULT_LANG: 'ita',
@@ -49,6 +49,7 @@ export const INTERNAL_URL = {
 export const API_RESULT_JSON_KEY = {
   TEMPLATES: 'recordTemplates',
   LOGICAL_VIEW: 'views',
+  HEADING_TYPES: 'headingTypes',
   CATEGORIES: 'categories',
   FIELDS: 'fields',
   INDEX_CATEGORIES: 'categories',

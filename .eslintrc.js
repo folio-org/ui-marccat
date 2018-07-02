@@ -22,6 +22,7 @@ module.exports = {
     "import/prefer-default-export":"off",
     "arrow-body-style": "off",
     "comma-dangle": "off",
+    "react/no-unused-prop-types":"off",
     "import/no-extraneous-dependencies": "off",
     "jsx-quotes": "off",
     "no-console": "warn",

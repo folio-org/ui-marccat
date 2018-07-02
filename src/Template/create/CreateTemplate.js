@@ -22,12 +22,15 @@ class CreateTemplate extends React.Component {
       pop: PropTypes.func,
       push: PropTypes.func
     }),
+    resources: PropTypes.object,
     mutator: PropTypes.shape({
-      createUser: PropTypes.shape({
-        POST: PropTypes.func.isRequired,
+      entries: PropTypes.shape({
+        POST: PropTypes.func,
+        GET: PropTypes.func,
+        PUT: PropTypes.func,
+        DELETE: PropTypes.func,
       }),
-      query: PropTypes.object.isRequired,
-    }),
+    })
   };
 
   static manifest = Object.freeze({
@@ -39,50 +42,16 @@ class CreateTemplate extends React.Component {
       path: C.ENDPOINT.TEMPLATE_MANDATORY,
       headers: C.ENDPOINT.HEADERS,
       records: 'fields',
-      GET: {
-        params: { lang: C.ENDPOINT.DEFAULT_LANG },
-      },
-    },
-    createUser: {
-      type: C.RESOURCE_TYPE,
-      root: C.ENDPOINT.BASE_URL,
-      path: C.ENDPOINT.CREATE_TEMPLATE,
-      clear: false,
-    },
+      GET: { params: { lang: C.ENDPOINT.DEFAULT_LANG }, },
+      POST: { path: C.ENDPOINT.BASE_URL + C.ENDPOINT.TEMPLATE_MANDATORY },
+      PUT: { path: C.ENDPOINT.BASE_URL + C.ENDPOINT.TEMPLATE_MANDATORY },
+      DELETE: { path: C.ENDPOINT.BASE_URL + C.ENDPOINT.TEMPLATE_MANDATORY },
+    }
   });
 
   constructor(props) {
     super(props);
     this.state = {};
-
-    this.create = this.create.bind(this);
-  }
-
-
-  create(template) {
-    const json = {
-      json: JSON.stringify({
-        'name': template.name,
-      }),
-      delay: 3
-    };
-
-    fetch('http://localhost:8080/cataloging/record-templates/123?type=B&lang=ita', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'x-okapi-tenant': 'tnx'
-      },
-      body: json.json
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then(() => {
-      })
-      .catch(() => {
-      });
   }
 
 
@@ -99,8 +68,7 @@ class CreateTemplate extends React.Component {
 
     const { resources: { records } } = this.props; // eslint-disable-line react/prop-types
     if (!records || !records.hasLoaded) return <div />;
-    const fields = records.records;
-    let obj = remapMultiArray(fields);
+    let obj = remapMultiArray(records.records);
 
     const actionMenuItems = [
       {

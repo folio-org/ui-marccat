@@ -7,7 +7,7 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import searchResultsData from '../Mock/search-results';
 import * as C from '../Utils';
 
-class SearchResults extends React.Component {
+class SearchResults extends React.Component<{}> {
   render() {
     const searchRes = searchResultsData.searchResults;
     return (

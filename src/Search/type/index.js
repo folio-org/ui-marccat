@@ -3,7 +3,7 @@
 export type SearchProps = {|
     stripes: {
     connect: Function,
-        intl: Object
+        intl: Object,
 },
 history: {
     goBack: Function,
@@ -12,7 +12,16 @@ history: {
 }
     |}
 export type SearchState = {|
-    showRestrictionSettings: bool
+    showRestrictionSettings: bool;
+    handleClick:Function;
+    handleCloseRestrictionPanel:Function;
+
 |};
-type RestricionProps = {||}; // eslint-disable-line no-unused-vars
-type RestricionRouterState = {||}; // eslint-disable-line no-unused-vars
+export type RestricionProps = {||}; // eslint-disable-line no-unused-vars
+export type RestricionState = {|
+    showRestrictionSettings: bool;
+    connectedRestrictionSettingsView:Function;
+    handleClick:Function;
+    handleCloseRestrictionPanel:Function;
+|};
+

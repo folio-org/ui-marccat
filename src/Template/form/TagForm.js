@@ -6,9 +6,7 @@ import Button from '@folio/stripes-components/lib/Button';
 import { Row, Col } from 'react-flexbox-grid';
 import { FormattedMessage } from 'react-intl';
 import TextField from '@folio/stripes-components/lib/TextField';
-import SimpleSelect from '../../Material/SimpleSelect';
 import CategorySelect from '../field/CategorySelect';
-import DinamicField from '../field/DinaymcField';
 
 function validate(values) {
   const errors = {
@@ -136,7 +134,6 @@ class TagForm extends React.Component {
         >Add Tag
         </Button>
         <hr />
-        <DinamicField />
       </form>
     );
   }

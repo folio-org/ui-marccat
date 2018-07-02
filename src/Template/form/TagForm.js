@@ -7,7 +7,8 @@ import { Row, Col } from 'react-flexbox-grid';
 import { FormattedMessage } from 'react-intl';
 import TextField from '@folio/stripes-components/lib/TextField';
 import SimpleSelect from '../../Material/SimpleSelect';
-import Category from '../../Category';
+import CategorySelect from '../field/CategorySelect';
+import DinamicField from '../field/DinaymcField';
 
 function validate(values) {
   const errors = {
@@ -119,16 +120,12 @@ class TagForm extends React.Component {
         }
         {isTagInputVisible &&
           <Row>
-            <Row>
-              <Col xs={3}>
-                <Category {...this.props} title="Category" />
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={3}>
-                <SimpleSelect {...this.props} data={data} title="source" />
-              </Col>
-            </Row>
+            <Col xs={6}>
+              <CategorySelect {...this.props} title="Category" />
+            </Col>
+            <Col xs={6}>
+              <CategorySelect {...this.props} title="Source" />
+            </Col>
           </Row>
         }
         <Button
@@ -139,6 +136,7 @@ class TagForm extends React.Component {
         >Add Tag
         </Button>
         <hr />
+        <DinamicField />
       </form>
     );
   }

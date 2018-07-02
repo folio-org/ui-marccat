@@ -6,11 +6,9 @@ const styles = theme => ({
   },
   'chip': {
     margin: theme.spacing.unit / 4,
+    backgroundColor: '#2b75bb',
+    color: '#fff'
   },
-  // We had to use a lot of global selectors in order to style react-select.
-  // We are waiting on https://github.com/JedWatson/react-select/issues/1679
-  // to provide a much better implementation.
-  // Also, we had to reset the default style injected by the library.
   '@global': {
     '.Select-control': {
       'display': 'flex',
@@ -26,6 +24,9 @@ const styles = theme => ({
       flexGrow: 1,
       display: 'flex',
       flexWrap: 'wrap',
+    },
+    '.Select-multi-value-wrapper svg': {
+      color: '#fff'
     },
     '.Select--multi .Select-input': {
       margin: 0,

@@ -22,9 +22,12 @@ onToggleSubSection: Function,
 
 export type NavigationState = {
   navigatorFixed: boolean,
+  state: Object;
   subSections: {
     searchSection: boolean,
     reportSection: boolean,
     templateSection: boolean
-  }
+  },
+  onToggleSubSection: Function,
+  handleClose: Function
 };

@@ -13,7 +13,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import Chip from '@material-ui/core/Chip';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
-import styles from './Style';
+import styles from '../Style/Autocomplete';
 
 
 class Option extends React.Component {
@@ -114,7 +114,7 @@ class CatalogingSelect extends React.Component {
               instanceId: 'react-select-chip-label',
               id: 'react-select-chip-label',
               simpleValue: true,
-              options,
+              options
             },
           }}
         />

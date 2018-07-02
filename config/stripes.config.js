@@ -8,11 +8,11 @@ if (environment === 'sandbox') {
 }
 
 module.exports = {
-  // This could be set here or in a .stripesclirc file
   okapi: { url, tenant: 'diku' },
   config: {
+    autoLogin: { username: 'diku_admin', password: 'admin' },
     logCategories: 'core,redux,connect,connect-fetch,substitute,path,mpath,mquery,action,event,perm,interface,xhr',
-    logPrefix: 'stripes',
+    logPrefix: 'cat-stripes',
     logTimestamp: true,
     showPerms: true,
     showHomeLink: true,

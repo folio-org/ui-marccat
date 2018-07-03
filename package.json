@@ -42,7 +42,7 @@
     "publish": "yarn prepublish;npm publish",
     "flow": "flow src/",
     "version": "yarn changelog && git add CHANGELOG.md",
-    "clean": ". ./script/clean.sh"
+    "clean": "./script/clean.sh"
   },
   "devDependencies": {
     "@folio/eslint-config-stripes": "^1.1.0",

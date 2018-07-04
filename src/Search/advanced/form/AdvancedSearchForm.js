@@ -128,7 +128,7 @@ class AdvancedSearchForm extends React.Component {
         </Row>
         <Row>
           <Col xs={11}>
-            <Field component={TextArea} rows='8' id='searchTextArea' name='searchTextArea' />            
+            <Field component={TextArea} rows='8' id='searchTextArea' name='searchTextArea' />
           </Col>
         </Row>
         <Row>

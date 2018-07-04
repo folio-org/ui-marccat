@@ -29,7 +29,7 @@ class SearchSnackBar extends React.Component {
     const { classes } = this.props;
     return (
       <div>
-        
+
         <Snackbar
           anchorOrigin={{
             vertical: 'bottom',

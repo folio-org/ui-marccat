@@ -7,8 +7,8 @@ import IconButton from '@folio/stripes-components/lib/IconButton';
 import { connect } from '@folio/stripes-connect';
 import { remapMultiArray } from '../../Utils/Mapper';
 import TemplateForm from '../form/TemplateForm';
+import OpenIconSpeedDial from '../field/FabSpeed';
 import * as C from '../../Utils';
-import { DialogSelect } from '../../Material/';
 import css from './CreateTemplate.css';
 
 class CreateTemplate extends React.Component {
@@ -65,7 +65,6 @@ class CreateTemplate extends React.Component {
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-
     const { resources: { records } } = this.props; // eslint-disable-line react/prop-types
     if (!records || !records.hasLoaded) return <div />;
     let obj = remapMultiArray(records.records);
@@ -103,7 +102,7 @@ class CreateTemplate extends React.Component {
           <div className={css.form}>
             <TemplateForm {...this.props} field={obj} initialValues={{}} onSubmit={(template) => this.create(template)} />
           </div>
-          <DialogSelect />
+          <OpenIconSpeedDial />
         </Pane>
       </Paneset>
     );

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
@@ -50,20 +49,20 @@ class SimpleSelect extends React.Component {
 
   render() {
     const { classes, title } = this.props;
-    const item = this.props.data;
+    const item = this.props.data || this.props.data;
     let options = <MenuItem>vuoto</MenuItem>;
     if (item) {
       options = item.map((element) => {
         return (
-          <MenuItem value={element.code}>{element.description}</MenuItem>
+          <option value={element.code}>{element.description}</option>
         );
       });
     }
     return (
       <form autoComplete="off">
         <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="demo-controlled-open-select">{title}</InputLabel>
           <Select
+            native
             open={this.state.open}
             onClose={this.handleClose}
             onOpen={this.handleOpen}

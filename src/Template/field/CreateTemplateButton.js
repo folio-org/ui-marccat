@@ -6,8 +6,8 @@ import * as C from '../../Utils';
 
 class CreateTemplateButton extends React.Component {
   static propTypes = {
-    onClick: PropTypes.func.isRequired,
-    disabled: PropTypes.bool.isRequired,
+    onClick: PropTypes.func,
+    disabled: PropTypes.bool,
   };
   render() {
     return (

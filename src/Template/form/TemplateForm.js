@@ -54,6 +54,8 @@ class TemplateForm extends React.Component {
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
     const { handleSubmit, reset, submitting, pristine } = this.props;
+    const defaultValue = this.mandatoryField[this.mandatoryField.length - 1];
+
     return (
       <form id="template-form" onSubmit={handleSubmit}>
         <Row id="section-name">
@@ -92,7 +94,7 @@ class TemplateForm extends React.Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <TagForm {...this.props} />
+            <TagForm {...this.props} defaultValue={defaultValue} />
           </Col>
         </Row>
         <Row>

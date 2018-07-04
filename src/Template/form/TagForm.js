@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm } from 'redux-form';
+import { reduxForm } from 'redux-form';
 import _ from 'lodash';
 import Button from '@folio/stripes-components/lib/Button';
 import { Row, Col } from 'react-flexbox-grid';
 import { FormattedMessage } from 'react-intl';
-import TextField from '@folio/stripes-components/lib/TextField';
 import CategorySelect from '../field/CategorySelect';
 
 function validate(values) {
@@ -36,6 +35,7 @@ class TagForm extends React.Component {
       intl: PropTypes.object.isRequired,
     }).isRequired,
     handleSubmit: PropTypes.func.isRequired,
+    defaultValue: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -72,55 +72,9 @@ class TagForm extends React.Component {
 
     return (
       <form onSubmit={handleSubmit} style={{ paddingTop: '30px' }}>
-        {isTagInputVisible &&
-        <Row>
-          <Col xs={8}>
-            <Row>
-              <Col xs={4}>
-                <Field
-                  label={formatMsg({ id: 'ui-cataloging.template.form.tag.code' })}
-                  name="code"
-                  id="code"
-                  placeholder={formatMsg({ id: 'ui-cataloging.template.form.tag.code' })}
-                  aria-label={formatMsg({ id: 'ui-cataloging.template.form.tag.code' })}
-                  component={TextField}
-                  required
-                  fullWidth
-                />
-              </Col>
-              <Col xs={4}>
-                <Field
-                  label={formatMsg({ id: 'ui-cataloging.template.form.tag.ind1' })}
-                  name="ind1"
-                  id="ind1"
-                  placeholder={formatMsg({ id: 'ui-cataloging.template.form.tag.ind1' })}
-                  aria-label={formatMsg({ id: 'ui-cataloging.template.form.tag.ind1' })}
-                  component={TextField}
-                  required
-                  fullWidth
-                />
-              </Col>
-              <Col xs={4}>
-                <Field
-                  label={formatMsg({ id: 'ui-cataloging.template.form.tag.ind2' })}
-                  name="ind2"
-                  id="ind2"
-                  placeholder={formatMsg({ id: 'ui-cataloging.template.form.tag.ind2' })}
-                  aria-label={formatMsg({ id: 'ui-cataloging.template.form.tag.ind2' })}
-                  component={TextField}
-                  required
-                  fullWidth
-                />
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-        }
+        <p>Default value: <strong>{this.props.defaultValue.description} {this.props.defaultValue.displayValue}</strong></p>
         {isTagInputVisible &&
           <Row>
-            <Col xs={6}>
-              <CategorySelect {...this.props} title="Category" />
-            </Col>
             <Col xs={6}>
               <CategorySelect {...this.props} title="Source" />
             </Col>

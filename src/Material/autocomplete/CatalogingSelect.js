@@ -110,7 +110,7 @@ class CatalogingSelect extends React.Component {
             inputComponent: SelectWrapped,
             inputProps: {
               classes,
-              multi: true,
+              multi: false,
               instanceId: 'react-select-chip-label',
               id: 'react-select-chip-label',
               simpleValue: true,

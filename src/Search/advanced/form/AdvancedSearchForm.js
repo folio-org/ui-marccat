@@ -8,15 +8,14 @@ import RadioButton from '@folio/stripes-components/lib/RadioButton';
 import { FormattedMessage } from 'react-intl';
 import TextArea from '@folio/stripes-components/lib/TextArea';
 import Button from '@folio/stripes-components/lib/Button';
-import AdvancedSearchButton from './AdvancedSearchButton';
 import ScanButton from './ScanButton';
 import AndButton from './AndButton';
 import OrButton from './OrButton';
 import NotButton from './NotButton';
 import NearButton from './NearButton';
 import WildCard from './WildCard';
+import { SnackBar } from '../../../Material/';
 import * as C from '../../../Utils';
-import SnackBar from '../../../Material/SearchSnackBar';
 
 function validate(values) {
   const errors = {};
@@ -98,7 +97,7 @@ class AdvancedSearchForm extends React.Component {
       <form id="search-form" onSubmit={handleSubmit}>
         {this.state.showErrorMessage &&
         <Row>
-          <SnackBar />
+          <SnackBar position="right" message="erqwerwqwrq"/>
         </Row>
         }
         <Row>

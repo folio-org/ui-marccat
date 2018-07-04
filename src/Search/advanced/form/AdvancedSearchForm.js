@@ -13,8 +13,8 @@ import AndButton from './AndButton';
 import OrButton from './OrButton';
 import NotButton from './NotButton';
 import NearButton from './NearButton';
-import WildCardCheckbox from './WildCardCheckbox';
-import IndexCategory from '../../advanced/IndexCategory';
+import WildCard from './WildCard';
+import * as C from '../../../Utils';
 
 function validate(values) {
   const errors = {};
@@ -27,6 +27,18 @@ function validate(values) {
 }
 
 class AdvancedSearchForm extends React.Component {
+
+  static manifest = Object.freeze({
+    indexType: {},
+    categories: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      path: 'index-categories?type=%{indexType.type}&lang=ita',
+      headers: { 'x-okapi-tenant': 'tnx' },
+      records: C.API_RESULT_JSON_KEY.INDEX_CATEGORIES
+    },
+  });
+
   static propTypes = {
     stripes: PropTypes.shape({
       intl: PropTypes.object.isRequired,
@@ -82,7 +94,7 @@ class AdvancedSearchForm extends React.Component {
             </Field>
           </Col>
           <Col xs={6}>
-            <IndexCategory {...this.props} initialValues={{}} />
+            {/* <IndexCategory {...this.props} initialValues={{}} /> */}            
           </Col>
         </Row>
         <Row>
@@ -95,8 +107,7 @@ class AdvancedSearchForm extends React.Component {
             <AndButton />
             <NotButton />
             <OrButton />
-            <NearButton />
-            <WildCardCheckbox {...this.props} />
+            <NearButton />            
           </Col>
           <Col xs={6}>
             <AdvancedSearchButton {...this.props} />
@@ -113,6 +124,7 @@ class AdvancedSearchForm extends React.Component {
             </Button>
           </Col>
         </Row>
+        <WildCard {...this.props} />
       </form>
     );
   }

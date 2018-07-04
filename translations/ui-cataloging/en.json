@@ -57,6 +57,8 @@
   "search.simple.SW" : "SW Subject Keyword",
   "search.simple.NW" : "NW Name Keyword",
   "search.simple.TW" : "TW Title Keyword",
-  "search.simple.AW" : "AW Any Keyword"
-
+  "search.simple.AW" : "AW Any Keyword",
+  "search.wildCard.replace1" : "Replace 0.1 or more characters",
+  "search.wildCard.replace2" : "Replace one character",
+  "search.wildCard.restriction" : "Restriction"
 }

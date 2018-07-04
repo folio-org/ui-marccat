@@ -12,7 +12,7 @@ const styles = theme => ({
   },
 });
 
-class SearchSnackBar extends React.Component {
+class SnackBar extends React.Component {
   state = {
     open: true,
   };
@@ -26,22 +26,22 @@ class SearchSnackBar extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, position, authHideDuration, message } = this.props;
     return (
       <div>
 
         <Snackbar
           anchorOrigin={{
             vertical: 'bottom',
-            horizontal: 'left',
+            horizontal: position || 'left',
           }}
           open={this.state.open}
-          autoHideDuration={6000}
+          autoHideDuration={authHideDuration || 6000}
           onClose={this.handleClose}
           ContentProps={{
             'aria-describedby': 'message-id',
           }}
-          message={<span id="message-id">Note archived</span>}
+          message={<span id="message-id">{message}</span>}
           action={[
             <IconButton
               key="close"
@@ -59,8 +59,11 @@ class SearchSnackBar extends React.Component {
   }
 }
 
-SearchSnackBar.propTypes = {
+SnackBar.propTypes = {
   classes: PropTypes.object.isRequired,
+  position: PropTypes.object,
+  authHideDuration: PropTypes.number,
+  message: PropTypes.string.isRequired,
 };
 
-export default withStyles(styles)(SearchSnackBar);
+export default withStyles(styles)(SnackBar);

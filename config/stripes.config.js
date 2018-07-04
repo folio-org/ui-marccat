@@ -4,16 +4,17 @@ let url;
 if (environment === 'sandbox') {
   url = 'https://okapi-sandbox.frontside.io';
 } else {
+  //  url = 'http://192.168.0.245:9130';
   url = 'http://192.168.0.28:9130';
 }
 
 module.exports = {
-  // This could be set here or in a .stripesclirc file
   okapi: { url, tenant: 'diku' },
   config: {
-    logCategories: 'core,redux,connect,connect-fetch,substitute,path,mpath,mquery,action,event,perm,interface,xhr',
-    logPrefix: 'stripes',
-    logTimestamp: true,
+    autoLogin: { username: 'diku_admin', password: 'admin' },
+    logCategories: 'core,path,mpath,mquery,xhr',
+    logPrefix: 'cat-stripes',
+    logTimestamp: false,
     showPerms: true,
     showHomeLink: true,
     listInvisiblePerms: true,

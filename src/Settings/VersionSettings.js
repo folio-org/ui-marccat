@@ -1,28 +1,18 @@
 import React from 'react';
-import Modal from '@folio/stripes-components/lib/Modal';
-import Button from '@folio/stripes-components/lib/Button';
+import PropTypes from 'prop-types';
 import { connect } from '@folio/stripes-connect';
+import { VersionModal } from './';
 import * as C from '../Utils';
 
-type VersionProps = {|
-    id: string;
-    appTitle: string;
-    version: number;
-    isOpen: bool;
-    onClose: Function;
-|}
-type VersionState = {||};
+class Version extends React.Component {
 
-class Version extends React.Component<VersionProps, VersionState> {
-
+  static propTypes = {
+    appTitle: PropTypes.string.isRequired,
+    version: PropTypes.string.isRequired,
+  }
   render() {
-    const { id, appTitle, version, onClose, isOpen = false } = this.props;
     return (
-      <Modal id={id} onClose={onClose} open={isOpen} size="small" label={appTitle} dismissible>
-        <p>{appTitle}</p>
-        <p>{version}</p>
-        <Button onClick={onClose}>Close</Button>
-      </Modal>
+      <VersionModal appTitle="Cataloging" version="1.0-beta" />
     );
   }
 }

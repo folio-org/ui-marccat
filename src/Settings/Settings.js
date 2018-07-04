@@ -2,7 +2,6 @@ import React from 'react';
 import Settings from '@folio/stripes-components/lib/Settings';
 import GeneralSettings from './GeneralSettings';
 import LogicalViewSettings from './LogicalViewSettings';
-import VersionSettings from './VersionSettings';
 
 type CatalogingSettingsProps = {|
   stripes: {
@@ -22,12 +21,6 @@ export default class CatalogingSettings extends React.Component<CatalogingSettin
       route: 'logical-view',
       label: this.props.stripes.intl.formatMessage({ id: 'ui-cataloging.settings.logicalview' }),
       component: LogicalViewSettings,
-    },
-    {
-      route: 'version',
-      label: this.props.stripes.intl.formatMessage({ id: 'ui-cataloging.settings.modal.version' }),
-      isOpen: true,
-      component: VersionSettings,
     }
   ];
 

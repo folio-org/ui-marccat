@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Pane from '@folio/stripes-components/lib/Pane';
+import Icon from '@folio/stripes-components/lib/Icon';
+
 import * as C from '../Utils';
-import { CatalogingSelect } from '../Material/autocomplete/';
+import { CatalogingSelect } from '../Material/';
 
 type LogicalViewProps = {|
     resources: Object,
@@ -11,8 +13,7 @@ type LogicalViewProps = {|
 type LogicalViewState= {|
     label: PropTypes.string.isRequired;
 |}
-
-export default class LogicalView extends React.Component<LogicalViewProps, LogicalViewState> {
+class LogicalView extends React.Component<LogicalViewProps, LogicalViewState> {
   static manifest = Object.freeze({
     views: {
       type: C.RESOURCE_TYPE,
@@ -28,13 +29,21 @@ export default class LogicalView extends React.Component<LogicalViewProps, Logic
 
   render() {
     const { resources: { views } } = this.props;
+    if (!views || !views.hasLoaded) return <div />;
     const logicalViews = views.records;
     return (
       <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label}>
         <div>
+          { !logicalViews &&
+          <Icon icon="spinner-ellipsis" />
+        }
+          { logicalViews.length > 0 &&
           <CatalogingSelect options={logicalViews} label="Database" />
+        }
         </div>
       </Pane>
     );
   }
 }
+
+export default LogicalView;

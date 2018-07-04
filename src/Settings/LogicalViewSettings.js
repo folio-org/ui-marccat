@@ -4,7 +4,7 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import Icon from '@folio/stripes-components/lib/Icon';
 
 import * as C from '../Utils';
-import { CatalogingSelect } from '../Material/';
+import { CatalogingSelect } from '../Material/autocomplete/';
 
 type LogicalViewProps = {|
     resources: Object,

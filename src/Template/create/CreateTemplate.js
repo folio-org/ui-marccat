@@ -100,7 +100,7 @@ class CreateTemplate extends React.Component {
           appIcon={{ app: 'cataloging' }}
         >
           <div className={css.form}>
-            <TemplateForm {...this.props} field={obj} initialValues={{}} onSubmit={(template) => this.create(template)} />
+            <TemplateForm {...this.props} mandatoryField={obj} initialValues={{}} onSubmit={(template) => this.create(template)} />
           </div>
           <OpenIconSpeedDial />
         </Pane>

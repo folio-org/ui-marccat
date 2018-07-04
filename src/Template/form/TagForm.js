@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { reduxForm } from 'redux-form';
 import _ from 'lodash';
 import Button from '@folio/stripes-components/lib/Button';
-import { Row, Col } from 'react-flexbox-grid';
 import { FormattedMessage } from 'react-intl';
 import CategorySelect from '../field/CategorySelect';
 
@@ -72,13 +71,8 @@ class TagForm extends React.Component {
 
     return (
       <form onSubmit={handleSubmit} style={{ paddingTop: '30px' }}>
-        <p>Default value: <strong>{this.props.defaultValue.description} {this.props.defaultValue.displayValue}</strong></p>
         {isTagInputVisible &&
-          <Row>
-            <Col xs={6}>
-              <CategorySelect {...this.props} title="Source" />
-            </Col>
-          </Row>
+          <CategorySelect {...this.props} title="Source" />
         }
         <Button
           type="button"

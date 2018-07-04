@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { withStyles } from '@material-ui/core/styles';
+import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import { connect } from '@folio/stripes-connect';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import * as C from '../../Utils';
 
-let pippo = '4';
 
 const styles = theme => ({
   button: {
@@ -24,13 +25,14 @@ const styles = theme => ({
 class CategorySelect extends React.Component {
 
     state = {
-      title: '',
-      currentMarc: '1',
+      firstSelect: '',
+      secondSelect: '',
+      marcCategoryValue: 1,
       open: false,
     };
 
     static manifest = Object.freeze({
-      query: {},
+      marcCategory: {},
       marcCategories: {
         type: C.RESOURCE_TYPE,
         root: C.ENDPOINT.BASE_URL,
@@ -42,41 +44,42 @@ class CategorySelect extends React.Component {
       heading: {
         type: C.RESOURCE_TYPE,
         root: C.ENDPOINT.BASE_URL,
-        path: C.ENDPOINT.HEADING_TYPES,
+        path: 'heading-types?lang=ita&marcCategory=%{marcCategory}',
         headers: C.ENDPOINT.HEADERS,
-        records: C.API_RESULT_JSON_KEY.HEADING_TYPES,
-        GET: {
-          params: { lang: 'ita', marcCategory: '4' }
-        }
+        records: C.API_RESULT_JSON_KEY.HEADING_TYPES
       }
     });
 
     componentDidMount() {
+      this.props.mutator.marcCategory.replace(this.state.marcCategoryValue);
     }
-
-    componentWillReceiveProps(nextProps) {
-      console.log('componentDidUpdate');
-
-    }
-    componentDidUpdate = (prevProps, prevState) => {
-      console.log('componentDidUpdate')
-    };
 
     handleChange = event => {
-      this.setState({ title: event.target.value });
-      this.state.currentMarc = event.target.value;
+      this.setState({ firstSelect: event.target.value });
+      this.props.mutator.marcCategory.replace(event.target.value);
     };
+
+    handleChangeSource = event => {
+      this.setState({ secondSelect: event.target.value });
+    };
+
     handleClose = () => {
       this.setState({ open: false });
     };
     handleOpen = () => {
       this.setState({ open: true });
     };
+
+    buildPreviewChoosed = () => {
+
+    }
+
+
     render() {
       const { classes, resources: { marcCategories, heading } } = this.props;
       if (!marcCategories || !marcCategories.hasLoaded) return <div />;
       if (!heading || !heading.hasLoaded) return <div />;
-
+      this.props.mandatoryField.push({});
 
       let options = {};
       let headings = {};
@@ -96,38 +99,51 @@ class CategorySelect extends React.Component {
       }
       return (
         <div>
-          <FormControl className={classes.formControl}>
-            <Select
-              native
-              open={this.state.open}
-              onClose={this.handleClose}
-              onOpen={this.handleOpen}
-              value={this.state.title}
-              onChange={this.handleChange}
-              inputProps={{
+          <Row id="section-table">
+            <MultiColumnList
+              contentData={this.props.mandatoryField}
+              onRowClick={() => { }}
+              visibleColumns={['categoryCode', 'headerTypeCode', 'code', 'displayValue', 'description']}
+              ariaLabel="TemplateNewMandatory"
+            />
+          </Row>
+          <p>Default value: <strong>{this.props.defaultValue.description} {this.props.defaultValue.displayValue}</strong></p>
+          <Row>
+            <Col xs={6}>
+              <FormControl className={classes.formControl}>
+                <Select
+                  native
+                  open={this.state.open}
+                  onClose={this.handleClose}
+                  onOpen={this.handleOpen}
+                  value={this.state.firstSelect}
+                  onChange={this.handleChange}
+                  inputProps={{
             name: 'Category',
             id: 'demo-controlled-open-selectr',
           }}
-            >
-              {options}
-            </Select>
-          </FormControl>
-          <FormControl className={classes.formControl}>
-            <Select
-              native
-              open={this.state.open}
-              onClose={this.handleClose}
-              onOpen={this.handleOpen}
-              value={this.state.title}
-              onChange={this.handleChange}
-              inputProps={{
+                >
+                  {options}
+                </Select>
+              </FormControl>
+              <FormControl className={classes.formControl}>
+                <Select
+                  native
+                  open={this.state.open}
+                  onClose={this.handleClose}
+                  onOpen={this.handleOpen}
+                  value={this.state.secondSelect}
+                  onChange={this.handleChangeSource}
+                  inputProps={{
             name: 'Source',
             id: 'demo-controlled-open-select',
           }}
-            >
-              {headings}
-            </Select>
-          </FormControl>
+                >
+                  {headings}
+                </Select>
+              </FormControl>
+            </Col>
+          </Row>
         </div>
       );
     }
@@ -142,7 +158,6 @@ CategorySelect.propTypes = {
   }),
   stripes: PropTypes.object,
   mutator: PropTypes.shape({
-    query: PropTypes.object.isRequired,
     heading: PropTypes.shape({
       GET: PropTypes.func.isRequired,
     }),

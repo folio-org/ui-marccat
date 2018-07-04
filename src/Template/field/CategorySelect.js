@@ -24,13 +24,6 @@ const styles = theme => ({
 
 class CategorySelect extends React.Component {
 
-    state = {
-      firstSelect: '',
-      secondSelect: '',
-      marcCategoryValue: 1,
-      open: false,
-    };
-
     static manifest = Object.freeze({
       marcCategory: {},
       marcCategories: {
@@ -50,17 +43,34 @@ class CategorySelect extends React.Component {
       }
     });
 
+    constructor(props) {
+      super(props);
+      this.state = {
+        firstSelect: '',
+        secondSelect: '',
+        marcCategoryValue: 1,
+        tableContent: this.props.mandatoryField,
+        open: false,
+      };
+
+      this.handleChange = this.handleChange.bind(this);
+      this.handleChangeSource = this.handleChangeSource.bind(this);
+    }
+
     componentDidMount() {
       this.props.mutator.marcCategory.replace(this.state.marcCategoryValue);
     }
 
     handleChange = event => {
-      this.setState({ firstSelect: event.target.value });
+      this.setState({
+        firstSelect: event.target.value,
+      });
       this.props.mutator.marcCategory.replace(event.target.value);
     };
 
     handleChangeSource = event => {
       this.setState({ secondSelect: event.target.value });
+
     };
 
     handleClose = () => {
@@ -79,7 +89,6 @@ class CategorySelect extends React.Component {
       const { classes, resources: { marcCategories, heading } } = this.props;
       if (!marcCategories || !marcCategories.hasLoaded) return <div />;
       if (!heading || !heading.hasLoaded) return <div />;
-      this.props.mandatoryField.push({});
 
       let options = {};
       let headings = {};
@@ -101,7 +110,7 @@ class CategorySelect extends React.Component {
         <div>
           <Row id="section-table">
             <MultiColumnList
-              contentData={this.props.mandatoryField}
+              contentData={this.state.tableContent}
               onRowClick={() => { }}
               visibleColumns={['categoryCode', 'headerTypeCode', 'code', 'displayValue', 'description']}
               ariaLabel="TemplateNewMandatory"
@@ -153,19 +162,19 @@ CategorySelect.propTypes = {
   resources: PropTypes.shape({
     query: PropTypes.object,
     heading: PropTypes.shape({
-      GET: PropTypes.func.isRequired,
+      GET: PropTypes.func,
     }),
   }),
   stripes: PropTypes.object,
   mutator: PropTypes.shape({
     heading: PropTypes.shape({
-      GET: PropTypes.func.isRequired,
+      GET: PropTypes.func,
     }),
   }),
-  classes: PropTypes.object.isRequired,
-  categories: PropTypes.object.isRequired,
-  headings: PropTypes.object.isRequired,
-  marcCategory: PropTypes.number.isRequired,
+  classes: PropTypes.object,
+  categories: PropTypes.object,
+  headings: PropTypes.object,
+  marcCategory: PropTypes.number,
 };
 
 export default withStyles(styles)(connect(CategorySelect, C.META.MODULE_NAME));

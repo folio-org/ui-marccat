@@ -39,14 +39,14 @@ class IndexCategory extends React.Component {
     return this.props.mutator.categories.GET(typeValue);
   }
 
-  render() {    
+  render() {
     const { resources: { categories } } = this.props;
-    if (categories && categories.hasLoaded) {
+    if (!categories || !categories.hasLoaded) {
       return (
-        <Select {...this.props} dataOptions={categories.records} title="Category" />
+        <div>vuoto</div>
       );
     }
-    return();
+    return (<Select {...this.props} dataOptions={categories.records} title="Category" />);
   }
 }
 

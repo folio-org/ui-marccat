@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Link from 'react-router-dom/Link';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { Field, reduxForm } from 'redux-form';
 import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
@@ -15,6 +16,7 @@ import NotButton from './NotButton';
 import NearButton from './NearButton';
 import WildCard from './WildCard';
 import * as C from '../../../Utils';
+import SnackBar from '../../../Material/SearchSnackBar';
 
 function validate(values) {
   const errors = {};
@@ -50,14 +52,35 @@ class AdvancedSearchForm extends React.Component {
     onCancel: PropTypes.func,
     reset: PropTypes.func,
     initialValues: PropTypes.object,
+    history: PropTypes.shape({
+      goBack: PropTypes.func,
+      pop: PropTypes.func,
+      push: PropTypes.func
+    }),
+    match: {
+      path: PropTypes.string,
+      url: PropTypes.string
+    },
+    searchTextArea: PropTypes.shape({
+      input: PropTypes.string
+    })
   }
 
   constructor(props) {
     super(props);
     this.state = {
       indexTypeP: true,
+      showErrorMessage: false,
     };
     this.handleRadio = this.handleRadio.bind(this);
+    this.onClick = this.onClick.bind(this);
+  }
+
+  onClick() {
+    if (!this.reduxForm.searchTextArea.value) {
+      this.setState({ showErrorMessage: true });
+    }
+    this.props.history.push(C.INTERNAL_URL.SEARCH_RESULTS);
   }
 
   handleRadio(e) {
@@ -70,8 +93,14 @@ class AdvancedSearchForm extends React.Component {
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
     const { handleSubmit, reset, submitting, pristine } = this.props;
+    const rootPath = this.props.match.path || this.props.match.url;
     return (
       <form id="search-form" onSubmit={handleSubmit}>
+        {this.state.showErrorMessage &&
+        <Row>
+          <SnackBar />
+        </Row>
+        }
         <Row>
           <Col xs={3}>
             <Field name="indexRadio" component={RadioButtonGroup} label={formatMsg({ id: 'ui-cataloging.search.indexes' })}>
@@ -94,12 +123,12 @@ class AdvancedSearchForm extends React.Component {
             </Field>
           </Col>
           <Col xs={6}>
-            {/* <IndexCategory {...this.props} initialValues={{}} /> */}            
+            {/* <IndexCategory {...this.props} initialValues={{}} /> */}
           </Col>
         </Row>
         <Row>
           <Col xs={11}>
-            <TextArea rows='8' />
+            <Field component={TextArea} rows='8' id='searchTextArea' name='searchTextArea' />            
           </Col>
         </Row>
         <Row>
@@ -107,10 +136,22 @@ class AdvancedSearchForm extends React.Component {
             <AndButton />
             <NotButton />
             <OrButton />
-            <NearButton />            
+            <NearButton />
           </Col>
           <Col xs={6}>
-            <AdvancedSearchButton {...this.props} />
+            {/* <AdvancedSearchButton {...this.props} /> */ }
+            <Link to={`${rootPath}/searchResults`} >
+              <Button
+                onClick={this.onClick}
+                type="button"
+                /* disabled={this.props.disabled} */
+                buttonStyle="primary"
+                /* href="/cataloging/searchResults" */
+                style={{ 'minHeight': '36px' }}
+              >
+                <FormattedMessage id="ui-cataloging.search.searchButton" />
+              </Button>
+            </Link>
             <ScanButton disabled={pristine || submitting} />
             <Button
               {...this.props}

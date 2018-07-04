@@ -97,7 +97,7 @@ class AdvancedSearchForm extends React.Component {
       <form id="search-form" onSubmit={handleSubmit}>
         {this.state.showErrorMessage &&
         <Row>
-          <SnackBar position="right" message="erqwerwqwrq"/>
+          <SnackBar position="right" message="erqwerwqwrq" />
         </Row>
         }
         <Row>

@@ -55,17 +55,7 @@ class TagForm extends React.Component {
 
 
   render() {
-    const data = [{
-      value: 15,
-      name: 'rrr'
-    }, {
-      value: 60,
-      name: 'rrr'
-    }, {
-      value: 10,
-      name: 'rrr'
-    }];
-    const formatMsg = this.props.stripes.intl.formatMessage;
+
     const { handleSubmit } = this.props;
     const { isTagInputVisible } = this.state;
 

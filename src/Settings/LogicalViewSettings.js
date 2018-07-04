@@ -2,11 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Icon from '@folio/stripes-components/lib/Icon';
-import NoResultsMessage from '@folio/stripes-smart-components/lib/SearchAndSort/components/NoResultsMessage';
 
 import * as C from '../Utils';
 import { CatalogingSelect } from '../Material/';
-import withRequestHandler from '../Core/Handler/withErrorHandler';
 
 type LogicalViewProps = {|
     resources: Object,

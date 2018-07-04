@@ -54,6 +54,9 @@ export const API_RESULT_JSON_KEY = {
   LOGICAL_VIEW: 'views',
   HEADING_TYPES: 'headingTypes',
   CATEGORIES: 'categories',
+  FUNCTION_CODES: 'functionCodes',
+  SUBFILED_TAG: 'subfields',
+  ITEM_TYPES: 'itemTypes',
   FIELDS: 'fields',
   INDEX_CATEGORIES: 'categories',
 };

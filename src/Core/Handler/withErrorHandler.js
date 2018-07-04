@@ -16,7 +16,7 @@ const withErrorHandler = WrappedComponent =>
     }
 
     componentDidCatch(error, info) {
-      this.setState({ hasError: true });
+      this.setState({ hasError: false });
       console.log('error: ', error); // eslint-disable-line no-console
       console.log('info: ', info);// eslint-disable-line no-console
     }

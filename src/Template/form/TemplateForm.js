@@ -5,7 +5,6 @@ import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
 import RadioButton from '@folio/stripes-components/lib/RadioButton';
 import Button from '@folio/stripes-components/lib/Button';
 import { FormattedMessage } from 'react-intl';
-import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import TagForm from '../form/TagForm';
 import { CreateTemplateButton } from '../';
@@ -26,7 +25,7 @@ class TemplateForm extends React.Component {
     stripes: PropTypes.shape({
       intl: PropTypes.object.isRequired,
     }).isRequired,
-    field: PropTypes.array.isRequired,
+    mandatoryField: PropTypes.array.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
@@ -35,11 +34,6 @@ class TemplateForm extends React.Component {
     initialValues: PropTypes.object,
     handleKeyDown: PropTypes.func,
   };
-
-  constructor(props) {
-    super(props);
-    this.mandatoryField = this.props.field;
-  }
 
   validate(values) {
     const errors = {};
@@ -53,7 +47,9 @@ class TemplateForm extends React.Component {
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const { handleSubmit, reset, submitting, pristine } = this.props;
+    const { handleSubmit, reset, submitting, pristine, mandatoryField } = this.props;
+    const defaultValue = mandatoryField[mandatoryField.length - 1];
+
     return (
       <form id="template-form" onSubmit={handleSubmit}>
         <Row id="section-name">
@@ -82,17 +78,9 @@ class TemplateForm extends React.Component {
             </Field>
           </Col>
         </Row>
-        <Row id="section-table" className={css.multilist}>
-          <MultiColumnList
-            contentData={this.mandatoryField}
-            onRowClick={() => { }}
-            visibleColumns={['categoryCode', 'headerTypeCode', 'code', 'displayValue', 'description']}
-            ariaLabel="TemplateNewMandatory"
-          />
-        </Row>
         <Row>
           <Col xs={12}>
-            <TagForm {...this.props} />
+            <TagForm {...this.props} defaultValue={defaultValue} />
           </Col>
         </Row>
         <Row>

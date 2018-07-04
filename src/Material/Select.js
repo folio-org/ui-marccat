@@ -33,9 +33,6 @@ const styles = theme => ({
 
 class Select<T:Array<*>> extends React.Component<SelectProps<T>, SelectState> {
   state = {
-    name: 'Cat in the Hat',
-    age: '',
-    multiline: 'Controlled',
     currency: 'EUR',
   };
   constructor(props) { // eslint-disable-line  no-useless-constructor
@@ -68,7 +65,7 @@ class Select<T:Array<*>> extends React.Component<SelectProps<T>, SelectState> {
         label: '¥',
       },
     ];
-    const { id, native, classes, options, label, placeholder } = this.props;
+    const { id, native, classes, label, placeholder } = this.props;
     return (
       <TextField
         id={id}

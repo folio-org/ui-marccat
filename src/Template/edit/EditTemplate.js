@@ -10,7 +10,8 @@ import * as C from '../../Utils';
 
 class EditTemplate extends React.Component {
   static propTypes = {
-    selectedTemplate: PropTypes.object.isRequired
+    selectedTemplate: PropTypes.object.isRequired,
+    handleEditButton: PropTypes.func
   };
 
   static manifest = Object.freeze({
@@ -28,7 +29,6 @@ class EditTemplate extends React.Component {
     }
   });
 
-
   constructor(props) {
     super(props);
     this.state = {
@@ -40,6 +40,7 @@ class EditTemplate extends React.Component {
     this.handleExpandAll = this.handleExpandAll.bind(this);
     this.handleSectionToggle = this.handleSectionToggle.bind(this);
   }
+
 
   handleExpandAll(section) {
     this.setState({ section });

@@ -1,56 +1,171 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
+import { withStyles } from '@material-ui/core/styles';
+import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import { connect } from '@folio/stripes-connect';
-import { CatalogingSelect } from '../../Material/';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import * as C from '../../Utils';
 
-const logical = require('../../Mock/logical-views');
 
-const mockCategory = require('../../Mock/cat-select');
+const styles = theme => ({
+  button: {
+    display: 'block',
+    marginTop: theme.spacing.unit * 2,
+  },
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 300,
+    paddingBottom: 30,
+  },
+});
 
 
 class CategorySelect extends React.Component {
+
+    state = {
+      firstSelect: '',
+      secondSelect: '',
+      marcCategoryValue: 1,
+      open: false,
+    };
+
     static manifest = Object.freeze({
-      categories: {
+      marcCategory: {},
+      marcCategories: {
         type: C.RESOURCE_TYPE,
         root: C.ENDPOINT.BASE_URL,
         path: C.ENDPOINT.CATEGORY_URL,
         headers: C.ENDPOINT.HEADERS,
         records: C.API_RESULT_JSON_KEY.CATEGORIES,
-        GET: {
-          params: { lang: 'ita' },
-        },
+        params: { lang: 'ita' },
       },
       heading: {
         type: C.RESOURCE_TYPE,
         root: C.ENDPOINT.BASE_URL,
-        path: C.ENDPOINT.HEADING_TYPES,
+        path: 'heading-types?lang=ita&marcCategory=%{marcCategory}',
         headers: C.ENDPOINT.HEADERS,
-        records: C.API_RESULT_JSON_KEY.HEADING_TYPES,
-        GET: {
-          params: { type: 'P', lang: 'ita', marcCategory: '1' },
-        },
+        records: C.API_RESULT_JSON_KEY.HEADING_TYPES
       }
     });
 
+    componentDidMount() {
+      this.props.mutator.marcCategory.replace(this.state.marcCategoryValue);
+    }
+
+    handleChange = event => {
+      this.setState({ firstSelect: event.target.value });
+      this.props.mutator.marcCategory.replace(event.target.value);
+    };
+
+    handleChangeSource = event => {
+      this.setState({ secondSelect: event.target.value });
+    };
+
+    handleClose = () => {
+      this.setState({ open: false });
+    };
+    handleOpen = () => {
+      this.setState({ open: true });
+    };
+
+    buildPreviewChoosed = () => {
+
+    }
+
+
     render() {
-      const { resources: { categories } } = this.props;
-      let category = {};
-      if (!categories || !categories.hasLoaded) category = logical.categorys;
+      const { classes, resources: { marcCategories, heading } } = this.props;
+      if (!marcCategories || !marcCategories.hasLoaded) return <div />;
+      if (!heading || !heading.hasLoaded) return <div />;
+      this.props.mandatoryField.push({});
 
-      const mapping = logical.views.map(s => ({
-        value: s.longDescription,
-        label: s.longDescription
-      }));
-
+      let options = {};
+      let headings = {};
+      if (marcCategories) {
+        options = marcCategories.records.map((element) => {
+          return (
+            <option value={element.code}>{element.description}</option>
+          );
+        });
+      }
+      if (heading) {
+        headings = heading.records.map((element) => {
+          return (
+            <option value={element.code}>{element.description}</option>
+          );
+        });
+      }
       return (
-        <CatalogingSelect options={mapping} label="Database" />
+        <div>
+          <Row id="section-table">
+            <MultiColumnList
+              contentData={this.props.mandatoryField}
+              onRowClick={() => { }}
+              visibleColumns={['categoryCode', 'headerTypeCode', 'code', 'displayValue', 'description']}
+              ariaLabel="TemplateNewMandatory"
+            />
+          </Row>
+          <p>Default value: <strong>{this.props.defaultValue.description} {this.props.defaultValue.displayValue}</strong></p>
+          <Row>
+            <Col xs={6}>
+              <FormControl className={classes.formControl}>
+                <Select
+                  native
+                  open={this.state.open}
+                  onClose={this.handleClose}
+                  onOpen={this.handleOpen}
+                  value={this.state.firstSelect}
+                  onChange={this.handleChange}
+                  inputProps={{
+            name: 'Category',
+            id: 'demo-controlled-open-selectr',
+          }}
+                >
+                  {options}
+                </Select>
+              </FormControl>
+              <FormControl className={classes.formControl}>
+                <Select
+                  native
+                  open={this.state.open}
+                  onClose={this.handleClose}
+                  onOpen={this.handleOpen}
+                  value={this.state.secondSelect}
+                  onChange={this.handleChangeSource}
+                  inputProps={{
+            name: 'Source',
+            id: 'demo-controlled-open-select',
+          }}
+                >
+                  {headings}
+                </Select>
+              </FormControl>
+            </Col>
+          </Row>
+        </div>
       );
     }
 }
 
 CategorySelect.propTypes = {
-  resources: PropTypes.object.isRequired
+  resources: PropTypes.shape({
+    query: PropTypes.object,
+    heading: PropTypes.shape({
+      GET: PropTypes.func.isRequired,
+    }),
+  }),
+  stripes: PropTypes.object,
+  mutator: PropTypes.shape({
+    heading: PropTypes.shape({
+      GET: PropTypes.func.isRequired,
+    }),
+  }),
+  classes: PropTypes.object.isRequired,
+  categories: PropTypes.object.isRequired,
+  headings: PropTypes.object.isRequired,
+  marcCategory: PropTypes.number.isRequired,
 };
 
-export default connect(CategorySelect, C.META.MODULE_NAME);
+export default withStyles(styles)(connect(CategorySelect, C.META.MODULE_NAME));

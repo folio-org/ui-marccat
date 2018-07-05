@@ -86,10 +86,10 @@ const styles = {
   }
 };
 @withStyles(styles)
-export default class VersionModalApp extends React.Component<VersionModalProps, VersionModalState> {
+export default class VersionModal extends React.Component<VersionModalProps, VersionModalState> {
 
   state = {
-    open: false
+    open: true
   };
 
   handleClickOpen = () => {

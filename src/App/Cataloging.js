@@ -37,8 +37,8 @@ class Cataloging extends React.Component<PropTypes> {
   render() {
     return (
       <div>
+        <VersionModalApp appTitle={pack.appName} appVersion={pack.version} />
         <Navigator {...this.props} />
-        <VersionModalApp pippo="wwww" appTitle={pack.appName} appVersion={pack.version} />
       </div>
     );
   }

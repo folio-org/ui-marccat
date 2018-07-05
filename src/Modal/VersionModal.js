@@ -12,6 +12,7 @@ type VersionModalProps = {|
     classes: Object;
     appIcon: string,
     open: boolean,
+    onClick: Function,
     onClose: Function,
     message: string,
     credits: string,
@@ -88,7 +89,7 @@ const styles = {
 export default class VersionModalApp extends React.Component<VersionModalProps, VersionModalState> {
 
   state = {
-    open: true
+    open: false
   };
 
   handleClickOpen = () => {
@@ -97,7 +98,6 @@ export default class VersionModalApp extends React.Component<VersionModalProps, 
 
   handleClose = () => {
     this.setState({ open: false });
-
   };
 
   render() {

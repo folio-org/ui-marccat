@@ -25,7 +25,7 @@ The `ui-cataloging` module adds the ability to manage cataloging in FOLIO.
 ## Running
 
 * `yarn start`
-* Visit your app at [http://localhost:8080](http://localhost:8080).
+* Visit your app at [http://localhost:3000](http://localhost:3000).
 
 By default, this will use the backend OKAPI cluster at
 https://okapi.frontside.io However, if you want to run the application

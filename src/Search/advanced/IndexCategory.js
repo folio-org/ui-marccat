@@ -20,14 +20,16 @@ class IndexCategory extends React.Component {
 
   static manifest = Object.freeze({
     indexType: {},
+    lang: {},
     categories: {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
-      path: 'index-categories?type=%{indexType.type}&lang=ita',
+      path: 'index-categories?type={indexType}&lang=%{lang}',
       headers: { 'x-okapi-tenant': 'tnx' },
       records: C.API_RESULT_JSON_KEY.INDEX_CATEGORIES
     },
   });
+
 
   constructor(props) {
     super(props);
@@ -35,7 +37,9 @@ class IndexCategory extends React.Component {
   }
 
   onUpdateType(typeValue) {
-    this.props.mutator.indexType.update({ type: typeValue });
+    this.props.mutator.indexType.relace({ type: typeValue });
+    this.props.mutator.lang.relace('ita');
+
     return this.props.mutator.categories.GET(typeValue);
   }
 

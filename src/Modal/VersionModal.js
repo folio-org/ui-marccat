@@ -12,6 +12,7 @@ type VersionModalProps = {|
     classes: Object;
     appIcon: string,
     open: boolean,
+    onClick: Function,
     onClose: Function,
     message: string,
     credits: string,
@@ -85,7 +86,7 @@ const styles = {
   }
 };
 @withStyles(styles)
-export default class VersionModalApp extends React.Component<VersionModalProps, VersionModalState> {
+export default class VersionModal extends React.Component<VersionModalProps, VersionModalState> {
 
   state = {
     open: true
@@ -97,7 +98,6 @@ export default class VersionModalApp extends React.Component<VersionModalProps, 
 
   handleClose = () => {
     this.setState({ open: false });
-
   };
 
   render() {

@@ -1,8 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { FormattedMessage } from 'react-intl';
-import * as C from '../../../Utils';
 
 class WildCard extends React.Component {
   render() {

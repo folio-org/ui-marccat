@@ -7,15 +7,35 @@ import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
 import RadioButton from '@folio/stripes-components/lib/RadioButton';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import css from '../EditTemplate.css';
-
+import * as C from '../../../Utils';
 
 class EditTemplateInfo extends React.Component {
+  static manifest = Object.freeze({
+    templateId: {},
+    records: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      path: 'record-template/%{id}',
+      headers: C.ENDPOINT.HEADERS,
+      records: C.API_RESULT_JSON_KEY.HEADING_TYPES
+    }
+  });
+
   static propTypes = {
+    resources: PropTypes.object,
+    stripes: PropTypes.object,
+    mutator: PropTypes.object,
     onToggle: PropTypes.object.isRequired,
     accordionId: PropTypes.object.isRequired,
     expanded: PropTypes.object.isRequired,
     selectedTemplate: PropTypes.object.isRequired,
   };
+
+
+  saveTemplateById() {
+
+  }
+
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
     const { expanded, onToggle, accordionId } = this.props;

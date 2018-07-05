@@ -1,1 +1,43 @@
-/* Modal.css */
+.backdrop {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.modalmask {
+  background: #fff;
+  border: 1px solid #fff;
+  box-shadow: 0 5px 28px 1px rgba(0, 0, 0, 0.75);
+  border-radius: 6px;
+}
+
+.modalicon {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+}
+
+.modalapp {
+  font-size: 36px;
+  color: #000;
+  letter-spacing: 0.4px;
+  text-align: center;
+}
+
+.modalversion {
+  font-size: 14px;
+  color: #616161;
+  letter-spacing: 0.4px;
+  text-align: center;
+}
+
+.modalcredits {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.62);
+  letter-spacing: 0.34px;
+  text-align: center;
+}
+
+.modalcontent {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.62);
+  letter-spacing: 0.31px;
+  text-align: center;
+}

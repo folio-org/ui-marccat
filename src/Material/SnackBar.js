@@ -9,6 +9,7 @@ const styles = theme => ({
   close: {
     width: theme.spacing.unit * 4,
     height: theme.spacing.unit * 4,
+    color: '#fff'
   },
 });
 
@@ -46,7 +47,7 @@ class SnackBar extends React.Component {
             <IconButton
               key="close"
               aria-label="Close"
-              color="inherit"
+              color="#fff"
               className={classes.close}
               onClick={this.handleClose}
             >

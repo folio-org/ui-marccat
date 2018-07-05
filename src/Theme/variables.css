@@ -33,18 +33,6 @@ i {
   font-size: var(--icons-size-medium) !important;
 }
 
-:global i { /* stylelint-disable-line selector-pseudo-class-no-unknown */
-  color: #fff;
-}
-
-button svg {
-  fill: rgba(0, 0, 0, 0.61) !important;
-}
-
-button:active svg {
-  fill: #fff !important;
-}
-
 section {
   transition: all 0.25s ease-in-out;
 
@@ -52,3 +40,4 @@ section {
     transition: all 0.25s ease-in-out;
   }
 }
+

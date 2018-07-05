@@ -29,8 +29,8 @@
   --icons-size-large: 36px;
 }
 
-header.navRoot {
- z-index: 999;
+header {
+  z-index: 999 !important;
 }
 
 i {

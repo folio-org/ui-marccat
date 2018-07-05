@@ -1,6 +1,7 @@
 {
   "name": "@folio/cataloging",
-  "version": "1.0.0-alpha",
+  "appName":"Cataloging",
+  "version": "1.0.21",
   "description": "cataloging",
   "repository": "folio-org/ui-cataloging",
   "publishConfig": {

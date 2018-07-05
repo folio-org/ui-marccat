@@ -102,10 +102,10 @@ class AdvancedSearchForm extends React.Component {
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const { handleSubmit, reset, submitting, pristine } = this.props;
+    const { reset, submitting, pristine } = this.props;
     const rootPath = this.props.match.path || this.props.match.url;
     return (
-      <form id="search-form" name="advancedSearchForms" onSubmit={handleSubmit} noValidate >
+      <form id="search-form" name="advancedSearchForms" onSubmit={this.handleSubmit} noValidate >
         {this.state.showErrorMessage &&
           <SnackBar position="right" message={formatMsg({ id: 'ui-cataloging.search.wrong.input' })} />
         }

@@ -5,6 +5,8 @@ import { Navigator } from '../Navigator';
 import * as C from '../Utils/';
 import VersionModalApp from '../Modal/VersionModal';
 
+const pack = require('../../package');
+
 class Cataloging extends React.Component<PropTypes> {
   static propTypes = {
     stripes: PropTypes.shape({
@@ -35,8 +37,8 @@ class Cataloging extends React.Component<PropTypes> {
   render() {
     return (
       <div>
+        <VersionModalApp appTitle={pack.appName} appVersion={pack.version} />
         <Navigator {...this.props} />
-        <VersionModalApp />
       </div>
     );
   }

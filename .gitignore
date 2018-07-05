@@ -17,7 +17,6 @@ build/
 ## node
 node_modules/
 dist/
-.circleci/
 ## vim
 *~
 .*.sw?

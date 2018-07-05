@@ -1,10 +1,12 @@
 /* Navigation */
 @import '../Theme/variables.css';
 
-.root {
-  flex: 1;
-  width: 100%;
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   height: 100%;
+  position: absolute;
 }
 
 .empty {

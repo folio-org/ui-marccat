@@ -1,18 +1,43 @@
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+@import 'https://fonts.googleapis.com/css?family=Roboto:300,400,500';
+
 :root {
   --background-gray: rgba(0, 0, 0, 0.62);
   --color-border: rgba(0, 0, 0, 0.2);
+  --color-white: #fff;
+  --button-color: #2b75bb;
+  --button-small: 24px;
+  --button-medium: 36px;
+  --button-large: 48px;
+  --font-weight-small: font-weight 100;
+  --font-weight-medium: font-weight 400;
+  --font-weight-large: font-weight 600;
+  --primary: #2b75bb;
+  --secondary: #999;
+  --error: #900;
+  --danger: #900;
+  --warn: #e27c3e;
+  --success: #070;
+  --controlMarginBottom: 12px;
+  --controlHeight: 24px;
+  --radius: 6px;
+  --gutter: 15px;
+  --controlHeightSmall: 44px;
+  --controlHeightTouch: var(--controlHeightSmall);
+  --icons-size-small: 18px;
+  --icons-size-medium: 24px;
+  --icons-size-large: 36px;
 }
 
-/* Lean on min-width queries to create mobile-first CSS. */
-@custom-media --smallUp (min-width: 321px);
-@custom-media --mediumUp (min-width: 641px);
-@custom-media --largeUp (min-width: 1025px);
-@custom-media --xlargeUp (min-width: 1441px);
-@custom-media --xxlargeUp (min-width: 1921px);
+i {
+  font-size: var(--icons-size-medium) !important;
+}
 
-/* Use these max-width queries as infrequently as possible. */
-@custom-media --small (max-width: 640px);
-@custom-media --mediumDown (max-width: 1024px);
-@custom-media --medium (min-width: 641px) and (max-width: 1024px);
-@custom-media --large (min-width: 1025px) and (max-width: 1440px);
-@custom-media --xlarge (min-width: 1441px) and (max-width: 1920px);
+section {
+  transition: all 0.25s ease-in-out;
+
+  &.pane {
+    transition: all 0.25s ease-in-out;
+  }
+}
+

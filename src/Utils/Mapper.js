@@ -38,5 +38,44 @@ const remapCodeLongDescription = (logicalViews) => {
     : false;
 };
 
+const remapMultiArray = (multiArray) => {
+  let obj = [];
+  multiArray.forEach((el, index) => {
+    if (multiArray[index]['fixed-field'] !== undefined) {
+      obj.push(multiArray[index]['fixed-field']);
+    }
+  });
+  return obj;
+};
 
-export { arrayToObject, convertValueToLabel, remapCodeLongDescription };
+const isEmptyObject = (obj) => {
+  for (const prop in obj) {
+    if (Object.prototype.toString.call(obj[prop]) !== '[object Undefined]') { if (obj[prop] && obj[prop].length > 0) return false; }
+  }
+  return true;
+};
+
+const removeEmpty = (data) => {
+  for (const entry in data) {
+    if (Object.prototype.toString.call(data[entry]) === '[object Array]') {
+      if (data[entry].length) {
+        let i = data[entry].length;
+        while (i--) {
+          if (Object.prototype.toString.call(data[entry][i]) === '[object Null]') {
+            data[entry].splice(i, 1);
+          } else if (isEmptyObject(data[entry][i])) {
+            data[entry].splice(i, 1);
+          } else if (Object.prototype.toString.call(data[entry][i]) === '[object Object]') {
+            removeEmpty(data[entry][i]);
+          }
+        }
+      }
+    } else if (Object.prototype.toString.call(data[entry]) === '[object Object]') {
+      removeEmpty(data[entry]);
+    }
+  }
+};
+
+export default removeEmpty;
+
+export { arrayToObject, convertValueToLabel, remapCodeLongDescription, remapMultiArray, removeEmpty };

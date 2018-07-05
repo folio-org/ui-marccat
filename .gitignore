@@ -6,7 +6,7 @@ ModuleDescriptor.json
 
 ## macos
 *.DS_Store
-
+*.icloud
 ## maven
 target/
 
@@ -16,6 +16,7 @@ build/
 
 ## node
 node_modules/
+dist/
 .circleci/
 ## vim
 *~

@@ -97,7 +97,7 @@ export default class VersionModalApp extends React.Component<VersionModalProps, 
 
   handleClose = () => {
     this.setState({ open: false });
-    
+
   };
 
   render() {

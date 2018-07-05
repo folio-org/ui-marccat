@@ -1,6 +1,6 @@
 {
   "name": "@folio/cataloging",
-  "appName":"Cataloging",
+  "appName": "Cataloging",
   "version": "1.0.21",
   "description": "cataloging",
   "repository": "folio-org/ui-cataloging",
@@ -29,7 +29,6 @@
     }
   ],
   "scripts": {
-    "preinstall": "yarn clean",
     "start": "stripes serve config/stripes.config.js",
     "start:vagrant": "stripes serve-vagrant config/stripes.config.js",
     "build": "stripes build --output --sourcemap",

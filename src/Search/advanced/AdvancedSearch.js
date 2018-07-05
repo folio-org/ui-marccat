@@ -38,9 +38,6 @@ class AdvancedSearch extends React.Component<SearchProps, SearchState> {
     this.handleCloseRestrictionPanel = this.handleCloseRestrictionPanel.bind(this);
   }
 
-  // RICORDARSI DI EFFETTUARE IL BIND NEL COSTRUTTORE DEI METODI
-  // this.handleClick = this.handleClick.bind(this);
-  // ALTRIMENTI NON VENGONO AGGANCIATI
   handleClose() {
     this.props.history.goBack();
   }

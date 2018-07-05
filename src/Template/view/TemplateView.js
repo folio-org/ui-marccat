@@ -10,6 +10,7 @@ import IconButton from '@folio/stripes-components/lib/IconButton';
 import { EditTemplate } from '../';
 import * as C from '../../Utils';
 import css from '../styles/TemplateView.css';
+import FabSpeed from '../field/FabSpeed';
 
 class TemplateView extends React.Component {
   static propTypes = {// eslint-disable-line react/no-unused-prop-types
@@ -87,13 +88,14 @@ class TemplateView extends React.Component {
 
     const searchMenu = (
       <PaneMenu>
-        <IconButton key="icon-search" icon="search" />
+        <IconButton key="icon-search" icon="search" onClick={() => this.props.history.push(C.INTERNAL_URL.ADVANCE_SEARCH)} />
       </PaneMenu>
     );
 
     const deleteMenu = (
       <PaneMenu>
         <IconButton key="icon-trash" icon="trashBin" />
+        <IconButton key="icon-save" icon="save" />
         <IconButton key="icon-edit" icon="edit" />
       </PaneMenu>
     );
@@ -176,6 +178,7 @@ class TemplateView extends React.Component {
             {...this.props}
             selectedTemplate={this.state.selectedTemplate}
           />
+          <FabSpeed />
         </Pane>
           }
       </Paneset>

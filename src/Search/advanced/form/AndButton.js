@@ -11,12 +11,13 @@ class AndButton extends React.Component {
     disabled: PropTypes.bool.isRequired,
   };
   render() {
+    const { disabled, onClick } = this.props;
     return (
       <Button
         {...this.props}
-        onClick={this.props.onClick}
+        onClick={onClick}
         type="submit"
-        disabled={this.props.disabled}
+        disabled={disabled}
         buttonStyle="primary"
         style={{ 'minHeight': '36px' }}
       >

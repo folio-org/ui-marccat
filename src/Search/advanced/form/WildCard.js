@@ -1,18 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from '@folio/stripes-connect';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { FormattedMessage } from 'react-intl';
 import * as C from '../../../Utils';
 
 class WildCard extends React.Component {
-  static propTypes = {
-    stripes: PropTypes.shape({
-      intl: PropTypes.object.isRequired,
-    }).isRequired
-  }
   render() {
-    const formatMsg = this.props.stripes.intl.formatMessage;
     return (
       <Row>
         <Col xs={1}>
@@ -35,4 +28,4 @@ class WildCard extends React.Component {
   }
 }
 
-export default connect(WildCard, C.META.MODULE_NAME);
+export default WildCard;

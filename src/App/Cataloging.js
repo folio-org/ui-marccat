@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from '@folio/stripes-connect';
 import { Navigator } from '../Navigator';
 import * as C from '../Utils/';
+import VersionModalApp from '../Modal/VersionModal';
 
 class Cataloging extends React.Component<PropTypes> {
   static propTypes = {
@@ -33,7 +34,10 @@ class Cataloging extends React.Component<PropTypes> {
 
   render() {
     return (
-      <Navigator {...this.props} />
+      <div>
+        <Navigator {...this.props} />
+        <VersionModalApp />
+      </div>
     );
   }
 }

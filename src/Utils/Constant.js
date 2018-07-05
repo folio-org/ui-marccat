@@ -15,7 +15,7 @@ export const ENDPOINT = {
   TEMPLATE_URL: 'record-templates',
   TEMPLATE_URL_ID: 'record-template/123',
   TEMPLATE_MANDATORY: 'bibliographic/fields/mandatory',
-  CREATE_TEMPLATE: 'record-template/:{id}',
+  CREATE_TEMPLATE: 'record-template',
   LOGICAL_VIEW_URL: 'logical-views',
   HEADING_TYPES: 'heading-types',
   FUNCTION_CODES: 'function-codes',
@@ -46,6 +46,7 @@ export const INTERNAL_URL = {
   EDIT_TEMPLATE: '/cataloging/template/edit/:id',
   DELETE_TEMPLATE: '/cataloging/template/delete/:id',
   VIEW_LOGICAL_VIEW: '/cataloging/logicalview/',
+  ADVANCE_SEARCH: '/cataloging/advancedSearch',
   SEARCH_RESULTS: '/cataloging/searchResults',
 };
 

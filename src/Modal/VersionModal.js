@@ -101,7 +101,7 @@ export default class VersionModalApp extends React.Component<VersionModalProps, 
   };
 
   render() {
-    const { open, appTitle, appVersion, appIcon, classes, credits, onClose, pippo } = this.props;
+    const { open, appTitle, appVersion, appIcon, classes, credits, onClose, pippo } = this.props; // eslint-disable-line no-unused-vars
     return (
       <MuiThemeProvider theme={theme}>
         <Dialog

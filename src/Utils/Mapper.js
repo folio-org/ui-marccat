@@ -1,3 +1,9 @@
+import * as C from './Constant';
+
+const marcSeparator = (stringa) => {
+  return stringa.replace(C.MARC_CHARACTER.SEPARATOR, C.MARC_CHARACTER.DOLLAR);
+};
+
 const arrayToObject = (arr) => {
   const objCur = [];
   for (let i = 0; i < arr.length; ++i) {
@@ -43,6 +49,10 @@ const remapMultiArray = (multiArray) => {
   multiArray.forEach((el, index) => {
     if (multiArray[index]['fixed-field'] !== undefined) {
       obj.push(multiArray[index]['fixed-field']);
+    } else if (multiArray[index]['variable-field'] !== undefined) {
+
+      multiArray[index]['variable-field'].displayValue = marcSeparator(multiArray[index]['variable-field'].displayValue);
+      obj.push(multiArray[index]['variable-field']);
     }
   });
   return obj;

@@ -2,9 +2,6 @@ version: 2
 jobs:
   build:
     branches:
-      # ignore:
-      #   - develop
-      #   - /feature-.*/
     docker:
       - image: circleci/node:9
     steps:

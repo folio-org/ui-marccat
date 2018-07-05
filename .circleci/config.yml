@@ -1,47 +1,8 @@
-version: 2.0
-
+version: 2
 jobs:
-  checkout-and-install:
-    docker:
-      - image: circleci/node:9
-    steps:
-      - checkout
-      - restore_cache:
-          key: v1-node-modules-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install dependencies
-          command: yarn install
-      - save_cache:
-          key: v1-node-modules-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/node_modules
-
-  eslint:
-    docker:
-      - image: circleci/node:9
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Lint JS
-          command: yarn eslint --max-warnings=0
-
-  stylelint:
-    docker:
-      - image: circleci/node:9
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Lint CSS
-          command: yarn stylelint
-
   build:
     docker:
       - image: circleci/node:9
     steps:
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Build bundle
-          command: NODE_ENV=production yarn build
+      - checkout
+      - run: yarn install

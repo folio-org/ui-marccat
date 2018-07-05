@@ -5,4 +5,16 @@ jobs:
       - image: circleci/node:9
     steps:
       - checkout
-      - run: yarn install && yarn lint && yarn build
+      - run: yarn install
+  lint:
+    docker:
+      - image: circleci/node:9
+    steps:
+      - checkout
+      - run: yarn lint
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - lint

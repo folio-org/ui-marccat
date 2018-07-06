@@ -60,6 +60,7 @@ export const API_RESULT_JSON_KEY = {
   ITEM_TYPES: 'itemTypes',
   FIELDS: 'fields',
   INDEX_CATEGORIES: 'categories',
+  INDEX_INNER: 'indexes',
 };
 
 export const INITIAL_RESULT_COUNT = 30;

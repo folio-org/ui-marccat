@@ -89,7 +89,7 @@ const styles = {
 export default class VersionModal extends React.Component<VersionModalProps, VersionModalState> {
 
   state = {
-    open: true
+    open: false
   };
 
   handleClickOpen = () => {

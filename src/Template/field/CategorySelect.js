@@ -95,14 +95,14 @@ class CategorySelect extends React.Component {
       if (marcCategories) {
         options = marcCategories.records.map((element) => {
           return (
-            <option value={element.code}>{element.description}</option>
+            <option value={element.value}>{element.label}</option>
           );
         });
       }
       if (heading) {
         headings = heading.records.map((element) => {
           return (
-            <option value={element.code}>{element.description}</option>
+            <option value={element.value}>{element.label}</option>
           );
         });
       }
@@ -118,7 +118,7 @@ class CategorySelect extends React.Component {
           </Row>
           <p>Default value: <strong>{this.props.defaultValue.description} {this.props.defaultValue.displayValue}</strong></p>
           <Row>
-            <Col xs={6}>
+            <Col xs={12}>
               <FormControl className={classes.formControl}>
                 <Select
                   native

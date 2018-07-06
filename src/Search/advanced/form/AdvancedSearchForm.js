@@ -14,7 +14,7 @@ import OrButton from './OrButton';
 import NotButton from './NotButton';
 import NearButton from './NearButton';
 import WildCard from './WildCard';
-import IndexCategory from '../IndexCategory'
+import IndexCategory from '../IndexCategory';
 import { SnackBar } from '../../../Material/';
 import * as C from '../../../Utils';
 
@@ -81,9 +81,9 @@ class AdvancedSearchForm extends React.Component {
   onClick() {
     if (!this._name.value) {
       this.setState({ showErrorMessage: true });
-    }else{
+    } else {
       this.props.history.push(C.INTERNAL_URL.SEARCH_RESULTS);
-    } 
+    }
   }
 
   handleRadio(e) {
@@ -111,7 +111,7 @@ class AdvancedSearchForm extends React.Component {
         {this.state.showErrorMessage &&
           <SnackBar position="right" message={formatMsg({ id: 'ui-cataloging.search.wrong.input' })} />
         }
-        <IndexCategory {...this.props} title="Category"  />
+        <IndexCategory {...this.props} title="Category" />
         <Row>
           <Col xs={11}>
             <Field component={TextArea} rows='8' id='searchTextArea' type="text" ref={TextArea => this._name = TextArea} name='searchTextArea' withRef />
@@ -119,16 +119,16 @@ class AdvancedSearchForm extends React.Component {
         </Row>
         <Row>
           <Col xs={6}>
-            <AndButton  {...this.props} onClick={() => this.handleLogicButton('searchTextArea', 'AND')} disabled={false} />
-            <NotButton  {...this.props} onClick={() => this.handleLogicButton('searchTextArea', 'NOT')} disabled={false} />
-            <OrButton  {...this.props} onClick={() => this.handleLogicButton('searchTextArea', 'OR')} disabled={false} />
-            <NearButton  {...this.props} onClick={() => this.handleLogicButton('searchTextArea', 'NEAR')} disabled={false} />
+            <AndButton {...this.props} onClick={() => this.handleLogicButton('searchTextArea', 'AND')} disabled={false} />
+            <NotButton {...this.props} onClick={() => this.handleLogicButton('searchTextArea', 'NOT')} disabled={false} />
+            <OrButton {...this.props} onClick={() => this.handleLogicButton('searchTextArea', 'OR')} disabled={false} />
+            <NearButton {...this.props} onClick={() => this.handleLogicButton('searchTextArea', 'NEAR')} disabled={false} />
           </Col>
           <Col xs={6}>
             {/* <AdvancedSearchButton {...this.props} /> */ }
             <Link to={`${rootPath}/searchResults`} >
               <Button
-               
+
                 onClick={this.onClick}
                 type="button"
                 /* disabled={this.props.disabled} */
@@ -139,7 +139,7 @@ class AdvancedSearchForm extends React.Component {
                 <FormattedMessage id="ui-cataloging.search.searchButton" />
               </Button>
             </Link>
-            <ScanButton  {...this.props} disabled={pristine || submitting} />
+            <ScanButton {...this.props} disabled={pristine || submitting} />
             <Button
               {...this.props}
               type="submit"

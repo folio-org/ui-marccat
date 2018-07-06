@@ -8,7 +8,7 @@ import IconButton from '@folio/stripes-components/lib/IconButton';
 import AdvancedSearchForm from './form/AdvancedSearchForm';
 import { SearchProps, SearchState } from '../type';
 import { RestrictionView } from '../restriction/';
-import css from '../Search.css';
+import css from '../style/Search.css';
 import * as C from '../../Utils';
 
 class AdvancedSearch extends React.Component<SearchProps, SearchState> {

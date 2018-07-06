@@ -6,7 +6,6 @@ import TextField from '@folio/stripes-components/lib/TextField';
 import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
 import RadioButton from '@folio/stripes-components/lib/RadioButton';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
-import css from '../EditTemplate.css';
 import * as C from '../../../Utils';
 
 class EditTemplateInfo extends React.Component {
@@ -58,7 +57,7 @@ class EditTemplateInfo extends React.Component {
               id="input-template-name"
             />
           </Col>
-          <Col xs={6} className={css.radiobutton}>
+          <Col xs={6}>
             <Field name="subGroup" component={RadioButtonGroup} label="Group" style={{ marginTop: '10px' }}>
               <RadioButton label="W" id="radio_1" value="W" inline />
               <RadioButton label="E" id="radio_2" value="E" inline />

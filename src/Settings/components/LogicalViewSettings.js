@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Icon from '@folio/stripes-components/lib/Icon';
-
-import * as C from '../Utils';
-import { CatalogingSelect } from '../Material/';
+import * as C from '../../Utils';
+import { CatalogingSelect } from '../../Common';
 
 type LogicalViewProps = {|
     resources: Object,

@@ -4,14 +4,15 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
+import { MuiThemeProvider, withStyles } from '@material-ui/core/styles';
+import { theme, styles } from '../Style/VersionModal';
 
 type VersionModalProps = {|
     appTitle: string;
     appVersion: string;
     classes: Object;
     appIcon: string,
-    open: boolean,
+    open: bool,
     onClick: Function,
     onClose: Function,
     message: string,
@@ -19,95 +20,24 @@ type VersionModalProps = {|
     translate: Function
 |}
 type VersionModalState = {|
-  open: boolean;
+  open: bool;
 |}
 
-const soureImg = require('../../icons/app-modal.svg');
+const soureImg = require('../../../icons/app-modal.svg');
 
-const theme = createMuiTheme({
-  overrides: {
-    MuiDialogContentText: {
-      root: {
-        fontFamily: '.AppleSystemUIFont',
-        fontSize: '11px',
-        color: 'rgba(0,0,0,0.62)',
-        letterSpacing: '0.31px',
-        textAlign: 'center'
-      }
-    },
-    MuiDialogTitle: {
-      root: {
-        padding: '24px 24px 0px'
-      }
-    },
-    MuiBackdrop: {
-      root: {
-        backgroundColor: 'rgba(0, 0, 0, .75)',
-        boxShadow: '0 5px 28px 1px rgba(0, 0, 0, 0.75)'
-      },
-    },
-    MuiDialog: {
-      paperWidthSm: {
-        maxWidth: '400px'
-      }
-    },
-  },
-});
 
-const styles = {
-  avatar: {
-    margin: 10,
-  },
-  row: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  title: {
-    fontFamily: '.SFNSDisplay',
-    fontSize: '36px',
-    color: '#000000',
-    letterSpacing: '0.4px',
-    textAlign: 'center',
-    margin: '20px'
-  },
-  version: {
-    fontFamily: '.AppleSystemUIFont',
-    fontSize: '14px',
-    color: '#616161',
-    letterSpacing: '0.4px',
-    textAlign: 'center'
-  },
-  credits: {
-    fontFamily: '.AppleSystemUIFont',
-    fontSize: '12px',
-    color: 'rgba(0,0,0,0.62)',
-    letterSpacing: '0.34px',
-    textAlign: 'center'
-  }
-};
 @withStyles(styles)
 export default class VersionModal extends React.Component<VersionModalProps, VersionModalState> {
 
-  state = {
-    open: true
-  };
-
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false });
-  };
-
   render() {
-    const { open, appTitle, appVersion, appIcon, classes, credits, onClose, pippo } = this.props; // eslint-disable-line no-unused-vars
+    const { open, appTitle, appVersion, appIcon, classes, credits, onClose } = this.props; // eslint-disable-line no-unused-vars
+
     return (
       <MuiThemeProvider theme={theme}>
         <Dialog
-          open={this.state.open}
+          open={this.props.open}
           keepMounted
-          onClose={this.handleClose}
+          onClose={this.props.onClose}
           aria-labelledby="alert-dialog-slide-title"
           aria-describedby="alert-dialog-slide-description"
         >
@@ -129,3 +59,4 @@ export default class VersionModal extends React.Component<VersionModalProps, Ver
     );
   }
 }
+

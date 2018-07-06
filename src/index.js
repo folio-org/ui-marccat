@@ -1,8 +1,10 @@
 import React from 'react';
-import Route from 'react-router-dom/Route';
+import { Route } from 'react-router-dom';
 import Switch from 'react-router-dom/Switch';
 import { Settings } from './Settings';
 import Cataloging from './App/Cataloging';
+
+import './Theme/variables.css';
 
 type RoutingProps = {|
   stripes: {

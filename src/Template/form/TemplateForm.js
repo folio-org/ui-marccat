@@ -8,7 +8,6 @@ import { FormattedMessage } from 'react-intl';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import TagForm from '../form/TagForm';
 import { CreateTemplateButton } from '../';
-import css from './TemplateForm.css';
 
 function validate(values) {
   const errors = {};
@@ -70,7 +69,7 @@ class TemplateForm extends React.Component {
               component="input"
             />
           </Col>
-          <Col xs={6} className={css.radiobutton}>
+          <Col xs={6}>
             <Field name="subGroup" component={RadioButtonGroup} label="Group" style={{ marginTop: '10px' }}>
               <RadioButton label="W" id="actingSponsor001" value="W" inline />
               <RadioButton label="E" id="actingSponsor002" value="E" inline />

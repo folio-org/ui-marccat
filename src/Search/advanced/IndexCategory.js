@@ -30,6 +30,7 @@ class IndexCategory extends React.Component {
       indexTypeValue: 'P',
       open: false,
       firstSelect: '',
+      checkedP: true,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -53,12 +54,13 @@ class IndexCategory extends React.Component {
   handleChange = event => {
     this.setState({
       firstSelect: event.target.value,
+      checkedP: (event.target.value === 'P'),
     });
     this.props.mutator.indexType.replace(event.target.value);
   };
 
   render() {
-    const { resources: { categories } } = this.props;   
+    const { resources: { categories } } = this.props;
     const formatMsg = this.props.stripes.intl.formatMessage;
     let options = {};
 
@@ -68,16 +70,16 @@ class IndexCategory extends React.Component {
           <option value={element.value}>{element.label}</option>
         );
       });
-    }    
+    }
     return (
       <Row>
         <Col xs={3}>
-          <Field name="indexRadio" value={this.state.firstSelect} component={RadioButtonGroup} label={formatMsg({ id: 'ui-cataloging.search.indexes' })}>
+          <Field name="indexRadio" component={RadioButtonGroup} label={formatMsg({ id: 'ui-cataloging.search.indexes' })}>
             <RadioButton
               label={formatMsg({ id: 'ui-cataloging.search.primary' })}
               id="actingSponsor001"
               value="P"
-              checked={this.state.indexTypeP}
+              checked={this.state.checkedP}
               onChange={this.handleChange}
               inline
             />
@@ -85,29 +87,31 @@ class IndexCategory extends React.Component {
               label={formatMsg({ id: 'ui-cataloging.search.secondary' })}
               id="actingSponsor002"
               value="S"
-              checked={!this.state.indexTypeP}
+              checked={!this.state.checkedP}
               onChange={this.handleChange}
               inline
             />
           </Field>
         </Col>
         <Col xs={6}>
+          {categories &&
           <FormControl>
             <Select
               native
               open={this.state.open}
               onClose={this.handleClose}
               onOpen={this.handleOpen}
-                        /* value={this.state.firstSelect} */
+              value={this.state.firstSelect}
               onChange={this.handleChange}
               inputProps={{
                           name: 'Category',
-                          id: 'demo-controlled-open-selectr',
+                          id: 'demo-controlled-open-select',
                         }}
             >
               {options}
             </Select>
           </FormControl>
+        }
         </Col>
       </Row>
     );

@@ -5,10 +5,10 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import IconButton from '@folio/stripes-components/lib/IconButton';
-import * as C from '../../Utils';
+import * as C from '../../../Utils';
 import SimpleSearchForm from './form/SimpleSearchForm';
-import type { SearchProps, SearchState } from '../type';
-import css from '../style/Search.css';
+import type { SearchProps, SearchState } from '../../type';
+import css from '../../style/Search.css';
 
 class SimpleSearch extends React.Component<SearchProps, SearchState> {
 

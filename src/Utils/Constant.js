@@ -120,3 +120,8 @@ export const LOGICAL_VIEW_SELECT = {
   INITIAL_VALUE: '0'
 };
 
+// Marc Constants
+export const MARC_CHARACTER = {
+  SEPARATOR: '\u001f',
+  DOLLAR: '$'
+};

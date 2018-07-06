@@ -59,12 +59,6 @@ export const reportMenuItem = (
       </ListItemIcon>
       <ListItemText primary="Report" />
     </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <ReportIcon />
-      </ListItemIcon>
-      <ListItemText primary="List Report" />
-    </ListItem>
   </div>
 );
 

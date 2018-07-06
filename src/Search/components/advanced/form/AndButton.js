@@ -3,9 +3,9 @@ import Button from '@folio/stripes-components/lib/Button';
 import { connect } from '@folio/stripes-connect';
 import { PropTypes } from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import * as C from '../../../Utils';
+import * as C from '../../../../Utils';
 
-class ScanButton extends React.Component {
+class AndButton extends React.Component {
   static propTypes = {
     onClick: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,
@@ -20,10 +20,10 @@ class ScanButton extends React.Component {
         buttonStyle="primary"
         style={{ 'minHeight': '36px' }}
       >
-        <FormattedMessage id="ui-cataloging.search.scanButton" />
+        <FormattedMessage id="ui-cataloging.search.andButton" />
       </Button>
     );
   }
 }
 
-export default connect(ScanButton, C.META.MODULE_NAME);
+export default connect(AndButton, C.META.MODULE_NAME);

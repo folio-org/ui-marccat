@@ -1,18 +1,22 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Button from '@folio/stripes-components/lib/Button';
 import { connect } from '@folio/stripes-connect';
-import { PropTypes } from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import Link from 'react-router-dom/Link';
-import * as C from '../../../Utils';
+import * as C from '../../../../Utils';
 
-class SimpleSearchButton extends React.Component {
+class AdvancedSearchButton extends React.Component {
   static propTypes = {
     history: PropTypes.shape({
       goBack: PropTypes.func,
       pop: PropTypes.func,
       push: PropTypes.func
     }),
+    match: {
+      path: PropTypes.string,
+      url: PropTypes.string
+    }
   }
 
   onClick() {
@@ -20,8 +24,9 @@ class SimpleSearchButton extends React.Component {
   }
 
   render() {
+    const rootPath = this.props.match.path || this.props.match.url;
     return (
-      <Link to="/cataloging/searchResults" >
+      <Link to={`${rootPath}/searchResults`} >
         <Button
           onClick={this.onClick}
           type="button"
@@ -37,4 +42,4 @@ class SimpleSearchButton extends React.Component {
   }
 }
 
-export default connect(SimpleSearchButton, C.META.MODULE_NAME);
+export default connect(AdvancedSearchButton, C.META.MODULE_NAME);

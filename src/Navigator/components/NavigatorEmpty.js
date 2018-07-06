@@ -25,9 +25,10 @@ class NavigatorEmpty extends React.Component {
     };
 
     return (
-      <Paneset static id="pippo">
+      <Paneset static>
         <Pane
-          style={style}
+          id="pippo"
+          padContent={false}
           loading
           firstMenu={searchMenu}
           lastMenu={lastMenu}

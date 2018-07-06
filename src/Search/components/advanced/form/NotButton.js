@@ -3,7 +3,7 @@ import Button from '@folio/stripes-components/lib/Button';
 import { connect } from '@folio/stripes-connect';
 import { PropTypes } from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import * as C from '../../../Utils';
+import * as C from '../../../../Utils';
 
 class NotButton extends React.Component {
   static propTypes = {

@@ -29,14 +29,14 @@ export const styles = theme => ({
     width: drawerWidth,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
+      duration: 10,
     }),
   },
   drawerPaperClose: {
     overflowX: 'hidden',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
+      duration: 10,
     }),
     width: theme.spacing.unit * 7,
     [theme.breakpoints.up('sm')]: {
@@ -53,6 +53,9 @@ export const styles = theme => ({
   content: {
     padding: 0,
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: 'rgba(0, 0, 0, 0.03)',
   },
+  paneContent: {
+    padding: 0
+  }
 });

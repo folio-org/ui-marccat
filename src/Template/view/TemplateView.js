@@ -9,8 +9,7 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import { EditTemplate } from '../';
 import * as C from '../../Utils';
-import css from '../styles/TemplateView.css';
-import FabSpeed from '../field/FabSpeed';
+import FabSpeed from '../../Common/Button/FabSpeedDial';
 
 class TemplateView extends React.Component {
   static propTypes = {// eslint-disable-line react/no-unused-prop-types
@@ -101,9 +100,9 @@ class TemplateView extends React.Component {
     );
 
     const lastMenu = (
-      <PaneMenu className={css.icon_plus} {...this.props}>
+      <PaneMenu {...this.props}>
         <IconButton key="icon-gear" icon="gear" />
-        <IconButton key="icon-plus-sign" icon="plus-sign" onClick={this.handleAddTemplate} className={css.icon_plus} />
+        <IconButton key="icon-plus-sign" icon="plus-sign" onClick={this.handleAddTemplate} />
       </PaneMenu>
     );
 

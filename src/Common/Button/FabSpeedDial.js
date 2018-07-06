@@ -8,25 +8,17 @@ import ContentCopyIcon from '@material-ui/icons/ContentCopy';
 import SaveIcon from '@material-ui/icons/Save';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/ModeEdit';
-
-const styles = theme => ({
-  root: {
-    height: 380,
-  },
-  speedDial: {
-    position: 'absolute',
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 3,
-  },
-});
+import { FormattedMessage } from 'react-intl';
+import styles from '../Style/Button';
 
 const actions = [
-  { icon: <ContentCopyIcon />, name: 'Add Tag' },
-  { icon: <SaveIcon />, name: 'Save Template' },
-  { icon: <DeleteIcon />, name: 'Delete Tag' },
+  { icon: <ContentCopyIcon />, name: <FormattedMessage id="ui-cataloging.settings.general" /> },
+  { icon: <SaveIcon />, name: <FormattedMessage id="ui-cataloging.settings.general" /> },
+  { icon: <DeleteIcon />, name: <FormattedMessage id="ui-cataloging.settings.general" /> },
 ];
 
-class OpenIconSpeedDial extends React.Component {
+@withStyles(styles)
+class FabSpeedDial extends React.Component {
   state = {
     open: false,
   };
@@ -84,8 +76,8 @@ class OpenIconSpeedDial extends React.Component {
   }
 }
 
-OpenIconSpeedDial.propTypes = {
+FabSpeedDial.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(OpenIconSpeedDial);
+export default FabSpeedDial;

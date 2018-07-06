@@ -1,11 +1,6 @@
 import React from 'react';
 import { FormattedDate, FormattedTime } from 'react-intl';
 
-// serialized object into http params
-export function toParams(obj) {
-  return Object.entries(obj).map(([key, val]) => `${key}=${val}`).join('&');
-}
-
 export function formatDate(dateStr) {
   if (!dateStr) return dateStr;
   return (<FormattedDate value={dateStr} />);

@@ -8,7 +8,7 @@ import IconButton from '@folio/stripes-components/lib/IconButton';
 import * as C from '../../Utils';
 import SimpleSearchForm from './form/SimpleSearchForm';
 import type { SearchProps, SearchState } from '../type';
-import css from '../Search.css';
+import css from '../style/Search.css';
 
 class SimpleSearch extends React.Component<SearchProps, SearchState> {
 
@@ -21,9 +21,13 @@ class SimpleSearch extends React.Component<SearchProps, SearchState> {
     }
   });
 
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-
     const lastMenu = (
       <PaneMenu className={css.icon_plus} {...this.props}>
         <IconButton key="icon-gear" icon="gear" />

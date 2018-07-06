@@ -1,4 +1,5 @@
 {
+  "cataloging":"Cataloging",
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
   "settings.logicalview": "Logical View",
@@ -16,15 +17,18 @@
   "navigator.report": "Report",
 
   "button.new": "+ New",
+  "button.close": "Close",
+  "button.cancel": "Cancel",
   "button.new.tag": "+ Tag",
   "button.backto": "Close",
   "templates.title": "Bibliographic templates",
   "template.column.id": "Id",
   "template.column.name": "Name",
   "template.create": "Create New Template",
+  "template.subfield.add": "Add subfield",
   "template.save": "Save Template",
   "template.tag.create": "Create New Tag",
-
+  "template.tag.delete": "Delete Tag",
 
   "template.form.name": "Name",
   "template.form.tag.code": "Code",

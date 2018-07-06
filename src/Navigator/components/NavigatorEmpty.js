@@ -4,8 +4,8 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import { connect } from '@folio/stripes-connect';
-import css from './Navigator.css';
-import * as C from '../Utils';
+import SwitchListSecondary from '../../Template/list-item/Item';
+import * as C from '../../Utils';
 
 class NavigatorEmpty extends React.Component {
   render() {
@@ -20,11 +20,14 @@ class NavigatorEmpty extends React.Component {
         <IconButton key="icon-add" icon="comment" />
       </PaneMenu>
     );
-
+    const style = {
+      padding: 0
+    };
 
     return (
-      <Paneset static style={css.root}>
+      <Paneset static id="pippo">
         <Pane
+          style={style}
           loading
           firstMenu={searchMenu}
           lastMenu={lastMenu}
@@ -33,7 +36,9 @@ class NavigatorEmpty extends React.Component {
           paneSub="0 result found"
           onClose={() => { }}
           appIcon={{ app: 'cataloging' }}
-        />
+        >
+          <SwitchListSecondary />
+        </Pane>
       </Paneset>
 
     );

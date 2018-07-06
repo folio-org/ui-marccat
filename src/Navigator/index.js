@@ -1,2 +1,2 @@
-export { default as Navigator } from './Navigator';
-export { default as NavigatorEmpty } from './NavigatorEmpty';
+export { default as NavigatorEmpty } from './components/NavigatorEmpty';
+export { default as NavDrawer } from './components/NavDrawer';

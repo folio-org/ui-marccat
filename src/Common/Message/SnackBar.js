@@ -4,15 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import styles from '../Style/SnackBar';
 
-const styles = theme => ({
-  close: {
-    width: theme.spacing.unit * 4,
-    height: theme.spacing.unit * 4,
-    color: '#fff'
-  },
-});
-
+@withStyles(styles)
 class SnackBar extends React.Component {
   state = {
     open: true,

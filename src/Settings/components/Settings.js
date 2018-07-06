@@ -1,6 +1,6 @@
 import React from 'react';
 import Settings from '@folio/stripes-components/lib/Settings';
-import GeneralSettings from './GeneralSettings';
+import GeneralSettings from '../components/GeneralSettings';
 import LogicalViewSettings from './LogicalViewSettings';
 
 type CatalogingSettingsProps = {|

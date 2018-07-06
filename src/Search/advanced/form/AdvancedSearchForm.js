@@ -14,7 +14,7 @@ import OrButton from './OrButton';
 import NotButton from './NotButton';
 import NearButton from './NearButton';
 import WildCard from './WildCard';
-import { SnackBar } from '../../../Material/';
+import { SnackBar } from '../../../Common/';
 import * as C from '../../../Utils';
 
 function validate(values) {

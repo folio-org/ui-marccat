@@ -1,5 +1,6 @@
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 @import 'https://fonts.googleapis.com/css?family=Roboto:300,400,500';
+@import './override.css';
 
 :root {
   --background-gray: rgba(0, 0, 0, 0.62);
@@ -27,21 +28,5 @@
   --icons-size-small: 18px;
   --icons-size-medium: 24px;
   --icons-size-large: 36px;
-}
-
-header {
-  z-index: 999 !important;
-}
-
-i {
-  font-size: var(--icons-size-medium) !important;
-}
-
-section {
-  transition: all 0.25s ease-in-out;
-
-  &.pane {
-    transition: all 0.25s ease-in-out;
-  }
 }
 

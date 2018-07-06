@@ -7,9 +7,8 @@ import IconButton from '@folio/stripes-components/lib/IconButton';
 import { connect } from '@folio/stripes-connect';
 import { remapMultiArray } from '../../Utils/Mapper';
 import TemplateForm from '../form/TemplateForm';
-import OpenIconSpeedDial from '../field/FabSpeed';
+import OpenIconSpeedDial from '../../Common/Button/FabSpeedDial';
 import * as C from '../../Utils';
-import css from './CreateTemplate.css';
 
 class CreateTemplate extends React.Component {
   static propTypes = {
@@ -91,7 +90,7 @@ class CreateTemplate extends React.Component {
     ];
 
     return (
-      <Paneset static style={css.root}>
+      <Paneset static>
         <Pane
           actionMenuItems={actionMenuItems}
           firstMenu={this.preparePaneMenu()}
@@ -99,7 +98,7 @@ class CreateTemplate extends React.Component {
           paneTitle={formatMsg({ id: 'ui-cataloging.template.create' })}
           appIcon={{ app: 'cataloging' }}
         >
-          <div className={css.form}>
+          <div>
             <TemplateForm {...this.props} mandatoryField={obj} initialValues={{}} onSubmit={(template) => this.create(template)} />
           </div>
           <OpenIconSpeedDial />

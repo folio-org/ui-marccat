@@ -21,23 +21,38 @@ class IndexCategory extends React.Component {
       headers: { 'x-okapi-tenant': 'tnx' },
       records: C.API_RESULT_JSON_KEY.INDEX_CATEGORIES
     },
+    innerIndexValue: {},
+    innerIndexes: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      path: 'indexes?categoryType=%{indexType}&categoryCode=%{innerIndexValue}&lang=ita',
+      headers: { 'x-okapi-tenant': 'tnx' },
+      records: C.API_RESULT_JSON_KEY.INDEX_INNER
+    }
   });
 
 
   constructor(props) {
     super(props);
     this.state = {
-      indexTypeValue: 'P',
       open: false,
       firstSelect: '',
+      secondSelect: '',
       checkedP: true,
     };
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChange = this.handleChangeRadio.bind(this);
+    this.handleChange = this.handleChangeFirstSelect.bind(this);
+    this.handleChange = this.handleChangeSecondSelect.bind(this);
+    // default value
+    this.props.mutator.indexType.replace('P');
+    this.props.mutator.innerIndexValue.replace('2');
   }
 
+  /*
   componentDidMount() {
     this.props.mutator.indexType.replace(this.state.indexTypeValue);
   }
+  */
 
   handleClose = () => {
     this.setState({ open: false });
@@ -51,7 +66,7 @@ class IndexCategory extends React.Component {
 
   }
 
-  handleChange = event => {
+  handleChangeRadio = event => {
     this.setState({
       firstSelect: event.target.value,
       checkedP: (event.target.value === 'P'),
@@ -59,10 +74,24 @@ class IndexCategory extends React.Component {
     this.props.mutator.indexType.replace(event.target.value);
   };
 
+  handleChangeFirstSelect = event => {
+    this.setState({
+      firstSelect: event.target.value,
+    });
+    this.props.mutator.innerIndexValue.replace(event.target.value);
+  };
+
+  handleChangeSecondSelect = event => {
+    this.setState({
+      secondSelect: event.target.value,
+    });
+  };
+
   render() {
-    const { resources: { categories } } = this.props;
+    const { resources: { categories, innerIndexes } } = this.props;
     const formatMsg = this.props.stripes.intl.formatMessage;
     let options = {};
+    let optionsInnerIndex = {};
 
     if (categories) {
       options = categories.records.map((element) => {
@@ -71,6 +100,15 @@ class IndexCategory extends React.Component {
         );
       });
     }
+
+    if (innerIndexes) {
+      optionsInnerIndex = innerIndexes.records.map((element) => {
+        return (
+          <option value={element.value}>{element.label} ({element.value})</option>
+        );
+      });
+    }
+
     return (
       <Row>
         <Col xs={3}>
@@ -80,7 +118,7 @@ class IndexCategory extends React.Component {
               id="actingSponsor001"
               value="P"
               checked={this.state.checkedP}
-              onChange={this.handleChange}
+              onChange={this.handleChangeRadio}
               inline
             />
             <RadioButton
@@ -88,12 +126,12 @@ class IndexCategory extends React.Component {
               id="actingSponsor002"
               value="S"
               checked={!this.state.checkedP}
-              onChange={this.handleChange}
+              onChange={this.handleChangeRadio}
               inline
             />
           </Field>
         </Col>
-        <Col xs={6}>
+        <Col xs={3}>
           {categories &&
           <FormControl>
             <Select
@@ -102,7 +140,7 @@ class IndexCategory extends React.Component {
               onClose={this.handleClose}
               onOpen={this.handleOpen}
               value={this.state.firstSelect}
-              onChange={this.handleChange}
+              onChange={this.handleChangeFirstSelect}
               inputProps={{
                           name: 'Category',
                           id: 'demo-controlled-open-select',
@@ -112,6 +150,26 @@ class IndexCategory extends React.Component {
             </Select>
           </FormControl>
         }
+        </Col>
+        <Col xs={5}>
+          {innerIndexes &&
+          <FormControl>
+            <Select
+              native
+              open={this.state.open}
+              onClose={this.handleClose}
+              onOpen={this.handleOpen}
+              value={this.state.secondSelect}
+              onChange={this.handleChangeSecondSelect}
+              inputProps={{
+                          name: 'Index',
+                          id: 'demo-second-controlled-open-select',
+              }}
+            >
+              {optionsInnerIndex}
+            </Select>
+          </FormControl>
+          }
         </Col>
       </Row>
     );

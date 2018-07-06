@@ -1,6 +1,6 @@
 # ui-cataloging
 
-[![Build Status](https://circleci.com/gh/folio-org/ui-cataloging/tree/master.svg?style=svg)](https://circleci.com/gh/folio-org/ui-cataloging)
+[![CircleCI](https://circleci.com/gh/atcult/ui-cataloging/tree/feature%2FCATUI-searchForm.svg?style=svg)](https://circleci.com/gh/atcult/ui-cataloging/tree/feature%2FCATUI-searchForm)
 
 Copyright (C) 2017-2018 The Open Library Foundation
 

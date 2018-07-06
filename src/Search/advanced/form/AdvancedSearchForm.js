@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import Link from 'react-router-dom/Link';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { Field, reduxForm } from 'redux-form';
-import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
-import RadioButton from '@folio/stripes-components/lib/RadioButton';
 import { FormattedMessage } from 'react-intl';
 import TextArea from '@folio/stripes-components/lib/TextArea';
 import Button from '@folio/stripes-components/lib/Button';
@@ -69,28 +67,19 @@ class AdvancedSearchForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      indexTypeP: true,
       showErrorMessage: false,
     };
-    this.handleRadio = this.handleRadio.bind(this);
     this.onClick = this.onClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleLogicButton = this.handleLogicButton.bind(this);
   }
 
   onClick() {
-    if (!this._name.value) {
+    if (!document.getElementById('searchTextArea').value) {
       this.setState({ showErrorMessage: true });
     } else {
       this.props.history.push(C.INTERNAL_URL.SEARCH_RESULTS);
     }
-  }
-
-  handleRadio(e) {
-    const value = (e.target.value === 'P');
-    this.setState({
-      indexTypeP: value,
-    });
   }
 
   handleLogicButton = (idEl, op) => { // da modificare
@@ -114,7 +103,7 @@ class AdvancedSearchForm extends React.Component {
         <IndexCategory {...this.props} title="Category" />
         <Row>
           <Col xs={11}>
-            <Field component={TextArea} rows='8' id='searchTextArea' type="text" ref={TextArea => this._name = TextArea} name='searchTextArea' withRef />
+            <Field component={TextArea} rows='8' id='searchTextArea' type="text" /* ref={TextArea => this._name = TextArea} */ name='searchTextArea' withRef />
           </Col>
         </Row>
         <Row>

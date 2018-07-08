@@ -5,8 +5,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { Field } from 'redux-form';
+import Radio from '@material-ui/core/Radio';
 import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
-import RadioButton from '@folio/stripes-components/lib/RadioButton';
 import * as C from '../../../Utils';
 
 class IndexCategory extends React.Component {
@@ -48,12 +48,6 @@ class IndexCategory extends React.Component {
     this.props.mutator.innerIndexValue.replace('2');
   }
 
-  /*
-  componentDidMount() {
-    this.props.mutator.indexType.replace(this.state.indexTypeValue);
-  }
-  */
-
   handleClose = () => {
     this.setState({ open: false });
   };
@@ -62,9 +56,6 @@ class IndexCategory extends React.Component {
     this.setState({ open: true });
   };
 
-  buildPreviewChoosed = () => {
-
-  }
 
   handleChangeRadio = event => {
     this.setState({
@@ -113,7 +104,7 @@ class IndexCategory extends React.Component {
       <Row>
         <Col xs={3}>
           <Field name="indexRadio" component={RadioButtonGroup} label={formatMsg({ id: 'ui-cataloging.search.indexes' })}>
-            <RadioButton
+            <Radio
               label={formatMsg({ id: 'ui-cataloging.search.primary' })}
               id="actingSponsor001"
               value="P"
@@ -121,7 +112,7 @@ class IndexCategory extends React.Component {
               onChange={this.handleChangeRadio}
               inline
             />
-            <RadioButton
+            <Radio
               label={formatMsg({ id: 'ui-cataloging.search.secondary' })}
               id="actingSponsor002"
               value="S"
@@ -133,42 +124,42 @@ class IndexCategory extends React.Component {
         </Col>
         <Col xs={3}>
           {categories &&
-          <FormControl>
-            <Select
-              native
-              open={this.state.open}
-              onClose={this.handleClose}
-              onOpen={this.handleOpen}
-              value={this.state.firstSelect}
-              onChange={this.handleChangeFirstSelect}
-              inputProps={{
-                          name: 'Category',
-                          id: 'demo-controlled-open-select',
-                        }}
-            >
-              {options}
-            </Select>
-          </FormControl>
-        }
+            <FormControl>
+              <Select
+                native
+                open={this.state.open}
+                onClose={this.handleClose}
+                onOpen={this.handleOpen}
+                value={this.state.firstSelect}
+                onChange={this.handleChangeFirstSelect}
+                inputProps={{
+                  name: 'Category',
+                  id: 'demo-controlled-open-select',
+                }}
+              >
+                {options}
+              </Select>
+            </FormControl>
+          }
         </Col>
         <Col xs={5}>
           {innerIndexes &&
-          <FormControl>
-            <Select
-              native
-              open={this.state.open}
-              onClose={this.handleClose}
-              onOpen={this.handleOpen}
-              value={this.state.secondSelect}
-              onChange={this.handleChangeSecondSelect}
-              inputProps={{
-                          name: 'Index',
-                          id: 'demo-second-controlled-open-select',
-              }}
-            >
-              {optionsInnerIndex}
-            </Select>
-          </FormControl>
+            <FormControl>
+              <Select
+                native
+                open={this.state.open}
+                onClose={this.handleClose}
+                onOpen={this.handleOpen}
+                value={this.state.secondSelect}
+                onChange={this.handleChangeSecondSelect}
+                inputProps={{
+                  name: 'Index',
+                  id: 'demo-second-controlled-open-select',
+                }}
+              >
+                {optionsInnerIndex}
+              </Select>
+            </FormControl>
           }
         </Col>
       </Row>

@@ -7,7 +7,6 @@ import IconButton from '@folio/stripes-components/lib/IconButton';
 import { connect } from '@folio/stripes-connect';
 import { remapMultiArray } from '../../Utils/Mapper';
 import TemplateForm from '../form/TemplateForm';
-import OpenIconSpeedDial from '../../Common/Button/FabSpeedDial';
 import * as C from '../../Utils';
 
 class CreateTemplate extends React.Component {
@@ -101,7 +100,6 @@ class CreateTemplate extends React.Component {
           <div>
             <TemplateForm {...this.props} mandatoryField={obj} initialValues={{}} onSubmit={(template) => this.create(template)} />
           </div>
-          <OpenIconSpeedDial />
         </Pane>
       </Paneset>
     );

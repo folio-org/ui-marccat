@@ -12,10 +12,16 @@ import ReportIcon from '@material-ui/icons/Report';
 import Link from 'react-router-dom/Link';
 
 export default class NavMenuItem extends React.Component {
+  static propTypes = {
+    to: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    onClick: PropTypes.func,
+    children: PropTypes.object
+  };
   render() {
-    const { to, label } = this.props;
+    const { to, label, onClick } = this.props;
     return (
-      <Link to={to}>
+      <Link to={to} onClick={onClick}>
         <ListItem button>
           <ListItemIcon>
             {this.props.children}

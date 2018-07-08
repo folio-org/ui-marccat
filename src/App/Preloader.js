@@ -1,53 +1,66 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import MobileStepper from '@material-ui/core/MobileStepper';
 
 const styles = {
   root: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-    flexGrow: 1,
     display: 'flex',
-    alignItems: 'center',
+    width: '100%',
+    position: 'absolute',
     justifyContent: 'center',
+    top: '50%'
   },
+  progress: {
+    width: '80%',
+    borderRadius: '6px',
+    boxShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.25), 0 1px rgba(255, 255, 255, 0.08)',
+    padding: '1px'
+  },
+  progressBar: {
+    width: 0,
+    height: '6px',
+    borderRadius: '9px',
+    boxShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.25), 0 1px rgba(255, 255, 255, 0.08)',
+    backgroundColor: 'rgb(225, 0, 80);'
+  }
 };
+@withStyles(styles)
+class PreloaderCataloging extends React.Component {
 
-class ProgressMobileStepper extends React.Component {
-  state = {
-    activeStep: 0,
-  };
+  animate = () => {
+    const elem = document.getElementById('bar');
+    let width = 0.1;
+    const id = setInterval(frame, 1);
+    function frame() {
+      if (width >= 100) {
+        clearInterval(id);
+      } else {
+        width++;
+        elem.style.width = width + '%';
+      }
+    }
+  }
 
-  handleNext = () => {
+  runAnimation = () => {
     setTimeout(() => {
-      this.setState(state => ({
-        activeStep: state.activeStep + 1,
-      }));
-    }, 1000);
-  };
+      this.animate();
+    }, 2000);
+  }
+
+  async callback() {
+    await this.runAnimation();
+  }
 
   render() {
     const { classes } = this.props;
-    this.handleNext();
+    this.callback();
     return (
-      <div>
-        <MobileStepper
-          variant="progress"
-          steps={6}
-          position="static"
-          activeStep={this.state.activeStep}
-          className={classes.root}
-        />
+      <div className={classes.root}>
+        <div className={classes.progress}>
+          <div id='bar' className={classes.progressBar} />
+        </div>
       </div>
     );
   }
 }
-
-ProgressMobileStepper.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles, { withTheme: true })(ProgressMobileStepper);
+export default PreloaderCataloging;

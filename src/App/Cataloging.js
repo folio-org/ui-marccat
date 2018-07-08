@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'; // eslint-disable-line no-unused-vars
 import React from 'react';
 import NavDrawer from '../Navigator/components/NavDrawer';
-import ProgressMobileStepper from './Preloader';
+import PreloaderCataloging from './Preloader';
 
 export default class Cataloging extends React.Component<PropTypes> {
   static propTypes = {

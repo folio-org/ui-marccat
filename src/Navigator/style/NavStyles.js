@@ -1,4 +1,16 @@
-export const drawerWidth = 240;
+import { createMuiTheme } from '@material-ui/core/styles';
+
+export const drawerWidth = 256;
+
+export const themes = createMuiTheme({
+  overrides: {
+    MuiListItemText: {
+      root: {
+        padding: 0
+      }
+    },
+  }
+});
 
 export const styles = theme => ({
   root: {
@@ -15,13 +27,6 @@ export const styles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
-  },
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 36,
-  },
-  hide: {
-    display: 'none',
   },
   drawerPaper: {
     position: 'relative',
@@ -53,9 +58,5 @@ export const styles = theme => ({
   content: {
     padding: 0,
     flexGrow: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.03)',
-  },
-  paneContent: {
-    padding: 0
   }
 });

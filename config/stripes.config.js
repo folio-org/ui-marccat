@@ -11,7 +11,10 @@ if (environment === 'sandbox') {
 module.exports = {
   okapi: { url, tenant: 'diku' },
   config: {
-    autoLogin: { username: 'diku_admin', password: 'admin' },
+    autoLogin: {
+      username: 'diku_admin',
+      password: 'admin',
+    },
     logCategories: 'core,path,mpath,mquery,xhr',
     logPrefix: 'cat-stripes',
     logTimestamp: false,
@@ -19,9 +22,9 @@ module.exports = {
     showHomeLink: true,
     listInvisiblePerms: true,
     hasAllPerms: true,
-    softLogout: true
+    softLogout: true,
   },
   modules: {
     '@folio/cataloging': {},
-  }
+  },
 };

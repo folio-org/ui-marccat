@@ -1,4 +1,4 @@
-module.exports = (config) => {
+module.exports = config => {
   const configuration = {
     reporters: ['mocha', 'BrowserStack'],
 
@@ -10,41 +10,41 @@ module.exports = (config) => {
     customLaunchers: {
       Chrome_travis_ci: {
         base: 'Chrome',
-        flags: ['--no-sandbox']
+        flags: ['--no-sandbox'],
       },
       bs_safari_11: {
         base: 'BrowserStack',
         os: 'OS X',
         os_version: 'High Sierra',
         browser: 'safari',
-        browser_version: '11.0'
+        browser_version: '11.0',
       },
       bs_firefox_mac: {
         base: 'BrowserStack',
         browser: 'firefox',
         browser_version: '57.0',
         os: 'OS X',
-        os_version: 'Sierra'
+        os_version: 'Sierra',
       },
       bs_ieEdge_windows: {
         base: 'BrowserStack',
         browser: 'edge',
         browser_version: '15.0',
         os: 'Windows',
-        os_version: '10'
+        os_version: '10',
       },
       bs_ie11_windows: {
         base: 'BrowserStack',
         browser: 'ie',
         browser_version: '11.0',
         os: 'Windows',
-        os_version: '7'
-      }
+        os_version: '7',
+      },
     },
 
     browserStack: {
       username: 'folioproject1',
-      project: 'ui-eholdings'
+      project: 'ui-eholdings',
     },
 
     plugins: [
@@ -54,15 +54,15 @@ module.exports = (config) => {
       'karma-mocha',
       'karma-webpack',
       'karma-mocha-reporter',
-      'karma-junit-reporter'
-    ]
+      'karma-junit-reporter',
+    ],
   };
 
-    // Also run junit reporter on CircleCI
+  // Also run junit reporter on CircleCI
   if (process.env.CIRCLECI) {
     configuration.reporters.push('junit');
     configuration.junitReporter = {
-      outputDir: 'artifacts/junit/Karma'
+      outputDir: 'artifacts/junit/Karma',
     };
   }
 
@@ -71,19 +71,17 @@ module.exports = (config) => {
     configuration.coverageReporter = {
       dir: 'artifacts/coverage',
       subdir: '.',
-      reporters: [
-        { type: 'text' },
-        { type: 'lcovonly', file: 'lcov.txt' }
-      ],
+      reporters: [{ type: 'text' }, { type: 'lcovonly', file: 'lcov.txt' }],
       includeAllSources: true,
       check: {
-        global: { // thresholds under which karma will return failure
+        global: {
+          // thresholds under which karma will return failure
           statements: 95,
           branches: 85, // should be raised after getting this % up
           functions: 95,
-          lines: 95
-        }
-      }
+          lines: 95,
+        },
+      },
     };
     configuration.reporters.push('coverage');
     configuration.plugins.push('karma-coverage');

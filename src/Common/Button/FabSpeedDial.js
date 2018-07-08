@@ -12,9 +12,24 @@ import { FormattedMessage } from 'react-intl';
 import styles from '../Style/Button';
 
 const actions = [
-  { icon: <ContentCopyIcon />, name: <FormattedMessage id="ui-cataloging.settings.general" /> },
-  { icon: <SaveIcon />, name: <FormattedMessage id="ui-cataloging.settings.general" /> },
-  { icon: <DeleteIcon />, name: <FormattedMessage id="ui-cataloging.settings.general" /> },
+  {
+    icon: <ContentCopyIcon />,
+    name: (
+      <FormattedMessage id="ui-cataloging.settings.general" />
+    ),
+  },
+  {
+    icon: <SaveIcon />,
+    name: (
+      <FormattedMessage id="ui-cataloging.settings.general" />
+    ),
+  },
+  {
+    icon: <DeleteIcon />,
+    name: (
+      <FormattedMessage id="ui-cataloging.settings.general" />
+    ),
+  },
 ];
 
 @withStyles(styles)

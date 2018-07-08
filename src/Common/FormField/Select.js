@@ -4,16 +4,16 @@ import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 
 type SelectProps<T> = {|
-    id: string;
-    native: boolean;
-    label: string;
-    placeholder: string;
-    options: Array<T>;
-    classes: Object;
+  id: string,
+  native: boolean,
+  label: string,
+  placeholder: string,
+  options: Array<T>,
+  classes: Object,
 |};
 
 type SelectState = {|
-  value:string;
+  value: string,
 |};
 
 const styles = theme => ({
@@ -31,11 +31,15 @@ const styles = theme => ({
   },
 });
 
-class Select<T:Array<*>> extends React.Component<SelectProps<T>, SelectState> {
+class Select<T: Array<*>> extends React.Component<
+  SelectProps<T>,
+  SelectState
+> {
   state = {
     currency: 'EUR',
   };
-  constructor(props) { // eslint-disable-line  no-useless-constructor
+  constructor(props) {
+    // eslint-disable-line  no-useless-constructor
     super(props);
   }
 
@@ -44,7 +48,6 @@ class Select<T:Array<*>> extends React.Component<SelectProps<T>, SelectState> {
       [name]: event.target.value,
     });
   };
-
 
   render() {
     const currencies = [
@@ -65,7 +68,13 @@ class Select<T:Array<*>> extends React.Component<SelectProps<T>, SelectState> {
         label: '¥',
       },
     ];
-    const { id, native, classes, label, placeholder } = this.props;
+    const {
+      id,
+      native,
+      classes,
+      label,
+      placeholder,
+    } = this.props;
     return (
       <TextField
         id={id}
@@ -83,20 +92,24 @@ class Select<T:Array<*>> extends React.Component<SelectProps<T>, SelectState> {
         helperText={placeholder}
         margin="normal"
       >
-        {!native && currencies.map(option => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
-        {native && currencies.map(option => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
+        {!native &&
+          currencies.map(option => (
+            <MenuItem
+              key={option.value}
+              value={option.value}
+            >
+              {option.label}
+            </MenuItem>
+          ))}
+        {native &&
+          currencies.map(option => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
       </TextField>
     );
   }
 }
-
 
 export default withStyles(styles)(Select);

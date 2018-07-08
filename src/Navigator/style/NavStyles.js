@@ -6,10 +6,10 @@ export const themes = createMuiTheme({
   overrides: {
     MuiListItemText: {
       root: {
-        padding: 0
-      }
+        padding: 0,
+      },
     },
-  }
+  },
 });
 
 export const styles = theme => ({
@@ -23,10 +23,13 @@ export const styles = theme => ({
   appBarShift: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
+    transition: theme.transitions.create(
+      ['width', 'margin'],
+      {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }
+    ),
   },
   drawerPaper: {
     position: 'relative',
@@ -58,5 +61,5 @@ export const styles = theme => ({
   content: {
     padding: 0,
     flexGrow: 1,
-  }
+  },
 });

@@ -18,7 +18,7 @@ class AndButton extends React.Component {
         type="submit"
         disabled={this.props.disabled}
         buttonStyle="primary"
-        style={{ 'minHeight': '36px' }}
+        style={{ minHeight: '36px' }}
       >
         <FormattedMessage id="ui-cataloging.search.andButton" />
       </Button>
@@ -26,4 +26,7 @@ class AndButton extends React.Component {
   }
 }
 
-export default connect(AndButton, C.META.MODULE_NAME);
+export default connect(
+  AndButton,
+  C.META.MODULE_NAME
+);

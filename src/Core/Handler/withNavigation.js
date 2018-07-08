@@ -3,7 +3,6 @@ import hoistStatics from 'hoist-non-react-statics';
 
 export default function withNavigation(Component) {
   class ComponentWithNavigation extends React.Component {
-
     render() {
       const navigationProp = this.props.navigation;
       const navigation = navigationProp || {};

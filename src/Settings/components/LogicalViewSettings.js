@@ -6,13 +6,16 @@ import * as C from '../../Utils';
 import { CatalogingSelect } from '../../Common';
 
 type LogicalViewProps = {|
-    resources: Object,
-    label: PropTypes.string.isRequired;
-|}
-type LogicalViewState= {|
-    label: PropTypes.string.isRequired;
-|}
-class LogicalView extends React.Component<LogicalViewProps, LogicalViewState> {
+  resources: Object,
+  label: PropTypes.string.isRequired,
+|};
+type LogicalViewState = {|
+  label: PropTypes.string.isRequired,
+|};
+class LogicalView extends React.Component<
+  LogicalViewProps,
+  LogicalViewState
+> {
   static manifest = Object.freeze({
     views: {
       type: C.RESOURCE_TYPE,
@@ -27,18 +30,27 @@ class LogicalView extends React.Component<LogicalViewProps, LogicalViewState> {
   });
 
   render() {
-    const { resources: { views } } = this.props;
+    const {
+      resources: { views },
+    } = this.props;
     if (!views || !views.hasLoaded) return <div />;
     const logicalViews = views.records;
     return (
-      <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label}>
+      <Pane
+        defaultWidth="fill"
+        fluidContentWidth
+        paneTitle={this.props.label}
+      >
         <div>
-          { !logicalViews &&
-          <Icon icon="spinner-ellipsis" />
-        }
-          { logicalViews.length > 0 &&
-          <CatalogingSelect options={logicalViews} label="Database" />
-        }
+          {!logicalViews && (
+            <Icon icon="spinner-ellipsis" />
+          )}
+          {logicalViews.length > 0 && (
+            <CatalogingSelect
+              options={logicalViews}
+              label="Database"
+            />
+          )}
         </div>
       </Pane>
     );

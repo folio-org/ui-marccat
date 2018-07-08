@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'react-router-dom/Link';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
+import {
+  Row,
+  Col,
+} from '@folio/stripes-components/lib/LayoutGrid';
 import { Field, reduxForm } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import TextArea from '@folio/stripes-components/lib/TextArea';
@@ -21,21 +24,23 @@ function validate(values) {
   errors.name = {};
 
   if (!values.name) {
-    errors.name = <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />;
+    errors.name = (
+      <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />
+    );
   }
   return errors;
 }
 
 class AdvancedSearchForm extends React.Component {
-
   static manifest = Object.freeze({
     indexType: {},
     categories: {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
-      path: 'index-categories?type=%{indexType.type}&lang=ita',
+      path:
+        'index-categories?type=%{indexType.type}&lang=ita',
       headers: { 'x-okapi-tenant': 'tnx' },
-      records: C.API_RESULT_JSON_KEY.INDEX_CATEGORIES
+      records: C.API_RESULT_JSON_KEY.INDEX_CATEGORIES,
     },
   });
 
@@ -53,16 +58,16 @@ class AdvancedSearchForm extends React.Component {
     history: PropTypes.shape({
       goBack: PropTypes.func,
       pop: PropTypes.func,
-      push: PropTypes.func
+      push: PropTypes.func,
     }),
     match: {
       path: PropTypes.string,
-      url: PropTypes.string
+      url: PropTypes.string,
     },
     searchTextArea: PropTypes.shape({
-      input: PropTypes.string
-    })
-  }
+      input: PropTypes.string,
+    }),
+  };
 
   constructor(props) {
     super(props);
@@ -71,71 +76,132 @@ class AdvancedSearchForm extends React.Component {
     };
     this.onClick = this.onClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleLogicButton = this.handleLogicButton.bind(this);
+    this.handleLogicButton = this.handleLogicButton.bind(
+      this
+    );
   }
 
   onClick() {
     if (!document.getElementById('searchTextArea').value) {
       this.setState({ showErrorMessage: true });
     } else {
-      this.props.history.push(C.INTERNAL_URL.SEARCH_RESULTS);
+      this.props.history.push(
+        C.INTERNAL_URL.SEARCH_RESULTS
+      );
     }
   }
 
-  handleLogicButton = (idEl, op) => { // da modificare
+  handleLogicButton = (idEl, op) => {
+    // da modificare
     const previousVal = document.getElementById(idEl).value;
-    document.getElementById(idEl).value = previousVal.concat(' ').concat(op);
-  }
+    document.getElementById(
+      idEl
+    ).value = previousVal.concat(' ').concat(op);
+  };
 
-  handleSubmit = () => {
-
-  }
+  handleSubmit = () => {};
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
     const { reset, submitting, pristine } = this.props;
-    const rootPath = this.props.match.path || this.props.match.url;
+    const rootPath =
+      this.props.match.path || this.props.match.url;
     return (
-      <form id="search-form" name="advancedSearchForms" onSubmit={this.handleSubmit} noValidate >
-        {this.state.showErrorMessage &&
-          <SnackBar position="right" message={formatMsg({ id: 'ui-cataloging.search.wrong.input' })} />
-        }
+      <form
+        id="search-form"
+        name="advancedSearchForms"
+        onSubmit={this.handleSubmit}
+        noValidate
+      >
+        {this.state.showErrorMessage && (
+          <SnackBar
+            position="right"
+            message={formatMsg({
+              id: 'ui-cataloging.search.wrong.input',
+            })}
+          />
+        )}
         <IndexCategory {...this.props} title="Category" />
         <Row>
           <Col xs={11}>
-            <Field component={TextArea} rows='8' id='searchTextArea' type="text" /* ref={TextArea => this._name = TextArea} */ name='searchTextArea' withRef />
+            <Field
+              component={TextArea}
+              rows="8"
+              id="searchTextArea"
+              type="text"
+              /* ref={TextArea => this._name = TextArea} */ name="searchTextArea"
+              withRef
+            />
           </Col>
         </Row>
         <Row>
           <Col xs={6}>
-            <AndButton {...this.props} onClick={() => this.handleLogicButton('searchTextArea', 'AND')} disabled={false} />
-            <NotButton {...this.props} onClick={() => this.handleLogicButton('searchTextArea', 'NOT')} disabled={false} />
-            <OrButton {...this.props} onClick={() => this.handleLogicButton('searchTextArea', 'OR')} disabled={false} />
-            <NearButton {...this.props} onClick={() => this.handleLogicButton('searchTextArea', 'NEAR')} disabled={false} />
+            <AndButton
+              {...this.props}
+              onClick={() =>
+                this.handleLogicButton(
+                  'searchTextArea',
+                  'AND'
+                )
+              }
+              disabled={false}
+            />
+            <NotButton
+              {...this.props}
+              onClick={() =>
+                this.handleLogicButton(
+                  'searchTextArea',
+                  'NOT'
+                )
+              }
+              disabled={false}
+            />
+            <OrButton
+              {...this.props}
+              onClick={() =>
+                this.handleLogicButton(
+                  'searchTextArea',
+                  'OR'
+                )
+              }
+              disabled={false}
+            />
+            <NearButton
+              {...this.props}
+              onClick={() =>
+                this.handleLogicButton(
+                  'searchTextArea',
+                  'NEAR'
+                )
+              }
+              disabled={false}
+            />
           </Col>
           <Col xs={6}>
-            {/* <AdvancedSearchButton {...this.props} /> */ }
-            <Link to={`${rootPath}/searchResults`} >
+            {/* <AdvancedSearchButton {...this.props} /> */}
+            <Link to={`${rootPath}/searchResults`}>
               <Button
-
                 onClick={this.onClick}
                 type="button"
                 /* disabled={this.props.disabled} */
                 buttonStyle="primary"
                 /* href="/cataloging/searchResults" */
-                style={{ 'minHeight': '36px' }}
+                style={{ minHeight: '36px' }}
               >
                 <FormattedMessage id="ui-cataloging.search.searchButton" />
               </Button>
             </Link>
-            <ScanButton {...this.props} disabled={pristine || submitting} />
+            <ScanButton
+              {...this.props}
+              disabled={pristine || submitting}
+            />
             <Button
               {...this.props}
               type="submit"
               disabled={pristine || submitting}
               onClick={reset}
               buttonStyle="primary"
-              style={{ 'minHeight': '36px' }}
+              style={{ minHeight: '36px' }}
             >
               Clear
             </Button>
@@ -149,7 +215,8 @@ class AdvancedSearchForm extends React.Component {
 export default reduxForm({
   form: 'advancedSearchForms', // a unique identifier for this form
   initialValues: {
-    name: 'indexRadio', value: 'P'
+    name: 'indexRadio',
+    value: 'P',
   },
-  validate
+  validate,
 })(AdvancedSearchForm);

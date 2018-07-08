@@ -18,7 +18,7 @@ class ScanButton extends React.Component {
         type="submit"
         disabled={this.props.disabled}
         buttonStyle="primary"
-        style={{ 'minHeight': '36px' }}
+        style={{ minHeight: '36px' }}
       >
         <FormattedMessage id="ui-cataloging.search.scanButton" />
       </Button>
@@ -26,4 +26,7 @@ class ScanButton extends React.Component {
   }
 }
 
-export default connect(ScanButton, C.META.MODULE_NAME);
+export default connect(
+  ScanButton,
+  C.META.MODULE_NAME
+);

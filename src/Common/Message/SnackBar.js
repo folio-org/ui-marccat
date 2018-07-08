@@ -21,10 +21,14 @@ class SnackBar extends React.Component {
   };
 
   render() {
-    const { classes, position, authHideDuration, message } = this.props;
+    const {
+      classes,
+      position,
+      authHideDuration,
+      message,
+    } = this.props;
     return (
       <div>
-
         <Snackbar
           anchorOrigin={{
             vertical: 'bottom',

@@ -7,7 +7,12 @@ import SearchResults from './Search/components/results/SearchResults';
 import { TemplateView, CreateTemplate } from './Template/';
 import { AdvancedSearch, SimpleSearch } from './Search/';
 
-export function ConnectedRoute({ path, id, component: Component, ...props }) {
+export function ConnectedRoute({
+  path,
+  id,
+  component: Component,
+  ...props
+}) {
   return (
     <Route path={path}>
       <Component {...props} id={id} />
@@ -20,24 +25,43 @@ export default class Router extends React.Component {
     const rootPath = this.props.match.path;
     return (
       <Switch>
-        <ConnectedRoute path={`${rootPath}/simpleSearch`} component={SimpleSearch} id="simple_search" />
+        <ConnectedRoute
+          path={`${rootPath}/simpleSearch`}
+          component={SimpleSearch}
+          id="simple_search"
+        />
         <Route path={`${rootPath}/template/create`}>
           <CreateTemplate {...this.props} />
         </Route>
         <Route path={`${rootPath}/advancedSearch`}>
-          <AdvancedSearch {...this.props} id="advanced_search" />
+          <AdvancedSearch
+            {...this.props}
+            id="advanced_search"
+          />
         </Route>
         <Route path={`${rootPath}/searchResults`}>
-          <SearchResults {...this.props} id="search_result" />
+          <SearchResults
+            {...this.props}
+            id="search_result"
+          />
         </Route>
         <Route path={`${rootPath}/externalSearch`}>
-          <TemplateView {...this.props} id="template_view" />
+          <TemplateView
+            {...this.props}
+            id="template_view"
+          />
         </Route>
         <Route path={`${rootPath}/templatelist`}>
-          <TemplateView {...this.props} id="empty_crontainer" />
+          <TemplateView
+            {...this.props}
+            id="empty_crontainer"
+          />
         </Route>
         <Route path={`${rootPath}`}>
-          <NavigatorEmpty {...this.props} id="empty_corntainer" />
+          <NavigatorEmpty
+            {...this.props}
+            id="empty_corntainer"
+          />
         </Route>
       </Switch>
     );

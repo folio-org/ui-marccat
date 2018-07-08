@@ -11,29 +11,30 @@ class AdvancedSearchButton extends React.Component {
     history: PropTypes.shape({
       goBack: PropTypes.func,
       pop: PropTypes.func,
-      push: PropTypes.func
+      push: PropTypes.func,
     }),
     match: {
       path: PropTypes.string,
-      url: PropTypes.string
-    }
-  }
+      url: PropTypes.string,
+    },
+  };
 
   onClick() {
     this.props.history.push(C.INTERNAL_URL.SEARCH_RESULTS);
   }
 
   render() {
-    const rootPath = this.props.match.path || this.props.match.url;
+    const rootPath =
+      this.props.match.path || this.props.match.url;
     return (
-      <Link to={`${rootPath}/searchResults`} >
+      <Link to={`${rootPath}/searchResults`}>
         <Button
           onClick={this.onClick}
           type="button"
           /* disabled={this.props.disabled} */
           buttonStyle="primary"
           /* href="/cataloging/searchResults" */
-          style={{ 'minHeight': '36px' }}
+          style={{ minHeight: '36px' }}
         >
           <FormattedMessage id="ui-cataloging.search.searchButton" />
         </Button>
@@ -42,4 +43,7 @@ class AdvancedSearchButton extends React.Component {
   }
 }
 
-export default connect(AdvancedSearchButton, C.META.MODULE_NAME);
+export default connect(
+  AdvancedSearchButton,
+  C.META.MODULE_NAME
+);

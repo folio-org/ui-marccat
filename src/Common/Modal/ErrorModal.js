@@ -19,9 +19,17 @@ class ErrorModal extends React.Component {
     const { translate } = this.context;
 
     return (
-      <Modal onClose={onClose} open={open} size="small" label={translate('itemNotCheckedOut')} dismissible>
+      <Modal
+        onClose={onClose}
+        open={open}
+        size="small"
+        label={translate('itemNotCheckedOut')}
+        dismissible
+      >
         <p>{message}</p>
-        <Button onClick={onClose}>{translate('okay')}</Button>
+        <Button onClick={onClose}>
+          {translate('okay')}
+        </Button>
       </Modal>
     );
   }

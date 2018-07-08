@@ -16,23 +16,20 @@ export default class NavMenuItem extends React.Component {
     to: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     onClick: PropTypes.func,
-    children: PropTypes.object
+    children: PropTypes.object,
   };
   render() {
     const { to, label, onClick } = this.props;
     return (
       <Link to={to} onClick={onClick}>
         <ListItem button>
-          <ListItemIcon>
-            {this.props.children}
-          </ListItemIcon>
+          <ListItemIcon>{this.props.children}</ListItemIcon>
           <ListItemText primary={label} />
         </ListItem>
       </Link>
     );
   }
 }
-
 
 export const searchMenuItem = (
   <div>
@@ -67,7 +64,6 @@ export const reportMenuItem = (
     </ListItem>
   </div>
 );
-
 
 export const templateMenuItem = (
   <div>

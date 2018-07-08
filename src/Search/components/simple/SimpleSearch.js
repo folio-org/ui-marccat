@@ -10,15 +10,16 @@ import SimpleSearchForm from './form/SimpleSearchForm';
 import type { SearchProps, SearchState } from '../../type';
 import css from '../../style/Search.css';
 
-class SimpleSearch extends React.Component<SearchProps, SearchState> {
-
+class SimpleSearch extends React.Component<
+  SearchProps,
+  SearchState
+> {
   /* TO-DO fill this empty manifest */
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
     query: { initialValue: {} },
     resultCount: { initialValue: C.INITIAL_RESULT_COUNT },
-    recordsSearch: {
-    }
+    recordsSearch: {},
   });
 
   constructor(props) {
@@ -31,17 +32,25 @@ class SimpleSearch extends React.Component<SearchProps, SearchState> {
     const lastMenu = (
       <PaneMenu className={css.icon_plus} {...this.props}>
         <IconButton key="icon-gear" icon="gear" />
-        <IconButton key="icon-plus-sign" icon="plus-sign" className={css.icon_plus} />
+        <IconButton
+          key="icon-plus-sign"
+          icon="plus-sign"
+          className={css.icon_plus}
+        />
       </PaneMenu>
     );
 
     const actionMenuItems = [
       {
-        label: formatMsg({ id: 'ui-cataloging.template.create' }),
+        label: formatMsg({
+          id: 'ui-cataloging.template.create',
+        }),
         onClick: () => {
-          this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE);
+          this.props.history.push(
+            C.INTERNAL_URL.ADD_TEMPLATE
+          );
         },
-      }
+      },
     ];
     return (
       <Paneset static>
@@ -51,13 +60,21 @@ class SimpleSearch extends React.Component<SearchProps, SearchState> {
           defaultWidth="fill"
           paneSub="search result"
           appIcon={{ app: 'cataloging' }}
-          paneTitle={formatMsg({ id: 'ui-cataloging.navigator.simpleSearch' })}
+          paneTitle={formatMsg({
+            id: 'ui-cataloging.navigator.simpleSearch',
+          })}
         >
-          <SimpleSearchForm {...this.props} initialValues={{}} />
+          <SimpleSearchForm
+            {...this.props}
+            initialValues={{}}
+          />
         </Pane>
       </Paneset>
     );
   }
 }
 
-export default connect(SimpleSearch, C.META.MODULE_NAME);
+export default connect(
+  SimpleSearch,
+  C.META.MODULE_NAME
+);

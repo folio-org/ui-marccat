@@ -16,8 +16,17 @@ class SearchResults extends React.Component<{}> {
           <MultiColumnList
             id="search-results"
             contentData={searchRes}
-            visibleColumns={
-              ['id', 'amicusNumber', 'title', 'name', 'date', 'date2', 'edition', 'serie', 'volume']}
+            visibleColumns={[
+              'id',
+              'amicusNumber',
+              'title',
+              'name',
+              'date',
+              'date2',
+              'edition',
+              'serie',
+              'volume',
+            ]}
             striped
           />
         </Pane>
@@ -26,4 +35,7 @@ class SearchResults extends React.Component<{}> {
   }
 }
 
-export default connect(SearchResults, C.META.MODULE_NAME);
+export default connect(
+  SearchResults,
+  C.META.MODULE_NAME
+);

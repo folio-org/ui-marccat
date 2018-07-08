@@ -8,10 +8,18 @@ class CreateTagButton extends React.Component {
     return (
       <div>
         <hr />
-        <Button buttonStyle="primary" style={{ 'minHeight': '36px' }}>Create New Tag</Button>
+        <Button
+          buttonStyle="primary"
+          style={{ minHeight: '36px' }}
+        >
+          Create New Tag
+        </Button>
       </div>
     );
   }
 }
 
-export default connect(CreateTagButton, C.META.MODULE_NAME);
+export default connect(
+  CreateTagButton,
+  C.META.MODULE_NAME
+);

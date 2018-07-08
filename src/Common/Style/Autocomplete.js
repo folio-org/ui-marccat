@@ -1,21 +1,21 @@
 const ITEM_HEIGHT = 48;
 const styles = theme => ({
-  'root': {
+  root: {
     flexGrow: 1,
     height: 250,
   },
-  'chip': {
+  chip: {
     margin: theme.spacing.unit / 4,
     backgroundColor: '#2b75bb',
-    color: '#fff'
+    color: '#fff',
   },
   '@global': {
     '.Select-control': {
-      'display': 'flex',
-      'alignItems': 'center',
-      'border': 0,
-      'height': 'auto',
-      'background': 'transparent',
+      display: 'flex',
+      alignItems: 'center',
+      border: 0,
+      height: 'auto',
+      background: 'transparent',
       '&:hover': {
         boxShadow: 'none',
       },
@@ -26,7 +26,7 @@ const styles = theme => ({
       flexWrap: 'wrap',
     },
     '.Select-multi-value-wrapper svg': {
-      color: '#fff'
+      color: '#fff',
     },
     '.Select--multi .Select-input': {
       margin: 0,

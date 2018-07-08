@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
+import {
+  Row,
+  Col,
+} from '@folio/stripes-components/lib/LayoutGrid';
 import { Field, reduxForm } from 'redux-form';
 import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
 import RadioButton from '@folio/stripes-components/lib/RadioButton';
@@ -13,7 +16,9 @@ function validate(values) {
   errors.name = {};
 
   if (!values.name) {
-    errors.name = <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />;
+    errors.name = (
+      <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />
+    );
   }
   return errors;
 }
@@ -24,7 +29,7 @@ class SimpleSearchForm extends React.Component {
       intl: PropTypes.object.isRequired,
     }).isRequired,
     handleSubmit: PropTypes.func.isRequired,
-  }
+  };
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
     const { handleSubmit } = this.props;
@@ -32,42 +37,52 @@ class SimpleSearchForm extends React.Component {
       <form id="search-form" onSubmit={handleSubmit}>
         <Row>
           <Col xs={7}>
-            <TextArea rows='8' />
+            <TextArea rows="8" />
           </Col>
           <Col xs={5}>
-            <Field name="subGroup" component={RadioButtonGroup} >
+            <Field
+              name="subGroup"
+              component={RadioButtonGroup}
+            >
               <RadioButton
-                label={formatMsg({ id: 'ui-cataloging.search.simple.NT' })}
+                label={formatMsg({
+                  id: 'ui-cataloging.search.simple.NT',
+                })}
                 id="actingSponsor001"
                 value="NT"
-
               />
               <RadioButton
-                label={formatMsg({ id: 'ui-cataloging.search.simple.PW' })}
+                label={formatMsg({
+                  id: 'ui-cataloging.search.simple.PW',
+                })}
                 id="actingSponsor002"
                 value="PW"
-
               />
               <RadioButton
-                label={formatMsg({ id: 'ui-cataloging.search.simple.SW' })}
+                label={formatMsg({
+                  id: 'ui-cataloging.search.simple.SW',
+                })}
                 id="actingSponsor003"
                 value="SW"
-
               />
               <RadioButton
-                label={formatMsg({ id: 'ui-cataloging.search.simple.NW' })}
+                label={formatMsg({
+                  id: 'ui-cataloging.search.simple.NW',
+                })}
                 id="actingSponsor004"
                 value="NW"
-
               />
               <RadioButton
-                label={formatMsg({ id: 'ui-cataloging.search.simple.TW' })}
+                label={formatMsg({
+                  id: 'ui-cataloging.search.simple.TW',
+                })}
                 id="actingSponsor005"
                 value="TW"
-
               />
               <RadioButton
-                label={formatMsg({ id: 'ui-cataloging.search.simple.AW' })}
+                label={formatMsg({
+                  id: 'ui-cataloging.search.simple.AW',
+                })}
                 id="actingSponsor006"
                 value="AW"
               />
@@ -86,7 +101,6 @@ class SimpleSearchForm extends React.Component {
 
 export default reduxForm({
   form: 'simpleSearchForms', // a unique identifier for this form
-  initialValues: {
-  },
-  validate
+  initialValues: {},
+  validate,
 })(SimpleSearchForm);

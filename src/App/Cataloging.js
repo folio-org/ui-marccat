@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'; // eslint-disable-line no-unused-vars
 import React from 'react';
 import NavDrawer from '../Navigator/components/NavDrawer';
-import PreloaderCataloging from './Preloader';
 
-export default class Cataloging extends React.Component<PropTypes> {
+export default class Cataloging extends React.Component<
+  PropTypes
+> {
   static propTypes = {
     stripes: PropTypes.shape({
       intl: PropTypes.object.isRequired,
@@ -11,9 +12,11 @@ export default class Cataloging extends React.Component<PropTypes> {
       connect: PropTypes.func,
       store: PropTypes.object,
     }).isRequired,
-    resources: PropTypes.shape({ // eslint-disable-line no-unused-vars
+    resources: PropTypes.shape({
+      // eslint-disable-line no-unused-vars
     }).isRequired,
-    mutator: PropTypes.shape({ // eslint-disable-line no-unused-vars
+    mutator: PropTypes.shape({
+      // eslint-disable-line no-unused-vars
       initializedFilterConfig: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }),
@@ -28,8 +31,6 @@ export default class Cataloging extends React.Component<PropTypes> {
   });
 
   render() {
-    return (
-      <NavDrawer {...this.props} />
-    );
+    return <NavDrawer {...this.props} />;
   }
 }

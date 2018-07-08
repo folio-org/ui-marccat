@@ -11,9 +11,9 @@ class SimpleSearchButton extends React.Component {
     history: PropTypes.shape({
       goBack: PropTypes.func,
       pop: PropTypes.func,
-      push: PropTypes.func
+      push: PropTypes.func,
     }),
-  }
+  };
 
   onClick() {
     this.props.history.push(C.INTERNAL_URL.SEARCH_RESULTS);
@@ -21,14 +21,14 @@ class SimpleSearchButton extends React.Component {
 
   render() {
     return (
-      <Link to="/cataloging/searchResults" >
+      <Link to="/cataloging/searchResults">
         <Button
           onClick={this.onClick}
           type="button"
           /* disabled={this.props.disabled} */
           buttonStyle="primary"
           /* href="/cataloging/searchResults" */
-          style={{ 'minHeight': '36px' }}
+          style={{ minHeight: '36px' }}
         >
           <FormattedMessage id="ui-cataloging.search.searchButton" />
         </Button>
@@ -37,4 +37,7 @@ class SimpleSearchButton extends React.Component {
   }
 }
 
-export default connect(SimpleSearchButton, C.META.MODULE_NAME);
+export default connect(
+  SimpleSearchButton,
+  C.META.MODULE_NAME
+);

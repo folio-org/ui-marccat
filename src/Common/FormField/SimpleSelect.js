@@ -36,11 +36,9 @@ class SimpleSelect extends React.Component {
   };
 
   renderOptions() {
-    return this.props.resources.records.map((dt) => {
+    return this.props.resources.records.map(dt => {
       return (
-        <MenuItem
-          value={dt.code}
-        >
+        <MenuItem value={dt.code}>
           {dt.description}
         </MenuItem>
       );
@@ -52,9 +50,11 @@ class SimpleSelect extends React.Component {
     const item = this.props.data || this.props.data;
     let options = <MenuItem>vuoto</MenuItem>;
     if (item) {
-      options = item.map((element) => {
+      options = item.map(element => {
         return (
-          <option value={element.code}>{element.description}</option>
+          <option value={element.code}>
+            {element.description}
+          </option>
         );
       });
     }
@@ -85,7 +85,7 @@ SimpleSelect.propTypes = {
   classes: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   data: PropTypes.array.isRequired,
-  resources: PropTypes.object.isRequired
+  resources: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(SimpleSelect);

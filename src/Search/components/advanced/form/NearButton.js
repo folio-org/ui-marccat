@@ -18,7 +18,7 @@ class NearButton extends React.Component {
         type="submit"
         disabled={this.props.disabled}
         buttonStyle="primary"
-        style={{ 'minHeight': '36px' }}
+        style={{ minHeight: '36px' }}
       >
         <FormattedMessage id="ui-cataloging.search.nearButton" />
       </Button>
@@ -26,4 +26,7 @@ class NearButton extends React.Component {
   }
 }
 
-export default connect(NearButton, C.META.MODULE_NAME);
+export default connect(
+  NearButton,
+  C.META.MODULE_NAME
+);

@@ -20,9 +20,6 @@ class NavigatorEmpty extends React.Component {
         <IconButton key="icon-add" icon="comment" />
       </PaneMenu>
     );
-    const style = {
-      padding: 0
-    };
 
     return (
       <Paneset static>
@@ -35,16 +32,17 @@ class NavigatorEmpty extends React.Component {
           defaultWidth="fill"
           paneTitle="Cataloging"
           paneSub="0 result found"
-          onClose={() => { }}
+          onClose={() => {}}
           appIcon={{ app: 'cataloging' }}
         >
           <SwitchListSecondary />
         </Pane>
       </Paneset>
-
     );
   }
 }
 
-
-export default connect(NavigatorEmpty, C.META.MODULE_NAME);
+export default connect(
+  NavigatorEmpty,
+  C.META.MODULE_NAME
+);

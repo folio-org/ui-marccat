@@ -48,12 +48,13 @@ class NavDrawer extends React.Component {
     this.setState({ openModal: !this.state.openModal });
   };
 
-  temporaryFix = () => { // absolutely to remove
+  temporaryFix = () => {
+    // absolutely to remove
     setTimeout(() => {
       let main = document.getElementById('ModuleContainer');
       main.style.overflowY = 'hidden';
     }, 1000);
-  }
+  };
 
   render() {
     const { classes } = this.props;
@@ -63,39 +64,127 @@ class NavDrawer extends React.Component {
         <Drawer
           variant="permanent"
           classes={{
-            paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose),
+            paper: classNames(
+              classes.drawerPaper,
+              !this.state.open && classes.drawerPaperClose
+            ),
           }}
           open={this.state.open}
         >
           <div className={classes.toolbar}>
             <IconButton onClick={this.toggleDrawer}>
-              {this.state.open ? <ChevronLeftIcon /> : <MenuIcon />}
+              {this.state.open ? (
+                <ChevronLeftIcon />
+              ) : (
+                <MenuIcon />
+              )}
             </IconButton>
           </div>
           <Divider />
-          <List subheader={this.state.open && <ListSubheader component="div">Search</ListSubheader>}>
-            <NavMenuItem to={`${this.props.match.path}/simple`} label="Simple Search"><ZoomOutIcon /></NavMenuItem>
-            <NavMenuItem to={`${this.props.match.path}/advancedSearch`} label="Advanced Search"><SearchIcon /></NavMenuItem>
-            <NavMenuItem to={`${this.props.match.path}/indexes`} label="Indexes"><SpellCheckIcon /></NavMenuItem>
+          <List
+            subheader={
+              this.state.open && (
+                <ListSubheader component="div">
+                  Search
+                </ListSubheader>
+              )
+            }
+          >
+            <NavMenuItem
+              to={`${this.props.match.path}/simple`}
+              label="Simple Search"
+            >
+              <ZoomOutIcon />
+            </NavMenuItem>
+            <NavMenuItem
+              to={`${this.props.match.path}/advancedSearch`}
+              label="Advanced Search"
+            >
+              <SearchIcon />
+            </NavMenuItem>
+            <NavMenuItem
+              to={`${this.props.match.path}/indexes`}
+              label="Indexes"
+            >
+              <SpellCheckIcon />
+            </NavMenuItem>
           </List>
           <Divider />
-          <List subheader={this.state.open && <ListSubheader component="div">Report</ListSubheader>}>
-            <NavMenuItem {...this.props} to={`${this.props.match.path}/report`} label="Show Report"><BubbleChartIcon /></NavMenuItem>
+          <List
+            subheader={
+              this.state.open && (
+                <ListSubheader component="div">
+                  Report
+                </ListSubheader>
+              )
+            }
+          >
+            <NavMenuItem
+              {...this.props}
+              to={`${this.props.match.path}/report`}
+              label="Show Report"
+            >
+              <BubbleChartIcon />
+            </NavMenuItem>
           </List>
           <Divider />
-          <List subheader={this.state.open && <ListSubheader component="div">Template</ListSubheader>}>
-            <NavMenuItem to={`${this.props.match.path}/templateList`} label="Template Management"><FormatAlignLeftIcon /></NavMenuItem>
+          <List
+            subheader={
+              this.state.open && (
+                <ListSubheader component="div">
+                  Template
+                </ListSubheader>
+              )
+            }
+          >
+            <NavMenuItem
+              to={`${this.props.match.path}/templateList`}
+              label="Template Management"
+            >
+              <FormatAlignLeftIcon />
+            </NavMenuItem>
           </List>
           <Divider />
-          <List subheader={this.state.open && <ListSubheader component="div">Settings</ListSubheader>}>
-            <NavMenuItem to={`${this.props.match.path}/mail`} label="Email Settings"><MailIcon /></NavMenuItem>
-            <NavMenuItem to={`${this.props.match.path}/push`} label="Notifications"><NotificationsIcon /></NavMenuItem>
-            <NavMenuItem onClick={this.toggleModalVersion} to={`${this.props.match.path}/version`} label="Info"><InfoOutlineIcon /></NavMenuItem>
-            <NavMenuItem to="/settings" label="Settings"><SettingsIcon /></NavMenuItem>
+          <List
+            subheader={
+              this.state.open && (
+                <ListSubheader component="div">
+                  Settings
+                </ListSubheader>
+              )
+            }
+          >
+            <NavMenuItem
+              to={`${this.props.match.path}/mail`}
+              label="Email Settings"
+            >
+              <MailIcon />
+            </NavMenuItem>
+            <NavMenuItem
+              to={`${this.props.match.path}/push`}
+              label="Notifications"
+            >
+              <NotificationsIcon />
+            </NavMenuItem>
+            <NavMenuItem
+              onClick={this.toggleModalVersion}
+              to={`${this.props.match.path}/version`}
+              label="Info"
+            >
+              <InfoOutlineIcon />
+            </NavMenuItem>
+            <NavMenuItem to="/settings" label="Settings">
+              <SettingsIcon />
+            </NavMenuItem>
           </List>
         </Drawer>
         <main className={classes.content}>
-          <VersionModal appTitle={pack.appName} appVersion={pack.version} open={this.state.openModal} onClose={this.handleClose} />
+          <VersionModal
+            appTitle={pack.appName}
+            appVersion={pack.version}
+            open={this.state.openModal}
+            onClose={this.handleClose}
+          />
           <Router {...this.props} />
         </main>
       </div>
@@ -104,7 +193,7 @@ class NavDrawer extends React.Component {
 }
 
 NavDrawer.propTypes = {
-  classes: PropTypes.object
+  classes: PropTypes.object,
 };
 
 export default NavDrawer;

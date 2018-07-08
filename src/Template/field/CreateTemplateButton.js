@@ -17,11 +17,15 @@ class CreateTemplateButton extends React.Component {
         type="submit"
         disabled={this.props.disabled}
         buttonStyle="primary"
-        style={{ 'minHeight': '36px' }}
-      >Create Template
+        style={{ minHeight: '36px' }}
+      >
+        Create Template
       </Button>
     );
   }
 }
 
-export default connect(CreateTemplateButton, C.META.MODULE_NAME);
+export default connect(
+  CreateTemplateButton,
+  C.META.MODULE_NAME
+);

@@ -11,8 +11,10 @@ import { RestrictionView } from '../restriction/';
 import css from '../../style/Search.css';
 import * as C from '../../../Utils';
 
-class AdvancedSearch extends React.Component<SearchProps, SearchState> {
-
+class AdvancedSearch extends React.Component<
+  SearchProps,
+  SearchState
+> {
   static manifest = Object.freeze({
     query: { initialValue: {} },
     resultCount: { initialValue: C.INITIAL_RESULT_COUNT },
@@ -23,9 +25,12 @@ class AdvancedSearch extends React.Component<SearchProps, SearchState> {
       headers: C.ENDPOINT.HEADERS,
       records: 'categories',
       GET: {
-        params: { lang: C.ENDPOINT.DEFAULT_LANG, type: 'P' },
+        params: {
+          lang: C.ENDPOINT.DEFAULT_LANG,
+          type: 'P',
+        },
       },
-    }
+    },
   });
 
   constructor(props) {
@@ -33,9 +38,13 @@ class AdvancedSearch extends React.Component<SearchProps, SearchState> {
     this.state = {
       showRestrictionSettings: false,
     };
-    this.connectedRestrictionSettingsView = props.stripes.connect(RestrictionView);
+    this.connectedRestrictionSettingsView = props.stripes.connect(
+      RestrictionView
+    );
     this.handleClick = this.handleClick.bind(this);
-    this.handleCloseRestrictionPanel = this.handleCloseRestrictionPanel.bind(this);
+    this.handleCloseRestrictionPanel = this.handleCloseRestrictionPanel.bind(
+      this
+    );
   }
 
   handleClose() {
@@ -44,13 +53,13 @@ class AdvancedSearch extends React.Component<SearchProps, SearchState> {
 
   handleCloseRestrictionPanel() {
     this.setState({
-      showRestrictionSettings: false
+      showRestrictionSettings: false,
     });
   }
 
   handleClick() {
     this.setState({
-      showRestrictionSettings: true
+      showRestrictionSettings: true,
     });
   }
 
@@ -59,34 +68,51 @@ class AdvancedSearch extends React.Component<SearchProps, SearchState> {
 
     const lastMenu = (
       <PaneMenu className={css.icon_plus} {...this.props}>
-        <IconButton key="icon-gear" icon="gear" onClick={this.handleClick} />
-        <IconButton key="icon-plus-sign" icon="plus-sign" className={css.icon_plus} />
+        <IconButton
+          key="icon-gear"
+          icon="gear"
+          onClick={this.handleClick}
+        />
+        <IconButton
+          key="icon-plus-sign"
+          icon="plus-sign"
+          className={css.icon_plus}
+        />
       </PaneMenu>
     );
 
     const actionMenuItems = [
       {
-        label: formatMsg({ id: 'ui-cataloging.template.create' }),
+        label: formatMsg({
+          id: 'ui-cataloging.template.create',
+        }),
         onClick: () => {
           this.props.history.goBack();
         },
-      }
+      },
     ];
     return (
       <Paneset static>
         <Pane
           dismissible
-          onClose={() => { return this.props.history.goBack(); }}
+          onClose={() => {
+            return this.props.history.goBack();
+          }}
           actionMenuItems={actionMenuItems}
           lastMenu={lastMenu}
           defaultWidth="fill"
           paneSub="search result"
           appIcon={{ app: 'cataloging' }}
-          paneTitle={formatMsg({ id: 'ui-cataloging.navigator.search' })}
+          paneTitle={formatMsg({
+            id: 'ui-cataloging.navigator.search',
+          })}
         >
-          <AdvancedSearchForm {...this.props} initialValues={{}} />
+          <AdvancedSearchForm
+            {...this.props}
+            initialValues={{}}
+          />
         </Pane>
-        {this.state.showRestrictionSettings &&
+        {this.state.showRestrictionSettings && (
           <Pane
             defaultWidth="fill"
             paneTitle="Search Settings"
@@ -99,9 +125,12 @@ class AdvancedSearch extends React.Component<SearchProps, SearchState> {
               {...this.props}
             />
           </Pane>
-            }
+        )}
       </Paneset>
     );
   }
 }
-export default connect(AdvancedSearch, C.META.MODULE_NAME);
+export default connect(
+  AdvancedSearch,
+  C.META.MODULE_NAME
+);

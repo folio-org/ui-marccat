@@ -2,7 +2,10 @@ import React from 'react';
 import _ from 'lodash';
 import stripesForm from '@folio/stripes-form';
 import PropTypes from 'prop-types';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
+import {
+  Row,
+  Col,
+} from '@folio/stripes-components/lib/LayoutGrid';
 import { ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
 import EditTemplateInfo from './section/EditTemplateInfo';
 import EditTemplateTag from './section/EditTemplateTag';
@@ -11,7 +14,7 @@ import * as C from '../../Utils';
 class EditTemplate extends React.Component {
   static propTypes = {
     selectedTemplate: PropTypes.object.isRequired,
-    handleEditButton: PropTypes.func
+    handleEditButton: PropTypes.func,
   };
 
   static manifest = Object.freeze({
@@ -26,7 +29,7 @@ class EditTemplate extends React.Component {
       GET: {
         params: { lang: C.ENDPOINT.DEFAULT_LANG },
       },
-    }
+    },
   });
 
   constructor(props) {
@@ -34,20 +37,21 @@ class EditTemplate extends React.Component {
     this.state = {
       section: {
         editTemplateInfo: false,
-        editTemplateTag: false
-      }
+        editTemplateTag: false,
+      },
     };
     this.handleExpandAll = this.handleExpandAll.bind(this);
-    this.handleSectionToggle = this.handleSectionToggle.bind(this);
+    this.handleSectionToggle = this.handleSectionToggle.bind(
+      this
+    );
   }
-
 
   handleExpandAll(section) {
     this.setState({ section });
   }
 
   handleSectionToggle({ id }) {
-    this.setState((curState) => {
+    this.setState(curState => {
       const newState = _.cloneDeep(curState);
       newState.section[id] = !newState.section[id];
       return newState;
@@ -62,19 +66,31 @@ class EditTemplate extends React.Component {
         <form>
           <Row end="xs">
             <Col xs>
-              <ExpandAllButton accordionStatus={section} onToggle={this.handleExpandAll} />
+              <ExpandAllButton
+                accordionStatus={section}
+                onToggle={this.handleExpandAll}
+              />
             </Col>
           </Row>
-          <EditTemplateInfo {...this.props} accordionId="editTemplateInfo" expanded={section.editTemplateInfo} selectedTemplate={this.props.selectedTemplate} onToggle={this.handleSectionToggle} />
+          <EditTemplateInfo
+            {...this.props}
+            accordionId="editTemplateInfo"
+            expanded={section.editTemplateInfo}
+            selectedTemplate={this.props.selectedTemplate}
+            onToggle={this.handleSectionToggle}
+          />
         </form>
-        <EditTemplateTag {...this.props} accordionId="editTemplateTag" expanded={section.editTemplateTag} onToggle={this.handleSectionToggle} />
+        <EditTemplateTag
+          {...this.props}
+          accordionId="editTemplateTag"
+          expanded={section.editTemplateTag}
+          onToggle={this.handleSectionToggle}
+        />
       </div>
     );
   }
 }
 
-
 export default stripesForm({
   form: 'EditTemplateForm',
 })(EditTemplate);
-

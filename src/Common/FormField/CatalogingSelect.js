@@ -15,14 +15,18 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import styles from '../Style/Autocomplete';
 
-
 class Option extends React.Component {
   handleClick = event => {
     this.props.onSelect(this.props.option, event); // eslint-disable-line react/prop-types
   };
 
   render() {
-    const { children, isFocused, isSelected, onFocus } = this.props; // eslint-disable-line react/prop-types
+    const {
+      children,
+      isFocused,
+      isSelected,
+      onFocus,
+    } = this.props; // eslint-disable-line react/prop-types
 
     return (
       <MenuItem
@@ -45,9 +49,15 @@ function SelectWrapped(props) {
   return (
     <Select
       optionComponent={Option}
-      noResultsText={<Typography>No results found</Typography>}
+      noResultsText={
+        <Typography>No results found</Typography>
+      }
       arrowRenderer={arrowProps => {
-        return arrowProps.isOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />;
+        return arrowProps.isOpen ? (
+          <ArrowDropUpIcon />
+        ) : (
+          <ArrowDropDownIcon />
+        );
       }}
       clearRenderer={() => <ClearIcon />}
       valueComponent={valueProps => {
@@ -65,13 +75,17 @@ function SelectWrapped(props) {
               tabIndex={-1}
               label={children}
               className={classes.chip}
-              deleteIcon={<CancelIcon onTouchEnd={onDelete} />}
+              deleteIcon={
+                <CancelIcon onTouchEnd={onDelete} />
+              }
               onDelete={onDelete}
             />
           );
         }
 
-        return <div className="Select-value">{children}</div>;
+        return (
+          <div className="Select-value">{children}</div>
+        );
       }}
       {...other}
     />
@@ -92,7 +106,11 @@ class CatalogingSelect extends React.Component {
   };
 
   render() {
-    const { classes, options, label = 'Database' } = this.props; // eslint-disable-line react/prop-types
+    const {
+      classes,
+      options,
+      label = 'Database',
+    } = this.props; // eslint-disable-line react/prop-types
 
     return (
       <div className={classes.root}>
@@ -114,7 +132,7 @@ class CatalogingSelect extends React.Component {
               instanceId: 'react-select-chip-label',
               id: 'react-select-chip-label',
               simpleValue: true,
-              options
+              options,
             },
           }}
         />
@@ -124,7 +142,7 @@ class CatalogingSelect extends React.Component {
 }
 
 CatalogingSelect.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(CatalogingSelect);

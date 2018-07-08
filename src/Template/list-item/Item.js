@@ -42,14 +42,47 @@ class CheckboxListSecondary extends React.Component {
     return (
       <div className={classes.root}>
         <List>
-          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19].map(value => (
-            <ListItem key={value} dense button className={classes.listItem}>
-              <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/remy.jpg" />
-              <ListItemText primary={`Line item ${value + 1}`} />
+          {[
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+          ].map(value => (
+            <ListItem
+              key={value}
+              dense
+              button
+              className={classes.listItem}
+            >
+              <Avatar
+                alt="Remy Sharp"
+                src="https://material-ui.com/static/images/remy.jpg"
+              />
+              <ListItemText
+                primary={`Line item ${value + 1}`}
+              />
               <ListItemSecondaryAction>
                 <Checkbox
                   onChange={this.handleToggle(value)}
-                  checked={this.state.checked.indexOf(value) !== -1}
+                  checked={
+                    this.state.checked.indexOf(value) !== -1
+                  }
                 />
               </ListItemSecondaryAction>
             </ListItem>

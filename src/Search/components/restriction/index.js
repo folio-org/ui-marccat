@@ -1,1 +1,3 @@
-export { default as RestrictionView } from './view/Restriction';
+export {
+  default as RestrictionView,
+} from './view/Restriction';

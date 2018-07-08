@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
+import {
+  Row,
+  Col,
+} from '@folio/stripes-components/lib/LayoutGrid';
 import TextField from '@folio/stripes-components/lib/TextField';
 import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
 import RadioButton from '@folio/stripes-components/lib/RadioButton';
@@ -16,8 +19,8 @@ class EditTemplateInfo extends React.Component {
       root: C.ENDPOINT.BASE_URL,
       path: 'record-template/%{id}',
       headers: C.ENDPOINT.HEADERS,
-      records: C.API_RESULT_JSON_KEY.HEADING_TYPES
-    }
+      records: C.API_RESULT_JSON_KEY.HEADING_TYPES,
+    },
   });
 
   static propTypes = {
@@ -30,10 +33,7 @@ class EditTemplateInfo extends React.Component {
     selectedTemplate: PropTypes.object.isRequired,
   };
 
-
-  saveTemplateById() {
-
-  }
+  saveTemplateById() {}
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
@@ -41,7 +41,10 @@ class EditTemplateInfo extends React.Component {
 
     return (
       <Accordion
-        label={formatMsg({ id: 'ui-cataloging.template.detail.information.title' })}
+        label={formatMsg({
+          id:
+            'ui-cataloging.template.detail.information.title',
+        })}
         open={expanded}
         id={accordionId}
         onToggle={onToggle}
@@ -50,18 +53,42 @@ class EditTemplateInfo extends React.Component {
           <Col xs={6}>
             <TextField
               value={this.props.selectedTemplate.name}
-              label={formatMsg({ id: 'ui-cataloging.template.form.name' })}
+              label={formatMsg({
+                id: 'ui-cataloging.template.form.name',
+              })}
               name="name"
-              aria-label={formatMsg({ id: 'ui-cataloging.template.form.name' })}
+              aria-label={formatMsg({
+                id: 'ui-cataloging.template.form.name',
+              })}
               fullWidth
               id="input-template-name"
             />
           </Col>
           <Col xs={6}>
-            <Field name="subGroup" component={RadioButtonGroup} label="Group" style={{ marginTop: '10px' }}>
-              <RadioButton label="W" id="radio_1" value="W" inline />
-              <RadioButton label="E" id="radio_2" value="E" inline />
-              <RadioButton label="M" id="radio_3" value="M" inline />
+            <Field
+              name="subGroup"
+              component={RadioButtonGroup}
+              label="Group"
+              style={{ marginTop: '10px' }}
+            >
+              <RadioButton
+                label="W"
+                id="radio_1"
+                value="W"
+                inline
+              />
+              <RadioButton
+                label="E"
+                id="radio_2"
+                value="E"
+                inline
+              />
+              <RadioButton
+                label="M"
+                id="radio_3"
+                value="M"
+                inline
+              />
             </Field>
           </Col>
         </Row>
@@ -70,11 +97,10 @@ class EditTemplateInfo extends React.Component {
   }
 }
 
-
 EditTemplateInfo.propTypes = {
   stripes: PropTypes.shape({
     intl: PropTypes.object.isRequired,
-  }).isRequired
+  }).isRequired,
 };
 
 export default EditTemplateInfo;

@@ -10,23 +10,28 @@ function validate(values) {
   const errors = {
     code: {},
     ind1: {},
-    ind2: {}
+    ind2: {},
   };
   if (!values.code) {
-    errors.code = <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />;
+    errors.code = (
+      <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />
+    );
   }
 
   if (!values.ind1) {
-    errors.ind1 = <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />;
+    errors.ind1 = (
+      <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />
+    );
   }
 
   if (!values.ind2) {
-    errors.ind2 = <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />;
+    errors.ind2 = (
+      <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />
+    );
   }
 
   return errors;
 }
-
 
 class TagForm extends React.Component {
   static propTypes = {
@@ -35,41 +40,43 @@ class TagForm extends React.Component {
     }).isRequired,
     handleSubmit: PropTypes.func.isRequired,
     defaultValue: PropTypes.object.isRequired,
-  }
+  };
 
   constructor(props) {
     super(props);
     this.state = {
-      isTagInputVisible: false
+      isTagInputVisible: false,
     };
     this.handleForm = this.handleForm.bind(this);
   }
 
   handleForm() {
-    this.setState((curState) => {
+    this.setState(curState => {
       const newState = _.cloneDeep(curState);
       newState.isTagInputVisible = !newState.isTagInputVisible;
       return newState;
     });
   }
 
-
   render() {
-
     const { handleSubmit } = this.props;
     const { isTagInputVisible } = this.state;
 
     return (
-      <form onSubmit={handleSubmit} style={{ paddingTop: '30px' }}>
-        {isTagInputVisible &&
+      <form
+        onSubmit={handleSubmit}
+        style={{ paddingTop: '30px' }}
+      >
+        {isTagInputVisible && (
           <CategorySelect {...this.props} title="Source" />
-        }
+        )}
         <Button
           type="button"
           onClick={this.handleForm}
           buttonStyle="primary"
-          style={{ 'minHeight': '36px' }}
-        >Add Tag
+          style={{ minHeight: '36px' }}
+        >
+          Add Tag
         </Button>
         <hr />
       </form>
@@ -78,5 +85,5 @@ class TagForm extends React.Component {
 }
 export default reduxForm({
   form: 'tagForm',
-  validate
+  validate,
 })(TagForm);

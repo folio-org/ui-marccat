@@ -6,10 +6,13 @@ type ErrorWrapperProps = {|
 
 type ErrorWrapperState = {|
   hasError: Object,
-|}
+|};
 
 const withErrorHandler = WrappedComponent =>
-  class WithErrorHandlerComponent extends React.Component<ErrorWrapperProps, ErrorWrapperState> {
+  class WithErrorHandlerComponent extends React.Component<
+    ErrorWrapperProps,
+    ErrorWrapperState
+  > {
     constructor(props) {
       super(props);
       this.state = { hasError: false };
@@ -18,7 +21,7 @@ const withErrorHandler = WrappedComponent =>
     componentDidCatch(error, info) {
       this.setState({ hasError: false });
       console.log('error: ', error); // eslint-disable-line no-console
-      console.log('info: ', info);// eslint-disable-line no-console
+      console.log('info: ', info); // eslint-disable-line no-console
     }
     render() {
       if (this.state.hasError) {
@@ -27,7 +30,8 @@ const withErrorHandler = WrappedComponent =>
       return (
         <WrappedComponent>
           {this.props.children}
-        </WrappedComponent>);
+        </WrappedComponent>
+      );
     }
   };
 export default withErrorHandler;

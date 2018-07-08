@@ -18,7 +18,7 @@ class CreateTemplate extends React.Component {
     history: PropTypes.shape({
       goBack: PropTypes.func,
       pop: PropTypes.func,
-      push: PropTypes.func
+      push: PropTypes.func,
     }),
     resources: PropTypes.object,
     mutator: PropTypes.shape({
@@ -28,7 +28,7 @@ class CreateTemplate extends React.Component {
         PUT: PropTypes.func,
         DELETE: PropTypes.func,
       }),
-    })
+    }),
   };
 
   static manifest = Object.freeze({
@@ -40,11 +40,23 @@ class CreateTemplate extends React.Component {
       path: C.ENDPOINT.TEMPLATE_MANDATORY,
       headers: C.ENDPOINT.HEADERS,
       records: 'fields',
-      GET: { params: { lang: C.ENDPOINT.DEFAULT_LANG }, },
-      POST: { path: C.ENDPOINT.BASE_URL + C.ENDPOINT.TEMPLATE_MANDATORY },
-      PUT: { path: C.ENDPOINT.BASE_URL + C.ENDPOINT.TEMPLATE_MANDATORY },
-      DELETE: { path: C.ENDPOINT.BASE_URL + C.ENDPOINT.TEMPLATE_MANDATORY },
-    }
+      GET: { params: { lang: C.ENDPOINT.DEFAULT_LANG } },
+      POST: {
+        path:
+          C.ENDPOINT.BASE_URL +
+          C.ENDPOINT.TEMPLATE_MANDATORY,
+      },
+      PUT: {
+        path:
+          C.ENDPOINT.BASE_URL +
+          C.ENDPOINT.TEMPLATE_MANDATORY,
+      },
+      DELETE: {
+        path:
+          C.ENDPOINT.BASE_URL +
+          C.ENDPOINT.TEMPLATE_MANDATORY,
+      },
+    },
   });
 
   constructor(props) {
@@ -52,38 +64,53 @@ class CreateTemplate extends React.Component {
     this.state = {};
   }
 
-
   preparePaneMenu() {
     return (
       <PaneMenu {...this.props}>
-        <IconButton key="icon-close" icon="closeX" onClick={this.props.history.goBack} />
+        <IconButton
+          key="icon-close"
+          icon="closeX"
+          onClick={this.props.history.goBack}
+        />
       </PaneMenu>
     );
   }
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const { resources: { records } } = this.props; // eslint-disable-line react/prop-types
+    const {
+      resources: { records },
+    } = this.props; // eslint-disable-line react/prop-types
     if (!records || !records.hasLoaded) return <div />;
     let obj = remapMultiArray(records.records);
 
     const actionMenuItems = [
       {
-        label: formatMsg({ id: 'ui-cataloging.template.tag.create' }),
+        label: formatMsg({
+          id: 'ui-cataloging.template.tag.create',
+        }),
         onClick: () => {
           this.props.history.pop();
         },
       },
       {
-        label: formatMsg({ id: 'ui-cataloging.template.save' }),
+        label: formatMsg({
+          id: 'ui-cataloging.template.save',
+        }),
         onClick: () => {
-          this.props.history.push(C.INTERNAL_URL.VIEW_TEMPLATE);
+          this.props.history.push(
+            C.INTERNAL_URL.VIEW_TEMPLATE
+          );
         },
       },
       {
-        label: formatMsg({ id: 'ui-cataloging.button.backto' }),
+        label: formatMsg({
+          id: 'ui-cataloging.button.backto',
+        }),
         onClick: () => {
-          this.props.history.push(C.INTERNAL_URL.VIEW_TEMPLATE);
+          this.props.history.push(
+            C.INTERNAL_URL.VIEW_TEMPLATE
+          );
         },
       },
     ];
@@ -94,11 +121,18 @@ class CreateTemplate extends React.Component {
           actionMenuItems={actionMenuItems}
           firstMenu={this.preparePaneMenu()}
           defaultWidth="fill"
-          paneTitle={formatMsg({ id: 'ui-cataloging.template.create' })}
+          paneTitle={formatMsg({
+            id: 'ui-cataloging.template.create',
+          })}
           appIcon={{ app: 'cataloging' }}
         >
           <div>
-            <TemplateForm {...this.props} mandatoryField={obj} initialValues={{}} onSubmit={(template) => this.create(template)} />
+            <TemplateForm
+              {...this.props}
+              mandatoryField={obj}
+              initialValues={{}}
+              onSubmit={template => this.create(template)}
+            />
           </div>
         </Pane>
       </Paneset>
@@ -106,5 +140,7 @@ class CreateTemplate extends React.Component {
   }
 }
 
-
-export default connect(CreateTemplate, C.META.MODULE_NAME);
+export default connect(
+  CreateTemplate,
+  C.META.MODULE_NAME
+);

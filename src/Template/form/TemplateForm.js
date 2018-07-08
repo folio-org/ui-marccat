@@ -5,7 +5,10 @@ import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
 import RadioButton from '@folio/stripes-components/lib/RadioButton';
 import Button from '@folio/stripes-components/lib/Button';
 import { FormattedMessage } from 'react-intl';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
+import {
+  Row,
+  Col,
+} from '@folio/stripes-components/lib/LayoutGrid';
 import TagForm from '../form/TagForm';
 import { CreateTemplateButton } from '../';
 
@@ -14,7 +17,9 @@ function validate(values) {
   errors.name = {};
 
   if (!values.name) {
-    errors.name = <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />;
+    errors.name = (
+      <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />
+    );
   }
   return errors;
 }
@@ -39,15 +44,24 @@ class TemplateForm extends React.Component {
     errors.name = {};
 
     if (!values.name) {
-      errors.name = <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />;
+      errors.name = (
+        <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />
+      );
     }
     return errors;
   }
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const { handleSubmit, reset, submitting, pristine, mandatoryField } = this.props;
-    const defaultValue = mandatoryField[mandatoryField.length - 1];
+    const {
+      handleSubmit,
+      reset,
+      submitting,
+      pristine,
+      mandatoryField,
+    } = this.props;
+    const defaultValue =
+      mandatoryField[mandatoryField.length - 1];
 
     return (
       <form id="template-form" onSubmit={handleSubmit}>
@@ -55,13 +69,19 @@ class TemplateForm extends React.Component {
           <Col xs={6}>
             <Field
               style={{
-              width: 100 + '%',
-              marginTop: 25
-          }}
-              label={formatMsg({ id: 'ui-cataloging.template.form.name' })}
+                width: 100 + '%',
+                marginTop: 25,
+              }}
+              label={formatMsg({
+                id: 'ui-cataloging.template.form.name',
+              })}
               name="name"
-              placeholder={formatMsg({ id: 'ui-cataloging.template.form.name' })}
-              aria-label={formatMsg({ id: 'ui-cataloging.template.form.name' })}
+              placeholder={formatMsg({
+                id: 'ui-cataloging.template.form.name',
+              })}
+              aria-label={formatMsg({
+                id: 'ui-cataloging.template.form.name',
+              })}
               fullWidth
               id="input-template-name"
               withRef
@@ -70,29 +90,55 @@ class TemplateForm extends React.Component {
             />
           </Col>
           <Col xs={6}>
-            <Field name="subGroup" component={RadioButtonGroup} label="Group" style={{ marginTop: '10px' }}>
-              <RadioButton label="W" id="actingSponsor001" value="W" inline />
-              <RadioButton label="E" id="actingSponsor002" value="E" inline />
-              <RadioButton label="M" id="actingSponsor003" value="M" inline />
+            <Field
+              name="subGroup"
+              component={RadioButtonGroup}
+              label="Group"
+              style={{ marginTop: '10px' }}
+            >
+              <RadioButton
+                label="W"
+                id="actingSponsor001"
+                value="W"
+                inline
+              />
+              <RadioButton
+                label="E"
+                id="actingSponsor002"
+                value="E"
+                inline
+              />
+              <RadioButton
+                label="M"
+                id="actingSponsor003"
+                value="M"
+                inline
+              />
             </Field>
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <TagForm {...this.props} defaultValue={defaultValue} />
+            <TagForm
+              {...this.props}
+              defaultValue={defaultValue}
+            />
           </Col>
         </Row>
         <Row>
           <Col xs={12}>
-            <CreateTemplateButton disabled={pristine || submitting} />
+            <CreateTemplateButton
+              disabled={pristine || submitting}
+            />
             <Button
               {...this.props}
               type="submit"
               disabled={pristine || submitting}
               onClick={reset}
               buttonStyle="primary"
-              style={{ 'minHeight': '36px' }}
-            >Clear
+              style={{ minHeight: '36px' }}
+            >
+              Clear
             </Button>
           </Col>
         </Row>
@@ -103,5 +149,5 @@ class TemplateForm extends React.Component {
 
 export default reduxForm({
   form: 'templateForms', // a unique identifier for this form
-  validate
+  validate,
 })(TemplateForm);

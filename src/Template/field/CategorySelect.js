@@ -93,8 +93,9 @@ class CategorySelect extends React.Component {
       classes,
       resources: { marcCategories, heading },
     } = this.props;
-    if (!marcCategories || !marcCategories.hasLoaded)
+    if (!marcCategories || !marcCategories.hasLoaded) {
       return <div />;
+    }
     if (!heading || !heading.hasLoaded) return <div />;
 
     let options = {};

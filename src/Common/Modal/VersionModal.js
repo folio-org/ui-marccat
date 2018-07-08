@@ -33,14 +33,7 @@ export default class VersionModal extends React.Component<
   VersionModalState
 > {
   render() {
-    const {
-      open,
-      appTitle,
-      appVersion,
-      appIcon,
-      classes,
-      onClose,
-    } = this.props; // eslint-disable-line no-unused-vars
+    const { appTitle, appVersion, classes } = this.props; // eslint-disable-line no-unused-vars
 
     return (
       <MuiThemeProvider theme={theme}>

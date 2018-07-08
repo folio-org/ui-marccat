@@ -38,10 +38,6 @@ class Select<T: Array<*>> extends React.Component<
   state = {
     currency: 'EUR',
   };
-  constructor(props) {
-    // eslint-disable-line  no-useless-constructor
-    super(props);
-  }
 
   handleChange = name => event => {
     this.setState({

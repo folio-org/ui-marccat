@@ -19,6 +19,7 @@ class ScanButton extends React.Component {
         disabled={this.props.disabled}
         variant="contained"
         color="primary"
+        style={{ margin: '10pt' }}
       >
         <FormattedMessage id="ui-cataloging.search.scanButton" />
       </Button>

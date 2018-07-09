@@ -101,6 +101,7 @@ class IndexCategory extends React.Component {
       secondSelect: event.target.value,
     });
     this.props.mutator.constraintIndexValue.replace(event.target.value);
+    this.props.onSelectIndex(event.target.value);
   };
 
   handleChangeThirdSelect = event => {

@@ -5,6 +5,7 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { reduxForm } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import Button from '@material-ui/core/Button';
+import Textarea from '@folio/stripes-components/lib/TextArea';
 import ScanButton from './ScanButton';
 import AndButton from './AndButton';
 import OrButton from './OrButton';
@@ -83,9 +84,9 @@ class AdvancedSearchForm extends React.Component {
     }
   }
 
-  handleLogicButton = (idEl, op) => { // da modificare
-    const previousVal = document.getElementById(idEl).value;
-    document.getElementById(idEl).value = previousVal.concat(' ').concat(op);
+  handleLogicButton = (op) => { // da modificare
+    const previousVal = this.state.value;
+    this.setState({ value: previousVal.concat(' ').concat(op) });
   }
 
   handleSubmit = () => {
@@ -105,19 +106,18 @@ class AdvancedSearchForm extends React.Component {
         {this.state.showErrorMessage &&
           <SnackBar position="right" message={formatMsg({ id: 'ui-cataloging.search.wrong.input' })} />
         }
-        <IndexCategory {...this.props} title="Category" />
+        <IndexCategory {...this.props} onSelectIndex={this.handleLogicButton} title="Category" />
         <Row>
           <Col xs={11}>
-            <textarea rows='8' id='searchTextArea' value={this.state.value} onChange={this.handleChange} style={{ width: '100%' }} />
-            {/* <Field component={TextArea} rows='8' id='searchTextArea' type="text"  ref={TextArea => this._name = TextArea}  name='searchTextArea' withRef /> */}
+            <Textarea rows='8' id='searchTextArea' value={this.state.value} onChange={this.handleChange} style={{ width: '100%' }} />
           </Col>
         </Row>
         <Row>
           <Col xs={6}>
-            <AndButton {...this.props} onClick={() => this.handleLogicButton('searchTextArea', 'AND')} disabled={false} />
-            <NotButton {...this.props} onClick={() => this.handleLogicButton('searchTextArea', 'NOT')} disabled={false} />
-            <OrButton {...this.props} onClick={() => this.handleLogicButton('searchTextArea', 'OR')} disabled={false} />
-            <NearButton {...this.props} onClick={() => this.handleLogicButton('searchTextArea', 'NEAR')} disabled={false} />
+            <AndButton {...this.props} onClick={() => this.handleLogicButton('AND')} disabled={false} />
+            <NotButton {...this.props} onClick={() => this.handleLogicButton('NOT')} disabled={false} />
+            <OrButton {...this.props} onClick={() => this.handleLogicButton('OR')} disabled={false} />
+            <NearButton {...this.props} onClick={() => this.handleLogicButton('NEAR')} disabled={false} />
           </Col>
           <Col xs={6}>
             {/* <AdvancedSearchButton {...this.props} /> */ }

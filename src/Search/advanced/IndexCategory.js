@@ -28,6 +28,14 @@ class IndexCategory extends React.Component {
       path: 'indexes?categoryType=%{indexType}&categoryCode=%{innerIndexValue}&lang=ita',
       headers: { 'x-okapi-tenant': 'tnx' },
       records: C.API_RESULT_JSON_KEY.INDEX_INNER
+    },
+    constraintIndexValue: {},
+    constraintIndexes: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      headers: { 'x-okapi-tenant': 'tnx' },
+      path: 'indexes/%{constraintIndexValue}?lang=ita',
+      records: C.API_RESULT_JSON_KEY.CONSTRAINT_INDEX
     }
   });
 
@@ -38,14 +46,17 @@ class IndexCategory extends React.Component {
       open: false,
       firstSelect: '',
       secondSelect: '',
+      thirdSelect: '',
       checkedP: true,
     };
     this.handleChange = this.handleChangeRadio.bind(this);
-    this.handleChange = this.handleChangeFirstSelect.bind(this);
-    this.handleChange = this.handleChangeSecondSelect.bind(this);
+    this.handleChangeFirstSelect = this.handleChangeFirstSelect.bind(this);
+    this.handleChangeSecondSelect = this.handleChangeSecondSelect.bind(this);
+    this.handleChangeThirdSelect = this.handleChangeThirdSelect.bind(this);
     // default value
     this.props.mutator.indexType.replace('P');
     this.props.mutator.innerIndexValue.replace('2');
+    this.props.mutator.constraintIndexValue.replace('LIB');
   }
 
   /*
@@ -72,6 +83,8 @@ class IndexCategory extends React.Component {
       checkedP: (event.target.value === 'P'),
     });
     this.props.mutator.indexType.replace(event.target.value);
+    // reset last select
+    this.props.mutator.constraintIndexValue.replace('LIB');
   };
 
   handleChangeFirstSelect = event => {
@@ -79,19 +92,29 @@ class IndexCategory extends React.Component {
       firstSelect: event.target.value,
     });
     this.props.mutator.innerIndexValue.replace(event.target.value);
+    // reset last select
+    this.props.mutator.constraintIndexValue.replace('LIB');
   };
 
   handleChangeSecondSelect = event => {
     this.setState({
       secondSelect: event.target.value,
     });
+    this.props.mutator.constraintIndexValue.replace(event.target.value);
+  };
+
+  handleChangeThirdSelect = event => {
+    this.setState({
+      thirdSelect: event.target.value,
+    });
   };
 
   render() {
-    const { resources: { categories, innerIndexes } } = this.props;
+    const { resources: { categories, innerIndexes, constraintIndexes } } = this.props;
     const formatMsg = this.props.stripes.intl.formatMessage;
     let options = {};
     let optionsInnerIndex = {};
+    let optionsConstraintIndex = {};
 
     if (categories) {
       options = categories.records.map((element) => {
@@ -105,6 +128,14 @@ class IndexCategory extends React.Component {
       optionsInnerIndex = innerIndexes.records.map((element) => {
         return (
           <option value={element.value}>{element.label} ({element.value})</option>
+        );
+      });
+    }
+
+    if (constraintIndexes) {
+      optionsConstraintIndex = constraintIndexes.records.map((element) => {
+        return (
+          <option value={element.value}> {element.label} </option>
         );
       });
     }
@@ -151,7 +182,7 @@ class IndexCategory extends React.Component {
           </FormControl>
         }
         </Col>
-        <Col xs={5}>
+        <Col xs={3}>
           {innerIndexes &&
           <FormControl>
             <Select
@@ -166,7 +197,29 @@ class IndexCategory extends React.Component {
                           id: 'demo-second-controlled-open-select',
               }}
             >
+              <option value="">--</option>
               {optionsInnerIndex}
+            </Select>
+          </FormControl>
+          }
+        </Col>
+        <Col xs={3}>
+          {constraintIndexes && constraintIndexes.records.length > 0 &&
+          <FormControl>
+            <Select
+              native
+              open={this.state.open}
+              onClose={this.handleClose}
+              onOpen={this.handleOpen}
+              value={this.state.thirdSelect}
+              onChange={this.handleChangeThirdSelect}
+              inputProps={{
+                          name: 'Index',
+                          id: 'demo-third-controlled-open-select',
+              }}
+            >
+              <option value="">--</option>
+              {optionsConstraintIndex}
             </Select>
           </FormControl>
           }

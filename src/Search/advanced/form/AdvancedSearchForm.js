@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import Link from 'react-router-dom/Link';
+import Link from 'react-router-dom/Link';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { reduxForm } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
@@ -99,7 +99,7 @@ class AdvancedSearchForm extends React.Component {
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
     const { reset, submitting, pristine } = this.props;
-    // const rootPath = this.props.match.path || this.props.match.url;
+    const rootPath = this.props.match.path || this.props.match.url;
     return (
       <form id="search-form" name="advancedSearchForms" onSubmit={this.handleSubmit} noValidate >
         {this.state.showErrorMessage &&
@@ -124,7 +124,7 @@ class AdvancedSearchForm extends React.Component {
             {/* <Link to={`${rootPath}/searchResults`} > */}
             <Button
               {...this.props}
-              onClick={this.props.onClick}
+              onClick={this.onClick}
               type="button"
               // disabled={this.props.disabled}
               variant="contained"

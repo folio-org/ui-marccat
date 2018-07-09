@@ -61,6 +61,7 @@ export const API_RESULT_JSON_KEY = {
   FIELDS: 'fields',
   INDEX_CATEGORIES: 'categories',
   INDEX_INNER: 'indexes',
+  CONSTRAINT_INDEX: 'constraints'
 };
 
 export const INITIAL_RESULT_COUNT = 30;

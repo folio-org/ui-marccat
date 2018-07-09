@@ -108,6 +108,7 @@ class IndexCategory extends React.Component {
     this.setState({
       thirdSelect: event.target.value,
     });
+    this.props.onSelectConstraint(event.target.value, event.target.label);
   };
 
   render() {
@@ -136,7 +137,7 @@ class IndexCategory extends React.Component {
     if (constraintIndexes) {
       optionsConstraintIndex = constraintIndexes.records.map((element) => {
         return (
-          <option value={element.value}> {element.label} </option>
+          <option value={element.value} label={element.label}> {element.label} </option>
         );
       });
     }

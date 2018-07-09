@@ -74,6 +74,7 @@ class AdvancedSearchForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleLogicButton = this.handleLogicButton.bind(this);
+    this.handleConstraint = this.handleConstraint.bind(this);
   }
 
   onClick() {
@@ -87,6 +88,12 @@ class AdvancedSearchForm extends React.Component {
   handleLogicButton = (op) => { // da modificare
     const previousVal = this.state.value;
     this.setState({ value: previousVal.concat(' ').concat(op) });
+  }
+
+  handleConstraint = (valueSelect, labelSelect) => {
+    const previousVal = this.state.value;
+    this.setState({ value: previousVal.concat(' "').concat(valueSelect).concat('" [').concat(labelSelect)
+      .concat('] ') });
   }
 
   handleSubmit = () => {
@@ -106,7 +113,7 @@ class AdvancedSearchForm extends React.Component {
         {this.state.showErrorMessage &&
           <SnackBar position="right" message={formatMsg({ id: 'ui-cataloging.search.wrong.input' })} />
         }
-        <IndexCategory {...this.props} onSelectIndex={this.handleLogicButton} title="Category" />
+        <IndexCategory {...this.props} onSelectIndex={this.handleLogicButton} onSelectConstraint={this.handleConstraint} title="Category" />
         <Row>
           <Col xs={11}>
             <Textarea rows='8' id='searchTextArea' value={this.state.value} onChange={this.handleChange} style={{ width: '100%' }} />

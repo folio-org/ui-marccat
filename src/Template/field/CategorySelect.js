@@ -1,9 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {
-  Row,
-  Col,
-} from '@folio/stripes-components/lib/LayoutGrid';
+import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { withStyles } from '@material-ui/core/styles';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import { connect } from '@folio/stripes-connect';
@@ -37,8 +34,7 @@ class CategorySelect extends React.Component {
     heading: {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
-      path:
-        'heading-types?lang=ita&marcCategory=%{marcCategory}',
+      path: 'heading-types?lang=ita&marcCategory=%{marcCategory}',
       headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.HEADING_TYPES,
     },
@@ -55,24 +51,18 @@ class CategorySelect extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleChangeSource = this.handleChangeSource.bind(
-      this
-    );
+    this.handleChangeSource = this.handleChangeSource.bind(this);
   }
 
   componentDidMount() {
-    this.props.mutator.marcCategory.replace(
-      this.state.marcCategoryValue
-    );
+    this.props.mutator.marcCategory.replace(this.state.marcCategoryValue);
   }
 
   handleChange = event => {
     this.setState({
       firstSelect: event.target.value,
     });
-    this.props.mutator.marcCategory.replace(
-      event.target.value
-    );
+    this.props.mutator.marcCategory.replace(event.target.value);
   };
 
   handleChangeSource = event => {
@@ -102,20 +92,12 @@ class CategorySelect extends React.Component {
     let headings = {};
     if (marcCategories) {
       options = marcCategories.records.map(element => {
-        return (
-          <option value={element.value}>
-            {element.label}
-          </option>
-        );
+        return <option value={element.value}>{element.label}</option>;
       });
     }
     if (heading) {
       headings = heading.records.map(element => {
-        return (
-          <option value={element.value}>
-            {element.label}
-          </option>
-        );
+        return <option value={element.value}>{element.label}</option>;
       });
     }
     return (
@@ -137,8 +119,7 @@ class CategorySelect extends React.Component {
         <p>
           Default value:{' '}
           <strong>
-            {this.props.defaultValue.description}{' '}
-            {this.props.defaultValue.displayValue}
+            {this.props.defaultValue.description} {this.props.defaultValue.displayValue}
           </strong>
         </p>
         <Row>

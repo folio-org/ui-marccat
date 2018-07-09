@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '@folio/stripes-components/lib/Button';
+import Button from '@material-ui/core/Button';
 import { connect } from '@folio/stripes-connect';
 import { PropTypes } from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -15,10 +15,11 @@ class NotButton extends React.Component {
       <Button
         {...this.props}
         onClick={this.props.onClick}
-        type="submit"
+        type="button"
         disabled={this.props.disabled}
-        buttonStyle="primary"
-        style={{ 'minHeight': '36px' }}
+        variant="contained"
+        color="primary"
+        style={{ margin: '10pt' }}
       >
         <FormattedMessage id="ui-cataloging.search.notButton" />
       </Button>

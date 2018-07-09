@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Link from 'react-router-dom/Link';
+// import Link from 'react-router-dom/Link';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import { Field, reduxForm } from 'redux-form';
+import { reduxForm } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
-import TextArea from '@folio/stripes-components/lib/TextArea';
 import Button from '@folio/stripes-components/lib/Button';
 import ScanButton from './ScanButton';
 import AndButton from './AndButton';
@@ -13,7 +12,7 @@ import NotButton from './NotButton';
 import NearButton from './NearButton';
 import WildCard from './WildCard';
 import IndexCategory from '../IndexCategory';
-import { SnackBar } from '../../../Material/';
+import { SnackBar } from '../../../Material';
 import * as C from '../../../Utils';
 
 function validate(values) {
@@ -67,16 +66,18 @@ class AdvancedSearchForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      value: '',
       showErrorMessage: false,
     };
     this.onClick = this.onClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleLogicButton = this.handleLogicButton.bind(this);
   }
 
   onClick() {
-    if (!document.getElementById('searchTextArea').value) {
-      this.setState({ showErrorMessage: true });
+    if (this.state.value === '') {
+      this.state.showErrorMessage = true;
     } else {
       this.props.history.push(C.INTERNAL_URL.SEARCH_RESULTS);
     }
@@ -91,10 +92,14 @@ class AdvancedSearchForm extends React.Component {
 
   }
 
+  handleChange(event) {
+    this.setState({ value: event.target.value });
+  }
+
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
     const { reset, submitting, pristine } = this.props;
-    const rootPath = this.props.match.path || this.props.match.url;
+    // const rootPath = this.props.match.path || this.props.match.url;
     return (
       <form id="search-form" name="advancedSearchForms" onSubmit={this.handleSubmit} noValidate >
         {this.state.showErrorMessage &&
@@ -103,7 +108,8 @@ class AdvancedSearchForm extends React.Component {
         <IndexCategory {...this.props} title="Category" />
         <Row>
           <Col xs={11}>
-            <Field component={TextArea} rows='8' id='searchTextArea' type="text" /* ref={TextArea => this._name = TextArea} */ name='searchTextArea' withRef />
+            <textarea rows='8' id='searchTextArea' value={this.state.value} onChange={this.handleChange} style={{ width: '100%' }} />
+            {/* <Field component={TextArea} rows='8' id='searchTextArea' type="text"  ref={TextArea => this._name = TextArea}  name='searchTextArea' withRef /> */}
           </Col>
         </Row>
         <Row>
@@ -115,19 +121,19 @@ class AdvancedSearchForm extends React.Component {
           </Col>
           <Col xs={6}>
             {/* <AdvancedSearchButton {...this.props} /> */ }
-            <Link to={`${rootPath}/searchResults`} >
-              <Button
+            {/* <Link to={`${rootPath}/searchResults`} > */}
+            <Button
 
-                onClick={this.onClick}
-                type="button"
+              onClick={this.onClick}
+              type="button"
                 /* disabled={this.props.disabled} */
-                buttonStyle="primary"
+              buttonStyle="primary"
                 /* href="/cataloging/searchResults" */
-                style={{ 'minHeight': '36px' }}
-              >
-                <FormattedMessage id="ui-cataloging.search.searchButton" />
-              </Button>
-            </Link>
+              style={{ 'minHeight': '36px' }}
+            >
+              <FormattedMessage id="ui-cataloging.search.searchButton" />
+            </Button>
+            {/* </Link> */}
             <ScanButton {...this.props} disabled={pristine || submitting} />
             <Button
               {...this.props}

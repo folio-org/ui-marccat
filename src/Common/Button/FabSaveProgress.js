@@ -58,7 +58,7 @@ class FabSaveProgress extends React.Component {
             variant="fab"
             color="primary"
             className={buttonClassname}
-            onClick={onClick}
+            onClick={this.handleButtonClick}
           >
             {success ? <CheckIcon /> : <SaveIcon />}
           </Button>

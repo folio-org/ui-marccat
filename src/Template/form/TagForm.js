@@ -44,6 +44,12 @@ class TagForm extends React.Component {
     defaultValue: PropTypes.object.isRequired,
   };
 
+  getInitialState() {
+    return {
+      inputs: [0, 1]
+    };
+  }
+
   componentDidMount() {
     this.props.initialize({ accountno: 'some value here' });
   }
@@ -51,9 +57,19 @@ class TagForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isTagInputVisible: false,
+      inputs: [0]
     };
     this.handleForm = this.handleForm.bind(this);
+    this.appendItem = this.appendItem.bind(this);
+    this.onCancel = this.onCancel.bind(this);
+  }
+
+  onCancel(){
+    this.setState({ inputs: this.state.inputs.splice(0,this.state.inputs.length -1) });
+  }
+  appendItem(){
+    const newInput = `input-${this.state.inputs.length}`;
+    this.setState({ inputs: this.state.inputs.concat([newInput]) });
   }
 
   handleForm() {
@@ -68,7 +84,8 @@ class TagForm extends React.Component {
     const { handleSubmit } = this.props;
     const formatMsg = this.props.stripes.intl.formatMessage;
     return (
-      <form 
+
+      <form
         name="tagForm"
         onSubmit={handleSubmit}
         style={{ paddingTop: '30px' }}
@@ -76,93 +93,51 @@ class TagForm extends React.Component {
         <Row>
           <CategorySelect {...this.props} title="Source" />
         </Row>
-        <Row>
-          <Select
-            dataOptions={[
-              { value: "a", label: "a" },
-            ]}
-          />
-          <Col xs={6}>
-            <Field
-              style={{
-                width: 100 + '%',
-              }}
-              label={formatMsg({
-                id: 'ui-cataloging.template.form.name',
-              })}
-              name="name"
-              placeholder={formatMsg({
-                id: 'ui-cataloging.template.form.name',
-              })}
-              aria-label={formatMsg({
-                id: 'ui-cataloging.template.form.name',
-              })}
-              fullWidth
-              id="input-template-name"
-              withRef
-              validationEnabled={false}
-              component="input"
+        {this.state.inputs.map(input =>
+          <Row>
+            <Select
+              dataOptions={[
+                { value: "a", label: "a" },
+              ]}
             />
-          </Col>
-          <Button
-            type="button"
-            onClick={this.OnCancel}
-            buttonStyle="primary"
-          >
-            Cancel
-          </Button>
-          <Button
-            type="button"
-            onClick={this.onOpen}
-            buttonStyle="primary"
-          >
-            Open
-          </Button>
-        </Row>
-        <Row>
-          <Select
-            dataOptions={[
-              { value: "b", label: "b" },
-            ]}
-          />
-          <Col xs={6}>
-            <Field
-              style={{
-                width: 100 + '%',
-              }}
-              label={formatMsg({
-                id: 'ui-cataloging.template.form.name',
-              })}
-              value="eeee"
-              name="tssag"
-              placeholder={formatMsg({
-                id: 'ui-cataloging.template.form.name',
-              })}
-              aria-label={formatMsg({
-                id: 'ui-cataloging.template.form.name',
-              })}
-              fullWidth
-              id="input-template-name"
-              withRef
-              validationEnabled={false}
-              component="input"
-            />
-          </Col>
-          <Button
-            type="button"
-            onClick={this.OnCancel}
-            buttonStyle="primary"
-          >
-            Cancel
-          </Button>
-          <Button
-            type="button"
-            onClick={this.onOpen}
-            buttonStyle="primary"
-          >
-            Open
-          </Button>
-        </Row>
+            <Col xs={6}>
+              <Field
+                style={{
+                  width: 100 + '%',
+                }}
+                label={formatMsg({
+                  id: 'ui-cataloging.template.form.name',
+                })}
+                name="name"
+                placeholder={formatMsg({
+                  id: 'ui-cataloging.template.form.name',
+                })}
+                aria-label={formatMsg({
+                  id: 'ui-cataloging.template.form.name',
+                })}
+                fullWidth
+                id="input-template-name"
+                withRef
+                validationEnabled={false}
+                component="input"
+              />
+            </Col>
+            <Button
+              type="button"
+              onClick={this.onCancel}
+              buttonStyle="primary"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              onClick={this.onOpen}
+              buttonStyle="primary"
+            >
+              Open
+            </Button>
+          </Row>
+        )}
         <Row>
           <Select
             dataOptions={[
@@ -193,7 +168,7 @@ class TagForm extends React.Component {
           </Col>
           <Button
             type="button"
-            onClick={this.OnCancel}
+            onClick={this.appendItem}
             buttonStyle="primary"
           >
             Add Subfield

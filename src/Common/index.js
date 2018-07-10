@@ -5,4 +5,4 @@ export { default as SimpleSelect } from './FormField/SimpleSelect';
 export { default as VersionModal } from './Modal/VersionModal';
 export { default as FabSaveProgress } from './Button/FabSaveProgress';
 
-export { CSS3Slide, CSS3SFade } from './Anim/Transition';
+export { CSS3Slide, CSS3Fade } from './Anim/Transition';

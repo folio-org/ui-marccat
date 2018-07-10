@@ -26,17 +26,18 @@ class SnackBar extends React.Component {
       classes,
       position,
       authHideDuration,
+      onClose,
       message,
     } = this.props;
     return (
       <div>
-        <Snackbar
+        <Snackbar    
           anchorOrigin={{
             vertical: 'bottom',
-            horizontal: position || 'left',
+            horizontal: position || 'right',
           }}
           open={this.state.open}
-          autoHideDuration={authHideDuration || 6000}
+          autoHideDuration={authHideDuration || 3000}
           onClose={this.handleClose}
           ContentProps={{
             'aria-describedby': 'message-id',
@@ -48,7 +49,7 @@ class SnackBar extends React.Component {
               aria-label="Close"
               color="#fff"
               className={classes.close}
-              onClick={this.handleClose}
+              onClick={onClose}
             >
               <CloseIcon />
             </IconButton>,
@@ -64,6 +65,7 @@ SnackBar.propTypes = {
   position: PropTypes.object,
   authHideDuration: PropTypes.number,
   message: PropTypes.string.isRequired,
+  onClose: PropTypes.func
 };
 
 export default withStyles(styles)(SnackBar);

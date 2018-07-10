@@ -23,6 +23,7 @@ const styles = theme => ({
 class CategorySelect extends React.Component {
   static manifest = Object.freeze({
     marcCategory: {},
+    subFileds: {},
     marcCategories: {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
@@ -37,7 +38,7 @@ class CategorySelect extends React.Component {
       path: 'heading-types?lang=ita&marcCategory=%{marcCategory}',
       headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.HEADING_TYPES,
-    },
+    }
   });
 
   constructor(props) {
@@ -67,8 +68,9 @@ class CategorySelect extends React.Component {
 
   handleChangeSource = event => {
     this.setState({ secondSelect: event.target.value });
-    const prefix = event.target[event.target.value-1].innerHTML.split(' ')[0]
-    this.props.defaultValue.description = prefix + '- ' +event.target[event.target.value-1].innerHTML  + ' ' + event.target.value
+    const prefix = event.target[event.target.value -1].innerHTML.split(' ')[0];
+    this.props.defaultValue.description = prefix + '- ' +event.target[event.target.value -1].innerHTML  + ' ' + event.target.value;
+  
   };
 
   handleClose = () => {
@@ -104,22 +106,23 @@ class CategorySelect extends React.Component {
       });
     }
     return (
-      <div>
+      <div style={{width: '100%'}}>
         <Row id="section-table">
           <MultiColumnList
+            columnWidths={{'description': '40%'}}
             contentData={this.state.tableContent}
             onRowClick={() => {}}
             visibleColumns={[
+              'code',
+              'description',
               'categoryCode',
               'headerTypeCode',
-              'code',
-              'displayValue',
-              'description',
+              'displayValue'
             ]}
             ariaLabel="TemplateNewMandatory"
           />
         </Row>
-        <p>
+        <p style={{margin: '8px', marginTop:'20px'}}>
           Default value:{' '}
           <strong>
             {this.props.defaultValue.description} {this.props.defaultValue.displayValue}

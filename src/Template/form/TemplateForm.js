@@ -51,10 +51,11 @@ class TemplateForm extends React.Component {
     return errors;
   }
 
+  handleSubmit = () => {}
+
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
     const {
-      handleSubmit,
       reset,
       submitting,
       pristine,
@@ -64,7 +65,7 @@ class TemplateForm extends React.Component {
       mandatoryField[mandatoryField.length - 1];
 
     return (
-      <form id="template-form" onSubmit={handleSubmit}>
+      <form id="templateForm" name="templateForm" onSubmit={this.handleSubmit}>
         <Row id="section-name">
           <Col xs={6}>
             <Field
@@ -148,6 +149,6 @@ class TemplateForm extends React.Component {
 }
 
 export default reduxForm({
-  form: 'templateForms', // a unique identifier for this form
+  form: 'templateForm',
   validate,
 })(TemplateForm);

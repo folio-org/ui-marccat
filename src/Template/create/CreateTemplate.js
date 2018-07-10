@@ -130,8 +130,6 @@ class CreateTemplate extends React.Component {
             <TemplateForm
               {...this.props}
               mandatoryField={obj}
-              initialValues={{}}
-              onSubmit={template => this.create(template)}
             />
           </div>
         </Pane>

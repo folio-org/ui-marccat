@@ -23,10 +23,20 @@ class TemplateView extends React.Component {
       pop: PropTypes.func,
       push: PropTypes.func,
     }),
+    mutator: PropTypes.shape({
+      templateId: PropTypes.shape({
+        replace: PropTypes.func,
+      }),
+      updateTemplate: PropTypes.shape({
+        POST: PropTypes.func,
+        PUT: PropTypes.func,
+      }),
+    }),
   };
 
   static manifest = Object.freeze({
     query: { initialValue: {} },
+    templateId: '',
     resultCount: { initialValue: C.INITIAL_RESULT_COUNT },
     recordsTemplates: {
       type: C.RESOURCE_TYPE,
@@ -37,7 +47,13 @@ class TemplateView extends React.Component {
       GET: {
         params: { lang: 'ita', type: 'B' },
       },
-    },
+      POST: {
+        path: 'record-template/%{templateId}',
+      },
+      PUT: {
+        path: 'record-template/%{templateId}',
+      },
+    }
   });
 
   constructor(props) {
@@ -139,7 +155,7 @@ class TemplateView extends React.Component {
     ];
 
     return (
-      <Paneset id="pippooddd">
+      <Paneset>
         <Pane
           actionMenuItems={actionMenuItems}
           firstMenu={searchMenu}

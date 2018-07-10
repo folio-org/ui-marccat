@@ -27,8 +27,8 @@ class EditTemplate extends React.Component {
       records: 'fields',
       GET: {
         params: { lang: C.ENDPOINT.DEFAULT_LANG },
-      },
-    },
+      }, 
+    }
   });
   
   constructor(props) {
@@ -56,17 +56,23 @@ class EditTemplate extends React.Component {
   }
 
   handleButtonClick = () => {
-    return { 
-      success: false,
-      loading: true
-    }
+  
   };
 
+  handleEditTemplate = ()=> {
+    const settings = {
+      id: 288,
+      name: '444444'
+    };
+    this.props.mutator.recordsTemplates.POST(settings)
+  }
+
   render() {
+   
     const { section } = this.state;
     return ( 
       <div>
-        <form onSubmit={this.onSubmit}>
+        <form id="editTemplateForm" name="editTemplateForm" onSubmit={this.onSubmit}>
           <Row end="xs">
             <Col xs>
               <ExpandAllButton accordionStatus={section} onToggle={this.handleExpandAll} />
@@ -88,7 +94,9 @@ class EditTemplate extends React.Component {
         />
         <FabSaveProgress 
           disabled={false}
-          onClick={this.handleButtonClick}
+          onClick={this.handleEditTemplate}
+          message="Template saved with success"
+          onClose={()=>this.props.history.goBack()}
         />
       </div>
     );
@@ -96,5 +104,5 @@ class EditTemplate extends React.Component {
 }
 
 export default stripesForm({
-  form: 'EditTemplateForm',
+  form: 'editTemplateForm'
 })(EditTemplate);

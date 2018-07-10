@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import CheckIcon from '@material-ui/icons/Check';
 import SaveIcon from '@material-ui/icons/Save';
 import { stylesFabProgress as styles} from '../Style/Button';
+import SnackBar from '../Message/SnackBar';
 
 @withStyles(styles)
 class FabSaveProgress extends React.Component {
@@ -19,6 +20,7 @@ class FabSaveProgress extends React.Component {
   state = {
     loading: false,
     success: false,
+    showSnack: false
   };
 
   componentWillUnmount() {
@@ -37,7 +39,9 @@ class FabSaveProgress extends React.Component {
             this.setState({
               loading: false,
               success: true,
+              showSnack: true
             });
+
           }, 2000);
         },
       );
@@ -46,7 +50,7 @@ class FabSaveProgress extends React.Component {
 
   render() {
     const { loading, success } = this.state;
-    const { classes, onClick } = this.props;
+    const { classes, message, onClose, onClick } = this.props;
     const buttonClassname = classNames({
       [classes.buttonSuccess]: success,
     });
@@ -58,12 +62,15 @@ class FabSaveProgress extends React.Component {
             variant="fab"
             color="primary"
             className={buttonClassname}
-            onClick={this.handleButtonClick}
+            onClick={onClick}
           >
             {success ? <CheckIcon /> : <SaveIcon />}
           </Button>
           {loading && <CircularProgress size={68} className={classes.fabProgress} />}
         </div>
+        { this.state.showSnack &&
+        <SnackBar message={message} onClose={onClose} />
+        }
       </div>
     );
   }

@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import {
-  Row,
-  Col,
-} from '@folio/stripes-components/lib/LayoutGrid';
+import { connect } from '@folio/stripes-connect';
+import {Row, Col} from '@folio/stripes-components/lib/LayoutGrid';
 import TextField from '@folio/stripes-components/lib/TextField';
 import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
 import RadioButton from '@folio/stripes-components/lib/RadioButton';
@@ -56,7 +54,7 @@ class EditTemplateInfo extends React.Component {
               label={formatMsg({
                 id: 'ui-cataloging.template.form.name',
               })}
-              name="name"
+              name="templateEditName"
               aria-label={formatMsg({
                 id: 'ui-cataloging.template.form.name',
               })}
@@ -103,4 +101,4 @@ EditTemplateInfo.propTypes = {
   }).isRequired,
 };
 
-export default EditTemplateInfo;
+export default connect(EditTemplateInfo,  C.META.MODULE_NAME);

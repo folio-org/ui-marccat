@@ -1,12 +1,32 @@
-const fabDialStyle = theme => ({
+import green from '@material-ui/core/colors/green';
+
+export const stylesFabProgress = theme => ({
   root: {
-    height: 380,
+    display: 'flex',
+    alignItems: 'center',
   },
-  speedDial: {
+  cssRoot: {
+    backgroundColor: 'blue',
+    '&:hover': {
+      backgroundColor: 'blue',
+    },
+  },
+  wrapper: {
+    margin: theme.spacing.unit,
+    position: 'relative',
+    marginTop: 150,
+  },
+  buttonSuccess: {
+    backgroundColor: green[500],
+    '&:hover': {
+      backgroundColor: green[700],
+    },
+  },
+  fabProgress: {
+    color: green[500],
     position: 'absolute',
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 3,
+    top: -6,
+    left: -6,
+    zIndex: 1,
   },
 });
-
-export default fabDialStyle;

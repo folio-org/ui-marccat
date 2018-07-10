@@ -2,16 +2,15 @@ import React from 'react';
 import _ from 'lodash';
 import stripesForm from '@folio/stripes-form';
 import PropTypes from 'prop-types';
-import {
-  Row,
-  Col,
-} from '@folio/stripes-components/lib/LayoutGrid';
+import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
 import EditTemplateInfo from './section/EditTemplateInfo';
 import EditTemplateTag from './section/EditTemplateTag';
+import { FabSaveProgress } from '../../Common/';
 import * as C from '../../Utils';
 
 class EditTemplate extends React.Component {
+
   static propTypes = {
     selectedTemplate: PropTypes.object.isRequired,
     handleEditButton: PropTypes.func,
@@ -31,7 +30,7 @@ class EditTemplate extends React.Component {
       },
     },
   });
-
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -41,9 +40,7 @@ class EditTemplate extends React.Component {
       },
     };
     this.handleExpandAll = this.handleExpandAll.bind(this);
-    this.handleSectionToggle = this.handleSectionToggle.bind(
-      this
-    );
+    this.handleSectionToggle = this.handleSectionToggle.bind(this);
   }
 
   handleExpandAll(section) {
@@ -58,18 +55,21 @@ class EditTemplate extends React.Component {
     });
   }
 
+  handleButtonClick = () => {
+    return { 
+      success: false,
+      loading: true
+    }
+  };
+
   render() {
     const { section } = this.state;
-
-    return (
+    return ( 
       <div>
-        <form>
+        <form onSubmit={this.onSubmit}>
           <Row end="xs">
             <Col xs>
-              <ExpandAllButton
-                accordionStatus={section}
-                onToggle={this.handleExpandAll}
-              />
+              <ExpandAllButton accordionStatus={section} onToggle={this.handleExpandAll} />
             </Col>
           </Row>
           <EditTemplateInfo
@@ -85,6 +85,10 @@ class EditTemplate extends React.Component {
           accordionId="editTemplateTag"
           expanded={section.editTemplateTag}
           onToggle={this.handleSectionToggle}
+        />
+        <FabSaveProgress 
+          disabled={false}
+          onClick={this.handleButtonClick}
         />
       </div>
     );

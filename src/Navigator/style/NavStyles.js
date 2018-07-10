@@ -1,6 +1,7 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
 export const drawerWidth = 256;
+export const drawerWidthCollapse = 71;
 
 export const themes = createMuiTheme({
   overrides: {
@@ -23,13 +24,10 @@ export const styles = theme => ({
   appBarShift: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(
-      ['width', 'margin'],
-      {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }
-    ),
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   drawerPaper: {
     position: 'relative',

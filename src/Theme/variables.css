@@ -28,5 +28,9 @@
   --icons-size-small: 18px;
   --icons-size-medium: 24px;
   --icons-size-large: 36px;
+  --drawer-expanded: 256px;
+  --drawer-collapse: 71px;
+  --pane-drawer-expanded: calc(100% - var(--drawer-expanded));
+  --pane-drawer-collapse: calc(100% - var(--drawer-collapse));
 }
 

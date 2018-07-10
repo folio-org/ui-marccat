@@ -1,9 +1,10 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Row,
-  Col,
-} from '@folio/stripes-components/lib/LayoutGrid';
+import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { Field, reduxForm } from 'redux-form';
 import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
 import RadioButton from '@folio/stripes-components/lib/RadioButton';
@@ -16,9 +17,7 @@ function validate(values) {
   errors.name = {};
 
   if (!values.name) {
-    errors.name = (
-      <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />
-    );
+    errors.name = <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />;
   }
   return errors;
 }
@@ -40,10 +39,7 @@ class SimpleSearchForm extends React.Component {
             <TextArea rows="8" />
           </Col>
           <Col xs={5}>
-            <Field
-              name="subGroup"
-              component={RadioButtonGroup}
-            >
+            <Field name="subGroup" component={RadioButtonGroup}>
               <RadioButton
                 label={formatMsg({
                   id: 'ui-cataloging.search.simple.NT',

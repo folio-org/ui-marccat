@@ -46,12 +46,8 @@ class TemplateView extends React.Component {
       showTemplateDetail: false,
       selectedTemplate: {},
     };
-    this.connectedEditTemplateView = props.stripes.connect(
-      EditTemplate
-    );
-    this.handleAddTemplate = this.handleAddTemplate.bind(
-      this
-    );
+    this.connectedEditTemplateView = props.stripes.connect(EditTemplate);
+    this.handleAddTemplate = this.handleAddTemplate.bind(this);
     this.handleRowClick = this.handleRowClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
@@ -59,8 +55,7 @@ class TemplateView extends React.Component {
   handleClose() {
     this.setState(curState => {
       const newState = _.cloneDeep(curState);
-      newState.showTemplateDetail = !this.state
-        .showTemplateDetail;
+      newState.showTemplateDetail = !this.state.showTemplateDetail;
       return newState;
     });
   }
@@ -71,11 +66,6 @@ class TemplateView extends React.Component {
 
   handleAddTemplate() {
     this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE);
-  }
-
-  showToaster() {
-    // eslint-disable-line   no-unused-vars
-    this.setState({});
   }
 
   render() {
@@ -98,11 +88,7 @@ class TemplateView extends React.Component {
         <IconButton
           key="icon-search"
           icon="search"
-          onClick={() =>
-            this.props.history.push(
-              C.INTERNAL_URL.ADVANCE_SEARCH
-            )
-          }
+          onClick={() => this.props.history.push(C.INTERNAL_URL.ADVANCE_SEARCH)}
         />
       </PaneMenu>
     );
@@ -118,11 +104,7 @@ class TemplateView extends React.Component {
     const lastMenu = (
       <PaneMenu {...this.props}>
         <IconButton key="icon-gear" icon="gear" />
-        <IconButton
-          key="icon-plus-sign"
-          icon="plus-sign"
-          onClick={this.handleAddTemplate}
-        />
+        <IconButton key="icon-plus-sign" icon="plus-sign" onClick={this.handleAddTemplate} />
       </PaneMenu>
     );
 
@@ -132,9 +114,7 @@ class TemplateView extends React.Component {
           id: 'ui-cataloging.template.create',
         }),
         onClick: () => {
-          this.props.history.push(
-            C.INTERNAL_URL.ADD_TEMPLATE
-          );
+          this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE);
         },
       },
     ];
@@ -145,9 +125,7 @@ class TemplateView extends React.Component {
           id: 'ui-cataloging.template.create',
         }),
         onClick: () => {
-          this.props.history.push(
-            C.INTERNAL_URL.ADD_TEMPLATE
-          );
+          this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE);
         },
       },
       {
@@ -155,20 +133,17 @@ class TemplateView extends React.Component {
           id: 'ui-cataloging.template.tag.create',
         }),
         onClick: () => {
-          this.props.history.push(
-            C.INTERNAL_URL.ADD_TEMPLATE
-          );
+          this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE);
         },
       },
     ];
 
     return (
-      <Paneset>
+      <Paneset id="pippooddd">
         <Pane
           actionMenuItems={actionMenuItems}
           firstMenu={searchMenu}
           lastMenu={lastMenu}
-          defaultWidth="fill"
           paneTitle={formatMsg({
             id: 'ui-cataloging.templates.title',
           })}

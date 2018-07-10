@@ -1,3 +1,7 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@folio/stripes-components/lib/Button';
@@ -24,8 +28,7 @@ class AdvancedSearchButton extends React.Component {
   }
 
   render() {
-    const rootPath =
-      this.props.match.path || this.props.match.url;
+    const rootPath = this.props.match.path || this.props.match.url;
     return (
       <Link to={`${rootPath}/searchResults`}>
         <Button

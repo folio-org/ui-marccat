@@ -1,4 +1,7 @@
-/* @flow */
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import { connect } from '@folio/stripes-connect';
 import Pane from '@folio/stripes-components/lib/Pane';
@@ -8,12 +11,10 @@ import IconButton from '@folio/stripes-components/lib/IconButton';
 import * as C from '../../../Utils';
 import SimpleSearchForm from './form/SimpleSearchForm';
 import type { SearchProps, SearchState } from '../../type';
+
 import css from '../../style/Search.css';
 
-class SimpleSearch extends React.Component<
-  SearchProps,
-  SearchState
-> {
+class SimpleSearch extends React.Component<SearchProps, SearchState> {
   /* TO-DO fill this empty manifest */
   static manifest = Object.freeze({
     initializedFilterConfig: { initialValue: false },
@@ -32,11 +33,7 @@ class SimpleSearch extends React.Component<
     const lastMenu = (
       <PaneMenu className={css.icon_plus} {...this.props}>
         <IconButton key="icon-gear" icon="gear" />
-        <IconButton
-          key="icon-plus-sign"
-          icon="plus-sign"
-          className={css.icon_plus}
-        />
+        <IconButton key="icon-plus-sign" icon="plus-sign" className={css.icon_plus} />
       </PaneMenu>
     );
 
@@ -46,9 +43,7 @@ class SimpleSearch extends React.Component<
           id: 'ui-cataloging.template.create',
         }),
         onClick: () => {
-          this.props.history.push(
-            C.INTERNAL_URL.ADD_TEMPLATE
-          );
+          this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE);
         },
       },
     ];
@@ -64,10 +59,7 @@ class SimpleSearch extends React.Component<
             id: 'ui-cataloging.navigator.simpleSearch',
           })}
         >
-          <SimpleSearchForm
-            {...this.props}
-            initialValues={{}}
-          />
+          <SimpleSearchForm {...this.props} initialValues={{}} />
         </Pane>
       </Paneset>
     );

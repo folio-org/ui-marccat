@@ -1,10 +1,11 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'react-router-dom/Link';
-import {
-  Row,
-  Col,
-} from '@folio/stripes-components/lib/LayoutGrid';
+import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { Field, reduxForm } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import TextArea from '@folio/stripes-components/lib/TextArea';
@@ -24,9 +25,7 @@ function validate(values) {
   errors.name = {};
 
   if (!values.name) {
-    errors.name = (
-      <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />
-    );
+    errors.name = <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />;
   }
   return errors;
 }
@@ -37,8 +36,7 @@ class AdvancedSearchForm extends React.Component {
     categories: {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
-      path:
-        'index-categories?type=%{indexType.type}&lang=ita',
+      path: 'index-categories?type=%{indexType.type}&lang=ita',
       headers: { 'x-okapi-tenant': 'tnx' },
       records: C.API_RESULT_JSON_KEY.INDEX_CATEGORIES,
     },
@@ -76,27 +74,21 @@ class AdvancedSearchForm extends React.Component {
     };
     this.onClick = this.onClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleLogicButton = this.handleLogicButton.bind(
-      this
-    );
+    this.handleLogicButton = this.handleLogicButton.bind(this);
   }
 
   onClick() {
     if (!document.getElementById('searchTextArea').value) {
       this.setState({ showErrorMessage: true });
     } else {
-      this.props.history.push(
-        C.INTERNAL_URL.SEARCH_RESULTS
-      );
+      this.props.history.push(C.INTERNAL_URL.SEARCH_RESULTS);
     }
   }
 
   handleLogicButton = (idEl, op) => {
     // da modificare
     const previousVal = document.getElementById(idEl).value;
-    document.getElementById(
-      idEl
-    ).value = previousVal.concat(' ').concat(op);
+    document.getElementById(idEl).value = previousVal.concat(' ').concat(op);
   };
 
   handleSubmit = () => {};
@@ -104,15 +96,9 @@ class AdvancedSearchForm extends React.Component {
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
     const { reset, submitting, pristine } = this.props;
-    const rootPath =
-      this.props.match.path || this.props.match.url;
+    const rootPath = this.props.match.path || this.props.match.url;
     return (
-      <form
-        id="search-form"
-        name="advancedSearchForms"
-        onSubmit={this.handleSubmit}
-        noValidate
-      >
+      <form id="search-form" name="advancedSearchForms" onSubmit={this.handleSubmit} noValidate>
         {this.state.showErrorMessage && (
           <SnackBar
             position="right"
@@ -138,42 +124,22 @@ class AdvancedSearchForm extends React.Component {
           <Col xs={6}>
             <AndButton
               {...this.props}
-              onClick={() =>
-                this.handleLogicButton(
-                  'searchTextArea',
-                  'AND'
-                )
-              }
+              onClick={() => this.handleLogicButton('searchTextArea', 'AND')}
               disabled={false}
             />
             <NotButton
               {...this.props}
-              onClick={() =>
-                this.handleLogicButton(
-                  'searchTextArea',
-                  'NOT'
-                )
-              }
+              onClick={() => this.handleLogicButton('searchTextArea', 'NOT')}
               disabled={false}
             />
             <OrButton
               {...this.props}
-              onClick={() =>
-                this.handleLogicButton(
-                  'searchTextArea',
-                  'OR'
-                )
-              }
+              onClick={() => this.handleLogicButton('searchTextArea', 'OR')}
               disabled={false}
             />
             <NearButton
               {...this.props}
-              onClick={() =>
-                this.handleLogicButton(
-                  'searchTextArea',
-                  'NEAR'
-                )
-              }
+              onClick={() => this.handleLogicButton('searchTextArea', 'NEAR')}
               disabled={false}
             />
           </Col>
@@ -191,10 +157,7 @@ class AdvancedSearchForm extends React.Component {
                 <FormattedMessage id="ui-cataloging.search.searchButton" />
               </Button>
             </Link>
-            <ScanButton
-              {...this.props}
-              disabled={pristine || submitting}
-            />
+            <ScanButton {...this.props} disabled={pristine || submitting} />
             <Button
               {...this.props}
               type="submit"

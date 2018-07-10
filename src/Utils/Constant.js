@@ -68,6 +68,7 @@ export const INITIAL_RESULT_COUNT = 30;
 export const RESULT_COUNT_INCREMENT = 30;
 export const RESULT_PER_REQUEST = 20;
 export const FILTER_CONFIG = [{}];
+export const SEPARATOR = ';;;'
 
 // TOASTER MESSAGE
 export const TOASTER_MESSAGE = {

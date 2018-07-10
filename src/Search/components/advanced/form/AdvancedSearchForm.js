@@ -13,8 +13,8 @@ import NotButton from './NotButton';
 import NearButton from './NearButton';
 import WildCard from './WildCard';
 import IndexCategory from '../IndexCategory';
-import { SnackBar } from '../../../Material';
-import * as C from '../../../Utils';
+import { SnackBar } from '../../../../Common';
+import * as C from '../../../../Utils';
 
 function validate(values) {
   const errors = {};

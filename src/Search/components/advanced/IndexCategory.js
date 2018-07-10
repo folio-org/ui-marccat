@@ -7,7 +7,7 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { Field } from 'redux-form';
 import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
 import RadioButton from '@folio/stripes-components/lib/RadioButton';
-import * as C from '../../Utils';
+import * as C from '../../../Utils';
 
 class IndexCategory extends React.Component {
 
@@ -105,9 +105,11 @@ class IndexCategory extends React.Component {
   };
 
   handleChangeThirdSelect = event => {
-    this.setState({
-      thirdSelect: event.target.value,
+    const splitted = event.target.value.split(C.SEPARATOR);    
+    this.setState({      
+      thirdSelect: splitted[0],
     });
+    this.props.onSelectConstraint(splitted[0], splitted[1]);
   };
 
   render() {
@@ -135,8 +137,9 @@ class IndexCategory extends React.Component {
 
     if (constraintIndexes) {
       optionsConstraintIndex = constraintIndexes.records.map((element) => {
+        const valueLabel = element.value  + C.SEPARATOR + element.label 
         return (
-          <option value={element.value}> {element.label} </option>
+          <option value={valueLabel}> {element.label} </option>
         );
       });
     }

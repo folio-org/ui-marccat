@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { reduxForm } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import _ from 'lodash';
+import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Button from '@folio/stripes-components/lib/Button';
 import { FormattedMessage } from 'react-intl';
+import Select from '@folio/stripes-components/lib/Select';
 import CategorySelect from '../field/CategorySelect';
 
 function validate(values) {
@@ -42,6 +44,10 @@ class TagForm extends React.Component {
     defaultValue: PropTypes.object.isRequired,
   };
 
+  componentDidMount() {
+    this.props.initialize({ accountno: 'some value here' });
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -60,16 +66,139 @@ class TagForm extends React.Component {
 
   render() {
     const { handleSubmit } = this.props;
-    const { isTagInputVisible } = this.state;
-
+    const formatMsg = this.props.stripes.intl.formatMessage;
     return (
-      <form
+      <form 
+        name="tagForm"
         onSubmit={handleSubmit}
         style={{ paddingTop: '30px' }}
       >
-        {isTagInputVisible && (
+        <Row>
           <CategorySelect {...this.props} title="Source" />
-        )}
+        </Row>
+        <Row>
+          <Select
+            dataOptions={[
+              { value: "a", label: "a" },
+            ]}
+          />
+          <Col xs={6}>
+            <Field
+              style={{
+                width: 100 + '%',
+              }}
+              label={formatMsg({
+                id: 'ui-cataloging.template.form.name',
+              })}
+              name="name"
+              placeholder={formatMsg({
+                id: 'ui-cataloging.template.form.name',
+              })}
+              aria-label={formatMsg({
+                id: 'ui-cataloging.template.form.name',
+              })}
+              fullWidth
+              id="input-template-name"
+              withRef
+              validationEnabled={false}
+              component="input"
+            />
+          </Col>
+          <Button
+            type="button"
+            onClick={this.OnCancel}
+            buttonStyle="primary"
+          >
+            Cancel
+          </Button>
+          <Button
+            type="button"
+            onClick={this.onOpen}
+            buttonStyle="primary"
+          >
+            Open
+          </Button>
+        </Row>
+        <Row>
+          <Select
+            dataOptions={[
+              { value: "b", label: "b" },
+            ]}
+          />
+          <Col xs={6}>
+            <Field
+              style={{
+                width: 100 + '%',
+              }}
+              label={formatMsg({
+                id: 'ui-cataloging.template.form.name',
+              })}
+              value="eeee"
+              name="tssag"
+              placeholder={formatMsg({
+                id: 'ui-cataloging.template.form.name',
+              })}
+              aria-label={formatMsg({
+                id: 'ui-cataloging.template.form.name',
+              })}
+              fullWidth
+              id="input-template-name"
+              withRef
+              validationEnabled={false}
+              component="input"
+            />
+          </Col>
+          <Button
+            type="button"
+            onClick={this.OnCancel}
+            buttonStyle="primary"
+          >
+            Cancel
+          </Button>
+          <Button
+            type="button"
+            onClick={this.onOpen}
+            buttonStyle="primary"
+          >
+            Open
+          </Button>
+        </Row>
+        <Row>
+          <Select
+            dataOptions={[
+              { value: "a", label: "a" },
+            ]}
+          />
+          <Col xs={6}>
+            <Field
+              style={{
+                width: 100 + '%',
+              }}
+              label={formatMsg({
+                id: 'ui-cataloging.template.form.name',
+              })}
+              name="nssdasdame"
+              placeholder={formatMsg({
+                id: 'ui-cataloging.template.form.name',
+              })}
+              aria-label={formatMsg({
+                id: 'ui-cataloging.template.form.name',
+              })}
+              fullWidth
+              id="input-template-name"
+              withRef
+              validationEnabled={false}
+              component="input"
+            />
+          </Col>
+          <Button
+            type="button"
+            onClick={this.OnCancel}
+            buttonStyle="primary"
+          >
+            Add Subfield
+          </Button>
+        </Row>
         <Button
           type="button"
           onClick={this.handleForm}
@@ -85,5 +214,8 @@ class TagForm extends React.Component {
 }
 export default reduxForm({
   form: 'tagForm',
+  initialValues: {
+    name: 'some value here'
+  },
   validate,
 })(TagForm);

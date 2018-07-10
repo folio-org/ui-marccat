@@ -67,6 +67,8 @@ class CategorySelect extends React.Component {
 
   handleChangeSource = event => {
     this.setState({ secondSelect: event.target.value });
+    const prefix = event.target[event.target.value-1].innerHTML.split(' ')[0]
+    this.props.defaultValue.description = prefix + '- ' +event.target[event.target.value-1].innerHTML  + ' ' + event.target.value
   };
 
   handleClose = () => {
@@ -86,6 +88,7 @@ class CategorySelect extends React.Component {
     if (!marcCategories || !marcCategories.hasLoaded) {
       return <div />;
     }
+ 
     if (!heading || !heading.hasLoaded) return <div />;
 
     let options = {};

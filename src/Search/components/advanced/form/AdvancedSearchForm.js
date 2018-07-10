@@ -77,9 +77,10 @@ class AdvancedSearchForm extends React.Component {
     this.handleConstraint = this.handleConstraint.bind(this);
   }
 
-  onClick() {
-    if (this.state.value === '') {
+  onClick(event) {
+    if (!this.state.value) {
       this.state.showErrorMessage = true;
+      this.setState({ value: event.target.value });
     } else {
       this.props.history.push(C.INTERNAL_URL.SEARCH_RESULTS);
     }
@@ -120,13 +121,13 @@ class AdvancedSearchForm extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={6}>
+          <Col xs={7}>
             <AndButton {...this.props} onClick={() => this.handleLogicButton('AND')} disabled={false} />
             <NotButton {...this.props} onClick={() => this.handleLogicButton('NOT')} disabled={false} />
             <OrButton {...this.props} onClick={() => this.handleLogicButton('OR')} disabled={false} />
             <NearButton {...this.props} onClick={() => this.handleLogicButton('NEAR')} disabled={false} />
           </Col>
-          <Col xs={6}>
+          <Col xs={5}>
             {/* <AdvancedSearchButton {...this.props} /> */ }
             {/* <Link to={`${rootPath}/searchResults`} > */}
             <Button

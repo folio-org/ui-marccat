@@ -1,9 +1,22 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
-import Button from '@folio/stripes-components/lib/Button';
-import { connect } from '@folio/stripes-connect';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import { FormattedMessage } from 'react-intl';
 import * as C from '../../../../Utils';
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+  input: {
+    display: 'none',
+  },
+});
 
 class ScanButton extends React.Component {
   static propTypes = {
@@ -15,10 +28,10 @@ class ScanButton extends React.Component {
       <Button
         {...this.props}
         onClick={this.props.onClick}
-        type="submit"
+        type="button"
         disabled={this.props.disabled}
-        buttonStyle="primary"
-        style={{ minHeight: '36px' }}
+        variant="contained" 
+        color="primary" 
       >
         <FormattedMessage id="ui-cataloging.search.scanButton" />
       </Button>
@@ -26,7 +39,5 @@ class ScanButton extends React.Component {
   }
 }
 
-export default connect(
-  ScanButton,
-  C.META.MODULE_NAME
-);
+export default withStyles(styles)(ScanButton,C.META.MODULE_NAME);
+

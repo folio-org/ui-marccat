@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import Button from '@folio/stripes-components/lib/Button';
 import { FormattedMessage } from 'react-intl';
 import * as C from '../../../../Utils';
 
@@ -26,8 +26,8 @@ class NotButton extends React.Component {
         onClick={this.props.onClick}
         type="button"
         disabled={this.props.disabled}
-        variant="contained" 
-        color="primary"
+        buttonStyle="primary"
+        style={{ minHeight: '36px' }}
       >
         <FormattedMessage id="ui-cataloging.search.notButton" />
       </Button>

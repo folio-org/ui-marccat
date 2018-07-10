@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { reduxForm } from 'redux-form';
+import Button from '@folio/stripes-components/lib/Button';
 import { FormattedMessage } from 'react-intl';
-import Button from '@material-ui/core/Button';
 import Textarea from '@folio/stripes-components/lib/TextArea';
 import ScanButton from './ScanButton';
 import AndButton from './AndButton';
@@ -133,8 +133,8 @@ class AdvancedSearchForm extends React.Component {
               onClick={this.onClick}
               type="button"
               // disabled={this.props.disabled}
-              variant="contained"
-              color="primary"
+              buttonStyle="primary"
+              style={{ minHeight: '36px' }}
             >
               <FormattedMessage id="ui-cataloging.search.searchButton" />
             </Button>
@@ -145,8 +145,8 @@ class AdvancedSearchForm extends React.Component {
               onClick={this.props.onClick}
               type="button"
               disabled={pristine || submitting}
-              variant="contained"
-              color="primary"
+              buttonStyle="primary"
+              style={{ minHeight: '36px' }}
             >
               Clear
             </Button>

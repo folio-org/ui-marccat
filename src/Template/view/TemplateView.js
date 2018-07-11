@@ -25,20 +25,20 @@ class TemplateView extends React.Component {
       push: PropTypes.func,
     }),
     mutator: PropTypes.shape({
-      templateId: PropTypes.shape({
-        replace: PropTypes.func,
+      currentTemplate: PropTypes.shape({
+        update: PropTypes.func,
       }),
-      updateTemplate: PropTypes.shape({
+      recordsTemplates: PropTypes.shape({
         POST: PropTypes.func,
         PUT: PropTypes.func,
+        DELETE: PropTypes.func,
       }),
-    }),
+    }).isRequired,
+    
   };
 
   static manifest = Object.freeze({
-    query: { initialValue: {} },
-    templateId: '',
-    resultCount: { initialValue: C.INITIAL_RESULT_COUNT },
+    currentTemplate: {},
     recordsTemplates: {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
@@ -49,11 +49,15 @@ class TemplateView extends React.Component {
         params: { lang: C.ENDPOINT.DEFAULT_LANG, type: 'B' },
       },
       POST: {
-        path: 'record-template/%{templateId}',
+        path: 'record-template/%{currentTemplate.id}',
       },
       PUT: {
-        path: 'record-template/%{templateId}',
+        path: 'record-template/%{currentTemplate.id}',
       },
+      DELETE: {
+        path: 'record-template/%{currentTemplate.id}',
+        params: { lang: C.ENDPOINT.DEFAULT_LANG, type: 'B', }
+      }
     }
   });
 
@@ -67,6 +71,15 @@ class TemplateView extends React.Component {
     this.handleAddTemplate = this.handleAddTemplate.bind(this);
     this.handleRowClick = this.handleRowClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.onDelete = this.onDelete.bind(this);
+  }
+
+  onDelete() {
+    const toDelete = this.state.selectedTemplate;
+    this.props.mutator.currentTemplate.update({ id: toDelete.id });
+    return this.props.mutator.recordsTemplates.DELETE(toDelete)
+    .catch(() => {})
+    .finally(() => {});
   }
 
   handleClose() {
@@ -112,7 +125,12 @@ class TemplateView extends React.Component {
 
     const deleteMenu = (
       <PaneMenu>
-        <IconButton key="icon-trash" icon="trashBin" />
+        <IconButton 
+          key="icon-trash" 
+          icon="trashBin" 
+          onClick={this.onDelete}
+        />
+
         <IconButton key="icon-save" icon="save" />
         <IconButton key="icon-edit" icon="edit" />
       </PaneMenu>

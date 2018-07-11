@@ -24,7 +24,7 @@ class LogicalView extends React.Component<
       headers: { 'x-okapi-tenant': 'tnx' },
       records: C.API_RESULT_JSON_KEY.LOGICAL_VIEW,
       GET: {
-        params: { lang: 'ita' },
+        params: { lang: C.ENDPOINT.DEFAULT_LANG },
       },
     },
   });

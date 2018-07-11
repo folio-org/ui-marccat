@@ -8,6 +8,7 @@ import Button from '@folio/stripes-components/lib/Button';
 import Select from '@folio/stripes-components/lib/Select';
 import CategorySelect from '../field/CategorySelect';
 import { FabSaveProgress } from '../../Common/';
+import * as C from '../../Utils/';
 
 
 class TagForm extends React.Component {
@@ -27,7 +28,7 @@ class TagForm extends React.Component {
 
   componentDidMount() {
     this.props.initialize({
-      lang: 'ita',
+      lang: C.ENDPOINT.DEFAULT_LANG,
       firstArgs: this.props.defaultValue.displayValue.split('$a')[1]
     });
   }

@@ -46,7 +46,7 @@ class TemplateView extends React.Component {
       headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.TEMPLATES,
       GET: {
-        params: { lang: 'ita', type: 'B' },
+        params: { lang: C.ENDPOINT.DEFAULT_LANG, type: 'B' },
       },
       POST: {
         path: 'record-template/%{templateId}',

@@ -7,6 +7,7 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Button from '@folio/stripes-components/lib/Button';
 import Select from '@folio/stripes-components/lib/Select';
 import CategorySelect from '../field/CategorySelect';
+import { FabSaveProgress } from '../../Common/';
 
 
 class TagForm extends React.Component {
@@ -192,17 +193,14 @@ class TagForm extends React.Component {
           >
             Add Subfield
           </Button>
-          
+
         </Row>
         <hr />
-        <Button
-          type="button"
-          onClick={this.handleForm}
-          buttonStyle="primary"
-          style={{ minHeight: '36px' }}
-        >
-            Add Tag
-        </Button>
+        <FabSaveProgress
+          disabled={false}
+          message="Tag saved with success"
+          onClose={() => this.props.history.goBack()}
+        />
       </div>
     );
   }

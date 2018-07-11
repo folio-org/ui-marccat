@@ -33,7 +33,7 @@ export default class VersionModal extends React.Component<
   VersionModalState
 > {
   render() {
-    const { appTitle, appVersion, classes } = this.props; // eslint-disable-line no-unused-vars
+    const { appTitle, appVersion, credits, classes } = this.props; // eslint-disable-line no-unused-vars
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -56,7 +56,7 @@ export default class VersionModal extends React.Component<
               id="alert-dialog-slide-description"
               className={classes.credits}
             >
-              <p className={classes.credits}>Credits</p>
+              <p className={classes.credits}>{credits}</p>
               Lorem ipsum dolor sit amet, consectetur
               adipisicing elit, sed do eiusmod tempor
               incididunt ut labore et dolore magna aliqua.

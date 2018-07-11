@@ -50,7 +50,7 @@ class FabSaveProgress extends React.Component {
 
   render() {
     const { loading, success } = this.state;
-    const { classes, message, onClose, onClick } = this.props;
+    const { classes, message, onClose } = this.props;
     const buttonClassname = classNames({
       [classes.buttonSuccess]: success,
     });
@@ -62,7 +62,7 @@ class FabSaveProgress extends React.Component {
             variant="fab"
             color="primary"
             className={buttonClassname}
-            onClick={onClick}
+            onClick={this.handleButtonClick}
           >
             {success ? <CheckIcon /> : <SaveIcon />}
           </Button>

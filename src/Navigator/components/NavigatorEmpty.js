@@ -4,7 +4,7 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import { connect } from '@folio/stripes-connect';
-import SwitchListSecondary from '../../Template/list-item/Item';
+import Preloader from '../../App/Preloader';
 import * as C from '../../Utils';
 
 class NavigatorEmpty extends React.Component {
@@ -35,7 +35,7 @@ class NavigatorEmpty extends React.Component {
           onClose={() => {}}
           appIcon={{ app: 'cataloging' }}
         >
-          <SwitchListSecondary />
+          <Preloader />
         </Pane>
       </Paneset>
     );

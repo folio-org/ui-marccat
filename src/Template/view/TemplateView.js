@@ -9,6 +9,7 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import { EditTemplate } from '../';
 import * as C from '../../Utils';
+import css from '../../Search/style/Search.css';
 
 class TemplateView extends React.Component {
   static propTypes = {
@@ -119,8 +120,13 @@ class TemplateView extends React.Component {
 
     const lastMenu = (
       <PaneMenu {...this.props}>
+        <IconButton
+          onClick={this.handleAddTemplate}
+          key="icon-plus-sign"
+          icon="plus-sign"
+          className={css.icon_plus}
+        />
         <IconButton key="icon-gear" icon="gear" />
-        <IconButton key="icon-plus-sign" icon="plus-sign" onClick={this.handleAddTemplate} />
       </PaneMenu>
     );
 
@@ -155,8 +161,9 @@ class TemplateView extends React.Component {
     ];
 
     return (
-      <Paneset>
+      <Paneset static>
         <Pane
+          defaultWidth="fill"
           actionMenuItems={actionMenuItems}
           firstMenu={searchMenu}
           lastMenu={lastMenu}

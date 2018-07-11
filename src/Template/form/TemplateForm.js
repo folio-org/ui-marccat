@@ -3,14 +3,9 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
 import RadioButton from '@folio/stripes-components/lib/RadioButton';
-import Button from '@folio/stripes-components/lib/Button';
 import { FormattedMessage } from 'react-intl';
-import {
-  Row,
-  Col,
-} from '@folio/stripes-components/lib/LayoutGrid';
+import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import TagForm from '../form/TagForm';
-import { CreateTemplateButton } from '../';
 
 function validate(values) {
   const errors = {};
@@ -56,9 +51,6 @@ class TemplateForm extends React.Component {
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
     const {
-      reset,
-      submitting,
-      pristine,
       mandatoryField,
     } = this.props;
     const defaultValue =
@@ -126,7 +118,7 @@ class TemplateForm extends React.Component {
             />
           </Col>
         </Row>
-        <Row>
+        {/* <Row>
           <Col xs={12}>
             <CreateTemplateButton
               disabled={pristine || submitting}
@@ -142,7 +134,7 @@ class TemplateForm extends React.Component {
               Clear
             </Button>
           </Col>
-        </Row>
+        </Row> */}
       </form>
     );
   }

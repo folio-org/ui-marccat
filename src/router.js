@@ -38,7 +38,7 @@ export default class Router extends React.Component {
           <SearchResults {...this.props} id="search_result" />
         </Route>
         <Route path={`${rootPath}/externalSearch`}>
-          <TemplateView {...this.props} id="template_view" />
+          <NavigatorEmpty {...this.props} id="template_view" />
         </Route>
         <Route path={`${rootPath}/templatelist`}>
           <TemplateView {...this.props} id="empty_crontainer" />

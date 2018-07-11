@@ -37,7 +37,7 @@ class SnackBar extends React.Component {
             horizontal: position || 'right',
           }}
           open={this.state.open}
-          autoHideDuration={authHideDuration || 3000}
+          autoHideDuration={authHideDuration || 6000}
           onClose={this.handleClose}
           ContentProps={{
             'aria-describedby': 'message-id',

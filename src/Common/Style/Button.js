@@ -14,7 +14,7 @@ export const stylesFabProgress = theme => ({
   wrapper: {
     margin: theme.spacing.unit,
     position: 'relative',
-    marginTop: 150,
+    marginTop: 50,
   },
   buttonSuccess: {
     backgroundColor: green[500],

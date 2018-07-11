@@ -113,7 +113,7 @@ class AdvancedSearchForm extends React.Component {
           <SnackBar position="right" message={formatMsg({ id: 'ui-cataloging.search.wrong.input' })} />
         }
         <IndexCategory {...this.props} onSelectIndex={this.handleLogicButton} onSelectConstraint={this.handleConstraint} title="Category" />
-        <Row>
+        <Row style={{ marginTop: '50px'}}>
           <Col xs={11}>
             <Textarea rows='8' id='searchTextArea' value={this.state.value} onChange={this.handleChange} style={{ width: '100%' }} />
           </Col>
@@ -160,7 +160,8 @@ class AdvancedSearchForm extends React.Component {
 export default reduxForm({
   form: 'advancedSearchForms', // a unique identifier for this form
   initialValues: {
-    name: 'indexRadio', value: 'P'
+    name: 'indexRadio', value: 'P',
+    testSelected: 'Ainu'
   },
   validate
 })(AdvancedSearchForm);

@@ -65,6 +65,7 @@ class IndexCategory extends React.Component {
   }
   */
 
+
   handleClose = () => {
     this.setState({ open: false });
   };
@@ -107,7 +108,7 @@ class IndexCategory extends React.Component {
   handleChangeThirdSelect = event => {
     const splitted = event.target.value.split(C.SEPARATOR);    
     this.setState({      
-      thirdSelect: splitted[0],
+      thirdSelect: event.target.value,
     });
     this.props.onSelectConstraint(splitted[0], splitted[1]);
   };
@@ -146,7 +147,7 @@ class IndexCategory extends React.Component {
 
     return (
       <Row>
-        <Col xs={3}>
+        <Col xs={12}>
           <Field name="indexRadio" component={RadioButtonGroup} label={formatMsg({ id: 'ui-cataloging.search.indexes' })}>
             <RadioButton
               label={formatMsg({ id: 'ui-cataloging.search.primary' })}
@@ -166,7 +167,7 @@ class IndexCategory extends React.Component {
             />
           </Field>
         </Col>
-        <Col xs={3}>
+        <Col xs={3} style={{marginLeft:'20px', marginTop:'20px'}}>
           {categories &&
           <FormControl>
             <Select
@@ -186,7 +187,7 @@ class IndexCategory extends React.Component {
           </FormControl>
         }
         </Col>
-        <Col xs={3}>
+        <Col xs={3} style={{ marginTop:'20px'}}>
           {innerIndexes &&
           <FormControl>
             <Select
@@ -207,10 +208,11 @@ class IndexCategory extends React.Component {
           </FormControl>
           }
         </Col>
-        <Col xs={3}>
+        <Col xs={3} style={{ marginTop:'20px'}}>
           {constraintIndexes && constraintIndexes.records.length > 0 &&
           <FormControl>
             <Select
+              name="testSelected"
               native
               open={this.state.open}
               onClose={this.handleClose}

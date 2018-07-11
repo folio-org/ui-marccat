@@ -118,7 +118,7 @@ class CatalogingSelect extends React.Component {
           fullWidth
           value={this.state.multiLabel}
           onChange={this.handleChange('multiLabel')}
-          placeholder="Select multiple countries"
+          placeholder="Select logical view"
           name="react-select-chip-label"
           label={label}
           InputLabelProps={{
@@ -128,7 +128,7 @@ class CatalogingSelect extends React.Component {
             inputComponent: SelectWrapped,
             inputProps: {
               classes,
-              multi: false,
+              multi: true,
               instanceId: 'react-select-chip-label',
               id: 'react-select-chip-label',
               simpleValue: true,

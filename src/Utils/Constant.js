@@ -23,7 +23,7 @@ export const ENDPOINT = {
   SUBFIELDS_TAGS: 'subfield-tags',
   CATEGORY_URL: 'marc-categories',
   INDEX_CATEGORY: 'index-categories',
-  DEFAULT_LANG: 'ita',
+  DEFAULT_LANG: 'eng',
   DEFAULT_PAGINATION: 20,
 };
 

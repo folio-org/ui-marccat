@@ -179,13 +179,6 @@ class NavDrawer extends React.Component {
           </List>
         </Drawer>
         <main className={classes.content}>
-          <VersionModal
-            appTitle={pack.appName}
-            appVersion={pack.version}
-            open={this.state.openModal}
-            onClose={this.handleClose}
-            credits={pack.compnay}
-          />
           <Router {...this.props} />
         </main>
       </div>

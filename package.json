@@ -1,10 +1,10 @@
 {
-  "name": "@folio/cataloging",
-  "appName": "Cataloging",
+  "name": "@folio/marccat",
+  "appName": "MARCCcat",
   "version": "1.0.1",
-  "compnay": "@Cult",
-  "description": "cataloging",
-  "repository": "folio-org/ui-cataloging",
+  "company": "@Cult",
+  "description": "MARCcat Cataloging Module",
+  "repository": "folio-org/ui-marccat",
   "publishConfig": {
     "registry": "https://repository.folio.org/repository/npm-folio/"
   },
@@ -104,8 +104,8 @@
   },
   "stripes": {
     "type": "app",
-    "displayName": "cataloging",
-    "route": "/cataloging",
+    "displayName": "MARCcat",
+    "route": "/marccat",
     "defaultPopoverSize": "400px",
     "defaultPreviewWidth": "40%",
     "helpPage": "https://wiki.folio.org/pages/",
@@ -116,19 +116,19 @@
     "icons": [
       {
         "name": "app",
-        "alt": "Create, view and manage catalog",
-        "title": "Cataloging"
+        "alt": "Create, view and manage marccat",
+        "title": "MARCcat"
       }
     ],
     "permissionSets": [
       {
-        "permissionName": "module.cataloging.enabled",
-        "displayName": "UI: ui-cataloging module is enabled",
+        "permissionName": "module.marccat.enabled",
+        "displayName": "UI: ui-marccat module is enabled",
         "visible": true
       },
       {
-        "permissionName": "settings.cataloging.enabled",
-        "displayName": "Settings (cataloging): display list of settings pages",
+        "permissionName": "settings.marccat.enabled",
+        "displayName": "Settings (marccat): display list of settings pages",
         "subPermissions": [
           "settings.enabled"
         ],

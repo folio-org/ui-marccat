@@ -25,6 +25,6 @@ module.exports = {
     softLogout: true,
   },
   modules: {
-    '@folio/cataloging': {},
+    '@folio/marccat': {},
   },
 };

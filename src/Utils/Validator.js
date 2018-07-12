@@ -1,4 +1,4 @@
-const Required = (value) => {
+const Required = value => {
   if (value) return undefined;
   return 'Required!';
 };

@@ -6,12 +6,14 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
 import EditTemplateInfo from './section/EditTemplateInfo';
 import EditTemplateTag from './section/EditTemplateTag';
+import { FabSaveProgress } from '../../Common/';
 import * as C from '../../Utils';
 
 class EditTemplate extends React.Component {
+
   static propTypes = {
     selectedTemplate: PropTypes.object.isRequired,
-    handleEditButton: PropTypes.func
+    handleEditButton: PropTypes.func,
   };
 
   static manifest = Object.freeze({
@@ -25,56 +27,82 @@ class EditTemplate extends React.Component {
       records: 'fields',
       GET: {
         params: { lang: C.ENDPOINT.DEFAULT_LANG },
-      },
+      }, 
     }
   });
-
+  
   constructor(props) {
     super(props);
     this.state = {
       section: {
         editTemplateInfo: false,
-        editTemplateTag: false
-      }
+        editTemplateTag: false,
+      },
     };
     this.handleExpandAll = this.handleExpandAll.bind(this);
     this.handleSectionToggle = this.handleSectionToggle.bind(this);
   }
-
 
   handleExpandAll(section) {
     this.setState({ section });
   }
 
   handleSectionToggle({ id }) {
-    this.setState((curState) => {
+    this.setState(curState => {
       const newState = _.cloneDeep(curState);
       newState.section[id] = !newState.section[id];
       return newState;
     });
   }
 
-  render() {
-    const { section } = this.state;
+  handleButtonClick = () => {
+  
+  };
 
-    return (
+  handleEditTemplate = ()=> {
+    const settings = {
+      id: 288,
+      name: '444444'
+    };
+    this.props.mutator.recordsTemplates.POST(settings)
+  }
+
+  render() {
+   
+    const { section } = this.state;
+    return ( 
       <div>
-        <form>
+        <form id="editTemplateForm" name="editTemplateForm" onSubmit={this.onSubmit}>
           <Row end="xs">
             <Col xs>
               <ExpandAllButton accordionStatus={section} onToggle={this.handleExpandAll} />
             </Col>
           </Row>
-          <EditTemplateInfo {...this.props} accordionId="editTemplateInfo" expanded={section.editTemplateInfo} selectedTemplate={this.props.selectedTemplate} onToggle={this.handleSectionToggle} />
+          <EditTemplateInfo
+            {...this.props}
+            accordionId="editTemplateInfo"
+            expanded={section.editTemplateInfo}
+            selectedTemplate={this.props.selectedTemplate}
+            onToggle={this.handleSectionToggle}
+          />
         </form>
-        <EditTemplateTag {...this.props} accordionId="editTemplateTag" expanded={section.editTemplateTag} onToggle={this.handleSectionToggle} />
+        <EditTemplateTag
+          {...this.props}
+          accordionId="editTemplateTag"
+          expanded={section.editTemplateTag}
+          onToggle={this.handleSectionToggle}
+        />
+        <FabSaveProgress 
+          disabled={false}
+          onClick={this.handleEditTemplate}
+          message="Template saved with success"
+          onClose={()=>this.props.history.goBack()}
+        />
       </div>
     );
   }
 }
 
-
 export default stripesForm({
-  form: 'EditTemplateForm',
+  form: 'editTemplateForm'
 })(EditTemplate);
-

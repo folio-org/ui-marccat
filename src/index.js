@@ -1,46 +1,50 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
-import Route from 'react-router-dom/Route';
+import { Route } from 'react-router-dom';
 import Switch from 'react-router-dom/Switch';
 import { Settings } from './Settings';
-import Cataloging from './App/Cataloging';
+import MARCcat from './App/MARCcat';
+
+import './Theme/variables.css';
 
 type RoutingProps = {|
   stripes: {
-  connect: Function,
-    intl: Object
-},
-history: {
-  goBack: Function,
+    connect: Function,
+    intl: Object,
+  },
+  history: {
+    goBack: Function,
     pop: Function,
-      push: Function
-},
-match: {
-  path: string,
-    id: string
-},
-location: {
-  pathname: string
-},
-showSettings: bool;
-|}
+    push: Function,
+  },
+  match: {
+    path: string,
+    id: string,
+  },
+  location: {
+    pathname: string,
+  },
+  showSettings: boolean,
+|};
 
-class CatalogingRouting extends React.Component<RoutingProps, {}> {
-
+class MARCCatRouting extends React.Component<RoutingProps, {}> {
   constructor(props) {
     super(props);
-    this.connectedApp = props.stripes.connect(Cataloging);
+    this.connectedApp = props.stripes.connect(MARCcat);
   }
 
   render() {
-    let {
-      showSettings
-    } = this.props;
+    let { showSettings } = this.props;
     if (showSettings) {
       return <Settings {...this.props} />;
     }
     return (
       <Switch>
         <Route
+          {...this.props}
           path={`${this.props.match.path}`}
           render={() => <this.connectedApp {...this.props} />}
         />
@@ -49,4 +53,4 @@ class CatalogingRouting extends React.Component<RoutingProps, {}> {
   }
 }
 
-export default CatalogingRouting;
+export default MARCCatRouting;

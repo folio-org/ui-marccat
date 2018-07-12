@@ -1,0 +1,7 @@
+header {
+  z-index: 999 !important;
+}
+
+i {
+  font-size: var(--icons-size-medium) !important;
+}

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const withProxy = ProxyWrapperComponent =>
   class WithProxyComponent extends React.Component {
     static manifest = Object.freeze(
-      Object.assign({}, ProxyWrapperComponent.manifest, {}),
+      Object.assign({}, ProxyWrapperComponent.manifest, {})
     );
 
     static propTypes = {
@@ -46,7 +46,11 @@ const withProxy = ProxyWrapperComponent =>
     }
 
     static getDerivedStateFromProps(nextProps) {
-      const { match: { params: { id } } } = nextProps;
+      const {
+        match: {
+          params: { id },
+        },
+      } = nextProps;
       if (id) {
         return { userId: id };
       }
@@ -54,7 +58,11 @@ const withProxy = ProxyWrapperComponent =>
     }
 
     componentDidUpdate(prevProps, prevState) {
-      if (!this.props.stripes.hasPerm('proxiesfor.collection.get')) {
+      if (
+        !this.props.stripes.hasPerm(
+          'proxiesfor.collection.get'
+        )
+      ) {
         return;
       }
 
@@ -69,28 +77,50 @@ const withProxy = ProxyWrapperComponent =>
     getRecords(resourceName, idKey) {
       const { resources } = this.props;
       const resourceForName = `${resourceName}For`;
-      const records = (resources[resourceName] || {}).records || [];
-      const recordsFor = (resources[resourceForName] || {}).records || [];
+      const records =
+        (resources[resourceName] || {}).records || [];
+      const recordsFor =
+        (resources[resourceForName] || {}).records || [];
 
       if (!records.length) return records;
 
-      const rMap = records.reduce((memo, record) =>
-        Object.assign(memo, { [record.id]: record }), {});
-      return recordsFor.map(r => ({ proxy: r, user: rMap[r[idKey]] }));
+      const rMap = records.reduce(
+        (memo, record) =>
+          Object.assign(memo, { [record.id]: record }),
+        {}
+      );
+      return recordsFor.map(r => ({
+        proxy: r,
+        user: rMap[r[idKey]],
+      }));
     }
 
     update(resourceName, records) {
-      const { match: { params }, mutator } = this.props;
+      const {
+        match: { params },
+        mutator,
+      } = this.props;
       const userId = params.id;
 
-      const edited = records.filter(rec => !!(rec.proxy.id));
+      const edited = records.filter(rec => !!rec.proxy.id);
       const added = records.filter(rec => !rec.proxy.id);
 
-      const editPromises = edited.map(rec => (mutator.PUT(rec.proxy)));
-      const addPromises = added.map((rec) => {
-        const data = (resourceName === 'proxies') ?
-          { ...rec.proxy, proxyUserId: rec.user.id, userId } :
-          { ...rec.proxy, proxyUserId: userId, userId: rec.user.id };
+      const editPromises = edited.map(rec =>
+        mutator.PUT(rec.proxy)
+      );
+      const addPromises = added.map(rec => {
+        const data =
+          resourceName === 'proxies'
+            ? {
+                ...rec.proxy,
+                proxyUserId: rec.user.id,
+                userId,
+              }
+            : {
+                ...rec.proxy,
+                proxyUserId: userId,
+                userId: rec.user.id,
+              };
 
         return mutator.POST(data);
       });
@@ -98,11 +128,8 @@ const withProxy = ProxyWrapperComponent =>
       return Promise.all([...addPromises, ...editPromises]);
     }
     render() {
-      return (<ProxyWrapperComponent
-        {...this.props}
-      />);
+      return <ProxyWrapperComponent {...this.props} />;
     }
   };
-
 
 export default withProxy;

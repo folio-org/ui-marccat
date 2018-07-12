@@ -1,0 +1,11 @@
+[
+  { 
+    "title": "Classification",
+    "descr": [
+      { "key":"AN1", "value": "No. rec. equivalent"},
+      { "key":"CC", "value":"Other Class. (Canada)"},
+      { "key":"DC", "value":"Dewey Classification"},
+      { "key":"LC", "value":"LC Classification"}      
+    ]
+  }
+]

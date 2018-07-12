@@ -2,7 +2,7 @@
 
 git log --reverse --format='* %aN [%aE](%aE)' | perl -wnE '
 BEGIN {
-  say "# Ui-Cataloging Module";
+  say "# Ui-MARCcat Module";
   say "## Authors"
 }
 print $seen{$_} = $_ unless $seen{$_}

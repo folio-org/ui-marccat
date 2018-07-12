@@ -114,7 +114,7 @@ class TemplateView extends React.Component {
   showCalloutMessage() {
     const message = (
       <span>
-        <FormattedMessage id="ui-cataloging.template.delete-completed" />
+        <FormattedMessage id="ui-marccat.template.delete-completed" />
       </span>
     );
     this.callout.sendCallout({ message });
@@ -138,9 +138,9 @@ class TemplateView extends React.Component {
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const modalHeading = formatMsg({ id: 'ui-cataloging.template.delete' });
-    const modalMessage = formatMsg({ id: 'ui-cataloging.template.delete.modal' });
-    const confirmLabel = formatMsg({ id: 'ui-cataloging.template.delete.button' });
+    const modalHeading = formatMsg({ id: 'ui-marccat.template.delete' });
+    const modalMessage = formatMsg({ id: 'ui-marccat.template.delete.modal' });
+    const confirmLabel = formatMsg({ id: 'ui-marccat.template.delete.button' });
 
     const {
       resources: { recordsTemplates },
@@ -231,7 +231,7 @@ class TemplateView extends React.Component {
             id: 'ui-marccat.templates.title',
           })}
           paneSub={templates.length + ' Result found'}          
-          appIcon={{ app: 'cataloging' }}
+          appIcon={{ app: C.META.ICON_TITLE }}
         >
           <MultiColumnList
             id="list-templates"

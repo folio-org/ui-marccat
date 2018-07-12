@@ -1,5 +1,20 @@
 import * as C from './Constant';
 
+const catalogResults = require('../../config/static/index-list')
+
+const splitValueFromJson = str => {
+  for (let i in obj) {
+    const titolo = obj[i].title ; 
+    for(let j in obj[i].values){
+        const valore = obj[i].values[j] ;
+        for(let k in valore){
+            const valueKey = k;
+            const valueValues = valore[k];
+        }
+    }
+  }
+}
+
 const marcSeparator = stringa => {
   return stringa.replace(
     C.MARC_CHARACTER.SEPARATOR,
@@ -40,9 +55,9 @@ const convertValueToLabel = resourcesPath => {
 const remapCodeLongDescription = logicalViews => {
   return logicalViews.length > 0 // verificare che il servizio risponda [] non [{}], altrimenti mettere > 1
     ? logicalViews.map(view => ({
-        value: view.code,
-        label: view.longDescription,
-      }))
+      value: view.code,
+      label: view.longDescription,
+    }))
     : false;
 };
 

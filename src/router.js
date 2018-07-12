@@ -7,8 +7,9 @@ import Route from 'react-router-dom/Route';
 import Switch from 'react-router/Switch';
 import NavigatorEmpty from './Navigator/components/NavigatorEmpty';
 import SearchResults from './Search/components/results/SearchResults';
-import { TemplateView, CreateTemplate } from './Template';
-import { AdvancedSearch, SimpleSearch } from './Search';
+import { TemplateView, CreateTemplate } from './Template/';
+import { AdvancedSearch, SimpleSearch } from './Search/';
+import IndexList from './Index/IndexList';
 
 export function ConnectedRoute({ path, id, component: Component, ...props }) {
   return (
@@ -42,6 +43,12 @@ export default class Router extends React.Component {
         </Route>
         <Route path={`${rootPath}/templatelist`}>
           <TemplateView {...this.props} id="empty_crontainer" />
+        </Route>
+        <Route path={`${rootPath}/indexList`}>
+          <IndexList {...this.props} id="index_list"  buttonClickText="close" handleClose={()=> alert('alert')}/>
+        </Route>
+        <Route path={`${rootPath}/diacritic`}>
+          <IndexList {...this.props} id="diacritic" buttonClickText="close" handleClose={()=> alert('alert')} />
         </Route>
         <Route path={`${rootPath}`}>
           <NavigatorEmpty {...this.props} id="empty_corntainer" />

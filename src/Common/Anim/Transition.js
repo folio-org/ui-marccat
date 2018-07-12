@@ -1,5 +1,5 @@
 import React from 'react';
-import { Slide, Fade } from '@material-ui/core/';
+import { Slide, Fade } from '@material-ui/core';
 
 const CSS3Slide = props => {
   return <Slide direction={props.direction} {...props} />;

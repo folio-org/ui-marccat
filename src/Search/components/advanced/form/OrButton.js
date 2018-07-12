@@ -33,7 +33,7 @@ class OrButton extends React.Component {
         buttonStyle="primary"
         style={{ minHeight: '36px' }}
       >
-        <FormattedMessage id="ui-cataloging.search.orButton" />
+        <FormattedMessage id="ui-marccat.search.orButton" />
       </Button>
     );
   }

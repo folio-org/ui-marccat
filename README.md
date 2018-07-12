@@ -1,4 +1,4 @@
-# ui-cataloging
+# ui-marccat
 
 [![CircleCI](https://circleci.com/gh/atcult/ui-cataloging.svg?style=svg)](https://circleci.com/gh/atcult/ui-cataloging)
 
@@ -8,7 +8,7 @@ This software is distributed under the terms of the Apache License,
 Version 2.0. See the file "[LICENSE](LICENSE)" for more information.
 
 ## Introduction
-The `ui-cataloging` module adds the ability to manage cataloging in FOLIO.
+The `ui-marccat` module adds the ability to manage cataloging in FOLIO.
 
 ## Prerequisites
 
@@ -18,8 +18,8 @@ The `ui-cataloging` module adds the ability to manage cataloging in FOLIO.
 
 ## Installation
 
-* `git clone https://github.com/folio-org/ui-cataloging`
-* `cd ui-cataloging`
+* `git clone https://github.com/folio-org/ui-marccat`
+* `cd ui-marccat`
 * `yarn`
 
 ## Running

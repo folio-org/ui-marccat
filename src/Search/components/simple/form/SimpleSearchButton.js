@@ -29,12 +29,10 @@ class SimpleSearchButton extends React.Component {
         <Button
           onClick={this.onClick}
           type="button"
-          /* disabled={this.props.disabled} */
           buttonStyle="primary"
-          /* href="/cataloging/searchResults" */
           style={{ minHeight: '36px' }}
         >
-          <FormattedMessage id="ui-cataloging.search.searchButton" />
+          <FormattedMessage id="ui-marccat.search.searchButton" />
         </Button>
       </Link>
     );

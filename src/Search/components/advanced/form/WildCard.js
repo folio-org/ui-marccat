@@ -10,19 +10,19 @@ class WildCard extends React.Component {
     return (
       <Row>
         <Col xs={1}>
-          <FormattedMessage id="ui-cataloging.search.wildCard" />:
+          <FormattedMessage id="ui-marccat.search.wildCard" />:
         </Col>
         <Col xs={3}>
           <b>?</b> &nbsp;
-          <FormattedMessage id="ui-cataloging.search.wildCard.replace1" />
+          <FormattedMessage id="ui-marccat.search.wildCard.replace1" />
         </Col>
         <Col xs={3}>
           <b>#</b> &nbsp;
-          <FormattedMessage id="ui-cataloging.search.wildCard.replace2" />
+          <FormattedMessage id="ui-marccat.search.wildCard.replace2" />
         </Col>
         <Col xs={3}>
           <b>!</b> &nbsp;
-          <FormattedMessage id="ui-cataloging.search.wildCard.restriction" />
+          <FormattedMessage id="ui-marccat.search.wildCard.restriction" />
         </Col>
       </Row>
     );

@@ -4,7 +4,6 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import { connect } from '@folio/stripes-connect';
-import Preloader from '../../App/Preloader';
 import * as C from '../../Utils';
 
 class NavigatorEmpty extends React.Component {
@@ -20,23 +19,23 @@ class NavigatorEmpty extends React.Component {
         <IconButton key="icon-add" icon="comment" />
       </PaneMenu>
     );
+    const formatMsg = this.props.stripes.intl.formatMessage;
 
     return (
       <Paneset static>
         <Pane
-          id="pippo"
           padContent={false}
           loading
           firstMenu={searchMenu}
           lastMenu={lastMenu}
           defaultWidth="fill"
-          paneTitle="Cataloging"
+          paneTitle={formatMsg({
+            id: 'ui-marccat.templates.title',
+          })}
           paneSub="0 result found"
           onClose={() => {}}
-          appIcon={{ app: 'cataloging' }}
-        >
-          <Preloader />
-        </Pane>
+          appIcon={{ app: C.META.ICON_TITLE }}
+        />
       </Paneset>
     );
   }

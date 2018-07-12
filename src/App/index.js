@@ -1,1 +1,1 @@
-export { default } from './Cataloging';
+export { default } from './MARCcat';

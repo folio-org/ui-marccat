@@ -19,11 +19,8 @@ import InfoOutlineIcon from '@material-ui/icons/InfoOutline';
 import BubbleChartIcon from '@material-ui/icons/BubbleChart';
 import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
 import NavMenuItem from './NavMenu';
-import { VersionModal } from '../../Common/';
 import Router from '../../router';
 import { styles } from '../style/NavStyles';
-
-const pack = require('../../../package');
 
 @withStyles(styles, { withTheme: true })
 class NavDrawer extends React.Component {
@@ -179,13 +176,6 @@ class NavDrawer extends React.Component {
           </List>
         </Drawer>
         <main className={classes.content}>
-          <VersionModal
-            appTitle={pack.appName}
-            appVersion={pack.version}
-            open={this.state.openModal}
-            onClose={this.handleClose}
-            credits={pack.compnay}
-          />
           <Router {...this.props} />
         </main>
       </div>

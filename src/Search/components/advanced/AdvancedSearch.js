@@ -7,7 +7,7 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import AdvancedSearchForm from './form/AdvancedSearchForm';
 import { SearchProps, SearchState } from '../../type';
-import { RestrictionView } from '../restriction/';
+import { RestrictionView } from '../restriction';
 import css from '../../style/Search.css';
 import * as C from '../../../Utils';
 
@@ -84,7 +84,7 @@ class AdvancedSearch extends React.Component<
     const actionMenuItems = [
       {
         label: formatMsg({
-          id: 'ui-cataloging.template.create',
+          id: 'ui-marccat.template.create',
         }),
         onClick: () => {
           this.props.history.goBack();
@@ -102,9 +102,9 @@ class AdvancedSearch extends React.Component<
           lastMenu={lastMenu}
           defaultWidth="fill"
           paneSub="search result"
-          appIcon={{ app: 'cataloging' }}
+          appIcon={{ app:  C.META.ICON_TITLE }}
           paneTitle={formatMsg({
-            id: 'ui-cataloging.navigator.search',
+            id: 'ui-marccat.navigator.search',
           })}
         >
           <AdvancedSearchForm
@@ -117,7 +117,7 @@ class AdvancedSearch extends React.Component<
             defaultWidth="fill"
             paneTitle="Search Settings"
             paneSub="restriction"
-            appIcon={{ app: 'cataloging' }}
+            appIcon={{ app:  C.META.ICON_TITLE }}
             dismissible
             onClose={this.handleCloseRestrictionPanel}
           >

@@ -18,7 +18,7 @@ export default class GeneralSettings extends Component<
         paneTitle={this.props.label}
       >
         <div id="stripes-new-app-settings-message">
-          <FormattedMessage id="ui-cataloging.settings.general" />
+          <FormattedMessage id="ui-marccat.settings.general" />
         </div>
       </Pane>
     );

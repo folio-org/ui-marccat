@@ -33,7 +33,7 @@ class AndButton extends React.Component {
         buttonStyle="primary"
         style={{ minHeight: '36px' }}
       >
-        <FormattedMessage id="ui-cataloging.search.andButton" />
+        <FormattedMessage id="ui-marccat.search.andButton" />
       </Button>
     );
   }

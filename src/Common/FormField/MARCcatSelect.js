@@ -92,7 +92,7 @@ function SelectWrapped(props) {
   );
 }
 
-class CatalogingSelect extends React.Component {
+class MARCcatSelect extends React.Component {
   state = {
     single: null, // eslint-disable-line react/no-unused-state
     multi: null, // eslint-disable-line react/no-unused-state
@@ -141,8 +141,8 @@ class CatalogingSelect extends React.Component {
   }
 }
 
-CatalogingSelect.propTypes = {
+MARCcatSelect.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(CatalogingSelect);
+export default withStyles(styles)(MARCcatSelect);

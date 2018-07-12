@@ -30,7 +30,7 @@ class CategorySelect extends React.Component {
       path: C.ENDPOINT.CATEGORY_URL,
       headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.CATEGORIES,
-      params: { lang: 'ita' },
+      params: { lang: C.ENDPOINT.DEFAULT_LANG },
     },
     heading: {
       type: C.RESOURCE_TYPE,

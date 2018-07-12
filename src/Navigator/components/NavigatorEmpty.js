@@ -19,6 +19,7 @@ class NavigatorEmpty extends React.Component {
         <IconButton key="icon-add" icon="comment" />
       </PaneMenu>
     );
+    const formatMsg = this.props.stripes.intl.formatMessage;
 
     return (
       <Paneset static>
@@ -28,10 +29,12 @@ class NavigatorEmpty extends React.Component {
           firstMenu={searchMenu}
           lastMenu={lastMenu}
           defaultWidth="fill"
-          paneTitle="Cataloging"
+          paneTitle={formatMsg({
+            id: 'ui-marccat.templates.title',
+          })}
           paneSub="0 result found"
           onClose={() => {}}
-          appIcon={{ app: 'cataloging' }}
+          appIcon={{ app: C.META.ICON_TITLE }}
         />
       </Paneset>
     );

@@ -1,4 +1,4 @@
-# Ui-Cataloging Module
+# Ui-MARCcat Module
 ## Authors
 * aliceGuercio [alice.guercio@atcult.it](alice.guercio@atcult.it)
 * Natascia Bianchini [natascia.bianchini@atcult.it](natascia.bianchini@atcult.it)

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'; // eslint-disable-line no-unused-vars
 import React from 'react';
 import NavDrawer from '../Navigator/components/NavDrawer';
 
-export default class Cataloging extends React.Component<PropTypes> {
+export default class MARCcat extends React.Component<PropTypes> {
   static propTypes = {
     stripes: PropTypes.shape({
       intl: PropTypes.object.isRequired,

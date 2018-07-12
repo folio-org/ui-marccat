@@ -1,6 +1,7 @@
-// CATALOGING UI APP METADADA
+// MARCCAT UI APP METADADA
 export const META = {
-  MODULE_NAME: 'ui-cataloging',
+  MODULE_NAME: 'ui-marccat',
+  ICON_TITLE: 'marccat'
 };
 
 // API
@@ -23,7 +24,7 @@ export const ENDPOINT = {
   SUBFIELDS_TAGS: 'subfield-tags',
   CATEGORY_URL: 'marc-categories',
   INDEX_CATEGORY: 'index-categories',
-  DEFAULT_LANG: 'ita',
+  DEFAULT_LANG: 'eng',
   DEFAULT_PAGINATION: 20,
 };
 
@@ -69,6 +70,7 @@ export const RESULT_COUNT_INCREMENT = 30;
 export const RESULT_PER_REQUEST = 20;
 export const FILTER_CONFIG = [{}];
 export const SEPARATOR = ';;;'
+
 
 // TOASTER MESSAGE
 export const TOASTER_MESSAGE = {

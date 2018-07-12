@@ -47,7 +47,7 @@ class EditTemplateTag extends React.Component {
       <Accordion
         label={formatMsg({
           id:
-            'ui-cataloging.template.detail.information.mandatory.table',
+            'ui-marccat.template.detail.information.mandatory.table',
         })}
         open={expanded}
         id={accordionId}

@@ -20,7 +20,7 @@ function validate(values) {
   errors.name = {};
 
   if (!values.name) {
-    errors.name = <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />;
+    errors.name = <FormattedMessage id="ui-marccat.errors.missingRequiredField" />;
   }
   return errors;
 }
@@ -110,7 +110,7 @@ class AdvancedSearchForm extends React.Component {
     return (
       <form id="search-form" name="advancedSearchForms" onSubmit={this.handleSubmit} noValidate>
         {this.state.showErrorMessage &&
-          <SnackBar position="right" message={formatMsg({ id: 'ui-cataloging.search.wrong.input' })} />
+          <SnackBar position="right" message={formatMsg({ id: 'ui-marccat.search.wrong.input' })} />
         }
         <IndexCategory {...this.props} onSelectIndex={this.handleLogicButton} onSelectConstraint={this.handleConstraint} title="Category" />
         <Row style={{ marginTop: '50px'}}>
@@ -136,7 +136,7 @@ class AdvancedSearchForm extends React.Component {
               buttonStyle="primary"
               style={{ minHeight: '36px' }}
             >
-              <FormattedMessage id="ui-cataloging.search.searchButton" />
+              <FormattedMessage id="ui-marccat.search.searchButton" />
             </Button>
             {/* </Link> */}
             <ScanButton {...this.props} disabled={pristine || submitting} />

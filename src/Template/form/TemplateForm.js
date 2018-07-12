@@ -13,7 +13,7 @@ function validate(values) {
 
   if (!values.name) {
     errors.name = (
-      <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />
+      <FormattedMessage id="ui-marccat.errors.missingRequiredField" />
     );
   }
   return errors;
@@ -40,7 +40,7 @@ class TemplateForm extends React.Component {
 
     if (!values.name) {
       errors.name = (
-        <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />
+        <FormattedMessage id="ui-marccat.errors.missingRequiredField" />
       );
     }
     return errors;
@@ -66,14 +66,14 @@ class TemplateForm extends React.Component {
                 marginTop: 25,
               }}
               label={formatMsg({
-                id: 'ui-cataloging.template.form.name',
+                id: 'ui-marccat.template.form.name',
               })}
               name="name"
               placeholder={formatMsg({
-                id: 'ui-cataloging.template.form.name',
+                id: 'ui-marccat.template.form.name',
               })}
               aria-label={formatMsg({
-                id: 'ui-cataloging.template.form.name',
+                id: 'ui-marccat.template.form.name',
               })}
               fullWidth
               id="input-template-name"

@@ -87,7 +87,7 @@ class CreateTemplate extends React.Component {
     const actionMenuItems = [
       {
         label: formatMsg({
-          id: 'ui-cataloging.template.tag.create',
+          id: 'ui-marccat.template.tag.create',
         }),
         onClick: () => {
           this.props.history.pop();
@@ -95,7 +95,7 @@ class CreateTemplate extends React.Component {
       },
       {
         label: formatMsg({
-          id: 'ui-cataloging.template.save',
+          id: 'ui-marccat.template.save',
         }),
         onClick: () => {
           this.props.history.push(
@@ -105,7 +105,7 @@ class CreateTemplate extends React.Component {
       },
       {
         label: formatMsg({
-          id: 'ui-cataloging.button.backto',
+          id: 'ui-catalmarccatoging.button.backto',
         }),
         onClick: () => {
           this.props.history.push(
@@ -122,9 +122,9 @@ class CreateTemplate extends React.Component {
           firstMenu={this.preparePaneMenu()}
           defaultWidth="fill"
           paneTitle={formatMsg({
-            id: 'ui-cataloging.template.create',
+            id: 'ui-marccat.template.create',
           })}
-          appIcon={{ app: 'cataloging' }}
+          appIcon={{ app:  C.META.ICON_TITLE }}
         >
           <div>
             <TemplateForm

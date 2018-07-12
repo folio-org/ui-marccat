@@ -148,9 +148,9 @@ class IndexCategory extends React.Component {
     return (
       <Row>
         <Col xs={12}>
-          <Field name="indexRadio" component={RadioButtonGroup} label={formatMsg({ id: 'ui-cataloging.search.indexes' })}>
+          <Field name="indexRadio" component={RadioButtonGroup} label={formatMsg({ id: 'ui-marccat.search.indexes' })}>
             <RadioButton
-              label={formatMsg({ id: 'ui-cataloging.search.primary' })}
+              label={formatMsg({ id: 'ui-marccat.search.primary' })}
               id="actingSponsor001"
               value="P"
               checked={this.state.checkedP}
@@ -158,7 +158,7 @@ class IndexCategory extends React.Component {
               inline
             />
             <RadioButton
-              label={formatMsg({ id: 'ui-cataloging.search.secondary' })}
+              label={formatMsg({ id: 'ui-marccat.search.secondary' })}
               id="actingSponsor002"
               value="S"
               checked={!this.state.checkedP}

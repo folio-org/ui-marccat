@@ -42,14 +42,14 @@ class TemplateView extends React.Component {
 
   static manifest = Object.freeze({
     currentTemplate: {},
+    currentType: {},
     recordsTemplates: {
       type: C.RESOURCE_TYPE,
-      root: C.ENDPOINT.BASE_URL,
-      path: C.ENDPOINT.TEMPLATE_URL,
+      root: C.ENDPOINT.BASE_URL,      
       headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.TEMPLATES,
       GET: {
-        params: { lang: C.ENDPOINT.DEFAULT_LANG, type: 'B' },
+        path: 'record-templates?type=%{currentType}&lang=' + C.ENDPOINT.DEFAULT_LANG        
       },
       POST: {
         path: 'record-template/%{currentTemplate.id}',
@@ -71,6 +71,9 @@ class TemplateView extends React.Component {
       showTemplateDetail: false,
       selectedTemplate: {},
     };
+
+    this.props.mutator.currentType.replace('B');
+
     this.connectedEditTemplateView = props.stripes.connect(EditTemplate);
     this.handleAddTemplate = this.handleAddTemplate.bind(this);
     this.handleRowClick = this.handleRowClick.bind(this);
@@ -95,7 +98,6 @@ class TemplateView extends React.Component {
     this.setState({
       confirming: false
     });
-    this.props.mutator.recordsTemplates.GET();   
   }
 
   showConfirm() {    
@@ -147,7 +149,7 @@ class TemplateView extends React.Component {
       return <div />;
     }
     const templates = recordsTemplates.records;
-    
+
     const formatter = {
       'Id: id': x => _.get(x, ['id']),
       'name: name': x => _.get(x, ['name']),

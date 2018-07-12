@@ -1,20 +1,5 @@
 import * as C from './Constant';
 
-const catalogResults = require('../../config/static/index-list')
-
-const splitValueFromJson = str => {
-  for (let i in obj) {
-    const titolo = obj[i].title ; 
-    for(let j in obj[i].values){
-        const valore = obj[i].values[j] ;
-        for(let k in valore){
-            const valueKey = k;
-            const valueValues = valore[k];
-        }
-    }
-  }
-}
-
 const marcSeparator = stringa => {
   return stringa.replace(
     C.MARC_CHARACTER.SEPARATOR,

@@ -7,6 +7,9 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import IconButton from '@folio/stripes-components/lib/IconButton';
+import Callout from '@folio/stripes-components/lib/Callout';
+import ConfirmationModal from '@folio/stripes-components/lib/structures/ConfirmationModal';
+import { FormattedMessage } from 'react-intl';
 import { EditTemplate } from '../';
 import * as C from '../../Utils';
 import css from '../../Search/style/Search.css';
@@ -25,48 +28,96 @@ class TemplateView extends React.Component {
       push: PropTypes.func,
     }),
     mutator: PropTypes.shape({
-      templateId: PropTypes.shape({
-        replace: PropTypes.func,
+      currentTemplate: PropTypes.shape({
+        update: PropTypes.func,
       }),
-      updateTemplate: PropTypes.shape({
+      recordsTemplates: PropTypes.shape({
         POST: PropTypes.func,
         PUT: PropTypes.func,
+        DELETE: PropTypes.func,
       }),
-    }),
+    }).isRequired,
+    
   };
 
   static manifest = Object.freeze({
-    query: { initialValue: {} },
-    templateId: '',
-    resultCount: { initialValue: C.INITIAL_RESULT_COUNT },
+    currentTemplate: {},
+    currentType: {},
     recordsTemplates: {
       type: C.RESOURCE_TYPE,
-      root: C.ENDPOINT.BASE_URL,
-      path: C.ENDPOINT.TEMPLATE_URL,
+      root: C.ENDPOINT.BASE_URL,      
       headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.TEMPLATES,
       GET: {
-        params: { lang: C.ENDPOINT.DEFAULT_LANG, type: 'B' },
+        path: 'record-templates?type=%{currentType}&lang=' + C.ENDPOINT.DEFAULT_LANG        
       },
       POST: {
-        path: 'record-template/%{templateId}',
+        path: 'record-template/%{currentTemplate.id}',
       },
       PUT: {
-        path: 'record-template/%{templateId}',
+        path: 'record-template/%{currentTemplate.id}',
       },
+      DELETE: {
+        path: 'record-template/%{currentTemplate.id}',
+        params: { lang: C.ENDPOINT.DEFAULT_LANG, type: 'B', }
+      }
     }
   });
 
   constructor(props) {
     super(props);
     this.state = {
+      confirming: false,
       showTemplateDetail: false,
       selectedTemplate: {},
     };
+
+    this.props.mutator.currentType.replace('B');
+
     this.connectedEditTemplateView = props.stripes.connect(EditTemplate);
     this.handleAddTemplate = this.handleAddTemplate.bind(this);
     this.handleRowClick = this.handleRowClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.onDelete = this.onDelete.bind(this);
+    this.showConfirm = this.showConfirm.bind(this);
+    this.hideConfirm = this.hideConfirm.bind(this);
+    this.callout = null;
+  }
+
+  onDelete() {
+    const toDelete = this.state.selectedTemplate;
+    this.props.mutator.currentTemplate.update({ id: toDelete.id });
+    return this.props.mutator.recordsTemplates.DELETE(toDelete)
+      .then(() => this.deleteResolve())
+      .then(() => this.showCalloutMessage())
+      .catch(() => this.deleteReject())
+      .finally(() => this.hideConfirm());
+  }
+
+  hideConfirm() {
+    this.setState({
+      confirming: false
+    });
+  }
+
+  showConfirm() {    
+    this.setState({
+      confirming: true,      
+    });
+    this.deletePromise = new Promise((resolve, reject) => {    
+      this.deleteResolve = resolve;
+      this.deleteReject = reject;
+    });
+    return this.deletPromise; 
+  }
+
+  showCalloutMessage() {
+    const message = (
+      <span>
+        <FormattedMessage id="ui-marccat.template.delete-completed" />
+      </span>
+    );
+    this.callout.sendCallout({ message });
   }
 
   handleClose() {
@@ -87,6 +138,9 @@ class TemplateView extends React.Component {
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
+    const modalHeading = formatMsg({ id: 'ui-marccat.template.delete' });
+    const modalMessage = formatMsg({ id: 'ui-marccat.template.delete.modal' });
+    const confirmLabel = formatMsg({ id: 'ui-marccat.template.delete.button' });
 
     const {
       resources: { recordsTemplates },
@@ -95,6 +149,7 @@ class TemplateView extends React.Component {
       return <div />;
     }
     const templates = recordsTemplates.records;
+
     const formatter = {
       'Id: id': x => _.get(x, ['id']),
       'name: name': x => _.get(x, ['name']),
@@ -112,7 +167,12 @@ class TemplateView extends React.Component {
 
     const deleteMenu = (
       <PaneMenu>
-        <IconButton key="icon-trash" icon="trashBin" />
+        <IconButton 
+          key="icon-trash" 
+          icon="trashBin" 
+          onClick={this.showConfirm}
+        />
+
         <IconButton key="icon-save" icon="save" />
         <IconButton key="icon-edit" icon="edit" />
       </PaneMenu>
@@ -170,12 +230,12 @@ class TemplateView extends React.Component {
           paneTitle={formatMsg({
             id: 'ui-marccat.templates.title',
           })}
-          paneSub={templates.length + ' Result found'}
-          appIcon={{ app:  C.META.ICON_TITLE }}
+          paneSub={templates.length + ' Result found'}          
+          appIcon={{ app: C.META.ICON_TITLE }}
         >
           <MultiColumnList
             id="list-templates"
-            contentData={templates}
+            contentData={templates}            
             rowMetadata={['id', 'id']}
             formatter={formatter}
             ariaLabel="TemplateView"
@@ -208,6 +268,15 @@ class TemplateView extends React.Component {
               {...this.props}
               selectedTemplate={this.state.selectedTemplate}
             />
+            <ConfirmationModal
+              open={this.state.confirming}
+              heading={modalHeading}
+              message={modalMessage}
+              onConfirm={this.onDelete}
+              onCancel={this.hideConfirm}
+              confirmLabel={confirmLabel}
+            />
+            <Callout ref={(ref) => { this.callout = ref; }} />
           </Pane>
         )}
       </Paneset>

@@ -45,10 +45,10 @@ export default class Router extends React.Component {
           <TemplateView {...this.props} id="empty_crontainer" />
         </Route>
         <Route path={`${rootPath}/indexList`}>
-          <IndexList {...this.props} id="index_list"  buttonClickText="close" handleClose={()=> alert('alert')}/>
+          <IndexList {...this.props} id="index_list"  buttonClickText="close" />
         </Route>
         <Route path={`${rootPath}/diacritic`}>
-          <IndexList {...this.props} id="diacritic" buttonClickText="close" handleClose={()=> alert('alert')} />
+          <IndexList {...this.props} id="diacritic" buttonClickText="close" />
         </Route>
         <Route path={`${rootPath}`}>
           <NavigatorEmpty {...this.props} id="empty_corntainer" />

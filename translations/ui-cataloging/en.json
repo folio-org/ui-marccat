@@ -40,6 +40,10 @@
 
   "template.detail.information.title": "Template Information",
   "template.detail.information.mandatory.table": "Template Mandatory Table",
+  "template.delete": "Delete template?",
+  "template.delete.modal": "The template will be deleted",
+  "template.delete.button": "Delete",
+  "template.delete-completed": "The template was successfully deleted.",
 
   "errors.missingRequiredField": "Please fill this in to continue",
   "errors.missingRequiredName": "Please provide a username when a password is given",

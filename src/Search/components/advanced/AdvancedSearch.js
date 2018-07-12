@@ -6,15 +6,12 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import AdvancedSearchForm from './form/AdvancedSearchForm';
-import { SearchProps, SearchState } from '../../type';
 import { RestrictionView } from '../restriction/';
 import css from '../../style/Search.css';
+import IndexList from '../../../Index/IndexList';
 import * as C from '../../../Utils';
 
-class AdvancedSearch extends React.Component<
-  SearchProps,
-  SearchState
-> {
+class AdvancedSearch extends React.Component {
   static manifest = Object.freeze({
     query: { initialValue: {} },
     resultCount: { initialValue: C.INITIAL_RESULT_COUNT },

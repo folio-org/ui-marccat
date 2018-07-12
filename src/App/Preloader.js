@@ -46,9 +46,9 @@ class PreloaderCataloging extends React.Component {
   };
 
   runAnimation = () => {
-    setTimeout(() => {
-      this.animate();
-    }, 2000);
+    // setTimeout(() => {
+    //   this.animate();
+    // }, 2000);
   };
 
   async callback() {

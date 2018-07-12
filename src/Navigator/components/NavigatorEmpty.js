@@ -4,7 +4,6 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import { connect } from '@folio/stripes-connect';
-import Preloader from '../../App/Preloader';
 import * as C from '../../Utils';
 
 class NavigatorEmpty extends React.Component {
@@ -24,7 +23,6 @@ class NavigatorEmpty extends React.Component {
     return (
       <Paneset static>
         <Pane
-          id="pippo"
           padContent={false}
           loading
           firstMenu={searchMenu}
@@ -34,9 +32,7 @@ class NavigatorEmpty extends React.Component {
           paneSub="0 result found"
           onClose={() => {}}
           appIcon={{ app: 'cataloging' }}
-        >
-          <Preloader />
-        </Pane>
+        />
       </Paneset>
     );
   }

@@ -1,0 +1,32 @@
+[
+  { 
+    "title": "Classification",
+    "values": [
+      {
+        "AN1":"No. rec. equivalent",
+        "CC":"Other Class. (Canada)",
+        "DC":"Dewey Classification",
+        "LC":"LC Classification"
+      }
+    ]
+  },
+  { 
+    "title": "Control number",
+    "values": [
+      {
+        "AN":"AMICUS No.",
+        "BN":"ISBN",
+        "CA":"Canadiana No.",
+        "CD":"CODEN designation"
+      }
+    ]
+  },
+  { 
+    "title": "ISSN",
+    "values": [
+      {
+        "SN":"ISSN"
+      }
+    ]
+  }
+]

@@ -17,7 +17,7 @@ function validate(values) {
   errors.name = {};
 
   if (!values.name) {
-    errors.name = <FormattedMessage id="ui-cataloging.errors.missingRequiredField" />;
+    errors.name = <FormattedMessage id="ui-marccat.errors.missingRequiredField" />;
   }
   return errors;
 }
@@ -42,42 +42,42 @@ class SimpleSearchForm extends React.Component {
             <Field name="subGroup" component={RadioButtonGroup}>
               <RadioButton
                 label={formatMsg({
-                  id: 'ui-cataloging.search.simple.NT',
+                  id: 'ui-marccat.search.simple.NT',
                 })}
                 id="actingSponsor001"
                 value="NT"
               />
               <RadioButton
                 label={formatMsg({
-                  id: 'ui-cataloging.search.simple.PW',
+                  id: 'ui-marccat.search.simple.PW',
                 })}
                 id="actingSponsor002"
                 value="PW"
               />
               <RadioButton
                 label={formatMsg({
-                  id: 'ui-cataloging.search.simple.SW',
+                  id: 'ui-marccat.search.simple.SW',
                 })}
                 id="actingSponsor003"
                 value="SW"
               />
               <RadioButton
                 label={formatMsg({
-                  id: 'ui-cataloging.search.simple.NW',
+                  id: 'ui-marccat.search.simple.NW',
                 })}
                 id="actingSponsor004"
                 value="NW"
               />
               <RadioButton
                 label={formatMsg({
-                  id: 'ui-cataloging.search.simple.TW',
+                  id: 'ui-marccat.search.simple.TW',
                 })}
                 id="actingSponsor005"
                 value="TW"
               />
               <RadioButton
                 label={formatMsg({
-                  id: 'ui-cataloging.search.simple.AW',
+                  id: 'ui-marccat.search.simple.AW',
                 })}
                 id="actingSponsor006"
                 value="AW"

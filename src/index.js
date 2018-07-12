@@ -6,7 +6,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import Switch from 'react-router-dom/Switch';
 import { Settings } from './Settings';
-import Cataloging from './App/Cataloging';
+import MARCcat from './App/MARCcat';
 
 import './Theme/variables.css';
 
@@ -30,10 +30,10 @@ type RoutingProps = {|
   showSettings: boolean,
 |};
 
-class CatalogingRouting extends React.Component<RoutingProps, {}> {
+class MARCCatRouting extends React.Component<RoutingProps, {}> {
   constructor(props) {
     super(props);
-    this.connectedApp = props.stripes.connect(Cataloging);
+    this.connectedApp = props.stripes.connect(MARCcat);
   }
 
   render() {
@@ -53,4 +53,4 @@ class CatalogingRouting extends React.Component<RoutingProps, {}> {
   }
 }
 
-export default CatalogingRouting;
+export default MARCCatRouting;

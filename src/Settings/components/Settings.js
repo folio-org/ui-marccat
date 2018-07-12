@@ -1,31 +1,31 @@
 import React from 'react';
 import Settings from '@folio/stripes-components/lib/Settings';
-import GeneralSettings from '../components/GeneralSettings';
+import GeneralSettings from './GeneralSettings';
 import LogicalViewSettings from './LogicalViewSettings';
 
-type CatalogingSettingsProps = {|
+type MARCcatSelectSettingsProps = {|
   stripes: {
     connect: Function,
     intl: Object,
   },
 |};
 
-export default class CatalogingSettings extends React.Component<
-  CatalogingSettingsProps,
+export default class MARCcatSelectSettings extends React.Component<
+MARCcatSelectSettingsProps,
   {}
 > {
   pages = [
     {
       route: 'general',
       label: this.props.stripes.intl.formatMessage({
-        id: 'ui-cataloging.settings.general',
+        id: 'ui-marccat.settings.general',
       }),
       component: GeneralSettings,
     },
     {
       route: 'logical-view',
       label: this.props.stripes.intl.formatMessage({
-        id: 'ui-cataloging.settings.logicalview',
+        id: 'ui-marccat.settings.logicalview',
       }),
       component: LogicalViewSettings,
     },
@@ -37,7 +37,7 @@ export default class CatalogingSettings extends React.Component<
         {...this.props}
         pages={this.pages}
         paneTitle={this.props.stripes.intl.formatMessage({
-          id: 'ui-cataloging.settings.general',
+          id: 'ui-marccat.settings.general',
         })}
       />
     );

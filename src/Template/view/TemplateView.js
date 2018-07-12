@@ -133,7 +133,7 @@ class TemplateView extends React.Component {
     const actionMenuItems = [
       {
         label: formatMsg({
-          id: 'ui-cataloging.template.create',
+          id: 'ui-marccat.template.create',
         }),
         onClick: () => {
           this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE);
@@ -144,7 +144,7 @@ class TemplateView extends React.Component {
     const actionMenuItemsDetail = [
       {
         label: formatMsg({
-          id: 'ui-cataloging.template.create',
+          id: 'ui-marccat.template.create',
         }),
         onClick: () => {
           this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE);
@@ -152,7 +152,7 @@ class TemplateView extends React.Component {
       },
       {
         label: formatMsg({
-          id: 'ui-cataloging.template.tag.create',
+          id: 'ui-marccat.template.tag.create',
         }),
         onClick: () => {
           this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE);
@@ -168,10 +168,10 @@ class TemplateView extends React.Component {
           firstMenu={searchMenu}
           lastMenu={lastMenu}
           paneTitle={formatMsg({
-            id: 'ui-cataloging.templates.title',
+            id: 'ui-marccat.templates.title',
           })}
           paneSub={templates.length + ' Result found'}
-          appIcon={{ app: 'cataloging' }}
+          appIcon={{ app:  C.META.ICON_TITLE }}
         >
           <MultiColumnList
             id="list-templates"
@@ -198,7 +198,7 @@ class TemplateView extends React.Component {
             defaultWidth="fill"
             paneTitle={this.state.selectedTemplate.name}
             paneSub={'Id ' + this.state.selectedTemplate.id}
-            appIcon={{ app: 'cataloging' }}
+            appIcon={{ app: C.META.ICON_TITLE }}
             dismissible
             onClose={this.handleClose}
             actionMenuItems={actionMenuItemsDetail}

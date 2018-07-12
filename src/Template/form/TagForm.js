@@ -206,4 +206,4 @@ class TagForm extends React.Component {
     );
   }
 }
-export default connect(TagForm, 'ui-cataloging');
+export default connect(TagForm, 'ui-marccat');

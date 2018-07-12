@@ -41,7 +41,7 @@ class EditTemplateInfo extends React.Component {
       <Accordion
         label={formatMsg({
           id:
-            'ui-cataloging.template.detail.information.title',
+            'ui-marccat.template.detail.information.title',
         })}
         open={expanded}
         id={accordionId}
@@ -52,11 +52,11 @@ class EditTemplateInfo extends React.Component {
             <TextField
               value={this.props.selectedTemplate.name}
               label={formatMsg({
-                id: 'ui-cataloging.template.form.name',
+                id: 'ui-marccat.template.form.name',
               })}
               name="templateEditName"
               aria-label={formatMsg({
-                id: 'ui-cataloging.template.form.name',
+                id: 'ui-marccat.template.form.name',
               })}
               fullWidth
               id="input-template-name"

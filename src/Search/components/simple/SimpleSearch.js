@@ -40,7 +40,7 @@ class SimpleSearch extends React.Component<SearchProps, SearchState> {
     const actionMenuItems = [
       {
         label: formatMsg({
-          id: 'ui-cataloging.template.create',
+          id: 'ui-marccat.template.create',
         }),
         onClick: () => {
           this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE);
@@ -54,9 +54,9 @@ class SimpleSearch extends React.Component<SearchProps, SearchState> {
           lastMenu={lastMenu}
           defaultWidth="fill"
           paneSub="search result"
-          appIcon={{ app: 'cataloging' }}
+          appIcon={{ app:  C.META.ICON_TITLE }}
           paneTitle={formatMsg({
-            id: 'ui-cataloging.navigator.simpleSearch',
+            id: 'ui-marccat.navigator.simpleSearch',
           })}
         >
           <SimpleSearchForm {...this.props} initialValues={{}} />

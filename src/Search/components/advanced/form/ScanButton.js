@@ -33,7 +33,7 @@ class ScanButton extends React.Component {
         buttonStyle="primary"
         style={{ minHeight: '36px' }}
       >
-        <FormattedMessage id="ui-cataloging.search.scanButton" />
+        <FormattedMessage id="ui-marccat.search.scanButton" />
       </Button>
     );
   }

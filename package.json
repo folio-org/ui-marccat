@@ -38,8 +38,8 @@
     "start": "stripes serve config/stripes.config.js",
     "start:vagrant": "stripes serve-vagrant config/stripes.config.js",
     "build": "stripes build --output --sourcemap",
-    "build:analizer": "stripes build config/stripes.config.js ./dist/analyze/ui-cataloging-analyze --analyze --sourcemap",
-    "test": "(cd test/ui-testing; yarn test-module -- -o --run=ui-cataloging --host=localhost)",
+    "build:analizer": "stripes build config/stripes.config.js ./dist/analyze/ui-marccat-analyze --analyze --sourcemap",
+    "test": "(cd test/ui-testing; yarn test-module -- -o --run=ui-marccat --host=localhost)",
     "lint": "reset; yarn eslint;yarn stylelint",
     "lint-i18n": ". ./script/i18n-lint.sh",
     "flow:gen": "lint-staged",
@@ -98,7 +98,7 @@
   "lint-staged": {
     "src/**/*.js": [
       "eslint --fix",
-      "prettier --write  flow/cataloging-module.js",
+      "prettier --write  flow/marccat-module.js",
       "git add"
     ]
   },

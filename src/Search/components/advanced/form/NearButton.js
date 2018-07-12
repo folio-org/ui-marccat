@@ -33,7 +33,7 @@ class NearButton extends React.Component {
         buttonStyle="primary"
         style={{ minHeight: '36px' }}
       >
-        <FormattedMessage id="ui-cataloging.search.nearButton" />
+        <FormattedMessage id="ui-marccat.search.nearButton" />
       </Button>
     );
   }

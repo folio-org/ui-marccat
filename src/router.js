@@ -7,8 +7,8 @@ import Route from 'react-router-dom/Route';
 import Switch from 'react-router/Switch';
 import NavigatorEmpty from './Navigator/components/NavigatorEmpty';
 import SearchResults from './Search/components/results/SearchResults';
-import { TemplateView, CreateTemplate } from './Template/';
-import { AdvancedSearch, SimpleSearch } from './Search/';
+import { TemplateView, CreateTemplate } from './Template';
+import { AdvancedSearch, SimpleSearch } from './Search';
 
 export function ConnectedRoute({ path, id, component: Component, ...props }) {
   return (

@@ -3,7 +3,7 @@
 # Find entries in translations/en.json that are not used and
 # translation ids that are missing from translations/en.json.
 
-# extract the name like ui-cataloging or stripes-core
+# extract the name like ui-marccat or stripes-core
 NAME=`sed -n -e '/"repository"/ { s=.*"folio-org\/\(.*\)".*=\1=p; q }' package.json`
 
 comm -3 \

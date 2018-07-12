@@ -16,7 +16,7 @@ module.exports = {
       password: 'admin',
     },
     logCategories: 'core,path,mpath,mquery,xhr',
-    logPrefix: 'cat-stripes',
+    logPrefix: 'marccat-stripes',
     logTimestamp: false,
     showPerms: true,
     showHomeLink: true,

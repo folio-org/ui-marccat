@@ -1,11 +1,11 @@
 {
-  "cataloging":"Cataloging",
+  "marccat":"MARCcat",
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
   "settings.logicalview": "Logical View",
   "settings.modal.version": "Version",
 
-  "empty.title": "Cataloging",
+  "empty.title": "MARCcat",
   "navigator.title": "Menu",
   "navigator.template": "Template",
   "navigator.templateList": "Template List",

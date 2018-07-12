@@ -24,6 +24,11 @@ class IndexList extends React.Component {
 
   render() {
 
+    let list = {} 
+    list = catalogResults.map((element) => {
+      return (element.values)
+    });
+
     return (
       <Paneset
         static
@@ -40,7 +45,24 @@ class IndexList extends React.Component {
               paneSub=""
               appIcon={{ app: 'cataloging' }}
             >
-              <KeyValue label={catalogResults[0].title}  />
+              <div>
+                {
+                  catalogResults.map((dynamicData, i) =>
+                    <div>
+                      <p><h3>{dynamicData.title}</h3></p>
+                      {
+                        dynamicData.descr.map((dynamicValues, k) =>
+                          <div>
+                            <span>{dynamicValues.key}</span>
+                            <span>{dynamicValues.value}</span>
+                          </div>)
+                      }
+                    </div>
+
+                  )
+                }
+              </div>
+              {/* <KeyValue label={catalogResults[0].title} /> */}
               {/* <KeyValue label="Control number" value={catalogResults} /> */}
             </Pane>
             <Pane

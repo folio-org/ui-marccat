@@ -100,8 +100,14 @@ class NavDrawer extends React.Component {
               <SearchIcon />
             </NavMenuItem>
             <NavMenuItem
-              to={`${this.props.match.path}/indexes`}
-              label="Indexes"
+              to={`${this.props.match.path}/indexList`}
+              label="Indexes List"
+            >
+              <SpellCheckIcon />
+            </NavMenuItem>
+            <NavMenuItem
+              to={`${this.props.match.path}/diacritic`}
+              label="Diacritic"
             >
               <SpellCheckIcon />
             </NavMenuItem>

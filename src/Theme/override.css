@@ -5,3 +5,11 @@ header {
 i {
   font-size: var(--icons-size-medium) !important;
 }
+
+.CustomIndexesH2 {
+  -webkit-margin-collapse: discard;
+}
+
+.CustomDivContentIndexes{
+  text-align: -webkit-auto;
+}

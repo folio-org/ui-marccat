@@ -1,16 +1,18 @@
 import React from 'react';
-import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import Pane from '@folio/stripes-components/lib/Pane';
-import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import { connect } from '@folio/stripes-connect';
 import * as C from '../Utils';
+import s from '../Theme/override.css';
 
-const catalogResults = require('../../config/static/index-list')
+
+const mainIndexResults = require('../../config/static/main-index-list')
+const secondaryIndexResults = require('../../config/static/secondary-index-list')
 
 const propTypes = {
 
 }
+
 
 class IndexList extends React.Component {
 
@@ -23,12 +25,6 @@ class IndexList extends React.Component {
   }
 
   render() {
-
-    let list = {} 
-    list = catalogResults.map((element) => {
-      return (element.values)
-    });
-
     return (
       <Paneset
         static
@@ -47,30 +43,48 @@ class IndexList extends React.Component {
             >
               <div>
                 {
-                  catalogResults.map((dynamicData, i) =>
-                    <div>
-                      <p><h3>{dynamicData.title}</h3></p>
+                  mainIndexResults.map((dynamicData, i) =>
+                    <div className={s.CustomDivContentIndexes}>
+                      <p><h2 className={s.CustomIndexesH2}>{dynamicData.title}</h2></p>
                       {
-                        dynamicData.descr.map((dynamicValues, k) =>
+                        dynamicData.descriptions.map((dynamicValues, k) =>
                           <div>
-                            <span>{dynamicValues.key}</span>
-                            <span>{dynamicValues.value}</span>
+                            <span style={{paddingRight: '7pt'}}><b>{dynamicValues.key}</b></span>
+                            <span >{dynamicValues.value}</span>
                           </div>)
                       }
+                      <br />
+                      <br />
                     </div>
-
                   )
                 }
               </div>
-              {/* <KeyValue label={catalogResults[0].title} /> */}
-              {/* <KeyValue label="Control number" value={catalogResults} /> */}
             </Pane>
             <Pane
               defaultWidth="fill"
               paneTitle={<h3>Secondary Indexes</h3>}
               paneSub=""
               appIcon={{ app: 'cataloging' }}
-            />
+            >
+              <div>
+                {
+                  secondaryIndexResults.map((dynamicData, i) =>
+                    <div className={s.CustomDivContentIndexes} >
+                      <p><h2 className={s.CustomIndexesH2}>{dynamicData.title}</h2></p>
+                      {
+                        dynamicData.descriptions.map((dynamicValues, k) =>
+                          <div>
+                            <span style={{paddingRight: '7pt'}}><b>{dynamicValues.key}</b></span>
+                            <span>{dynamicValues.value}</span>
+                          </div>)
+                      }
+                      <br />
+                      <br />
+                    </div>
+                  )
+                }
+              </div>
+            </Pane>
           </Paneset>
         </Pane>
       </Paneset>

@@ -13,6 +13,14 @@ const propTypes = {
 
 }
 
+function printDiv(divName, anotherDivName) {
+  let printContentsMain = document.getElementById(divName).innerHTML;
+  let printContentsSecondary = document.getElementById(anotherDivName).innerHTML;
+  let originalContents = document.body.innerHTML;
+  document.body.innerHTML = printContentsMain + printContentsSecondary;
+  window.print();
+  document.body.innerHTML = originalContents;
+}
 
 class IndexList extends React.Component {
 
@@ -34,14 +42,16 @@ class IndexList extends React.Component {
           defaultWidth="100%"
           paneTitle={<h2>INDEX GUIDE</h2>}
         >
+          <button className='primary' type='button' onClick={() => printDiv('main', 'secondary')}>Print</button>
           <Paneset static>
+
             <Pane
               defaultWidth="fill"
               paneTitle={<h3>Main Indexes</h3>}
               paneSub=""
               appIcon={{ app: 'cataloging' }}
             >
-              <div>
+              <div id='main'>
                 {
                   mainIndexResults.map((dynamicData, i) =>
                     <div className={s.CustomDivContentIndexes}>
@@ -49,7 +59,7 @@ class IndexList extends React.Component {
                       {
                         dynamicData.descriptions.map((dynamicValues, k) =>
                           <div>
-                            <span style={{paddingRight: '7pt'}}><b>{dynamicValues.key}</b></span>
+                            <span style={{ paddingRight: '7pt' }}><b>{dynamicValues.key}</b></span>
                             <span >{dynamicValues.value}</span>
                           </div>)
                       }
@@ -60,13 +70,14 @@ class IndexList extends React.Component {
                 }
               </div>
             </Pane>
+
             <Pane
               defaultWidth="fill"
               paneTitle={<h3>Secondary Indexes</h3>}
               paneSub=""
               appIcon={{ app: 'cataloging' }}
             >
-              <div>
+              <div id='secondary'>
                 {
                   secondaryIndexResults.map((dynamicData, i) =>
                     <div className={s.CustomDivContentIndexes} >
@@ -74,7 +85,7 @@ class IndexList extends React.Component {
                       {
                         dynamicData.descriptions.map((dynamicValues, k) =>
                           <div>
-                            <span style={{paddingRight: '7pt'}}><b>{dynamicValues.key}</b></span>
+                            <span style={{ paddingRight: '7pt' }}><b>{dynamicValues.key}</b></span>
                             <span>{dynamicValues.value}</span>
                           </div>)
                       }

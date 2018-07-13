@@ -11,7 +11,6 @@ type Props = {
   mutator: Object,
 };
 
-
 export default class MARCcat extends React.Component<Props, {}> {
 
   static manifest = Object.freeze({

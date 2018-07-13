@@ -1,21 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Icon from '@folio/stripes-components/lib/Icon';
 import * as C from '../../Utils';
-import { CatalogingSelect } from '../../Common';
+import { MARCcatSelect } from '../../Common';
 
-type LogicalViewProps = {|
-  resources: Object,
-  label: PropTypes.string.isRequired,
-|};
-type LogicalViewState = {|
-  label: PropTypes.string.isRequired,
-|};
-class LogicalView extends React.Component<
-  LogicalViewProps,
-  LogicalViewState
-> {
+class LogicalView extends React.Component{
   static manifest = Object.freeze({
     views: {
       type: C.RESOURCE_TYPE,
@@ -46,7 +35,7 @@ class LogicalView extends React.Component<
             <Icon icon="spinner-ellipsis" />
           )}
           {logicalViews.length > 0 && (
-            <CatalogingSelect
+            <MARCcatSelect
               options={logicalViews}
               label="Database"
             />

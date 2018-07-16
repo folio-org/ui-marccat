@@ -28,7 +28,7 @@ export default class Router extends React.Component {
         <ConnectedRoute path={`${rootPath}/advancedSearch`} {...this.props} component={AdvancedSearch} id="advanced_search" />
         <ConnectedRoute path={`${rootPath}/externalSearch`} {...this.props} component={NavigatorEmpty} id="external_search" />
         <ConnectedRoute path={`${rootPath}/searchResults`} {...this.props} component={SearchResults} id="search_result" />
-        <ConnectedRoute path={`${rootPath}/template/create`} {...this.props} component={CreateTemplate} id="template_create" />
+        <ConnectedRoute path={`${rootPath}/templateAdd`} {...this.props} component={CreateTemplate} id="template_create" />
         <ConnectedRoute path={`${rootPath}/templatelist`} {...this.props} component={TemplateView} id="template_list" />
         <ConnectedRoute path={`${rootPath}/indexList`} {...this.props} component={IndexList} id="index_list" />
         <ConnectedRoute path={`${rootPath}/diacritic`} {...this.props} component={IndexList} id="diacritic" />

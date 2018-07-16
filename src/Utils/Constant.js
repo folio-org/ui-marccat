@@ -42,13 +42,13 @@ export const COMMON_MANIFEST = {
 export const INTERNAL_URL = {
   SETTINGS_GENERAL: '/settings/',
   SETTINGS_LOGICAL_VIEW: '/logicalview',
-  VIEW_TEMPLATE: '/cataloging/templatelist/',
-  ADD_TEMPLATE: '/cataloging/template/create',
-  EDIT_TEMPLATE: '/cataloging/template/edit/:id',
-  DELETE_TEMPLATE: '/cataloging/template/delete/:id',
-  VIEW_LOGICAL_VIEW: '/cataloging/logicalview/',
-  ADVANCE_SEARCH: '/cataloging/advancedSearch',
-  SEARCH_RESULTS: '/cataloging/searchResults',
+  VIEW_TEMPLATE: '/marccat/templatelist/',
+  ADD_TEMPLATE: '/marccat/templateAdd',
+  EDIT_TEMPLATE: '/marccat/template/edit/:id',
+  DELETE_TEMPLATE: '/marccat/template/delete/:id',
+  VIEW_LOGICAL_VIEW: '/marccat/logicalview/',
+  ADVANCE_SEARCH: '/marccat/advancedSearch',
+  SEARCH_RESULTS: '/marccat/searchResults',
 };
 
 export const API_RESULT_JSON_KEY = {

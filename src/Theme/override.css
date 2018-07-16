@@ -7,9 +7,15 @@ i {
 }
 
 .CustomIndexesH2 {
+  display: -webkit-box;
   -webkit-margin-collapse: discard;
 }
 
-.CustomDivContentIndexes{
-  text-align: -webkit-auto;
+.CustomIndexTR {
+  display: -webkit-box
+}
+
+.PageBreak	{
+   display: block; 
+   page-break-before: always; 
 }

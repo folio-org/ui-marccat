@@ -1,6 +1,8 @@
 import React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
+import { FormattedMessage } from 'react-intl';
+import Button from '@folio/stripes-components/lib/Button';
 import { connect } from '@folio/stripes-connect';
 import * as C from '../Utils';
 import s from '../Theme/override.css';
@@ -17,7 +19,7 @@ function printDiv(divName, anotherDivName) {
   let printContentsMain = document.getElementById(divName).innerHTML;
   let printContentsSecondary = document.getElementById(anotherDivName).innerHTML;
   let originalContents = document.body.innerHTML;
-  document.body.innerHTML = printContentsMain + printContentsSecondary;
+  document.body.innerHTML = "--------------------------------------------------------------- MAIN INDEXES ---------------------------------------------------------------" + printContentsMain + "---------------------------------------------------------- SECONDARY INDEXES ----------------------------------------------------------" + printContentsSecondary;
   window.print();
   document.body.innerHTML = originalContents;
 }
@@ -40,58 +42,92 @@ class IndexList extends React.Component {
         <Pane
           dismissible
           defaultWidth="100%"
-          paneTitle={<h2>INDEX GUIDE</h2>}
+          paneTitle='INDEX GUIDE'
         >
-          <button className='primary' type='button' onClick={() => printDiv('main', 'secondary')}>Print</button>
+          <Button
+            onClick={() => printDiv('main', 'secondary')}
+            type="button"
+            buttonStyle="primary"
+            style={{position: 'absolute' ,minHeight: '36px' }}
+          >
+            <FormattedMessage id="Print" />
+          </Button>
           <Paneset static>
-
             <Pane
               defaultWidth="fill"
-              paneTitle={<h3>Main Indexes</h3>}
-              paneSub=""
+              paneTitle='Main Indexes'
               appIcon={{ app: 'cataloging' }}
             >
               <div id='main'>
                 {
                   mainIndexResults.map((dynamicData, i) =>
-                    <div className={s.CustomDivContentIndexes}>
-                      <p><h2 className={s.CustomIndexesH2}>{dynamicData.title}</h2></p>
-                      {
-                        dynamicData.descriptions.map((dynamicValues, k) =>
-                          <div>
-                            <span style={{ paddingRight: '7pt' }}><b>{dynamicValues.key}</b></span>
-                            <span >{dynamicValues.value}</span>
-                          </div>)
-                      }
-                      <br />
-                      <br />
-                    </div>
+                    <table style={{ float: 'left', width: '50%', paddingTop: '50pt' }}>
+                      <thead>
+                        <tr>
+                          <th colSpan="2"> <p><h2 className={s.CustomIndexesH2}>{dynamicData.title}</h2></p></th>
+                        </tr>
+                        {
+                          dynamicData.descriptions.map((dynamicValues, k) =>
+                            <tbody>
+                              <tr className={s.CustomIndexTR}>
+                                <td colSpan="1"><b>{dynamicValues.key}</b></td>
+                                <td colSpan="1">{dynamicValues.value}</td>
+                              </tr>
+                            </tbody>
+                          )
+                        }
+                      </thead>
+                    </table>
                   )
                 }
+                <div >
+                  <h1 style={{ visibility: 'hidden' }}>MAIN INDEXES</h1>
+                </div>
+                <div >
+                  <h1 style={{ visibility: 'hidden' }}>MAIN INDEXES</h1>
+                </div>
+                <div >
+                  <h1 style={{ visibility: 'hidden' }}>MAIN INDEXES</h1>
+                </div>
+                <div >
+                  <h1 style={{ visibility: 'hidden' }}>MAIN INDEXES</h1>
+                </div>
+                <div >
+                  <h1 style={{ visibility: 'hidden' }}>MAIN INDEXES</h1>
+                </div>
+                <div >
+                  <h1 style={{ visibility: 'hidden' }}>MAIN INDEXES</h1>
+                </div>
+                <div >
+                  <h1 style={{ visibility: 'hidden' }}>MAIN INDEXES</h1>
+                </div>
               </div>
             </Pane>
-
             <Pane
               defaultWidth="fill"
-              paneTitle={<h3>Secondary Indexes</h3>}
-              paneSub=""
+              paneTitle='Secondary Indexes'
               appIcon={{ app: 'cataloging' }}
             >
               <div id='secondary'>
                 {
                   secondaryIndexResults.map((dynamicData, i) =>
-                    <div className={s.CustomDivContentIndexes} >
-                      <p><h2 className={s.CustomIndexesH2}>{dynamicData.title}</h2></p>
-                      {
-                        dynamicData.descriptions.map((dynamicValues, k) =>
-                          <div>
-                            <span style={{ paddingRight: '7pt' }}><b>{dynamicValues.key}</b></span>
-                            <span>{dynamicValues.value}</span>
-                          </div>)
-                      }
-                      <br />
-                      <br />
-                    </div>
+                    <table style={{ float: 'left', width: '50%', paddingTop: '50pt' }}>
+                      <thead>
+                        <tr>
+                          <th colSpan="2"> <p><h2 className={s.CustomIndexesH2}>{dynamicData.title}</h2></p></th>
+                        </tr>
+                        {
+                          dynamicData.descriptions.map((dynamicValues, k) =>
+                            <tbody>
+                              <tr className={s.CustomIndexTR}>
+                                <td colSpan="1"><b>{dynamicValues.key}</b></td>
+                                <td colSpan="1">{dynamicValues.value}</td>
+                              </tr>
+                            </tbody>
+                          )
+                        }
+                      </thead>
+                    </table>
                   )
                 }
               </div>

@@ -7,9 +7,7 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Button from '@folio/stripes-components/lib/Button';
 import Select from '@folio/stripes-components/lib/Select';
 import CategorySelect from '../field/CategorySelect';
-import { FabSaveProgress } from '../../Common/';
 import * as C from '../../Utils/';
-
 
 class TagForm extends React.Component {
   static propTypes = {
@@ -22,21 +20,21 @@ class TagForm extends React.Component {
 
   getInitialState() {
     return {
-      inputs: [0, 1]
+      inputs: [0, 1],
     };
   }
 
   componentDidMount() {
     this.props.initialize({
       lang: C.ENDPOINT.DEFAULT_LANG,
-      firstArgs: this.props.defaultValue.displayValue.split('$a')[1]
+      firstArgs: this.props.defaultValue.displayValue.split('$a')[1],
     });
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      inputs: [0]
+      inputs: [0],
     };
     this.handleForm = this.handleForm.bind(this);
     this.appendItem = this.appendItem.bind(this);
@@ -67,15 +65,11 @@ class TagForm extends React.Component {
         </Row>
         {this.state.isTagInputVisible}
         <Row>
-          <Select
-            dataOptions={[
-              { value: 'a', label: 'a' },
-            ]}
-          />
+          <Select dataOptions={[{ value: 'a', label: 'a' }]} />
           <Col xs={6}>
             <Field
               style={{
-                width: 100 + '%',
+                width: `${100}%`,
               }}
               name="firstArgs"
               id="firstArgs"
@@ -84,31 +78,19 @@ class TagForm extends React.Component {
               component="input"
             />
           </Col>
-          <Button
-            type="button"
-            onClick={this.onCancel}
-            buttonStyle="primary"
-          >
+          <Button type="button" onClick={this.onCancel} buttonStyle="primary">
             Cancel
           </Button>
-          <Button
-            type="button"
-            onClick={this.onOpen}
-            buttonStyle="primary"
-          >
+          <Button type="button" onClick={this.onOpen} buttonStyle="primary">
             Open
           </Button>
         </Row>
         <Row>
-          <Select
-            dataOptions={[
-              { value: 'a', label: 'a' },
-            ]}
-          />
+          <Select dataOptions={[{ value: 'a', label: 'a' }]} />
           <Col xs={6}>
             <Field
               style={{
-                width: 100 + '%',
+                width: `${100}%`,
               }}
               name="lang"
               id="lang"
@@ -117,67 +99,42 @@ class TagForm extends React.Component {
               component="input"
             />
           </Col>
-          <Button
-            type="button"
-            onClick={this.onCancel}
-            buttonStyle="primary"
-          >
+          <Button type="button" onClick={this.onCancel} buttonStyle="primary">
             Cancel
           </Button>
-          <Button
-            type="button"
-            onClick={this.onOpen}
-            buttonStyle="primary"
-          >
+          <Button type="button" onClick={this.onOpen} buttonStyle="primary">
             Open
           </Button>
         </Row>
-        {this.state.inputs.map((i) =>
+        {this.state.inputs.map(i => (
           <Row>
-            <Select
-              dataOptions={[
-                { value: 'a', label: 'a' },
-              ]}
-            />
+            <Select dataOptions={[{ value: 'a', label: 'a' }]} />
             <Col xs={6}>
               <Field
                 style={{
-                  width: 100 + '%',
+                  width: `${100}%`,
                 }}
-                name={this.props.defaultValue.code + `-${i}`}
-                id={this.props.defaultValue.code + `-${i}`}
+                name={`${this.props.defaultValue.code}-${i}`}
+                id={`${this.props.defaultValue.code}-${i}`}
                 withRef
                 validationEnabled={false}
                 component="input"
               />
             </Col>
-            <Button
-              type="button"
-              onClick={this.onCancel}
-              buttonStyle="primary"
-            >
+            <Button type="button" onClick={this.onCancel} buttonStyle="primary">
               Cancel
             </Button>
-            <Button
-              type="button"
-              onClick={this.onOpen}
-              buttonStyle="primary"
-            >
+            <Button type="button" onClick={this.onOpen} buttonStyle="primary">
               Open
             </Button>
           </Row>
-        )}
+        ))}
         <Row>
-          <Select
-            dataOptions={[
-              { value: "b", label: "b" },
-              { value: "c", label: "c" },
-            ]}
-          />
+          <Select dataOptions={[{ value: 'b', label: 'b' }, { value: 'c', label: 'c' }]} />
           <Col xs={6}>
             <Field
               style={{
-                width: 100 + '%',
+                width: `${100}%`,
               }}
               fullWidth
               name="langField"
@@ -187,23 +144,16 @@ class TagForm extends React.Component {
               component="input"
             />
           </Col>
-          <Button
-            type="button"
-            onClick={this.appendItem}
-            buttonStyle="primary"
-          >
+          <Button type="button" onClick={this.appendItem} buttonStyle="primary">
             Add Subfield
           </Button>
-
         </Row>
         <hr />
-        <FabSaveProgress
-          disabled={false}
-          message="Tag saved with success"
-          onClose={() => this.props.history.goBack()}
-        />
       </div>
     );
   }
 }
-export default connect(TagForm, 'ui-marccat');
+export default connect(
+  TagForm,
+  'ui-marccat',
+);

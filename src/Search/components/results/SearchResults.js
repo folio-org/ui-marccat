@@ -4,12 +4,13 @@ import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { connect } from '@folio/stripes-connect';
 import Paneset from '@folio/stripes-components/lib/Paneset';
-import searchResultsData from '../../../../config/mock/search-results';
 import * as C from '../../../Utils';
+
+const searchResultsData = require('../../../../config/mock/search-results');
 
 class SearchResults extends React.Component<{}> {
   render() {
-    const searchRes = searchResultsData.searchResults;
+    const searchRes = searchResultsData;
     return (
       <Paneset>
         <Pane>
@@ -37,5 +38,5 @@ class SearchResults extends React.Component<{}> {
 
 export default connect(
   SearchResults,
-  C.META.MODULE_NAME
+  C.META.MODULE_NAME,
 );

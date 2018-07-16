@@ -6,14 +6,11 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
 import EditTemplateInfo from './section/EditTemplateInfo';
 import EditTemplateTag from './section/EditTemplateTag';
-import { FabSaveProgress } from '../../Common/';
 import * as C from '../../Utils';
 
 class EditTemplate extends React.Component {
-
   static propTypes = {
     selectedTemplate: PropTypes.object.isRequired,
-    handleEditButton: PropTypes.func,
   };
 
   static manifest = Object.freeze({
@@ -27,10 +24,10 @@ class EditTemplate extends React.Component {
       records: 'fields',
       GET: {
         params: { lang: C.ENDPOINT.DEFAULT_LANG },
-      }, 
-    }
+      },
+    },
   });
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -55,22 +52,19 @@ class EditTemplate extends React.Component {
     });
   }
 
-  handleButtonClick = () => {
-  
-  };
+  handleButtonClick = () => {};
 
-  handleEditTemplate = ()=> {
+  handleEditTemplate = () => {
     const settings = {
       id: 288,
-      name: '444444'
+      name: '',
     };
-    this.props.mutator.recordsTemplates.POST(settings)
-  }
+    this.props.mutator.recordsTemplates.POST(settings);
+  };
 
   render() {
-   
     const { section } = this.state;
-    return ( 
+    return (
       <div>
         <form id="editTemplateForm" name="editTemplateForm" onSubmit={this.onSubmit}>
           <Row end="xs">
@@ -92,17 +86,11 @@ class EditTemplate extends React.Component {
           expanded={section.editTemplateTag}
           onToggle={this.handleSectionToggle}
         />
-        <FabSaveProgress 
-          disabled={false}
-          onClick={this.handleEditTemplate}
-          message="Template saved with success"
-          onClose={()=>this.props.history.goBack()}
-        />
       </div>
     );
   }
 }
 
 export default stripesForm({
-  form: 'editTemplateForm'
+  form: 'editTemplateForm',
 })(EditTemplate);

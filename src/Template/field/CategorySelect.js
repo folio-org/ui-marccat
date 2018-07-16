@@ -1,24 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import { withStyles } from '@material-ui/core/styles';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import { connect } from '@folio/stripes-connect';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import * as C from '../../Utils';
-
-const styles = theme => ({
-  button: {
-    display: 'block',
-    marginTop: theme.spacing.unit * 2,
-  },
-  formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 300,
-    paddingBottom: 30,
-  },
-});
 
 class CategorySelect extends React.Component {
   static manifest = Object.freeze({
@@ -38,7 +23,7 @@ class CategorySelect extends React.Component {
       path: 'heading-types?lang=ita&marcCategory=%{marcCategory}',
       headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.HEADING_TYPES,
-    }
+    },
   });
 
   constructor(props) {
@@ -68,9 +53,8 @@ class CategorySelect extends React.Component {
 
   handleChangeSource = event => {
     this.setState({ secondSelect: event.target.value });
-    const prefix = event.target[event.target.value -1].innerHTML.split(' ')[0];
-    this.props.defaultValue.description = prefix + '- ' +event.target[event.target.value -1].innerHTML  + ' ' + event.target.value;
-  
+    const prefix = event.target[event.target.value - 1].innerHTML.split(' ')[0];
+    this.props.defaultValue.description = `${prefix}- ${event.target[event.target.value - 1].innerHTML} ${event.target.value}`;
   };
 
   handleClose = () => {
@@ -90,26 +74,24 @@ class CategorySelect extends React.Component {
     if (!marcCategories || !marcCategories.hasLoaded) {
       return <div />;
     }
- 
+
     if (!heading || !heading.hasLoaded) return <div />;
 
     let options = {};
     let headings = {};
     if (marcCategories) {
-      options = marcCategories.records.map(element => {
-        return <option value={element.value}>{element.label}</option>;
-      });
+      options = marcCategories.records.map(element =>
+        <option value={element.value}>{element.label}</option>);
     }
     if (heading) {
-      headings = heading.records.map(element => {
-        return <option value={element.value}>{element.label}</option>;
-      });
+      headings = heading.records.map(element =>
+        <option value={element.value}>{element.label}</option>);
     }
     return (
-      <div style={{width: '100%'}}>
+      <div style={{ width: '100%' }}>
         <Row id="section-table">
           <MultiColumnList
-            columnWidths={{'description': '40%'}}
+            columnWidths={{ description: '40%' }}
             contentData={this.state.tableContent}
             onRowClick={() => {}}
             visibleColumns={[
@@ -117,12 +99,12 @@ class CategorySelect extends React.Component {
               'description',
               'categoryCode',
               'headerTypeCode',
-              'displayValue'
+              'displayValue',
             ]}
             ariaLabel="TemplateNewMandatory"
           />
         </Row>
-        <p style={{margin: '8px', marginTop:'20px'}}>
+        <p style={{ margin: '8px', marginTop: '20px' }}>
           Default value:{' '}
           <strong>
             {this.props.defaultValue.description} {this.props.defaultValue.displayValue}
@@ -188,9 +170,7 @@ CategorySelect.propTypes = {
   marcCategory: PropTypes.number,
 };
 
-export default withStyles(styles)(
-  connect(
-    CategorySelect,
-    C.META.MODULE_NAME
-  )
+export default connect(
+  CategorySelect,
+  C.META.MODULE_NAME,
 );

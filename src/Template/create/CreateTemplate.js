@@ -15,20 +15,6 @@ class CreateTemplate extends React.Component {
       connect: PropTypes.func.isRequired,
       intl: PropTypes.object.isRequired,
     }).isRequired,
-    history: PropTypes.shape({
-      goBack: PropTypes.func,
-      pop: PropTypes.func,
-      push: PropTypes.func,
-    }),
-    resources: PropTypes.object,
-    mutator: PropTypes.shape({
-      entries: PropTypes.shape({
-        POST: PropTypes.func,
-        GET: PropTypes.func,
-        PUT: PropTypes.func,
-        DELETE: PropTypes.func,
-      }),
-    }),
   };
 
   static manifest = Object.freeze({
@@ -59,11 +45,6 @@ class CreateTemplate extends React.Component {
     },
   });
 
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   preparePaneMenu() {
     return (
       <PaneMenu {...this.props}>
@@ -80,9 +61,9 @@ class CreateTemplate extends React.Component {
     const formatMsg = this.props.stripes.intl.formatMessage;
     const {
       resources: { records },
-    } = this.props; // eslint-disable-line react/prop-types
+    } = this.props;
     if (!records || !records.hasLoaded) return <div />;
-    let obj = remapMultiArray(records.records);
+    const obj = remapMultiArray(records.records);
 
     const actionMenuItems = [
       {
@@ -98,9 +79,7 @@ class CreateTemplate extends React.Component {
           id: 'ui-marccat.template.save',
         }),
         onClick: () => {
-          this.props.history.push(
-            C.INTERNAL_URL.VIEW_TEMPLATE
-          );
+          this.props.history.push(C.INTERNAL_URL.VIEW_TEMPLATE);
         },
       },
       {
@@ -108,9 +87,7 @@ class CreateTemplate extends React.Component {
           id: 'ui-catalmarccatoging.button.backto',
         }),
         onClick: () => {
-          this.props.history.push(
-            C.INTERNAL_URL.VIEW_TEMPLATE
-          );
+          this.props.history.push(C.INTERNAL_URL.VIEW_TEMPLATE);
         },
       },
     ];
@@ -124,7 +101,7 @@ class CreateTemplate extends React.Component {
           paneTitle={formatMsg({
             id: 'ui-marccat.template.create',
           })}
-          appIcon={{ app:  C.META.ICON_TITLE }}
+          appIcon={{ app: C.META.ICON_TITLE }}
         >
           <div>
             <TemplateForm
@@ -140,5 +117,5 @@ class CreateTemplate extends React.Component {
 
 export default connect(
   CreateTemplate,
-  C.META.MODULE_NAME
+  C.META.MODULE_NAME,
 );

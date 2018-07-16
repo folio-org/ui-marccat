@@ -37,7 +37,7 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
   }
 
   render() {
-    let { showSettings } = this.props;
+    const { showSettings } = this.props;
     if (showSettings) {
       return <Settings {...this.props} />;
     }

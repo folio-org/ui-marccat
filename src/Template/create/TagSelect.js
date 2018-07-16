@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
+import Select from '@folio/stripes-components/lib/Select';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import { connect } from '@folio/stripes-connect';
 import * as C from '../../Utils';
 
-class CategorySelect extends React.Component {
+class TagSelect extends React.Component {
   static manifest = Object.freeze({
     marcCategory: {},
     subFileds: {},
@@ -68,7 +68,6 @@ class CategorySelect extends React.Component {
 
   render() {
     const {
-      classes,
       resources: { marcCategories, heading },
     } = this.props;
     if (!marcCategories || !marcCategories.hasLoaded) {
@@ -111,39 +110,27 @@ class CategorySelect extends React.Component {
           </strong>
         </p>
         <Row>
-          <Col xs={12}>
-            <FormControl className={classes.formControl}>
-              <Select
-                native
-                open={this.state.open}
-                onClose={this.handleClose}
-                onOpen={this.handleOpen}
-                value={this.state.firstSelect}
-                onChange={this.handleChange}
-                inputProps={{
-                  name: 'Category',
-                  id: 'demo-controlled-open-selectr',
-                }}
-              >
-                {options}
-              </Select>
-            </FormControl>
-            <FormControl className={classes.formControl}>
-              <Select
-                native
-                open={this.state.open}
-                onClose={this.handleClose}
-                onOpen={this.handleOpen}
-                value={this.state.secondSelect}
-                onChange={this.handleChangeSource}
-                inputProps={{
-                  name: 'Source',
-                  id: 'demo-controlled-open-select',
-                }}
-              >
-                {headings}
-              </Select>
-            </FormControl>
+          <Col xs={5}>
+            <Select
+              open={this.state.open}
+              onClose={this.handleClose}
+              onOpen={this.handleOpen}
+              value={this.state.firstSelect}
+              onChange={this.handleChange}
+            >
+              {options}
+            </Select>
+          </Col>
+          <Col xs={5}>
+            <Select
+              open={this.state.open}
+              onClose={this.handleClose}
+              onOpen={this.handleOpen}
+              value={this.state.secondSelect}
+              onChange={this.handleChangeSource}
+            >
+              {headings}
+            </Select>
           </Col>
         </Row>
       </div>
@@ -151,26 +138,7 @@ class CategorySelect extends React.Component {
   }
 }
 
-CategorySelect.propTypes = {
-  resources: PropTypes.shape({
-    query: PropTypes.object,
-    heading: PropTypes.shape({
-      GET: PropTypes.func,
-    }),
-  }),
-  stripes: PropTypes.object,
-  mutator: PropTypes.shape({
-    heading: PropTypes.shape({
-      GET: PropTypes.func,
-    }),
-  }),
-  classes: PropTypes.object,
-  categories: PropTypes.object,
-  headings: PropTypes.object,
-  marcCategory: PropTypes.number,
-};
-
 export default connect(
-  CategorySelect,
+  TagSelect,
   C.META.MODULE_NAME,
 );

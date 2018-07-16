@@ -1,3 +1,7 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { FormattedMessage } from 'react-intl';

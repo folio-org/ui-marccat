@@ -13,6 +13,7 @@ import { FormattedMessage } from 'react-intl';
 import { EditTemplate } from '../';
 import * as C from '../../Utils';
 import css from '../../Search/style/Search.css';
+import '../styles/Template.css';
 
 
 class TemplateView extends React.Component {
@@ -263,6 +264,7 @@ class TemplateView extends React.Component {
               selectedTemplate={this.state.selectedTemplate}
             />
             <ConfirmationModal
+              className={css.actionsBar}
               open={this.state.confirming}
               heading={modalHeading}
               message={modalMessage}

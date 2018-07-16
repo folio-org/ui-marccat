@@ -3,26 +3,19 @@
  * @flow
  */
 import React from 'react';
-import PropTypes from 'prop-types';
 import Button from '@folio/stripes-components/lib/Button';
 import { connect } from '@folio/stripes-connect';
 import { FormattedMessage } from 'react-intl';
 import Link from 'react-router-dom/Link';
 import * as C from '../../../../Utils';
 
-class AdvancedSearchButton extends React.Component {
-  static propTypes = {
-    history: PropTypes.shape({
-      goBack: PropTypes.func,
-      pop: PropTypes.func,
-      push: PropTypes.func,
-    }),
-    match: {
-      path: PropTypes.string,
-      url: PropTypes.string,
-    },
-  };
+type Props = {
+  history: Object;
+  match: Object;
+};
 
+type State = {}
+class AdvancedSearchButton extends React.Component<Props, State> {
   onClick() {
     this.props.history.push(C.INTERNAL_URL.SEARCH_RESULTS);
   }

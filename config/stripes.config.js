@@ -4,7 +4,6 @@ let url;
 if (environment === 'sandbox') {
   url = 'https://okapi-sandbox.frontside.io';
 } else {
-  //  url = 'http://192.168.0.245:9130';
   url = 'http://192.168.0.28:9130';
 }
 

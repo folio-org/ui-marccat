@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
@@ -9,14 +8,14 @@ import { remapMultiArray } from '../../Utils/Mapper';
 import TemplateForm from '../form/TemplateForm';
 import * as C from '../../Utils';
 
-class CreateTemplate extends React.Component {
-  static propTypes = {
-    stripes: PropTypes.shape({
-      connect: PropTypes.func.isRequired,
-      intl: PropTypes.object.isRequired,
-    }).isRequired,
-  };
+type CreateTemplateProps = {
+  stripes: Object;
+  history: Object;
+  resources: Object;
+};
+type CreateTemplateState = {};
 
+class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplateState> {
   static manifest = Object.freeze({
     query: { initialValue: {} },
     resultCount: { initialValue: C.INITIAL_RESULT_COUNT },

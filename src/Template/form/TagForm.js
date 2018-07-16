@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Button from '@folio/stripes-components/lib/Button';
 import Select from '@folio/stripes-components/lib/Select';
-import CategorySelect from '../field/CategorySelect';
+import { TagSelect } from '../';
 import * as C from '../../Utils/';
 
 class TagForm extends React.Component {
@@ -61,7 +61,7 @@ class TagForm extends React.Component {
     return (
       <div>
         <Row>
-          <CategorySelect {...this.props} title="Source" />
+          <TagSelect {...this.props} title="Source" />
         </Row>
         {this.state.isTagInputVisible}
         <Row>

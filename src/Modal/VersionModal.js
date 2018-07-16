@@ -23,7 +23,8 @@
 //   VersionModalState
 // > {
 //   render() {
-//     const { appTitle, appVersion, credits, classes } = this.props; // eslint-disable-line no-unused-vars
+//   const { appTitle, appVersion, credits, classes } = this.props;
+// eslint-disable-line no-unused-vars
 
 //     return (
 //       <MuiThemeProvider theme={theme}>

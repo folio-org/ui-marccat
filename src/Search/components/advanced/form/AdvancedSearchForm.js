@@ -1,8 +1,11 @@
-// eslint-disable react/require-default-props
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import { reduxForm } from 'redux-form'; // eslint-disable-line
+import { reduxForm } from 'redux-form';
 import Button from '@folio/stripes-components/lib/Button';
 import { FormattedMessage } from 'react-intl';
 import Textarea from '@folio/stripes-components/lib/TextArea';

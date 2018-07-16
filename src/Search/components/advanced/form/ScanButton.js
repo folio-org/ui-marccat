@@ -3,17 +3,18 @@
  * @flow
  */
 import React from 'react';
-import PropTypes from 'prop-types';
 import Button from '@folio/stripes-components/lib/Button';
 import { connect } from '@folio/stripes-connect';
 import { FormattedMessage } from 'react-intl';
 import * as C from '../../../../Utils';
 
-class ScanButton extends React.Component {
-  static propTypes = {
-    onClick: PropTypes.func.isRequired,
-    disabled: PropTypes.bool.isRequired,
-  };
+type Props = {
+  onClick: Function;
+  disabled: boolean;
+};
+
+type State = {};
+class ScanButton extends React.Component<Props, State> {
   render() {
     return (
       <Button

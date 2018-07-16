@@ -11,7 +11,6 @@ import * as C from '../../Utils';
 class EditTemplate extends React.Component {
   static propTypes = {
     selectedTemplate: PropTypes.object.isRequired,
-    handleEditButton: PropTypes.func,
   };
 
   static manifest = Object.freeze({
@@ -58,7 +57,7 @@ class EditTemplate extends React.Component {
   handleEditTemplate = () => {
     const settings = {
       id: 288,
-      name: '444444',
+      name: '',
     };
     this.props.mutator.recordsTemplates.POST(settings);
   };

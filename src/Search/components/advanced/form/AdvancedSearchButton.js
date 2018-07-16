@@ -46,5 +46,5 @@ class AdvancedSearchButton extends React.Component {
 
 export default connect(
   AdvancedSearchButton,
-  C.META.MODULE_NAME
+  C.META.MODULE_NAME,
 );

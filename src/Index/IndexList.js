@@ -4,20 +4,22 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import { connect } from '@folio/stripes-connect';
 import * as C from '../Utils';
 
-const catalogResults = require('../../config/static/index-list');
+type IndexListProps = {
+};
 
-class IndexList extends React.Component {
+type IndexListState = {
+  open: boolean;
+}
 
+class IndexList extends React.Component<IndexListProps, IndexListState> {
   constructor(props) {
     super(props);
     this.state = {
       open: true, // eslint-disable-line react/no-unused-state
     };
-
   }
 
   render() {
-
     return (
       <Paneset
         static
@@ -33,25 +35,7 @@ class IndexList extends React.Component {
               paneTitle={<h3>Main Indexes</h3>}
               paneSub=""
               appIcon={{ app: 'cataloging' }}
-            >
-              <div>
-                {
-                  catalogResults.map((dynamicData) =>
-                    <div>
-                      <p><h3>{dynamicData.title}</h3></p>
-                      {
-                        dynamicData.descr.map((dynamicValues) =>
-                          <div>
-                            <span>{dynamicValues.key}</span>
-                            <span>{dynamicValues.value}</span>
-                          </div>)
-                      }
-                    </div>
-
-                  )
-                }
-              </div>
-            </Pane>
+            />
             <Pane
               defaultWidth="fill"
               paneTitle={<h3>Secondary Indexes</h3>}
@@ -65,4 +49,4 @@ class IndexList extends React.Component {
   }
 }
 
-export default connect(IndexList, C.META.MODULE_NAME)
+export default connect(IndexList, C.META.MODULE_NAME);

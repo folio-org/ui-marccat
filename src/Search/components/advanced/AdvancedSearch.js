@@ -1,5 +1,6 @@
 /* @flow */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from '@folio/stripes-connect';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
@@ -11,6 +12,12 @@ import css from '../../style/Search.css';
 import * as C from '../../../Utils';
 
 class AdvancedSearch extends React.Component {
+  static propTypes = {
+    stripes: PropTypes.shape({
+      intl: PropTypes.object.isRequired,
+    }).isRequired,
+  }
+
   static manifest = Object.freeze({
     query: { initialValue: {} },
     resultCount: { initialValue: C.INITIAL_RESULT_COUNT },
@@ -34,13 +41,9 @@ class AdvancedSearch extends React.Component {
     this.state = {
       showRestrictionSettings: false,
     };
-    this.connectedRestrictionSettingsView = props.stripes.connect(
-      RestrictionView
-    );
+    this.connectedRestrictionSettingsView = props.stripes.connect(RestrictionView);
     this.handleClick = this.handleClick.bind(this);
-    this.handleCloseRestrictionPanel = this.handleCloseRestrictionPanel.bind(
-      this
-    );
+    this.handleCloseRestrictionPanel = this.handleCloseRestrictionPanel.bind(this);
   }
 
   handleClose() {
@@ -91,14 +94,12 @@ class AdvancedSearch extends React.Component {
       <Paneset static>
         <Pane
           dismissible
-          onClose={() => {
-            return this.props.history.goBack();
-          }}
+          onClose={() => this.props.history.goBack()}
           actionMenuItems={actionMenuItems}
           lastMenu={lastMenu}
           defaultWidth="fill"
           paneSub="search result"
-          appIcon={{ app:  C.META.ICON_TITLE }}
+          appIcon={{ app: C.META.ICON_TITLE }}
           paneTitle={formatMsg({
             id: 'ui-marccat.navigator.search',
           })}
@@ -113,7 +114,7 @@ class AdvancedSearch extends React.Component {
             defaultWidth="fill"
             paneTitle="Search Settings"
             paneSub="restriction"
-            appIcon={{ app:  C.META.ICON_TITLE }}
+            appIcon={{ app: C.META.ICON_TITLE }}
             dismissible
             onClose={this.handleCloseRestrictionPanel}
           >
@@ -128,5 +129,5 @@ class AdvancedSearch extends React.Component {
 }
 export default connect(
   AdvancedSearch,
-  C.META.MODULE_NAME
+  C.META.MODULE_NAME,
 );

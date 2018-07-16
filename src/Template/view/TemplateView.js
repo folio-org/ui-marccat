@@ -14,19 +14,13 @@ import { EditTemplate } from '../';
 import * as C from '../../Utils';
 import css from '../../Search/style/Search.css';
 
+
 class TemplateView extends React.Component {
   static propTypes = {
-    // eslint-disable-line react/no-unused-prop-types
     stripes: PropTypes.shape({
-      // eslint-disable-line react/no-unused-prop-types
-      connect: PropTypes.func,
-      intl: PropTypes.object,
-    }),
-    history: PropTypes.shape({
-      goBack: PropTypes.func,
-      pop: PropTypes.func,
-      push: PropTypes.func,
-    }),
+      connect: PropTypes.func.isRequired,
+      intl: PropTypes.object.isRequired,
+    }).isRequired,
     mutator: PropTypes.shape({
       currentTemplate: PropTypes.shape({
         update: PropTypes.func,
@@ -37,7 +31,7 @@ class TemplateView extends React.Component {
         DELETE: PropTypes.func,
       }),
     }).isRequired,
-    
+
   };
 
   static manifest = Object.freeze({
@@ -45,11 +39,11 @@ class TemplateView extends React.Component {
     currentType: {},
     recordsTemplates: {
       type: C.RESOURCE_TYPE,
-      root: C.ENDPOINT.BASE_URL,      
+      root: C.ENDPOINT.BASE_URL,
       headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.TEMPLATES,
       GET: {
-        path: 'record-templates?type=%{currentType}&lang=' + C.ENDPOINT.DEFAULT_LANG        
+        path: `record-templates?type=%{currentType}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
       },
       POST: {
         path: 'record-template/%{currentTemplate.id}',
@@ -59,9 +53,9 @@ class TemplateView extends React.Component {
       },
       DELETE: {
         path: 'record-template/%{currentTemplate.id}',
-        params: { lang: C.ENDPOINT.DEFAULT_LANG, type: 'B', }
-      }
-    }
+        params: { lang: C.ENDPOINT.DEFAULT_LANG, type: 'B' },
+      },
+    },
   });
 
   constructor(props) {
@@ -96,19 +90,19 @@ class TemplateView extends React.Component {
 
   hideConfirm() {
     this.setState({
-      confirming: false
+      confirming: false,
     });
   }
 
-  showConfirm() {    
+  showConfirm() {
     this.setState({
-      confirming: true,      
+      confirming: true,
     });
-    this.deletePromise = new Promise((resolve, reject) => {    
+    this.deletePromise = new Promise((resolve, reject) => {
       this.deleteResolve = resolve;
       this.deleteReject = reject;
     });
-    return this.deletPromise; 
+    return this.deletPromise;
   }
 
   showCalloutMessage() {
@@ -144,7 +138,7 @@ class TemplateView extends React.Component {
 
     const {
       resources: { recordsTemplates },
-    } = this.props; // eslint-disable-line react/prop-types
+    } = this.props;
     if (!recordsTemplates || !recordsTemplates.hasLoaded) {
       return <div />;
     }
@@ -167,9 +161,9 @@ class TemplateView extends React.Component {
 
     const deleteMenu = (
       <PaneMenu>
-        <IconButton 
-          key="icon-trash" 
-          icon="trashBin" 
+        <IconButton
+          key="icon-trash"
+          icon="trashBin"
           onClick={this.showConfirm}
         />
 
@@ -230,12 +224,12 @@ class TemplateView extends React.Component {
           paneTitle={formatMsg({
             id: 'ui-marccat.templates.title',
           })}
-          paneSub={templates.length + ' Result found'}          
+          paneSub={`${templates.length} Result found`}
           appIcon={{ app: C.META.ICON_TITLE }}
         >
           <MultiColumnList
             id="list-templates"
-            contentData={templates}            
+            contentData={templates}
             rowMetadata={['id', 'id']}
             formatter={formatter}
             ariaLabel="TemplateView"
@@ -257,7 +251,7 @@ class TemplateView extends React.Component {
           <Pane
             defaultWidth="fill"
             paneTitle={this.state.selectedTemplate.name}
-            paneSub={'Id ' + this.state.selectedTemplate.id}
+            paneSub={`Id ${this.state.selectedTemplate.id}`}
             appIcon={{ app: C.META.ICON_TITLE }}
             dismissible
             onClose={this.handleClose}
@@ -286,5 +280,5 @@ class TemplateView extends React.Component {
 
 export default connect(
   TemplateView,
-  C.META.MODULE_NAME
+  C.META.MODULE_NAME,
 );

@@ -1,89 +1,28 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import StarIcon from '@material-ui/icons/Star';
-import SendIcon from '@material-ui/icons/Send';
-import MailIcon from '@material-ui/icons/Mail';
-import DeleteIcon from '@material-ui/icons/Delete';
-import ReportIcon from '@material-ui/icons/Report';
-import Link from 'react-router-dom/Link';
+import NavListSection from '@folio/stripes-components/lib/NavListSection';
+import NavListItem from '@folio/stripes-components/lib/NavListItem';
+import NavList from '@folio/stripes-components/lib/NavList';
 
-export default class NavMenuItem extends React.Component {
-  static propTypes = {
-    to: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    onClick: PropTypes.func,
-    children: PropTypes.object,
-  };
+export default class NavMenu extends React.Component {
   render() {
-    const { to, label, onClick } = this.props;
+    const rootPath = this.props.match.path;
     return (
-      <Link to={to} onClick={onClick}>
-        <ListItem button>
-          <ListItemIcon>{this.props.children}</ListItemIcon>
-          <ListItemText primary={label} />
-        </ListItem>
-      </Link>
+      <NavList>
+        <NavListSection label="Search" activeLink={`${rootPath}`}>
+          <NavListItem to={`${rootPath}/simpleSearch`}>Simple Search</NavListItem>
+          <NavListItem to={`${rootPath}/advancedSearch`}>Advance Search</NavListItem>
+          <NavListItem to={`${rootPath}/externalSearch`}>External Search</NavListItem>
+          <NavListItem to={`${rootPath}/indexList`}>Indexes</NavListItem>
+          <NavListItem to={`${rootPath}/diacritic`} style={{ marginBottom: '20px' }}>Diacritic</NavListItem>
+        </NavListSection>
+        <NavListSection label="Report">
+          <NavListItem to={`${rootPath}/report`} style={{ marginBottom: '20px' }}>Report</NavListItem>
+        </NavListSection>
+        <NavListSection label="Template">
+          <NavListItem to={`${rootPath}/templateList`}>Template from file</NavListItem>
+          <NavListItem to={`${rootPath}/templateList`} style={{ marginBottom: '20px' }}>Template List</NavListItem>
+        </NavListSection>
+      </NavList>
     );
   }
 }
-
-export const searchMenuItem = (
-  <div>
-    <ListItem button>
-      <ListItemIcon>
-        <StarIcon />
-      </ListItemIcon>
-      <ListItemText primary="Simple Search" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <SendIcon />
-      </ListItemIcon>
-      <ListItemText primary="Advance Search" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <DraftsIcon />
-      </ListItemIcon>
-      <ListItemText primary="Indexes" />
-    </ListItem>
-  </div>
-);
-
-export const reportMenuItem = (
-  <div>
-    <ListItem button>
-      <ListItemIcon>
-        <MailIcon />
-      </ListItemIcon>
-      <ListItemText primary="Report" />
-    </ListItem>
-  </div>
-);
-
-export const templateMenuItem = (
-  <div>
-    <ListItem button>
-      <ListItemIcon>
-        <MailIcon />
-      </ListItemIcon>
-      <ListItemText primary="Template handler" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <DeleteIcon />
-      </ListItemIcon>
-      <ListItemText primary="Create Template" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <ReportIcon />
-      </ListItemIcon>
-      <ListItemText primary="Manage Tag" />
-    </ListItem>
-  </div>
-);

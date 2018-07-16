@@ -3,17 +3,11 @@ import Settings from '@folio/stripes-components/lib/Settings';
 import GeneralSettings from './GeneralSettings';
 import LogicalViewSettings from './LogicalViewSettings';
 
-type MARCcatSelectSettingsProps = {|
-  stripes: {
-    connect: Function,
-    intl: Object,
-  },
-|};
+type MARCcatSelectSettingsProps = {};
+type MARCcatSelectSettingsState = {};
 
-export default class MARCcatSelectSettings extends React.Component<
-MARCcatSelectSettingsProps,
-  {}
-> {
+export default class MARCcatSelectSettings extends
+  React.Component<MARCcatSelectSettingsProps, MARCcatSelectSettingsState> {
   pages = [
     {
       route: 'general',

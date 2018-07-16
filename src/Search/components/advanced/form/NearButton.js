@@ -4,19 +4,10 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { connect } from '@folio/stripes-connect';
 import Button from '@folio/stripes-components/lib/Button';
 import { FormattedMessage } from 'react-intl';
 import * as C from '../../../../Utils';
-
-const styles = theme => ({
-  button: {
-    margin: theme.spacing.unit,
-  },
-  input: {
-    display: 'none',
-  },
-});
 
 class NearButton extends React.Component {
   static propTypes = {
@@ -39,5 +30,5 @@ class NearButton extends React.Component {
   }
 }
 
-export default withStyles(styles)(NearButton,C.META.MODULE_NAME);
+export default connect(NearButton, C.META.MODULE_NAME);
 

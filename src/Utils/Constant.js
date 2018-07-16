@@ -1,7 +1,7 @@
 // MARCCAT UI APP METADADA
 export const META = {
   MODULE_NAME: 'ui-marccat',
-  ICON_TITLE: 'marccat'
+  ICON_TITLE: 'marccat',
 };
 
 // API
@@ -42,13 +42,13 @@ export const COMMON_MANIFEST = {
 export const INTERNAL_URL = {
   SETTINGS_GENERAL: '/settings/',
   SETTINGS_LOGICAL_VIEW: '/logicalview',
-  VIEW_TEMPLATE: '/cataloging/templatelist/',
-  ADD_TEMPLATE: '/cataloging/template/create',
-  EDIT_TEMPLATE: '/cataloging/template/edit/:id',
-  DELETE_TEMPLATE: '/cataloging/template/delete/:id',
-  VIEW_LOGICAL_VIEW: '/cataloging/logicalview/',
-  ADVANCE_SEARCH: '/cataloging/advancedSearch',
-  SEARCH_RESULTS: '/cataloging/searchResults',
+  VIEW_TEMPLATE: '/marccat/templatelist/',
+  ADD_TEMPLATE: '/marccat/templateAdd',
+  EDIT_TEMPLATE: '/marccat/template/edit/:id',
+  DELETE_TEMPLATE: '/marccat/template/delete/:id',
+  VIEW_LOGICAL_VIEW: '/marccat/logicalview/',
+  ADVANCE_SEARCH: '/marccat/advancedSearch',
+  SEARCH_RESULTS: '/marccat/searchResults',
 };
 
 export const API_RESULT_JSON_KEY = {
@@ -62,14 +62,14 @@ export const API_RESULT_JSON_KEY = {
   FIELDS: 'fields',
   INDEX_CATEGORIES: 'categories',
   INDEX_INNER: 'indexes',
-  CONSTRAINT_INDEX: 'constraints'
+  CONSTRAINT_INDEX: 'constraints',
 };
 
 export const INITIAL_RESULT_COUNT = 30;
 export const RESULT_COUNT_INCREMENT = 30;
 export const RESULT_PER_REQUEST = 20;
 export const FILTER_CONFIG = [{}];
-export const SEPARATOR = ';;;'
+export const SEPARATOR = ';;;';
 
 
 // TOASTER MESSAGE

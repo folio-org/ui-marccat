@@ -3,8 +3,6 @@ const Required = value => {
   return 'Required!';
 };
 
-const RequiredInput = () => {
-  return false;
-};
+const RequiredInput = () => false;
 
 export { Required, RequiredInput };

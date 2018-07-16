@@ -1,16 +1,7 @@
 // /* @flow */
 // import React from 'react';
-// import Dialog from '@material-ui/core/Dialog';
-// import DialogContent from '@material-ui/core/DialogContent';
-// import DialogContentText from '@material-ui/core/DialogContentText';
-// import DialogTitle from '@material-ui/core/DialogTitle';
-// import {
-//   MuiThemeProvider,
-//   withStyles,
-// } from '@material-ui/core/styles';
-// import { theme, styles } from '../Style/VersionModal';
 
-// type VersionModalProps = {|
+// type VersionModalProps = {
 //   appTitle: string,
 //   appVersion: string,
 //   classes: Object,
@@ -20,20 +11,20 @@
 //   onClose: Function,
 //   message: string,
 //   translate: Function,
-// |};
-// type VersionModalState = {|
+// };
+// type VersionModalState = {
 //   open: boolean,
-// |};
+// };
 
 // const soureImg = require('../../../icons/app-modal.svg');
 
-// @withStyles(styles)
 // export default class VersionModal extends React.Component<
 //   VersionModalProps,
 //   VersionModalState
 // > {
 //   render() {
-//     const { appTitle, appVersion, credits, classes } = this.props; // eslint-disable-line no-unused-vars
+//   const { appTitle, appVersion, credits, classes } = this.props;
+// eslint-disable-line no-unused-vars
 
 //     return (
 //       <MuiThemeProvider theme={theme}>

@@ -1,24 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { connect } from '@folio/stripes-connect';
 import Button from '@folio/stripes-components/lib/Button';
 import { FormattedMessage } from 'react-intl';
 import * as C from '../../../../Utils';
 
-const styles = theme => ({
-  button: {
-    margin: theme.spacing.unit,
-  },
-  input: {
-    display: 'none',
-  },
-});
+type Props = {
+  onClick: Function;
+  disabled: boolean;
+};
 
-class NotButton extends React.Component {
-  static propTypes = {
-    onClick: PropTypes.func.isRequired,
-    disabled: PropTypes.bool.isRequired,
-  };
+type State = {}
+
+class NotButton extends React.Component<Props, State> {
   render() {
     return (
       <Button
@@ -35,4 +28,4 @@ class NotButton extends React.Component {
   }
 }
 
-export default withStyles(styles)(NotButton,C.META.MODULE_NAME);
+export default connect(NotButton, C.META.MODULE_NAME);

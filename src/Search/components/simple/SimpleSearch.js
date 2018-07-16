@@ -54,7 +54,7 @@ class SimpleSearch extends React.Component<SearchProps, SearchState> {
           lastMenu={lastMenu}
           defaultWidth="fill"
           paneSub="search result"
-          appIcon={{ app:  C.META.ICON_TITLE }}
+          appIcon={{ app: C.META.ICON_TITLE }}
           paneTitle={formatMsg({
             id: 'ui-marccat.navigator.simpleSearch',
           })}
@@ -68,5 +68,5 @@ class SimpleSearch extends React.Component<SearchProps, SearchState> {
 
 export default connect(
   SimpleSearch,
-  C.META.MODULE_NAME
+  C.META.MODULE_NAME,
 );

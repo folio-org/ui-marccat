@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import stripesForm from '@folio/stripes-form';
+import { reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
@@ -11,7 +11,6 @@ import * as C from '../../Utils';
 class EditTemplate extends React.Component {
   static propTypes = {
     selectedTemplate: PropTypes.object.isRequired,
-    handleEditButton: PropTypes.func,
   };
 
   static manifest = Object.freeze({
@@ -21,7 +20,7 @@ class EditTemplate extends React.Component {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
       path: C.ENDPOINT.TEMPLATE_MANDATORY,
-      headers: C.ENDPOINT.HEADER,
+      headers: C.ENDPOINT.HEADERS,
       records: 'fields',
       GET: {
         params: { lang: C.ENDPOINT.DEFAULT_LANG },
@@ -58,7 +57,7 @@ class EditTemplate extends React.Component {
   handleEditTemplate = () => {
     const settings = {
       id: 288,
-      name: '444444',
+      name: '',
     };
     this.props.mutator.recordsTemplates.POST(settings);
   };
@@ -92,6 +91,6 @@ class EditTemplate extends React.Component {
   }
 }
 
-export default stripesForm({
+export default reduxForm({
   form: 'editTemplateForm',
 })(EditTemplate);

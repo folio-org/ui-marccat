@@ -1,16 +1,18 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from '@folio/stripes-connect';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { Field } from 'redux-form';
+import Select from '@folio/stripes-components/lib/Select';
 import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
 import RadioButton from '@folio/stripes-components/lib/RadioButton';
 import * as C from '../../../Utils';
 
 class IndexCategory extends React.Component {
-
   static manifest = Object.freeze({
     indexType: {},
     /* lang: {}, */
@@ -19,7 +21,7 @@ class IndexCategory extends React.Component {
       root: C.ENDPOINT.BASE_URL,
       path: 'index-categories?type=%{indexType}&lang=ita',
       headers: { 'x-okapi-tenant': 'tnx' },
-      records: C.API_RESULT_JSON_KEY.INDEX_CATEGORIES
+      records: C.API_RESULT_JSON_KEY.INDEX_CATEGORIES,
     },
     innerIndexValue: {},
     innerIndexes: {
@@ -27,7 +29,7 @@ class IndexCategory extends React.Component {
       root: C.ENDPOINT.BASE_URL,
       path: 'indexes?categoryType=%{indexType}&categoryCode=%{innerIndexValue}&lang=ita',
       headers: { 'x-okapi-tenant': 'tnx' },
-      records: C.API_RESULT_JSON_KEY.INDEX_INNER
+      records: C.API_RESULT_JSON_KEY.INDEX_INNER,
     },
     constraintIndexValue: {},
     constraintIndexes: {
@@ -35,8 +37,8 @@ class IndexCategory extends React.Component {
       root: C.ENDPOINT.BASE_URL,
       headers: { 'x-okapi-tenant': 'tnx' },
       path: 'indexes/%{constraintIndexValue}?lang=ita',
-      records: C.API_RESULT_JSON_KEY.CONSTRAINT_INDEX
-    }
+      records: C.API_RESULT_JSON_KEY.CONSTRAINT_INDEX,
+    },
   });
 
 
@@ -106,8 +108,8 @@ class IndexCategory extends React.Component {
   };
 
   handleChangeThirdSelect = event => {
-    const splitted = event.target.value.split(C.SEPARATOR);    
-    this.setState({      
+    const splitted = event.target.value.split(C.SEPARATOR);
+    this.setState({
       thirdSelect: event.target.value,
     });
     this.props.onSelectConstraint(splitted[0], splitted[1]);
@@ -121,24 +123,20 @@ class IndexCategory extends React.Component {
     let optionsConstraintIndex = {};
 
     if (categories) {
-      options = categories.records.map((element) => {
-        return (
-          <option value={element.value}>{element.label}</option>
-        );
-      });
+      options = categories.records.map((element) => (
+        <option value={element.value}>{element.label}</option>
+      ));
     }
 
     if (innerIndexes) {
-      optionsInnerIndex = innerIndexes.records.map((element) => {
-        return (
-          <option value={element.value}>{element.label} ({element.value})</option>
-        );
-      });
+      optionsInnerIndex = innerIndexes.records.map((element) => (
+        <option value={element.value}>{element.label} ({element.value})</option>
+      ));
     }
 
     if (constraintIndexes) {
       optionsConstraintIndex = constraintIndexes.records.map((element) => {
-        const valueLabel = element.value  + C.SEPARATOR + element.label 
+        const valueLabel = element.value + C.SEPARATOR + element.label;
         return (
           <option value={valueLabel}> {element.label} </option>
         );
@@ -167,29 +165,21 @@ class IndexCategory extends React.Component {
             />
           </Field>
         </Col>
-        <Col xs={3} style={{marginLeft:'20px', marginTop:'20px'}}>
+        <Col xs={3} style={{ marginLeft: '20px', marginTop: '20px' }}>
           {categories &&
-          <FormControl>
             <Select
-              native
               open={this.state.open}
               onClose={this.handleClose}
               onOpen={this.handleOpen}
               value={this.state.firstSelect}
               onChange={this.handleChangeFirstSelect}
-              inputProps={{
-                          name: 'Category',
-                          id: 'demo-controlled-open-select',
-                        }}
             >
               {options}
             </Select>
-          </FormControl>
-        }
+          }
         </Col>
-        <Col xs={3} style={{ marginTop:'20px'}}>
+        <Col xs={3} style={{ marginTop: '20px' }}>
           {innerIndexes &&
-          <FormControl>
             <Select
               native
               open={this.state.open}
@@ -198,19 +188,17 @@ class IndexCategory extends React.Component {
               value={this.state.secondSelect}
               onChange={this.handleChangeSecondSelect}
               inputProps={{
-                          name: 'Index',
-                          id: 'demo-second-controlled-open-select',
+                name: 'Index',
+                id: 'demo-second-controlled-open-select',
               }}
             >
               <option value="">--</option>
               {optionsInnerIndex}
             </Select>
-          </FormControl>
           }
         </Col>
-        <Col xs={3} style={{ marginTop:'20px'}}>
+        <Col xs={3} style={{ marginTop: '20px' }}>
           {constraintIndexes && constraintIndexes.records.length > 0 &&
-          <FormControl>
             <Select
               name="testSelected"
               native
@@ -219,15 +207,10 @@ class IndexCategory extends React.Component {
               onOpen={this.handleOpen}
               value={this.state.thirdSelect}
               onChange={this.handleChangeThirdSelect}
-              inputProps={{
-                          name: 'Index',
-                          id: 'demo-third-controlled-open-select',
-              }}
             >
               <option value="">--</option>
               {optionsConstraintIndex}
             </Select>
-          </FormControl>
           }
         </Col>
       </Row>

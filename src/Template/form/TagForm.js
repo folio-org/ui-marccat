@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Button from '@folio/stripes-components/lib/Button';
 import Select from '@folio/stripes-components/lib/Select';
-import CategorySelect from '../field/CategorySelect';
+import { TagSelect } from '../';
 import * as C from '../../Utils/';
 
 class TagForm extends React.Component {
@@ -61,7 +61,7 @@ class TagForm extends React.Component {
     return (
       <div>
         <Row>
-          <CategorySelect {...this.props} title="Source" />
+          <TagSelect {...this.props} title="Source" />
         </Row>
         {this.state.isTagInputVisible}
         <Row>
@@ -69,7 +69,7 @@ class TagForm extends React.Component {
           <Col xs={6}>
             <Field
               style={{
-                width: 100 + '%',
+                width: `${100}%`,
               }}
               name="firstArgs"
               id="firstArgs"
@@ -90,7 +90,7 @@ class TagForm extends React.Component {
           <Col xs={6}>
             <Field
               style={{
-                width: 100 + '%',
+                width: `${100}%`,
               }}
               name="lang"
               id="lang"
@@ -112,10 +112,10 @@ class TagForm extends React.Component {
             <Col xs={6}>
               <Field
                 style={{
-                  width: 100 + '%',
+                  width: `${100}%`,
                 }}
-                name={this.props.defaultValue.code + `-${i}`}
-                id={this.props.defaultValue.code + `-${i}`}
+                name={`${this.props.defaultValue.code}-${i}`}
+                id={`${this.props.defaultValue.code}-${i}`}
                 withRef
                 validationEnabled={false}
                 component="input"
@@ -134,7 +134,7 @@ class TagForm extends React.Component {
           <Col xs={6}>
             <Field
               style={{
-                width: 100 + '%',
+                width: `${100}%`,
               }}
               fullWidth
               name="langField"
@@ -155,5 +155,5 @@ class TagForm extends React.Component {
 }
 export default connect(
   TagForm,
-  'ui-marccat'
+  'ui-marccat',
 );

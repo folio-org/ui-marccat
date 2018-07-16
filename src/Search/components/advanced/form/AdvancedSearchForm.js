@@ -1,3 +1,7 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
@@ -12,7 +16,6 @@ import NotButton from './NotButton';
 import NearButton from './NearButton';
 import WildCard from './WildCard';
 import IndexCategory from '../IndexCategory';
-import { SnackBar } from '../../../../Common';
 import * as C from '../../../../Utils';
 
 function validate(values) {
@@ -26,7 +29,6 @@ function validate(values) {
 }
 
 class AdvancedSearchForm extends React.Component {
-
   static manifest = Object.freeze({
     indexType: {},
     categories: {
@@ -34,7 +36,7 @@ class AdvancedSearchForm extends React.Component {
       root: C.ENDPOINT.BASE_URL,
       path: 'index-categories?type=%{indexType.type}&lang=ita',
       headers: { 'x-okapi-tenant': 'tnx' },
-      records: C.API_RESULT_JSON_KEY.INDEX_CATEGORIES
+      records: C.API_RESULT_JSON_KEY.INDEX_CATEGORIES,
     },
   });
 
@@ -42,25 +44,6 @@ class AdvancedSearchForm extends React.Component {
     stripes: PropTypes.shape({
       intl: PropTypes.object.isRequired,
     }).isRequired,
-    field: PropTypes.array.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
-    pristine: PropTypes.bool,
-    submitting: PropTypes.bool,
-    onCancel: PropTypes.func,
-    reset: PropTypes.func,
-    initialValues: PropTypes.object,
-    history: PropTypes.shape({
-      goBack: PropTypes.func,
-      pop: PropTypes.func,
-      push: PropTypes.func
-    }),
-    match: {
-      path: PropTypes.string,
-      url: PropTypes.string
-    },
-    searchTextArea: PropTypes.shape({
-      input: PropTypes.string
-    })
   }
 
   constructor(props) {
@@ -105,17 +88,13 @@ class AdvancedSearchForm extends React.Component {
   }
 
   render() {
-    const formatMsg = this.props.stripes.intl.formatMessage;
     const { submitting, pristine } = this.props;
     return (
       <form id="search-form" name="advancedSearchForms" onSubmit={this.handleSubmit} noValidate>
-        {this.state.showErrorMessage &&
-          <SnackBar position="right" message={formatMsg({ id: 'ui-marccat.search.wrong.input' })} />
-        }
         <IndexCategory {...this.props} onSelectIndex={this.handleLogicButton} onSelectConstraint={this.handleConstraint} title="Category" />
-        <Row style={{ marginTop: '50px'}}>
+        <Row style={{ marginTop: '50px' }}>
           <Col xs={11}>
-            <Textarea rows='8' id='searchTextArea' value={this.state.value} onChange={this.handleChange} style={{ width: '100%' }} />
+            <Textarea rows="8" id="searchTextArea" value={this.state.value} onChange={this.handleChange} style={{ width: '100%' }} />
           </Col>
         </Row>
         <Row>
@@ -126,19 +105,15 @@ class AdvancedSearchForm extends React.Component {
             <NearButton {...this.props} onClick={() => this.handleLogicButton('NEAR')} disabled={false} />
           </Col>
           <Col xs={5}>
-            {/* <AdvancedSearchButton {...this.props} /> */ }
-            {/* <Link to={`${rootPath}/searchResults`} > */}
             <Button
               {...this.props}
               onClick={this.onClick}
               type="button"
-              // disabled={this.props.disabled}
               buttonStyle="primary"
               style={{ minHeight: '36px' }}
             >
               <FormattedMessage id="ui-marccat.search.searchButton" />
             </Button>
-            {/* </Link> */}
             <ScanButton {...this.props} disabled={pristine || submitting} />
             <Button
               {...this.props}
@@ -160,8 +135,9 @@ class AdvancedSearchForm extends React.Component {
 export default reduxForm({
   form: 'advancedSearchForms', // a unique identifier for this form
   initialValues: {
-    name: 'indexRadio', value: 'P',
-    testSelected: 'Ainu'
+    name: 'indexRadio',
+    value: 'P',
+    testSelected: 'Ainu',
   },
-  validate
+  validate,
 })(AdvancedSearchForm);

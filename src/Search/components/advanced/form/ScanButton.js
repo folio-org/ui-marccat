@@ -3,26 +3,18 @@
  * @flow
  */
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import Button from '@folio/stripes-components/lib/Button';
+import { connect } from '@folio/stripes-connect';
 import { FormattedMessage } from 'react-intl';
 import * as C from '../../../../Utils';
 
-const styles = theme => ({
-  button: {
-    margin: theme.spacing.unit,
-  },
-  input: {
-    display: 'none',
-  },
-});
+type Props = {
+  onClick: Function;
+  disabled: boolean;
+};
 
-class ScanButton extends React.Component {
-  static propTypes = {
-    onClick: PropTypes.func.isRequired,
-    disabled: PropTypes.bool.isRequired,
-  };
+type State = {};
+class ScanButton extends React.Component<Props, State> {
   render() {
     return (
       <Button
@@ -39,5 +31,5 @@ class ScanButton extends React.Component {
   }
 }
 
-export default withStyles(styles)(ScanButton,C.META.MODULE_NAME);
+export default connect(ScanButton, C.META.MODULE_NAME);
 

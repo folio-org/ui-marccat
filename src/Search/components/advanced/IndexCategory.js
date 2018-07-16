@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from '@folio/stripes-connect';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import { Field } from 'redux-form'; // eslint-disable-line import/no-extraneous-dependencies
+import { Field } from 'redux-form';
+import Select from '@folio/stripes-components/lib/Select';
 import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
 import RadioButton from '@folio/stripes-components/lib/RadioButton';
 import * as C from '../../../Utils';
@@ -162,27 +163,19 @@ class IndexCategory extends React.Component {
         </Col>
         <Col xs={3} style={{ marginLeft: '20px', marginTop: '20px' }}>
           {categories &&
-          <FormControl>
             <Select
-              native
               open={this.state.open}
               onClose={this.handleClose}
               onOpen={this.handleOpen}
               value={this.state.firstSelect}
               onChange={this.handleChangeFirstSelect}
-              inputProps={{
-                name: 'Category',
-                id: 'demo-controlled-open-select',
-              }}
             >
               {options}
             </Select>
-          </FormControl>
           }
         </Col>
         <Col xs={3} style={{ marginTop: '20px' }}>
           {innerIndexes &&
-          <FormControl>
             <Select
               native
               open={this.state.open}
@@ -198,12 +191,10 @@ class IndexCategory extends React.Component {
               <option value="">--</option>
               {optionsInnerIndex}
             </Select>
-          </FormControl>
           }
         </Col>
         <Col xs={3} style={{ marginTop: '20px' }}>
           {constraintIndexes && constraintIndexes.records.length > 0 &&
-          <FormControl>
             <Select
               name="testSelected"
               native
@@ -212,15 +203,10 @@ class IndexCategory extends React.Component {
               onOpen={this.handleOpen}
               value={this.state.thirdSelect}
               onChange={this.handleChangeThirdSelect}
-              inputProps={{
-                name: 'Index',
-                id: 'demo-third-controlled-open-select',
-              }}
             >
               <option value="">--</option>
               {optionsConstraintIndex}
             </Select>
-          </FormControl>
           }
         </Col>
       </Row>

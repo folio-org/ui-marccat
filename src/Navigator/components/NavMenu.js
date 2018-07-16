@@ -1,22 +1,28 @@
 import React from 'react';
-import { AccordionSet, Accordion } from '@folio/stripes-components/lib/Accordion';
 import NavListSection from '@folio/stripes-components/lib/NavListSection';
 import NavListItem from '@folio/stripes-components/lib/NavListItem';
+import NavList from '@folio/stripes-components/lib/NavList';
 
 export default class NavMenu extends React.Component {
   render() {
-    const { item } = this.props;
+    const rootPath = this.props.match.path;
     return (
-      <AccordionSet>
-        {Object.keys(item).map(i => (
-          <Accordion label={i.sectionLabel} id={i.id}>
-            <NavListSection label={i.label} activeLink={i.activeLink}>
-              <NavListItem to={i.to}>{i.label}</NavListItem>
-            </NavListSection>
-          </Accordion>
-        ))
-        }
-      </AccordionSet>
+      <NavList>
+        <NavListSection label="Search" activeLink={`${rootPath}`}>
+          <NavListItem to={`${rootPath}/simpleSearch`}>Simple Search</NavListItem>
+          <NavListItem to={`${rootPath}/advancedSearch`}>Advance Search</NavListItem>
+          <NavListItem to={`${rootPath}/externalSearch`}>External Search</NavListItem>
+          <NavListItem to={`${rootPath}/indexList`}>Indexes</NavListItem>
+          <NavListItem to={`${rootPath}/diacritic`} style={{ marginBottom: '20px' }}>Diacritic</NavListItem>
+        </NavListSection>
+        <NavListSection label="Report">
+          <NavListItem to={`${rootPath}/report`} style={{ marginBottom: '20px' }}>Report</NavListItem>
+        </NavListSection>
+        <NavListSection label="Template">
+          <NavListItem to={`${rootPath}/templateList`}>Template from file</NavListItem>
+          <NavListItem to={`${rootPath}/templateList`} style={{ marginBottom: '20px' }}>Template List</NavListItem>
+        </NavListSection>
+      </NavList>
     );
   }
 }

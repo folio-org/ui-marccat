@@ -3,17 +3,17 @@
  * @flow
  */
 import * as React from 'react';
-import Navigator from '../Navigator/components/Navigator';
+import { Navigator } from '../Navigator';
 
-type Props = {
+type MARCcatProps = {
   stripes: Object,
   resources: Object,
   mutator: Object,
 };
 
-type State = {}
+type MARCcatState = {}
 
-export default class MARCcat extends React.Component<Props, State> {
+export default class MARCcat extends React.Component<MARCcatProps, MARCcatState> {
   static manifest = Object.freeze({
     query: { initialValue: {} },
   });

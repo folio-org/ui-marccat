@@ -14,8 +14,13 @@ import { EditTemplate } from '../';
 import * as C from '../../Utils';
 import css from '../../Search/style/Search.css';
 
+
 class TemplateView extends React.Component {
   static propTypes = {
+    stripes: PropTypes.shape({
+      connect: PropTypes.func.isRequired,
+      intl: PropTypes.object.isRequired,
+    }).isRequired,
     mutator: PropTypes.shape({
       currentTemplate: PropTypes.shape({
         update: PropTypes.func,

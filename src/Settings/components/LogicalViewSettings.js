@@ -4,7 +4,11 @@ import Select from '@folio/stripes-components/lib/Select';
 import Icon from '@folio/stripes-components/lib/Icon';
 import * as C from '../../Utils';
 
-class LogicalView extends React.Component {
+type LogicalViewProps = {
+  label: string,
+};
+type LogicalViewState = {};
+class LogicalView extends React.Component<LogicalViewProps, LogicalViewState> {
   static manifest = Object.freeze({
     views: {
       type: C.RESOURCE_TYPE,

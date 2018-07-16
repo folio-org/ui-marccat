@@ -24,8 +24,6 @@ class NavigatorEmpty extends React.Component {
     return (
       <Paneset static>
         <Pane
-          padContent={false}
-          loading
           firstMenu={searchMenu}
           lastMenu={lastMenu}
           defaultWidth="fill"

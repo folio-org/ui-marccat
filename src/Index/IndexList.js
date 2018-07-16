@@ -4,9 +4,14 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import { connect } from '@folio/stripes-connect';
 import * as C from '../Utils';
 
-const catalogResults = require('../../config/static/index-list');
+type IndexListProps = {
+};
 
-class IndexList extends React.Component {
+type IndexListState = {
+  open: boolean;
+}
+
+class IndexList extends React.Component<IndexListProps, IndexListState> {
   constructor(props) {
     super(props);
     this.state = {

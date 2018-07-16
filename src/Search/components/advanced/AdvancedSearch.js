@@ -1,5 +1,6 @@
 /* @flow */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from '@folio/stripes-connect';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
@@ -11,6 +12,12 @@ import css from '../../style/Search.css';
 import * as C from '../../../Utils';
 
 class AdvancedSearch extends React.Component {
+  static propTypes = {
+    stripes: PropTypes.shape({
+      intl: PropTypes.object.isRequired,
+    }).isRequired,
+  }
+
   static manifest = Object.freeze({
     query: { initialValue: {} },
     resultCount: { initialValue: C.INITIAL_RESULT_COUNT },

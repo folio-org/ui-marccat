@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import Modal from '@folio/stripes-components/lib/Modal';
 import Button from '@folio/stripes-components/lib/Button';
 
-class ErrorModal extends React.Component {
+type ErrorModalProps = {};
+type ErrorModalState = {}
+
+class ErrorModal extends React.Component<ErrorModalProps, ErrorModalState> {
   static contextTypes = {
     translate: PropTypes.func,
   };

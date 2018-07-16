@@ -1,7 +1,11 @@
 import React from 'react';
-import NavList from '@folio/stripes-components/lib/NavList';
+import Paneset from '@folio/stripes-components/lib/Paneset';
+import Pane from '@folio/stripes-components/lib/Pane';
+import { connect } from '@folio/stripes-connect';
 import Router from '../../router';
 import NavMenu from './NavMenu';
+import * as C from '../../Utils';
+
 
 export interface NavItem {
   id: string;
@@ -12,19 +16,24 @@ export interface NavItem {
   activeLink: string;
 }
 
-export default class Navigator extends React.Component {
+class Navigator extends React.Component {
   render() {
-    const item = require('../../../config/static/menu');
-    const navItem: Array<NavItem> = [];
     return (
-      <div>
-        <NavList>
-          <NavMenu item={navItem} />
-        </NavList>
-        <main>
-          <Router {...this.props} />
-        </main>
-      </div>
+      <Paneset>
+        <Pane
+          defaultWidth="20%"
+          paneTitle="Menu"
+          paneSub=""
+          appIcon={{ app: 'marccat' }}
+        >
+          <NavMenu {...this.props} />
+        </Pane>
+        <Router {...this.props} />
+      </Paneset>
     );
   }
 }
+export default connect(
+  Navigator,
+  C.META.MODULE_NAME,
+);

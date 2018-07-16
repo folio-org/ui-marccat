@@ -45,11 +45,6 @@ class CreateTemplate extends React.Component {
     },
   });
 
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   preparePaneMenu() {
     return (
       <PaneMenu {...this.props}>
@@ -66,7 +61,7 @@ class CreateTemplate extends React.Component {
     const formatMsg = this.props.stripes.intl.formatMessage;
     const {
       resources: { records },
-    } = this.props; // eslint-disable-line react/prop-types
+    } = this.props;
     if (!records || !records.hasLoaded) return <div />;
     const obj = remapMultiArray(records.records);
 

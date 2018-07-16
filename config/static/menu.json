@@ -1,5 +1,5 @@
-{
-    "Search":{
+[
+    {
         "id": "search_root_menu",
         "sectionLabel": "Search",
         "label": ["Simple Search"," Advance Search","External Search", "Indexes List", "Diacritic"],
@@ -7,20 +7,20 @@
         "href": [],
         "activeLink": ""
     },
-    "Report":{
+    {
         "id": "report_root_menu",
-        "sectionLabel": "Report Management",
+        "sectionLabel": "Report",
         "label": ["Report"],
         "to": ["report"],
         "href": [],
         "activeLink": ""
     },
-    "Template":{
+    {
         "id": "template_root_menu",
-        "sectionLabel": "Template Management",
+        "sectionLabel": "Template",
         "label": ["Template List"],
         "to": ["templateList"],
         "href": [],
         "activeLink": ""
     }
-}
+]

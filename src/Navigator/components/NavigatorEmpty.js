@@ -43,5 +43,5 @@ class NavigatorEmpty extends React.Component {
 
 export default connect(
   NavigatorEmpty,
-  C.META.MODULE_NAME
+  C.META.MODULE_NAME,
 );

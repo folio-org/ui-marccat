@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { connect } from '@folio/stripes-connect';
-import {Row, Col} from '@folio/stripes-components/lib/LayoutGrid';
+import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import TextField from '@folio/stripes-components/lib/TextField';
 import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
 import RadioButton from '@folio/stripes-components/lib/RadioButton';
@@ -22,16 +22,12 @@ class EditTemplateInfo extends React.Component {
   });
 
   static propTypes = {
-    resources: PropTypes.object,
-    stripes: PropTypes.object,
-    mutator: PropTypes.object,
     onToggle: PropTypes.object.isRequired,
     accordionId: PropTypes.object.isRequired,
     expanded: PropTypes.object.isRequired,
     selectedTemplate: PropTypes.object.isRequired,
   };
 
-  saveTemplateById() {}
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
@@ -101,4 +97,4 @@ EditTemplateInfo.propTypes = {
   }).isRequired,
 };
 
-export default connect(EditTemplateInfo,  C.META.MODULE_NAME);
+export default connect(EditTemplateInfo, C.META.MODULE_NAME);

@@ -26,12 +26,6 @@ class TemplateForm extends React.Component {
     }).isRequired,
     mandatoryField: PropTypes.array.isRequired,
     handleSubmit: PropTypes.func.isRequired,
-    pristine: PropTypes.bool,
-    submitting: PropTypes.bool,
-    onCancel: PropTypes.func,
-    reset: PropTypes.func,
-    initialValues: PropTypes.object,
-    handleKeyDown: PropTypes.func,
   };
 
   validate(values) {
@@ -62,7 +56,7 @@ class TemplateForm extends React.Component {
           <Col xs={6}>
             <Field
               style={{
-                width: 100 + '%',
+                width: `${100}%`,
                 marginTop: 25,
               }}
               label={formatMsg({

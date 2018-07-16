@@ -1,14 +1,9 @@
 import React from 'react';
 import Button from '@folio/stripes-components/lib/Button';
-import { PropTypes } from 'prop-types';
 import { connect } from '@folio/stripes-connect';
 import * as C from '../../Utils';
 
 class CreateTemplateButton extends React.Component {
-  static propTypes = {
-    onClick: PropTypes.func,
-    disabled: PropTypes.bool,
-  };
   render() {
     return (
       <Button
@@ -27,5 +22,5 @@ class CreateTemplateButton extends React.Component {
 
 export default connect(
   CreateTemplateButton,
-  C.META.MODULE_NAME
+  C.META.MODULE_NAME,
 );

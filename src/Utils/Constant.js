@@ -1,7 +1,7 @@
 // MARCCAT UI APP METADADA
 export const META = {
   MODULE_NAME: 'ui-marccat',
-  ICON_TITLE: 'marccat'
+  ICON_TITLE: 'marccat',
 };
 
 // API
@@ -62,14 +62,14 @@ export const API_RESULT_JSON_KEY = {
   FIELDS: 'fields',
   INDEX_CATEGORIES: 'categories',
   INDEX_INNER: 'indexes',
-  CONSTRAINT_INDEX: 'constraints'
+  CONSTRAINT_INDEX: 'constraints',
 };
 
 export const INITIAL_RESULT_COUNT = 30;
 export const RESULT_COUNT_INCREMENT = 30;
 export const RESULT_PER_REQUEST = 20;
 export const FILTER_CONFIG = [{}];
-export const SEPARATOR = ';;;'
+export const SEPARATOR = ';;;';
 
 
 // TOASTER MESSAGE

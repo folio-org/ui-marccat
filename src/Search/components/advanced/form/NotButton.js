@@ -1,18 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { connect } from '@folio/stripes-connect';
 import Button from '@folio/stripes-components/lib/Button';
 import { FormattedMessage } from 'react-intl';
 import * as C from '../../../../Utils';
 
-const styles = theme => ({
-  button: {
-    margin: theme.spacing.unit,
-  },
-  input: {
-    display: 'none',
-  },
-});
 
 class NotButton extends React.Component {
   static propTypes = {
@@ -35,4 +27,4 @@ class NotButton extends React.Component {
   }
 }
 
-export default withStyles(styles)(NotButton,C.META.MODULE_NAME);
+export default connect(NotButton, C.META.MODULE_NAME);

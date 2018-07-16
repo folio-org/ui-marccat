@@ -4,7 +4,7 @@
  */
 import React from 'react';
 import Route from 'react-router-dom/Route';
-import Switch from 'react-router/Switch';
+import Switch from 'react-router-dom/Switch';
 import NavigatorEmpty from './Navigator/components/NavigatorEmpty';
 import SearchResults from './Search/components/results/SearchResults';
 import { TemplateView, CreateTemplate } from './Template/';

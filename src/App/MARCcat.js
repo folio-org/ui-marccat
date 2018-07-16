@@ -3,7 +3,7 @@
  * @flow
  */
 import * as React from 'react';
-import NavDrawer from '../Navigator/components/NavDrawer';
+import Navigator from '../Navigator/components/Navigator';
 
 type Props = {
   stripes: Object,
@@ -11,13 +11,14 @@ type Props = {
   mutator: Object,
 };
 
-export default class MARCcat extends React.Component<Props, {}> {
+type State = {}
 
+export default class MARCcat extends React.Component<Props, State> {
   static manifest = Object.freeze({
     query: { initialValue: {} },
   });
 
   render() {
-    return <NavDrawer {...this.props} />;
+    return <Navigator {...this.props} />;
   }
 }

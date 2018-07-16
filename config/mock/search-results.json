@@ -1,37 +1,35 @@
-{
-    "searchResults": [
-        {
-            "id": 1,
-            "amicusNumber": "1691908",
-            "title": "La religione babilonese e assira / Giuseppe Furlani.",
-            "name": "Furlani, Giuseppe,1885-1962",
-            "date": "1928",
-            "date2": "1929",
-            "edition": "",
-            "serie": "Storia delle religioni (Zanichelli)",
-            "volume": "6, 9"
-        },
-        {
-            "id": 2,
-            "amicusNumber": "1691540",
-            "title": "Il Governo e la Chiesa in Polonia di fronte alla diplomazia vaticana (1945-1978) / Paweł Wójcik ; [prefazione di Jan Mikrut].",
-            "name": "Wójcik, Paweł Sebastian,s.v.d,1976-,",
-            "date": "2016",
-            "date2": "",
-            "edition": "",
-            "serie": "Storia della Chiesa in Europa centro-orientale",
-            "volume": ""
-        },
-        {
-            "id": 3,
-            "amicusNumber": "1691520",
-            "title": "Storia antica : ad uso delle scuole secondarie e militari / Gerolamo Olivati.",
-            "name": "Olivati, Girolamo",
-            "date": "1918",
-            "date2": "9999",
-            "edition": "20. ed.",
-            "serie": "",
-            "volume": ""
-        }
-    ]
-}
+[
+    {
+        "id": 1,
+        "amicusNumber": "1691908",
+        "title": "La religione babilonese e assira / Giuseppe Furlani.",
+        "name": "Furlani, Giuseppe,1885-1962",
+        "date": "1928",
+        "date2": "1929",
+        "edition": "",
+        "serie": "Storia delle religioni (Zanichelli)",
+        "volume": "6, 9"
+    },
+    {
+        "id": 2,
+        "amicusNumber": "1691540",
+        "title": "Il Governo e la Chiesa in Polonia di fronte alla diplomazia vaticana (1945-1978) / Paweł Wójcik ; [prefazione di Jan Mikrut].",
+        "name": "Wójcik, Paweł Sebastian,s.v.d,1976-,",
+        "date": "2016",
+        "date2": "",
+        "edition": "",
+        "serie": "Storia della Chiesa in Europa centro-orientale",
+        "volume": ""
+    },
+    {
+        "id": 3,
+        "amicusNumber": "1691520",
+        "title": "Storia antica : ad uso delle scuole secondarie e militari / Gerolamo Olivati.",
+        "name": "Olivati, Girolamo",
+        "date": "1918",
+        "date2": "9999",
+        "edition": "20. ed.",
+        "serie": "",
+        "volume": ""
+    }
+]

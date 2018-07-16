@@ -8,16 +8,9 @@ class ErrorModal extends React.Component {
     translate: PropTypes.func,
   };
 
-  static propTypes = {
-    open: PropTypes.bool,
-    onClose: PropTypes.func,
-    message: PropTypes.string,
-  };
-
   render() {
     const { open, message, onClose } = this.props;
     const { translate } = this.context;
-
     return (
       <Modal
         onClose={onClose}

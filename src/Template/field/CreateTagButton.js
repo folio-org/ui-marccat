@@ -21,5 +21,5 @@ class CreateTagButton extends React.Component {
 
 export default connect(
   CreateTagButton,
-  C.META.MODULE_NAME
+  C.META.MODULE_NAME,
 );

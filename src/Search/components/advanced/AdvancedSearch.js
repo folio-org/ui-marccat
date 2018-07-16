@@ -34,13 +34,9 @@ class AdvancedSearch extends React.Component {
     this.state = {
       showRestrictionSettings: false,
     };
-    this.connectedRestrictionSettingsView = props.stripes.connect(
-      RestrictionView
-    );
+    this.connectedRestrictionSettingsView = props.stripes.connect(RestrictionView);
     this.handleClick = this.handleClick.bind(this);
-    this.handleCloseRestrictionPanel = this.handleCloseRestrictionPanel.bind(
-      this
-    );
+    this.handleCloseRestrictionPanel = this.handleCloseRestrictionPanel.bind(this);
   }
 
   handleClose() {
@@ -91,14 +87,12 @@ class AdvancedSearch extends React.Component {
       <Paneset static>
         <Pane
           dismissible
-          onClose={() => {
-            return this.props.history.goBack();
-          }}
+          onClose={() => this.props.history.goBack()}
           actionMenuItems={actionMenuItems}
           lastMenu={lastMenu}
           defaultWidth="fill"
           paneSub="search result"
-          appIcon={{ app:  C.META.ICON_TITLE }}
+          appIcon={{ app: C.META.ICON_TITLE }}
           paneTitle={formatMsg({
             id: 'ui-marccat.navigator.search',
           })}
@@ -113,7 +107,7 @@ class AdvancedSearch extends React.Component {
             defaultWidth="fill"
             paneTitle="Search Settings"
             paneSub="restriction"
-            appIcon={{ app:  C.META.ICON_TITLE }}
+            appIcon={{ app: C.META.ICON_TITLE }}
             dismissible
             onClose={this.handleCloseRestrictionPanel}
           >
@@ -128,5 +122,5 @@ class AdvancedSearch extends React.Component {
 }
 export default connect(
   AdvancedSearch,
-  C.META.MODULE_NAME
+  C.META.MODULE_NAME,
 );

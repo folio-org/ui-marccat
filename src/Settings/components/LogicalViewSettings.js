@@ -1,10 +1,10 @@
 import React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
+import Select from '@folio/stripes-components/lib/Select';
 import Icon from '@folio/stripes-components/lib/Icon';
 import * as C from '../../Utils';
-import { MARCcatSelect } from '../../Common';
 
-class LogicalView extends React.Component{
+class LogicalView extends React.Component {
   static manifest = Object.freeze({
     views: {
       type: C.RESOURCE_TYPE,
@@ -35,8 +35,9 @@ class LogicalView extends React.Component{
             <Icon icon="spinner-ellipsis" />
           )}
           {logicalViews.length > 0 && (
-            <MARCcatSelect
-              options={logicalViews}
+            <Select
+              id="logical_view"
+              dataOptions={logicalViews}
               label="Database"
             />
           )}

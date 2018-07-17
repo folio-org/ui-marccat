@@ -15,18 +15,21 @@ type DiacriticProps = {
 type DiacriticState = {
   value: string;
   charCopied: string;
+  isOpen: boolean;
 };
 
 class Diacritic extends Component<DiacriticProps, DiacriticState> {
   constructor(props: DiacriticProps) {
     super(props);
     this.state = {
-      value: '',
-      charCopied: ''
+      value: '', //eslint-disable-line
+      charCopied: '', //eslint-disable-line
+      isOpen: false, //eslint-disable-line
     };
     /** bind habdler **/
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handlerOpenDetail = this.handlerOpenDetail.bind(this);
   }
 
   static defaultProps = {
@@ -34,19 +37,23 @@ class Diacritic extends Component<DiacriticProps, DiacriticState> {
   };
 
   handleChange = (event) => {
-    this.setState({ value: event.target.value });
+    this.setState({ value: event.target.value });//eslint-disable-line
   };
 
-  handleSubmit = () => {
-
-  };
+  handlerOpenDetail = () => {
+    this.setState({
+      isOpen: true,
+    });
+  }
+  handleSubmit = () => {};
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
     const { pristine, reset, submitting } = this.props;
+    const { isOpen } = this.state;
     const lastMenu = (
       <PaneMenu {...this.props}>
-        <IconButton key="icon-gear" icon="gear" />
+        <IconButton key="icon-gear" icon="gear" onClick={this.handlerOpenDetail} />
       </PaneMenu>
     );
 
@@ -111,6 +118,23 @@ class Diacritic extends Component<DiacriticProps, DiacriticState> {
             </Col>
           </Row>
         </Pane>
+        {isOpen &&
+        <Pane
+          dismissible
+          onClose={() => this.setState({
+            isOpen: false,
+          })}
+          actionMenuItems={actionMenuItems}
+          lastMenu={lastMenu}
+          paneTitle={formatMsg({
+            id: 'ui-marccat.diacritic.title',
+          })}
+          paneSub={formatMsg({
+            id: 'ui-marccat.diacritic.subTitle',
+          })}
+          appIcon={{ app: C.META.ICON_TITLE }}
+        />
+        }
       </Paneset>
     );
   }

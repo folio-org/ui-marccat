@@ -3,7 +3,7 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { connect } from '@folio/stripes-connect';
 import Router from '../../router';
-import NavMenu from './NavMenu';
+import { NavMenu, LogicalView } from '../';
 import * as C from '../../Utils';
 
 
@@ -16,16 +16,29 @@ export interface NavItem {
   activeLink: string;
 }
 
-class Navigator extends React.Component {
+type NavigatorProps = {
+  stripes: Object;
+};
+type NavigatorState = {};
+
+class Navigator extends React.Component<NavigatorProps, NavigatorState> {
   render() {
+    const { formatMessage } = this.props.stripes.intl;
     return (
       <Paneset>
         <Pane
-          defaultWidth="20%"
-          paneTitle="Menu"
-          paneSub=""
+          dismissible
+          onClose={() => {}}
+          defaultWidth="30%"
+          paneTitle={formatMessage({
+            id: 'ui-marccat.navigator.title',
+          })}
+          paneSub={formatMessage({
+            id: 'ui-marccat.diacritic.title',
+          }).toLowerCase()}
           appIcon={{ app: 'marccat' }}
         >
+          <LogicalView {...this.props} label="Database"/>
           <NavMenu {...this.props} />
         </Pane>
         <Router {...this.props} />

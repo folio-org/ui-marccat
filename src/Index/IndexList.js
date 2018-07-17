@@ -11,10 +11,6 @@ import s from '../Theme/override.css';
 const mainIndexResults = require('../../config/static/main-index-list')
 const secondaryIndexResults = require('../../config/static/secondary-index-list')
 
-const propTypes = {
-
-}
-
 function printDiv(divName, anotherDivName) {
   let printContentsMain = document.getElementById(divName).innerHTML;
   let printContentsSecondary = document.getElementById(anotherDivName).innerHTML;
@@ -29,9 +25,7 @@ class IndexList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: true, // eslint-disable-line react/no-unused-state
     };
-
   }
 
   render() {
@@ -40,7 +34,6 @@ class IndexList extends React.Component {
         static
       >
         <Pane
-          dismissible
           defaultWidth="100%"
           paneTitle='INDEX GUIDE'
         >
@@ -60,14 +53,14 @@ class IndexList extends React.Component {
             >
               <div id='main'>
                 {
-                  mainIndexResults.map((dynamicData, i) =>
+                  mainIndexResults.map((dynamicData) =>
                     <table style={{ float: 'left', width: '50%', paddingTop: '50pt' }}>
                       <thead>
                         <tr>
                           <th colSpan="2"> <p><h2 className={s.CustomIndexesH2}>{dynamicData.title}</h2></p></th>
                         </tr>
                         {
-                          dynamicData.descriptions.map((dynamicValues, k) =>
+                          dynamicData.descriptions.map((dynamicValues) =>
                             <tbody>
                               <tr className={s.CustomIndexTR}>
                                 <td colSpan="1"><b>{dynamicValues.key}</b></td>
@@ -110,14 +103,14 @@ class IndexList extends React.Component {
             >
               <div id='secondary'>
                 {
-                  secondaryIndexResults.map((dynamicData, i) =>
+                  secondaryIndexResults.map((dynamicData) =>
                     <table style={{ float: 'left', width: '50%', paddingTop: '50pt' }}>
                       <thead>
                         <tr>
                           <th colSpan="2"> <p><h2 className={s.CustomIndexesH2}>{dynamicData.title}</h2></p></th>
                         </tr>
                         {
-                          dynamicData.descriptions.map((dynamicValues, k) =>
+                          dynamicData.descriptions.map((dynamicValues) =>
                             <tbody>
                               <tr className={s.CustomIndexTR}>
                                 <td colSpan="1"><b>{dynamicValues.key}</b></td>
@@ -138,6 +131,4 @@ class IndexList extends React.Component {
     );
   }
 }
-IndexList.propTypes = propTypes;
-
 export default connect(IndexList, C.META.MODULE_NAME)

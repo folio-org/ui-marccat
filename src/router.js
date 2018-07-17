@@ -10,6 +10,8 @@ import SearchResults from './Search/components/results/SearchResults';
 import { TemplateView, CreateTemplate } from './Template/';
 import { AdvancedSearch, SimpleSearch } from './Search/';
 import IndexList from './Index/IndexList';
+import DiacriticsList from './Diacritics/DiacriticsList';
+
 
 export function ConnectedRoute({ path, id, component: Component, ...props }) {
   return (
@@ -45,10 +47,10 @@ export default class Router extends React.Component {
           <TemplateView {...this.props} id="empty_crontainer" />
         </Route>
         <Route path={`${rootPath}/indexList`}>
-          <IndexList {...this.props} id="index_list"  buttonClickText="close" handleClose={()=> alert('alert')} />
+          <IndexList {...this.props} id="index_list" />
         </Route>
         <Route path={`${rootPath}/diacritic`}>
-          <IndexList {...this.props} id="diacritic" buttonClickText="close" handleClose={()=> alert('alert')} />
+          <DiacriticsList {...this.props} id="diacritic" />
         </Route>
         <Route path={`${rootPath}`}>
           <NavigatorEmpty {...this.props} id="empty_corntainer" />

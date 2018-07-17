@@ -38,7 +38,7 @@ class Navigator extends React.Component<NavigatorProps, NavigatorState> {
           }).toLowerCase()}
           appIcon={{ app: 'marccat' }}
         >
-          <LogicalView {...this.props} label="Database"/>
+          <LogicalView {...this.props} label="Database" />
           <NavMenu {...this.props} />
         </Pane>
         <Router {...this.props} />

@@ -1,0 +1,357 @@
+[
+  {
+    "title": "Classification",
+    "descriptions": [
+      {
+        "key": "AN1",
+        "value": "No. rec. equivalent  "
+      },
+      {
+        "key": "CC",
+        "value": "Other Class. (Canada)"
+      },
+      {
+        "key": "DC",
+        "value": "Dewey Classification "
+      },
+      {
+        "key": "LC",
+        "value": "LC Classification    "
+      },
+      {
+        "key": "LX   ",
+        "value": "Local Classification "
+      },
+      {
+        "key": "MC   ",
+        "value": "NLM Classification   "
+      },
+      {
+        "key": "OC   ",
+        "value": "Other Classification "
+      },
+      {
+        "key": "SC   ",
+        "value": "NAL Subject Category "
+      },
+      {
+        "key": "UC   ",
+        "value": "Universal Decimal    "
+      },
+      {
+        "key": "XC   ",
+        "value": "Document Shelving    "
+      },
+      {
+        "key": "ZC   ",
+        "value": "NLC Classed Catalogue"
+      }
+    ]
+  },
+  {
+    "title": "Control number",
+    "descriptions": [
+      {
+        "key": "AN   ",
+        "value": "AMICUS No.           "
+      },
+      {
+        "key": "BN   ",
+        "value": "ISBN                 "
+      },
+      {
+        "key": "CA   ",
+        "value": "Canadiana No.        "
+      },
+      {
+        "key": "CD   ",
+        "value": "CODEN designation    "
+      },
+      {
+        "key": "CN   ",
+        "value": "CONSER No.           "
+      },
+      {
+        "key": "DN   ",
+        "value": "Dynix No.            "
+      },
+      {
+        "key": "LN   ",
+        "value": "LC control No.       "
+      },
+      {
+        "key": "ML   ",
+        "value": "MultiLis No.         "
+      },
+      {
+        "key": "MN   ",
+        "value": "ISMN                 "
+      },
+      {
+        "key": "MU   ",
+        "value": "Cdn Sheet Music No.  "
+      },
+      {
+        "key": "NF   ",
+        "value": "NFB Control No.      "
+      },
+      {
+        "key": "NN   ",
+        "value": "Other Control No.    "
+      },
+      {
+        "key": "PB   ",
+        "value": "NRC Publication No.  "
+      },
+      {
+        "key": "PN   ",
+        "value": "Music Publisher No.  "
+      },
+      {
+        "key": "RM   ",
+        "value": "CRMM No.             "
+      },
+      {
+        "key": "RN   ",
+        "value": "Report No.           "
+      },
+      {
+        "key": "SN   ",
+        "value": "ISSN                 "
+      },
+      {
+        "key": "TN   ",
+        "value": "NLM TCN              "
+      },
+      {
+        "key": "XN   ",
+        "value": "Immutable No.        "
+      }
+    ]
+  },
+  {
+    "title": "ISBN",
+    "descriptions": [
+      {
+        "key": "BN   ",
+        "value": "ISBN                 "
+      }
+    ]
+  },
+  {
+    "title": "ISSN",
+    "descriptions": [
+      {
+        "key": "SN   ",
+        "value": "ISSN                 "
+      }
+    ]
+  },
+  {
+    "title": "Keyword",
+    "descriptions": [
+      {
+        "key": "AW   ",
+        "value": "Any Keyword          "
+      },
+      {
+        "key": "CW   ",
+        "value": "Class keyword        "
+      },
+      {
+        "key": "NT   ",
+        "value": "Note Keyword         "
+      },
+      {
+        "key": "NW   ",
+        "value": "Name Keyword         "
+      },
+      {
+        "key": "PW   ",
+        "value": "Publ. Name Keyword   "
+      },
+      {
+        "key": "SW   ",
+        "value": "Subject Keyword      "
+      },
+      {
+        "key": "TW   ",
+        "value": "Title Keyword        "
+      }
+    ]
+  },
+  {
+    "title": "Local Number",
+    "descriptions": [
+      {
+        "key": "AN   ",
+        "value": "AMICUS No.           "
+      },
+      {
+        "key": "BC   ",
+        "value": "Barcode nbr.         "
+      },
+      {
+        "key": "CP   ",
+        "value": "Copy id nbr           "
+      }
+    ]
+  },
+  {
+    "title": "Name",
+    "descriptions": [
+      {
+        "key": "NA    ",
+        "value": "Name                "
+      },
+      {
+        "key": "NC    ",
+        "value": "Corporate Name      "
+      },
+      {
+        "key": "NM    ",
+        "value": "Conf./Meeting Name  "
+      },
+      {
+        "key": "NP    ",
+        "value": "Personal Name       "
+      },
+      {
+        "key": "NW    ",
+        "value": "Name Keyword        "
+      },
+      {
+        "key": "PW    ",
+        "value": "Publ. Name Keyword"
+      }
+    ]
+  },
+  {
+    "title": "Publisher",
+    "descriptions": [
+      {
+        "key": "PP    ",
+        "value": "Publication Plac                 "
+      },
+      {
+        "key": "PU    ",
+        "value": "Publisher Name                   "
+      },
+      {
+        "key": "PUD   ",
+        "value": "Publisher small code for digital "
+      },
+      {
+        "key": "PUT   ",
+        "value": "Publisher: small code for paper  "
+      },
+      {
+        "key": "PW    ",
+        "value": "Publisher Keyword                "
+      }
+    ]
+  },
+  {
+    "title": "Shelf location",
+    "descriptions": [
+      {
+        "key": "L0    ",
+        "value": "National Archives                "
+      },
+      {
+        "key": "L1    ",
+        "value": "LC-Like                          "
+      },
+      {
+        "key": "L2    ",
+        "value": "NLC Periodical                   "
+      },
+      {
+        "key": "L3    ",
+        "value": "Microform                        "
+      },
+      {
+        "key": "L4    ",
+        "value": "AERO                             "
+      },
+      {
+        "key": "L5    ",
+        "value": "UDC                              "
+      },
+      {
+        "key": "L6    ",
+        "value": "NLC Sound Recording              "
+      },
+      {
+        "key": "L7    ",
+        "value": "NLC Official Publ.               "
+      },
+      {
+        "key": "L8    ",
+        "value": "NLC Newspaper                    "
+      },
+      {
+        "key": "L9    ",
+        "value": "Dewey                            "
+      },
+      {
+        "key": "LL    ",
+        "value": "Other                            "
+      },
+      {
+        "key": "LM    ",
+        "value": "National Library of Medicine     "
+      }
+    ]
+  },
+  {
+    "title": "Subject",
+    "descriptions": [
+      {
+        "key": "ME    ",
+        "value": "Subject Mesh       "
+      },
+      {
+        "key": "SI    ",
+        "value": "Suggest            "
+      },
+      {
+        "key": "SU    ",
+        "value": "Subject Heading    "
+      },
+      {
+        "key": "SW    ",
+        "value": "Subject Keyword    "
+      },
+      {
+        "key": "TH    ",
+        "value": "Thesaurus          "
+      }
+    ]
+  },
+  {
+    "title": "Title",
+    "descriptions": [
+      {
+        "key": "NTN   ",
+        "value": "Name/Title for name    "
+      },
+      {
+        "key": "NTT   ",
+        "value": "Name/Title for title   "
+      },
+      {
+        "key": "TI    ",
+        "value": "Title                  "
+      },
+      {
+        "key": "TS    ",
+        "value": "Series Title           "
+      },
+      {
+        "key": "TW    ",
+        "value": "Title Keyword          "
+      }
+    ]
+  }
+]

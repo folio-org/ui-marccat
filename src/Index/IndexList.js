@@ -12,16 +12,17 @@ type IndexListProps = {
 
 type IndexListState = {
   open: boolean;
-const mainIndexResults = require('../../config/static/main-index-list')
-const secondaryIndexResults = require('../../config/static/secondary-index-list')
+}
+const mainIndexResults = require('../../config/static/main-index-list');
+const secondaryIndexResults = require('../../config/static/secondary-index-list');
 
 function printDiv(divName, anotherDivName) {
-  let printContentsMain = document.getElementById(divName).innerHTML;
-  let printContentsSecondary = document.getElementById(anotherDivName).innerHTML;
-  let originalContents = document.body.innerHTML;
-  document.body.innerHTML = "--------------------------------------------------------------- MAIN INDEXES ---------------------------------------------------------------" + printContentsMain + "---------------------------------------------------------- SECONDARY INDEXES ----------------------------------------------------------" + printContentsSecondary;
+  const printContentsMain = document.getElementById(divName).textContent;// eslint-disable-lines
+  const printContentsSecondary = document.getElementById(anotherDivName).textContent;
+  const originalContents = document.body.textContent;
+  document.body.textContent = `--------------------------------------------------------------- MAIN INDEXES ---------------------------------------------------------------" + printContentsMain + "---------------------------------------------------------- SECONDARY INDEXES ----------------------------------------------------------${printContentsSecondary}`;
   window.print();
-  document.body.innerHTML = originalContents;
+  document.body.textContent = originalContents;
 }
 
 class IndexList extends React.Component<IndexListProps, IndexListState> {
@@ -38,93 +39,89 @@ class IndexList extends React.Component<IndexListProps, IndexListState> {
       >
         <Pane
           defaultWidth="100%"
-          paneTitle='INDEX GUIDE'
+          paneTitle="INDEX GUIDE"
         >
           <Button
             onClick={() => printDiv('main', 'secondary')}
             type="button"
             buttonStyle="primary"
-            style={{position: 'absolute' ,minHeight: '36px' }}
+            style={{ position: 'absolute', minHeight: '36px' }}
           >
             <FormattedMessage id="Print" />
           </Button>
           <Paneset static>
             <Pane
               defaultWidth="fill"
-              paneTitle='Main Indexes'
+              paneTitle="Main Indexes"
               appIcon={{ app: 'cataloging' }}
             >
-              <div id='main'>
+              <div id="main">
                 {
                   mainIndexResults.map((dynamicData) =>
-                    <table style={{ float: 'left', width: '50%', paddingTop: '50pt' }}>
+                    (<table style={{ float: 'left', width: '50%', paddingTop: '50pt' }}>
                       <thead>
                         <tr>
                           <th colSpan="2"> <p><h2 className={s.CustomIndexesH2}>{dynamicData.title}</h2></p></th>
                         </tr>
                         {
                           dynamicData.descriptions.map((dynamicValues) =>
-                            <tbody>
+                            (<tbody>
                               <tr className={s.CustomIndexTR}>
                                 <td colSpan="1"><b>{dynamicValues.key}</b></td>
                                 <td colSpan="1">{dynamicValues.value}</td>
                               </tr>
-                            </tbody>
-                          )
-                        }
+                            </tbody>)
+                          )}
                       </thead>
-                    </table>
-                  )
+                    </table>)
                 }
-                <div >
+                <div>
                   <h1 style={{ visibility: 'hidden' }}>MAIN INDEXES</h1>
                 </div>
-                <div >
+                <div>
                   <h1 style={{ visibility: 'hidden' }}>MAIN INDEXES</h1>
                 </div>
-                <div >
+                <div>
                   <h1 style={{ visibility: 'hidden' }}>MAIN INDEXES</h1>
                 </div>
-                <div >
+                <div>
                   <h1 style={{ visibility: 'hidden' }}>MAIN INDEXES</h1>
                 </div>
-                <div >
+                <div>
                   <h1 style={{ visibility: 'hidden' }}>MAIN INDEXES</h1>
                 </div>
-                <div >
+                <div>
                   <h1 style={{ visibility: 'hidden' }}>MAIN INDEXES</h1>
                 </div>
-                <div >
+                <div>
                   <h1 style={{ visibility: 'hidden' }}>MAIN INDEXES</h1>
                 </div>
               </div>
             </Pane>
             <Pane
               defaultWidth="fill"
-              paneTitle='Secondary Indexes'
+              paneTitle="Secondary Indexes"
               appIcon={{ app: 'cataloging' }}
             >
-              <div id='secondary'>
+              <div id="secondary">
                 {
                   secondaryIndexResults.map((dynamicData) =>
-                    <table style={{ float: 'left', width: '50%', paddingTop: '50pt' }}>
+                    (<table style={{ float: 'left', width: '50%', paddingTop: '50pt' }}>
                       <thead>
                         <tr>
                           <th colSpan="2"> <p><h2 className={s.CustomIndexesH2}>{dynamicData.title}</h2></p></th>
                         </tr>
                         {
                           dynamicData.descriptions.map((dynamicValues) =>
-                            <tbody>
+                            (<tbody>
                               <tr className={s.CustomIndexTR}>
                                 <td colSpan="1"><b>{dynamicValues.key}</b></td>
                                 <td colSpan="1">{dynamicValues.value}</td>
                               </tr>
-                            </tbody>
-                          )
+                            </tbody>))
                         }
                       </thead>
-                    </table>
-                  )
+                    </table>))
                 }
               </div>
             </Pane>
@@ -134,4 +131,4 @@ class IndexList extends React.Component<IndexListProps, IndexListState> {
     );
   }
 }
-export default connect(IndexList, C.META.MODULE_NAME)
+export default connect(IndexList, C.META.MODULE_NAME);

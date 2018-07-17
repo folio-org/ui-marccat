@@ -1,5 +1,4 @@
 import React from 'react';
-import Pane from '@folio/stripes-components/lib/Pane';
 import Select from '@folio/stripes-components/lib/Select';
 import Icon from '@folio/stripes-components/lib/Icon';
 import { connect } from '@folio/stripes-connect';

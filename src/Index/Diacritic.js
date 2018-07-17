@@ -26,7 +26,7 @@ class Diacritic extends Component<DiacriticProps, DiacriticState> {
       charCopied: '', //eslint-disable-line
       isOpen: false, //eslint-disable-line
     };
-    /** bind habdler **/
+    /** bind handler **/
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handlerOpenDetail = this.handlerOpenDetail.bind(this);

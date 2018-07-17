@@ -9,7 +9,7 @@ import NavigatorEmpty from './Navigator/components/NavigatorEmpty';
 import SearchResults from './Search/components/results/SearchResults';
 import { TemplateView, CreateTemplate } from './Template/';
 import { AdvancedSearch, SimpleSearch } from './Search/';
-import IndexList from './Index/IndexList';
+import { IndexList, Diacritic } from './Index/';
 
 export function ConnectedRoute({ path, id, component: Component, ...props }) {
   return (
@@ -31,7 +31,7 @@ export default class Router extends React.Component {
         <ConnectedRoute path={`${rootPath}/templateAdd`} {...this.props} component={CreateTemplate} id="template_create" />
         <ConnectedRoute path={`${rootPath}/templatelist`} {...this.props} component={TemplateView} id="template_list" />
         <ConnectedRoute path={`${rootPath}/indexList`} {...this.props} component={IndexList} id="index_list" />
-        <ConnectedRoute path={`${rootPath}/diacritic`} {...this.props} component={IndexList} id="diacritic" />
+        <ConnectedRoute path={`${rootPath}/diacritic`} {...this.props} component={Diacritic} id="diacritic" />
         <ConnectedRoute path={`${rootPath}`} {...this.props} component={NavigatorEmpty} id="navigation_root" />
       </Switch>
     );

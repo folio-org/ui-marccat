@@ -54,6 +54,7 @@
   "search.indexes" : "Indexes",
   "search.searchButton" : "Search",
   "search.scanButton" : "Scan",
+  "search.clear" : "Clear",
   "search.andButton" : "AND",
   "search.orButton" : "OR",
   "search.notButton" : "NOT",
@@ -70,5 +71,9 @@
   "search.wildCard.replace2" : "Replace one character",
   "search.wildCard.restriction" : "Restriction",
 
-  "search.wrong.input":"Wrong input on search field"
+  "search.wrong.input":"Wrong input on search field",
+
+  "diacritic.title":"Diacritic",
+  "diacritic.subTitle": "Diacritic Table",
+  "diacritic.char.copied":"Char copied "
 }

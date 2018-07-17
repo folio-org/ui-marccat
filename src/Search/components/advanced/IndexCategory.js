@@ -15,7 +15,7 @@ import * as C from '../../../Utils';
 class IndexCategory extends React.Component {
   static manifest = Object.freeze({
     indexType: {},
-    /* lang: {}, */
+    innerIndexValue: {},
     categories: {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
@@ -23,19 +23,18 @@ class IndexCategory extends React.Component {
       headers: { 'x-okapi-tenant': 'tnx' },
       records: C.API_RESULT_JSON_KEY.INDEX_CATEGORIES,
     },
-    innerIndexValue: {},
     innerIndexes: {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
       path: 'indexes?categoryType=%{indexType}&categoryCode=%{innerIndexValue}&lang=ita',
-      headers: { 'x-okapi-tenant': 'tnx' },
+      headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.INDEX_INNER,
     },
     constraintIndexValue: {},
     constraintIndexes: {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
-      headers: { 'x-okapi-tenant': 'tnx' },
+      headers: C.ENDPOINT.HEADERS,
       path: 'indexes/%{constraintIndexValue}?lang=ita',
       records: C.API_RESULT_JSON_KEY.CONSTRAINT_INDEX,
     },

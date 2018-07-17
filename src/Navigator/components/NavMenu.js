@@ -10,7 +10,7 @@ export default class NavMenu extends React.Component {
       <NavList>
         <NavListSection label="Search" activeLink={`${rootPath}`}>
           <NavListItem to={`${rootPath}/simpleSearch`}>Simple Search</NavListItem>
-          <NavListItem to={`${rootPath}/advancedSearch`}>Advance Search</NavListItem>
+          <NavListItem to={`${rootPath}/advancedSearch`}>Advanced Search</NavListItem>
           <NavListItem to={`${rootPath}/externalSearch`}>External Search</NavListItem>
           <NavListItem to={`${rootPath}/indexList`}>Indexes</NavListItem>
           <NavListItem to={`${rootPath}/diacritic`} style={{ marginBottom: '20px' }}>Diacritic</NavListItem>

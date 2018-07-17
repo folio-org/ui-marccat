@@ -88,7 +88,7 @@ class AdvancedSearchForm extends React.Component {
   }
 
   render() {
-    const { submitting, pristine } = this.props;
+    const { submitting, pristine, reset } = this.props;
     return (
       <form id="search-form" name="advancedSearchForms" onSubmit={this.handleSubmit} noValidate>
         <IndexCategory {...this.props} onSelectIndex={this.handleLogicButton} onSelectConstraint={this.handleConstraint} title="Category" />
@@ -117,7 +117,7 @@ class AdvancedSearchForm extends React.Component {
             <ScanButton {...this.props} disabled={pristine || submitting} />
             <Button
               {...this.props}
-              onClick={this.props.onClick}
+              onClick={reset}
               type="button"
               disabled={pristine || submitting}
               buttonStyle="primary"

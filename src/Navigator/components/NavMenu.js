@@ -3,8 +3,19 @@ import { AccordionSet, Accordion } from '@folio/stripes-components/lib/Accordion
 import NavListSection from '@folio/stripes-components/lib/NavListSection';
 import NavListItem from '@folio/stripes-components/lib/NavListItem';
 import NavList from '@folio/stripes-components/lib/NavList';
+import { AdvanceSearchForm } from '../../Search/';
 
 export default class NavMenu extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleAccordionClick = this.handleAccordionClick.bind(this);
+  }
+
+  handleAccordionClick = (url) => {
+    this.props.history.push(url);
+  };
+
+
   render() {
     const rootPath = this.props.match.path;
     return (
@@ -15,10 +26,8 @@ export default class NavMenu extends React.Component {
               <NavListItem to={`${rootPath}/simpleSearch`}>Simple Search</NavListItem>
             </NavListSection>
           </Accordion>
-          <Accordion label="Advanced Search">
-            <NavListSection activeLink={`${rootPath}`}>
-              <NavListItem to={`${rootPath}/advancedSearch`}>Advanced Search</NavListItem>
-            </NavListSection>
+          <Accordion label="Advanced Search" open onToggle={() => this.handleAccordionClick(`${rootPath}/searchResults`)}>
+            <AdvanceSearchForm {...this.props} />
           </Accordion>
           <Accordion label="External Search">
             <NavListSection activeLink={`${rootPath}`}>
@@ -50,3 +59,4 @@ export default class NavMenu extends React.Component {
     );
   }
 }
+

@@ -7,23 +7,16 @@ import Button from '@folio/stripes-components/lib/Button';
 import { connect } from '@folio/stripes-connect';
 import { FormattedMessage } from 'react-intl';
 import Link from 'react-router-dom/Link';
-import * as C from '../../../../Utils';
+import * as C from '../../../Utils';
 
-type Props = {
-  history: Object;
-  match: Object;
-};
-
-type State = {}
-class AdvancedSearchButton extends React.Component<Props, State> {
+class SimpleSearchButton extends React.Component {
   onClick() {
     this.props.history.push(C.INTERNAL_URL.SEARCH_RESULTS);
   }
 
   render() {
-    const rootPath = this.props.match.path || this.props.match.url;
     return (
-      <Link to={`${rootPath}/searchResults`}>
+      <Link to="/cataloging/searchResults">
         <Button
           onClick={this.onClick}
           type="button"
@@ -38,6 +31,6 @@ class AdvancedSearchButton extends React.Component<Props, State> {
 }
 
 export default connect(
-  AdvancedSearchButton,
+  SimpleSearchButton,
   C.META.MODULE_NAME,
 );

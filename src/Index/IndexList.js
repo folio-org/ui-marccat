@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
@@ -74,7 +75,7 @@ class IndexList extends React.Component<IndexListProps, IndexListState> {
                           )}
                       </thead>
                     </table>)
-                }
+                } 
                 <div>
                   <h1 style={{ visibility: 'hidden' }}>MAIN INDEXES</h1>
                 </div>

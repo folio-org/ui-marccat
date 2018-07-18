@@ -1,16 +1,9 @@
 {
   "name": "ui-marccat",
   "description": "MARCcat UI Module",
-  "scripts": {
-  },
-  "env": {
-  },
-  "formation": {
-  },
-  "addons": [
-
-  ],
-  "buildpacks": [
-
-  ]
+  "scripts": {},
+  "env": {},
+  "formation": {},
+  "addons": [],
+  "buildpacks": []
 }

@@ -50,6 +50,7 @@
     "flow": "yarn r;flow src/",
     "version": "yarn changelog && git add CHANGELOG.md",
     "gen:authors": ". ./script/authors.sh",
+    "heroku:setup":"heroku config:set NPM_CONFIG_PRODUCTION=true YARN_PRODUCTION=true",
     "r": "reset",
     "clean": ". ./script/clean.sh"
   },

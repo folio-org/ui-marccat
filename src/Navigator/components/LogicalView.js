@@ -1,13 +1,14 @@
 import React from 'react';
-import Pane from '@folio/stripes-components/lib/Pane';
 import Select from '@folio/stripes-components/lib/Select';
 import Icon from '@folio/stripes-components/lib/Icon';
+import { connect } from '@folio/stripes-connect';
 import * as C from '../../Utils';
 
 type LogicalViewProps = {
   label: string,
 };
 type LogicalViewState = {};
+
 class LogicalView extends React.Component<LogicalViewProps, LogicalViewState> {
   static manifest = Object.freeze({
     views: {
@@ -23,32 +24,21 @@ class LogicalView extends React.Component<LogicalViewProps, LogicalViewState> {
   });
 
   render() {
-    const {
-      resources: { views },
-    } = this.props;
-    if (!views || !views.hasLoaded) return <div />;
+    const { label, resources: { views } } = this.props;
+    if (!views || !views.hasLoaded) return <Icon icon="spinner-ellipsis" />;
     const logicalViews = views.records;
     return (
-      <Pane
-        defaultWidth="fill"
-        fluidContentWidth
-        paneTitle={this.props.label}
-      >
-        <div>
-          {!logicalViews && (
-            <Icon icon="spinner-ellipsis" />
-          )}
-          {logicalViews.length > 0 && (
-            <Select
-              id="logical_view"
-              dataOptions={logicalViews}
-              label="Database"
-            />
-          )}
-        </div>
-      </Pane>
+      <div>
+        {logicalViews.length > 0 && (
+          <Select
+            id="logical_view"
+            dataOptions={logicalViews}
+            label={label}
+          />
+        )}
+      </div>
     );
   }
 }
 
-export default LogicalView;
+export default connect(LogicalView, C.META.MODULE_NAME);

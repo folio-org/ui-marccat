@@ -6,10 +6,10 @@ import React from 'react';
 import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 import NavigatorEmpty from './Navigator/components/NavigatorEmpty';
-import SearchResults from './Search/components/results/SearchResults';
 import { TemplateView, CreateTemplate } from './Template/';
-import { AdvancedSearch, SimpleSearch } from './Search/';
-import IndexList from './Index/IndexList';
+import { SimpleSearch, SearchResults } from './Search/';
+import { IndexList, Diacritic } from './Index/';
+
 
 export function ConnectedRoute({ path, id, component: Component, ...props }) {
   return (
@@ -25,13 +25,12 @@ export default class Router extends React.Component {
     return (
       <Switch>
         <ConnectedRoute path={`${rootPath}/simpleSearch`} {...this.props} component={SimpleSearch} id="simple_search" />
-        <ConnectedRoute path={`${rootPath}/advancedSearch`} {...this.props} component={AdvancedSearch} id="advanced_search" />
         <ConnectedRoute path={`${rootPath}/externalSearch`} {...this.props} component={NavigatorEmpty} id="external_search" />
         <ConnectedRoute path={`${rootPath}/searchResults`} {...this.props} component={SearchResults} id="search_result" />
         <ConnectedRoute path={`${rootPath}/templateAdd`} {...this.props} component={CreateTemplate} id="template_create" />
         <ConnectedRoute path={`${rootPath}/templatelist`} {...this.props} component={TemplateView} id="template_list" />
         <ConnectedRoute path={`${rootPath}/indexList`} {...this.props} component={IndexList} id="index_list" />
-        <ConnectedRoute path={`${rootPath}/diacritic`} {...this.props} component={IndexList} id="diacritic" />
+        <ConnectedRoute path={`${rootPath}/diacritic`} {...this.props} component={Diacritic} id="diacritic" />
         <ConnectedRoute path={`${rootPath}`} {...this.props} component={NavigatorEmpty} id="navigation_root" />
       </Switch>
     );

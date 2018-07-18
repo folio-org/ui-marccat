@@ -3,10 +3,10 @@
  * @flow
  */
 import React from 'react';
-import { connect } from '@folio/stripes-connect';
 import Button from '@folio/stripes-components/lib/Button';
+import { connect } from '@folio/stripes-connect';
 import { FormattedMessage } from 'react-intl';
-import * as C from '../../../../Utils';
+import * as C from '../../../Utils';
 
 type Props = {
   onClick: Function;
@@ -14,8 +14,7 @@ type Props = {
 };
 
 type State = {};
-
-class OrButton extends React.Component<Props, State> {
+class ScanButton extends React.Component<Props, State> {
   render() {
     return (
       <Button
@@ -26,11 +25,11 @@ class OrButton extends React.Component<Props, State> {
         buttonStyle="primary"
         style={{ minHeight: '36px' }}
       >
-        <FormattedMessage id="ui-marccat.search.orButton" />
+        <FormattedMessage id="ui-marccat.search.scanButton" />
       </Button>
     );
   }
 }
 
-export default connect(OrButton, C.META.MODULE_NAME);
+export default connect(ScanButton, C.META.MODULE_NAME);
 

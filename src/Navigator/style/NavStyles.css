@@ -1,0 +1,12 @@
+.container {
+  flex: 1;
+  justify-content: 'center';
+  align-items: 'center';
+}
+
+.navItem {
+  margin-bottom: '30px';
+  overflow: 'hidden';
+  position: 'relative';
+  display: 'flex';
+}

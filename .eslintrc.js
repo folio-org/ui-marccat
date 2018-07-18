@@ -46,7 +46,19 @@ module.exports = {
 		"no-return-assign": "off",
 		"no-multi-assign": "off",
 		"no-use-before-define": "off",
-		"react/no-multi-comp": "off"
+		"react/no-multi-comp": "off",
+		"prefer-destructuring": ["error", {
+      "VariableDeclarator": {
+        "array": false,
+        "object": true
+      },
+      "AssignmentExpression": {
+        "array": true,
+        "object": false
+      }
+    }, {
+      "enforceForRenamedProperties": false
+    }]
 	},
 	"globals": {
 		"$Keys": true

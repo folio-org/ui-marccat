@@ -1,17 +1,20 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
-import { connect } from '@folio/stripes-connect';
 import Button from '@folio/stripes-components/lib/Button';
+import { connect } from '@folio/stripes-connect';
 import { FormattedMessage } from 'react-intl';
-import * as C from '../../../../Utils';
+import * as C from '../../../Utils';
 
 type Props = {
   onClick: Function;
   disabled: boolean;
 };
 
-type State = {}
-
-class NotButton extends React.Component<Props, State> {
+type State = {};
+class SearchButton extends React.Component<Props, State> {
   render() {
     return (
       <Button
@@ -22,10 +25,11 @@ class NotButton extends React.Component<Props, State> {
         buttonStyle="primary"
         style={{ minHeight: '36px' }}
       >
-        <FormattedMessage id="ui-marccat.search.notButton" />
+        <FormattedMessage id="ui-marccat.search.SearchButton" />
       </Button>
     );
   }
 }
 
-export default connect(NotButton, C.META.MODULE_NAME);
+export default connect(SearchButton, C.META.MODULE_NAME);
+

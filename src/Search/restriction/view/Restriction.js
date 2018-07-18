@@ -1,9 +1,9 @@
 // @flow
 import React, { Component } from 'react';
-import type {
-  RestricionProps,
-  RestricionState,
-} from '../../../type';
+
+type RestricionProps = {};
+type RestricionState = {};
+
 
 export default class RestrictionView extends Component<
   RestricionProps,

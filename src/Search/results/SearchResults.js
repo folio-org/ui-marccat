@@ -4,19 +4,30 @@ import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { connect } from '@folio/stripes-connect';
 import Paneset from '@folio/stripes-components/lib/Paneset';
-import * as C from '../../../Utils';
+import * as C from '../../Utils';
 
-const searchResultsData = require('../../../../config/mock/search-results');
+type SearchResultsProps = {};
+type SearchResultsState = {};
 
-class SearchResults extends React.Component<{}> {
+
+class SearchResults extends React.Component<SearchResultsProps, SearchResultsState> {
   render() {
-    const searchRes = searchResultsData;
+    const formatMsg = this.props.stripes.intl.formatMessage;
     return (
       <Paneset>
-        <Pane>
+        <Pane
+          dismissible
+          onClose={() => {}}
+          defaultWidth="fill"
+          paneTitle={formatMsg({
+            id: 'ui-marccat.search.result',
+          })}
+          paneSub="6 Result found"
+          appIcon={{ app: 'marccat' }}
+        >
           <MultiColumnList
             id="search-results"
-            contentData={searchRes}
+            contentData={{}}
             visibleColumns={[
               'id',
               'amicusNumber',

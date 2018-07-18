@@ -1,4 +1,5 @@
 {
+  "resultCount": "{count, number} {count, plural, one {Record found} other {Records found}}",
   "marccat":"MARCcat",
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
@@ -51,6 +52,7 @@
 
   "search.primary": "Primary",
   "search.secondary": "Secondary",
+  "search.result" : "Search Result",
   "search.indexes" : "Indexes",
   "search.searchButton" : "Search",
   "search.scanButton" : "Scan",

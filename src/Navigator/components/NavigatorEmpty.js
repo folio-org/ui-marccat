@@ -3,8 +3,11 @@ import IconButton from '@folio/stripes-components/lib/IconButton';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
+import Icon from '@folio/stripes-components/lib/Icon';
 import { connect } from '@folio/stripes-connect';
 import * as C from '../../Utils';
+
+import styles from '../style/NavStyles.css';
 
 class NavigatorEmpty extends React.Component {
   render() {
@@ -22,8 +25,9 @@ class NavigatorEmpty extends React.Component {
     const formatMsg = this.props.stripes.intl.formatMessage;
 
     return (
-      <Paneset static>
+      <Paneset static className={styles.container}>
         <Pane
+          className={styles.container}
           firstMenu={searchMenu}
           lastMenu={lastMenu}
           defaultWidth="fill"
@@ -34,6 +38,7 @@ class NavigatorEmpty extends React.Component {
           onClose={() => {}}
           appIcon={{ app: C.META.ICON_TITLE }}
         />
+        <Icon icon="spinner-ellipsis" />
       </Paneset>
     );
   }

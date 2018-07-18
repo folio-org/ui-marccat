@@ -46,7 +46,7 @@
     "eslint": "eslint --fix ./",
     "stylelint": "stylelint --fix \"src/**/*.css\"",
     "prepublish": "mkdir config/json; node node_modules/@folio/stripes-core/util/package2md.js package.json > config/json/ModuleDescriptor.json",
-    "publish": "yarn prepublish;npm publish",
+    "publish": "yarn start",
     "flow": "yarn r;flow src/",
     "version": "yarn changelog && git add CHANGELOG.md",
     "gen:authors": ". ./script/authors.sh",

@@ -11,6 +11,7 @@ import { TemplateView, CreateTemplate } from './Template/';
 import { AdvancedSearch, SimpleSearch } from './Search/';
 import { IndexList, Diacritic } from './Index/';
 
+
 export function ConnectedRoute({ path, id, component: Component, ...props }) {
   return (
     <Route path={path}>

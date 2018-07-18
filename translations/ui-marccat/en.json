@@ -59,6 +59,7 @@
   "search.orButton" : "OR",
   "search.notButton" : "NOT",
   "search.nearButton" : "NEAR",
+  "search.refreshButton":"Refresh",
   "search.wildCard" : "Wild cards",
 
   "search.simple.NT" : "NT Note Keyword",

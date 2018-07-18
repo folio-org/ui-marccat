@@ -1,0 +1,970 @@
+[
+    {
+        "title": "Access points/rel.",
+        "descriptions": [
+            {
+                "key": "BTD   ",
+                "value": "Note: Type  "
+            },
+            {
+                "key": "CLF   ",
+                "value": "Class.: Function  "
+            },
+            {
+                "key": "CLT   ",
+                "value": "Classification: Type  "
+            },
+            {
+                "key": "CTP   ",
+                "value": "Cntrl No.: Type  "
+            },
+            {
+                "key": "CVC   ",
+                "value": "Cntrl No.: Validation  "
+            },
+            {
+                "key": "IFC   ",
+                "value": "Cntrl No.: ISDS Func.  "
+            },
+            {
+                "key": "NHC   ",
+                "value": "Name: Relator Code  "
+            },
+            {
+                "key": "NHD   ",
+                "value": "Name: Relator Descr.  "
+            },
+            {
+                "key": "NHF   ",
+                "value": "Name: Function  "
+            },
+            {
+                "key": "RLD   ",
+                "value": "Rel: Description  "
+            },
+            {
+                "key": "RLP   ",
+                "value": "Rel: Display Note  "
+            },
+            {
+                "key": "RLQ   ",
+                "value": "Rel: Qualifying Info.  "
+            },
+            {
+                "key": "RLT   ",
+                "value": "Rel: Type  "
+            },
+            {
+                "key": "SHF   ",
+                "value": "Subject: Function  "
+            },
+            {
+                "key": "SHN   ",
+                "value": "Subject: Sequence No.  "
+            },
+            {
+                "key": "STC   ",
+                "value": "Shelflist: Type  "
+            },
+            {
+                "key": "TSF   ",
+                "value": "Title: Secondary Func  "
+            },
+            {
+                "key": "TSN   ",
+                "value": "Title: ISSN (Series)  "
+            },
+            {
+                "key": "TTP   ",
+                "value": "Title: Function  "
+            },
+            {
+                "key": "TVN   ",
+                "value": "Title: Vol No.-Series  "
+            },
+            {
+                "key": "ULW   ",
+                "value": "Rel Unlinked: Words  "
+            }
+        ]
+    },
+    {
+        "title": "Administrative data",
+        "descriptions": [
+            {
+                "key": "CDF",
+                "value": "Supplier Code    "
+            },
+            {
+                "key": "CMP",
+                "value": "Reference monthly shipment 1    "
+            },
+            {
+                "key": "CMS",
+                "value": "Reference monthly shipment 2    "
+            },
+            {
+                "key": "CWP",
+                "value": "Reference weekly shipment 1    "
+            },
+            {
+                "key": "CWS",
+                "value": "Reference weekly shipment 2    "
+            },
+            {
+                "key": "FTD",
+                "value": "Source Data    "
+            },
+            {
+                "key": "PRL",
+                "value": "List Price    "
+            },
+            {
+                "key": "STD",
+                "value": "Availability Status    "
+            }
+        ]
+    },
+    {
+        "title": "Biblio. record catlg",
+        "descriptions": [
+            {
+                "key": "AUT   ",
+                "value": "Catg: Authent. Centre  "
+            },
+            {
+                "key": "CSC   ",
+                "value": "Catg: Source  "
+            },
+            {
+                "key": "CSD   ",
+                "value": "Catg: Descr. Convntn  "
+            },
+            {
+                "key": "CSL   ",
+                "value": "Catg: Language  "
+            },
+            {
+                "key": "CSM   ",
+                "value": "Catg: Agency (Modif.)  "
+            },
+            {
+                "key": "CSO   ",
+                "value": "Catg: Agency (Orig.)  "
+            },
+            {
+                "key": "CST   ",
+                "value": "Catg: Agency (Trans.)  "
+            },
+            {
+                "key": "DEF   ",
+                "value": "Recd: Date of record  "
+            },
+            {
+                "key": "ENT   ",
+                "value": "Recd: Type of Entity  "
+            },
+            {
+                "key": "ICT   ",
+                "value": "Recd: Type of Control  "
+            },
+            {
+                "key": "IDC   ",
+                "value": "Catg: Descript. Form  "
+            },
+            {
+                "key": "IEL   ",
+                "value": "Catg: Encoding Level  "
+            },
+            {
+                "key": "ILR   ",
+                "value": "Recd: Linked  "
+            },
+            {
+                "key": "INS   ",
+                "value": "Recd: Input Source  "
+            },
+            {
+                "key": "IRS   ",
+                "value": "Recd: Status  "
+            },
+            {
+                "key": "NTL   ",
+                "value": "Recd: Nature Level  "
+            },
+            {
+                "key": "RMC   ",
+                "value": "Recd: Modified  "
+            },
+            {
+                "key": "RML   ",
+                "value": "Recd: Managerial Level  "
+            },
+            {
+                "key": "RPS   ",
+                "value": "Recd: Replacmt Status  "
+            },
+            {
+                "key": "TDT   ",
+                "value": "Recd: Trans Date/Time  "
+            },
+            {
+                "key": "VLC   ",
+                "value": "Catg: Verif. Level  "
+            }
+        ]
+    },
+    {
+        "title": "Collection custom",
+        "descriptions": [
+            {
+                "key": "CDC   ",
+                "value": "Custom: Date of Entry coll.    "
+            },
+            {
+                "key": "CDR   ",
+                "value": "Custom: Date added rec.    "
+            },
+            {
+                "key": "CMD   ",
+                "value": "Custom: Date of Modify coll.    "
+            },
+            {
+                "key": "CUS   ",
+                "value": "Custom: Collection Name    "
+            },
+            {
+                "key": "CUT   ",
+                "value": "Custom: Collection code    "
+            },
+            {
+                "key": "TCC   ",
+                "value": "Custom: Typology    "
+            },
+            {
+                "key": "TSC   ",
+                "value": "Custom: Status    "
+            }
+        ]
+    },
+    {
+        "title": "Collection master",
+        "descriptions": [
+            {
+                "key": "MCD   ",
+                "value": "Master: Date of Entry coll.    "
+            },
+            {
+                "key": "MDR   ",
+                "value": "Master: Date added rec.    "
+            },
+            {
+                "key": "MMD   ",
+                "value": "Master: Date of Modify coll.    "
+            },
+            {
+                "key": "MSC   ",
+                "value": "Master: Collection Name    "
+            },
+            {
+                "key": "MST   ",
+                "value": "Master: Collection code    "
+            },
+            {
+                "key": "TCM   ",
+                "value": "Master: Typology    "
+            },
+            {
+                "key": "TSM   ",
+                "value": "Master: Status    "
+            }
+        ]
+    },
+    {
+        "title": "Collection publisher",
+        "descriptions": [
+            {
+                "key": "PCD   ",
+                "value": "Publisher: Date of Entry coll.    "
+            },
+            {
+                "key": "PCL   ",
+                "value": "Publisher: Level    "
+            },
+            {
+                "key": "PCS   ",
+                "value": "Publisher: Status    "
+            },
+            {
+                "key": "PDR   ",
+                "value": "Publisher: Date added rec.    "
+            },
+            {
+                "key": "PMD   ",
+                "value": "Publisher: Date of Modify coll.    "
+            },
+            {
+                "key": "PNN   ",
+                "value": "Publisher: Collection Name    "
+            },
+            {
+                "key": "PNU   ",
+                "value": "Publisher: Collection code    "
+            }
+        ]
+    },
+    {
+        "title": "Digital",
+        "descriptions": [
+            {
+                "key": "ABS   ",
+                "value": "Abstract    "
+            },
+            {
+                "key": "CBS   ",
+                "value": "Casalini Abstract    "
+            },
+            {
+                "key": "CPM   ",
+                "value": "Casalini Promotion    "
+            },
+            {
+                "key": "DFU   ",
+                "value": "First upload date    "
+            },
+            {
+                "key": "DOD   ",
+                "value": "Digital document    "
+            },
+            {
+                "key": "NDL   ",
+                "value": "Nature digital level    "
+            },
+            {
+                "key": "REV   ",
+                "value": "Reviews    "
+            },
+            {
+                "key": "RRE   ",
+                "value": "RRE    "
+            },
+            {
+                "key": "TOC   ",
+                "value": "Toc    "
+            }
+        ]
+    },
+    {
+        "title": "Heading codes",
+        "descriptions": [
+            {
+                "key": "CLE   ",
+                "value": "Class.: Dewey Edition  "
+            },
+            {
+                "key": "NHS   ",
+                "value": "Name: Subtype  "
+            },
+            {
+                "key": "NHT   ",
+                "value": "Name: Type  "
+            },
+            {
+                "key": "NLA   ",
+                "value": "Name: Lang Acc. Point  "
+            },
+            {
+                "key": "NLI   ",
+                "value": "Name: Lang. Indexing  "
+            },
+            {
+                "key": "SDV   ",
+                "value": "Subject: Subdivisions  "
+            },
+            {
+                "key": "SHS   ",
+                "value": "Subject: Source  "
+            },
+            {
+                "key": "SHT   ",
+                "value": "Subject: Type  "
+            },
+            {
+                "key": "SLA   ",
+                "value": "Subj: Lang Acc. Point  "
+            },
+            {
+                "key": "SSS   ",
+                "value": "Subject: Scndry Src  "
+            },
+            {
+                "key": "TLA   ",
+                "value": "Title: Lang Acc Point  "
+            },
+            {
+                "key": "TLI   ",
+                "value": "Title: Lang. Indexing  "
+            }
+        ]
+    },
+    {
+        "title": "Holdings codes",
+        "descriptions": [
+            {
+                "key": "BRA   ",
+                "value": "Branch  "
+            },
+            {
+                "key": "CDE   ",
+                "value": "Copy: date of entry  "
+            },
+            {
+                "key": "CDT   ",
+                "value": "Copy: last transaction  "
+            },
+            {
+                "key": "CPN   ",
+                "value": "Keyword Copy Notes  "
+            },
+            {
+                "key": "CPR   ",
+                "value": "Keyword Copy Remarks  "
+            },
+            {
+                "key": "CTN   ",
+                "value": "Collection No.  "
+            },
+            {
+                "key": "HAL   ",
+                "value": "Accession List  "
+            },
+            {
+                "key": "HDT   ",
+                "value": "Transaction Date  "
+            },
+            {
+                "key": "HI1   ",
+                "value": "First Indicator  "
+            },
+            {
+                "key": "HI2   ",
+                "value": "Second Indicator  "
+            },
+            {
+                "key": "HIL   ",
+                "value": "ILL Indicator  "
+            },
+            {
+                "key": "HLD   ",
+                "value": "Level of Detail  "
+            },
+            {
+                "key": "HLP   ",
+                "value": "Loan Period  "
+            },
+            {
+                "key": "HRL   ",
+                "value": "Retention Level  "
+            },
+            {
+                "key": "HSC   ",
+                "value": "Status  "
+            },
+            {
+                "key": "HSS   ",
+                "value": "Subscription Status  "
+            },
+            {
+                "key": "HST   ",
+                "value": "Series Treatment  "
+            },
+            {
+                "key": "HSY   ",
+                "value": "Status Type  "
+            },
+            {
+                "key": "ILL   ",
+                "value": "ILL Library Symbol  "
+            },
+            {
+                "key": "INV   ",
+                "value": "Inventory number  "
+            },
+            {
+                "key": "LIB   ",
+                "value": "Lib Symbol Detailed Holdings  "
+            },
+            {
+                "key": "LOC   ",
+                "value": "Location  "
+            }
+        ]
+    },
+    {
+        "title": "Matl: audio-visual",
+        "descriptions": [
+            {
+                "key": "MPA   ",
+                "value": "MP: Sound on Med/Sep  "
+            },
+            {
+                "key": "MPC   ",
+                "value": "MP: Colour  "
+            },
+            {
+                "key": "MPD   ",
+                "value": "MP: Dimension  "
+            },
+            {
+                "key": "MPF   ",
+                "value": "MP: Presentn Format  "
+            },
+            {
+                "key": "MPM   ",
+                "value": "MP: Medium for Sound  "
+            },
+            {
+                "key": "MPS   ",
+                "value": "MP: SMD  "
+            },
+            {
+                "key": "MVP   ",
+                "value": "MSR: Publr Print Note  "
+            },
+            {
+                "key": "VRA   ",
+                "value": "VR: Sound on Med/Sep  "
+            },
+            {
+                "key": "VRC   ",
+                "value": "VR: Colour  "
+            },
+            {
+                "key": "VRD   ",
+                "value": "VR: Dimension  "
+            },
+            {
+                "key": "VRF   ",
+                "value": "VR: Format  "
+            },
+            {
+                "key": "VRM   ",
+                "value": "VR: Medium for Sound  "
+            },
+            {
+                "key": "VRP   ",
+                "value": "VR: Channel Config.  "
+            },
+            {
+                "key": "VRS   ",
+                "value": "VR: SMD  "
+            }
+        ]
+    },
+    {
+        "title": "Matl: books/serials",
+        "descriptions": [
+            {
+                "key": "BKA   ",
+                "value": "BK: Target Audience  "
+            },
+            {
+                "key": "BKB   ",
+                "value": "BK: Biography  "
+            },
+            {
+                "key": "BKF   ",
+                "value": "BK: Festschrift  "
+            },
+            {
+                "key": "BKI   ",
+                "value": "BK: Illustration Type  "
+            },
+            {
+                "key": "BKL   ",
+                "value": "BK: Literary Form  "
+            },
+            {
+                "key": "BKX   ",
+                "value": "BK: Index Availabilty  "
+            },
+            {
+                "key": "CNF   ",
+                "value": "Conference/Meeting  "
+            },
+            {
+                "key": "SEF   ",
+                "value": "SE: Frequency  "
+            },
+            {
+                "key": "SEI   ",
+                "value": "SE: ISDS Centre  "
+            },
+            {
+                "key": "SEO   ",
+                "value": "SE: Form Original Itm  "
+            },
+            {
+                "key": "SER   ",
+                "value": "SE: Regularity  "
+            },
+            {
+                "key": "SES   ",
+                "value": "SE: Succ/Latest Title  "
+            },
+            {
+                "key": "SEY   ",
+                "value": "SE: Type  "
+            },
+            {
+                "key": "SNW   ",
+                "value": "SE: Nature Entire Wrk  "
+            },
+            {
+                "key": "STA   ",
+                "value": "SE: Title Alphabet  "
+            }
+        ]
+    },
+    {
+        "title": "Matl: cartographic",
+        "descriptions": [
+            {
+                "key": "CRF   ",
+                "value": "CM: Format  "
+            },
+            {
+                "key": "CRI   ",
+                "value": "CM: Index Availablty  "
+            },
+            {
+                "key": "CRP   ",
+                "value": "CM: Map Projection  "
+            },
+            {
+                "key": "CRR   ",
+                "value": "CM: Relief  "
+            },
+            {
+                "key": "GLC   ",
+                "value": "GL: Colour  "
+            },
+            {
+                "key": "GLM   ",
+                "value": "GL: Physical Medium  "
+            },
+            {
+                "key": "GLR   ",
+                "value": "GL: Reprod. Type  "
+            },
+            {
+                "key": "GLS   ",
+                "value": "GL: SMD  "
+            },
+            {
+                "key": "MAA   ",
+                "value": "Map: Polarity  "
+            },
+            {
+                "key": "MAC   ",
+                "value": "Map: Colour  "
+            },
+            {
+                "key": "MAD   ",
+                "value": "Map: Prodn Detail  "
+            },
+            {
+                "key": "MAM   ",
+                "value": "Map: Physical Medium  "
+            },
+            {
+                "key": "MAR   ",
+                "value": "Map: Reprod. Type  "
+            },
+            {
+                "key": "MAS   ",
+                "value": "Map: SMD  "
+            }
+        ]
+    },
+    {
+        "title": "Matl: music/records",
+        "descriptions": [
+            {
+                "key": "MTA   ",
+                "value": "MSR: Target Audience  "
+            },
+            {
+                "key": "MUC   ",
+                "value": "MSR: Form of Comp Cde  "
+            },
+            {
+                "key": "MUF   ",
+                "value": "MSR: Format  "
+            },
+            {
+                "key": "MUL   ",
+                "value": "MSR: Literary Text  "
+            },
+            {
+                "key": "MUT   ",
+                "value": "MSR: Form of Mus Comp  "
+            },
+            {
+                "key": "MUV   ",
+                "value": "MSR: Number of Voices  "
+            },
+            {
+                "key": "MUX   ",
+                "value": "MSR: Accompg Text  "
+            },
+            {
+                "key": "MVP   ",
+                "value": "MSR: Publr Print Note  "
+            },
+            {
+                "key": "SRC   ",
+                "value": "SR: Kind of Cutting  "
+            },
+            {
+                "key": "SRD   ",
+                "value": "SR: Dimension  "
+            },
+            {
+                "key": "SRF   ",
+                "value": "SR: Tape Configuratn  "
+            },
+            {
+                "key": "SRG   ",
+                "value": "SR: Disc Groove Width  "
+            },
+            {
+                "key": "SRM   ",
+                "value": "SR: Kind of Material  "
+            },
+            {
+                "key": "SRP   ",
+                "value": "SR: Channel Config.  "
+            },
+            {
+                "key": "SRQ   ",
+                "value": "SR: Capture Storage  "
+            },
+            {
+                "key": "SRS   ",
+                "value": "SR: SMD  "
+            },
+            {
+                "key": "SRT   ",
+                "value": "SR: Disc/Cyl/Tape  "
+            },
+            {
+                "key": "SRV   ",
+                "value": "SR: Speed  "
+            },
+            {
+                "key": "SRW   ",
+                "value": "SR: Tape Width  "
+            },
+            {
+                "key": "SRX   ",
+                "value": "SR: Playback Chars  "
+            }
+        ]
+    },
+    {
+        "title": "Matl: other textual",
+        "descriptions": [
+            {
+                "key": "CFA   ",
+                "value": "CF: Target Audience  "
+            },
+            {
+                "key": "CFT   ",
+                "value": "CF: Type  "
+            },
+            {
+                "key": "MFB   ",
+                "value": "MIC: Film Base  "
+            },
+            {
+                "key": "MFC   ",
+                "value": "MIC: Colour  "
+            },
+            {
+                "key": "MFD   ",
+                "value": "MIC: Dimension  "
+            },
+            {
+                "key": "MFE   ",
+                "value": "MIC: Emulsion  "
+            },
+            {
+                "key": "MFG   ",
+                "value": "MIC: Generation  "
+            },
+            {
+                "key": "MFP   ",
+                "value": "MIC: Polarity  "
+            },
+            {
+                "key": "MFR   ",
+                "value": "MIC: Reduction Ratio  "
+            },
+            {
+                "key": "MFS   ",
+                "value": "MIC: SMD  "
+            },
+            {
+                "key": "MFX   ",
+                "value": "MIC: Reduction Range  "
+            }
+        ]
+    },
+    {
+        "title": "Matl: visual",
+        "descriptions": [
+            {
+                "key": "NGC   ",
+                "value": "NPG: Colour  "
+            },
+            {
+                "key": "NGP   ",
+                "value": "NPG: Prim Support Matl  "
+            },
+            {
+                "key": "NGS   ",
+                "value": "NPG: SMD  "
+            },
+            {
+                "key": "NGX   ",
+                "value": "NPG: Sec Support Matl  "
+            },
+            {
+                "key": "PGA   ",
+                "value": "PG: Sound on Med/Sep  "
+            },
+            {
+                "key": "PGB   ",
+                "value": "PG: Base Emulsn Matl  "
+            },
+            {
+                "key": "PGC   ",
+                "value": "PG: Colour  "
+            },
+            {
+                "key": "PGD   ",
+                "value": "PG: Dimension  "
+            },
+            {
+                "key": "PGM   ",
+                "value": "PG: Medium for Sound  "
+            },
+            {
+                "key": "PGS   ",
+                "value": "PG: SMD  "
+            },
+            {
+                "key": "PGX   ",
+                "value": "PG: Sec. Support Matl  "
+            },
+            {
+                "key": "VMI   ",
+                "value": "VM: Target Audience  "
+            },
+            {
+                "key": "VMM   ",
+                "value": "VM: Type  "
+            },
+            {
+                "key": "VMR   ",
+                "value": "VM: Running Time  "
+            },
+            {
+                "key": "VMT   ",
+                "value": "VM: Technique  "
+            }
+        ]
+    },
+    {
+        "title": "Phys item/contents",
+        "descriptions": [
+            {
+                "key": "BIB   ",
+                "value": "Bibliographic Level  "
+            },
+            {
+                "key": "CCI   ",
+                "value": "National Content Ind  "
+            },
+            {
+                "key": "CNF   ",
+                "value": "Conference/Meeting  "
+            },
+            {
+                "key": "CTY   ",
+                "value": "Country/State/Prov.  "
+            },
+            {
+                "key": "DA2   ",
+                "value": "Date 2  "
+            },
+            {
+                "key": "DAT   ",
+                "value": "Date of Publication  "
+            },
+            {
+                "key": "DTS   ",
+                "value": "Date/Time Type  "
+            },
+            {
+                "key": "ER    ",
+                "value": "Electronic resource  "
+            },
+            {
+                "key": "FRM   ",
+                "value": "Form of Item  "
+            },
+            {
+                "key": "GEO   ",
+                "value": "Geographic Area Code  "
+            },
+            {
+                "key": "GOV   ",
+                "value": "Govt Publication  "
+            },
+            {
+                "key": "IDT   ",
+                "value": "Publicatn Status Dte  "
+            },
+            {
+                "key": "LAN   ",
+                "value": "Language  "
+            },
+            {
+                "key": "MAT   ",
+                "value": "Material Type  "
+            },
+            {
+                "key": "NAT   ",
+                "value": "Nature of Contents  "
+            },
+            {
+                "key": "OLA   ",
+                "value": "Other Languages  "
+            },
+            {
+                "key": "SEY   ",
+                "value": "SE: Type  "
+            },
+            {
+                "key": "TPC   ",
+                "value": "Time Period  "
+            },
+            {
+                "key": "TRI   ",
+                "value": "Translation Indicator  "
+            }
+        ]
+    }
+]

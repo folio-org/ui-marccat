@@ -14,19 +14,11 @@ type MARCcatPrinterProps = {
     onBeforePrint: Function,
     onAfterPrint: Function,
     closeAfterPrint: bool,
-    triggerComponent: React.Component<*>;
     pageStyle: string,
     bodyClass: string,
     debug: bool;
 };
 type MARCcatPrinterState = {};
-
-export const PrinterProvider = ({ ref, children }) => {
-  return (
-    <MARCcatPrinter ref={ref}>
-    {...children}
-    </MARCcatPrinter>);
-};
 
 export default class MARCcatPrinter extends React.Component<MARCcatPrinterProps, MARCcatPrinterState> {
   static defaultProps = {

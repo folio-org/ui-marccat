@@ -9,7 +9,7 @@ module.exports = {
       experimentalObjectRestSpread: true,
     },
   },
-  extends: ['@folio/eslint-config-stripes','airbnb'],
+  extends: ["@folio/eslint-config-stripes"],
   env: {
     browser: true,
     jest: true
@@ -22,7 +22,7 @@ module.exports = {
   "rules": {		
 		"indent": ["error", 2],
 		"react/jsx-indent": ["error", 2],
-		"import/prefer-default-export": "off",
+		"import/prefer-default-export": ["warn", 1],
 		"react/jsx-indent-props": "off",
 		"react/jsx-no-bind": "off",
 		"react/prop-types": "off",

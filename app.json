@@ -1,0 +1,17 @@
+{
+  "name": "ui-marccat",
+  "description": "MARCcat UI Module",
+  "engines": {
+    "node": "8.9.4",
+    "npm": "5.6.x",
+    "yarn": "1.6.0"
+  },
+  "scripts": {
+    "start": "npm run lint",
+    "heroku-prebuild": "echo Start MARCCat UI Module"
+  },
+  "env": {},
+  "formation": {},
+  "addons": [],
+  "buildpacks": []
+}

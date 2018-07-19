@@ -107,7 +107,7 @@ class TagForm extends React.Component {
           </Button>
         </Row>
         {this.state.inputs.map(i => (
-          <Row>
+          <Row key={i}>
             <Select dataOptions={[{ value: 'a', label: 'a' }]} />
             <Col xs={6}>
               <Field

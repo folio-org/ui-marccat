@@ -12,6 +12,7 @@ import * as C from '../../Utils';
 import SimpleSearchForm from './form/SimpleSearchForm';
 
 import css from '../style/Search.css';
+import PrinterProvider from '../../Core/Provider/MARCcatPrinter';
 
 class SimpleSearch extends React.Component<*, *> {
   /* TO-DO fill this empty manifest */
@@ -27,12 +28,20 @@ class SimpleSearch extends React.Component<*, *> {
     this.state = {};
   }
 
+  testPrint = () => {
+
+  };
+
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
     const lastMenu = (
       <PaneMenu className={css.icon_plus} {...this.props}>
-        <IconButton key="icon-gear" icon="gear" />
-        <IconButton key="icon-plus-sign" icon="plus-sign" className={css.icon_plus} />
+        <PrinterProvider
+          trigger={() => <IconButton key="icon-gear" icon="gear" className={css.stripes__icon} />}
+          content={() => this.componentRef}
+        />
+        <IconButton key="icon-gear" icon="gear" className={css.custom_svg} />
+        <IconButton key="icon-plus-sign" icon="plus-sign" className={css.stripes__icon} />
       </PaneMenu>
     );
 
@@ -47,7 +56,7 @@ class SimpleSearch extends React.Component<*, *> {
       },
     ];
     return (
-      <Paneset static>
+      <Paneset static ref={(el) => this.componentRef = el} >
         <Pane
           actionMenuItems={actionMenuItems}
           lastMenu={lastMenu}

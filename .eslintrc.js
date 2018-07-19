@@ -22,7 +22,7 @@ module.exports = {
   "rules": {		
 		"indent": ["error", 2],
 		"react/jsx-indent": ["error", 2],
-		"import/prefer-default-export": ["warn", 1],
+		"import/prefer-default-export": "off",
 		"react/jsx-indent-props": "off",
 		"react/jsx-no-bind": "off",
 		"react/prop-types": "off",
@@ -32,7 +32,8 @@ module.exports = {
 		"spaced-comment": ["error", "always", { "markers": ["/"] }],
 		"arrow-parens": "off",
 		"linebreak-style": "off",
-		"no-undef": "warn",
+    "no-undef": "warn",
+    "react/no-find-dom-node":"off",
 		"react/prefer-stateless-function": "off",
 		"import/no-named-as-default": "off",
 		"react/no-unused-prop-types": "off",

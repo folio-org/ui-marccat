@@ -2,7 +2,6 @@ import React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { connect } from '@folio/stripes-connect';
-import Router from '../../router';
 import { NavMenu, LogicalView } from '../';
 import * as C from '../../Utils';
 
@@ -41,7 +40,7 @@ class Navigator extends React.Component<NavigatorProps, NavigatorState> {
           <LogicalView {...this.props} label="Database" />
           <NavMenu {...this.props} />
         </Pane>
-        <Router {...this.props} />
+        {this.props.children}
       </Paneset>
     );
   }

@@ -78,13 +78,13 @@ class AdvanceSearchForm extends
 
       if (categories) {
         options = categories.records.map((element) => (
-          <option value={element.value}>{element.label}</option>
+          <option key={element.value} value={element.value}>{element.label}</option>
         ));
       }
 
       if (innerIndexes) {
         optionsInnerIndex = innerIndexes.records.map((element) => (
-          <option value={element.value}>{element.label} ({element.value})</option>
+          <option key={element.value} value={element.value}>{element.label} ({element.value})</option>
         ));
       }
 
@@ -92,7 +92,7 @@ class AdvanceSearchForm extends
         optionsConstraintIndex = constraintIndexes.records.map((element) => {
           const valueLabel = element.value + C.SEPARATOR + element.label;
           return (
-            <option value={valueLabel}> {element.label} </option>
+            <option key={element.value} value={valueLabel}> {element.label} </option>
           );
         });
       }

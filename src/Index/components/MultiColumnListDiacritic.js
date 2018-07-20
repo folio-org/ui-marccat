@@ -41,6 +41,14 @@ class MultiColumnListDiacritic extends Component
       const { resources: { views } } = this.props;
       if (!views || !views.hasLoaded) return <Icon icon="spinner-ellipsis" />;
       const data = views.records;
+      const formatMsg = this.props.stripes.intl.formatMessage;
+      const columnMapping = {
+        value: formatMsg({ id: 'ui-marccat.diacritic.list.id' }),
+        character: formatMsg({ id: 'ui-marccat.diacritic.list.character' }),
+        label: formatMsg({ id: 'ui-marccat.diacritic.list.description' }),
+        characterSet: formatMsg({ id: 'ui-marccat.diacritic.list.charset' }),
+        unicode: formatMsg({ id: 'ui-marccat.diacritic.list.unicode' }),
+      };
       return (
         <MultiColumnList
           contentData={data}
@@ -50,6 +58,7 @@ class MultiColumnListDiacritic extends Component
             'label',
             'characterSet',
             'unicode']}
+          columnMapping={columnMapping}
         />
       );
     }

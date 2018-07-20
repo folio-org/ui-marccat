@@ -78,5 +78,10 @@
 
   "diacritic.title":"Diacritic",
   "diacritic.subTitle": "Diacritic Table",
-  "diacritic.char.copied":"Char copied "
+  "diacritic.char.copied":"Char copied ",
+  "diacritic.list.id":"Id",
+  "diacritic.list.character":"Character",
+  "diacritic.list.description":"Description",
+  "diacritic.list.charset":"Character Set",
+  "diacritic.list.unicode":"Unicode"
 }

@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
+import { Field, reduxForm } from 'redux-form';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Button from '@folio/stripes-components/lib/Button';
-import { Field, reduxForm } from 'redux-form';
 import { SearchButton } from './';
 import * as C from '../Utils';
+import MultiColumnListDiacritic from './components/MultiColumnListDiacritic';
 
 type DiacriticProps = {
-  stripes:Object;
+  stripes: Object;
 };
+
 type DiacriticState = {
   value: string;
   charCopied: string;
@@ -45,7 +47,7 @@ class Diacritic extends Component<DiacriticProps, DiacriticState> {
       isOpen: true,
     });
   }
-  handleSubmit = () => {};
+  handleSubmit = () => { };
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
@@ -100,41 +102,50 @@ class Diacritic extends Component<DiacriticProps, DiacriticState> {
                 </Button>
               </Col>
             </Row>
+            <Row style={{ marginBottom: '30px' }}>
+              <Col xs={12} sm={6} md={4} style={{ paddingTop: '30px' }}>
+                <h5 style={{ display: 'inline', paddingRight: '10px' }}>{formatMsg({
+                  id: 'ui-marccat.diacritic.char.copied',
+                })}
+                </h5>
+                <Field
+                  id="charCopied"
+                  label="Char Copied"
+                  name="charCopied"
+                  component="input"
+                  type="text"
+                  placeholder="Select a character..."
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12}>
+                <MultiColumnListDiacritic
+                  {...this.props}
+                />
+              </Col>
+            </Row>
           </form>
-          <Row>
-            <Col xs={12} sm={6} md={4} style={{ paddingTop: '30px' }}>
-              <h5 style={{ display: 'inline', paddingRight: '10px' }}>{formatMsg({
-                id: 'ui-marccat.diacritic.char.copied',
-              })}
-              </h5>
-              <Field
-                id="charCopied"
-                label="Char Copied"
-                name="charCopied"
-                component="input"
-                type="text"
-                placeholder="select a char...."
-              />
-            </Col>
-          </Row>
+
         </Pane>
         {isOpen &&
-        <Pane
-          dismissible
-          onClose={() => this.setState({
-            isOpen: false,
-          })}
-          actionMenuItems={actionMenuItems}
-          lastMenu={lastMenu}
-          paneTitle={formatMsg({
-            id: 'ui-marccat.diacritic.title',
-          })}
-          paneSub={formatMsg({
-            id: 'ui-marccat.diacritic.subTitle',
-          })}
-          appIcon={{ app: C.META.ICON_TITLE }}
-        />
+          <Pane
+            dismissible
+            onClose={() => this.setState({
+              isOpen: false,
+            })}
+            actionMenuItems={actionMenuItems}
+            lastMenu={lastMenu}
+            paneTitle={formatMsg({
+              id: 'ui-marccat.diacritic.title',
+            })}
+            paneSub={formatMsg({
+              id: 'ui-marccat.diacritic.subTitle',
+            })}
+            appIcon={{ app: C.META.ICON_TITLE }}
+          />
         }
+        );
       </Paneset>
     );
   }

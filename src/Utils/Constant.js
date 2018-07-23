@@ -8,7 +8,7 @@ export const META = {
 export const RESOURCE_TYPE = 'rest';
 export const ENDPOINT = {
   HEADERS: {
-    Accept: 'application/json',
+    'Accept': 'application/json',
     'Content-Type': 'application/json',
     'x-okapi-tenant': 'tnx',
   },

@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import Button from '@folio/stripes-components/lib/Button';
 
-type SearchButtonProps = {};
+type SearchButtonProps = {
+  stripes: Object;
+  submitting:boolean;
+  pristine:boolean;
+  onSubmit:Function;
+};
 type SearchButtonState = {};
+
 export default class SearchButton extends Component<SearchButtonProps, SearchButtonState> {
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;

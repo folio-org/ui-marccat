@@ -80,11 +80,11 @@ class TagSelect extends React.Component {
     let headings = {};
     if (marcCategories) {
       options = marcCategories.records.map(element =>
-        <option value={element.value}>{element.label}</option>);
+        <option key={element.value} value={element.value}>{element.label}</option>);
     }
     if (heading) {
       headings = heading.records.map(element =>
-        <option value={element.value}>{element.label}</option>);
+        <option key={element.value} value={element.value}>{element.label}</option>);
     }
     return (
       <div style={{ width: '100%' }}>

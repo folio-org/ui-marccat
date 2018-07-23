@@ -24,6 +24,7 @@ export const ENDPOINT = {
   SUBFIELDS_TAGS: 'subfield-tags',
   CATEGORY_URL: 'marc-categories',
   INDEX_CATEGORY: 'index-categories',
+  DIACRITIC_LIST_URL: 'diacritics',
   DEFAULT_LANG: 'eng',
   DEFAULT_PAGINATION: 20,
 };
@@ -61,6 +62,7 @@ export const API_RESULT_JSON_KEY = {
   ITEM_TYPES: 'itemTypes',
   FIELDS: 'fields',
   INDEX_CATEGORIES: 'categories',
+  DIACRITIC: 'diacritics',
   INDEX_INNER: 'indexes',
   CONSTRAINT_INDEX: 'constraints',
 };

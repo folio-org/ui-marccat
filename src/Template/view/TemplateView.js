@@ -15,7 +15,6 @@ import * as C from '../../Utils';
 import css from '../../Search/style/Search.css';
 import '../styles/Template.css';
 
-
 class TemplateView extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({

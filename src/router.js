@@ -8,7 +8,7 @@ import Switch from 'react-router-dom/Switch';
 import NavigatorEmpty from './Navigator/components/NavigatorEmpty';
 import { TemplateView, CreateTemplate } from './Template/';
 import { SimpleSearch, SearchResults } from './Search/';
-import { IndexList, Diacritic } from './Index/';
+import { IndexList, Diacritic } from './Indexes/';
 
 
 export function ConnectedRoute({ path, id, component: Component, ...props }) {
@@ -19,7 +19,7 @@ export function ConnectedRoute({ path, id, component: Component, ...props }) {
   );
 }
 
-export default class Router extends React.Component {
+export default class Router extends React.Component<*> {
   render() {
     const rootPath = this.props.match.path;
     return (

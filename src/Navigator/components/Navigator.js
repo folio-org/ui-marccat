@@ -17,6 +17,7 @@ export interface NavItem {
 
 type NavigatorProps = {
   stripes: Object;
+  children: Object
 };
 type NavigatorState = {};
 

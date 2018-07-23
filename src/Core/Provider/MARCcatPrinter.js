@@ -57,7 +57,7 @@ export default class MARCcatPrinter extends React.Component<MARCcatPrinterProps,
     }
 
     const contentEl = content();
-    const contentNodes = findDOMNode(contentEl);
+    const contentNodes = findDOMNode(contentEl); // eslint-disable-line react/no-find-dom-node
 
     const imageNodes = [...contentNodes.getElementsByTagName('img')];
     const linkNodes = document.querySelectorAll('link[rel="stylesheet"]');

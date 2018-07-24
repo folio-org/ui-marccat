@@ -96,7 +96,7 @@ class SimpleSearchForm extends React.Component {
 }
 
 export default reduxForm({
-  form: 'simpleSearchForms', // a unique identifier for this form
+  form: 'simpleSearchForms',
   initialValues: {},
   validate,
 })(SimpleSearchForm);

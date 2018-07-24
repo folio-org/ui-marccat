@@ -56,7 +56,7 @@ class SimpleSearch extends React.Component<*, *> {
       },
     ];
     return (
-      <Paneset static ref={(el) => this.componentRef = el} >
+      <Paneset static ref={(el) => this.componentRef = el}>
         <Pane
           actionMenuItems={actionMenuItems}
           lastMenu={lastMenu}

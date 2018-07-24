@@ -15,3 +15,11 @@ export function formatDateTime(dateStr) {
     </span>
   );
 }
+
+
+export const formatSearchQuery = (input: string) => {
+  const splitted = input.split(';;;');
+  const firstPart = `"${splitted[0]}"`;
+  const lastPart = `[${splitted[1]}]`;
+  return firstPart.concat(' ').concat(lastPart);
+};

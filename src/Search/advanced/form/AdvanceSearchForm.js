@@ -4,13 +4,21 @@ import RadioButton from '@folio/stripes-components/lib/RadioButton';
 import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
 import Select from '@folio/stripes-components/lib/Select';
 import { Field, reduxForm } from 'redux-form';
-import { AdvanceSearchTextArea } from '../../../Search/';
-
+import Button from '@folio/stripes-components/lib/Button';
+import { FormattedMessage } from 'react-intl';
+import Headline from '@folio/stripes-components/lib/Headline';
+import ScanButton from '../button/ScanButton';
+import SearchButton from '../button/SearchButton';
+import { formatSearchQuery } from '../../../Utils/Formatter';
 import * as C from '../../../Utils';
 
 type AdvanceSerachFormProps = {
     stripes: Object;
     mutator: Object;
+    resources: Object;
+    onSelectIndex: Function;
+    onSelectConstraint: Function;
+    change: Function;
 };
 type AdvanceSerachFormState = {
     value: string;
@@ -26,6 +34,7 @@ class AdvanceSearchForm extends
   constructor(props) {
     super(props);
     this.state = {
+      value: '',
       firstSelect: '',
       secondSelect: '',
       thirdSelect: '',
@@ -35,6 +44,8 @@ class AdvanceSearchForm extends
     this.handleChangeFirstSelect = this.handleChangeFirstSelect.bind(this);
     this.handleChangeSecondSelect = this.handleChangeSecondSelect.bind(this);
     this.handleChangeThirdSelect = this.handleChangeThirdSelect.bind(this);
+    this.handleTextAreaValue = this.handleTextAreaValue.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
     handleChangeFirstSelect = event => {
@@ -49,6 +60,9 @@ class AdvanceSearchForm extends
       this.setState({
         secondSelect: event.target.value,
       });
+      const newValue = this.state.value + ' ' + event.target.value + ' ';
+      this.props.change('searchTextArea', newValue);
+      this.setState({ value: newValue });
       this.props.mutator.constraintIndexValue.replace(event.target.value);
       this.props.onSelectIndex(event.target.value);
     };
@@ -58,7 +72,14 @@ class AdvanceSearchForm extends
       this.setState({
         thirdSelect: event.target.value,
       });
+      const newValue = this.state.value + ' ' + formatSearchQuery(event.target.value) + ' ';
+      this.props.change('searchTextArea', newValue);
+      this.setState({ value: newValue });
       this.props.onSelectConstraint(splitted[0], splitted[1]);
+    }
+
+    handleChange(event) {
+      this.setState({ value: event.target.value });
     }
 
     handleChangeRadio = event => {
@@ -69,12 +90,19 @@ class AdvanceSearchForm extends
       this.props.mutator.constraintIndexValue.replace('LIB');
     };
 
+    handleTextAreaValue = (text) => {
+      const newValue = this.state.value + ' ' + text + ' ';
+      this.setState({ value: newValue });
+      this.props.change('searchTextArea', newValue);
+    }
+
     render() {
       const formatMsg = this.props.stripes.intl.formatMessage;
       const { resources: { categories, innerIndexes, constraintIndexes } } = this.props;
       let options = {};
       let optionsInnerIndex = {};
       let optionsConstraintIndex = {};
+      const { value } = this.state;
 
       if (categories) {
         options = categories.records.map((element) => (
@@ -122,6 +150,7 @@ class AdvanceSearchForm extends
               <Col xs={12} style={{ marginTop: '20px' }}>
                 {categories &&
                   <Select
+                    name="testSelect"
                     value={this.state.firstSelect}
                     onChange={this.handleChangeFirstSelect}
                   >
@@ -144,7 +173,6 @@ class AdvanceSearchForm extends
               <Col xs={12}>
                 {constraintIndexes && constraintIndexes.records.length > 0 &&
                   <Select
-                    name="testSelected"
                     native
                     value={this.state.thirdSelect}
                     onChange={this.handleChangeThirdSelect}
@@ -154,10 +182,76 @@ class AdvanceSearchForm extends
                   </Select>
                 }
               </Col>
+              <Col xs={12}>
+                <div style={{ marginTop: '50px' }}>
+                  <Row>
+                    <Col xs={4}>
+                      <Headline size="small" margin="medium" tag="h4">
+                       Typed a Query:
+                      </Headline>
+                    </Col>
+                    <Col xs={8}>
+                      <Button
+                        {...this.props}
+                        type="button"
+                        buttonStyle="primary"
+                        onClick={() => this.handleTextAreaValue('AND')}
+                      >
+                        <FormattedMessage id="ui-marccat.search.andButton" />
+                      </Button>
+                      <Button
+                        {...this.props}
+                        type="button"
+                        buttonStyle="primary"
+                        onClick={() => this.handleTextAreaValue('NEAR')}
+                      >
+                        <FormattedMessage id="ui-marccat.search.nearButton" />
+                      </Button>
+                      <Button
+                        {...this.props}
+                        type="button"
+                        buttonStyle="primary"
+                        onClick={() => this.handleTextAreaValue('NOT')}
+                      >
+                        <FormattedMessage id="ui-marccat.search.notButton" />
+                      </Button>
+                      <Button
+                        {...this.props}
+                        type="button"
+                        buttonStyle="primary"
+                        onClick={() => this.handleTextAreaValue('OR')}
+                      >
+                        <FormattedMessage id="ui-marccat.search.orButton" />
+                      </Button>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col xs={12}>
+                      <Field value={value} onChange={this.handleChange} rows="8" name="searchTextArea" id="searchTextArea" component="textarea" style={{ width: '100%' }} />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col xs={6}>
+                      <SearchButton {...this.props} />
+                    </Col>
+                    <Col xs={6}>
+                      <ScanButton {...this.props} />
+                    </Col>
+                    <Col xs={6}>
+                      <Button
+                        {...this.props}
+                        onClick={this.handleClick}
+                        type="button"
+                        buttonStyle="primary"
+                        style={{ minHeight: '36px' }}
+                      >
+                      Reset
+                      </Button>
+                    </Col>
+                  </Row>
+                </div>
+              </Col>
             </form>
-            <Col xs={12}>
-              <AdvanceSearchTextArea {...this.props} />
-            </Col>
           </Col>
         </Row>
       );
@@ -170,4 +264,5 @@ export default reduxForm({
     name: 'actingSponsor001',
     value: 'P',
   },
+  enableReinitialize: true
 })(AdvanceSearchForm);

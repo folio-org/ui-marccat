@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
-import {
-  Row,
-  Col,
-} from '@folio/stripes-components/lib/LayoutGrid';
+import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import { connect } from '@folio/stripes-connect';
 import * as C from '../../../Utils';
@@ -40,7 +37,7 @@ class EditTemplateTag extends React.Component {
     } = this.props; // eslint-disable-line react/prop-types
     if (!records || !records.hasLoaded) return <div />;
     const fields = records.records;
-    let obj = remapMultiArray(fields);
+    const obj = remapMultiArray(fields);
 
     const { expanded, onToggle, accordionId } = this.props;
     return (
@@ -82,5 +79,5 @@ EditTemplateTag.propTypes = {
 
 export default connect(
   EditTemplateTag,
-  C.META.MODULE_NAME
+  C.META.MODULE_NAME,
 );

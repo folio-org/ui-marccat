@@ -1,6 +1,6 @@
 # ui-marccat
 
-[![CircleCI](https://circleci.com/gh/atcult/ui-cataloging.svg?style=svg)](https://circleci.com/gh/atcult/ui-cataloging)
+[![CircleCI](https://circleci.com/gh/atcult/ui-marccat.svg?style=svg)](https://circleci.com/gh/atcult/ui-marccat)
 
 Copyright (C) 2017-2018 The Open Library Foundation
 

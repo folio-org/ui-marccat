@@ -4,12 +4,12 @@
  */
 import React from 'react';
 import Route from 'react-router-dom/Route';
-import Switch from 'react-router/Switch';
+import Switch from 'react-router-dom/Switch';
 import NavigatorEmpty from './Navigator/components/NavigatorEmpty';
-import SearchResults from './Search/components/results/SearchResults';
 import { TemplateView, CreateTemplate } from './Template/';
-import { AdvancedSearch, SimpleSearch } from './Search/';
-import IndexList from './Index/IndexList';
+import { SimpleSearch, SearchResults } from './Search/';
+import { IndexList, Diacritic } from './Indexes/';
+
 
 export function ConnectedRoute({ path, id, component: Component, ...props }) {
   return (
@@ -19,40 +19,19 @@ export function ConnectedRoute({ path, id, component: Component, ...props }) {
   );
 }
 
-export default class Router extends React.Component {
+export default class Router extends React.Component<*> {
   render() {
     const rootPath = this.props.match.path;
     return (
       <Switch>
-        <ConnectedRoute
-          path={`${rootPath}/simpleSearch`}
-          component={SimpleSearch}
-          id="simple_search"
-        />
-        <Route path={`${rootPath}/template/create`}>
-          <CreateTemplate {...this.props} />
-        </Route>
-        <Route path={`${rootPath}/advancedSearch`}>
-          <AdvancedSearch {...this.props} id="advanced_search" />
-        </Route>
-        <Route path={`${rootPath}/searchResults`}>
-          <SearchResults {...this.props} id="search_result" />
-        </Route>
-        <Route path={`${rootPath}/externalSearch`}>
-          <NavigatorEmpty {...this.props} id="template_view" />
-        </Route>
-        <Route path={`${rootPath}/templatelist`}>
-          <TemplateView {...this.props} id="empty_crontainer" />
-        </Route>
-        <Route path={`${rootPath}/indexList`}>
-          <IndexList {...this.props} id="index_list"  buttonClickText="close" handleClose={()=> alert('alert')} />
-        </Route>
-        <Route path={`${rootPath}/diacritic`}>
-          <IndexList {...this.props} id="diacritic" buttonClickText="close" handleClose={()=> alert('alert')} />
-        </Route>
-        <Route path={`${rootPath}`}>
-          <NavigatorEmpty {...this.props} id="empty_corntainer" />
-        </Route>
+        <ConnectedRoute path={`${rootPath}/simpleSearch`} {...this.props} component={SimpleSearch} id="simple_search" />
+        <ConnectedRoute path={`${rootPath}/externalSearch`} {...this.props} component={NavigatorEmpty} id="external_search" />
+        <ConnectedRoute path={`${rootPath}/searchResults`} {...this.props} component={SearchResults} id="search_result" />
+        <ConnectedRoute path={`${rootPath}/templateAdd`} {...this.props} component={CreateTemplate} id="template_create" />
+        <ConnectedRoute path={`${rootPath}/templatelist`} {...this.props} component={TemplateView} id="template_list" />
+        <ConnectedRoute path={`${rootPath}/indexList`} {...this.props} component={IndexList} id="index_list" />
+        <ConnectedRoute path={`${rootPath}/diacritic`} {...this.props} component={Diacritic} id="diacritic" />
+        <ConnectedRoute path={`${rootPath}`} {...this.props} component={NavigatorEmpty} id="navigation_root" />
       </Switch>
     );
   }

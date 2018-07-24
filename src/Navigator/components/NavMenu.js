@@ -1,89 +1,62 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import StarIcon from '@material-ui/icons/Star';
-import SendIcon from '@material-ui/icons/Send';
-import MailIcon from '@material-ui/icons/Mail';
-import DeleteIcon from '@material-ui/icons/Delete';
-import ReportIcon from '@material-ui/icons/Report';
-import Link from 'react-router-dom/Link';
+import { AccordionSet, Accordion } from '@folio/stripes-components/lib/Accordion';
+import NavListSection from '@folio/stripes-components/lib/NavListSection';
+import NavListItem from '@folio/stripes-components/lib/NavListItem';
+import NavList from '@folio/stripes-components/lib/NavList';
+import { AdvanceSearchForm } from '../../Search/';
 
-export default class NavMenuItem extends React.Component {
-  static propTypes = {
-    to: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    onClick: PropTypes.func,
-    children: PropTypes.object,
+export default class NavMenu extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleAccordionClick = this.handleAccordionClick.bind(this);
+  }
+
+  handleAccordionClick = (url) => {
+    this.props.history.push(url);
   };
+
+
   render() {
-    const { to, label, onClick } = this.props;
+    const rootPath = this.props.match.path;
     return (
-      <Link to={to} onClick={onClick}>
-        <ListItem button>
-          <ListItemIcon>{this.props.children}</ListItemIcon>
-          <ListItemText primary={label} />
-        </ListItem>
-      </Link>
+      <AccordionSet>
+        <NavList styles={{ paddingTop: '50px' }}>
+          <Accordion label="Simple Search">
+            <NavListSection activeLink={`${rootPath}`}>
+              <NavListItem to={`${rootPath}/simpleSearch`}>Simple Search</NavListItem>
+            </NavListSection>
+          </Accordion>
+          <Accordion label="Advanced Search" open onToggle={() => this.handleAccordionClick(`${rootPath}/searchResults`)}>
+            <AdvanceSearchForm {...this.props} />
+          </Accordion>
+          <Accordion label="External Search">
+            <NavListSection activeLink={`${rootPath}`}>
+              <NavListItem to={`${rootPath}/externalSearch`}>External Search</NavListItem>
+            </NavListSection>
+          </Accordion>
+          <Accordion label="Indexes">
+            <NavListSection activeLink={`${rootPath}`}>
+              <NavListItem to={`${rootPath}/indexList`}>Indexes</NavListItem>
+            </NavListSection>
+          </Accordion>
+          <Accordion label="Diacritic">
+            <NavListSection activeLink={`${rootPath}`}>
+              <NavListItem to={`${rootPath}/diacritic`} style={{ marginBottom: '20px' }}>Diacritic</NavListItem>
+            </NavListSection>
+          </Accordion>
+          <Accordion label="Report">
+            <NavListSection>
+              <NavListItem to={`${rootPath}/report`} style={{ marginBottom: '20px' }}>Report</NavListItem>
+            </NavListSection>
+          </Accordion>
+          <Accordion label="Template">
+            <NavListSection>
+              <NavListItem to={`${rootPath}/templateList`}>Template List</NavListItem>
+            </NavListSection>
+          </Accordion>
+        </NavList>
+      </AccordionSet>
     );
   }
 }
 
-export const searchMenuItem = (
-  <div>
-    <ListItem button>
-      <ListItemIcon>
-        <StarIcon />
-      </ListItemIcon>
-      <ListItemText primary="Simple Search" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <SendIcon />
-      </ListItemIcon>
-      <ListItemText primary="Advance Search" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <DraftsIcon />
-      </ListItemIcon>
-      <ListItemText primary="Indexes" />
-    </ListItem>
-  </div>
-);
-
-export const reportMenuItem = (
-  <div>
-    <ListItem button>
-      <ListItemIcon>
-        <MailIcon />
-      </ListItemIcon>
-      <ListItemText primary="Report" />
-    </ListItem>
-  </div>
-);
-
-export const templateMenuItem = (
-  <div>
-    <ListItem button>
-      <ListItemIcon>
-        <MailIcon />
-      </ListItemIcon>
-      <ListItemText primary="Template handler" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <DeleteIcon />
-      </ListItemIcon>
-      <ListItemText primary="Create Template" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <ReportIcon />
-      </ListItemIcon>
-      <ListItemText primary="Manage Tag" />
-    </ListItem>
-  </div>
-);

@@ -9,29 +9,38 @@ module.exports = {
       experimentalObjectRestSpread: true,
     },
   },
-  extends: ['@folio/eslint-config-stripes', 'prettier'],
+  extends: ["@folio/eslint-config-stripes"],
   env: {
     browser: true,
+    jest: true
   },
   globals: {
     process: true,
     Promise: true,
   },
-  plugins: ['prettier'],
-  rules: {
-    'padded-blocks': 'off',
-    'react/prop-types': 'off',
-    'jsx-a11y/aria-proptypes': 'off',
-    'import/prefer-default-export': 'off',
-    'arrow-body-style': 'off',
-    'comma-dangle': 'off',
-    'react/no-unused-prop-types': 'off',
-    'import/no-extraneous-dependencies': 'off',
-    'jsx-quotes': 'off',
-    'no-console': 'warn',
-    'prefer-const': 'off',
-    'react/sort-comp': 'off',
-    'react/no-deprecated': 'off',
-    'react/forbid-prop-types': 'off',
-  },
-};
+  plugins: ["jsx-a11y" , "import"],
+  "rules": {		
+		"indent": ["error", 2],
+		"react/jsx-indent": ["error", 2],
+		"react/forbid-prop-types":"off",
+		"spaced-comment": ["error", "always", { "markers": ["/"] }],
+		"arrow-parens": "off",
+    "no-return-assign":"off",
+    "no-undef": "warn",
+    "import/no-named-as-default": "off",
+    "import/no-extraneous-dependencies": "off",
+		"react/sort-comp": "off",
+		"prefer-destructuring": ["error", {
+      "VariableDeclarator": {
+        "array": false,
+        "object": true
+      },
+      "AssignmentExpression": {
+        "array": true,
+        "object": false
+      }
+    }, {
+      "enforceForRenamedProperties": false
+    }]
+	}
+}

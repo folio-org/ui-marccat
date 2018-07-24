@@ -1,5 +1,5 @@
-/* Search */
-.icon_plus span svg {
+.stripes__icon {
   width: 16px;
   height: 16px;
+  fill: rgba(0, 0, 0, 0.5);
 }

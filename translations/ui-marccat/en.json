@@ -1,4 +1,5 @@
 {
+  "resultCount": "{count, number} {count, plural, one {Record found} other {Records found}}",
   "marccat":"MARCcat",
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
@@ -40,6 +41,10 @@
 
   "template.detail.information.title": "Template Information",
   "template.detail.information.mandatory.table": "Template Mandatory Table",
+  "template.delete": "Delete template?",
+  "template.delete.modal": "The template will be deleted",
+  "template.delete.button": "Delete",
+  "template.delete-completed": "The template was successfully deleted.",
 
   "errors.missingRequiredField": "Please fill this in to continue",
   "errors.missingRequiredName": "Please provide a username when a password is given",
@@ -47,13 +52,16 @@
 
   "search.primary": "Primary",
   "search.secondary": "Secondary",
+  "search.result" : "Search Result",
   "search.indexes" : "Indexes",
   "search.searchButton" : "Search",
   "search.scanButton" : "Scan",
+  "search.clear" : "Clear",
   "search.andButton" : "AND",
   "search.orButton" : "OR",
   "search.notButton" : "NOT",
   "search.nearButton" : "NEAR",
+  "search.refreshButton":"Refresh",
   "search.wildCard" : "Wild cards",
 
   "search.simple.NT" : "NT Note Keyword",
@@ -66,5 +74,14 @@
   "search.wildCard.replace2" : "Replace one character",
   "search.wildCard.restriction" : "Restriction",
 
-  "search.wrong.input":"Wrong input on search field"
+  "search.wrong.input":"Wrong input on search field",
+
+  "diacritic.title":"Diacritic",
+  "diacritic.subTitle": "Diacritic Table",
+  "diacritic.char.copied":"Char copied ",
+  "diacritic.list.id":"Id",
+  "diacritic.list.character":"Character",
+  "diacritic.list.description":"Description",
+  "diacritic.list.charset":"Character Set",
+  "diacritic.list.unicode":"Unicode"
 }

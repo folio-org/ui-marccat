@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { FormattedMessage } from 'react-intl';
 
-type GeneralSettingsProps = {|
+type GeneralSettingsProps = {
   label: string,
-|};
+};
+type GeneralSettingsState = {};
 
-export default class GeneralSettings extends Component<
-  GeneralSettingsProps,
-  {}
-> {
+export default class GeneralSettings extends Component<GeneralSettingsProps, GeneralSettingsState> {
   render() {
     return (
       <Pane

@@ -4,6 +4,7 @@ import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
 import RadioButton from '@folio/stripes-components/lib/RadioButton';
 import { FormattedMessage } from 'react-intl';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
+import TextField from '@folio/stripes-components/lib/TextField';
 import TagForm from '../form/TagForm';
 import MandatoryList from '../form/MandatoryList';
 import { remapForTemplateMandatory } from '../../Utils/Mapper';
@@ -62,8 +63,7 @@ class TemplateForm extends React.Component<TemplateFormProps, TemplateFormState>
           <Col xs={6}>
             <Field
               style={{
-                width: `${100}%`,
-                marginTop: 25,
+                width: `${100}%`
               }}
               label={formatMsg({
                 id: 'ui-marccat.template.form.name',
@@ -79,7 +79,7 @@ class TemplateForm extends React.Component<TemplateFormProps, TemplateFormState>
               id="input-template-name"
               withRef
               validationEnabled={false}
-              component="input"
+              component={TextField}
             />
           </Col>
           <Col xs={6}>

@@ -74,12 +74,13 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
           })}
           appIcon={{ app: C.META.ICON_TITLE }}
         >
-          <div>
-            <TemplateForm {...this.props} />
-            <CreateTag {...this.props} />
-          </div>
+
+          <TemplateForm {...this.props} />
         </Pane>
+
+        <CreateTag {...this.props} />
       </Paneset>
+
     );
   }
 }

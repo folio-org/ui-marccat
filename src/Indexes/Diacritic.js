@@ -9,12 +9,16 @@ import * as C from '../Utils';
 import MultiColumnListDiacritic from './components/MultiColumnListDiacritic';
 
 type DiacriticProps = {
+  charCopied: string;
   stripes: Object;
+  onRowClick: Function,
+  pristine: boolean,
+  reset: boolean,
+  submitting: boolean,
 };
 
 type DiacriticState = {
   value: string;
-  charCopied: string;
   isOpen: boolean;
 };
 
@@ -29,15 +33,18 @@ class Diacritic extends Component<DiacriticProps, DiacriticState> {
     /** bind handler * */
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onRowClick = this.onRowClick.bind(this);
   }
-
-  static defaultProps = {
-    value: '',
-  };
 
   handleChange = (event) => {
     this.setState({ value: event.target.value });//eslint-disable-line
   };
+
+  onRowClick = function (rowMetadata) {
+    const char = rowMetadata.currentTarget.children[1].innerText;
+    this.state.charCopied = char;
+    this.setState({ charCopied: char });
+  }
 
   handleSubmit = () => { };
 
@@ -87,13 +94,14 @@ class Diacritic extends Component<DiacriticProps, DiacriticState> {
                   name="charCopied"
                   component="input"
                   type="text"
-                  placeholder="Select a row..."
+                  placeholder={this.state.charCopied}
                 />
               </Col>
             </Row>
             <Row>
               <MultiColumnListDiacritic
                 {...this.props}
+                onRowClick={this.onRowClick}
               />
             </Row>
           </form>

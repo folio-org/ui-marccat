@@ -15,7 +15,7 @@ i {
   display: -webkit-box;
 }
 
-.PageBreak {
-  display: block;
-  page-break-before: always;
+.CustomDivTableContainer {
+  float: left;
+  width: -webkit-fill-available
 }

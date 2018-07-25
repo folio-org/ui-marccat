@@ -25,7 +25,7 @@ class SearchButton extends React.Component<Props, State> {
         buttonStyle="primary"
         style={{ minHeight: '36px' }}
       >
-        <FormattedMessage id="ui-marccat.search.SearchButton" />
+        <FormattedMessage id="ui-marccat.search.searchButton" />
       </Button>
     );
   }

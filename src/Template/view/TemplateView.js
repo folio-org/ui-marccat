@@ -43,7 +43,7 @@ class TemplateView extends React.Component {
       headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.TEMPLATES,
       GET: {
-        path: `record-templates?type=%{currentType}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
+        path: 'record-templates?type=%{currentType}&lang=' + C.ENDPOINT.DEFAULT_LANG
       },
       POST: {
         path: 'record-template/%{currentTemplate.id}',
@@ -53,9 +53,9 @@ class TemplateView extends React.Component {
       },
       DELETE: {
         path: 'record-template/%{currentTemplate.id}',
-        params: { lang: C.ENDPOINT.DEFAULT_LANG, type: 'B' },
-      },
-    },
+        params: { lang: C.ENDPOINT.DEFAULT_LANG, type: 'B' }
+      }
+    }
   });
 
   constructor(props) {
@@ -90,7 +90,7 @@ class TemplateView extends React.Component {
 
   hideConfirm() {
     this.setState({
-      confirming: false,
+      confirming: false
     });
   }
 
@@ -224,7 +224,7 @@ class TemplateView extends React.Component {
           paneTitle={formatMsg({
             id: 'ui-marccat.templates.title',
           })}
-          paneSub={`${templates.length} Result found`}
+          paneSub={templates.length + ' Result found'}
           appIcon={{ app: C.META.ICON_TITLE }}
         >
           <MultiColumnList
@@ -263,7 +263,6 @@ class TemplateView extends React.Component {
               selectedTemplate={this.state.selectedTemplate}
             />
             <ConfirmationModal
-              className={css.actionsBar}
               open={this.state.confirming}
               heading={modalHeading}
               message={modalMessage}

@@ -1,5 +1,5 @@
 /**
- * @author: Christian Chiama <Be Solution S.r.l>
+ * @author: Christian Chiama
  *
  * @format
  * @flow
@@ -20,7 +20,25 @@ type MARCcatPrinterProps = {
 };
 type MARCcatPrinterState = {};
 
-export default class MARCcatPrinter extends React.Component<MARCcatPrinterProps, MARCcatPrinterState> {
+/**
+ * Pass the children of a Route to the component that is responsible for rendering it.
+ * This allows us to have a single route hierarchy, where the routing
+ * components are responsible for marshalling data, and providing high
+ * level layout:
+ *
+ *    // component.js
+ *    <PrinterProvider
+ *       trigger={() => <IconButton key="icon-gear" icon="gear" className={css.stripes__icon} />}
+ *       content={() => this.componentRef} />
+ *
+ *    //component.js
+ *    <Paneset static ref={(el) => this.componentRef = el}>...
+ *
+ *
+ * will take all of the children of the top level `Route` component,
+ * and pass them as the children of the `ParentRoute` component.
+ */
+export default class PrinterProvider extends React.Component<MARCcatPrinterProps, MARCcatPrinterState> {
   static defaultProps = {
     copyStyles: true,
     closeAfterPrint: true,

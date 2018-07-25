@@ -34,7 +34,7 @@ type RoutingProps = {
 
 class MARCCatRouting extends React.Component<RoutingProps, {}> {
   static manifest = Object.freeze({
-    query: { initialValue: {} },
+    query: {},
     indexType: {},
     innerIndexValue: {},
     constraintIndexValue: {},
@@ -58,6 +58,20 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
       headers: C.ENDPOINT.HEADERS,
       path: `indexes/%{constraintIndexValue}?lang=${C.ENDPOINT.DEFAULT_LANG}`,
       records: C.API_RESULT_JSON_KEY.CONSTRAINT_INDEX,
+    },
+    sarchQuery: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      headers: C.ENDPOINT.HEADERS,
+      path: `search?lang=ita&q=%{query}&from=1&to=1&view=1&ml=170&dpo=1`,
+      records: 'docs',
+      // params: {
+      //   from: 1,
+      //   to: 1,
+      //   view: 1,
+      //   ml: 170,
+      //   dpo: 1
+      // }
     },
   });
 

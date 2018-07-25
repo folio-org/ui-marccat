@@ -40,13 +40,6 @@ class AdvanceSearchTextArea extends React.Component<AdvanceSerachTextAreaProps, 
     this.setState({ value: event.target.value });
   }
 
-  handleClick = () => {
-    this.props.reset();
-    this.setState({
-      value: ''
-    });
-  };
-
   render() {
     const { value } = this.state;
     return (

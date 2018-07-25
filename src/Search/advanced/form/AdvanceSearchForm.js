@@ -19,6 +19,7 @@ type AdvanceSerachFormProps = {
     onSelectIndex: Function;
     onSelectConstraint: Function;
     change: Function;
+    reset: Function;
 };
 type AdvanceSerachFormState = {
     value: string;
@@ -46,6 +47,7 @@ class AdvanceSearchForm extends
     this.handleChangeThirdSelect = this.handleChangeThirdSelect.bind(this);
     this.handleTextAreaValue = this.handleTextAreaValue.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
     handleChangeFirstSelect = event => {
@@ -81,6 +83,13 @@ class AdvanceSearchForm extends
     handleChange(event) {
       this.setState({ value: event.target.value });
     }
+
+    handleClick = () => {
+      this.props.reset();
+      this.setState({
+        value: ''
+      });
+    };
 
     handleChangeRadio = event => {
       this.setState({
@@ -232,18 +241,18 @@ class AdvanceSearchForm extends
                   </Row>
                   <Row>
                     <Col xs={6}>
-                      <SearchButton {...this.props} />
+                      <SearchButton data={this.state.value} {...this.props} />
                     </Col>
                     <Col xs={6}>
                       <ScanButton {...this.props} />
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={12}>
                       <Button
                         {...this.props}
                         onClick={this.handleClick}
                         type="button"
                         buttonStyle="primary"
-                        style={{ minHeight: '36px' }}
+                        style={{ width: '100%' }}
                       >
                       Reset
                       </Button>

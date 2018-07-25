@@ -1,12 +1,9 @@
 
-import Button from '@folio/stripes-components/lib/Button';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import { connect } from '@folio/stripes-connect';
 import React from 'react';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import { FormattedMessage } from 'react-intl';
-import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
+import { Col } from '@folio/stripes-components/lib/LayoutGrid';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import PrinterProvider from '../Core/Provider/MARCcatPrinter';
 import s from '../Theme/override.css';
@@ -15,15 +12,6 @@ import * as C from '../Utils';
 
 const mainIndexResults = require('../../config/static/main-index-list');
 const secondaryIndexResults = require('../../config/static/secondary-index-list');
-
-// function printDiv(divName, anotherDivName) {
-//   const printContentsMain = document.getElementById(divName).innerHTML;
-//   const printContentsSecondary = document.getElementById(anotherDivName).innerHTML;
-//   const originalContents = document.body.innerHTML;
-//   document.body.innerHTML = `--------------------------------------------------------------- MAIN INDEXES ---------------------------------------------------------------${printContentsMain}---------------------------------------------------------- SECONDARY INDEXES ----------------------------------------------------------${printContentsSecondary}`;
-//   window.print();
-//   document.body.innerHTML = originalContents;
-// }
 
 class IndexList extends React.Component {
   constructor(props) {
@@ -49,7 +37,7 @@ class IndexList extends React.Component {
               <h1><b>Main Indexes</b></h1>
               {
                 mainIndexResults.map((dynamicMainData) => (
-                  <table style={{ paddingTop: '20pt' }}>
+                  <table style={{ paddingTop: '20px' }}>
                     <thead>
                       <tr>
                         <th colSpan="2"> <p><h4 className={s.CustomIndexesH2}>{dynamicMainData.title}</h4></p></th>

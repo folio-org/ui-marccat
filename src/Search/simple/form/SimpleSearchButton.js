@@ -9,7 +9,10 @@ import { FormattedMessage } from 'react-intl';
 import Link from 'react-router-dom/Link';
 import * as C from '../../../Utils';
 
-class SimpleSearchButton extends React.Component {
+type SimpleSearchButtonProps = {
+  history: Object;
+};
+class SimpleSearchButton extends React.Component<SimpleSearchButtonProps, {}> {
   onClick() {
     this.props.history.push(C.INTERNAL_URL.SEARCH_RESULTS);
   }

@@ -1,13 +1,12 @@
-
 .CustomIndexesH2 {
   display: -webkit-box;
   -webkit-margin-collapse: discard;
 }
-  
+
 .CustomIndexTR {
   display: -webkit-box;
 }
-  
+
 .CustomDivTableContainer {
   float: left;
   width: -webkit-fill-available

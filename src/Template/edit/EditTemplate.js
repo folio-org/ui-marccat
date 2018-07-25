@@ -11,6 +11,7 @@ import * as C from '../../Utils';
 class EditTemplate extends React.Component {
   static propTypes = {
     selectedTemplate: PropTypes.object.isRequired,
+    mutator: PropTypes.object
   };
 
   static manifest = Object.freeze({

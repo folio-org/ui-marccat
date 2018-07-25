@@ -10,6 +10,8 @@ import * as C from '../../../Utils';
 
 type Props = {
   disabled: boolean;
+  mutator: Object;
+  data: string;
 };
 
 type State = {};

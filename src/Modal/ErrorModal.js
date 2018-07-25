@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import Modal from '@folio/stripes-components/lib/Modal';
 import Button from '@folio/stripes-components/lib/Button';
 
-type ErrorModalProps = {};
+type ErrorModalProps = {
+  open: bool;
+  message: string;
+  onClose: Function;
+};
 type ErrorModalState = {}
 
 class ErrorModal extends React.Component<ErrorModalProps, ErrorModalState> {

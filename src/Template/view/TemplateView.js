@@ -30,8 +30,10 @@ class TemplateView extends React.Component {
         PUT: PropTypes.func,
         DELETE: PropTypes.func,
       }),
+      currentType: PropTypes.string
     }).isRequired,
-
+    history: PropTypes.object,
+    resources: PropTypes.object,
   };
 
   static manifest = Object.freeze({

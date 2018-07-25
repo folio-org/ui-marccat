@@ -5,7 +5,14 @@ import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import { connect } from '@folio/stripes-connect';
 import * as C from '../../Utils';
 
-class TagSelect extends React.Component {
+type TagSelectProps = {
+  mutator: Object;
+  mandatoryField: Object;
+  defaultValue: Object;
+  resources: Object;
+};
+
+class TagSelect extends React.Component<TagSelectProps, {}> {
   static manifest = Object.freeze({
     marcCategory: {},
     subFileds: {},

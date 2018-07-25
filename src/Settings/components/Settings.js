@@ -2,7 +2,9 @@ import React from 'react';
 import Settings from '@folio/stripes-components/lib/Settings';
 import GeneralSettings from './GeneralSettings';
 
-type MARCcatSelectSettingsProps = {};
+type MARCcatSelectSettingsProps = {
+  stripes: Object;
+};
 type MARCcatSelectSettingsState = {};
 
 export default class MARCcatSelectSettings extends

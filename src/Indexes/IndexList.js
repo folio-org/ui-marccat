@@ -1,31 +1,26 @@
 
-import Button from '@folio/stripes-components/lib/Button';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import { connect } from '@folio/stripes-connect';
 import React from 'react';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import { FormattedMessage } from 'react-intl';
-import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
+import { Col } from '@folio/stripes-components/lib/LayoutGrid';
 import IconButton from '@folio/stripes-components/lib/IconButton';
+import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import PrinterProvider from '../Core/Provider/MARCcatPrinter';
-import s from '../Theme/override.css';
+import s from '../Indexes/style/indexes.css';
 import css from '../Search/style/Search.css';
 import * as C from '../Utils';
 
 const mainIndexResults = require('../../config/static/main-index-list');
 const secondaryIndexResults = require('../../config/static/secondary-index-list');
 
-// function printDiv(divName, anotherDivName) {
-//   const printContentsMain = document.getElementById(divName).innerHTML;
-//   const printContentsSecondary = document.getElementById(anotherDivName).innerHTML;
-//   const originalContents = document.body.innerHTML;
-//   document.body.innerHTML = `--------------------------------------------------------------- MAIN INDEXES ---------------------------------------------------------------${printContentsMain}---------------------------------------------------------- SECONDARY INDEXES ----------------------------------------------------------${printContentsSecondary}`;
-//   window.print();
-//   document.body.innerHTML = originalContents;
-// }
+type IndexListProps = {
+  stripes: Object;
+};
 
-class IndexList extends React.Component {
+type IndexListState = {
+};
+class IndexList extends React.Component<IndexListProps, IndexListState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,23 +28,32 @@ class IndexList extends React.Component {
   }
 
   render() {
+    const formatMsg = this.props.stripes.intl.formatMessage;
+    const printMenu = (
+      <PaneMenu {...this.props}>
+        <PrinterProvider
+          trigger={() => <IconButton title={formatMsg({ id: 'ui-marccat.indexes.print' })} key="icon-gear" icon="duplicate" className={css.stripes__icon} />}
+          content={() => (this.componentRef)}
+        />
+      </PaneMenu>
+    );
+
     return (
       <Paneset static >
         <Pane
-          defaultWidth="100%"
-          paneTitle="INDEX GUIDE"
+          defaultWidth="fill"
+          firstMenu={printMenu}
+          paneTitle={formatMsg({
+            id: 'ui-marccat.indexes.title',
+          })}
+          appIcon={{ app: C.META.ICON_TITLE }}
         >
-          <PrinterProvider
-            trigger={() => <IconButton title="Print" key="icon-gear" icon="duplicate" className={css.stripes__icon} />}
-            content={() => (this.componentRef)}
-          />
           <div ref={(el) => this.componentRef = el} >
-
             <Col xs={6} id="main" className={s.CustomDivTableContainer} >
-              <h1><b>Main Indexes</b></h1>
+              <h1><b>{formatMsg({ id: 'ui-marccat.indexes.main.title' })}</b></h1>
               {
                 mainIndexResults.map((dynamicMainData) => (
-                  <table style={{ paddingTop: '20pt' }}>
+                  <table style={{ paddingTop: '20px' }}>
                     <thead>
                       <tr>
                         <th colSpan="2"> <p><h4 className={s.CustomIndexesH2}>{dynamicMainData.title}</h4></p></th>
@@ -70,7 +74,7 @@ class IndexList extends React.Component {
               }
             </Col>
             <Col xs={6} id="secondary" className={s.CustomDivTableContainer}>
-              <h1><b>Secondary Indexes</b></h1>
+              <h1><b>{formatMsg({ id: 'ui-marccat.indexes.secondary.title' })}</b></h1>
               {
                 secondaryIndexResults.map((dynamicSecondaryData) => (
                   <table style={{ paddingTop: '20pt' }}>

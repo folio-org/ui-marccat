@@ -5,6 +5,7 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import { connect } from '@folio/stripes-connect';
 import TemplateForm from '../form/TemplateForm';
+import CreateTag from './CreateTag';
 import * as C from '../../Utils';
 
 
@@ -75,6 +76,7 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
         >
           <div>
             <TemplateForm {...this.props} />
+            <CreateTag {...this.props} />
           </div>
         </Pane>
       </Paneset>
@@ -82,4 +84,4 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
   }
 }
 
-export default connect(CreateTemplate);
+export default connect(CreateTemplate, C.META.MODULE_NAME);

@@ -65,6 +65,7 @@ export const API_RESULT_JSON_KEY = {
   DIACRITIC: 'diacritics',
   INDEX_INNER: 'indexes',
   CONSTRAINT_INDEX: 'constraints',
+  MARC_CATEGORIES: 'categories',
 };
 
 export const INITIAL_RESULT_COUNT = 30;

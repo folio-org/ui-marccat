@@ -63,7 +63,7 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
       headers: C.ENDPOINT.HEADERS,
-      path: `search?lang=ita&q=%{query}&from=1&to=1&view=1&ml=170&dpo=1`,
+      path: 'search?lang=ita&q=%{query}&from=1&to=1&view=1&ml=170&dpo=1',
       records: 'docs',
       // params: {
       //   from: 1,

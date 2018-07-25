@@ -40,10 +40,11 @@ class Diacritic extends Component<DiacriticProps, DiacriticState> {
     this.setState({ value: event.target.value });//eslint-disable-line
   };
 
-  onRowClick = function (rowMetadata) {
+  onRowClick = (rowMetadata) => {
     const char = rowMetadata.currentTarget.children[1].innerText;
     this.state.charCopied = char;
     this.setState({ charCopied: char });
+    this.props.change('charCopied', 'AAAAA');
   }
 
   handleSubmit = () => { };

@@ -1,11 +1,3 @@
-header {
-  z-index: 999 !important;
-}
-
-i {
-  font-size: var(--icons-size-medium) !important;
-}
-
 .CustomIndexesH2 {
   display: -webkit-box;
   -webkit-margin-collapse: discard;
@@ -17,5 +9,5 @@ i {
 
 .CustomDivTableContainer {
   float: left;
-  width: -webkit-fill-available
+  width: -webkit-fill-available;
 }

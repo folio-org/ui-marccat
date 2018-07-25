@@ -21,7 +21,8 @@ module.exports = {
   plugins: ["jsx-a11y" , "import"],
   "rules": {		
 		"indent": ["error", 2],
-		"react/jsx-indent": ["error", 2],
+    "react/jsx-indent": ["error", 2],
+    "react/prop-types":"off",
 		"react/forbid-prop-types":"off",
 		"spaced-comment": ["error", "always", { "markers": ["/"] }],
 		"arrow-parens": "off",

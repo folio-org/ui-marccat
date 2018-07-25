@@ -9,7 +9,6 @@ import { FormattedMessage } from 'react-intl';
 import * as C from '../../../Utils';
 
 type Props = {
-  onClick: Function;
   disabled: boolean;
 };
 
@@ -20,7 +19,7 @@ class SearchButton extends React.Component<Props, State> {
     this.handleSearch = this.handleSearch.bind(this);
   }
 
-  handleSearch = (data) => {
+  handleSearch = () => {
     this.props.mutator.query.replace(this.props.data);
   }
 

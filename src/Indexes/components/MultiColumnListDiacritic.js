@@ -62,6 +62,7 @@ class MultiColumnListDiacritic extends Component
           'characterSet',
           'unicode']}
         columnMapping={columnMapping}
+        columnWidths={{ value: '15%', character: '15%', label: '40%', characterSet: '15%', unicode: '15%' }}
       />
     );
   }

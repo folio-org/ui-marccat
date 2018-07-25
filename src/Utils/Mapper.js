@@ -59,10 +59,34 @@ const remapMultiArray = multiArray => {
   return obj;
 };
 
+/**
+ * map mandatory json in form of template to have a base structure to save
+ * @param {} multiArray
+ */
+const remapForTemplateMandatory = multiArray => {
+  const fixedFields = [];
+  const variableFields = [];
+  multiArray.forEach((el, index) => {
+    if (multiArray[index]['fixed-field'] !== undefined) {
+      fixedFields.push(multiArray[index]['fixed-field']);
+    } else if (
+      multiArray[index]['variable-field'] !== undefined
+    ) {
+      variableFields.push(multiArray[index]['variable-field']);
+    }
+  });
+  const result = {
+    'fixedFields': { fixedFields },
+    'variableFields': { variableFields },
+  };
+  return result;
+};
+
 
 export {
   arrayToObject,
   convertValueToLabel,
   remapCodeLongDescription,
   remapMultiArray,
+  remapForTemplateMandatory
 };

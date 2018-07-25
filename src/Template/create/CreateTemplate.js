@@ -4,46 +4,22 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import { connect } from '@folio/stripes-connect';
-import { remapMultiArray } from '../../Utils/Mapper';
 import TemplateForm from '../form/TemplateForm';
 import * as C from '../../Utils';
+
 
 type CreateTemplateProps = {
   stripes: Object;
   history: Object;
   resources: Object;
 };
-type CreateTemplateState = {};
+type CreateTemplateState = {
+  currentTemplate: {
+
+  };
+};
 
 class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplateState> {
-  static manifest = Object.freeze({
-    query: { initialValue: {} },
-    resultCount: { initialValue: C.INITIAL_RESULT_COUNT },
-    records: {
-      type: C.RESOURCE_TYPE,
-      root: C.ENDPOINT.BASE_URL,
-      path: C.ENDPOINT.TEMPLATE_MANDATORY,
-      headers: C.ENDPOINT.HEADERS,
-      records: 'fields',
-      GET: { params: { lang: C.ENDPOINT.DEFAULT_LANG } },
-      POST: {
-        path:
-          C.ENDPOINT.BASE_URL +
-          C.ENDPOINT.TEMPLATE_MANDATORY,
-      },
-      PUT: {
-        path:
-          C.ENDPOINT.BASE_URL +
-          C.ENDPOINT.TEMPLATE_MANDATORY,
-      },
-      DELETE: {
-        path:
-          C.ENDPOINT.BASE_URL +
-          C.ENDPOINT.TEMPLATE_MANDATORY,
-      },
-    },
-  });
-
   preparePaneMenu() {
     return (
       <PaneMenu {...this.props}>
@@ -58,11 +34,7 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const {
-      resources: { records },
-    } = this.props;
-    if (!records || !records.hasLoaded) return <div />;
-    const obj = remapMultiArray(records.records);
+
 
     const actionMenuItems = [
       {
@@ -90,7 +62,6 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
         },
       },
     ];
-
     return (
       <Paneset static>
         <Pane
@@ -103,10 +74,7 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
           appIcon={{ app: C.META.ICON_TITLE }}
         >
           <div>
-            <TemplateForm
-              {...this.props}
-              mandatoryField={obj}
-            />
+            <TemplateForm {...this.props} />
           </div>
         </Pane>
       </Paneset>
@@ -114,7 +82,4 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
   }
 }
 
-export default connect(
-  CreateTemplate,
-  C.META.MODULE_NAME,
-);
+export default connect(CreateTemplate);

@@ -37,13 +37,13 @@ class Diacritic extends Component<DiacriticProps, DiacriticState> {
   }
 
   handleChange = (event) => {
-    this.setState({ value: event.target.value });//eslint-disable-line
+    this.setState({ value: event.target.value });               //eslint-disable-line
   };
 
-  onRowClick = function (rowMetadata) {
+  onRowClick = function (rowMetadata) {                       //eslint-disable-line
     const char = rowMetadata.currentTarget.children[1].innerText;
-    this.state.charCopied = char;
     this.setState({ charCopied: char });
+    this.props.change('charCopied', char);                    //eslint-disable-line
   }
 
   handleSubmit = () => { };
@@ -94,7 +94,8 @@ class Diacritic extends Component<DiacriticProps, DiacriticState> {
                   name="charCopied"
                   component="input"
                   type="text"
-                  placeholder={this.state.charCopied}
+                  placeholder="Select a row..."
+                  value={this.state.charCopied}
                 />
               </Col>
             </Row>

@@ -76,6 +76,11 @@
 
   "search.wrong.input":"Wrong input on search field",
 
+  "indexes.title":"INDEX GUIDE",
+  "indexes.main.title":"Main Indexes",
+  "indexes.secondary.title":"Secondary Indexes",
+  "indexes.print":"Print",
+
   "diacritic.title":"Diacritic",
   "diacritic.subTitle": "Diacritic Table",
   "diacritic.char.copied":"Char copied ",

@@ -3,6 +3,7 @@
  * @flow
  */
 import React from 'react';
+import { connect } from '@folio/stripes-connect';
 import { Settings } from './Settings';
 import { Navigator } from './Navigator/';
 import * as C from './Utils';
@@ -15,6 +16,7 @@ type RoutingProps = {
     connect: Function,
     intl: Object,
   },
+  mutator: Object,
   history: {
     goBack: Function,
     pop: Function,
@@ -32,21 +34,21 @@ type RoutingProps = {
 
 class MARCCatRouting extends React.Component<RoutingProps, {}> {
   static manifest = Object.freeze({
-    query: { initialValue: {} },
+    query: {},
     indexType: {},
     innerIndexValue: {},
     constraintIndexValue: {},
     categories: {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
-      path: `index-categories?type=P&lang=${C.ENDPOINT.DEFAULT_LANG}`,
+      path: `index-categories?type=%{indexType}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
       headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.INDEX_CATEGORIES,
     },
     innerIndexes: {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
-      path: 'indexes?categoryType=P&categoryCode=2&lang=ita',
+      path: `indexes?categoryType=%{indexType}&categoryCode=%{innerIndexValue}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
       headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.INDEX_INNER,
     },
@@ -54,10 +56,31 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
       headers: C.ENDPOINT.HEADERS,
-      path: 'indexes/%{constraintIndexValue}?lang=ita',
+      path: `indexes/%{constraintIndexValue}?lang=${C.ENDPOINT.DEFAULT_LANG}`,
       records: C.API_RESULT_JSON_KEY.CONSTRAINT_INDEX,
     },
+    sarchQuery: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      headers: C.ENDPOINT.HEADERS,
+      path: 'search?lang=ita&q=%{query}&from=1&to=1&view=1&ml=170&dpo=1',
+      records: 'docs',
+      // params: {
+      //   from: 1,
+      //   to: 1,
+      //   view: 1,
+      //   ml: 170,
+      //   dpo: 1
+      // }
+    },
   });
+
+  constructor(props) {
+    super(props);
+    this.props.mutator.indexType.replace('P');
+    this.props.mutator.innerIndexValue.replace('2');
+    this.props.mutator.constraintIndexValue.replace('LIB');
+  }
 
   render() {
     const { showSettings } = this.props;
@@ -72,4 +95,4 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
   }
 }
 
-export default MARCCatRouting;
+export default connect(MARCCatRouting, C.META.MODULE_NAME);

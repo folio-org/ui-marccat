@@ -1,9 +1,6 @@
 version: 2
 jobs:
   build:
-    ignore:
-      - develop
-      - /feature-.*/
     docker:
       - image: circleci/node:9
     steps:
@@ -14,7 +11,7 @@ jobs:
       - image: circleci/node:9
     steps:
       - checkout
-      - run: yarn install
+      - run: yarn install && yarn lint
 workflows:
   version: 2
   build_and_test:

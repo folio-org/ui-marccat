@@ -5,7 +5,8 @@ import { connect } from '@folio/stripes-connect';
 import * as C from '../../Utils';
 
 type LogicalViewProps = {
-  label: string,
+  label: string;
+  resources: Object;
 };
 type LogicalViewState = {};
 

@@ -6,7 +6,9 @@ import { connect } from '@folio/stripes-connect';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import * as C from '../../Utils';
 
-type SearchResultsProps = {};
+type SearchResultsProps = {
+  stripes: Object;
+};
 type SearchResultsState = {};
 
 

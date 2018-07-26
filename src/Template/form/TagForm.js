@@ -16,6 +16,7 @@ class TagForm extends React.Component {
     }).isRequired,
     handleSubmit: PropTypes.func.isRequired,
     defaultValue: PropTypes.object.isRequired,
+    initialize: PropTypes.object
   };
 
   getInitialState() {

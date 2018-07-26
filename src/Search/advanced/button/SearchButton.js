@@ -9,23 +9,32 @@ import { FormattedMessage } from 'react-intl';
 import * as C from '../../../Utils';
 
 type Props = {
-  onClick: Function;
   disabled: boolean;
+  mutator: Object;
+  data: string;
 };
 
 type State = {};
 class SearchButton extends React.Component<Props, State> {
+  constructor(props) {
+    super(props);
+    this.handleSearch = this.handleSearch.bind(this);
+  }
+
+  handleSearch = () => {
+    this.props.mutator.query.replace(this.props.data);
+  }
+
   render() {
     return (
       <Button
-        {...this.props}
-        onClick={this.props.onClick}
+        onClick={this.handleSearch}
         type="button"
         disabled={this.props.disabled}
         buttonStyle="primary"
-        style={{ minHeight: '36px' }}
+        style={{ width: '100%' }}
       >
-        <FormattedMessage id="ui-marccat.search.SearchButton" />
+        <FormattedMessage id="ui-marccat.search.searchButton" />
       </Button>
     );
   }

@@ -53,7 +53,7 @@ class IndexList extends React.Component<IndexListProps, IndexListState> {
               <h1><b>{formatMsg({ id: 'ui-marccat.indexes.main.title' })}</b></h1>
               {
                 mainIndexResults.map((dynamicMainData) => (
-                  <table style={{ paddingTop: '20pt' }}>
+                  <table style={{ paddingTop: '20px' }}>
                     <thead>
                       <tr>
                         <th colSpan="2"> <p><h4 className={s.CustomIndexesH2}>{dynamicMainData.title}</h4></p></th>

@@ -46,7 +46,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
   }
 
   createTag() {
-    //TODO: validate this fields    
+    // TODO: validate this fields
     this.setState(
       { selectTagCreation: true,
         tagValue: createTagForm.tag.value,
@@ -95,7 +95,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
                 id="tag"
                 name="tag"
                 maxlength="3"
-                /*type="number"*/
+                /* type="number"*/
                 fullWidth={false}
               />
             </Col>

@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from '@folio/stripes-connect';
+import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import * as C from '../../Utils';
+import SelectFirstCorrelation from './SelectFirstCorrelation';
 
 type SelectTagCreationProps = {
   mutator: Object,
@@ -8,6 +10,7 @@ type SelectTagCreationProps = {
   tag: String,
   ind1: String,
   ind2: String,
+  resources: Object,
 }
 
 class SelectTagCreation extends React.Component<SelectTagCreationProps, SelectTagCreationState> {
@@ -20,8 +23,7 @@ class SelectTagCreation extends React.Component<SelectTagCreationProps, SelectTa
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
       path: `field-template?categoryCode=%{categoryCodeObj}&ind1=%{ind1Obj}&ind2=%{ind2Obj}&code=%{codeObj}&lang=${C.ENDPOINT.DEFAULT_LANG}&headerType=0&leader=''&valueField=''`,
-      headers: C.ENDPOINT.HEADERS,
-      records: C.API_RESULT_JSON_KEY.FIELD_TEMPLATES,
+      headers: C.ENDPOINT.HEADERS
     }
   });
 
@@ -34,7 +36,21 @@ class SelectTagCreation extends React.Component<SelectTagCreationProps, SelectTa
   }
 
   render() {
-    return (<div>{this.props.tag}</div>);
+    const { resources: { fieldTemplate } } = this.props;
+    let firstCorrelationValue;
+    if (fieldTemplate && fieldTemplate.hasLoaded) {
+      firstCorrelationValue = fieldTemplate.records.map(element => element['variable-field'].firstCorrelation || element.fixedField.firstCorrelation);
+    }
+
+    return (
+      <Row>
+        <Col xs={12}>
+          {fieldTemplate && fieldTemplate.hasLoaded &&
+          <SelectFirstCorrelation {...this.props} marcCategory={firstCorrelationValue} />
+          }
+        </Col>
+      </Row>
+    );
   }
 }
 

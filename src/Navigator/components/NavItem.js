@@ -11,6 +11,7 @@ type NavItemProps = {
     path: string;
     withChildren: bool;
     children: React.Node;
+    open: bool;
 };
 type NavItemState = {
     isOpen: bool;
@@ -30,13 +31,13 @@ export default class NavItem extends React.Component<NavItemProps, NavItemState>
   };
 
   render() {
-    const { label, path, activeLink, itemLabel, withChildren } = this.props;
+    const { label, path, activeLink, itemLabel, withChildren, open } = this.props;
     return (withChildren) ? (
-      <Accordion open={this.state.isOpen} onToggle={this.handleToggle} label={label}>
+      <Accordion open={this.state.isOpen || open} onToggle={this.handleToggle} label={label}>
         {this.props.children}
       </Accordion>
     ) : (
-      <Accordion open={this.state.isOpen} onToggle={this.handleToggle} label={label}>
+      <Accordion open={this.state.isOpen || open} onToggle={this.handleToggle} label={label}>
         <NavListSection activeLink={activeLink}>
           <NavListItem to={path}>{itemLabel}</NavListItem>
         </NavListSection>

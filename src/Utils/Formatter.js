@@ -23,3 +23,13 @@ export const formatSearchQuery = (input: string) => {
   const lastPart = `[${splitted[1]}]`;
   return firstPart.concat(' ').concat(lastPart);
 };
+
+export const removeById = (array, val) => {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i].id === val) {
+      array.splice(i, 1);
+      i--;
+    }
+  }
+  return array;
+};

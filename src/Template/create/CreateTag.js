@@ -22,6 +22,8 @@ type CreateTagState = {
 class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
   static manifest = Object.freeze({
     marcCategory: {},
+    headingType: {},
+    itemType: {},
     marcCategories: {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
@@ -34,14 +36,29 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
       root: C.ENDPOINT.BASE_URL,
       path: `heading-types?marcCategory=%{marcCategory}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
       headers: C.ENDPOINT.HEADERS,
-      records: 'headingTypes'
+      records: 'headingTypes',
+      fetch: false,
+      accumulate: true
+    },
+    itemTypes: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      path: `item-types?marcCategory=%{marcCategory}&code=%{headingType}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
+      headers: C.ENDPOINT.HEADERS,
+      records: 'itemTypes',
+      fetch: false,
+      accumulate: true
+    },
+    functionCodes: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      path: `function-codes?marcCategory=%{marcCategory}&code1=%{headingType}&code2=%{itemType}&code3=''&lang=${C.ENDPOINT.DEFAULT_LANG}`,
+      headers: C.ENDPOINT.HEADERS,
+      records: 'functionCodes',
+      fetch: false,
+      accumulate: true
     }
   });
-
-  constructor(props) {
-    super(props);
-    this.props.mutator.marcCategory.replace('1');
-  }
 
   preparePaneMenu() {
     return (
@@ -57,11 +74,22 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const { resources: { marcCategories, headingTypes } } = this.props;
+    const { resources: { marcCategories, headingTypes, itemTypes, functionCodes } } = this.props;
+    if (marcCategories && marcCategories.hasLoaded && marcCategoriesSelect.value) {
+      const current = marcCategoriesSelect.value;
+      this.props.mutator.headingType.replace(current);
+    }
 
-    let marcCategoryOptions = {};
-    if (marcCategories) {
-      marcCategoryOptions = marcCategories.records.map((element) => (
+    let functionCodesOptions = {};
+    if (functionCodes) {
+      functionCodesOptions = functionCodes.records.map((element) => (
+        <option key={element.value} value={element.value}>{element.label}</option>
+      ));
+    }
+
+    let itemTypesOptions = {};
+    if (itemTypes) {
+      itemTypesOptions = itemTypes.records.map((element) => (
         <option key={element.value} value={element.value}>{element.label}</option>
       ));
     }
@@ -87,9 +115,8 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
                 <Select
                   name="marcCategoriesSelect"
                   id="marcCategoriesSelect"
-                >
-                  {marcCategoryOptions}
-                </Select>
+                  dataOptions={marcCategories.records}
+                />
               }
             </Col>
           </Row>
@@ -102,6 +129,32 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
                   id="headingTypesSelect"
                 >
                   {headingTypesOptions}
+                </Select>
+              }
+            </Col>
+          </Row>
+
+          <Row>
+            <Col xs={12}>
+              {itemTypes &&
+                <Select
+                  name="itemTypesSelect"
+                  id="itemTypesSelect"
+                >
+                  {itemTypesOptions}
+                </Select>
+              }
+            </Col>
+          </Row>
+
+          <Row>
+            <Col xs={12}>
+              {functionCodes &&
+                <Select
+                  name="functionCodesSelect"
+                  id="functionCodesSelect"
+                >
+                  {functionCodesOptions}
                 </Select>
               }
             </Col>

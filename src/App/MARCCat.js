@@ -1,5 +1,4 @@
 import React from 'react';
-import SearchAndSort from '@folio/stripes-smart-components/lib/SearchAndSort';
 import { connect } from '@folio/stripes-connect';
 import * as C from '../Utils';
 

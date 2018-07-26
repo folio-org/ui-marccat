@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from '@folio/stripes-connect';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
+import { Observable } from 'rxjs/Observable';
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import Paneset from '@folio/stripes-components/lib/Paneset';
@@ -12,6 +13,7 @@ import ConfirmationModal from '@folio/stripes-components/lib/structures/Confirma
 import { FormattedMessage } from 'react-intl';
 import { EditTemplate } from '../';
 import * as C from '../../Utils';
+import { removeById } from '../../Utils/Formatter';
 import css from '../../Search/style/Search.css';
 import '../styles/Template.css';
 
@@ -67,7 +69,6 @@ class TemplateView extends React.Component {
       showTemplateDetail: false,
       selectedTemplate: {},
     };
-
     this.props.mutator.currentType.replace('B');
 
     this.connectedEditTemplateView = props.stripes.connect(EditTemplate);
@@ -92,9 +93,10 @@ class TemplateView extends React.Component {
 
   hideConfirm() {
     this.setState({
-      confirming: false
+      confirming: false,
     });
   }
+
 
   showConfirm() {
     this.setState({
@@ -142,9 +144,15 @@ class TemplateView extends React.Component {
       resources: { recordsTemplates },
     } = this.props;
     if (!recordsTemplates || !recordsTemplates.hasLoaded) {
-      return <div />;
+      return null;
     }
-    const templates = recordsTemplates.records;
+    let templates = recordsTemplates.records;
+    const obs = Observable.from(templates);
+
+    obs.subscribe((d) =>{
+     console.log(d)
+    });
+
 
     const formatter = {
       'Id: id': x => _.get(x, ['id']),
@@ -216,6 +224,11 @@ class TemplateView extends React.Component {
       },
     ];
 
+    if (this.props.resources.currentTemplate.id !== undefined) {
+      templates = removeById(templates, this.props.resources.currentTemplate.id);
+    }
+
+
     return (
       <Paneset static>
         <Pane
@@ -231,6 +244,7 @@ class TemplateView extends React.Component {
         >
           <MultiColumnList
             id="list-templates"
+            loading={!recordsTemplates.hasLoaded}
             contentData={templates}
             rowMetadata={['id', 'id']}
             formatter={formatter}

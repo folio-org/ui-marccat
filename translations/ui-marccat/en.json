@@ -32,7 +32,7 @@
   "template.tag.delete": "Delete Tag",
 
   "template.form.name": "Name",
-  "template.form.tag.code": "Code",
+  "template.form.tag.code": "Tag",
   "template.form.tag.ind1": "Ind2",
   "template.form.tag.ind2": "Ind2",
 
@@ -76,7 +76,17 @@
 
   "search.wrong.input":"Wrong input on search field",
 
+  "indexes.title":"INDEX GUIDE",
+  "indexes.main.title":"Main Indexes",
+  "indexes.secondary.title":"Secondary Indexes",
+  "indexes.print":"Print",
+
   "diacritic.title":"Diacritic",
   "diacritic.subTitle": "Diacritic Table",
-  "diacritic.char.copied":"Char copied "
+  "diacritic.char.copied":"Char copied ",
+  "diacritic.list.id":"Id",
+  "diacritic.list.character":"Character",
+  "diacritic.list.description":"Description",
+  "diacritic.list.charset":"Character Set",
+  "diacritic.list.unicode":"Unicode"
 }

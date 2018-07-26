@@ -1,62 +1,116 @@
 import React from 'react';
-import { AccordionSet, Accordion } from '@folio/stripes-components/lib/Accordion';
-import NavListSection from '@folio/stripes-components/lib/NavListSection';
-import NavListItem from '@folio/stripes-components/lib/NavListItem';
+import { AccordionSet, ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
 import NavList from '@folio/stripes-components/lib/NavList';
+import { Row } from '@folio/stripes-components/lib/LayoutGrid';
+import { connect } from '@folio/stripes-connect';
 import { AdvanceSearchForm } from '../../Search/';
+import NavItem from './NavItem';
+import * as C from '../../Utils';
+import css from '../style/NavStyles.css';
 
-export default class NavMenu extends React.Component {
+type NavMenuProps = {
+  stripes: Object;
+  resources: Object;
+  match: Object;
+  history: Object;
+  open: bool;
+};
+type NavMenuSatate = {
+  section: Object;
+  open: bool;
+};
+
+
+class NavMenu extends React.Component<NavMenuProps, NavMenuSatate> {
   constructor(props) {
     super(props);
-    this.handleAccordionClick = this.handleAccordionClick.bind(this);
+    this.state = {
+      section: {
+        expandeCollapseAction: false
+      }
+    };
+    this.handleExpandAll = this.handleExpandAll.bind(this);
   }
 
-  handleAccordionClick = (url) => {
-    this.props.history.push(url);
-  };
+  handleExpandAll(section) {
+    this.setState({ section });
+  }
 
 
   render() {
     const rootPath = this.props.match.path;
     return (
-      <AccordionSet>
-        <NavList styles={{ paddingTop: '50px' }}>
-          <Accordion label="Simple Search">
-            <NavListSection activeLink={`${rootPath}`}>
-              <NavListItem to={`${rootPath}/simpleSearch`}>Simple Search</NavListItem>
-            </NavListSection>
-          </Accordion>
-          <Accordion label="Advanced Search" open onToggle={() => this.handleAccordionClick(`${rootPath}/searchResults`)}>
-            <AdvanceSearchForm {...this.props} />
-          </Accordion>
-          <Accordion label="External Search">
-            <NavListSection activeLink={`${rootPath}`}>
-              <NavListItem to={`${rootPath}/externalSearch`}>External Search</NavListItem>
-            </NavListSection>
-          </Accordion>
-          <Accordion label="Indexes">
-            <NavListSection activeLink={`${rootPath}`}>
-              <NavListItem to={`${rootPath}/indexList`}>Indexes</NavListItem>
-            </NavListSection>
-          </Accordion>
-          <Accordion label="Diacritic">
-            <NavListSection activeLink={`${rootPath}`}>
-              <NavListItem to={`${rootPath}/diacritic`} style={{ marginBottom: '20px' }}>Diacritic</NavListItem>
-            </NavListSection>
-          </Accordion>
-          <Accordion label="Report">
-            <NavListSection>
-              <NavListItem to={`${rootPath}/report`} style={{ marginBottom: '20px' }}>Report</NavListItem>
-            </NavListSection>
-          </Accordion>
-          <Accordion label="Template">
-            <NavListSection>
-              <NavListItem to={`${rootPath}/templateList`}>Template List</NavListItem>
-            </NavListSection>
-          </Accordion>
-        </NavList>
-      </AccordionSet>
+      <div>
+        <Row className={css.expandAll}>
+          <ExpandAllButton accordionStatus={this.state.section} onToggle={this.handleExpandAll} />
+        </Row>
+        <AccordionSet>
+          <NavList className={css.navList} {...this.props}>
+            <NavItem
+              {...this.props}
+              accordionId="expandeCollapseAction"
+              label="Simple Search"
+              activeLink={`${rootPath}`}
+              open={this.state.section.expandeCollapseAction}
+              itemLabel="Simple Search"
+              path={`${rootPath}/externalSearch`}
+            />
+            <NavItem
+              accordionId="advancedSearchSection"
+              withChildren
+              open={this.state.section.expandeCollapseAction}
+              label="Advanced Search"
+              path={`${rootPath}/advancedSearch`}
+            ><AdvanceSearchForm {...this.props} />
+            </NavItem>
+            <NavItem
+              accordionId="externalSearchSection"
+              label="External Search"
+              open={this.state.section.expandeCollapseAction}
+              itemLabel="External Search"
+              activeLink={`${rootPath}/`}
+              path={`${rootPath}/externalSearch`}
+            />
+            <NavItem
+              accordionId="indexesSection"
+              label="Indexes"
+              itemLabel="Indexes"
+              open={this.state.section.expandeCollapseAction}
+              activeLink={`${rootPath}/`}
+              path={`${rootPath}/indexList`}
+            />
+            <NavItem
+              accordionId="diacriticSection"
+              label="Diacritic"
+              itemLabel="Diacritic"
+              open={this.state.section.expandeCollapseAction}
+              activeLink={`${rootPath}/`}
+              path={`${rootPath}/diacritic`}
+            />
+            <NavItem
+              accordionId="reportSection"
+              label="Report"
+              itemLabel="Report"
+              open={this.state.section.expandeCollapseAction}
+              activeLink={`${rootPath}/`}
+              path={`${rootPath}/report`}
+            />
+            <NavItem
+              accordionId="templateSection"
+              label="Template"
+              open={this.state.section.expandeCollapseAction}
+              activeLink={`${rootPath}/`}
+              itemLabel="Template List"
+              path={`${rootPath}/templateList`}
+            />
+          </NavList>
+        </AccordionSet>
+      </div>
     );
   }
 }
 
+export default connect(
+  NavMenu,
+  C.META.MODULE_NAME,
+);

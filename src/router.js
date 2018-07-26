@@ -11,13 +11,14 @@ import { SimpleSearch, SearchResults } from './Search/';
 import { IndexList, Diacritic } from './Indexes/';
 
 
-export function ConnectedRoute({ path, id, component: Component, ...props }) {
+export function ConnectedRoute({ path, id, component: Component, ...props }) { // eslint-disable-line react/prop-types
   return (
     <Route path={path}>
       <Component {...props} id={id} />
     </Route>
   );
 }
+
 
 export default class Router extends React.Component<*> {
   render() {

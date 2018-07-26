@@ -15,3 +15,21 @@ export function formatDateTime(dateStr) {
     </span>
   );
 }
+
+
+export const formatSearchQuery = (input: string) => {
+  const splitted = input.split(';;;');
+  const firstPart = `"${splitted[0]}"`;
+  const lastPart = `[${splitted[1]}]`;
+  return firstPart.concat(' ').concat(lastPart);
+};
+
+export const removeById = (array, val) => {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i].id === val) {
+      array.splice(i, 1);
+      i--;
+    }
+  }
+  return array;
+};

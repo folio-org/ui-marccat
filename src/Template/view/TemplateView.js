@@ -12,6 +12,7 @@ import ConfirmationModal from '@folio/stripes-components/lib/structures/Confirma
 import { FormattedMessage } from 'react-intl';
 import { EditTemplate } from '../';
 import * as C from '../../Utils';
+import { removeById } from '../../Utils/Formatter';
 import css from '../../Search/style/Search.css';
 import '../styles/Template.css';
 
@@ -30,8 +31,10 @@ class TemplateView extends React.Component {
         PUT: PropTypes.func,
         DELETE: PropTypes.func,
       }),
+      currentType: PropTypes.string
     }).isRequired,
-
+    history: PropTypes.object,
+    resources: PropTypes.object,
   };
 
   static manifest = Object.freeze({
@@ -43,7 +46,7 @@ class TemplateView extends React.Component {
       headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.TEMPLATES,
       GET: {
-        path: `record-templates?type=%{currentType}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
+        path: 'record-templates?type=%{currentType}&lang=' + C.ENDPOINT.DEFAULT_LANG
       },
       POST: {
         path: 'record-template/%{currentTemplate.id}',
@@ -53,9 +56,9 @@ class TemplateView extends React.Component {
       },
       DELETE: {
         path: 'record-template/%{currentTemplate.id}',
-        params: { lang: C.ENDPOINT.DEFAULT_LANG, type: 'B' },
-      },
-    },
+        params: { lang: C.ENDPOINT.DEFAULT_LANG, type: 'B' }
+      }
+    }
   });
 
   constructor(props) {
@@ -65,7 +68,6 @@ class TemplateView extends React.Component {
       showTemplateDetail: false,
       selectedTemplate: {},
     };
-
     this.props.mutator.currentType.replace('B');
 
     this.connectedEditTemplateView = props.stripes.connect(EditTemplate);
@@ -93,6 +95,7 @@ class TemplateView extends React.Component {
       confirming: false,
     });
   }
+
 
   showConfirm() {
     this.setState({
@@ -140,9 +143,9 @@ class TemplateView extends React.Component {
       resources: { recordsTemplates },
     } = this.props;
     if (!recordsTemplates || !recordsTemplates.hasLoaded) {
-      return <div />;
+      return null;
     }
-    const templates = recordsTemplates.records;
+    let templates = recordsTemplates.records;
 
     const formatter = {
       'Id: id': x => _.get(x, ['id']),
@@ -214,6 +217,11 @@ class TemplateView extends React.Component {
       },
     ];
 
+    if (this.props.resources.currentTemplate.id !== undefined) {
+      templates = removeById(templates, this.props.resources.currentTemplate.id);
+    }
+
+
     return (
       <Paneset static>
         <Pane
@@ -224,11 +232,12 @@ class TemplateView extends React.Component {
           paneTitle={formatMsg({
             id: 'ui-marccat.templates.title',
           })}
-          paneSub={`${templates.length} Result found`}
+          paneSub={templates.length + ' Result found'}
           appIcon={{ app: C.META.ICON_TITLE }}
         >
           <MultiColumnList
             id="list-templates"
+            loading={!recordsTemplates.hasLoaded}
             contentData={templates}
             rowMetadata={['id', 'id']}
             formatter={formatter}
@@ -263,7 +272,6 @@ class TemplateView extends React.Component {
               selectedTemplate={this.state.selectedTemplate}
             />
             <ConfirmationModal
-              className={css.actionsBar}
               open={this.state.confirming}
               heading={modalHeading}
               message={modalMessage}

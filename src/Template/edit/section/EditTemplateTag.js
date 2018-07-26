@@ -12,6 +12,7 @@ class EditTemplateTag extends React.Component {
     onToggle: PropTypes.object.isRequired,
     accordionId: PropTypes.object.isRequired,
     expanded: PropTypes.object.isRequired,
+    resources: PropTypes.object
   };
 
   static manifest = Object.freeze({

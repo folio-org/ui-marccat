@@ -5,8 +5,16 @@
 }
 
 .navItem {
-  margin-bottom: '30px';
+  margin-bottom: 30px;
   overflow: 'hidden';
   position: 'relative';
   display: 'flex';
+}
+
+.navList {
+  padding-top: 10px;
+}
+
+.expandAll {
+  float: right;
 }

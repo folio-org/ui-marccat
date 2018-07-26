@@ -9,7 +9,11 @@ import * as C from '../../Utils';
 
 import styles from '../style/NavStyles.css';
 
-class NavigatorEmpty extends React.Component {
+type NavigatorEmptyProps = {
+  stripes: Object;
+};
+
+class NavigatorEmpty extends React.Component<NavigatorEmptyProps, {}> {
   render() {
     const searchMenu = (
       <PaneMenu>

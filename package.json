@@ -1,7 +1,7 @@
 {
   "name": "@folio/marccat",
   "appName": "MARCCcat",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "company": "@Cult",
   "description": "MARCcat Cataloging Module",
   "repository": "folio-org/ui-marccat",

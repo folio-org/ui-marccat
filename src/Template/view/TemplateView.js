@@ -147,6 +147,7 @@ class TemplateView extends React.Component {
     }
     let templates = recordsTemplates.records;
 
+
     const formatter = {
       'Id: id': x => _.get(x, ['id']),
       'name: name': x => _.get(x, ['name']),

@@ -2,6 +2,7 @@
 *.log
 yarn.lock
 yarn-error.log
+package-lock.json
 ModuleDescriptor.json
 
 ## macos
@@ -22,7 +23,6 @@ dist/
 .*.sw?
 *.swp
 *.swo
-
 #CI
 
 

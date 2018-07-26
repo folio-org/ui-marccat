@@ -149,8 +149,8 @@ class TemplateView extends React.Component {
     let templates = recordsTemplates.records;
     const obs = Observable.from(templates);
 
-    obs.subscribe((d) =>{
-     console.log(d)
+    obs.subscribe((d) => {
+      console.log(d);
     });
 
 

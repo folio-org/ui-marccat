@@ -10,9 +10,11 @@
   position: 'relative';
   display: 'flex';
 }
+
 .navList {
   padding-top: 10px;
 }
+
 .expandAll {
   float: right;
 }

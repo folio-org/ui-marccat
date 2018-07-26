@@ -8,7 +8,7 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import Callout from '@folio/stripes-components/lib/Callout';
-import ConfirmationModal from '@folio/stripes-components/lib/structures/ConfirmationModal';
+import ConfirmationModal from '@folio/stripes-components/lib/ConfirmationModal';
 import { FormattedMessage } from 'react-intl';
 import { EditTemplate } from '../';
 import * as C from '../../Utils';
@@ -146,6 +146,7 @@ class TemplateView extends React.Component {
       return null;
     }
     let templates = recordsTemplates.records;
+
 
     const formatter = {
       'Id: id': x => _.get(x, ['id']),

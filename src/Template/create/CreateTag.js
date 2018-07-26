@@ -93,7 +93,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
               }
             </Col>
           </Row>
-         
+
           <Row>
             <Col xs={12}>
               {headingTypes &&
@@ -106,7 +106,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
               }
             </Col>
           </Row>
-       
+
           <Row>
             <Button
               {...this.props}

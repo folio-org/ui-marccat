@@ -40,7 +40,7 @@
     "build": "stripes build --output --sourcemap",
     "build:analizer": "stripes build config/stripes.config.js ./dist/analyze/ui-marccat-analyze --analyze --sourcemap",
     "test": "(cd test/ui-testing; yarn test-module -- -o --run=ui-marccat --host=localhost)",
-    "lint": "yarn eslint;yarn stylelint",
+    "lint": "yarn eslint yarn stylelint",
     "lint-i18n": ". ./script/i18n-lint.sh",
     "flow:gen": "lint-staged",
     "eslint": "eslint --fix ./",

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from '@folio/stripes-connect';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
-import { Observable } from 'rxjs/Observable';
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import Paneset from '@folio/stripes-components/lib/Paneset';
@@ -147,11 +146,6 @@ class TemplateView extends React.Component {
       return null;
     }
     let templates = recordsTemplates.records;
-    const obs = Observable.from(templates);
-
-    obs.subscribe((d) => {
-      console.log(d);
-    });
 
 
     const formatter = {

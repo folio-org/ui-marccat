@@ -8,15 +8,27 @@ class MARCCat extends React.Component<*> {
     initializedFilterConfig: { initialValue: false },
     query: { initialValue: {} },
     resultCount: { initialValue: 30 },
+    views: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      path: C.ENDPOINT.DIACRITIC_LIST_URL,
+      headers: C.ENDPOINT.HEADERS,
+      records: C.API_RESULT_JSON_KEY.DIACRITIC,
+      GET: {
+        params: { lang: C.ENDPOINT.DEFAULT_LANG },
+      },
+    },
   });
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
+    const { resources: { views } } = this.props;
+    if (!views || !views.hasLoaded) {
+      return null;
+    }
+    const diacritics = views.records;
+    alert(diacritics);
     return (
-      <SearchAndSort {...this.props} />
+      <div {...this.props} />
     );
   }
 }

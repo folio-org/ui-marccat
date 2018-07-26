@@ -20,16 +20,16 @@ export function ConnectedRoute({ path, id, component: Component, ...props }) { /
 }
 
 const Empty = () => {
-  return(
-  <Paneset static>
-    <Pane
-      defaultWidth="fill"
-      paneTitle="Marccat"
-      paneSub=""
-      onClose={() => {}}
+  return (
+    <Paneset static>
+      <Pane
+        defaultWidth="fill"
+        paneTitle="Marccat"
+        paneSub=""
+        onClose={() => {}}
       />
-  </Paneset>);
-}
+    </Paneset>);
+};
 
 
 export default class Router extends React.Component<*> {
@@ -44,7 +44,7 @@ export default class Router extends React.Component<*> {
         <ConnectedRoute path={`${rootPath}/templatelist`} {...this.props} component={TemplateView} id="template_list" />
         <ConnectedRoute path={`${rootPath}/indexList`} {...this.props} component={IndexList} id="index_list" />
         <ConnectedRoute path={`${rootPath}/diacritic`} {...this.props} component={Diacritic} id="diacritic" />
-        <Route path={`${rootPath}`} {...this.props} render={()=> <Empty />} id="navigation_root" />
+        <Route path={`${rootPath}`} {...this.props} render={() => <Empty />} id="navigation_root" />
       </Switch>
     );
   }

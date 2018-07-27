@@ -24,7 +24,7 @@ class SearchButton extends React.Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
-      results: null,
+      results: {},
       isOpen: true
     };
     this.handleSearch = this.handleSearch.bind(this);
@@ -33,13 +33,12 @@ class SearchButton extends React.Component<Props, State> {
 
   handleSearch = () => {
     this.props.mutator.query.replace(this.props.data);
-    const observer = Observable.fromPromise(this.props.mutator.searchQuery.GET());
+    const observer = Observable.from(this.props.mutator.searchQuery.GET());
     observer
       .take(1)
       .filter(r => r.length > 0)
-      .flatMap(r => this.setState({ results: r, isOpen: true }))
-      .subscribe()
-      .closed();
+      .map((r) => this.setState({ results: r, isOpen: true }))
+      .subscribe();
   }
 
   handleClose = () => {
@@ -60,8 +59,8 @@ class SearchButton extends React.Component<Props, State> {
         >
           <FormattedMessage id="ui-marccat.search.searchButton" />
         </Button>
-        {this.state.results &&
-        <Modal dismissible closeOnBackgroundClick onClose={this.handleClose} open={this.state.isOpen} label={`Results for: ${this.props.data}`}>
+        {!_.isEmpty(this.state.results) &&
+        <Modal dismissible closeOnBackgroundClick={this.handleClose} onClose={this.handleClose} open={this.state.isOpen} label={`Results for: ${this.props.data}`}>
           <div>{this.state.results ? this.state.results[0].data : 'No Result Found for ' + this.props.data}</div>
         </Modal>
         }

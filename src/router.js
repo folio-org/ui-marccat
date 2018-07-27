@@ -31,7 +31,6 @@ const Empty = () => {
     </Paneset>);
 };
 
-
 export default class Router extends React.Component<*> {
   render() {
     const rootPath = this.props.match.path;

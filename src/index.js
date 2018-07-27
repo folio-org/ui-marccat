@@ -20,7 +20,10 @@ type RoutingProps = {
     searchQuery:{
       GET: Function,
       reset: Function,
-    }
+    },
+    indexType: Object,
+    innerIndexValue: Object,
+    constraintIndexValue: Object,
   },
   history: {
     goBack: Function,

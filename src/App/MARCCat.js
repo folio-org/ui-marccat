@@ -1,5 +1,4 @@
 import React from 'react';
-import SearchAndSort from '@folio/stripes-smart-components/lib/SearchAndSort';
 import { connect } from '@folio/stripes-connect';
 import * as C from '../Utils';
 
@@ -25,8 +24,6 @@ class MARCCat extends React.Component<*> {
     if (!views || !views.hasLoaded) {
       return null;
     }
-    const diacritics = views.records;
-    alert(diacritics);
     return (
       <div {...this.props} />
     );

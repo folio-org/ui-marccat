@@ -19,7 +19,7 @@ export default class SearchButton extends Component<SearchButtonProps, SearchBut
         onClick={onSubmit}
         disabled={submitting || pristine}
         buttonStyle="primary"
-        style={{ minHeight: '36px' }}
+        style={{ width: '50%' }}
       >{formatMsg({
           id: 'ui-marccat.search.searchButton',
         })}

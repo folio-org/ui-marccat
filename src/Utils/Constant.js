@@ -133,3 +133,5 @@ export const MARC_CHARACTER = {
   SEPARATOR: '\u001f',
   DOLLAR: '$',
 };
+
+export const EMPTY_PARAMETER = -1;

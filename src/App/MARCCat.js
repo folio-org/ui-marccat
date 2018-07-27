@@ -24,8 +24,6 @@ class MARCCat extends React.Component<*> {
     if (!views || !views.hasLoaded) {
       return null;
     }
-    const diacritics = views.records;
-    alert(diacritics);
     return (
       <div {...this.props} />
     );

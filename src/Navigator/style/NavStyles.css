@@ -4,6 +4,14 @@
   align-items: 'center';
 }
 
+.navList section > div {
+  border-top: none !important;
+}
+
+.navList {
+  padding-top: 10px;
+}
+
 .navItem {
   margin-bottom: 30px;
   overflow: 'hidden';
@@ -11,10 +19,11 @@
   display: 'flex';
 }
 
-.navList {
-  padding-top: 10px;
-}
-
 .expandAll {
   float: right;
+  width: 100%;
+}
+
+.expandAll > button {
+  width: 100%;
 }

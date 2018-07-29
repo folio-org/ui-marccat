@@ -7,7 +7,7 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 
-type MARCcatPrinterProps = {
+type PrinterProviderProps = {
     copyStyles: bool;
     trigger: Function,
     content: Function,
@@ -18,7 +18,7 @@ type MARCcatPrinterProps = {
     bodyClass: string,
     debug: bool;
 };
-type MARCcatPrinterState = {};
+type PrinterProviderState = {};
 
 /**
  * Pass the children of a Route to the component that is responsible for rendering it.
@@ -38,7 +38,7 @@ type MARCcatPrinterState = {};
  * will take all of the children of the top level `Route` component,
  * and pass them as the children of the `ParentRoute` component.
  */
-export default class PrinterProvider extends React.Component<MARCcatPrinterProps, MARCcatPrinterState> {
+export default class PrinterProvider extends React.Component<PrinterProviderProps, PrinterProviderState> {
   static defaultProps = {
     copyStyles: true,
     closeAfterPrint: true,

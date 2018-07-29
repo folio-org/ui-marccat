@@ -1,4 +1,4 @@
-@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+@import '@folio/stripes-components/lib/variables';
 @import './override.css';
 
 :root {
@@ -18,18 +18,11 @@
   --danger: #900;
   --warn: #e27c3e;
   --success: #070;
-  --controlMarginBottom: 12px;
-  --controlHeight: 24px;
   --radius: 6px;
   --gutter: 15px;
-  --controlHeightSmall: 44px;
-  --controlHeightTouch: var(--controlHeightSmall);
   --icons-size-small: 18px;
   --icons-size-medium: 24px;
   --icons-size-large: 36px;
-  --drawer-expanded: 256px;
-  --drawer-collapse: 71px;
-  --pane-drawer-expanded: calc(100% - var(--drawer-expanded));
-  --pane-drawer-collapse: calc(100% - var(--drawer-collapse));
+  --min-pane-header-height: 45px;
 }
 

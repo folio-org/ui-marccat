@@ -21,9 +21,9 @@ type RoutingProps = {
       GET: Function,
       reset: Function,
     },
-    indexType: Object,
-    innerIndexValue: Object,
-    constraintIndexValue: Object,
+    indexType: string,
+    innerIndexValue: string,
+    constraintIndexValue: string,
   },
   history: {
     goBack: Function,

@@ -18,15 +18,29 @@ const execSyncSilent = (cmd) => {
   execSync(cmd, { stdio: ['ignore', 'ignore', 'ignore'] });
 };
 
-const prepareNodeEnvironment = () => {
+/**
+ * Setup Node Environment variables
+ */
+const prepareNpmEnvironment = () => {
    process.env.MAJOR_VERSION = pkg.version;
+   process.env.NPM_PACKAGE_NAME = pkg.name;
    process.env.FOLIO_MODULE = pkg.appName;
    process.env.GIT_EMAIL = pkg.contributors[0].email;
-   process.env.GIT_USER = pkg.contributors[0].username;
+   process.env.GIT_USERNAME = pkg.contributors[0].username;
    process.env.DEV_REPOSITORY = pkg.repository;
    process.env.GIT_BRANCH = ONLY_ON_MASTER;
+
+   //CIRCLE CI
+   process.env.CIRCLE_CI = false; // per il momento rilasciamo manualmente
+   process.env.CIRCLE_BRANCH = process.env.GIT_BRANCH;
+   process.env.CIRCLE_TAG = process.env.GIT_BRANCH;
+   process.env.CIRCLE_PROJECT_USERNAME = process.env.GIT_USERNAME;
+   process.env.CIRCLE_PROJECT_REPONAME = process.env.DEV_REPOSITORY
 };
 
+/**
+ * Setup Circle CI Environment variables
+ */
 const validateEnvironment = () => {
   if (!process.env.CIRCLE_CI) {
     throw new Error(`releasing is only available from CI`);
@@ -45,28 +59,39 @@ const validateEnvironment = () => {
   return true;
 }
 
+/**
+ * Setup Git Environment variables
+ */
 const setupGit = () => {
   execSyncSilent(`git config --global push.default simple`);
   execSyncSilent(`git config --global user.email "${process.env.GIT_EMAIL}"`);
-  execSyncSilent(`git config --global user.name "${process.env.GIT_USER}"`);
-  const remoteUrl = execSync(`git remote -v`)
-  //execSyncSilent(`git remote add deploy "https://${process.env.DEV_REPOSITORY}"`);
-  //execSyncSilent(`git remote add deploy "https://${process.env.GIT_USER}:${process.env.GIT_TOKEN}@${remoteUrl}"`);
+  execSyncSilent(`git config --global user.name "${process.env.GIT_USERNAME}"`);
+  console.log('Check repository....')
+  execSync(`git remote -v`)
   console.log('force stash pre release....')
   execSync(`git stash`);
   execSync(`git checkout ${ONLY_ON_MASTER}`);
 }
 
+/**
+ * Create Folio package and pubblish on Npm
+ */
 const createNpmFolioPackage = () => {
   execSync(`rm -f package-lock.json`);
   const content = `email=\${NPM_EMAIL}//registry.npmjs.org/:_authToken=\${NPM_TOKEN}`;
   fs.writeFileSync(`.npmrc`, content);
 }
 
+/**
+ * Find current and last Npm pubblish version
+ */
 const findCurrentPublishedVersion = () => {
-  return execSyncRead(`npm view ${process.env.npm_package_name} dist-tags.${VERSION_TAG}`);
+  return execSync(`npm view ${process.env.NPM_PACKAGE_NAME} dist-tags.${VERSION_TAG}`);
 }
 
+/**
+ * Create Tag Release and push on remote repository
+ */
 const tryTagAndPush = (version) => {
   let theCandidate = version;
   for (let retry = 0; retry < 5; retry++) {
@@ -85,18 +110,22 @@ const tryTagAndPush = (version) => {
   }
 }
 
+/**
+ * Create Tag Release and push on remote repository
+ */
 const tagAndPush = (newVersion) => {
   console.log(`trying to publish ${process.env.FOLIO_MODULE} - ${newVersion}...`);
-  // execSync(`npm --no-git-tag-version version ${newVersion}`);
- // execSyncRead(`npm publish --tag ${VERSION_TAG}`);
   execSync(`git tag -a ${newVersion} -m "${newVersion}"`);
   execSyncSilent(`git push origin ${newVersion} || true`);
 }
 
-const run = () => {
+/**
+ * Lunch Release process
+ */
+const lunchRelease = () => {
   prepareNodeEnvironment();
   setupGit();
   tryTagAndPush(process.env.MAJOR_VERSION);
 }
 
-run();
+lunchRelease();

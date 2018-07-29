@@ -2,6 +2,7 @@
 const cp = require('child_process');
 const semver = require('semver');
 const fs = require('fs');
+const _ = require('lodash');
 const pkg = require('../../package');
 
 
@@ -50,6 +51,7 @@ const setupGit = () => {
   const remoteUrl = execSync(`git remote -v`)
   //execSyncSilent(`git remote add deploy "https://${process.env.DEV_REPOSITORY}"`);
   //execSyncSilent(`git remote add deploy "https://${process.env.GIT_USER}:${process.env.GIT_TOKEN}@${remoteUrl}"`);
+  console.log('force push pre release....')
   execSync(`git add --all && git commit -am "commit pre-release" && git push`);
   execSync(`git checkout ${ONLY_ON_MASTER}`);
 }
@@ -60,20 +62,15 @@ const createNpmFolioPackage = () => {
   fs.writeFileSync(`.npmrc`, content);
 }
 
-const findVersion =  () => {
-  const packageVersion = semver.clean(process.env.npm_package_version);
-  console.log(`package version: ${packageVersion}`);
-};
-
 const findCurrentPublishedVersion = () => {
   return execSyncRead(`npm view ${process.env.npm_package_name} dist-tags.${VERSION_TAG}`);
 }
 
-const tryPublishAndTag = (version) => {
+const tryTagAndPush = (version) => {
   let theCandidate = version;
   for (let retry = 0; retry < 5; retry++) {
     try {
-      tagAndPublish(theCandidate);
+      tagAndPush(theCandidate);
       console.log(`Released ${theCandidate}`);
       return;
     } catch (err) {
@@ -87,10 +84,10 @@ const tryPublishAndTag = (version) => {
   }
 }
 
-const tagAndPublish = (newVersion) => {
+const tagAndPush = (newVersion) => {
   console.log(`trying to publish ${newVersion}...`);
   execSync(`npm --no-git-tag-version version ${newVersion}`);
-  execSyncRead(`npm publish --tag ${VERSION_TAG}`);
+ // execSyncRead(`npm publish --tag ${VERSION_TAG}`);
   execSync(`git tag -a ${newVersion} -m "${newVersion}"`);
   execSyncSilent(`git push deploy ${newVersion} || true`);
 }
@@ -103,7 +100,8 @@ const run = () => {
   // createNpmFolioPackage();
   // versionTagAndPublish();
   prepareNodeEnvironment();
-  setupGit()
+  setupGit();
+  tryTagAndPush(process.env.MAJOR_VERSION);
 }
 
 run();

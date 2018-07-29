@@ -20,6 +20,7 @@ const execSyncSilent = (cmd) => {
 
 const prepareNodeEnvironment = () => {
    process.env.MAJOR_VERSION = pkg.version;
+   process.env.FOLIO_MODULE = pkg.appName;
    process.env.GIT_EMAIL = pkg.contributors[0].email;
    process.env.GIT_USER = pkg.contributors[0].username;
    process.env.DEV_REPOSITORY = pkg.repository;
@@ -85,11 +86,11 @@ const tryTagAndPush = (version) => {
 }
 
 const tagAndPush = (newVersion) => {
-  console.log(`trying to publish ${newVersion}...`);
+  console.log(`trying to publish ${process.env.FOLIO_MODULE} - ${newVersion}...`);
   // execSync(`npm --no-git-tag-version version ${newVersion}`);
  // execSyncRead(`npm publish --tag ${VERSION_TAG}`);
   execSync(`git tag -a ${newVersion} -m "${newVersion}"`);
-  execSyncSilent(`git push deploy ${newVersion} || true`);
+  execSyncSilent(`git push origin ${newVersion} || true`);
 }
 
 const run = () => {

@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-/* eslint-disable quotes */
 const cp = require('child_process');
 const semver = require('semver');
 const fs = require('fs');
@@ -8,7 +7,7 @@ const pkg = require('../../package');
 
 const ONLY_ON_MASTER = 'origin/master';
 const VERSION_TAG = 'alpha';
-const PATCH = 'patch';
+const VERSION_INC = 'patch';
 
 const execSync = (cmd) => {
   cp.execSync(cmd, { stdio: ['inherit', 'inherit', 'inherit'] });
@@ -26,12 +25,12 @@ const prepareNodeEnvironment = () => {
    process.env.GIT_BRANCH = ONLY_ON_MASTER;
 };
 
-function validateEnv() {
-  if (!process.env.JENKINS_CI) {
+const validateEnvironment = () => {
+  if (!process.env.CIRCLE_CI) {
     throw new Error(`releasing is only available from CI`);
   }
 
-  if (!process.env.JENKINS_MASTER) {
+  if (!process.env.CIRCLE_CI_MASTER) {
     console.log(`not publishing on a different build`);
     return false;
   }
@@ -44,47 +43,33 @@ function validateEnv() {
   return true;
 }
 
-function setupGit() {
+const setupGit = () => {
   execSyncSilent(`git config --global push.default simple`);
   execSyncSilent(`git config --global user.email "${process.env.GIT_EMAIL}"`);
   execSyncSilent(`git config --global user.name "${process.env.GIT_USER}"`);
   const remoteUrl = execSync(`git remote -v`)
-  execSyncSilent(`git remote add deploy "https://${process.env.DEV_REPOSITORY}"`);
+  //execSyncSilent(`git remote add deploy "https://${process.env.DEV_REPOSITORY}"`);
   //execSyncSilent(`git remote add deploy "https://${process.env.GIT_USER}:${process.env.GIT_TOKEN}@${remoteUrl}"`);
-  execSync(`git stash`);
+  execSync(`git add --all && git commit -am "commit pre-release" && git push`);
   execSync(`git checkout ${ONLY_ON_MASTER}`);
 }
 
-function createNpmFolioPackage() {
+const createNpmFolioPackage = () => {
   execSync(`rm -f package-lock.json`);
-  const content = `
-email=\${NPM_EMAIL}
-//registry.npmjs.org/:_authToken=\${NPM_TOKEN}
-`;
+  const content = `email=\${NPM_EMAIL}//registry.npmjs.org/:_authToken=\${NPM_TOKEN}`;
   fs.writeFileSync(`.npmrc`, content);
 }
 
-const findVersion = async () => {
+const findVersion =  () => {
   const packageVersion = semver.clean(process.env.npm_package_version);
   console.log(`package version: ${packageVersion}`);
 };
 
-function versionTagAndPublish() {
-  const packageVersion = semver.clean(process.env.npm_package_version);
-  console.log(`package version: ${packageVersion}`);
-
-  const currentPublished = findCurrentPublishedVersion();
-  console.log(`current published version: ${currentPublished}`);
-
-  const version = semver.gt(packageVersion, currentPublished) ? packageVersion : semver.inc(currentPublished, PATCH);
-  tryPublishAndTag(version);
-}
-
-function findCurrentPublishedVersion() {
+const findCurrentPublishedVersion = () => {
   return execSyncRead(`npm view ${process.env.npm_package_name} dist-tags.${VERSION_TAG}`);
 }
 
-function tryPublishAndTag(version) {
+const tryPublishAndTag = (version) => {
   let theCandidate = version;
   for (let retry = 0; retry < 5; retry++) {
     try {
@@ -96,13 +81,13 @@ function tryPublishAndTag(version) {
       if (!alreadyPublished) {
         throw err;
       }
-      console.log(`previously published. retrying with increased ${PATCH}...`);
-      theCandidate = semver.inc(theCandidate, PATCH);
+      console.log(`previously published. retrying with increased ${VERSION_INC}...`);
+      theCandidate = semver.inc(theCandidate, VERSION_INC);
     }
   }
 }
 
-function tagAndPublish(newVersion) {
+const tagAndPublish = (newVersion) => {
   console.log(`trying to publish ${newVersion}...`);
   execSync(`npm --no-git-tag-version version ${newVersion}`);
   execSyncRead(`npm publish --tag ${VERSION_TAG}`);
@@ -110,16 +95,15 @@ function tagAndPublish(newVersion) {
   execSyncSilent(`git push deploy ${newVersion} || true`);
 }
 
-function run() {
+const run = () => {
   // if (!validateEnv()) {
   //   return;
   // }
   // setupGit();
   // createNpmFolioPackage();
   // versionTagAndPublish();
-  	prepareNodeEnvironment();
-console.log(process.env);
-setupGit()
+  prepareNodeEnvironment();
+  setupGit()
 }
 
 run();

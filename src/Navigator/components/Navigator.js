@@ -33,9 +33,6 @@ class Navigator extends React.Component<NavigatorProps, NavigatorState> {
           paneTitle={formatMessage({
             id: 'ui-marccat.navigator.title',
           })}
-          paneSub={formatMessage({
-            id: 'ui-marccat.diacritic.title',
-          }).toLowerCase()}
           appIcon={{ app: 'marccat' }}
         >
           <LogicalView {...this.props} label="Database" />

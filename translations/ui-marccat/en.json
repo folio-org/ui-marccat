@@ -1,12 +1,14 @@
 {
-  "resultCount": "{count, number} {count, plural, one {Record found} other {Records found}}",
   "marccat":"MARCcat",
+  "resultCount": "{count, number} {count, plural, one {Record found} other {Records found}}",
+  "noResult":"No Result found",
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
   "settings.logicalview": "Logical View",
   "settings.modal.version": "Version",
 
-  "empty.title": "MARCcat",
+  "initial.title":"Choose a menu item and enter search query to show results",
+  "app.title":"MARCcat",
   "navigator.title": "Menu",
   "navigator.template": "Template",
   "navigator.templateList": "Template List",

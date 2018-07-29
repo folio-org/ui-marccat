@@ -1,39 +1,43 @@
 import React from 'react';
+import Paneset from '@folio/stripes-components/lib/Paneset';
+import Pane from '@folio/stripes-components/lib/Pane';
 import { connect } from '@folio/stripes-connect';
+import { ToolbarMenu, EmptyMessage } from '../Core';
 import * as C from '../Utils';
 
-class MARCCat extends React.Component<*> {
-  static manifest = Object.freeze({
-    initializedFilterConfig: { initialValue: false },
-    query: { initialValue: {} },
-    resultCount: { initialValue: 30 },
-    views: {
-      type: C.RESOURCE_TYPE,
-      root: C.ENDPOINT.BASE_URL,
-      path: C.ENDPOINT.DIACRITIC_LIST_URL,
-      headers: C.ENDPOINT.HEADERS,
-      records: C.API_RESULT_JSON_KEY.DIACRITIC,
-      GET: {
-        params: { lang: C.ENDPOINT.DEFAULT_LANG },
-      },
-    },
-  });
-
+class MARCcat extends React.Component<*> {
   render() {
-    const { resources: { views } } = this.props;
-    if (!views || !views.hasLoaded) {
-      return null;
-    }
-    const diacritics = views.records;
-    alert(diacritics);
+    const leftMenu = <ToolbarMenu icon={['search']} />;
+    const rightMenu = <ToolbarMenu icon={['validation-check', 'gear']} />;
+    const { formatMessage } = this.props.stripes.intl;
     return (
-      <div {...this.props} />
+      <Paneset static>
+        <Pane
+          defaultWidth="fill"
+          firstMenu={leftMenu}
+          lastMenu={rightMenu}
+          paneTitle={formatMessage({
+            id: 'ui-marccat.app.title',
+          })}
+          paneSub={formatMessage({
+            id: 'ui-marccat.noResult',
+          })}
+          appIcon={{ app: 'marccat' }}
+        >
+          <EmptyMessage
+            icon="left-arrow"
+            label={formatMessage({
+              id: 'ui-marccat.initial.title',
+            })}
+          />
+        </Pane>
+      </Paneset>
     );
   }
 }
 
 export default connect(
-  MARCCat,
+  MARCcat,
   C.META.MODULE_NAME,
 );
 

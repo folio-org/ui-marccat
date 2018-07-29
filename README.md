@@ -11,7 +11,7 @@ Version 2.0. See the file "[LICENSE](LICENSE)" for more information.
 
 The MARCcat UI Module, or `ui-marccat`, is a Stripes UI module used for searching, sorting, filtering, viewing, editing and creating BIB record. (A "Stripes UI module" is an NPM module that adheres to certain conventions that allow it to function within the [Stripes UI framework](https://github.com/folio-org/stripes-core/blob/master/README.md) that is part of FOLIO.)
 
- FOLIO has several [server-side modules](http://dev.folio.org/source-code/#server-side) that run under Okapi (mod-auth, mod-configuration, mod-cataloging, mod-metadata, mod-files, etc.).
+FOLIO has several [server-side modules](http://dev.folio.org/source-code/#server-side) that run under Okapi (mod-auth, mod-configuration, [mod-cataloging](https://github.com/atcult/mod-cataloging), mod-metadata, mod-files, etc.).
 
 ## Installation
 

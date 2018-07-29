@@ -71,13 +71,13 @@ const validateEnvironment = () => {
  * Setup Git Environment variables
  */
 const setupGit = () => {
-  log.ok('Setup Git Environemnt.....');
+  log.ok('Setup Git Environment.....');
   execSyncSilent('git config --global push.default simple');
   execSyncSilent(`git config --global user.email "${process.env.GIT_EMAIL}"`);
   execSyncSilent(`git config --global user.name "${process.env.GIT_USERNAME}"`);
   log.ok('Check repository....');
   execSync('git remote -v');
-  log.ok('force stash pre release....');
+  log.ok('force stash pre-release....');
   execSync('git stash');
   log.ok('Checkout master branch....');
   execSync(`git checkout ${ONLY_ON_MASTER}`);
@@ -102,11 +102,14 @@ const findCurrentPublishedVersion = () => {
 /**
  * Create Tag Release and push on remote repository
  */
-const tagAndPush = (newVersion) => {
-  log.ok(`trying to publish ${process.env.FOLIO_MODULE} - ${newVersion}...`);
-  execSync(`git tag -a ${newVersion} -m "${newVersion}"`);
-  execSyncSilent(`git push origin ${newVersion} || true`);
-  log.ok(`Release Manager: ${process.env.GIT_NAME}!`);
+const tagAndPush = (internalVersion) => {
+  if (internalVersion < process.env.MAJOR_VERSION) {
+    log.fail(`Dont release a version less than the current version: ${process.env.MAJOR_VERSION}`);
+  } else {
+    log.ok(`trying to publish ${process.env.FOLIO_MODULE} - ${internalVersion}...`);
+    execSync(`git tag -a ${internalVersion} -m "${internalVersion}"`);
+    execSyncSilent(`git push origin ${internalVersion} || true`);
+  }
 };
 
 /**
@@ -119,6 +122,7 @@ const tryTagAndPush = (version) => {
     try {
       tagAndPush(theCandidate);
       log.ok(`Released ${process.env.FOLIO_MODULE} Version: ${theCandidate} succesfully!`);
+      log.ok(`Release Manager: ${process.env.GIT_NAME}!`);
       return;
     } catch (err) {
       const alreadyPublished = _.includes(err.toString(), 'You cannot publish over the previously published version');

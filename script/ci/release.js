@@ -51,6 +51,7 @@ function setupGit() {
   const remoteUrl = execSync(`git remote -v`)
   execSyncSilent(`git remote add deploy "https://${process.env.DEV_REPOSITORY}"`);
   //execSyncSilent(`git remote add deploy "https://${process.env.GIT_USER}:${process.env.GIT_TOKEN}@${remoteUrl}"`);
+  execSync(`git stash`);
   execSync(`git checkout ${ONLY_ON_MASTER}`);
 }
 

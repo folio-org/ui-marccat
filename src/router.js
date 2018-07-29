@@ -8,7 +8,7 @@ import Switch from 'react-router-dom/Switch';
 import { TemplateView, CreateTemplate } from './Template/';
 import { SimpleSearch, SearchResults } from './Search/';
 import { IndexList, Diacritic } from './Indexes/';
-import MARCcat from './App/MARCcat';
+import MARCcat from './App/MARCCat';
 
 export function ConnectedRoute({ path, id, component: Component, ...props }) { // eslint-disable-line react/prop-types
   return (

@@ -51,8 +51,8 @@ const setupGit = () => {
   const remoteUrl = execSync(`git remote -v`)
   //execSyncSilent(`git remote add deploy "https://${process.env.DEV_REPOSITORY}"`);
   //execSyncSilent(`git remote add deploy "https://${process.env.GIT_USER}:${process.env.GIT_TOKEN}@${remoteUrl}"`);
-  console.log('force push pre release....')
-  execSync(`git add --all;git commit -nam "commit pre-release";git push`);
+  console.log('force stash pre release....')
+  execSync(`git stash`);
   execSync(`git checkout ${ONLY_ON_MASTER}`);
 }
 
@@ -86,7 +86,7 @@ const tryTagAndPush = (version) => {
 
 const tagAndPush = (newVersion) => {
   console.log(`trying to publish ${newVersion}...`);
-  execSync(`npm --no-git-tag-version version ${newVersion}`);
+  // execSync(`npm --no-git-tag-version version ${newVersion}`);
  // execSyncRead(`npm publish --tag ${VERSION_TAG}`);
   execSync(`git tag -a ${newVersion} -m "${newVersion}"`);
   execSyncSilent(`git push deploy ${newVersion} || true`);

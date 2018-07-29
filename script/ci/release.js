@@ -123,7 +123,7 @@ const tagAndPush = (newVersion) => {
  * Lunch Release process
  */
 const lunchRelease = () => {
-  prepareNodeEnvironment();
+  prepareNpmEnvironment();
   setupGit();
   tryTagAndPush(process.env.MAJOR_VERSION);
 }

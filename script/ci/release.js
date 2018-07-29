@@ -52,7 +52,7 @@ const setupGit = () => {
   //execSyncSilent(`git remote add deploy "https://${process.env.DEV_REPOSITORY}"`);
   //execSyncSilent(`git remote add deploy "https://${process.env.GIT_USER}:${process.env.GIT_TOKEN}@${remoteUrl}"`);
   console.log('force push pre release....')
-  execSync(`git add --all && git commit -am "commit pre-release" && git push`);
+  execSync(`git add --all && git commit -nam "commit pre-release" && git push`);
   execSync(`git checkout ${ONLY_ON_MASTER}`);
 }
 
@@ -93,12 +93,6 @@ const tagAndPush = (newVersion) => {
 }
 
 const run = () => {
-  // if (!validateEnv()) {
-  //   return;
-  // }
-  // setupGit();
-  // createNpmFolioPackage();
-  // versionTagAndPublish();
   prepareNodeEnvironment();
   setupGit();
   tryTagAndPush(process.env.MAJOR_VERSION);

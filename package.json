@@ -50,7 +50,8 @@
     "flow": "flow src/",
     "version": "yarn changelog && git add CHANGELOG.md",
     "gen:authors": ". ./script/authors.sh",
-    "clean": "node ./script/clean.js"
+    "clean": "node ./script/clean.js",
+    "release": "node script/ci/release.js"
   },
   "devDependencies": {
     "@folio/eslint-config-stripes": "^1.1.0",

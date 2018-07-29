@@ -3,7 +3,6 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import RadioButton from '@folio/stripes-components/lib/RadioButton';
 import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
 import Select from '@folio/stripes-components/lib/Select';
-import { Observable } from 'rxjs';
 import { Field, reduxForm } from 'redux-form';
 import Button from '@folio/stripes-components/lib/Button';
 import { FormattedMessage } from 'react-intl';
@@ -12,7 +11,6 @@ import ScanButton from '../button/ScanButton';
 import SearchButton from '../button/SearchButton';
 import { formatSearchQuery } from '../../../Utils/Formatter';
 import * as C from '../../../Utils';
-import { isThursday } from 'date-fns';
 
 type AdvanceSerachFormProps = {
     stripes: Object;

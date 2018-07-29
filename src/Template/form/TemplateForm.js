@@ -5,9 +5,7 @@ import RadioButton from '@folio/stripes-components/lib/RadioButton';
 import { FormattedMessage } from 'react-intl';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import TextField from '@folio/stripes-components/lib/TextField';
-import TagForm from '../form/TagForm';
 import MandatoryList from '../form/MandatoryList';
-import { remapForTemplateMandatory } from '../../Utils/Mapper';
 
 type TemplateFormProps = {
   stripes: Object;
@@ -36,7 +34,7 @@ class TemplateForm extends React.Component<TemplateFormProps, TemplateFormState>
     this.handleMandatory = this.handleMandatory.bind(this);
   }
 
-  handleMandatory = (mandatoryMap) => {
+  handleMandatory = () => {
   // this.setState({ currentTemplate: remapForTemplateMandatory(mandatoryMap) });
   }
 

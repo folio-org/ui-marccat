@@ -14,7 +14,8 @@
   flex-direction: column;
 }
 
-.emptyMessage, .emptyMessageLabelWrap {
+.emptyMessage,
+.emptyMessageLabelWrap {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,7 +25,8 @@
   font-size: 22px;
 }
 
-.emptyMessageIcon, .emptyMessageLabel {
+.emptyMessageIcon,
+.emptyMessageLabel {
   margin: 0 4px;
 }
 

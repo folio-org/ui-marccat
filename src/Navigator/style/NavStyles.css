@@ -3,8 +3,9 @@
   justify-content: 'center';
   align-items: 'center';
 }
+
 .navList section > div {
-  border-top: none!important;
+  border-top: none !important;
 }
 
 .navList {

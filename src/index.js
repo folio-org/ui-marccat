@@ -4,7 +4,6 @@
  */
 import React from 'react';
 import { connect } from '@folio/stripes-connect';
-import Icon from '@folio/stripes-components/lib/Icon';
 import { Settings } from './Settings';
 import { Navigator } from './Navigator/';
 import * as C from './Utils';
@@ -92,10 +91,9 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
       return <Settings {...this.props} />;
     }
     return (
-      <div>
-        <Icon icon="spinner-ellipsis" />
+      <Navigator {...this.props}>
         <Router {...this.props} />
-      </div>
+      </Navigator>
     );
   }
 }

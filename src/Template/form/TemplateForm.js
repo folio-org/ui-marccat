@@ -108,7 +108,7 @@ class TemplateForm extends React.Component<TemplateFormProps, TemplateFormState>
             </Field>
           </Col>
         </Row>
-        <Row>
+        <Row style={{ marginBottom: '10px' }}>
           <Col xs={12}>
             <MandatoryList {...this.props} mandatoryFields={this.handleMandatory} />
           </Col>

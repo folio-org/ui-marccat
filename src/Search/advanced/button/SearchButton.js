@@ -71,4 +71,3 @@ class SearchButton extends React.Component<Props, State> {
 }
 
 export default connect(SearchButton, C.META.MODULE_NAME);
-

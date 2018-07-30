@@ -1,5 +1,9 @@
 version: 2
 jobs:
+  filters:
+    branches:
+      only:
+        - master
   build:
     docker:
       - image: circleci/node:9

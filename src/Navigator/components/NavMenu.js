@@ -83,7 +83,7 @@ class NavMenu extends React.Component<NavMenuProps, NavMenuSatate> {
             <NavItem
               accordionId="diacriticSection"
               label="Diacritic"
-              itemLabel="Diacritic"
+              itemLabel="Diacritic List"
               open={this.state.section.expandeCollapseAction}
               activeLink={`${rootPath}/`}
               path={`${rootPath}/diacritic`}

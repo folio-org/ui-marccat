@@ -16,6 +16,7 @@ type DiacriticProps = {
 type DiacriticState = {
   value: string;
   isOpen: boolean;
+  charCopied: string;
 };
 
 class Diacritic extends Component<DiacriticProps, DiacriticState> {
@@ -29,18 +30,11 @@ class Diacritic extends Component<DiacriticProps, DiacriticState> {
     /** bind handler * */
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.onRowClick = this.onRowClick.bind(this);
   }
 
   handleChange = (event) => {
     this.setState({ value: event.target.value });                      //eslint-disable-line
   };
-
-  onRowClick = function (rowMetadata) {                                //eslint-disable-line
-    const char = rowMetadata.currentTarget.children[1].innerText;
-    this.setState({ charCopied: char });
-    this.props.change('charCopied', char);                             //eslint-disable-line
-  }
 
   handleSubmit = () => { };
 
@@ -52,7 +46,7 @@ class Diacritic extends Component<DiacriticProps, DiacriticState> {
         <form name="diacriticForm" id="diacriticForm" onSubmit={this.handleSubmit}>
           <Row>
             <Col xs={12}>
-              <Field style={{ width: '100%' }} placeholder="Type a word..." rows="1" name="search_textarea_diacritic" id="search_textarea_diacritic" component="textarea" />
+              <Field style={{ width: '100%' }} placeholder="Type a word..." rows="2" name="search_textarea_diacritic" id="search_textarea_diacritic" component="textarea" />
             </Col>
             <Col xs={12} style={{ paddingTop: '10px', display: 'flex' }}>
               <SearchButton {...this.props} />
@@ -66,8 +60,8 @@ class Diacritic extends Component<DiacriticProps, DiacriticState> {
               </Button>
             </Col>
           </Row>
-          <Row style={{ marginBottom: '30px' }}>
-            <Col xs={12} sm={6} md={4} style={{ paddingTop: '10px' }}>
+          <Row style={{ marginBottom: '15px' }}>
+            <Col xs={12} style={{ paddingTop: '10px' }}>
               <h5 style={{ display: 'inline', paddingRight: '10px' }}>{formatMsg({
                 id: 'ui-marccat.diacritic.char.copied',
               })}

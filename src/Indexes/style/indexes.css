@@ -2,33 +2,42 @@
   display: -webkit-box;
   -webkit-margin-collapse: discard;
 }
-.CustomTableIndexes{
-	padding-top: 20px;
+
+.CustomTableIndexes {
+  padding-top: 20px;
 }
+
 .CustomIndexTR {
   display: -webkit-box;
 }
+
 .CustomDivTableContainer {
   float: left;
 }
-.CustomButtons{
-	width: 50%;
+
+.CustomButtons {
+  width: 50%;
 }
-.SearchTextArea{
-	width: 100%;
-	margin-top: 15px;
+
+.SearchTextArea {
+  width: 100%;
+  margin-top: 15px;
 }
-.CustomColButtons{
-	padding-top: 10px; 
-	display: flex;
+
+.CustomColButtons {
+  padding-top: 10px; 
+  display: flex;
 }
-.CustomRow{
-	margin-bottom: 15px;
+
+.CustomRow {
+  margin-bottom: 15px;
 }
-.Col{
-	padding-top: 10px; 
+
+.Col {
+  padding-top: 10px; 
 }
-.CustomH5{
-	display: inline;
-	padding-right: 10px;
+
+.CustomH5 {
+  display: inline;
+  padding-right: 10px;
 }

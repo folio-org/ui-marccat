@@ -3,7 +3,6 @@ import { connect } from '@folio/stripes-connect';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Select from '@folio/stripes-components/lib/Select';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
-import { Observable } from 'rxjs';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import Button from '@folio/stripes-components/lib/Button';
 import { FormattedMessage } from 'react-intl';
@@ -190,7 +189,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     this.props.mutator.headingType.replace(headingTypesValue);
     this.props.mutator.itemType.replace(itemTypesValue);
     this.props.mutator.functionCode.replace(functionCodeValue);
-    this.props.mutator.subfields.GET().then((fetchResult) => {});
+    this.props.mutator.subfields.GET().then(() => {});
   }
 
   fetchFieldTemplate(marcCategoryValue, headingTypesValue, tag, ind1, ind2) {
@@ -284,7 +283,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
             .concat(ind2)
             .concat('.')
         });
-        this.fetchFieldTemplate(marcCategoryValue, headingTypesValue, tag, ind1, ind2);
+        this.fetchFieldTemplate(marcCategoryValue, headingTypesValue, tagCode, ind1, ind2);
         this.fetchSubfields(marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue);
         return;
       }

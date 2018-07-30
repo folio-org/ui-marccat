@@ -5,16 +5,16 @@ import NavListItem from '@folio/stripes-components/lib/NavListItem';
 
 
 type NavItemProps = {
-    label: string;
-    itemLabel: string;
-    activeLink: string;
-    path: string;
-    withChildren: bool;
-    children: React.Node;
-    open: bool;
+  label: string;
+  itemLabel: string;
+  activeLink: string;
+  path: string;
+  withChildren: bool;
+  children: React.Node;
+  open: bool;
 };
 type NavItemState = {
-    isOpen: bool;
+  isOpen: bool;
 };
 
 export default class NavItem extends React.Component<NavItemProps, NavItemState> {
@@ -34,6 +34,9 @@ export default class NavItem extends React.Component<NavItemProps, NavItemState>
     const { label, path, activeLink, itemLabel, withChildren, open } = this.props;
     return (withChildren) ? (
       <Accordion open={this.state.isOpen || open} onToggle={this.handleToggle} label={label}>
+        <NavListSection activeLink={activeLink}>
+          <NavListItem to={path}>{itemLabel}</NavListItem>
+        </NavListSection>
         {this.props.children}
       </Accordion>
     ) : (

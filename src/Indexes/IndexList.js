@@ -4,9 +4,12 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import { connect } from '@folio/stripes-connect';
 import React from 'react';
 import { Col } from '@folio/stripes-components/lib/LayoutGrid';
-import css from '../Indexes/style/indexes.css';
+import IconButton from '@folio/stripes-components/lib/IconButton';
+import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
+import PrinterProvider from '../Core/Provider/PrinterProvider';
+import S from '../Indexes/style/indexes.css';
+import css from '../Search/style/Search.css';
 import * as C from '../Utils';
-import { ToolbarMenu } from '../Core';
 
 const mainIndexResults = require('../../config/static/main-index-list');
 const secondaryIndexResults = require('../../config/static/secondary-index-list');
@@ -26,10 +29,17 @@ class IndexList extends React.Component<IndexListProps, IndexListState> {
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const printMenu = <ToolbarMenu withPrinter icon={['duplicate']} content={() => (this.componentRef)} />;
+    const printMenu = (
+      <PaneMenu {...this.props}>
+        <PrinterProvider
+          trigger={() => <IconButton title={formatMsg({ id: 'ui-marccat.indexes.print' })} key="icon-gear" icon="duplicate" className={css.stripes__icon} />}
+          content={() => (this.componentRef)}
+        />
+      </PaneMenu>
+    );
 
     return (
-      <Paneset static>
+      <Paneset static >
         <Pane
           defaultWidth="fill"
           firstMenu={printMenu}
@@ -38,21 +48,21 @@ class IndexList extends React.Component<IndexListProps, IndexListState> {
           })}
           appIcon={{ app: C.META.ICON_TITLE }}
         >
-          <div ref={(el) => this.componentRef = el}>
-            <Col xs={6} id="main" className={css.CustomDivTableContainer} >
+          <div ref={(el) => this.componentRef = el} >
+            <Col xs={6} id="main" className={S.CustomDivTableContainer} >
               <h1><b>{formatMsg({ id: 'ui-marccat.indexes.main.title' })}</b></h1>
               {
                 mainIndexResults.map((dynamicMainData) => (
                   <table style={{ paddingTop: '20px' }}>
                     <thead>
                       <tr>
-                        <th colSpan="2"> <p><h4 className={css.CustomIndexesH2}>{dynamicMainData.title}</h4></p></th>
+                        <th colSpan="2"> <p><h4 className={S.CustomIndexesH2}>{dynamicMainData.title}</h4></p></th>
                       </tr>
                     </thead>
                     {
                       dynamicMainData.descriptions.map((dynamicMainValues) => (
                         <tbody>
-                          <tr className={css.CustomIndexTR}>
+                          <tr className={S.CustomIndexTR}>
                             <td colSpan="1"><b>{dynamicMainValues.key}</b></td>
                             <td colSpan="1">{dynamicMainValues.value}</td>
                           </tr>
@@ -63,20 +73,20 @@ class IndexList extends React.Component<IndexListProps, IndexListState> {
                 ))
               }
             </Col>
-            <Col xs={6} id="secondary" className={css.CustomDivTableContainer}>
+            <Col xs={6} id="secondary" className={S.CustomDivTableContainer}>
               <h1><b>{formatMsg({ id: 'ui-marccat.indexes.secondary.title' })}</b></h1>
               {
                 secondaryIndexResults.map((dynamicSecondaryData) => (
-                  <table style={{ paddingTop: '20pt' }}>
+                  <table className={S.CustomTableIndexes}>
                     <thead>
                       <tr>
-                        <th colSpan="2"> <p><h4 className={css.CustomIndexesH2}>{dynamicSecondaryData.title}</h4></p></th>
+                        <th colSpan="2"> <p><h4 className={S.CustomIndexesH2}>{dynamicSecondaryData.title}</h4></p></th>
                       </tr>
                     </thead>
                     {
                       dynamicSecondaryData.descriptions.map((dynamicMainValues) => (
                         <tbody>
-                          <tr className={css.CustomIndexTR}>
+                          <tr className={S.CustomIndexTR}>
                             <td colSpan="1"><b>{dynamicMainValues.key}</b></td>
                             <td colSpan="1">{dynamicMainValues.value}</td>
                           </tr>

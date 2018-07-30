@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Button from '@folio/stripes-components/lib/Button';
+import * as S from '../style/indexes.css';
 
 type SearchButtonProps = {
   stripes: Object;
@@ -19,7 +20,7 @@ export default class SearchButton extends Component<SearchButtonProps, SearchBut
         onClick={onSubmit}
         disabled={submitting || pristine}
         buttonStyle="primary"
-        style={{ minHeight: '36px' }}
+        buttonClass={S.CustomButtons}
       >{formatMsg({
           id: 'ui-marccat.search.searchButton',
         })}

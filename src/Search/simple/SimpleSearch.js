@@ -10,9 +10,8 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import * as C from '../../Utils';
 import SimpleSearchForm from './form/SimpleSearchForm';
-
+import { PrinterProvider } from '../../Core';
 import css from '../style/Search.css';
-import PrinterProvider from '../../Core/Provider/MARCcatPrinter';
 
 class SimpleSearch extends React.Component<*, *> {
   /* TO-DO fill this empty manifest */

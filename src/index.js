@@ -16,7 +16,15 @@ type RoutingProps = {
     connect: Function,
     intl: Object,
   },
-  mutator: Object,
+  mutator: {
+    searchQuery:{
+      GET: Function,
+      reset: Function,
+    },
+    indexType: string,
+    innerIndexValue: string,
+    constraintIndexValue: string,
+  },
   history: {
     goBack: Function,
     pop: Function,
@@ -59,20 +67,14 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
       path: `indexes/%{constraintIndexValue}?lang=${C.ENDPOINT.DEFAULT_LANG}`,
       records: C.API_RESULT_JSON_KEY.CONSTRAINT_INDEX,
     },
-    sarchQuery: {
+    searchQuery: {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
       headers: C.ENDPOINT.HEADERS,
       path: 'search?lang=ita&q=%{query}&from=1&to=1&view=1&ml=170&dpo=1',
       records: 'docs',
+      accumulate: true,
       fetch: false
-      // params: {
-      //   from: 1,
-      //   to: 1,
-      //   view: 1,
-      //   ml: 170,
-      //   dpo: 1
-      // }
     },
   });
 

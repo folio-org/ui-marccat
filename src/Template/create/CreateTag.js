@@ -3,6 +3,7 @@ import { connect } from '@folio/stripes-connect';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Select from '@folio/stripes-components/lib/Select';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
+import { Observable } from 'rxjs';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Button from '@folio/stripes-components/lib/Button';
@@ -145,6 +146,9 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
       </PaneMenu>
     );
   }
+
+
+
 
   fetchingMarcCategory() {
     this.props.mutator.marcCategories.GET().then((fetchResult) => {

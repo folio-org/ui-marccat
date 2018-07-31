@@ -7,6 +7,7 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import IconButton from '@folio/stripes-components/lib/IconButton';
+import Icon from '@folio/stripes-components/lib/Icon';
 import Callout from '@folio/stripes-components/lib/Callout';
 import ConfirmationModal from '@folio/stripes-components/lib/ConfirmationModal';
 import { FormattedMessage } from 'react-intl';
@@ -143,7 +144,7 @@ class TemplateView extends React.Component {
       resources: { recordsTemplates },
     } = this.props;
     if (!recordsTemplates || !recordsTemplates.hasLoaded) {
-      return null;
+      return <Icon icon="spinner-ellipsis" />;
     }
     let templates = recordsTemplates.records;
 

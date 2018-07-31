@@ -11,8 +11,6 @@ import { FormattedMessage } from 'react-intl';
 import { withCloseHandler } from '../../../Core/';
 import * as C from '../../../Utils';
 
-import css from '../../style/Search.css';
-
 type Props = {
   disabled: boolean;
   mutator: Object;
@@ -35,9 +33,9 @@ class SearchButton extends React.Component<Props, State> {
     this.props.mutator.query.replace(this.props.data);
     const observer = Observable.from(this.props.mutator.searchQuery.GET());
     observer
+      .take(1)
       .map(r => this.setState({ results: r, isOpen: true }))
-      .subscribe()
-      .closed();
+      .subscribe();
   }
 
   handleClose = () => {

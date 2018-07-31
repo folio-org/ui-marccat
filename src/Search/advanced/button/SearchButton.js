@@ -11,8 +11,6 @@ import { FormattedMessage } from 'react-intl';
 import { withCloseHandler } from '../../../Core/';
 import * as C from '../../../Utils';
 
-import css from '../../style/Search.css';
-
 type Props = {
   disabled: boolean;
   mutator: Object;

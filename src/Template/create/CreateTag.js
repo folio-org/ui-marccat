@@ -283,7 +283,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
             .concat(ind2)
             .concat('.')
         });
-        this.fetchFieldTemplate(marcCategoryValue, headingTypesValue, tag, ind1, ind2);
+        this.fetchFieldTemplate(marcCategoryValue, headingTypesValue, tagCode, ind1, ind2);
         this.fetchSubfields(marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue);
         return;
       }

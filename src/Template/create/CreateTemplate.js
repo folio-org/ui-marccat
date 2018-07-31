@@ -85,7 +85,7 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
           <Pane
             actionMenuItems={actionMenuItems}
             firstMenu={this.preparePaneMenu()}
-            defaultWidth="100%"
+            fullWidth
             paneTitle={formatMsg({
               id: 'ui-marccat.template.create',
             })}

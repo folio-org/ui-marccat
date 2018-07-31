@@ -31,6 +31,7 @@ class SearchButton extends React.Component<Props, State> {
 
   handleSearch = () => {
     this.props.mutator.query.replace(this.props.data);
+    // this.props.history.push('advancedSearch')
     const observer = Observable.from(this.props.mutator.searchQuery.GET());
     observer
       .map(r => this.setState({ results: r, isOpen: true }))

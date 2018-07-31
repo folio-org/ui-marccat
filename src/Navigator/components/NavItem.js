@@ -1,14 +1,10 @@
 import React from 'react';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import NavListSection from '@folio/stripes-components/lib/NavListSection';
-import NavListItem from '@folio/stripes-components/lib/NavListItem';
-
 
 type NavItemProps = {
   label: string;
-  itemLabel: string;
   activeLink: string;
-  path: string;
   withChildren: bool;
   children: React.Node;
   open: bool;
@@ -31,19 +27,15 @@ export default class NavItem extends React.Component<NavItemProps, NavItemState>
   };
 
   render() {
-    const { label, path, activeLink, itemLabel, withChildren, open } = this.props;
+    const { label, activeLink, withChildren, open } = this.props;
     return (withChildren) ? (
       <Accordion open={this.state.isOpen || open} onToggle={this.handleToggle} label={label}>
-        <NavListSection activeLink={activeLink}>
-          <NavListItem to={path}>{itemLabel}</NavListItem>
-        </NavListSection>
+        <NavListSection activeLink={activeLink} />
         {this.props.children}
       </Accordion>
     ) : (
       <Accordion open={this.state.isOpen || open} onToggle={this.handleToggle} label={label}>
-        <NavListSection activeLink={activeLink}>
-          <NavListItem to={path}>{itemLabel}</NavListItem>
-        </NavListSection>
+        <NavListSection activeLink={activeLink} />
       </Accordion>
     );
   }

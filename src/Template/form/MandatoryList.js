@@ -36,7 +36,7 @@ class MandatoryList extends React.Component<CreateTemplateProps, CreateTemplateS
 
       const {
         resources: { records },
-      } = this.props; // eslint-disable-line react/prop-types
+      } = this.props;
       if (!records || !records.hasLoaded) return <Icon icon="spinner-ellipsis" />;
       const fields = records.records;
       const obj = remapMultiArray(fields);

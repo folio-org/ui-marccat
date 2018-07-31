@@ -189,7 +189,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     this.props.mutator.headingType.replace(headingTypesValue);
     this.props.mutator.itemType.replace(itemTypesValue);
     this.props.mutator.functionCode.replace(functionCodeValue);
-    this.props.mutator.subfields.GET().then((fetchResult) => {});
+    this.props.mutator.subfields.GET().then(() => {});
   }
 
   fetchFieldTemplate(marcCategoryValue, headingTypesValue, tag, ind1, ind2) {

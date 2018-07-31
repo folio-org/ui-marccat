@@ -5,25 +5,30 @@ import Icon from '@folio/stripes-components/lib/Icon';
 import { connect } from '@folio/stripes-connect';
 import { NavMenu, LogicalView } from '../';
 import * as C from '../../Utils';
+import { ToolbarMenu } from '../../Core';
 
 type NavigatorProps = {
   stripes: Object;
   children: Object;
   resources: Object;
 };
-type NavigatorState = {};
+type NavigatorState = {
+  isOpen: bool;
+};
 
 class Navigator extends React.Component<NavigatorProps, NavigatorState> {
   render() {
     const { formatMessage } = this.props.stripes.intl;
     const isPending = this.props.resources.categories;
+    const rightMenu = <ToolbarMenu icon={['info']} />;
     return (!isPending || !isPending.hasLoaded) ? (<Icon icon="spinner-ellipsis" />) :
       (
         <Paneset>
           <Pane
             dismissible
-            onClose={() => {}}
+            onClose={this.handleClose}
             defaultWidth="30%"
+            lastMenu={rightMenu}
             paneTitle={formatMessage({
               id: 'ui-marccat.navigator.title',
             })}

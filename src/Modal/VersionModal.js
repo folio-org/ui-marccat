@@ -1,68 +1,70 @@
-// /* @flow */
-// import React from 'react';
+/**
+ * @format
+ * @flow
+ */
+import React from 'react';
+import Modal from '@folio/stripes-components/lib/Modal';
+import { Row } from '../../node_modules/react-flexbox-grid';
 
-// type VersionModalProps = {
-//   appTitle: string,
-//   appVersion: string,
-//   classes: Object,
-//   appIcon: string,
-//   open: boolean,
-//   onClick: Function,
-//   onClose: Function,
-//   message: string,
-//   translate: Function,
-// };
-// type VersionModalState = {
-//   open: boolean,
-// };
+import css from './style/Modal.css';
 
-// const soureImg = require('../../../icons/app-modal.svg');
+type VersionModalProps = {
+  appTitle: string,
+  appVersion: string,
+  credits: string,
+  appIcon: string,
+};
+type VersionModalState = {
+  open: boolean,
+};
 
-// export default class VersionModal extends React.Component<
-//   VersionModalProps,
-//   VersionModalState
-// > {
-//   render() {
-//   const { appTitle, appVersion, credits, classes } = this.props;
-// eslint-disable-line no-unused-vars
+export default class VersionModal extends React.Component<
+  VersionModalProps,
+  VersionModalState
+> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false
+    };
+    this.handleClose = this.handleClose.bind(this);
+  }
 
-//     return (
-//       <MuiThemeProvider theme={theme}>
-//         <Dialog
-//           open={this.props.open}
-//           keepMounted
-//           onClose={this.props.onClose}
-//           aria-labelledby="alert-dialog-slide-title"
-//           aria-describedby="alert-dialog-slide-description"
-//         >
-//           <DialogTitle id="alert-dialog-slide-title">
-//             <div className={classes.row}>
-//               <img src={soureImg} alt="app" />
-//             </div>
-//             <p className={classes.title}>{appTitle}</p>
-//             <p className={classes.version}>{appVersion}</p>
-//           </DialogTitle>
-//           <DialogContent>
-//             <DialogContentText
-//               id="alert-dialog-slide-description"
-//               className={classes.credits}
-//             >
-//               <p className={classes.credits}>{credits}</p>
-//               Lorem ipsum dolor sit amet, consectetur
-//               adipisicing elit, sed do eiusmod tempor
-//               incididunt ut labore et dolore magna aliqua.
-//               Ut enim ad minim veniam, quis nostrud
-//               exercitation ullamco laboris nisi ut aliquip
-//               ex ea commodo consequat. Duis aute irure dolor
-//               in reprehenderit in voluptate velit esse
-//               cillum dolore eu fugiat nulla pariatur.
-//               Excepteur sint occaecat cupidatat non
-//               proident, sunt in culpa qui officia deserunt
-//               mollit anim id est laborum
-//             </DialogContentText>
-//           </DialogContent>
-//         </Dialog>
-//       </MuiThemeProvider>
-//     );
-//   }
-// }
+  handleClose = () => {
+    this.setState({
+      isOpen: false
+    });
+  };
+
+  render() {
+    const { appTitle, appVersion, credits, appIcon } = this.props;
+    return (
+      <Modal dismissible closeOnBackgroundClick={this.handleClose} onClose={this.handleClose} open={this.state.isOpen} label="MARCcat">
+        <Row>
+          <Row>
+            <div className={css.row}>
+              <img src={appIcon} alt="app" />
+            </div>
+            <p className={css.modalTitle}>{appTitle}</p>
+            <p className={css.modalVersion}>{appVersion}</p>
+          </Row>
+          <Row>
+            <p className={css.modalCredits}>{credits}</p>
+            <p className={css.modalContent}>Lorem ipsum dolor sit amet, consectetur
+              adipisicing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua.
+              Ut enim ad minim veniam, quis nostrud
+              exercitation ullamco laboris nisi ut aliquip
+              ex ea commodo consequat. Duis aute irure dolor
+              in reprehenderit in voluptate velit esse
+              cillum dolore eu fugiat nulla pariatur.
+              Excepteur sint occaecat cupidatat non
+              proident, sunt in culpa qui officia deserunt
+              mollit anim id est laborum
+            </p>
+          </Row>
+        </Row>
+      </Modal>
+    );
+  }
+}

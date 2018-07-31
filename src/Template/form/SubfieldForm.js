@@ -4,7 +4,6 @@ import Select from '@folio/stripes-components/lib/Select';
 import Textarea from '@folio/stripes-components/lib/TextArea';
 import Button from '@folio/stripes-components/lib/Button';
 import { FormattedMessage } from 'react-intl';
-import * as C from '../../Utils';
 
 type SubfieldFormProps = {
 };

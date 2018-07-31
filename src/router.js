@@ -7,8 +7,9 @@ import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 import { TemplateView, CreateTemplate } from './Template/';
 import { SimpleSearch, SearchResults } from './Search/';
-import { IndexList, Diacritic } from './Indexes/';
-import MARCcat from './App/MARCCat';
+import { IndexList } from './Indexes/';
+import MultiColumnListDiacritic from './Indexes/components/MultiColumnListDiacritic';
+import MARCcat from './App/MARCcat';
 
 export function ConnectedRoute({ path, id, component: Component, ...props }) { // eslint-disable-line react/prop-types
   return (
@@ -29,7 +30,7 @@ export default class Router extends React.Component<*> {
         <ConnectedRoute path={`${rootPath}/templateAdd`} {...this.props} component={CreateTemplate} id="template_create" />
         <ConnectedRoute path={`${rootPath}/templatelist`} {...this.props} component={TemplateView} id="template_list" />
         <ConnectedRoute path={`${rootPath}/indexList`} {...this.props} component={IndexList} id="index_list" />
-        <ConnectedRoute path={`${rootPath}/diacritic`} {...this.props} component={Diacritic} id="diacritic_table" />
+        <ConnectedRoute path={`${rootPath}/diacritic`} {...this.props} component={MultiColumnListDiacritic} id="diacritic_table" />
         <ConnectedRoute path={`${rootPath}`} {...this.props} component={MARCcat} id="app_root" />
       </Switch>
     );

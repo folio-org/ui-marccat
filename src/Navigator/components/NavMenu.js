@@ -7,6 +7,7 @@ import { AdvanceSearchForm } from '../../Search/';
 import NavItem from './NavItem';
 import * as C from '../../Utils';
 import css from '../style/NavStyles.css';
+import { Diacritic } from '../../Indexes';
 
 type NavMenuProps = {
   stripes: Object;
@@ -82,11 +83,13 @@ class NavMenu extends React.Component<NavMenuProps, NavMenuSatate> {
             <NavItem
               accordionId="diacriticSection"
               label="Diacritic"
-              itemLabel="Diacritic"
+              itemLabel="Diacritic List"
               open={this.state.section.expandeCollapseAction}
               activeLink={`${rootPath}/`}
               path={`${rootPath}/diacritic`}
-            />
+              withChildren
+            ><Diacritic {...this.props} />
+            </NavItem>
             <NavItem
               accordionId="reportSection"
               label="Report"

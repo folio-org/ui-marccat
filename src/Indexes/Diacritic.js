@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Button from '@folio/stripes-components/lib/Button';
 import { SearchButton } from './';
-import * as S from './style/indexes.css';
+import css from './style/indexes.css';
 
 type DiacriticProps = {
   charCopied: string;
@@ -47,12 +47,12 @@ class Diacritic extends Component<DiacriticProps, DiacriticState> {
         <form name="diacriticForm" id="diacriticForm" onSubmit={this.handleSubmit}>
           <Row>
             <Col xs={12}>
-              <Field className={S.SearchTextArea} placeholder="Type a word..." rows="2" name="search_textarea_diacritic" id="search_textarea_diacritic" component="textarea" />
+              <Field className={css.SearchTextArea} placeholder="Type a word..." rows="2" name="search_textarea_diacritic" id="search_textarea_diacritic" component="textarea" />
             </Col>
-            <Col xs={12} className={S.CustomColButtons}>
+            <Col xs={12} className={css.CustomColButtons}>
               <SearchButton {...this.props} />
               <Button
-                buttonClass={S.CustomButtons}
+                buttonClass={css.CustomButtons}
                 type="button"
                 disabled={submitting || pristine}
                 onClick={reset}
@@ -61,15 +61,14 @@ class Diacritic extends Component<DiacriticProps, DiacriticState> {
               </Button>
             </Col>
           </Row>
-          <Row className={S.CustomRow}>
-            <Col xs={12} className={S.Col}>
-              <h5 className={S.CustomH5}>{formatMsg({
+          <Row className={css.CustomRow}>
+            <Col xs={12} className={css.Col}>
+              <h5 className={css.CustomH5}>{formatMsg({
                 id: 'ui-marccat.diacritic.char.copied',
               })}
               </h5>
               <Field
                 id="charCopied"
-                label="Char Copied"
                 name="charCopied"
                 component="input"
                 type="text"

@@ -7,6 +7,7 @@ import Button from '@folio/stripes-components/lib/Button';
 import { connect } from '@folio/stripes-connect';
 import { FormattedMessage } from 'react-intl';
 import Link from 'react-router-dom/Link';
+import css from '../../style/Search.css';
 import * as C from '../../../Utils';
 
 type SimpleSearchButtonProps = {
@@ -24,7 +25,7 @@ class SimpleSearchButton extends React.Component<SimpleSearchButtonProps, {}> {
           onClick={this.onClick}
           type="button"
           buttonStyle="primary"
-          style={{ minHeight: '36px' }}
+          buttonClass={css.buttonHeight}
         >
           <FormattedMessage id="ui-marccat.search.searchButton" />
         </Button>

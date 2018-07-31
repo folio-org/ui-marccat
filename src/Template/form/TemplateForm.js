@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import TextField from '@folio/stripes-components/lib/TextField';
 import MandatoryList from '../form/MandatoryList';
+import css from '../styles/Template.css';
 
 type TemplateFormProps = {
   stripes: Object;
@@ -35,7 +36,7 @@ class TemplateForm extends React.Component<TemplateFormProps, TemplateFormState>
   }
 
   handleMandatory = () => {
-  // this.setState({ currentTemplate: remapForTemplateMandatory(mandatoryMap) });
+    // this.setState({ currentTemplate: remapForTemplateMandatory(mandatoryMap) });
   }
 
   validate(values) {
@@ -50,7 +51,7 @@ class TemplateForm extends React.Component<TemplateFormProps, TemplateFormState>
     return errors;
   }
 
-  handleSubmit = () => {}
+  handleSubmit = () => { }
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
@@ -60,9 +61,7 @@ class TemplateForm extends React.Component<TemplateFormProps, TemplateFormState>
         <Row id="section-name">
           <Col xs={6}>
             <Field
-              style={{
-                width: `${100}%`
-              }}
+              className={css.largeField}
               label={formatMsg({
                 id: 'ui-marccat.template.form.name',
               })}
@@ -85,7 +84,7 @@ class TemplateForm extends React.Component<TemplateFormProps, TemplateFormState>
               name="subGroup"
               component={RadioButtonGroup}
               label="Group"
-              style={{ marginTop: '10px' }}
+              className={css.colRadio}
             >
               <RadioButton
                 label="W"
@@ -108,7 +107,7 @@ class TemplateForm extends React.Component<TemplateFormProps, TemplateFormState>
             </Field>
           </Col>
         </Row>
-        <Row style={{ marginBottom: '10px' }}>
+        <Row className={css.mandatoryList}>
           <Col xs={12}>
             <MandatoryList {...this.props} mandatoryFields={this.handleMandatory} />
           </Col>

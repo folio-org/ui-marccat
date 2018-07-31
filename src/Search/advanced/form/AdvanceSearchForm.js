@@ -3,6 +3,7 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import RadioButton from '@folio/stripes-components/lib/RadioButton';
 import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
 import Select from '@folio/stripes-components/lib/Select';
+import { Observable } from 'rxjs';
 import { Field, reduxForm } from 'redux-form';
 import Button from '@folio/stripes-components/lib/Button';
 import { FormattedMessage } from 'react-intl';
@@ -83,6 +84,13 @@ class AdvanceSearchForm extends
 
     handleChange(event) {
       this.setState({ value: event.target.value });
+    }
+
+    hanldeSearchWithSubscription = () => {
+      const soubscription = Observable.of(this.state.value);
+      soubscription
+        .filter(d => d !== '')
+        .subscribe((d) => peformSearch(d));
     }
 
     handleClick = () => {

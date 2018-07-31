@@ -3,16 +3,15 @@
   height: 16px;
   fill: rgba(0, 0, 0, 0.5);
 }
+
 .colFirstSelect {
-	margin-top: 20px;
+  margin-top: 20px;
 }
+
 .colQuery {
-	margin-top: 50px;
+  margin-top: 50px;
 }
-.largeBox{
-	width: 100%;
+
+.largeBox {
+  width: 100%;
 }
-.buttonHeight{
-  min-height: 36px
- }
- 

@@ -25,7 +25,6 @@ class SimpleSearchButton extends React.Component<SimpleSearchButtonProps, {}> {
           onClick={this.onClick}
           type="button"
           buttonStyle="primary"
-          buttonClass={css.buttonHeight}
         >
           <FormattedMessage id="ui-marccat.search.searchButton" />
         </Button>

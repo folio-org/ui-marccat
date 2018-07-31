@@ -23,7 +23,7 @@ class ScanButton extends React.Component<Props, State> {
         type="button"
         disabled={this.props.disabled}
         buttonStyle="primary"
-        style={{ width: '100%' }}
+        fullWidth
       >
         <FormattedMessage id="ui-marccat.search.scanButton" />
       </Button>

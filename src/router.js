@@ -9,7 +9,7 @@ import { TemplateView, CreateTemplate } from './Template/';
 import { SimpleSearch, SearchResults } from './Search/';
 import { IndexList } from './Indexes/';
 import MultiColumnListDiacritic from './Indexes/components/MultiColumnListDiacritic';
-import MARCcat from './App/MARCCat';
+import MARCcat from './App/MARCcat';
 
 export function ConnectedRoute({ path, id, component: Component, ...props }) { // eslint-disable-line react/prop-types
   return (

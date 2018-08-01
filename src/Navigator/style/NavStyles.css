@@ -27,3 +27,8 @@
 .expandAll > button {
   width: 100%;
 }
+
+.customSize span {
+  width: 16px;
+  height: 16px;
+}

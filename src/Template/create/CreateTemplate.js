@@ -13,7 +13,6 @@ import TemplateForm from '../form/TemplateForm';
 import CreateTag from './CreateTag';
 import MandatoryList from '../form/MandatoryList';
 import css from '../styles/Template.css';
-import { remapForTemplateMandatory } from '../../Utils/Mapper';
 import * as C from '../../Utils';
 
 type CreateTemplateProps = {
@@ -53,7 +52,7 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
     this.getLeader = this.getLeader.bind(this);
   }
 
-  getLeader(currentTemp) {
+  getLeader() {
     const leader = '';
     /*
     currentTemp['fixed-fields'].map(element => {

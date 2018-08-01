@@ -6,7 +6,10 @@ import Button from '@folio/stripes-components/lib/Button';
 import { FormattedMessage } from 'react-intl';
 
 type SubfieldFormProps = {
-  subfields: Array
+  subfields: Array,
+  isLast: Boolean,
+  addNewSubfield: Function,
+  deleteSubfield: Function
 };
 
 type SubfieldFormState = {
@@ -44,25 +47,35 @@ class SubfieldForm extends React.Component<SubfieldFormProps, SubfieldFormState>
           <Textarea />
         </Col>
         <Col xs={4}>
+          { !this.props.isLast &&
           <Row>
             <Col xs={12}>
-              <Button>
+              <Button
+                buttonStyle="primary"
+                onClick={this.props.deleteSubfield}
+              >
                 <FormattedMessage
                   id="ui-marccat.template.tag.delete"
                 />
               </Button>
             </Col>
           </Row>
+          }
 
+          { this.props.isLast &&
           <Row>
             <Col xs={12}>
-              <Button>
+              <Button
+                buttonStyle="primary"
+                onClick={this.props.addNewSubfield}
+              >
                 <FormattedMessage
                   id="ui-marccat.template.add.subfield"
                 />
               </Button>
             </Col>
           </Row>
+          }
 
         </Col>
       </Row>

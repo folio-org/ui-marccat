@@ -51,6 +51,7 @@ class SubfieldForm extends React.Component<SubfieldFormProps, SubfieldFormState>
           <Row>
             <Col xs={12}>
               <Button
+                buttonStyle="primary"
                 onClick={this.props.deleteSubfield}
               >
                 <FormattedMessage
@@ -65,6 +66,7 @@ class SubfieldForm extends React.Component<SubfieldFormProps, SubfieldFormState>
           <Row>
             <Col xs={12}>
               <Button
+                buttonStyle="primary"
                 onClick={this.props.addNewSubfield}
               >
                 <FormattedMessage

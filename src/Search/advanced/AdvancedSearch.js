@@ -17,7 +17,7 @@ class AdvancedSearch extends React.Component<*> {
           firstMenu={leftMenu}
           lastMenu={rightMenu}
           paneTitle={formatMessage({
-            id: 'ui-marccat.app.title',
+            id: 'ui-marccat.Advanced search',
           })}
           paneSub={formatMessage({
             id: 'ui-marccat.noResult',

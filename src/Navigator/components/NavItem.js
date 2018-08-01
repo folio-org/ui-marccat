@@ -2,11 +2,13 @@ import React from 'react';
 import { Observable } from 'rxjs';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import NavListSection from '@folio/stripes-components/lib/NavListSection';
+import NavListItem from '@folio/stripes-components/lib/NavListItem';
 
 type NavItemProps = {
   label: string;
   history: Object;
   activeLink: string;
+  itemLabel: string;
   withChildren: bool;
   children: Object;
   path: string;
@@ -26,15 +28,19 @@ export default class NavItem extends React.Component<NavItemProps, NavItemState>
   }
 
   handleToggle = () => {
-    this.setState({ isOpen: !this.state.isOpen });
-    const subscription = Observable.of(this.props.path);
-    subscription
-      .filter(p => p !== '')
-      .subscribe(p => this.props.history.push(p));
+    if (this.props.itemLabel) {
+      this.setState({ isOpen: !this.state.isOpen });
+    } else {
+      this.setState({ isOpen: !this.state.isOpen });
+      const subscription = Observable.of(this.props.path);
+      subscription
+        .filter(p => p !== '')
+        .subscribe(p => this.props.history.push(p));
+    }
   };
 
   render() {
-    const { label, activeLink, withChildren, open } = this.props;
+    const { label, path, itemLabel, activeLink, withChildren, open } = this.props;
     return (withChildren) ? (
       <Accordion open={this.state.isOpen || open} onToggle={this.handleToggle} label={label}>
         <NavListSection activeLink={activeLink} />
@@ -42,7 +48,9 @@ export default class NavItem extends React.Component<NavItemProps, NavItemState>
       </Accordion>
     ) : (
       <Accordion open={this.state.isOpen || open} onToggle={this.handleToggle} label={label}>
-        <NavListSection activeLink={activeLink} />
+        <NavListSection activeLink={activeLink}>
+          <NavListItem to={path}>{itemLabel}</NavListItem>
+        </NavListSection>
       </Accordion>
     );
   }

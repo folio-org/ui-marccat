@@ -7,7 +7,6 @@ import Button from '@folio/stripes-components/lib/Button';
 import { connect } from '@folio/stripes-connect';
 import { FormattedMessage } from 'react-intl';
 import Link from 'react-router-dom/Link';
-import css from '../../style/Search.css';
 import * as C from '../../../Utils';
 
 type SimpleSearchButtonProps = {

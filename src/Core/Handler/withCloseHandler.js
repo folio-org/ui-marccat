@@ -25,6 +25,7 @@ const withCloseHandler = WrappedComponent =>
       });
     };
 
+
     render() {
       return (
         <WrappedComponent {...this.props} handleClose={this.handleClose}>

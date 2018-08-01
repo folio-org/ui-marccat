@@ -7,9 +7,9 @@ import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 import { TemplateView, CreateTemplate } from './Template/';
 import { SimpleSearch, SearchResults } from './Search/';
-import { IndexList } from './Indexes/';
-import MultiColumnListDiacritic from './Indexes/components/MultiColumnListDiacritic';
+import { IndexList, MultiColumnListDiacritic } from './Indexes/';
 import MARCcat from './App/MARCcat';
+import { ReportView } from './Report';
 
 export function ConnectedRoute({ path, id, component: Component, ...props }) { // eslint-disable-line react/prop-types
   return (
@@ -26,12 +26,14 @@ export default class Router extends React.Component<*> {
       <Switch>
         <ConnectedRoute path={`${rootPath}/simpleSearch`} {...this.props} component={SimpleSearch} id="simple_search" />
         <ConnectedRoute path={`${rootPath}/externalSearch`} {...this.props} component={MARCcat} id="external_search" />
+        <ConnectedRoute path={`${rootPath}/advancedSearch`} {...this.props} component={IndexList} id="external_search" />
         <ConnectedRoute path={`${rootPath}/searchResults`} {...this.props} component={SearchResults} id="search_result" />
+        <ConnectedRoute path={`${rootPath}/report`} {...this.props} component={ReportView} id="index_list" />
         <ConnectedRoute path={`${rootPath}/templateAdd`} {...this.props} component={CreateTemplate} id="template_create" />
         <ConnectedRoute path={`${rootPath}/templatelist`} {...this.props} component={TemplateView} id="template_list" />
         <ConnectedRoute path={`${rootPath}/indexList`} {...this.props} component={IndexList} id="index_list" />
         <ConnectedRoute path={`${rootPath}/diacritic`} {...this.props} component={MultiColumnListDiacritic} id="diacritic_table" />
-        <ConnectedRoute path={`${rootPath}`} {...this.props} component={MARCcat} id="app_root" />
+        <ConnectedRoute path={`${rootPath}`} {...this.props} component={MARCcat} id="navigation_root" />
       </Switch>
     );
   }

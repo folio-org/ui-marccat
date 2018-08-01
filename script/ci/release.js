@@ -103,13 +103,9 @@ const findCurrentPublishedVersion = () => {
  * Create Tag Release and push on remote repository
  */
 const tagAndPush = (internalVersion) => {
-  if (internalVersion < process.env.MAJOR_VERSION) {
-    log.fail(`Dont release a version less than the current version: ${process.env.MAJOR_VERSION}`);
-  } else {
     log.ok(`trying to publish ${process.env.FOLIO_MODULE} - ${internalVersion}...`);
     execSync(`git tag -a v${internalVersion} -m "${internalVersion}"`);
     execSyncSilent(`git push origin ${internalVersion} || true`);
-  }
 };
 
 /**

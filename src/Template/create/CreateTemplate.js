@@ -8,8 +8,12 @@ import Layer from '@folio/stripes-components/lib/Layer';
 import { FormattedMessage } from 'react-intl';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Button from '@folio/stripes-components/lib/Button';
+import Icon from '@folio/stripes-components/lib/Icon';
 import TemplateForm from '../form/TemplateForm';
 import CreateTag from './CreateTag';
+import MandatoryList from '../form/MandatoryList';
+import css from '../styles/Template.css';
+import { remapForTemplateMandatory } from '../../Utils/Mapper';
 import * as C from '../../Utils';
 
 type CreateTemplateProps = {
@@ -25,6 +29,19 @@ type CreateTemplateState = {
 };
 
 class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplateState> {
+  static manifest = Object.freeze({
+    mandatory: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      path: C.ENDPOINT.TEMPLATE_MANDATORY,
+      headers: C.ENDPOINT.HEADERS,
+      records: 'fields',
+      GET: {
+        params: { lang: C.ENDPOINT.DEFAULT_LANG },
+      },
+    },
+  });
+
   constructor(props) {
     super(props);
     this.state = {
@@ -37,13 +54,15 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
   }
 
   getLeader(currentTemp) {
-    let leader = '';
+    const leader = '';
+    /*
     currentTemp['fixed-fields'].map(element => {
       if (element['fixed-fields'].code === '000') {
         return leader = element['fixed-fields'].displayValue;
       }
       return '';
     });
+    */
     return leader;
   }
 
@@ -69,6 +88,10 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
   }
 
   render() {
+    const { resources: { mandatory } } = this.props;
+    if (!mandatory || !mandatory.hasLoaded) return (<Layer isOpen> <Icon icon="spinner-ellipsis" /> </Layer>);
+    const fields = mandatory.records;
+    // this.setState({ currentTemplate: remapForTemplateMandatory(fields) });
     const formatMsg = this.props.stripes.intl.formatMessage;
     const actionMenuItems = [
       {
@@ -115,7 +138,12 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
                 defaultWidth="fill"
                 fluidContentWidth
               >
-                <TemplateForm {...this.props} getCurrentTemplate={this.getCurrentTemp} />
+                <TemplateForm {...this.props} />
+                <Row className={css.mandatoryList}>
+                  <Col xs={12}>
+                    <MandatoryList {...this.props} fields={fields} />
+                  </Col>
+                </Row>
                 <Row>
                   <Col>
                     <Button

@@ -5,15 +5,10 @@ import RadioButton from '@folio/stripes-components/lib/RadioButton';
 import { FormattedMessage } from 'react-intl';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import TextField from '@folio/stripes-components/lib/TextField';
-import MandatoryList from '../form/MandatoryList';
 import css from '../styles/Template.css';
-import { remapForTemplateMandatory } from '../../Utils/Mapper';
 
 type TemplateFormProps = {
   stripes: Object;
-  history: Object;
-  resources: Object;
-  getCurrentTemplate: Function
 };
 type TemplateFormState = {
   currentTemplate: Object;
@@ -32,19 +27,6 @@ function validate(values) {
 }
 
 class TemplateForm extends React.Component<TemplateFormProps, TemplateFormState> {
-  constructor(props) {
-    super(props);
-    this.handleMandatory = this.handleMandatory.bind(this);
-    this.state = {
-      currentTemplate: {}
-    };
-  }
-
-  handleMandatory = (mandatoryMap) => {
-    this.setState({ currentTemplate: remapForTemplateMandatory(mandatoryMap) });
-    this.props.getCurrentTemplate(this.state.currentTemplate);
-  }
-
   validate(values) {
     const errors = {};
     errors.name = {};
@@ -111,11 +93,6 @@ class TemplateForm extends React.Component<TemplateFormProps, TemplateFormState>
                 inline
               />
             </Field>
-          </Col>
-        </Row>
-        <Row className={css.mandatoryList}>
-          <Col xs={12}>
-            <MandatoryList {...this.props} mandatoryFields={this.handleMandatory} />
           </Col>
         </Row>
       </form>

@@ -1,13 +1,11 @@
 import React from 'react';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import { connect } from '@folio/stripes-connect';
-import Icon from '@folio/stripes-components/lib/Icon';
 import * as C from '../../Utils/Constant';
 import { remapMultiArray } from '../../Utils/Mapper';
 
 type CreateTemplateProps = {
-    resources: Object;
-    mandatoryFields: Function;
+    fields: Object
   };
   type CreateTemplateState = {
     currentTemplate: Object;
@@ -35,14 +33,7 @@ class MandatoryList extends React.Component<CreateTemplateProps, CreateTemplateS
         description: '',
         displayValue: ''
       };
-
-      const {
-        resources: { records },
-      } = this.props;
-      if (!records || !records.hasLoaded) return <Icon icon="spinner-ellipsis" />;
-      const fields = records.records;
-      const obj = remapMultiArray(fields);
-      this.props.mandatoryFields(fields);
+      const obj = remapMultiArray(this.props.fields);
       return (
         <MultiColumnList
           contentData={obj}

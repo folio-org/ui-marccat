@@ -57,7 +57,7 @@ class TemplateView extends React.Component {
       },
       DELETE: {
         path: 'record-template/%{currentTemplate.id}',
-        params: { lang: C.ENDPOINT.DEFAULT_LANG, type: 'B' }
+        params: { lang: C.ENDPOINT.DEFAULT_LANG }
       }
     }
   });

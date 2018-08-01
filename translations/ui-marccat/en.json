@@ -32,7 +32,8 @@
   "template.save": "Save Template",
   "template.tag.create": "Create New Tag",
   "template.tag.add": "Add New Tag",
-  "template.tag.delete": "Delete Tag",
+  "template.tag.delete": "Delete",
+  "template.add.subfield": "Add subfield",
 
   "template.form.name": "Name",
   "template.form.tag.code": "Tag",

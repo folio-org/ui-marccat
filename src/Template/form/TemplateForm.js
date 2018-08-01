@@ -7,11 +7,13 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import TextField from '@folio/stripes-components/lib/TextField';
 import MandatoryList from '../form/MandatoryList';
 import css from '../styles/Template.css';
+import { remapForTemplateMandatory } from '../../Utils/Mapper';
 
 type TemplateFormProps = {
   stripes: Object;
   history: Object;
   resources: Object;
+  getCurrentTemplate: Function
 };
 type TemplateFormState = {
   currentTemplate: Object;
@@ -33,10 +35,14 @@ class TemplateForm extends React.Component<TemplateFormProps, TemplateFormState>
   constructor(props) {
     super(props);
     this.handleMandatory = this.handleMandatory.bind(this);
+    this.state = {
+      currentTemplate: {}
+    };
   }
 
-  handleMandatory = () => {
-    // this.setState({ currentTemplate: remapForTemplateMandatory(mandatoryMap) });
+  handleMandatory = (mandatoryMap) => {
+    this.setState({ currentTemplate: remapForTemplateMandatory(mandatoryMap) });
+    this.props.getCurrentTemplate(this.state.currentTemplate);
   }
 
   validate(values) {

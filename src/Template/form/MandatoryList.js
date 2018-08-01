@@ -7,9 +7,11 @@ import { remapMultiArray } from '../../Utils/Mapper';
 
 type CreateTemplateProps = {
     resources: Object;
+    mandatoryFields: Function;
   };
   type CreateTemplateState = {
-    currentTemplate:Object;
+    currentTemplate: Object;
+    leader: String
   };
 
 
@@ -40,6 +42,7 @@ class MandatoryList extends React.Component<CreateTemplateProps, CreateTemplateS
       if (!records || !records.hasLoaded) return <Icon icon="spinner-ellipsis" />;
       const fields = records.records;
       const obj = remapMultiArray(fields);
+      this.props.mandatoryFields(fields);
       return (
         <MultiColumnList
           contentData={obj}

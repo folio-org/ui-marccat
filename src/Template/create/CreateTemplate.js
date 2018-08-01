@@ -12,24 +12,43 @@ import TemplateForm from '../form/TemplateForm';
 import CreateTag from './CreateTag';
 import * as C from '../../Utils';
 
-
 type CreateTemplateProps = {
   stripes: Object,
   history: Object,
   resources: Object,
+  getCurrentTemp: Function
 };
 type CreateTemplateState = {
   currentTemplate: Object,
   showTagForm: Boolean,
+  currentTemplate: Object
 };
 
 class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplateState> {
   constructor(props) {
     super(props);
     this.state = {
-      showTagForm: false
+      showTagForm: false,
+      currentTemplate: {}
     };
     this.showTagForm = this.showTagForm.bind(this);
+    this.getCurrentTemp = this.getCurrentTemp.bind(this);
+    this.getLeader = this.getLeader.bind(this);
+  }
+
+  getLeader(currentTemp) {
+    let leader = '';
+    currentTemp['fixed-fields'].map(element => {
+      if (element['fixed-fields'].code === '000') {
+        return leader = element['fixed-fields'].displayValue;
+      }
+      return '';
+    });
+    return leader;
+  }
+
+  getCurrentTemp = (currentTemp) => {
+    this.setState({ currentTemplate: currentTemp });
   }
 
   showTagForm() {
@@ -51,8 +70,6 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-
-
     const actionMenuItems = [
       {
         label: formatMsg({
@@ -85,7 +102,7 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
           <Pane
             actionMenuItems={actionMenuItems}
             firstMenu={this.preparePaneMenu()}
-            fullWidth
+            defaultWidth="100%"
             paneTitle={formatMsg({
               id: 'ui-marccat.template.create',
             })}
@@ -98,7 +115,7 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
                 defaultWidth="fill"
                 fluidContentWidth
               >
-                <TemplateForm {...this.props} />
+                <TemplateForm {...this.props} getCurrentTemplate={this.getCurrentTemp} />
                 <Row>
                   <Col>
                     <Button
@@ -121,7 +138,7 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
                     id: 'ui-marccat.template.tag.create',
                   })}
                 >
-                  <CreateTag {...this.props} />
+                  <CreateTag {...this.props} leader={this.getLeader(this.state.currentTemplate)} />
                 </Pane>
               }
             </Paneset>

@@ -129,7 +129,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
       headers: C.ENDPOINT.HEADERS,
-      path: `field-template?categoryCode=%{marcCategory}&code=%{tag}&ind1=%{ind1}&ind2=%{ind2}&valueField=''&leader=''&headerType=%{headingType}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
+      path: `field-template?categoryCode=%{marcCategory}&code=%{tag}&ind1=%{ind1}&ind2=%{ind2}&valueField=&leader=&headerType=%{headingType}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
       fetch: false,
       accumulate: true
     },
@@ -189,10 +189,14 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     this.props.mutator.headingType.replace(headingTypesValue);
     this.props.mutator.itemType.replace(itemTypesValue);
     this.props.mutator.functionCode.replace(functionCodeValue);
-    this.props.mutator.subfields.GET().then(() => {});
+    this.props.mutator.subfields.GET().then((fetchResult) => {
+      if (!(fetchResult.subfields.length > 0)) {
+        this.props.mutator.subfields.reset();
+      }
+    });
   }
 
-  fetchFieldTemplate(marcCategoryValue, headingTypesValue, tag, ind1, ind2) {
+  fetchFieldTemplate(marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue, tag, ind1, ind2) {
     this.props.mutator.fieldTemplate.reset();
     this.props.mutator.marcCategory.replace(marcCategoryValue);
     this.props.mutator.headingType.replace(headingTypesValue);
@@ -201,8 +205,15 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     this.props.mutator.ind2.replace(ind2);
     this.props.mutator.fieldTemplate.GET().then((fetchResult) => {
       if (fetchResult) {
-        // TO-DO
+        if (fetchResult['variable-field']) {
+          this.fetchSubfields(marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue);
+          return;
+        } else {
+          this.props.mutator.subfields.reset();
+          return;
+        }
       }
+      this.props.mutator.subfields.reset();
     });
   }
 
@@ -283,8 +294,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
             .concat(ind2)
             .concat('.')
         });
-        this.fetchFieldTemplate(marcCategoryValue, headingTypesValue, tagCode, ind1, ind2);
-        this.fetchSubfields(marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue);
+        this.fetchFieldTemplate(marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue, tagCode, ind1, ind2);
         return;
       }
       this.setState({ marcAssociatedValue: '' });
@@ -318,6 +328,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     const headingTypesValues = (resources.headingTypes || {}).records || [];
     const itemTypesValues = (resources.itemTypes || {}).records || [];
     const functionCodesValues = (resources.functionCodes || {}).records || [];
+    const subfields = (resources.subfields || {}).records || [];
     /*
     if (marcCategories && marcCategories.hasLoaded && marcCategoriesSelect.value) {
       fetchHeadingTypes(marcCategoriesSelect.value);
@@ -388,7 +399,8 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
 
         {resources.subfields &&
           resources.subfields.hasLoaded &&
-          <SubfieldForm {...this.props} />
+          subfields[0].subfields.length > 0 &&
+          <SubfieldForm {...this.props} subfields={subfields[0].subfields} />
         }
 
         <Row>

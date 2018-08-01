@@ -134,4 +134,9 @@ export const MARC_CHARACTER = {
   DOLLAR: '$',
 };
 
+// EVENTS
+export const EVENTS = {
+  CHAR_COPIED: 'CharCopied'
+};
+
 export const EMPTY_PARAMETER = -1;

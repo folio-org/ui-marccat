@@ -7,6 +7,8 @@
   "settings.logicalview": "Logical View",
   "settings.modal.version": "Version",
 
+  "perms.permissions.template.create": true,
+
   "initial.title":"Choose a menu item and enter search query to show results",
   "app.title":"MARCcat",
   "navigator.title": "Menu",

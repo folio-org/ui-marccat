@@ -6,10 +6,12 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import Button from '@folio/stripes-components/lib/Button';
 import { FormattedMessage } from 'react-intl';
-import SubfieldForm from '../form/SubfieldForm';
+import { getLeader } from '../../Utils/templateUtils';
+import SubfieldSection from '../form/SubfieldSection';
 import * as C from '../../Utils';
 
 type CreateTagProps = {
+  currentTemplate: Object,
   stripes: Object,
   history: Object,
   resources: Object,
@@ -20,6 +22,9 @@ type CreateTagProps = {
     marcCategories: {
       GET: Function,
       reset: Function
+    },
+    leader: {
+      replace: Function
     },
     tag: {
       replace: Function
@@ -81,6 +86,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     tag: {},
     ind1: {},
     ind2: {},
+    leader: {},
     marcCategories: {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
@@ -129,7 +135,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
       headers: C.ENDPOINT.HEADERS,
-      path: `field-template?categoryCode=%{marcCategory}&code=%{tag}&ind1=%{ind1}&ind2=%{ind2}&valueField=&leader=&headerType=%{headingType}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
+      path: `field-template?categoryCode=%{marcCategory}&code=%{tag}&ind1=%{ind1}&ind2=%{ind2}&valueField=&leader=%{leader}&headerType=%{headingType}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
       fetch: false,
       accumulate: true
     },
@@ -203,6 +209,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     this.props.mutator.tag.replace(tag);
     this.props.mutator.ind1.replace(ind1);
     this.props.mutator.ind2.replace(ind2);
+    this.props.mutator.leader.replace(getLeader(this.props.currentTemplate));
     this.props.mutator.fieldTemplate.GET().then((fetchResult) => {
       if (fetchResult) {
         if (fetchResult['variable-field']) {
@@ -400,7 +407,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
         {resources.subfields &&
           resources.subfields.hasLoaded &&
           subfields[0].subfields.length > 0 &&
-          <SubfieldForm {...this.props} subfields={subfields[0].subfields} />
+          <SubfieldSection {...this.props} subfields={subfields[0].subfields} />
         }
 
         <Row>

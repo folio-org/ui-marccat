@@ -122,7 +122,7 @@ const tryTagAndPush = (version) => {
     try {
       tagAndPush(theCandidate);
       log.ok(`Released ${process.env.FOLIO_MODULE} Version: ${theCandidate} succesfully!`);
-      log.ok(`Release Manager: ${process.env.GIT_NAME}!`);
+      log.ok(`Release Manager:${process.env.GIT_NAME} <${process.env.GIT_EMAIL}>!`);
       return;
     } catch (err) {
       const alreadyPublished = _.includes(err.toString(), 'You cannot publish over the previously published version');

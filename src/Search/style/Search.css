@@ -3,3 +3,15 @@
   height: 16px;
   fill: rgba(0, 0, 0, 0.5);
 }
+
+.colFirstSelect {
+  margin-top: 20px;
+}
+
+.colQuery {
+  margin-top: 50px;
+}
+
+.largeBox {
+  width: 100%;
+}

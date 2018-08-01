@@ -31,11 +31,12 @@ class SearchButton extends React.Component<Props, State> {
 
   handleSearch = () => {
     this.props.mutator.query.replace(this.props.data);
+    // this.props.history.push('advancedSearch')
     const observer = Observable.from(this.props.mutator.searchQuery.GET());
     observer
+      .take(1)
       .map(r => this.setState({ results: r, isOpen: true }))
-      .subscribe()
-      .closed();
+      .subscribe();
   }
 
   handleClose = () => {
@@ -59,7 +60,7 @@ class SearchButton extends React.Component<Props, State> {
         </Button>
         {this.state.results &&
         <Modal dismissible closeOnBackgroundClick onClose={this.handleClose} open={isOpen} label={`Results for: ${this.props.data}`}>
-          <div>{this.state.results ? this.state.results[0].data : 'No Result Found for ' + this.props.data}</div>
+          <div>{this.state.results && this.state.results[0] ? this.state.results[0].data : 'No Result Found for ' + this.props.data}</div>
         </Modal>
         }
       </div>

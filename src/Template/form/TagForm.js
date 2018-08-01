@@ -7,6 +7,7 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Button from '@folio/stripes-components/lib/Button';
 import Select from '@folio/stripes-components/lib/Select';
 import { TagSelect } from '../';
+import css from '../styles/Template.css';
 import * as C from '../../Utils/';
 
 class TagForm extends React.Component {
@@ -69,9 +70,7 @@ class TagForm extends React.Component {
           <Select dataOptions={[{ value: 'a', label: 'a' }]} />
           <Col xs={6}>
             <Field
-              style={{
-                width: `${100}%`,
-              }}
+              className={css.largeField}
               name="firstArgs"
               id="firstArgs"
               withRef
@@ -90,9 +89,7 @@ class TagForm extends React.Component {
           <Select dataOptions={[{ value: 'a', label: 'a' }]} />
           <Col xs={6}>
             <Field
-              style={{
-                width: `${100}%`,
-              }}
+              className={css.largeField}
               name="lang"
               id="lang"
               withRef
@@ -112,9 +109,7 @@ class TagForm extends React.Component {
             <Select dataOptions={[{ value: 'a', label: 'a' }]} />
             <Col xs={6}>
               <Field
-                style={{
-                  width: `${100}%`,
-                }}
+                className={css.largeField}
                 name={`${this.props.defaultValue.code}-${i}`}
                 id={`${this.props.defaultValue.code}-${i}`}
                 withRef
@@ -134,9 +129,7 @@ class TagForm extends React.Component {
           <Select dataOptions={[{ value: 'b', label: 'b' }, { value: 'c', label: 'c' }]} />
           <Col xs={6}>
             <Field
-              style={{
-                width: `${100}%`,
-              }}
+              className={css.largeField}
               fullWidth
               name="langField"
               id="secondField"

@@ -253,7 +253,7 @@ class AdvanceSearchForm extends
                       <SearchButton data={this.state.value} {...this.props} />
                     </Col>
                     <Col xs={6}>
-                      <ScanButton {...this.props} />
+                      <ScanButton data={this.state.value} {...this.props} />
                     </Col>
                     <Col xs={12}>
                       <Button

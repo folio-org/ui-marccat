@@ -94,5 +94,8 @@
   "diacritic.list.character":"Character",
   "diacritic.list.description":"Description",
   "diacritic.list.charset":"Character Set",
-  "diacritic.list.unicode":"Unicode"
+  "diacritic.list.unicode":"Unicode",
+
+  "browsing.title":"Browse search",
+  "browsing.subtitle":"Results for: "
 }

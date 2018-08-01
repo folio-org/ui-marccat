@@ -1,12 +1,15 @@
 import React from 'react';
+import { Observable } from 'rxjs';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import NavListSection from '@folio/stripes-components/lib/NavListSection';
 
 type NavItemProps = {
   label: string;
+  history: Object;
   activeLink: string;
   withChildren: bool;
-  children: React.Node;
+  children: Object;
+  path: string;
   open: bool;
 };
 type NavItemState = {
@@ -19,11 +22,15 @@ export default class NavItem extends React.Component<NavItemProps, NavItemState>
     this.state = {
       isOpen: false,
     };
+    this.handleToggle = this.handleToggle.bind(this);
   }
-
 
   handleToggle = () => {
     this.setState({ isOpen: !this.state.isOpen });
+    const subscription = Observable.of(this.props.path);
+    subscription
+      .filter(p => p !== '')
+      .subscribe(p => this.props.history.push(p));
   };
 
   render() {

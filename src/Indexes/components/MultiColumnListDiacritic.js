@@ -9,7 +9,6 @@ import * as C from '../../Utils';
 type MultiColumnListDiacriticProps = {
   stripes: Object;
   resources: Object;
-  onRowClick: Function,
 };
 
 type MultiColumnListDiacriticState = {
@@ -36,9 +35,15 @@ class MultiColumnListDiacritic extends Component
   constructor(props: MultiColumnListDiacriticProps) {
     super(props);
     this.state = {
-      charCopied: '',//eslint-disable-line
+      charCopied: '', // eslint-disable-line react/no-unused-state
     };
     /** bind handler **/
+    this.onRowClick = this.onRowClick.bind(this);
+  }
+
+  onRowClick = (event) => { // FIX ME
+    const evt = new CustomEvent(C.EVENTS.CHAR_COPIED, { detail: event.target.textContent });
+    window.dispatchEvent(evt);
   }
 
   render() {
@@ -65,7 +70,7 @@ class MultiColumnListDiacritic extends Component
           appIcon={{ app: C.META.ICON_TITLE }}
         >
           <MultiColumnList
-            onRowClick={this.props.onRowClick}
+            onRowClick={this.onRowClick}
             contentData={data}
             visibleColumns={[
               'value',

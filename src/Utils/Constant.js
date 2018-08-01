@@ -26,6 +26,7 @@ export const ENDPOINT = {
   SEARCH_URL: 'search',
   INDEX_CATEGORY: 'index-categories',
   DIACRITIC_LIST_URL: 'diacritics',
+  BROWSING_FIRST_PAGE: 'first-page',
   DEFAULT_LANG: 'eng',
   DEFAULT_PAGINATION: 20,
 };
@@ -51,6 +52,7 @@ export const INTERNAL_URL = {
   VIEW_LOGICAL_VIEW: '/marccat/logicalview/',
   ADVANCE_SEARCH: '/marccat/advancedSearch',
   SEARCH_RESULTS: '/marccat/searchResults',
+  VIEW_BROWSING: '/marccat/browsing'
 };
 
 export const API_RESULT_JSON_KEY = {
@@ -64,6 +66,7 @@ export const API_RESULT_JSON_KEY = {
   FIELDS: 'fields',
   INDEX_CATEGORIES: 'categories',
   DIACRITIC: 'diacritics',
+  BROWSING: 'headings',
   INDEX_INNER: 'indexes',
   CONSTRAINT_INDEX: 'constraints',
   MARC_CATEGORIES: 'categories',

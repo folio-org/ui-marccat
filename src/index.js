@@ -17,6 +17,10 @@ type RoutingProps = {
     intl: Object,
   },
   mutator: {
+    firstPage: {
+      GET: Function,
+      reset: Function,
+    },
     searchQuery:{
       GET: Function,
       reset: Function,
@@ -73,6 +77,15 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
       headers: C.ENDPOINT.HEADERS,
       path: 'search?lang=ita&q=%{query}&from=1&to=1&view=1&ml=170&dpo=1',
       records: 'docs',
+      accumulate: true,
+      fetch: false
+    },
+    firstPage: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      path: `first-page?mainLibrary=170&view=1&query=%{query}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
+      headers: C.ENDPOINT.HEADERS,
+      records: C.API_RESULT_JSON_KEY.BROWSING,
       accumulate: true,
       fetch: false
     },

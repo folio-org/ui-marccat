@@ -76,8 +76,8 @@ const remapForTemplateMandatory = multiArray => {
     }
   });
   const result = {
-    'fixedFields': { fixedFields },
-    'variableFields': { variableFields },
+    fixedFields: { fixedFields },
+    variableFields: { variableFields },
   };
   return result;
 };

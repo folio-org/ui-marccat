@@ -8,28 +8,65 @@ import Layer from '@folio/stripes-components/lib/Layer';
 import { FormattedMessage } from 'react-intl';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Button from '@folio/stripes-components/lib/Button';
+import Icon from '@folio/stripes-components/lib/Icon';
 import TemplateForm from '../form/TemplateForm';
 import CreateTag from './CreateTag';
+import MandatoryList from '../form/MandatoryList';
+import css from '../styles/Template.css';
 import * as C from '../../Utils';
-
 
 type CreateTemplateProps = {
   stripes: Object,
   history: Object,
   resources: Object,
+  getCurrentTemp: Function
 };
 type CreateTemplateState = {
   currentTemplate: Object,
   showTagForm: Boolean,
+  currentTemplate: Object
 };
 
 class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplateState> {
+  static manifest = Object.freeze({
+    mandatory: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      path: C.ENDPOINT.TEMPLATE_MANDATORY,
+      headers: C.ENDPOINT.HEADERS,
+      records: 'fields',
+      GET: {
+        params: { lang: C.ENDPOINT.DEFAULT_LANG },
+      },
+    },
+  });
+
   constructor(props) {
     super(props);
     this.state = {
-      showTagForm: false
+      showTagForm: false,
+      currentTemplate: {}
     };
     this.showTagForm = this.showTagForm.bind(this);
+    this.getCurrentTemp = this.getCurrentTemp.bind(this);
+    this.getLeader = this.getLeader.bind(this);
+  }
+
+  getLeader() {
+    const leader = '';
+    /*
+    currentTemp['fixed-fields'].map(element => {
+      if (element['fixed-fields'].code === '000') {
+        return leader = element['fixed-fields'].displayValue;
+      }
+      return '';
+    });
+    */
+    return leader;
+  }
+
+  getCurrentTemp = (currentTemp) => {
+    this.setState({ currentTemplate: currentTemp });
   }
 
   showTagForm() {
@@ -50,9 +87,11 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
   }
 
   render() {
+    const { resources: { mandatory } } = this.props;
+    if (!mandatory || !mandatory.hasLoaded) return (<Layer isOpen> <Icon icon="spinner-ellipsis" /> </Layer>);
+    const fields = mandatory.records;
+    // this.setState({ currentTemplate: remapForTemplateMandatory(fields) });
     const formatMsg = this.props.stripes.intl.formatMessage;
-
-
     const actionMenuItems = [
       {
         label: formatMsg({
@@ -85,7 +124,7 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
           <Pane
             actionMenuItems={actionMenuItems}
             firstMenu={this.preparePaneMenu()}
-            fullWidth
+            defaultWidth="100%"
             paneTitle={formatMsg({
               id: 'ui-marccat.template.create',
             })}
@@ -99,6 +138,11 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
                 fluidContentWidth
               >
                 <TemplateForm {...this.props} />
+                <Row className={css.mandatoryList}>
+                  <Col xs={12}>
+                    <MandatoryList {...this.props} fields={fields} />
+                  </Col>
+                </Row>
                 <Row>
                   <Col>
                     <Button
@@ -121,7 +165,7 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
                     id: 'ui-marccat.template.tag.create',
                   })}
                 >
-                  <CreateTag {...this.props} />
+                  <CreateTag {...this.props} leader={this.getLeader(this.state.currentTemplate)} />
                 </Pane>
               }
             </Paneset>

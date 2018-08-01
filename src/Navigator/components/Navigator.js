@@ -4,8 +4,10 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import Icon from '@folio/stripes-components/lib/Icon';
 import { connect } from '@folio/stripes-connect';
 import { NavMenu, LogicalView } from '../';
-import * as C from '../../Utils';
 import { ToolbarMenu } from '../../Core';
+import * as C from '../../Utils';
+
+import css from '../style/NavStyles.css';
 
 type NavigatorProps = {
   stripes: Object;
@@ -20,7 +22,7 @@ class Navigator extends React.Component<NavigatorProps, NavigatorState> {
   render() {
     const { formatMessage } = this.props.stripes.intl;
     const isPending = this.props.resources.categories;
-    const rightMenu = <ToolbarMenu icon={['info']} />;
+    const rightMenu = <ToolbarMenu icon={['info']} className={css.customSize} />;
     return (!isPending || !isPending.hasLoaded) ? (<Icon icon="spinner-ellipsis" />) :
       (
         <Paneset>

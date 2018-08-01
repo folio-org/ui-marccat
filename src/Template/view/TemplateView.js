@@ -12,10 +12,11 @@ import Callout from '@folio/stripes-components/lib/Callout';
 import ConfirmationModal from '@folio/stripes-components/lib/ConfirmationModal';
 import { FormattedMessage } from 'react-intl';
 import { EditTemplate } from '../';
-import * as C from '../../Utils';
+import { ToolbarButtonMenu } from '../../Core';
 import { removeById } from '../../Utils/Formatter';
-import css from '../../Search/style/Search.css';
-import '../styles/Template.css';
+import * as C from '../../Utils';
+
+import css from '../styles/Template.css';
 
 class TemplateView extends React.Component {
   static propTypes = {
@@ -57,7 +58,7 @@ class TemplateView extends React.Component {
       },
       DELETE: {
         path: 'record-template/%{currentTemplate.id}',
-        params: { lang: C.ENDPOINT.DEFAULT_LANG, type: 'B' }
+        params: { lang: C.ENDPOINT.DEFAULT_LANG }
       }
     }
   });
@@ -177,18 +178,6 @@ class TemplateView extends React.Component {
       </PaneMenu>
     );
 
-    const lastMenu = (
-      <PaneMenu {...this.props}>
-        <IconButton
-          onClick={this.handleAddTemplate}
-          key="icon-plus-sign"
-          icon="plus-sign"
-          className={css.icon_plus}
-        />
-        <IconButton key="icon-gear" icon="gear" />
-      </PaneMenu>
-    );
-
     const actionMenuItems = [
       {
         label: formatMsg({
@@ -223,6 +212,12 @@ class TemplateView extends React.Component {
       templates = removeById(templates, this.props.resources.currentTemplate.id);
     }
 
+    const lastMenu = <ToolbarButtonMenu
+      {...this.props}
+      create
+      className={css.mr15}
+      onClick={() => this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE)}
+    />;
 
     return (
       <Paneset static>

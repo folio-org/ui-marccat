@@ -1,3 +1,7 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import Settings from '@folio/stripes-components/lib/Settings';
 import GeneralSettings from './GeneralSettings';

@@ -1,3 +1,7 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
@@ -5,6 +9,7 @@ import Icon from '@folio/stripes-components/lib/Icon';
 import { connect } from '@folio/stripes-connect';
 import { NavMenu, LogicalView } from '../';
 import { ToolbarMenu } from '../../Core';
+import { VersionModal } from '../../Modal/';
 import * as C from '../../Utils';
 
 import css from '../style/NavStyles.css';
@@ -17,12 +22,19 @@ type NavigatorProps = {
 type NavigatorState = {
   isOpen: bool;
 };
-
 class Navigator extends React.Component<NavigatorProps, NavigatorState> {
+  constructor(props) {
+    super(props);
+    this.handleVersionModal = this.handleVersionModal.bind(this);
+  }
+
+  handleVersionModal = () => {
+  };
+
   render() {
     const { formatMessage } = this.props.stripes.intl;
     const isPending = this.props.resources.categories;
-    const rightMenu = <ToolbarMenu icon={['info']} className={css.customSize} />;
+    const rightMenu = <ToolbarMenu icon={['info']} onClick={this.handleVersionModal} className={css.customSize} />;
     return (!isPending || !isPending.hasLoaded) ? (<Icon icon="spinner-ellipsis" />) :
       (
         <Paneset>
@@ -38,6 +50,7 @@ class Navigator extends React.Component<NavigatorProps, NavigatorState> {
           >
             <LogicalView {...this.props} label="Database" />
             <NavMenu {...this.props} />
+            <VersionModal open />
           </Pane>
           {this.props.children}
         </Paneset>

@@ -194,9 +194,6 @@ class TemplateView extends React.Component {
         label: formatMsg({
           id: 'ui-marccat.template.create',
         }),
-        onClick: () => {
-          this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE);
-        },
       },
       {
         label: formatMsg({

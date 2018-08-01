@@ -1,8 +1,12 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { connect } from '@folio/stripes-connect';
-import { ToolbarMenu, EmptyMessage } from '../../Core';
+import { ToolbarMenu } from '../../Core';
 import * as C from '../../Utils';
 
 class AdvancedSearch extends React.Component<*> {
@@ -23,14 +27,7 @@ class AdvancedSearch extends React.Component<*> {
             id: 'ui-marccat.noResult',
           })}
           appIcon={{ app: 'marccat' }}
-        >
-          <EmptyMessage
-            icon="left-arrow"
-            label={formatMessage({
-              id: 'ui-marccat.initial.title',
-            })}
-          />
-        </Pane>
+        />
       </Paneset>
     );
   }

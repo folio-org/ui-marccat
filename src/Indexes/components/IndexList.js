@@ -1,18 +1,21 @@
 
+/**
+ * @format
+ * @flow
+ */
+import React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import { connect } from '@folio/stripes-connect';
-import React from 'react';
 import { Col } from '@folio/stripes-components/lib/LayoutGrid';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
-import PrinterProvider from '../Core/Provider/PrinterProvider';
-import css from './style/indexes.css';
-import cssIcons from '../Search/style/Search.css';
-import * as C from '../Utils';
+import PrinterProvider from '../../Core/Provider/PrinterProvider';
+import css from '../style/indexes.css';
+import * as C from '../../Utils';
 
-const mainIndexResults = require('../../config/static/main-index-list');
-const secondaryIndexResults = require('../../config/static/secondary-index-list');
+const mainIndexResults = require('../../../config/static/main-index-list');
+const secondaryIndexResults = require('../../../config/static/secondary-index-list');
 
 type IndexListProps = {
   stripes: Object;
@@ -32,7 +35,7 @@ class IndexList extends React.Component<IndexListProps, IndexListState> {
     const printMenu = (
       <PaneMenu {...this.props}>
         <PrinterProvider
-          trigger={() => <IconButton title={formatMsg({ id: 'ui-marccat.indexes.print' })} key="icon-gear" icon="duplicate" className={cssIcons.stripes__icon} />}
+          trigger={() => <IconButton title={formatMsg({ id: 'ui-marccat.indexes.print' })} key="icon-gear" icon="duplicate" />}
           content={() => (this.componentRef)}
         />
       </PaneMenu>

@@ -1,3 +1,7 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import { connect } from '@folio/stripes-connect';

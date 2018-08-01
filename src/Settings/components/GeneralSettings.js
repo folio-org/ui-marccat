@@ -1,4 +1,8 @@
-import React, { Component } from 'react';
+/**
+ * @format
+ * @flow
+ */
+import React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { FormattedMessage } from 'react-intl';
 
@@ -7,7 +11,7 @@ type GeneralSettingsProps = {
 };
 type GeneralSettingsState = {};
 
-export default class GeneralSettings extends Component<GeneralSettingsProps, GeneralSettingsState> {
+export default class GeneralSettings extends React.Component<GeneralSettingsProps, GeneralSettingsState> {
   render() {
     return (
       <Pane

@@ -1,3 +1,7 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import RadioButton from '@folio/stripes-components/lib/RadioButton';
@@ -168,7 +172,8 @@ class AdvanceSearchForm extends
               <Col xs={12} className={css.colFirstSelect}>
                 {categories &&
                   <Select
-                    name="testSelect"
+                    label={formatMsg({ id: 'ui-marccat.advancedsearch.categories.select' })}
+                    name="categorySelect"
                     value={this.state.firstSelect}
                     onChange={this.handleChangeFirstSelect}
                   >
@@ -179,7 +184,7 @@ class AdvanceSearchForm extends
               <Col xs={12}>
                 {innerIndexes &&
                   <Select
-                    native
+                    label={formatMsg({ id: 'ui-marccat.advancedsearch.indexes.select' })}
                     value={this.state.secondSelect}
                     onChange={this.handleChangeSecondSelect}
                   >
@@ -191,7 +196,7 @@ class AdvanceSearchForm extends
               <Col xs={12}>
                 {constraintIndexes && constraintIndexes.records.length > 0 &&
                   <Select
-                    native
+                    label={formatMsg({ id: 'ui-marccat.advancedsearch.codes.select' })}
                     value={this.state.thirdSelect}
                     onChange={this.handleChangeThirdSelect}
                   >
@@ -253,7 +258,7 @@ class AdvanceSearchForm extends
                       <SearchButton data={this.state.value} {...this.props} />
                     </Col>
                     <Col xs={6}>
-                      <ScanButton {...this.props} />
+                      <ScanButton data={this.state.value} {...this.props} />
                     </Col>
                     <Col xs={12}>
                       <Button

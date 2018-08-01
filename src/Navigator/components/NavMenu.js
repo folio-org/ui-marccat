@@ -57,6 +57,7 @@ class NavMenu extends React.Component<NavMenuProps, NavMenuSatate> {
               path={`${rootPath}/externalSearch`}
             />
             <NavItem
+              {...this.props}
               accordionId="advancedSearchSection"
               withChildren
               open={this.state.section.expandeCollapseAction}
@@ -71,19 +72,20 @@ class NavMenu extends React.Component<NavMenuProps, NavMenuSatate> {
               itemLabel="External Search"
               activeLink={`${rootPath}/`}
               path={`${rootPath}/externalSearch`}
+              withChildren
             />
             <NavItem
+              {...this.props}
               accordionId="indexesSection"
               label="Indexes"
-              itemLabel="Indexes"
               open={this.state.section.expandeCollapseAction}
               activeLink={`${rootPath}/`}
               path={`${rootPath}/indexList`}
             />
             <NavItem
+              {...this.props}
               accordionId="diacriticSection"
               label="Diacritic"
-              itemLabel="Diacritic List"
               open={this.state.section.expandeCollapseAction}
               activeLink={`${rootPath}/`}
               path={`${rootPath}/diacritic`}
@@ -91,6 +93,7 @@ class NavMenu extends React.Component<NavMenuProps, NavMenuSatate> {
             ><Diacritic {...this.props} />
             </NavItem>
             <NavItem
+              {...this.props}
               accordionId="reportSection"
               label="Report"
               itemLabel="Report"
@@ -99,6 +102,7 @@ class NavMenu extends React.Component<NavMenuProps, NavMenuSatate> {
               path={`${rootPath}/report`}
             />
             <NavItem
+              {...this.props}
               accordionId="templateSection"
               label="Template"
               open={this.state.section.expandeCollapseAction}

@@ -1,3 +1,7 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
@@ -113,15 +117,7 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
         onClick: () => {
           this.props.history.push(C.INTERNAL_URL.VIEW_TEMPLATE);
         },
-      },
-      {
-        label: formatMsg({
-          id: 'ui-catalmarccatoging.button.backto',
-        }),
-        onClick: () => {
-          this.props.history.push(C.INTERNAL_URL.VIEW_TEMPLATE);
-        },
-      },
+      }
     ];
     return (
       <Layer isOpen>

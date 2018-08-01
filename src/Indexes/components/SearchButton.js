@@ -1,4 +1,8 @@
-import React, { Component } from 'react';
+/**
+ * @format
+ * @flow
+ */
+import React from 'react';
 import Button from '@folio/stripes-components/lib/Button';
 import css from '../style/indexes.css';
 
@@ -10,7 +14,7 @@ type SearchButtonProps = {
 };
 type SearchButtonState = {};
 
-export default class SearchButton extends Component<SearchButtonProps, SearchButtonState> {
+export default class SearchButton extends React.Component<SearchButtonProps, SearchButtonState> {
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
     const { submitting, pristine, onSubmit } = this.props;

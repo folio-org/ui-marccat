@@ -1,23 +1,28 @@
-import React, { Component } from 'react';
+
+/**
+ * @format
+ * @flow
+ */
+import React from 'react';
 import { connect } from '@folio/stripes-connect';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import Icon from '@folio/stripes-components/lib/Icon';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
-import * as C from '../../../Utils';
+import * as C from '../../Utils';
 
-type MultiColumnListBrowsingProps = {
+type AdvancedBrowsingProps = {
     stripes: Object;
     resources: Object;
     query: string;
 };
 
-type MultiColumnListBrowsingState = {
+type AdvancedBrowsingState = {
 
 };
 
-class MultiColumnListBrowsing extends Component
-    <MultiColumnListBrowsingProps, MultiColumnListBrowsingState> {
+class AdvancedBrowsing extends React.Component
+    <AdvancedBrowsingProps, AdvancedBrowsingState> {
   static manifest = Object.freeze({
     query: {},
     firstPage: {
@@ -32,7 +37,7 @@ class MultiColumnListBrowsing extends Component
   });
 
 
-  constructor(props: MultiColumnListBrowsingProps) {
+  constructor(props: AdvancedBrowsingProps) {
     super(props);
     this.state = {
     };
@@ -44,13 +49,6 @@ class MultiColumnListBrowsing extends Component
     if (!firstPage || !firstPage.hasLoaded) return <Icon icon="spinner-ellipsis" />;
     const dataFirstPage = firstPage.records;
     const formatMsg = this.props.stripes.intl.formatMessage;
-    // const columnMapping = {
-    //   stringText: formatMsg({ id: 'ui-marccat.' }),
-    //   character: formatMsg({ id: 'ui-marccat.diacritic.list.character' }),
-    //   label: formatMsg({ id: 'ui-marccat.diacritic.list.description' }),
-    //   characterSet: formatMsg({ id: 'ui-marccat.diacritic.list.charset' }),
-    //   unicode: formatMsg({ id: 'ui-marccat.diacritic.list.unicode' }),
-    // };
     return (
       <Paneset static>
         <Pane
@@ -73,7 +71,6 @@ class MultiColumnListBrowsing extends Component
               'indexingLanguage',
               'verificationlevel'
             ]}
-            //   columnMapping={columnMapping}
             columnWidths={{}}
           />
         </Pane>
@@ -81,4 +78,4 @@ class MultiColumnListBrowsing extends Component
     );
   }
 }
-export default connect(MultiColumnListBrowsing, C.META.MODULE_NAME);
+export default connect(AdvancedBrowsing, C.META.MODULE_NAME);

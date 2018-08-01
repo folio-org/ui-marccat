@@ -1,3 +1,7 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import PropTypes from 'prop-types';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';

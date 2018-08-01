@@ -1,12 +1,16 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 
-type ErrorWrapperProps = {|
+type ErrorWrapperProps = {
   children: Object,
-|};
+};
 
-type ErrorWrapperState = {|
+type ErrorWrapperState = {
   hasError: Object,
-|};
+};
 
 const withErrorHandler = WrappedComponent =>
   class WithErrorHandlerComponent extends React.Component<

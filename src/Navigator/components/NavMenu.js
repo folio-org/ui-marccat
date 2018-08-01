@@ -1,3 +1,7 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import { AccordionSet, ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
 import NavList from '@folio/stripes-components/lib/NavList';

@@ -37,7 +37,7 @@
     }
   ],
   "scripts": {
-    "start": "stripes serve --devtool eval --lint config/stripes.config.js",
+    "start": "stripes serve --lint config/stripes.config.js",
     "start-debug": "stripes serve --dev config/stripes.config.js",
     "build": "stripes build --output dist/ --sourcemap",
     "build:analizer": "stripes build config/stripes.config.js ./dist/analyze/ui-marccat-analyze --analyze --sourcemap",

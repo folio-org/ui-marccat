@@ -1,10 +1,13 @@
-// @flow
-import React, { Component } from 'react';
+/**
+ * @format
+ * @flow
+ */
+import React from 'react';
 
 type RestricionProps = {};
 type RestricionState = {};
 
-export default class RestrictionView extends Component<
+export default class RestrictionView extends React.Component<
   RestricionProps,
   RestricionState
 > {

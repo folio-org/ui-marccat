@@ -3,6 +3,7 @@
  * @flow
  */
 import React from 'react';
+import { xsltProcess, xmlParse } from 'xslt-processor';
 import Button from '@folio/stripes-components/lib/Button';
 import { connect } from '@folio/stripes-connect';
 import { Observable } from 'rxjs';
@@ -10,6 +11,8 @@ import Modal from '@folio/stripes-components/lib/Modal';
 import { FormattedMessage } from 'react-intl';
 import { withCloseHandler } from '../../../Core/';
 import * as C from '../../../Utils';
+
+const xslString = require('../../../../config/static/txt.xsl');
 
 type Props = {
   disabled: boolean;
@@ -47,6 +50,9 @@ class SearchButton extends React.Component<Props, State> {
 
   render() {
     const { isOpen } = this.state;
+    const xml = xmlParse(this.state.results[0].data); // xmlString: string of xml file contents
+    const xsl = xmlParse(xslString); // xsltString: string of xslt file contents
+    const outXmlString = xsltProcess(xml, xsl); // outXmlString: output xml string.
     return (
       <div>
         <Button
@@ -59,9 +65,9 @@ class SearchButton extends React.Component<Props, State> {
           <FormattedMessage id="ui-marccat.search.searchButton" />
         </Button>
         {this.state.results &&
-        <Modal dismissible closeOnBackgroundClick onClose={this.handleClose} open={isOpen} label={`Results for: ${this.props.data}`}>
-          <div>{this.state.results && this.state.results[0] ? this.state.results[0].data : 'No Result Found for ' + this.props.data}</div>
-        </Modal>
+          <Modal dismissible closeOnBackgroundClick onClose={this.handleClose} open={isOpen} label={`Results for: ${this.props.data}`}>
+            <div>{this.state.results && this.state.results[0] ? outXmlString : 'No Result Found for ' + this.props.data}</div>
+          </Modal>
         }
       </div>
     );

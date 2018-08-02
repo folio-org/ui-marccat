@@ -1,9 +1,14 @@
-import React, { Component } from 'react';
+/**
+ * @format
+ * @flow
+ */
+import React from 'react';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import Icon from '@folio/stripes-components/lib/Icon';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { connect } from '@folio/stripes-connect';
+import { ToolbarMenu } from '../../Core';
 import * as C from '../../Utils';
 
 type MultiColumnListDiacriticProps = {
@@ -17,7 +22,7 @@ type MultiColumnListDiacriticState = {
   isOpen: boolean;
 };
 
-class MultiColumnListDiacritic extends Component
+class MultiColumnListDiacritic extends React.Component
   <MultiColumnListDiacriticProps, MultiColumnListDiacriticState> {
   static manifest = Object.freeze({
     diacritics: {
@@ -51,6 +56,8 @@ class MultiColumnListDiacritic extends Component
     if (!diacritics || !diacritics.hasLoaded) return <Icon icon="spinner-ellipsis" />;
     const data = diacritics.records;
     const formatMsg = this.props.stripes.intl.formatMessage;
+    const leftMenu = <ToolbarMenu icon={['search']} />;
+    const rightMenu = <ToolbarMenu icon={['bookmark', 'gear']} />;
     const columnMapping = {
       value: formatMsg({ id: 'ui-marccat.diacritic.list.id' }),
       character: formatMsg({ id: 'ui-marccat.diacritic.list.character' }),
@@ -61,6 +68,8 @@ class MultiColumnListDiacritic extends Component
     return (
       <Paneset static>
         <Pane
+          firstMenu={leftMenu}
+          lastMenu={rightMenu}
           paneTitle={formatMsg({
             id: 'ui-marccat.diacritic.title',
           })}

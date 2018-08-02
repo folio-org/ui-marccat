@@ -77,8 +77,6 @@ const setupGit = () => {
   execSyncSilent(`git config --global user.name "${process.env.GIT_USERNAME}"`);
   log.ok('Check repository....');
   execSync('git remote -v');
-  log.ok('force stash pre-release....');
-  execSync('git stash');
   log.ok('Checkout master branch....');
   execSync(`git checkout ${ONLY_ON_MASTER}`);
 };
@@ -103,13 +101,9 @@ const findCurrentPublishedVersion = () => {
  * Create Tag Release and push on remote repository
  */
 const tagAndPush = (internalVersion) => {
-  if (internalVersion < process.env.MAJOR_VERSION) {
-    log.fail(`Dont release a version less than the current version: ${process.env.MAJOR_VERSION}`);
-  } else {
-    log.ok(`trying to publish ${process.env.FOLIO_MODULE} - ${internalVersion}...`);
-    execSync(`git tag -a v${internalVersion} -m "${internalVersion}"`);
-    execSyncSilent(`git push origin ${internalVersion} || true`);
-  }
+  log.ok(`trying to publish ${process.env.FOLIO_MODULE} - ${internalVersion}...`);
+  execSync(`git tag  v${internalVersion} -m "v${internalVersion}"`);
+  execSyncSilent(`git push origin v${internalVersion} || true`);
 };
 
 /**

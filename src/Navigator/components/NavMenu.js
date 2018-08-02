@@ -1,3 +1,7 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import { AccordionSet, ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
 import NavList from '@folio/stripes-components/lib/NavList';
@@ -49,12 +53,12 @@ class NavMenu extends React.Component<NavMenuProps, NavMenuSatate> {
           <NavList className={css.navList} {...this.props}>
             <NavItem
               {...this.props}
-              accordionId="expandeCollapseAction"
-              label="Simple Search"
-              activeLink={`${rootPath}`}
+              accordionId="templateSection"
+              label="Template"
               open={this.state.section.expandeCollapseAction}
-              itemLabel="Simple Search"
-              path={`${rootPath}/externalSearch`}
+              activeLink={`${rootPath}/`}
+              itemLabel="Template List"
+              path={`${rootPath}/templateList`}
             />
             <NavItem
               {...this.props}
@@ -101,15 +105,6 @@ class NavMenu extends React.Component<NavMenuProps, NavMenuSatate> {
               open={this.state.section.expandeCollapseAction}
               activeLink={`${rootPath}/`}
               path={`${rootPath}/report`}
-            />
-            <NavItem
-              {...this.props}
-              accordionId="templateSection"
-              label="Template"
-              open={this.state.section.expandeCollapseAction}
-              activeLink={`${rootPath}/`}
-              itemLabel="Template List"
-              path={`${rootPath}/templateList`}
             />
           </NavList>
         </AccordionSet>

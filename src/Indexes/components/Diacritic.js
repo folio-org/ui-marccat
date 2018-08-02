@@ -1,10 +1,14 @@
-import React, { Component } from 'react';
+/**
+ * @format
+ * @flow
+ */
+import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Button from '@folio/stripes-components/lib/Button';
-import { SearchButton } from './';
-import * as C from '../Utils';
-import css from './style/indexes.css';
+import { SearchButton } from '../';
+import * as C from '../../Utils';
+import css from '../style/indexes.css';
 
 type DiacriticProps = {
   charCopied: string;
@@ -22,7 +26,7 @@ type DiacriticState = {
   charCopied: string;
 };
 
-class Diacritic extends Component<DiacriticProps, DiacriticState> {
+class Diacritic extends React.Component<DiacriticProps, DiacriticState> {
   static bus;
   constructor(props: DiacriticProps) {
     super(props);

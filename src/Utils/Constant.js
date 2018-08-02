@@ -2,6 +2,8 @@
 export const META = {
   MODULE_NAME: 'ui-marccat',
   ICON_TITLE: 'marccat',
+  SRC_PATH: `${__dirname}/src`,
+  STATIC_FOLDER_PATH: `${__dirname}/config/static`
 };
 
 // API

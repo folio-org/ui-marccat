@@ -16,7 +16,6 @@ export function formatDateTime(dateStr) {
   );
 }
 
-
 export const formatSearchQuery = (input: string) => {
   const splitted = input.split(';;;');
   const firstPart = `"${splitted[0]}"`;

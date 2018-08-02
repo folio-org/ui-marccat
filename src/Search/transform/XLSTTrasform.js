@@ -1,17 +1,16 @@
 import React from 'react';
 import { connect } from '@folio/stripes-connect';
-// import { xsltProcess, xmlParse } from 'xslt-processor';
+import { xmlParse } from 'xslt-processor';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import * as C from '../../Utils';
 
-// const xsltString = require('../../../config/static/txt.xslt');
 type Props = {
     stripes: Object;
-  };
+    xmlData: Object;
+};
 
-type State = {
-  };
+type State = {};
 
 class XLSTTrasform extends React.Component<Props, State> {
   constructor(props) {
@@ -21,10 +20,7 @@ class XLSTTrasform extends React.Component<Props, State> {
   }
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-    // const xml = xmlParse(xmlString); // xmlString: string of xml file contents
-    // const xslt = xmlParse(xsltString); // xsltString: string of xslt file contents
-    // const outXmlString = xsltProcess(xml, xslt); // outXmlString: output xml string.
-
+    const xml = xmlParse(this.props.xmlData);
     return (
       <Paneset static>
         <Pane
@@ -33,7 +29,7 @@ class XLSTTrasform extends React.Component<Props, State> {
           appIcon={{ app: C.META.ICON_TITLE }}
         >
           <div>
-            {/* {outXmlString} */}
+            {xml}
           </div>
         </Pane>
       </Paneset>

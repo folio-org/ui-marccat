@@ -15,9 +15,13 @@ type State = {};
 class XLSTTrasform extends React.Component<Props, State> {
   constructor(props) {
     super(props);
-    this.state = {
-    };
+    this.state = {};
+
+    this.handleXml = this.handleXml.bind(this);
   }
+
+  handleXml = () => {};
+
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
     const xml = xmlParse(this.props.xmlData);
@@ -29,7 +33,7 @@ class XLSTTrasform extends React.Component<Props, State> {
           appIcon={{ app: C.META.ICON_TITLE }}
         >
           <div>
-            {xml}
+            {alert(xml)}
           </div>
         </Pane>
       </Paneset>

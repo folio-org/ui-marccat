@@ -99,5 +99,16 @@
   "diacritic.list.unicode":"Unicode",
 
   "browsing.title":"Browse search",
-  "browsing.subtitle":"Results for: "
+  "browsing.subtitle":"Results for: ",
+  "browsing.col.heading":"Heading",
+  "browsing.col.db":"DB",
+  "browsing.col.nt":"NT",
+  "browsing.col.refs":"Refs",
+  "browsing.col.a":"A",
+  "browsing.col.docs":"Docs",
+  "browsing.col.level":"Level",
+  "browsing.col.index":"Index",
+  "browsing.col.acc":"Acc",
+  "browsing.previous":"Previous",
+  "browsing.next":"Next"
 }

@@ -8,7 +8,7 @@ import { connect } from '@folio/stripes-connect';
 import { Observable } from 'rxjs';
 import Modal from '@folio/stripes-components/lib/Modal';
 import { FormattedMessage } from 'react-intl';
-import { withCloseHandler } from '../../../Core/';
+import { withCloseHandler, EventBus } from '../../../Core/';
 import * as C from '../../../Utils';
 
 type Props = {
@@ -37,6 +37,8 @@ class SearchButton extends React.Component<Props, State> {
       .take(1)
       .map(r => this.setState({ results: r, isOpen: true }))
       .subscribe();
+    const bus = new EventBus();
+    bus.post('TODO_ADDED', 'pippo');
   }
 
   handleClose = () => {

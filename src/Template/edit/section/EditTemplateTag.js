@@ -9,7 +9,7 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import { connect } from '@folio/stripes-connect';
 import * as C from '../../../Utils';
-import { remapMultiArray } from '../../../Utils/Mapper';
+import { remapTemplateView } from '../../../Utils/Mapper';
 
 class EditTemplateTag extends React.Component {
   static propTypes = {
@@ -20,17 +20,11 @@ class EditTemplateTag extends React.Component {
   };
 
   static manifest = Object.freeze({
-    query: { initialValue: {} },
-    resultCount: { initialValue: C.INITIAL_RESULT_COUNT },
-    records: {
+    details: {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
-      path: C.ENDPOINT.TEMPLATE_MANDATORY,
+      path: `record-template/423?type=B&lang=${C.ENDPOINT.DEFAULT_LANG}`,
       headers: C.ENDPOINT.HEADERS,
-      records: 'fields',
-      GET: {
-        params: { lang: C.ENDPOINT.DEFAULT_LANG },
-      },
     },
   });
 
@@ -38,11 +32,11 @@ class EditTemplateTag extends React.Component {
     const formatMsg = this.props.stripes.intl.formatMessage;
 
     const {
-      resources: { records },
+      resources: { details },
     } = this.props; // eslint-disable-line react/prop-types
-    if (!records || !records.hasLoaded) return <div />;
-    const fields = records.records;
-    const obj = remapMultiArray(fields);
+    if (!details || !details.hasLoaded) return <div />;
+    const fields = details.records[0];
+    const resultTemplateView = remapTemplateView(fields);
 
     const { expanded, onToggle, accordionId } = this.props;
     return (
@@ -58,14 +52,12 @@ class EditTemplateTag extends React.Component {
         <Row>
           <Col xs={12}>
             <MultiColumnList
-              contentData={obj}
+              contentData={resultTemplateView}
               onRowClick={() => {}}
               visibleColumns={[
-                'categoryCode',
-                'headerTypeCode',
                 'code',
-                'displayValue',
                 'description',
+                'displayValue',
               ]}
               ariaLabel="TemplateNewMandatory"
             />

@@ -166,6 +166,10 @@ workflows:
           requires:
             - install-dependencies
       - build:
+          filters:
+            branches:
+              only:
+                - master
           requires:
             - install-dependencies
       - deploy:

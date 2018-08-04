@@ -165,3 +165,9 @@ workflows:
       # - publish:
       #     requires:
       #       - checkout-and-install
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - eslint
+      - stylelint

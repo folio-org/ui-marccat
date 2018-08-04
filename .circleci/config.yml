@@ -1,114 +1,154 @@
-version: 2
+version: 2.0
+
+jobs:
+  pull-checkout-install:
+    docker:
+      - image: circleci/node:9
+    steps:
+      - checkout
+      - restore_cache:
+          key: v1-node-modules-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies
+          command: yarn install
+
+  eslint:
+    docker:
+      - image: circleci/node:9
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Lint JS
+          command: yarn eslint --max-warnings=0
+      - store_test_results:
+          path: ./artifacts
+      - store_artifacts:
+          path: ./artifacts
+
+  stylelint:
+    docker:
+      - image: circleci/node:9
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Set up artifacts directory
+          command: mkdir -p artifacts
+      - run:
+          name: Lint CSS
+          command: yarn --silent stylelint
+      - store_test_results:
+          path: ./artifacts
+      - store_artifacts:
+          path: ./artifacts
+
+  build:
+    docker:
+      - image: circleci/node:9
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Build bundle
+          command: NODE_ENV=production yarn build
+
+  test-chrome:
+    docker:
+      - image: circleci/node:9-browsers
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run tests
+          command: yarn test --karma.singleRun --karma.browsers=Chrome --karma.reporters mocha junit --coverage
+      - store_test_results:
+          path: ./artifacts/junit
+      - store_artifacts:
+          path: ./artifacts
+  
+  publish_npm:
+    docker:
+      - image: 'node:9'
+        user: node
+    steps:
+      - checkout
+      - run: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
+      - run: npm publish --access=public
+
+  test-safari:
+    docker:
+      - image: circleci/node:9
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run tests
+          command: yarn test --karma.singleRun --karma.browsers=bs_safari_11 --karma.reporters mocha junit BrowserStack
+      - store_test_results:
+          path: ./artifacts/junit
+      - store_artifacts:
+          path: ./artifacts
+
+  test-firefox:
+    docker:
+      - image: circleci/node:9-browsers
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Install the latest Firefox ESR
+          command: |
+            sudo apt-get remove firefox-mozilla-build &&
+            sudo apt install firefox-esr &&
+            firefox --version
+      - run:
+          name: Run tests
+          command: yarn test --karma.singleRun --karma.browsers=Firefox --karma.reporters mocha junit
+      - store_test_results:
+          path: ./artifacts/junit
+      - store_artifacts:
+          path: ./artifacts
+
+  test-edge:
+    docker:
+      - image: circleci/node:9
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run tests
+          command: yarn test --karma.singleRun --karma.browsers=bs_ieEdge_windows --karma.reporters mocha junit BrowserStack || true
+      - store_test_results:
+          path: ./artifacts/junit
+      - store_artifacts:
+          path: ./artifacts
+
+  test-ie:
+    docker:
+      - image: circleci/node:9
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run tests
+          command: yarn test --karma.singleRun --karma.browsers=bs_ie11_windows --karma.reporters mocha junit BrowserStack || true
+      - store_test_results:
+          path: ./artifacts/junit
+      - store_artifacts:
+          path: ./artifacts
+
 workflows:
   version: 2
-  tests:
-    jobs: &workflow_jobs
-      - node8:
-          filters: &all_commits
-            tags:
-              only: /.*/
-      - node10:
-          filters: *all_commits
-      - lint:
+  push:
+    jobs:
+      - pull-checkout-install
+      - eslint:
           requires:
-            - node8
-            - node10
-          filters: *all_commits
-      - system_tests:
+            - pull-checkout-install
+      - stylelint:
           requires:
-            - lint
-          filters: &master_and_releases
-            branches:
-              only: master
-            tags: &releases
-              only: '/^v[\d.]+$/'
-      - sample_tests:
+            - pull-checkout-install
+      - build:
           requires:
-            - lint
-          filters: *master_and_releases
-      # - publish_npm:
-      #     requires:
-      #       - system_tests
-      #       - sample_tests
-      #     filters:
-      #       branches:
-      #         ignore: /.*/
-      #       tags: *releases
-  nightly:
-    triggers:
-      - schedule:
-          cron: 0 7 * * *
-          filters:
-            branches:
-              only: master
-    jobs: *workflow_jobs
-jobs:
-  node8:
-    docker:
-      - image: 'node:8'
-        user: node
-    steps: &unit_tests_steps
-      - checkout
-      - run: &remove_package_lock
-          name: Remove package-lock.json if needed.
-          command: echo "Remove package-lock.json if needed"
-      - run: &npm_install_and_link
-          name: Install and link the module
-          command: |-
-            mkdir -p /home/node/.npm-global
-            yarn install
-          environment:
-            NPM_CONFIG_PREFIX: /home/node/.npm-global
-      - run: echo 'yarn test'
-      - run: node_modules/.bin/codecov
-  
-  node10:
-    docker:
-      - image: 'node:10'
-        user: node
-    steps: *unit_tests_steps
-  lint:
-    docker:
-      - image: 'node:8'
-        user: node
-    steps:
-      - checkout
-      - run: *remove_package_lock
-      - run: *npm_install_and_link
-      - run: &samples_npm_install_and_link
-          name: Link the module being tested to the samples.
-          command: yarn install
-          environment:
-            NPM_CONFIG_PREFIX: /home/node/.npm-global
-      - run:
-          name: Run linting.
-          command: yarn lint
-          environment:
-            NPM_CONFIG_PREFIX: /home/node/.npm-global
-
-  sample_tests:
-    docker:
-      - image: 'node:8'
-        user: node
-    steps:
-      - checkout
-      - run: *remove_package_lock
-      - run: *npm_install_and_link
-      - run: *samples_npm_install_and_link
-    working_directory: /home/node/samples/
-  system_tests:
-    docker:
-      - image: 'node:8'
-        user: node
-    steps:
-      - checkout
-      - run: *remove_package_lock
-      - run: *npm_install_and_link
-  # publish_npm:
-  #   docker:
-  #     - image: 'node:8'
-  #       user: node
-  #   steps:
-  #     - checkout
-  #     - run: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
-  #     - run: npm publish --access=public
+            - pull-checkout-install

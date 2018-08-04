@@ -58,7 +58,16 @@ jobs:
           at: ~/
       - run:
           name: Build bundle
-          command: NODE_ENV=production yarn build
+          command: echo 'build marccat production pack'
+  deploy:
+    docker:
+      - image: circleci/node:9
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Deploy MARCcat module on Folio Project 
+          command: echo 'deploy on Folio...'
 
   test-chrome:
     docker:
@@ -159,9 +168,9 @@ workflows:
       - build:
           requires:
             - install-dependencies
-      # - deploy:
-      #     requires:
-      #       - install-dependencies
+      - deploy:
+          requires:
+            - install-dependencies
       # - publish:
       #     requires:
       #       - install-dependencies

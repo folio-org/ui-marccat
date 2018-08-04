@@ -23,18 +23,9 @@ publish_to_npm:
       - image: circleci/node:9
     steps:
       - checkout
-      - restore_cache:
-          key: v1-node-modules-{{ checksum "yarn.lock" }}
       - run:
           name: Pubblish to Folio Npm
           command: echo 'publishing....'
-      - persist_to_workspace:
-          root: ~/
-          paths: project
-      - save_cache:
-          key: v1-node-modules-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/project/node_modules
 
   eslint:
     docker:

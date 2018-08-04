@@ -141,7 +141,8 @@ export const MARC_CHARACTER = {
 
 // EVENTS
 export const EVENTS = {
-  CHAR_COPIED: 'CharCopied'
+  CHAR_COPIED: 'CHAR_COPIED',
+  REPLAY_SEARCH_REESULT: 'REPLAY_SEARCH_REESULT'
 };
 
 export const EMPTY_PARAMETER = -1;

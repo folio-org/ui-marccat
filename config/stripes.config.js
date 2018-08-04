@@ -14,7 +14,8 @@ module.exports = {
       username: 'diku_admin',
       password: 'admin',
     },
-    logCategories: 'core,path,mpath,mquery,xhr',
+    languages: ['en', 'de'],
+    logCategories: 'redux',
     logPrefix: 'marccat-stripes',
     logTimestamp: false,
     showPerms: true,
@@ -25,5 +26,9 @@ module.exports = {
   },
   modules: {
     '@folio/marccat': {},
-  }
+  },
+  // branding: {
+  //   logo: {},
+  //   favicon: {},
+  // },
 };

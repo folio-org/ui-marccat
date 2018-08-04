@@ -10,13 +10,12 @@ import Select from '@folio/stripes-components/lib/Select';
 import { Observable } from 'rxjs';
 import { Field, reduxForm } from 'redux-form';
 import Button from '@folio/stripes-components/lib/Button';
-import { FormattedMessage } from 'react-intl';
-import Headline from '@folio/stripes-components/lib/Headline';
 import ScanButton from '../button/ScanButton';
 import SearchButton from '../button/SearchButton';
 import { formatSearchQuery } from '../../../Utils/Formatter';
 import css from '../../style/Search.css';
 import * as C from '../../../Utils';
+import LogicalButton from '../button/LogicalButton';
 
 type AdvanceSerachFormProps = {
     stripes: Object;
@@ -97,6 +96,12 @@ class AdvanceSearchForm extends
         .subscribe((d) => peformSearch(d)); // eslint-disable-line
     }
 
+    search(terms: Observable<string>) {
+      return terms.debounceTime(400)
+        .distinctUntilChanged()
+        .switchMap(term => this.searchEntries(term));
+    }
+
     handleClick = () => {
       this.props.reset();
       this.setState({
@@ -149,7 +154,7 @@ class AdvanceSearchForm extends
       return (
         <Row>
           <Col xs={12}>
-            <form name="advancedSearchForm" id="advancedSearchForm" noValidate>
+            <form name="advancedSearchForm" id="advancedSearchForm">
               <Field name="indexRadio" component={RadioButtonGroup} label={formatMsg({ id: 'ui-marccat.search.indexes' })}>
                 <RadioButton
                   label={formatMsg({ id: 'ui-marccat.search.primary' })}
@@ -172,7 +177,6 @@ class AdvanceSearchForm extends
               <Col xs={12} className={css.colFirstSelect}>
                 {categories &&
                   <Select
-                    label={formatMsg({ id: 'ui-marccat.advancedsearch.categories.select' })}
                     name="categorySelect"
                     value={this.state.firstSelect}
                     onChange={this.handleChangeFirstSelect}
@@ -184,7 +188,6 @@ class AdvanceSearchForm extends
               <Col xs={12}>
                 {innerIndexes &&
                   <Select
-                    label={formatMsg({ id: 'ui-marccat.advancedsearch.indexes.select' })}
                     value={this.state.secondSelect}
                     onChange={this.handleChangeSecondSelect}
                   >
@@ -196,7 +199,6 @@ class AdvanceSearchForm extends
               <Col xs={12}>
                 {constraintIndexes && constraintIndexes.records.length > 0 &&
                   <Select
-                    label={formatMsg({ id: 'ui-marccat.advancedsearch.codes.select' })}
                     value={this.state.thirdSelect}
                     onChange={this.handleChangeThirdSelect}
                   >
@@ -207,55 +209,27 @@ class AdvanceSearchForm extends
               </Col>
               <Col xs={12}>
                 <div className={css.colQuery}>
-                  <Row>
-                    <Col xs={4}>
-                      <Headline size="small" margin="medium" tag="h4">
-                       Typed a Query:
-                      </Headline>
-                    </Col>
-                    <Col xs={8}>
-                      <Button
-                        {...this.props}
-                        type="button"
-                        buttonStyle="primary"
-                        onClick={() => this.handleTextAreaValue('AND')}
-                      >
-                        <FormattedMessage id="ui-marccat.search.andButton" />
-                      </Button>
-                      <Button
-                        {...this.props}
-                        type="button"
-                        buttonStyle="primary"
-                        onClick={() => this.handleTextAreaValue('NEAR')}
-                      >
-                        <FormattedMessage id="ui-marccat.search.nearButton" />
-                      </Button>
-                      <Button
-                        {...this.props}
-                        type="button"
-                        buttonStyle="primary"
-                        onClick={() => this.handleTextAreaValue('NOT')}
-                      >
-                        <FormattedMessage id="ui-marccat.search.notButton" />
-                      </Button>
-                      <Button
-                        {...this.props}
-                        type="button"
-                        buttonStyle="primary"
-                        onClick={() => this.handleTextAreaValue('OR')}
-                      >
-                        <FormattedMessage id="ui-marccat.search.orButton" />
-                      </Button>
-                    </Col>
-                  </Row>
+                  <LogicalButton {...this.props} />
                   <Row>
                     <Col xs={12}>
-                      <Field value={value} onChange={this.handleChange} rows="8" name="searchTextArea" id="searchTextArea" component="textarea" className={css.largeBox} />
+                      <Field
+                        value={value}
+                        innerRef={el => this.searchTextArea = el}
+                        onChange={this.handleChange}
+                        rows="8"
+                        name="searchTextArea"
+                        id="searchTextArea"
+                        component="textarea"
+                        className={css.largeBox}
+                      />
                     </Col>
                   </Row>
                   <Row>
                     <Col xs={6}>
-                      <SearchButton data={this.state.value} {...this.props} />
+                      <SearchButton
+                        data={this.state.value}
+                        {...this.props}
+                      />
                     </Col>
                     <Col xs={6}>
                       <ScanButton data={this.state.value} {...this.props} />

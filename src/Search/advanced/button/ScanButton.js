@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import * as C from '../../../Utils';
 
 type Props = {
+  stripes: Object;
   onClick: Function;
   disabled: boolean;
   mutator: Object;

@@ -8,37 +8,37 @@ import { connect } from '@folio/stripes-connect';
 import { Observable } from 'rxjs';
 import Modal from '@folio/stripes-components/lib/Modal';
 import { FormattedMessage } from 'react-intl';
-import { withCloseHandler, EventBus } from '../../../Core/';
+import { withCloseHandler } from '../../../Core/';
 import * as C from '../../../Utils';
 
 type Props = {
-  disabled: boolean;
   mutator: Object;
   data: string;
+  disabled: boolean;
 };
 
 type State = {
   results: Object;
 };
+
+
 class SearchButton extends React.Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
       results: null,
     };
+
     this.handleSearch = this.handleSearch.bind(this);
   }
 
   handleSearch = () => {
     this.props.mutator.query.replace(this.props.data);
-    // this.props.history.push('advancedSearch')
     const observer = Observable.from(this.props.mutator.searchQuery.GET());
     observer
       .take(1)
       .map(r => this.setState({ results: r, isOpen: true }))
       .subscribe();
-    const bus = new EventBus();
-    bus.post('TODO_ADDED', 'pippo');
   }
 
   handleClose = () => {

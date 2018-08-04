@@ -144,6 +144,15 @@ jobs:
       - store_artifacts:
           path: ./artifacts
 
+  publish_npm:
+    docker:
+      - image: 'node:9'
+        user: node
+    steps:
+      - install-dependencies
+      - run: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
+      - run: npm publish --access=public
+
 workflows:
   version: 2
   lint_build_test_and_deploy:
@@ -181,7 +190,6 @@ workflows:
                 - develop
           requires:
             - install-dependencies
-    jobs:
       - publish:
           requires:
             - install-dependencies

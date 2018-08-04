@@ -210,6 +210,8 @@ workflows:
                 - master
                 - develop
           requires:
+            - eslint
+            - stylelint
             - build
       - npm_publish:
           filters:

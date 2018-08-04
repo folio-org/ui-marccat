@@ -156,13 +156,23 @@ jobs:
 
 workflows:
   version: 2
-  code_review_and_build:
+  lint_build_test_and_deploy:
     jobs:
       - install-dependencies
       - eslint:
+          filters:
+            branches:
+              only:
+                - master
+                - develop
           requires:
             - install-dependencies
       - stylelint:
+          filters:
+            branches:
+              only:
+                - master
+                - develop
           requires:
             - install-dependencies
       - build:
@@ -170,9 +180,15 @@ workflows:
             branches:
               only:
                 - master
+                - develop
           requires:
             - install-dependencies
       - deploy:
+          filters:
+            branches:
+              only:
+                - master
+                - develop
           requires:
             - install-dependencies
       # - publish:

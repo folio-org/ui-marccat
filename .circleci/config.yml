@@ -10,7 +10,7 @@ jobs:
           key: v1-node-modules-{{ checksum "yarn.lock" }}
       - run:
           name: Install dependencies
-          command: yarn install
+          command: mkdir -p project && yarn install
 
   eslint:
     docker:

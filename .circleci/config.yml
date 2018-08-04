@@ -201,6 +201,7 @@ workflows:
                 - master
                 - develop
           requires:
+            - install-dependencies
             - eslint
             - stylelint
       - deploy:
@@ -210,8 +211,7 @@ workflows:
                 - master
                 - develop
           requires:
-            - eslint
-            - stylelint
+            - install-dependencies
             - build
       - npm_publish:
           filters:
@@ -220,4 +220,5 @@ workflows:
                 - master
                 - develop
           requires:
+            - install-dependencies
             - deploy

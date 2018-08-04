@@ -18,7 +18,7 @@ jobs:
           paths:
             - ~/project/node_modules
 
-publish_to_npm:
+  publish_to_npm:
     docker:
       - image: circleci/node:9
     steps:

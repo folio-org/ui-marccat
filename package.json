@@ -38,7 +38,7 @@
   "scripts": {
     "prestart": "DEBUG=stripes* stripes serve config/stripes.config.js",
     "start": "stripes serve --lint config/stripes.config.js",
-    "start-debug": "stripes serve --dev config/stripes.config.js",
+    "status": "stripes status config/stripes.config.js",
     "build": "node ./script/js/build",
     "build:analizer": "stripes build config/stripes.config.js ./dist/analyze/ui-marccat-analyze --analyze --sourcemap",
     "test": "(cd test/ui-testing; yarn test-module -- -o --run=ui-marccat --host=localhost)",

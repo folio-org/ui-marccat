@@ -1,7 +1,7 @@
 version: 2.0
 
 jobs:
-  pull-checkout-install:
+  checkout-and-install:
     docker:
       - image: circleci/node:9
     steps:
@@ -10,7 +10,14 @@ jobs:
           key: v1-node-modules-{{ checksum "yarn.lock" }}
       - run:
           name: Install dependencies
-          command: mkdir -p project && yarn install
+          command: yarn install
+      - persist_to_workspace:
+          root: ~/
+          paths: project
+      - save_cache:
+          key: v1-node-modules-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/project/node_modules
 
   eslint:
     docker:
@@ -20,7 +27,7 @@ jobs:
           at: ~/
       - run:
           name: Lint JS
-          command: yarn eslint --max-warnings=0
+          command: yarn eslint --max-warnings=0 --format junit --output-file ./artifacts/eslint/eslint.xml
       - store_test_results:
           path: ./artifacts
       - store_artifacts:
@@ -34,10 +41,10 @@ jobs:
           at: ~/
       - run:
           name: Set up artifacts directory
-          command: mkdir -p artifacts
+          command: mkdir -p artifacts/stylelint
       - run:
           name: Lint CSS
-          command: yarn --silent stylelint
+          command: yarn --silent stylelint --custom-formatter './node_modules/stylelint-junit-formatter' > ./artifacts/stylelint/stylelint.xml
       - store_test_results:
           path: ./artifacts
       - store_artifacts:
@@ -66,15 +73,6 @@ jobs:
           path: ./artifacts/junit
       - store_artifacts:
           path: ./artifacts
-  
-  publish_npm:
-    docker:
-      - image: 'node:9'
-        user: node
-    steps:
-      - checkout
-      - run: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
-      - run: npm publish --access=public
 
   test-safari:
     docker:
@@ -142,13 +140,10 @@ workflows:
   version: 2
   push:
     jobs:
-      - pull-checkout-install
+      - checkout-and-install
       - eslint:
           requires:
-            - pull-checkout-install
+            - checkout-and-install
       - stylelint:
           requires:
-            - pull-checkout-install
-      - build:
-          requires:
-            - pull-checkout-install
+            - checkout-and-install

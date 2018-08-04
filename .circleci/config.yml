@@ -18,15 +18,6 @@ jobs:
           paths:
             - ~/project/node_modules
 
-  publish_to_npm:
-    docker:
-      - image: circleci/node:9
-    steps:
-      - checkout
-      - run:
-          name: Pubblish to Folio Npm
-          command: echo 'publishing....'
-
   eslint:
     docker:
       - image: circleci/node:9
@@ -190,7 +181,7 @@ workflows:
                 - develop
           requires:
             - install-dependencies
-            - publish_to_npm
-      # - publish:
-      #     requires:
-      #       - install-dependencies
+    jobs:
+      - publish:
+          requires:
+            - install-dependencies

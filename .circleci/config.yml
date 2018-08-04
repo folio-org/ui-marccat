@@ -1,20 +1,114 @@
 version: 2
-jobs:
-  build:
-    docker:
-      - image: circleci/node:9
-    steps:
-      - checkout
-      - run: yarn install
-  test:
-    docker:
-      - image: circleci/node:9
-    steps:
-      - checkout
-      - run: yarn install && yarn lint
 workflows:
   version: 2
-  build_and_test:
-    jobs:
-      - build
-      - test
+  tests:
+    jobs: &workflow_jobs
+      - node8:
+          filters: &all_commits
+            tags:
+              only: /.*/
+      - node10:
+          filters: *all_commits
+      - lint:
+          requires:
+            - node8
+            - node10
+          filters: *all_commits
+      - system_tests:
+          requires:
+            - lint
+          filters: &master_and_releases
+            branches:
+              only: master
+            tags: &releases
+              only: '/^v[\d.]+$/'
+      - sample_tests:
+          requires:
+            - lint
+          filters: *master_and_releases
+      # - publish_npm:
+      #     requires:
+      #       - system_tests
+      #       - sample_tests
+      #     filters:
+      #       branches:
+      #         ignore: /.*/
+      #       tags: *releases
+  nightly:
+    triggers:
+      - schedule:
+          cron: 0 7 * * *
+          filters:
+            branches:
+              only: master
+    jobs: *workflow_jobs
+jobs:
+  node8:
+    docker:
+      - image: 'node:8'
+        user: node
+    steps: &unit_tests_steps
+      - checkout
+      - run: &remove_package_lock
+          name: Remove package-lock.json if needed.
+          command: echo "Remove package-lock.json if needed"
+      - run: &npm_install_and_link
+          name: Install and link the module
+          command: |-
+            mkdir -p /home/node/.npm-global
+            yarn install
+          environment:
+            NPM_CONFIG_PREFIX: /home/node/.npm-global
+      - run: echo 'yarn test'
+      - run: node_modules/.bin/codecov
+  
+  node10:
+    docker:
+      - image: 'node:10'
+        user: node
+    steps: *unit_tests_steps
+  lint:
+    docker:
+      - image: 'node:8'
+        user: node
+    steps:
+      - checkout
+      - run: *remove_package_lock
+      - run: *npm_install_and_link
+      - run: &samples_npm_install_and_link
+          name: Link the module being tested to the samples.
+          command: yarn install
+          environment:
+            NPM_CONFIG_PREFIX: /home/node/.npm-global
+      - run:
+          name: Run linting.
+          command: yarn lint
+          environment:
+            NPM_CONFIG_PREFIX: /home/node/.npm-global
+
+  sample_tests:
+    docker:
+      - image: 'node:8'
+        user: node
+    steps:
+      - checkout
+      - run: *remove_package_lock
+      - run: *npm_install_and_link
+      - run: *samples_npm_install_and_link
+    working_directory: /home/node/samples/
+  system_tests:
+    docker:
+      - image: 'node:8'
+        user: node
+    steps:
+      - checkout
+      - run: *remove_package_lock
+      - run: *npm_install_and_link
+  # publish_npm:
+  #   docker:
+  #     - image: 'node:8'
+  #       user: node
+  #   steps:
+  #     - checkout
+  #     - run: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
+  #     - run: npm publish --access=public

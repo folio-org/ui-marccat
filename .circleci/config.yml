@@ -169,5 +169,10 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - eslint
-      - stylelint
+      - checkout-and-install
+      - eslint:
+          requires:
+            - checkout-and-install
+      - stylelint:
+          requires:
+            - checkout-and-install

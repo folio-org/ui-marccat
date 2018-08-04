@@ -27,7 +27,7 @@ jobs:
           at: ~/
       - run:
           name: Lint JS
-          command: yarn eslint --max-warnings=0 --format junit --output-file ./artifacts/eslint/eslint.xml
+          command: yarn eslint --max-warnings=0
       - store_test_results:
           path: ./artifacts
       - store_artifacts:
@@ -44,7 +44,7 @@ jobs:
           command: mkdir -p artifacts/stylelint
       - run:
           name: Lint CSS
-          command: yarn --silent stylelint --custom-formatter './node_modules/stylelint-junit-formatter' > ./artifacts/stylelint/stylelint.xml
+          command: yarn --silent stylelint
       - store_test_results:
           path: ./artifacts
       - store_artifacts:
@@ -136,6 +136,15 @@ jobs:
       - store_artifacts:
           path: ./artifacts
 
+  publish_npm:
+    docker:
+      - image: 'node:9'
+        user: node
+    steps:
+      - checkout-and-install
+      - run: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
+      - run: npm publish --access=public
+
 workflows:
   version: 2
   push:
@@ -147,3 +156,12 @@ workflows:
       - stylelint:
           requires:
             - checkout-and-install
+      # - build:
+      #     requires:
+      #       - checkout-and-install
+      # - deploy:
+      #     requires:
+      #       - checkout-and-install
+      # - publish:
+      #     requires:
+      #       - checkout-and-install

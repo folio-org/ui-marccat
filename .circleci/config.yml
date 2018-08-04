@@ -21,12 +21,20 @@ jobs:
 publish_to_npm:
     docker:
       - image: circleci/node:9
-    working_directory: ~/circleci-demo-workflows
     steps:
       - checkout
       - restore_cache:
           key: v1-node-modules-{{ checksum "yarn.lock" }}
-      - run: echo 'publish MARCcat to Folio Npm'
+      - run:
+          name: Pubblish to Folio Npm
+          command: echo 'publishing....'
+      - persist_to_workspace:
+          root: ~/
+          paths: project
+      - save_cache:
+          key: v1-node-modules-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/project/node_modules
 
   eslint:
     docker:

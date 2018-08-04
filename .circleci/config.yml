@@ -1,5 +1,4 @@
 version: 2.0
-
 jobs:
   install-dependencies:
     docker:
@@ -18,6 +17,16 @@ jobs:
           key: v1-node-modules-{{ checksum "yarn.lock" }}
           paths:
             - ~/project/node_modules
+
+  publish_to_npm:
+    docker:
+      - image: circleci/node:9
+    working_directory: ~/circleci-demo-workflows
+    steps:
+      - checkout
+      - restore_cache:
+          key: v1-node-modules-{{ checksum "yarn.lock" }}
+      - run: echo 'publish MARCcat to Folio Npm'
 
   eslint:
     docker:
@@ -40,11 +49,11 @@ jobs:
       - attach_workspace:
           at: ~/
       - run:
-          name: Set up artifacts directory
+          name: Set up artifacts directory for MARCcat Folio module
           command: mkdir -p artifacts/stylelint
       - run:
           name: Lint CSS
-          command: yarn --silent stylelint
+          command: yarn stylelint  --silent 
       - store_test_results:
           path: ./artifacts
       - store_artifacts:
@@ -145,15 +154,6 @@ jobs:
       - store_artifacts:
           path: ./artifacts
 
-  publish_npm:
-    docker:
-      - image: 'node:9'
-        user: node
-    steps:
-      - install-dependencies
-      - run: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
-      - run: npm publish --access=public
-
 workflows:
   version: 2
   lint_build_test_and_deploy:
@@ -191,6 +191,7 @@ workflows:
                 - develop
           requires:
             - install-dependencies
+            - publish_to_npm
       # - publish:
       #     requires:
       #       - install-dependencies

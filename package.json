@@ -37,7 +37,7 @@
   ],
   "scripts": {
     "prestart": "DEBUG=stripes* stripes serve config/stripes.config.js",
-    "start": "stripes serve --lint config/stripes.config.js",
+    "start": "node script/js/start",
     "status": "stripes status config/stripes.config.js",
     "build": "node ./script/js/build",
     "build:analizer": "stripes build config/stripes.config.js ./dist/analyze/ui-marccat-analyze --analyze --sourcemap",
@@ -48,7 +48,7 @@
     "flow": "flow src/",
     "gen:authors": ". ./script/sh/authors.sh",
     "clean": "node ./script/js/clean.js",
-    "show:descriptor":"stripes mod descriptor --full",
+    "show:descriptor": "stripes mod descriptor --full",
     "release": "node script/ci/release.js"
   },
   "devDependencies": {
@@ -76,7 +76,8 @@
     "redux-form": "^7.4.2",
     "semafor": "0.0.1",
     "stylelint": "^9.3.0",
-    "stylelint-config-standard": "^18.2.0"
+    "stylelint-config-standard": "^18.2.0",
+    "suber": "^5.0.1"
   },
   "peerDependencies": {
     "@folio/stripes-core": "*",
@@ -98,8 +99,12 @@
     "defaultPreviewWidth": "40%",
     "helpPage": "https://wiki.folio.org/pages/",
     "hasSettings": true,
+    "actionNames": [
+      "advancedSearch",
+      "diacritcChar"
+    ],
     "okapiInterfaces": {
-      "cataloging": "1.0.0"
+      "marccat": "1.0.0"
     },
     "icons": [
       {

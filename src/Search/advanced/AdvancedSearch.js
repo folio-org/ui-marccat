@@ -7,6 +7,7 @@ import { connect } from '@folio/stripes-connect';
 import { AdvanceSearchForm } from '../';
 import * as C from '../../Utils';
 
+
 class AdvancedSearch extends React.Component<*> {
   render() {
     return (

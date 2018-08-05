@@ -6,17 +6,17 @@ import React from 'react';
 import Button from '@folio/stripes-components/lib/Button';
 import { connect } from '@folio/stripes-connect';
 import { FormattedMessage } from 'react-intl';
-import { Observable } from 'rxjs';
 import * as C from '../../../Utils';
 
-type Props = {
+type Props = {|
   stripes: Object;
   onClick: Function;
   disabled: boolean;
   mutator: Object;
   history: Object;
   data: string;
-};
+  dispatch: Function;
+|};
 
 type State = {
   results: Object;
@@ -30,11 +30,16 @@ class ScanButton extends React.Component<Props, State> {
   }
 
   handleScan = () => {
-    this.props.mutator.firstPage.reset();
-    this.props.mutator.query.replace(this.props.data);
-    Observable.from(this.props.mutator.firstPage.GET());
-    this.props.history.push(C.INTERNAL_URL.VIEW_BROWSING);
+    // this.props.mutator.firstPage.reset();
+    // this.props.mutator.query.replace(this.props.data);
+    // Observable.from(this.props.mutator.firstPage.GET());
+    // this.props.history.push(C.INTERNAL_URL.VIEW_BROWSING);
+    this.props.dispatch({
+      type: 'START_SUBMISSION',
+      payload: 'values',
+    });
   }
+
   render() {
     return (
       <div>

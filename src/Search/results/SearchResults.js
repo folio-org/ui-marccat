@@ -8,8 +8,7 @@ import React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { connect } from '@folio/stripes-connect';
 import Paneset from '@folio/stripes-components/lib/Paneset';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { ToolbarMenu, BehaviorSubscription } from '../../Core';
+import { ToolbarMenu } from '../../Core';
 import * as C from '../../Utils';
 
 type SearchResultsProps = {
@@ -18,20 +17,20 @@ type SearchResultsProps = {
 type SearchResultsState = {};
 
 class SearchResults extends React.Component<SearchResultsProps, SearchResultsState> {
-  createBehaviorSubject(initialValue = 3) {
-    const behaviorSubject = new BehaviorSubject();
-    if (initialValue) {
-      behaviorSubject.next(initialValue);
-    }
-    return behaviorSubject;
+  constructor(props) {
+    super(props);
+    this.state = {};
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps)
+  }
   render() {
     const leftMenu = <ToolbarMenu icon={['search']} />;
     const rightMenu = <ToolbarMenu icon={['bookmark', 'gear']} />;
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const observable = this.createBehaviorSubject();
-
+    const { store } = this.props.root;
+    const state = store.getState();
     return (
       <Paneset>
         <Pane
@@ -60,9 +59,6 @@ class SearchResults extends React.Component<SearchResultsProps, SearchResultsSta
             ]}
             striped
           /> */}
-          <BehaviorSubscription source={observable}>
-            {value => 'There are ' + value + ' results'}
-          </BehaviorSubscription>
         </Pane>
       </Paneset>
     );

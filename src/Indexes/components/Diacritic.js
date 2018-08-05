@@ -6,7 +6,6 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Button from '@folio/stripes-components/lib/Button';
-import reactTriggerChange from 'react-trigger-change';
 import { SearchButton } from '../';
 import * as C from '../../Utils';
 import css from '../style/indexes.css';
@@ -61,10 +60,6 @@ class Diacritic extends React.Component<DiacriticProps, DiacriticState> {
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
     const { pristine, reset, submitting } = this.props;
-    let node;
-    setTimeout(() => {
-      reactTriggerChange(node); // 'changed' is logged
-    }, 6000);
     return (
       <div>
         <form name="diacriticForm" id="diacriticForm" onSubmit={this.handleSubmit} noValidate>
@@ -95,7 +90,6 @@ class Diacritic extends React.Component<DiacriticProps, DiacriticState> {
                 name="charCopied"
                 component="input"
                 type="text"
-                ref={(input) => { node = input; }}
                 placeholder="Select a row..."
                 value={this.state.charCopied}
               />
@@ -108,6 +102,6 @@ class Diacritic extends React.Component<DiacriticProps, DiacriticState> {
 }
 
 export default reduxForm({
-  form: 'diacriticForm', // a unique identifier for this form
+  form: 'diacriticForm',
   initialValues: {},
 })(Diacritic);

@@ -7,15 +7,14 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import RadioButton from '@folio/stripes-components/lib/RadioButton';
 import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';
 import Select from '@folio/stripes-components/lib/Select';
-import { Observable } from 'rxjs';
 import { Field, reduxForm } from 'redux-form';
 import Button from '@folio/stripes-components/lib/Button';
 import ScanButton from '../button/ScanButton';
 import SearchButton from '../button/SearchButton';
 import { formatSearchQuery } from '../../../Utils/Formatter';
-import css from '../../style/Search.css';
 import * as C from '../../../Utils';
 import LogicalButton from '../button/LogicalButton';
+import css from '../../style/Search.css';
 
 type AdvanceSerachFormProps = {
     stripes: Object;
@@ -33,7 +32,6 @@ type AdvanceSerachFormState = {
     thirdSelect: React.node;
     checkedFirstRadio: boolean;
 };
-
 
 class AdvanceSearchForm extends
   React.Component<AdvanceSerachFormProps, AdvanceSerachFormState> {
@@ -87,19 +85,6 @@ class AdvanceSearchForm extends
 
     handleChange(event) {
       this.setState({ value: event.target.value });
-    }
-
-    hanldeSearchWithSubscription = () => {
-      const soubscription = Observable.of(this.state.value);
-      soubscription
-        .filter(d => d !== '')
-        .subscribe((d) => peformSearch(d)); // eslint-disable-line
-    }
-
-    search(terms: Observable<string>) {
-      return terms.debounceTime(400)
-        .distinctUntilChanged()
-        .switchMap(term => this.searchEntries(term));
     }
 
     handleClick = () => {
@@ -174,8 +159,9 @@ class AdvanceSearchForm extends
                   inline
                 />
               </Field>
-              <Col xs={12} className={css.colFirstSelect}>
-                {categories &&
+              <div className="selectContainer">
+                <Col xs={12} className={css.colFirstSelect}>
+                  {categories &&
                   <Select
                     name="categorySelect"
                     value={this.state.firstSelect}
@@ -183,10 +169,10 @@ class AdvanceSearchForm extends
                   >
                     {options}
                   </Select>
-                }
-              </Col>
-              <Col xs={12}>
-                {innerIndexes &&
+                  }
+                </Col>
+                <Col xs={12}>
+                  {innerIndexes &&
                   <Select
                     value={this.state.secondSelect}
                     onChange={this.handleChangeSecondSelect}
@@ -194,10 +180,10 @@ class AdvanceSearchForm extends
                     <option value="">--</option>
                     {optionsInnerIndex}
                   </Select>
-                }
-              </Col>
-              <Col xs={12}>
-                {constraintIndexes && constraintIndexes.records.length > 0 &&
+                  }
+                </Col>
+                <Col xs={12}>
+                  {constraintIndexes && constraintIndexes.records.length > 0 &&
                   <Select
                     value={this.state.thirdSelect}
                     onChange={this.handleChangeThirdSelect}
@@ -205,8 +191,9 @@ class AdvanceSearchForm extends
                     <option value="">--</option>
                     {optionsConstraintIndex}
                   </Select>
-                }
-              </Col>
+                  }
+                </Col>
+              </div>
               <Col xs={12}>
                 <div className={css.colQuery}>
                   <LogicalButton {...this.props} />

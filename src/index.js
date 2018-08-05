@@ -105,10 +105,13 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
     this.props.mutator.constraintIndexValue.replace('LIB');
 
     /*
-     * add epic and reducer
+     * @author: Christian Chiama
+     * add epic and reducer to the application store
+     * all the reducer and the epic are load in the Redux folder
+     * and combine in a  unique reducer and unique epic$
      */
-    props.root.addReducer('marccat', reducer);
-    props.root.addEpic('marccat', epics);
+    props.root.addReducer(C.STATE_MANAGEMENT.REDUCER, reducer);
+    props.root.addEpic(C.STATE_MANAGEMENT.EPIC, epics);
   }
 
   render() {

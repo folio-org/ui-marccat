@@ -14,6 +14,9 @@ import * as C from '../../Utils';
 type MultiColumnListDiacriticProps = {
   stripes: Object;
   resources: Object;
+  root: {
+    store: {}
+  };
 };
 
 type MultiColumnListDiacriticState = {
@@ -46,9 +49,9 @@ class MultiColumnListDiacritic extends React.Component
     this.onRowClick = this.onRowClick.bind(this);
   }
 
-  onRowClick = (event) => { // FIX ME
-    const evt = new CustomEvent(C.EVENTS.CHAR_COPIED, { detail: event.target.textContent });
-    window.dispatchEvent(evt);
+  onRowClick = (event) => {
+    const { store } = this.props.root;
+    store.dispatch({ type: '@@ui-marccat/DIACRITIC_CHAR', payload: event.target.textContent });
   }
 
   render() {
@@ -68,6 +71,7 @@ class MultiColumnListDiacritic extends React.Component
     return (
       <Paneset static>
         <Pane
+          defaultWidth="full"
           firstMenu={leftMenu}
           lastMenu={rightMenu}
           paneTitle={formatMsg({

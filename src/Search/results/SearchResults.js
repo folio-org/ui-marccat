@@ -13,24 +13,30 @@ import * as C from '../../Utils';
 
 type SearchResultsProps = {
   stripes: Object;
+  root: {
+    store: {}
+  };
 };
-type SearchResultsState = {};
+type SearchResultsState = {
+  results: Array;
+};
 
 class SearchResults extends React.Component<SearchResultsProps, SearchResultsState> {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      results: [] // eslint-disable-line
+    };
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
-  }
   render() {
     const leftMenu = <ToolbarMenu icon={['search']} />;
     const rightMenu = <ToolbarMenu icon={['bookmark', 'gear']} />;
     const formatMsg = this.props.stripes.intl.formatMessage;
     const { store } = this.props.root;
     const state = store.getState();
+    const formObserved = state.form.advancedSearchForm;
+    const value = formObserved.values.searchTextArea;
     return (
       <Paneset>
         <Pane
@@ -59,6 +65,9 @@ class SearchResults extends React.Component<SearchResultsProps, SearchResultsSta
             ]}
             striped
           /> */}
+          <div>
+            {'you typed:' + value}
+          </div>
         </Pane>
       </Paneset>
     );

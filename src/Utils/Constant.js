@@ -33,6 +33,12 @@ export const ENDPOINT = {
   DEFAULT_PAGINATION: 20,
 };
 
+// REDUX
+export const STATE_MANAGEMENT = {
+  REDUCER: 'marccat',
+  EPIC: 'marccat',
+};
+
 export const REGEX = {
   TAG_NAME: /^(?:\d{3})?$/,
 };

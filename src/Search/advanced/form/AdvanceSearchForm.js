@@ -248,5 +248,6 @@ export default reduxForm({
     name: 'actingSponsor001',
     value: 'P',
   },
-  enableReinitialize: true
+  enableReinitialize: true,
+  fields: ['searchTextArea']
 })(AdvanceSearchForm);

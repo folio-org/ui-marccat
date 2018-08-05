@@ -1,18 +1,22 @@
-/* MARCCAT DB ACTIONS TYPES */
+/* MARCCAT ACTIONS TYPES */
 export const actionTypes = {
-  QUERY: '@@ui-marccat/db/QUERY',
-  FIND: '@@ui-marccat/db/FIND',
-  SAVE: '@@ui-marccat/db/SAVE',
-  CREATE: '@@ui-marccat/db/CREATE',
-  DELETE: '@@ui-marccat/db/DELETE',
-  RESOLVE: '@@ui-marccat/db/RESOLVE',
-  REJECT: '@@ui-marccat/db/REJECT',
-  UNLOAD: '@@ui-marccat/db/UNLOAD'
+  SEARCH: '@@ui-marccat/SEARCH',
+  QUERY: '@@ui-marccat/QUERY',
+  FIND: '@@ui-marccat/FIND',
+  SAVE: '@@ui-marccat/SAVE',
+  CREATE: '@@ui-marccat/CREATE',
+  DELETE: '@@ui-marccat/DELETE',
+  UPDATE: '@@ui-marccat/UPDATE',
+  REJECT: '@@ui-marccat/REJECT',
+  DIACRITIC_CHAR: '@@ui-marccat/DIACRITIC_CHAR',
+  CLEAR_SEARCH_RESULTS: '@@ui-marccat/CLEAR_SEARCH_RESULTS',
 };
 
+export const nativeActionTypes = {
+  REDUX_FORM_CHANGE: '@@redux-form/CHANGE',
+  REDUX_FORM_BLUR: '@@redux-form/CHANGE',
 
-/* MARCCAT DB ACTIONS CREATOR */
-
+};
 
 /**
  * Action creator for querying a set of records

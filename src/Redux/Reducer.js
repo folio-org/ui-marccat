@@ -3,7 +3,7 @@ import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { actionTypes } from './Actions';
+import { actionTypes as ActionTypes, nativeActionTypes } from './Actions';
 
 
 /**
@@ -13,7 +13,7 @@ import { actionTypes } from './Actions';
  * @param {String} options.path - path to use for the query
  */
 export const query = (type, params, { path }) => ({
-  type: actionTypes.QUERY,
+  type: ActionTypes.QUERY,
   data: {
     type,
     path,
@@ -31,7 +31,7 @@ export const query = (type, params, { path }) => ({
  * to include via the `?include` query param
  */
 export const find = (type, id, { path, include }) => ({
-  type: actionTypes.FIND,
+  type: ActionTypes.FIND,
   data: {
     type,
     path,
@@ -47,7 +47,7 @@ export const find = (type, id, { path, include }) => ({
  * @param {String} [options.path] - path to use
  */
 export const save = (type, payload, { path }) => ({
-  type: actionTypes.SAVE,
+  type: ActionTypes.SAVE,
   data: {
     type,
     path,
@@ -64,7 +64,7 @@ export const save = (type, payload, { path }) => ({
  * @param {String} [options.path] - path to use
  */
 export const create = (type, payload, { path }) => ({
-  type: actionTypes.CREATE,
+  type: ActionTypes.CREATE,
   data: {
     type,
     path,
@@ -82,7 +82,7 @@ export const create = (type, payload, { path }) => ({
  * @param {String} [options.path] - path to use
  */
 export const destroy = (type, payload, { path }) => ({
-  type: actionTypes.DELETE,
+  type: ActionTypes.DELETE,
   data: {
     type,
     path,
@@ -94,18 +94,6 @@ export const destroy = (type, payload, { path }) => ({
   }
 });
 
-/**
- * Action creator for uloading a record
- * @param {String} type - resource type
- * @param {String|[String]} ids - one or more record ids
- */
-export const unload = (type, ids) => ({
-  type: actionTypes.UNLOAD,
-  data: {
-    type,
-    ids: [].concat(ids)
-  }
-});
 
 /**
  * Action creator for resolving a record or a set of records
@@ -139,7 +127,7 @@ const resolve = (request, body, payload = {}) => {
   }
 
   return {
-    type: actionTypes.RESOLVE,
+    type: ActionTypes.UPDATE,
     data: { type: request.resource, ids },
     request: { ...request, records: ids, meta },
     records
@@ -154,7 +142,7 @@ const resolve = (request, body, payload = {}) => {
  * @param {Object} data - data associated with the request
  */
 const reject = (request, errors, data) => ({
-  type: actionTypes.REJECT,
+  type: ActionTypes.REJECT,
   request,
   errors,
   data
@@ -225,55 +213,6 @@ const reduceData = (type, state, fn) => {
   };
 };
 
-/**
- * Helper for formatting errors returned from a rejected response
- * @param {Mixed} errors - the error or errors
- * @returns {Array} array of error objects
- */
-const formatErrors = (errors) => {
-  const format = (err) => {
-    if (typeof err === 'string') {
-      return { title: err };
-    } else if (err && err.message) {
-      return { title: err.message };
-    } else if (err && err.title) {
-      return err;
-    } else {
-      return { title: 'An unknown error occurred' };
-    }
-  };
-
-  if (Array.isArray(errors)) {
-    return errors.map(format);
-  } else {
-    return [format(errors)];
-  }
-};
-
-/**
- * Helper for calculating the difference between old and new state
- * with model.save(). Borrows heavily from Ember Data.
- * @param {Object} oldData - current state of attributes in store
- * @param {Object} newData - requested new state of attributes
- * @returns {Object} set of attributes with change
- */
-const getChangedAttributes = (oldData, newData) => {
-  const diffData = Object.create(null);
-  const newDataKeys = Object.keys(newData);
-
-  for (let i = 0, { length } = newDataKeys; i < length; i++) {
-    const key = newDataKeys[i];
-    if (oldData[key] !== newData[key]) {
-      diffData[key] = {
-        prev: oldData[key],
-        next: newData[key]
-      };
-    }
-  }
-
-  return diffData;
-};
-
 // reducer handlers
 const handlers = {
 
@@ -282,7 +221,7 @@ const handlers = {
    * @param {Object} state - data store state
    * @param {Object} action.data - data associated with the query
    */
-  [actionTypes.QUERY]: (state, { data }) => {
+  [ActionTypes.QUERY]: (state, { data }) => {
     return reduceData(data.type, state, store => ({
       requests: {
         ...store.requests,
@@ -297,7 +236,7 @@ const handlers = {
    * @param {Object} action.data - data associated with the query
    * @param {Object} action.data.params.id - the id of the requested record
    */
-  [actionTypes.FIND]: (state, { data }) => {
+  [ActionTypes.FIND]: (state, { data }) => {
     return reduceData(data.type, state, store => ({
       requests: {
         ...store.requests,
@@ -319,7 +258,7 @@ const handlers = {
    * @param {Object} action.data - data associated with the query
    * @param {String} action.data.params.id - the id of the requested record
    */
-  [actionTypes.SAVE]: (state, { data, payload }) => {
+  [ActionTypes.SAVE]: (state, { data, payload }) => {
     return reduceData(data.type, state, (store) => {
       const record = getRecord(store, data.params.id);
 
@@ -347,7 +286,7 @@ const handlers = {
    * @param {Object} state - data store state
    * @param {Object} action.data - data associated with the query
    */
-  [actionTypes.CREATE]: (state, { data }) => {
+  [ActionTypes.CREATE]: (state, { data }) => {
     return reduceData(data.type, state, store => ({
       requests: {
         ...store.requests,
@@ -362,7 +301,7 @@ const handlers = {
    * @param {Object} action.data - data associated with the query
    * @param {String} action.data.params.id - the id of the requested record
    */
-  [actionTypes.DELETE]: (state, { data }) => {
+  [ActionTypes.DELETE]: (state, { data }) => {
     return reduceData(data.type, state, (store) => {
       return {
         requests: {
@@ -374,51 +313,15 @@ const handlers = {
   },
 
   /**
-   * Handles reducing the data store when unloading records
-   * @param {Object} state - data store state
-   * @param {Object} action.data - data associated with the action
-   * @param {String} action.data.ids - ids of records
-   */
-  [actionTypes.UNLOAD]: (state, { data }) => {
-    return reduceData(data.type, state, store => ({
-      // remove the records from the store
-      records: data.ids.reduce((records, id) => {
-        // eslint-disable-next-line no-unused-vars
-        const { [id]: r, ...rest } = records;
-        return rest;
-      }, store.records),
-
-      // remove reqeusts for this record and flag query requests with `hasUnloaded`
-      requests: Object.keys(store.requests).reduce((reqs, timestamp) => {
-        const request = store.requests[timestamp];
-
-        // if the request does not include any unloaded ids, keep it
-        if (request.type === 'destroy' || !request.records.some(id => data.ids.includes(id))) {
-          reqs[timestamp] = request;
-
-        // if a query request includes unloaded ids, flag is with `hasUnloaded`
-        } else if (request.type === 'query') {
-          reqs[timestamp] = {
-            ...request,
-            hasUnloaded: true
-          };
-        }
-
-        return reqs;
-      }, {})
-    }));
-  },
-
-  /**
    * Handles reducing the data store when resolving a resource request
    * @param {Object} state - data store state
    * @param {Object} action.request - the request state object
    * @param {Array} action.records - array of resolved records
    */
-  [actionTypes.RESOLVE]: (state, action) => {
-    const { request, records } = action;
+  [ActionTypes.UPDATE]: (state, action) => {
+    const { request } = action;
     // first we reduce the request state object
-    let next = reduceData(request.resource, state, store => ({
+    const next = reduceData(request.resource, state, store => ({
       requests: {
         ...store.requests,
         [request.timestamp]: {
@@ -431,29 +334,6 @@ const handlers = {
       }
     }));
 
-    if (request.type === 'destroy') {
-      next = handlers[actionTypes.UNLOAD](next, action);
-    } else {
-      // then we reduce each record in the set of records
-      next = records.reduce((next, record) => { // eslint-disable-line no-shadow
-        return reduceData(record.type, next, (store) => {
-          const recordState = getRecord(store, record.id);
-
-          return {
-            records: {
-              ...store.records,
-              [record.id]: {
-                ...recordState,
-                isSaving: false,
-                isLoading: false,
-                isLoaded: true
-              }
-            }
-          };
-        });
-      }, next);
-    }
-
     return next;
   },
 
@@ -464,7 +344,7 @@ const handlers = {
    * @param {Array} action.errors - response errors
    * @param {Object} action.data - data used to create the request
    */
-  [actionTypes.REJECT]: (state, { request, errors, data }) => {
+  [ActionTypes.REJECT]: (state, { request, errors, data }) => {
     // first we reduce the request state object
     let next = reduceData(request.resource, state, store => ({
       requests: {
@@ -550,11 +430,11 @@ export function reducer(state = {}, action) {
  */
 export function epic(action$, { getState }) {
   const actionMethods = {
-    [actionTypes.QUERY]: 'GET',
-    [actionTypes.FIND]: 'GET',
-    [actionTypes.SAVE]: 'PUT',
-    [actionTypes.CREATE]: 'POST',
-    [actionTypes.DELETE]: 'DELETE'
+    [ActionTypes.QUERY]: 'GET',
+    [ActionTypes.FIND]: 'GET',
+    [ActionTypes.SAVE]: 'PUT',
+    [ActionTypes.CREATE]: 'POST',
+    [ActionTypes.DELETE]: 'DELETE'
   };
 
   return action$
@@ -564,31 +444,8 @@ export function epic(action$, { getState }) {
       const method = actionMethods[type];
 
       // the request object created from this action
-      const request = state.marccat.data[data.type].requests[data.timestamp];
+      // const request = state.marccat.data[data.type].requests[data.timestamp];
 
-      // used for the actual request
-      let url = `${state.okapi.url}${data.path}`;
-      const headers = getHeaders(method, state);
-      let body;
-
-      // if we're querying a set of records, data.params are the
-      // parameters needed in the request URL
-      if (type === actionTypes.QUERY && Object.keys(data.params).length !== 0) {
-        url = `${url}?${qs.stringify(data.params)}`;
-      }
-
-      // if we need to include additional resources in the response,
-      // we need to add the proper query param to the request URL.
-      if (data.params.include) {
-        let { include } = data.params;
-        include = Array.isArray(include) ? include.join(',') : include;
-        url = `${url}?${qs.stringify({ include })}`;
-      }
-
-      // When PUTing, the payload needs to be stringified
-      if (method === 'PUT' || method === 'POST') {
-        body = JSON.stringify(payload);
-      }
 
       // request which rejects when not OK
       const promise = fetch(url, { headers, method, body })
@@ -600,4 +457,27 @@ export function epic(action$, { getState }) {
         .map(responseBody => resolve(request, responseBody, payload))
         .catch(errors => Observable.of(reject(request, errors, data)));
     });
+}
+
+/**
+ * Theform store reducer simply uses the handlers defined above
+ * @param {Object} state - data store state leaf
+ * @param {Object} action - redux action being dispatched
+ */
+export function formReducer(state = {}, action = null) {
+  switch (action.type) {
+  case nativeActionTypes.REDUX_FORM_CHANGE:
+    return Object.assign({}, state, {
+      fieldValue: action.payload,
+    });
+  case nativeActionTypes.REDUX_FORM_BLUR:
+    return Object.assign({}, state, {
+      fieldValue: action.payload,
+    });
+  case ActionTypes.DIACRITIC_CHAR:
+    return Object.assign({}, state, {
+      charCopied: action.payload,
+    });
+  default: return state;
+  }
 }

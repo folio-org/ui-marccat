@@ -6,6 +6,7 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Button from '@folio/stripes-components/lib/Button';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { SearchButton } from '../';
 import * as C from '../../Utils';
 import css from '../style/indexes.css';
@@ -38,16 +39,7 @@ class Diacritic extends React.Component<DiacriticProps, DiacriticState> {
     /** bind handler * */
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-
-    /** observe custom event (remember you must remove the listener) * */
-    this.observe();
   }
-
-  observe = () => {
-    window.addEventListener(C.EVENTS.CHAR_COPIED, (evt) => { // FIX ME
-      this.props.change('charCopied', evt.detail);
-    }, false);
-  };
 
   handleChange = (event) => {
     this.setState({ value: event.target.value });                      //eslint-disable-line
@@ -103,5 +95,5 @@ class Diacritic extends React.Component<DiacriticProps, DiacriticState> {
 
 export default reduxForm({
   form: 'diacriticForm',
-  initialValues: {},
+  initialValues: {}
 })(Diacritic);

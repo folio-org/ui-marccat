@@ -7,9 +7,9 @@ import React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { connect } from '@folio/stripes-connect';
 import Paneset from '@folio/stripes-components/lib/Paneset';
-import { AdvanceSearchResult } from '../';
-import { ToolbarMenu } from '../../Core';
-import * as C from '../../Utils';
+import { AdvanceSearchResult } from '../../';
+import { ToolbarMenu } from '../../../Core';
+import * as C from '../../../Utils';
 
 type SearchResultsProps = {
   stripes: Object;
@@ -27,17 +27,6 @@ class SearchResults extends React.Component<SearchResultsProps, SearchResultsSta
     this.state = {
       results: [] // eslint-disable-line
     };
-
-    this.handleSearch = this.handleSearch.bind(this);
-  }
-
-  handleSearch = () => {
-    this.props.mutator.query.replace(this.props.data);
-    const observer = Observable.from(this.props.mutator.searchQuery.GET());
-    observer
-      .take(1)
-      .map(r => this.setState({ results: r}))
-      .subscribe();
   }
 
   render() {

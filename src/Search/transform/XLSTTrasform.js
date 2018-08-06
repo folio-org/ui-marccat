@@ -33,7 +33,7 @@ class XLSTTrasform extends React.Component<Props, State> {
           appIcon={{ app: C.META.ICON_TITLE }}
         >
           <div>
-            {xml}
+            {alert(xml)}
           </div>
         </Pane>
       </Paneset>

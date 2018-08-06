@@ -33,6 +33,12 @@ export const ENDPOINT = {
   DEFAULT_PAGINATION: 20,
 };
 
+// REDUX
+export const STATE_MANAGEMENT = {
+  REDUCER: 'marccat',
+  EPIC: 'marccat',
+};
+
 export const REGEX = {
   TAG_NAME: /^(?:\d{3})?$/,
 };
@@ -141,7 +147,8 @@ export const MARC_CHARACTER = {
 
 // EVENTS
 export const EVENTS = {
-  CHAR_COPIED: 'CharCopied'
+  CHAR_COPIED: 'CHAR_COPIED',
+  REPLAY_SEARCH_REESULT: 'REPLAY_SEARCH_REESULT'
 };
 
 export const EMPTY_PARAMETER = -1;

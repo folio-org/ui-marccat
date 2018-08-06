@@ -27,13 +27,13 @@ type DiacriticState = {
 };
 
 class Diacritic extends React.Component<DiacriticProps, DiacriticState> {
-  static bus;
+  static unsubscribe;
   constructor(props: DiacriticProps) {
     super(props);
     this.state = {
       value: '',                                                      //eslint-disable-line
       charCopied: '',                                                 //eslint-disable-line
-      isOpen: false,                                                  //eslint-disable-line
+      isOpen: false,                                               //eslint-disable-line
     };
     /** bind handler * */
     this.handleChange = this.handleChange.bind(this);
@@ -102,6 +102,6 @@ class Diacritic extends React.Component<DiacriticProps, DiacriticState> {
 }
 
 export default reduxForm({
-  form: 'diacriticForm', // a unique identifier for this form
-  initialValues: {},
+  form: 'diacriticForm',
+  initialValues: {}
 })(Diacritic);

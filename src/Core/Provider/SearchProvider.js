@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 
 // Da rimuovere con una gestione dello stato migliore
-export class SearchProvider {
+export default class SearchProvider {
   constructor() {
     this.searchTerm = new BehaviorSubject();
   }

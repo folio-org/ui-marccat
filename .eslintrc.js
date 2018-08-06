@@ -26,7 +26,6 @@ module.exports = {
 		"spaced-comment": ["error", "always", { "markers": ["/"] }],
 		"arrow-parens": "off",
     "no-return-assign":"off",
-    "import/prefer-default-export": "off",
     "no-undef": "warn",
     "import/no-named-as-default": "off",
     "import/no-extraneous-dependencies": "off",

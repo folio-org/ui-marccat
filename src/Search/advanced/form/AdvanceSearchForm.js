@@ -115,7 +115,6 @@ class AdvanceSearchForm extends
       let options = {};
       let optionsInnerIndex = {};
       let optionsConstraintIndex = {};
-      const { value } = this.state;
 
       if (categories) {
         options = categories.records.map((element) => (
@@ -197,7 +196,7 @@ class AdvanceSearchForm extends
               </div>
               <Col xs={12}>
                 <div className={css.colQuery}>
-                  <LogicalButton {...this.props} />
+                  <LogicalButton {...this.props} handleTextAreaValue={this.handleTextAreaValue} />
                   <AdavnceSearchInput onChange={this.handleChange} />
                   <Row>
                     <Col xs={6}>

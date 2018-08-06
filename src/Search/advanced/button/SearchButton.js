@@ -6,11 +6,9 @@ import React from 'react';
 import Button from '@folio/stripes-components/lib/Button';
 import { connect } from '@folio/stripes-connect';
 import { Observable } from 'rxjs';
-import Modal from '@folio/stripes-components/lib/Modal';
 import { FormattedMessage } from 'react-intl';
 import { withCloseHandler } from '../../../Core/';
 import * as C from '../../../Utils';
-import XLSTTrasform from '../../transform/XLSTTrasform';
 
 type Props = {
   mutator: Object;
@@ -38,18 +36,12 @@ class SearchButton extends React.Component<Props, State> {
     const observer = Observable.from(this.props.mutator.searchQuery.GET());
     observer
       .take(1)
-      .map(r => this.setState({ results: r, isOpen: true }))
+      .takeUntil(r => this.state.results !== r)
+      .map(r => this.setState({ results: r }))
       .subscribe();
   }
 
-  handleClose = () => {
-    this.setState({
-      isOpen: false
-    });
-  };
-
   render() {
-    const { isOpen } = this.state;
     return (
       <div>
         <Button
@@ -61,13 +53,13 @@ class SearchButton extends React.Component<Props, State> {
         >
           <FormattedMessage id="ui-marccat.search.searchButton" />
         </Button>
-        {this.state.results &&
+        {/* {this.state.results &&
           <Modal dismissible closeOnBackgroundClick onClose={this.handleClose} open={isOpen} label={`Results for: ${this.props.data}`}>
             {this.state.results && this.state.results[0] ?
               <XLSTTrasform {...this.props} xmlData={this.state.results[0].data} />
               : <div>{'No Result Found for ' + this.props.data}</div>}
           </Modal>
-        }
+        } */}
       </div>
     );
   }

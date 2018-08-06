@@ -9,6 +9,7 @@ export const actionTypes = {
   UPDATE: '@@ui-marccat/UPDATE',
   REJECT: '@@ui-marccat/REJECT',
   DIACRITIC_CHAR: '@@ui-marccat/DIACRITIC_CHAR',
+  RECEIVED_SEARCH: '@@ui-marccat/RECEIVED_SEARCH',
   CLEAR_SEARCH_RESULTS: '@@ui-marccat/CLEAR_SEARCH_RESULTS',
 };
 

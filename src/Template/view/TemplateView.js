@@ -12,7 +12,7 @@ import Callout from '@folio/stripes-components/lib/Callout';
 import ConfirmationModal from '@folio/stripes-components/lib/ConfirmationModal';
 import { FormattedMessage } from 'react-intl';
 import { EditTemplate } from '../';
-import { ToolbarButtonMenu } from '../../Core';
+import { ToolbarButtonMenu, actionMenuItem } from '../../Core';
 import { removeById } from '../../Utils/Formatter';
 import * as C from '../../Utils';
 
@@ -178,17 +178,7 @@ class TemplateView extends React.Component {
       </PaneMenu>
     );
 
-    const actionMenuItems = [
-      {
-        label: formatMsg({
-          id: 'ui-marccat.template.create',
-        }),
-        onClick: () => {
-          this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE);
-        },
-      },
-    ];
-
+    const actionMenuItems = actionMenuItem('ui-marccat.template.create', () => this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE));
     const actionMenuItemsDetail = [
       {
         label: formatMsg({

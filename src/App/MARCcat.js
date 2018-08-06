@@ -10,20 +10,25 @@ import { connect } from '@folio/stripes-connect';
 import { ToolbarMenu, EmptyMessage } from '../Core';
 import * as C from '../Utils';
 
-type MARCcatProps = {
-  stripes: Object
+type Props = {
+  stripes: Object;
+  actionMenuItems: () => void;
 };
-class MARCcat extends React.Component<MARCcatProps> {
+type State = {};
+
+class MARCcat extends React.Component<Props, State> {
   render() {
     const leftMenu = <ToolbarMenu icon={['search']} />;
     const rightMenu = <ToolbarMenu icon={['diacritic', 'indexes']} />;
     const { formatMessage } = this.props.stripes.intl;
+    const { actionMenuItems } = this.props;
     return (
       <Paneset static>
         <Pane
           defaultWidth="fill"
           firstMenu={leftMenu}
           lastMenu={rightMenu}
+          actionMenuItems={actionMenuItems}
           paneTitle={formatMessage({
             id: 'ui-marccat.app.title',
           })}

@@ -1,4 +1,4 @@
-import { nativeActionTypes, actionTypes as ActionTypes } from '../actions/Actions';
+import { reduxActionTypes, actionTypes as ActionTypes } from '../actions/Actions';
 /**
  * The form store reducer
  * @param {Object} state - data store state leaf
@@ -6,12 +6,12 @@ import { nativeActionTypes, actionTypes as ActionTypes } from '../actions/Action
  */
 export default function formReducer(state = {}, action = null) {
   switch (action.type) {
-  case nativeActionTypes.REDUX_FORM_CHANGE:
+  case reduxActionTypes.REDUX_FORM_CHANGE:
     return Object.assign({}, state, {
       fieldValue: action.payload,
       meta: action.meta
     });
-  case nativeActionTypes.REDUX_FORM_BLUR:
+  case reduxActionTypes.REDUX_FORM_BLUR:
     return Object.assign({}, state, {
       fieldValue: action.payload,
     });

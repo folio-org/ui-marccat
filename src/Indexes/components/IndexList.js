@@ -10,7 +10,7 @@ import { connect } from '@folio/stripes-connect';
 import { Col } from '@folio/stripes-components/lib/LayoutGrid';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
-import PrinterProvider from '../../Core/Provider/PrinterProvider';
+import PrinterProvider from '../../Core/Provider/withPrinter';
 import css from '../style/indexes.css';
 import * as C from '../../Utils';
 

@@ -179,6 +179,8 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     this.onChangeHeadingType = this.onChangeHeadingType.bind(this);
     this.onChangeItemType = this.onChangeItemType.bind(this);
     this.onChangeFunctionCode = this.onChangeFunctionCode.bind(this);
+    this.createNewTag = this.createNewTag.bind(this);
+    this.createTagObjectFromJson = this.createTagObjectFromJson.bind(this);
   }
 
   componentDidMount() {
@@ -195,6 +197,19 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
         />
       </PaneMenu>
     );
+  }
+
+  createNewTag() {
+    const textareas = Array.prototype.slice.call(document.getElementById('subfieldsData').querySelectorAll('.subfieldElement'));
+    let displayValue = '';
+    textareas.map((current) => {
+      const code = current.querySelectorAll('select')[0].value;
+      const data = current.querySelectorAll('textarea')[0].value;
+      return displayValue = displayValue.concat(C.MARC_CHARACTER.SEPARATOR + code + data);
+    });
+    const currentTag = this.state.newTag;
+    currentTag.displayValue = displayValue;
+    this.setState({ newTag: currentTag });
   }
 
   fetchSubfields(marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue) {
@@ -223,22 +238,39 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
         if (fetchResult['variable-field']) {
           const res = fetchResult['variable-field'];
           this.fetchSubfields(marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue);
+          const tagFetch = this.createTagObjectFromJson(res, marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue);
+          tagFetch.type = 'variableField';
           this.setState({
-            newTag: {
-              code: res.code,
-              ind1: res.ind1,
-              ind2: res.ind2,
-              description: findLabel(this.state.headingTypeLoaded, headingTypesValue)
-            }
+            newTag: tagFetch
           });
           return;
-        } else {
+        }
+        if (fetchResult['fixed-field']) {
+          const res = fetchResult['fixed-field'];
+          const tagFetch = this.createTagObjectFromJson(res, marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue);
+          tagFetch.type = 'fixedField';
+          this.setState({
+            newTag: tagFetch
+          });
           this.props.mutator.subfields.reset();
           return;
         }
       }
       this.props.mutator.subfields.reset();
     });
+  }
+
+  createTagObjectFromJson(res, marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue) {
+    return {
+      code: res.code,
+      ind1: res.ind1,
+      ind2: res.ind2,
+      categoryCode: marcCategoryValue,
+      headingTypeCode: headingTypesValue,
+      itemTypeCode: itemTypesValue,
+      functionCode: functionCodeValue,
+      description: findLabel(this.state.headingTypeLoaded, headingTypesValue)
+    };
   }
 
   fetchingMarcCategory() {
@@ -372,6 +404,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
                 'ind2',
                 'displayValue',
               ]}
+              columnWidths={{ code: '10%', description: '40%', ind1: '5%', ind2: '5%', displayValue: '40%' }}
             />
           </Col>
         </Row>
@@ -441,7 +474,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
         <Row>
           <Button
             {...this.props}
-            onClick={this.createTag}
+            onClick={this.createNewTag}
             type="button"
             buttonStyle="primary"
           >

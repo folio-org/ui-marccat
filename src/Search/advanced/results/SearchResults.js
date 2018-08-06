@@ -5,17 +5,15 @@
 /* eslint-disable react/no-deprecated */
 import React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
-import { connect } from '@folio/stripes-connect';
+import { connect } from 'react-redux';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import { AdvanceSearchResult } from '../../';
 import { ToolbarMenu } from '../../../Core';
-import * as C from '../../../Utils';
 
 type SearchResultsProps = {
   stripes: Object;
-  root: {
-    store: {}
-  };
+  searchInput: string;
+  actionMenuItems: Object;
 };
 type SearchResultsState = {
   results: Array;
@@ -33,33 +31,30 @@ class SearchResults extends React.Component<SearchResultsProps, SearchResultsSta
     const leftMenu = <ToolbarMenu icon={['search']} />;
     const rightMenu = <ToolbarMenu icon={['bookmark', 'gear']} />;
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const { store } = this.props.root;
-    const state = store.getState();
-    const formObserved = state.form.advancedSearchForm;
-    const value = formObserved.values.searchTextArea;
+    const { searchInput, actionMenuItems } = this.props;
     return (
       <Paneset>
         <Pane
           firstMenu={leftMenu}
           lastMenu={rightMenu}
+          actionMenuItems={actionMenuItems}
           defaultWidth="fill"
           paneTitle={formatMsg({
             id: 'ui-marccat.search.result',
           })}
-          paneSub="6 Result found"
+          paneSub={(searchInput) ? 'Result found for: ' + searchInput : 'No Result found'}
           appIcon={{ app: 'marccat' }}
         >
-          <div>
-            {'you typed:' + (value || 'anything') }
-          </div>
-          <AdvanceSearchResult />
+          <AdvanceSearchResult {...this.props} />
         </Pane>
       </Paneset>
     );
   }
 }
 
-export default connect(
-  SearchResults,
-  C.META.MODULE_NAME,
-);
+
+const mapStateToProps = state => ({
+  searchInput: state.marccat.form.fieldValue || '',
+});
+
+export default connect(mapStateToProps, null)(SearchResults);

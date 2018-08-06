@@ -4,10 +4,12 @@
  */
 import React from 'react';
 import { connect } from '@folio/stripes-connect';
+import { withRoot as withStoreSubscription } from '@folio/stripes-core/src/components/Root/RootContext';
 import { Settings } from './Settings';
 import { Navigator } from './Navigator/';
-import * as C from './Utils';
 import Router from './router';
+import { reducer, epics } from './Redux';
+import * as C from './Utils';
 
 import './Theme/variables.css';
 
@@ -18,6 +20,14 @@ type RoutingProps = {
   },
   mutator: {
     firstPage: {
+      GET: Function,
+      reset: Function,
+    },
+    previousPage: {
+      GET: Function,
+      reset: Function,
+    },
+    nextPage: {
       GET: Function,
       reset: Function,
     },
@@ -38,6 +48,10 @@ type RoutingProps = {
     path: string,
     id: string,
   },
+  root: {
+    addReducer: Function,
+    addEpic: Function,
+  },
   location: {
     pathname: string,
   },
@@ -45,6 +59,7 @@ type RoutingProps = {
 };
 
 class MARCCatRouting extends React.Component<RoutingProps, {}> {
+  static actionNames = ['advancedSearch', 'diacritcChar'];
   static manifest = Object.freeze({
     query: {},
     indexType: {},
@@ -89,6 +104,24 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
       accumulate: true,
       fetch: false
     },
+    previousPage: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      path: `previous-page?mainLibrary=170&view=1&query=%{query}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
+      headers: C.ENDPOINT.HEADERS,
+      records: C.API_RESULT_JSON_KEY.BROWSING,
+      accumulate: true,
+      fetch: false
+    },
+    nextPage: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      path: `next-page?mainLibrary=170&view=1&query=%{query}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
+      headers: C.ENDPOINT.HEADERS,
+      records: C.API_RESULT_JSON_KEY.BROWSING,
+      accumulate: true,
+      fetch: false
+    },
   });
 
   constructor(props) {
@@ -96,6 +129,15 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
     this.props.mutator.indexType.replace('P');
     this.props.mutator.innerIndexValue.replace('2');
     this.props.mutator.constraintIndexValue.replace('LIB');
+
+    /*
+     * @author: Christian Chiama
+     * add epic and reducer to the application store
+     * all the reducer and the epic are load in the Redux folder
+     * and combine in a  unique reducer and unique epic$
+     */
+    props.root.addReducer(C.STATE_MANAGEMENT.REDUCER, reducer);
+    props.root.addEpic(C.STATE_MANAGEMENT.EPIC, epics);
   }
 
   render() {
@@ -111,4 +153,4 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
   }
 }
 
-export default connect(MARCCatRouting, C.META.MODULE_NAME);
+export default withStoreSubscription(connect(MARCCatRouting, C.META.MODULE_NAME));

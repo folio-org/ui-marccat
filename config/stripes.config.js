@@ -6,7 +6,6 @@ if (environment === 'sandbox') {
 } else {
   url = 'http://192.168.0.28:9130';
 }
-
 module.exports = {
   okapi: { url, tenant: 'diku' },
   config: {
@@ -14,8 +13,9 @@ module.exports = {
       username: 'diku_admin',
       password: 'admin',
     },
-    logCategories: 'core,path,mpath,mquery,xhr',
-    logPrefix: 'marccat-stripes',
+    languages: (process.env.NODE_ENV === 'DEBUG') ? ['en'] : ['en'],
+    logCategories: false,
+    logPrefix: false,
     logTimestamp: false,
     showPerms: true,
     showHomeLink: true,
@@ -25,5 +25,9 @@ module.exports = {
   },
   modules: {
     '@folio/marccat': {},
-  }
+  },
+  // branding: {
+  //   logo: {},
+  //   favicon: {},
+  // },
 };

@@ -2,8 +2,10 @@
  * @format
  * @flow
  */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import Route from 'react-router-dom/Route';
+import Redirect from 'react-router-dom/Redirect';
 import Switch from 'react-router-dom/Switch';
 import { TemplateView, CreateTemplate } from './Template/';
 import { SimpleSearch, SearchResults, AdvancedBrowsing } from './Search/';
@@ -11,11 +13,11 @@ import { IndexList, DiacriticTable } from './Indexes/';
 import { ReportView } from './Report';
 import MARCcat from './App/MARCcat';
 
-export function ConnectedRoute({ path, id, component: Component, ...props }) { // eslint-disable-line react/prop-types
+export function ConnectedRoute({ id, component: Component, ...props }) {
+  const { store } = props.root;
+  const state = store.getState();
   return (
-    <Route path={path}>
-      <Component {...props} id={id} />
-    </Route>
+    <Route render={() => (<Component {...props} id={id} state={state} form={state.form} />)} />
   );
 }
 
@@ -33,7 +35,8 @@ export default class Router extends React.Component<*> {
         <ConnectedRoute path={`${rootPath}/indexList`} {...this.props} component={IndexList} id="index_list_nav_root" />
         <ConnectedRoute path={`${rootPath}/diacritic`} {...this.props} component={DiacriticTable} id="diacritic_table_nav_root" />
         <ConnectedRoute path={`${rootPath}/browsing`} {...this.props} component={AdvancedBrowsing} id="browsing_search_nav_root" />
-        <ConnectedRoute path={`${rootPath}`} {...this.props} component={MARCcat} id="navigation_root_nav_root" />
+        <ConnectedRoute path={`${rootPath}`} {...this.props} component={MARCcat} id="nav_root" />
+        <Route render={() => (<Redirect to={`${rootPath}`} id="nav_root_redirect" />)} />
       </Switch>
     );
   }

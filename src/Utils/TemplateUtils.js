@@ -1,4 +1,4 @@
-const getLeader = currentTemp => {
+export const getLeader = currentTemp => { // eslint-disable-line
   let leader = '';
   currentTemp.fixedFields.map(element => {
     if (element.code === '000') {
@@ -9,6 +9,5 @@ const getLeader = currentTemp => {
   return leader;
 };
 
-export {
-  getLeader
-};
+export default getLeader;
+

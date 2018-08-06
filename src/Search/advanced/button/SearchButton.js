@@ -10,28 +10,31 @@ import Modal from '@folio/stripes-components/lib/Modal';
 import { FormattedMessage } from 'react-intl';
 import { withCloseHandler } from '../../../Core/';
 import * as C from '../../../Utils';
+import XLSTTrasform from '../../transform/XLSTTrasform';
 
 type Props = {
-  disabled: boolean;
   mutator: Object;
   data: string;
+  disabled: boolean;
 };
 
 type State = {
   results: Object;
 };
+
+
 class SearchButton extends React.Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
       results: null,
     };
+
     this.handleSearch = this.handleSearch.bind(this);
   }
 
   handleSearch = () => {
     this.props.mutator.query.replace(this.props.data);
-    // this.props.history.push('advancedSearch')
     const observer = Observable.from(this.props.mutator.searchQuery.GET());
     observer
       .take(1)
@@ -59,9 +62,11 @@ class SearchButton extends React.Component<Props, State> {
           <FormattedMessage id="ui-marccat.search.searchButton" />
         </Button>
         {this.state.results &&
-        <Modal dismissible closeOnBackgroundClick onClose={this.handleClose} open={isOpen} label={`Results for: ${this.props.data}`}>
-          <div>{this.state.results && this.state.results[0] ? this.state.results[0].data : 'No Result Found for ' + this.props.data}</div>
-        </Modal>
+          <Modal dismissible closeOnBackgroundClick onClose={this.handleClose} open={isOpen} label={`Results for: ${this.props.data}`}>
+            {this.state.results && this.state.results[0] ?
+              <XLSTTrasform {...this.props} xmlData={this.state.results[0].data} />
+              : <div>{'No Result Found for ' + this.props.data}</div>}
+          </Modal>
         }
       </div>
     );

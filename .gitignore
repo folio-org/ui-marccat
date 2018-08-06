@@ -31,3 +31,6 @@ dist/
 # Until each mod-* has addressed RMB-130:
 **/src/main/java/org/folio/rest/jaxrs/
 **/src/main/java/org/folio/rest/client/
+
+## docs
+docs/**

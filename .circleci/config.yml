@@ -1,20 +1,221 @@
-version: 2
+version: 2.0
 jobs:
+  install-dependencies:
+    docker:
+      - image: circleci/node:9
+    steps:
+      - checkout
+      - restore_cache:
+          key: v1-node-modules-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies
+          command: yarn install
+      - persist_to_workspace:
+          root: ~/
+          paths: project
+      - save_cache:
+          key: v1-node-modules-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/project/node_modules
+
+  eslint:
+    docker:
+      - image: circleci/node:9
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Lint JS
+          command: yarn eslint --max-warnings=0
+      - store_test_results:
+          path: ./artifacts
+      - store_artifacts:
+          path: ./artifacts
+
+  stylelint:
+    docker:
+      - image: circleci/node:9
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Set up artifacts directory for MARCcat Folio module
+          command: mkdir -p artifacts/stylelint
+      - run:
+          name: Lint CSS
+          command: yarn stylelint  --silent 
+      - store_test_results:
+          path: ./artifacts
+      - store_artifacts:
+          path: ./artifacts
+
   build:
     docker:
       - image: circleci/node:9
     steps:
-      - checkout
-      - run: yarn install
-  test:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Build bundle
+          command: echo 'build marccat production pack'
+
+  deploy:
     docker:
       - image: circleci/node:9
     steps:
-      - checkout
-      - run: yarn install && yarn lint
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Deploy MARCcat module on Folio Project 
+          command: echo 'deploy on Folio...'
+
+  npm_publish:
+    docker:
+      - image: circleci/node:9
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Publish on Folio npm
+          command: echo 'publishing....'
+
+  test-chrome:
+    docker:
+      - image: circleci/node:9-browsers
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run tests
+          command: yarn test --karma.singleRun --karma.browsers=Chrome --karma.reporters mocha junit --coverage
+      - store_test_results:
+          path: ./artifacts/junit
+      - store_artifacts:
+          path: ./artifacts
+
+  test-safari:
+    docker:
+      - image: circleci/node:9
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run tests
+          command: yarn test --karma.singleRun --karma.browsers=bs_safari_11 --karma.reporters mocha junit BrowserStack
+      - store_test_results:
+          path: ./artifacts/junit
+      - store_artifacts:
+          path: ./artifacts
+
+  test-firefox:
+    docker:
+      - image: circleci/node:9-browsers
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Install the latest Firefox ESR
+          command: |
+            sudo apt-get remove firefox-mozilla-build &&
+            sudo apt install firefox-esr &&
+            firefox --version
+      - run:
+          name: Run tests
+          command: yarn test --karma.singleRun --karma.browsers=Firefox --karma.reporters mocha junit
+      - store_test_results:
+          path: ./artifacts/junit
+      - store_artifacts:
+          path: ./artifacts
+
+  test-edge:
+    docker:
+      - image: circleci/node:9
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run tests
+          command: yarn test --karma.singleRun --karma.browsers=bs_ieEdge_windows --karma.reporters mocha junit BrowserStack || true
+      - store_test_results:
+          path: ./artifacts/junit
+      - store_artifacts:
+          path: ./artifacts
+
+  test-ie:
+    docker:
+      - image: circleci/node:9
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run tests
+          command: yarn test --karma.singleRun --karma.browsers=bs_ie11_windows --karma.reporters mocha junit BrowserStack || true
+      - store_test_results:
+          path: ./artifacts/junit
+      - store_artifacts:
+          path: ./artifacts
+
+  publish_npm:
+    docker:
+      - image: 'node:9'
+        user: node
+    steps:
+      - install-dependencies
+      - run: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
+      - run: npm publish --access=public
+
 workflows:
   version: 2
-  build_and_test:
+  # nightly:
+  #   triggers:
+  #     - schedule:
+  #         cron: "0 0 * * *"
+  #         filters:
+  #           branches:
+  #             only:
+  #               - master
+  #               - beta
+  lint_build_test_and_deploy:
     jobs:
-      - build
-      - test
+      - install-dependencies
+      - eslint:
+          filters:
+            branches:
+              only:
+                - master
+                - develop
+          requires:
+            - install-dependencies
+      - stylelint:
+          filters:
+            branches:
+              only:
+                - master
+                - develop
+          requires:
+            - install-dependencies
+      - build:
+          filters:
+            branches:
+              only:
+                - master
+                - develop
+          requires:
+            - eslint
+            - stylelint
+      - deploy:
+          filters:
+            branches:
+              only:
+                - master
+                - develop
+          requires:
+            - build
+      - npm_publish:
+          filters:
+            branches:
+              only:
+                - master
+                - develop
+          requires:
+            - deploy

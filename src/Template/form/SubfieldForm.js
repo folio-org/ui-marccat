@@ -41,7 +41,7 @@ class SubfieldForm extends React.Component<SubfieldFormProps, SubfieldFormState>
 
   render() {
     return (
-      <Row>
+      <Row className="subfieldElement">
         <Col xs={2}>
           <Select
             dataOptions={this.remapSubfields(this.props.subfields)}

@@ -15,7 +15,7 @@ import { formatSearchQuery } from '../../../Utils/Formatter';
 import * as C from '../../../Utils';
 import LogicalButton from '../button/LogicalButton';
 import css from '../../style/Search.css';
-import AdavnceSearchInput from './AdavnceSearchInput';
+import AdavnceSearchInput from './AdvanceSearchInput';
 
 type AdvanceSerachFormProps = {
     stripes: Object;

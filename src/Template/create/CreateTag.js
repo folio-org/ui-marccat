@@ -9,9 +9,11 @@ import Select from '@folio/stripes-components/lib/Select';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import Button from '@folio/stripes-components/lib/Button';
+import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import { FormattedMessage } from 'react-intl';
-import getLeader from '../../Utils/TemplateUtils';
+import { getLeader, findLabel } from '../../Utils/TemplateUtils';
 import SubfieldSection from '../form/SubfieldSection';
+import css from '../styles/Template.css';
 import * as C from '../../Utils';
 
 type CreateTagProps = {
@@ -19,6 +21,7 @@ type CreateTagProps = {
   stripes: Object,
   history: Object,
   resources: Object,
+  headingTypeLoaded: Object,
   headingTypes: {
     records: Object
   },
@@ -157,10 +160,11 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     super(props);
     this.state = {
       marcCategorySel: '',
-      headingTypeSel: '',
+      headingTypeSel: Number,
+      headingTypeLoaded: {},
       itemTypeSel: '', // eslint-disable-line react/no-unused-state
       functionCodeSel: '', // eslint-disable-line react/no-unused-state
-      marcAssociatedValue: ''
+      newTag: {}
     };
 
     this.fetchingMarcCategory = this.fetchingMarcCategory.bind(this);
@@ -175,6 +179,8 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     this.onChangeHeadingType = this.onChangeHeadingType.bind(this);
     this.onChangeItemType = this.onChangeItemType.bind(this);
     this.onChangeFunctionCode = this.onChangeFunctionCode.bind(this);
+    this.createNewTag = this.createNewTag.bind(this);
+    this.createTagObjectFromJson = this.createTagObjectFromJson.bind(this);
   }
 
   componentDidMount() {
@@ -191,6 +197,19 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
         />
       </PaneMenu>
     );
+  }
+
+  createNewTag() {
+    const textareas = Array.prototype.slice.call(document.getElementById('subfieldsData').querySelectorAll('.subfieldElement'));
+    let displayValue = '';
+    textareas.map((current) => {
+      const code = current.querySelectorAll('select')[0].value;
+      const data = current.querySelectorAll('textarea')[0].value;
+      return displayValue = displayValue.concat(C.MARC_CHARACTER.SEPARATOR + code + data);
+    });
+    const currentTag = this.state.newTag;
+    currentTag.displayValue = displayValue;
+    this.setState({ newTag: currentTag });
   }
 
   fetchSubfields(marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue) {
@@ -217,15 +236,41 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     this.props.mutator.fieldTemplate.GET().then((fetchResult) => {
       if (fetchResult) {
         if (fetchResult['variable-field']) {
+          const res = fetchResult['variable-field'];
           this.fetchSubfields(marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue);
+          const tagFetch = this.createTagObjectFromJson(res, marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue);
+          tagFetch.type = 'variableField';
+          this.setState({
+            newTag: tagFetch
+          });
           return;
-        } else {
+        }
+        if (fetchResult['fixed-field']) {
+          const res = fetchResult['fixed-field'];
+          const tagFetch = this.createTagObjectFromJson(res, marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue);
+          tagFetch.type = 'fixedField';
+          this.setState({
+            newTag: tagFetch
+          });
           this.props.mutator.subfields.reset();
           return;
         }
       }
       this.props.mutator.subfields.reset();
     });
+  }
+
+  createTagObjectFromJson(res, marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue) {
+    return {
+      code: res.code,
+      ind1: res.ind1,
+      ind2: res.ind2,
+      categoryCode: marcCategoryValue,
+      headingTypeCode: headingTypesValue,
+      itemTypeCode: itemTypesValue,
+      functionCode: functionCodeValue,
+      description: findLabel(this.state.headingTypeLoaded, headingTypesValue)
+    };
   }
 
   fetchingMarcCategory() {
@@ -247,11 +292,13 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
       if (fetchResult.length > 0) {
         this.setState({ headingTypeSel: fetchResult[0].value });
         this.fetchItemTypes(marcCategoryValue, fetchResult[0].value);
+        this.setState({ headingTypeLoaded: fetchResult });
         return;
       }
       this.fetchMarcAssociated(marcCategoryValue, C.EMPTY_PARAMETER, C.EMPTY_PARAMETER, C.EMPTY_PARAMETER);
       this.props.mutator.itemTypes.reset();
       this.setState({ headingTypeSel: '' });
+      this.setState({ headingTypeLoaded: '' });
     });
   }
 
@@ -296,40 +343,29 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     this.props.mutator.marcAssociated.GET().then((fetchResult) => {
       if (fetchResult) {
         const { tagCode, ind1, ind2 } = fetchResult;
-        this.setState({
-          marcAssociatedValue: 'tag: '
-            .concat(tagCode)
-            .concat(' ind 1:')
-            .concat(ind1)
-            .concat(' ind 2:')
-            .concat(ind2)
-            .concat('.')
-        });
         this.fetchFieldTemplate(marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue, tagCode, ind1, ind2);
-        return;
       }
-      this.setState({ marcAssociatedValue: '' });
     });
   }
 
   onChangeMarcCategory = event => {
-    this.fetchHeadingTypes(event.target.value);
-    this.setState({ marcCategorySel: event.target.value });
+    this.fetchHeadingTypes(Number.parseInt(event.target.value, 10));
+    this.setState({ marcCategorySel: Number.parseInt(event.target.value, 10) });
   }
 
   onChangeHeadingType = event => {
-    this.setState({ headingTypeSel: event.target.value });
-    this.fetchItemTypes(this.state.marcCategorySel, event.target.value);
+    this.setState({ headingTypeSel: Number.parseInt(event.target.value, 10) });
+    this.fetchItemTypes(this.state.marcCategorySel, Number.parseInt(event.target.value, 10));
   }
 
   onChangeItemType = event => {
-    this.setState({ itemTypeSel: event.target.value }); // eslint-disable-line react/no-unused-state
-    this.fetchFunctionCodes(this.state.marcCategorySel, this.state.headingTypeSel, event.target.value);
+    this.setState({ itemTypeSel: Number.parseInt(event.target.value, 10) }); // eslint-disable-line react/no-unused-state
+    this.fetchFunctionCodes(this.state.marcCategorySel, this.state.headingTypeSel, Number.parseInt(event.target.value, 10));
   }
 
   onChangeFunctionCode = event => {
-    this.setState({ functionCodeSel: event.target.value }); // eslint-disable-line react/no-unused-state
-    this.fetchMarcAssociated(this.state.marcCategorySel, this.state.headingTypeSel, this.state.itemTypeSe, event.target.value);
+    this.setState({ functionCodeSel: Number.parseInt(event.target.value, 10) }); // eslint-disable-line react/no-unused-state
+    this.fetchMarcAssociated(this.state.marcCategorySel, this.state.headingTypeSel, this.state.itemTypeSel, Number.parseInt(event.target.value, 10));
   }
 
   render() {
@@ -340,6 +376,15 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     const itemTypesValues = (resources.itemTypes || {}).records || [];
     const functionCodesValues = (resources.functionCodes || {}).records || [];
     const subfields = (resources.subfields || {}).records || [];
+    const columnMapping = {
+      code: '',
+      description: '',
+      ind1: '',
+      ind2: '',
+      displayValue: ''
+    };
+    const currenctTag = [];
+    currenctTag.push(this.state.newTag);
     /*
     if (marcCategories && marcCategories.hasLoaded && marcCategoriesSelect.value) {
       fetchHeadingTypes(marcCategoriesSelect.value);
@@ -347,6 +392,23 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     */
     return (
       <form name="createTagForm" id="createTagForm" noValidate>
+        <Row className={css.mandatoryList}>
+          <Col xs={12}>
+            <MultiColumnList
+              contentData={currenctTag}
+              columnMapping={columnMapping}
+              visibleColumns={[
+                'code',
+                'description',
+                'ind1',
+                'ind2',
+                'displayValue',
+              ]}
+              columnWidths={{ code: '10%', description: '40%', ind1: '5%', ind2: '5%', displayValue: '40%' }}
+            />
+          </Col>
+        </Row>
+
         <Row>
           <Col xs={12}>
             {marcCatValues &&
@@ -402,11 +464,6 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
             }
           </Col>
         </Row>
-        <Row>
-          <Col xs={12}>
-            {this.state.marcAssociatedValue}
-          </Col>
-        </Row>
 
         {resources.subfields &&
           resources.subfields.hasLoaded &&
@@ -417,7 +474,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
         <Row>
           <Button
             {...this.props}
-            onClick={this.createTag}
+            onClick={this.createNewTag}
             type="button"
             buttonStyle="primary"
           >

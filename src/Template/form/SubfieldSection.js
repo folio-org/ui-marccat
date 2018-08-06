@@ -52,7 +52,7 @@ class SubfieldSection extends React.Component<SubfieldSectionProps, SubfieldSect
   render() {
     return (
       <Row>
-        <Col xs={12}>
+        <Col xs={12} id="subfieldsData">
           {this.renderSubfield(this.props.subfields, this.state.count)}
         </Col>
       </Row>

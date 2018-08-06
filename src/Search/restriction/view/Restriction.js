@@ -4,7 +4,7 @@
  */
 import React from 'react';
 
-type RestricionProps = {};
+type RestricionProps = { open: Boolean };
 
 export default function RestrictionView({ open } : RestricionProps) {
   return (

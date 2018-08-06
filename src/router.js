@@ -2,6 +2,7 @@
  * @format
  * @flow
  */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import Route from 'react-router-dom/Route';
 import Redirect from 'react-router-dom/Redirect';
@@ -12,9 +13,11 @@ import { IndexList, DiacriticTable } from './Indexes/';
 import { ReportView } from './Report';
 import MARCcat from './App/MARCcat';
 
-export function ConnectedRoute({ id, component: Component, ...props }) { // eslint-disable-line react/prop-types
+export function ConnectedRoute({ id, component: Component, ...props }) {
+  const { store } = props.root;
+  const state = store.getState();
   return (
-    <Route render={() => (<Component {...props} id={id} subscription={{}} />)} />
+    <Route render={() => (<Component {...props} id={id} state={state} form={state.form} />)} />
   );
 }
 

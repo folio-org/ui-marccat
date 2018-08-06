@@ -10,10 +10,10 @@ import { connect } from '@folio/stripes-connect';
 import { ToolbarMenu, EmptyMessage } from '../Core';
 import * as C from '../Utils';
 
-class MARCcat extends React.Component<*> {
+class MARCcat extends React.Component {
   render() {
     const leftMenu = <ToolbarMenu icon={['search']} />;
-    const rightMenu = <ToolbarMenu icon={['validation-check', 'gear']} />;
+    const rightMenu = <ToolbarMenu icon={['diacritic', 'indexes']} />;
     const { formatMessage } = this.props.stripes.intl;
     return (
       <Paneset static>

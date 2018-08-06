@@ -1,16 +1,17 @@
 import React from 'react';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { Field } from 'redux-form';
+import { connect } from 'react-redux';
 
 import css from '../../style/Search.css';
 
 
 type Props = {
-  defaultValue: string,
-  onChange: Function,
+  defaultValue: string;
+  onChange: Function;
 }
 
-export default function AdavnceSearchInput({ defaultValue, onChange } : Props) {
+function AdvanceSearchInput({ defaultValue, onChange } : Props) {
   return (
     <Row>
       <Col xs={12}>
@@ -27,3 +28,12 @@ export default function AdavnceSearchInput({ defaultValue, onChange } : Props) {
     </Row>
   );
 }
+
+const mapStateToProps = state => ({
+  data: state.marccat.data
+});
+
+const mapDispatchToProps = {
+  performSearch: '@@ui-marccat/FIND'
+};
+export default connect(mapStateToProps, mapDispatchToProps)(AdvanceSearchInput);

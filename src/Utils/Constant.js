@@ -54,7 +54,7 @@ export const COMMON_MANIFEST = {
 export const INTERNAL_URL = {
   SETTINGS_GENERAL: '/settings/',
   SETTINGS_LOGICAL_VIEW: '/logicalview',
-  VIEW_TEMPLATE: '/marccat/templatelist/',
+  VIEW_TEMPLATE: '/marccat/templateList/',
   ADD_TEMPLATE: '/marccat/templateAdd',
   EDIT_TEMPLATE: '/marccat/template/edit/:id',
   DELETE_TEMPLATE: '/marccat/template/delete/:id',

@@ -1,5 +1,7 @@
-export { default as PrinterProvider } from './Provider/PrinterProvider';
+export { default as PrinterProvider } from './Provider/withPrinter';
+export { default as withCloseHandler } from './Provider/withCloseHandler';
 export { default as EmptyMessage } from './UI/Message/EmptyMessage';
-export { default as withCloseHandler } from './Handler/withCloseHandler';
 
 export { ToolbarMenu, ToolbarButtonMenu } from './UI/Toolbar/Menu';
+export { actionMenuItem } from './UI/Toolbar/ActionMenu';
+

@@ -4,11 +4,12 @@
  */
 import React from 'react';
 import { connect } from '@folio/stripes-connect';
-import { withRoot as withStoreSubscription } from '@folio/stripes-core/src/components/Root/RootContext';
+import { withRoot } from '@folio/stripes-core/src/components/Root/RootContext';
 import { Settings } from './Settings';
 import { Navigator } from './Navigator/';
 import Router from './router';
 import { reducer, epics } from './Redux';
+import withSubscription from './Core/Provider/withSubscription';
 import * as C from './Utils';
 
 import './Theme/variables.css';
@@ -124,8 +125,8 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
     },
   });
 
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
     this.props.mutator.indexType.replace('P');
     this.props.mutator.innerIndexValue.replace('2');
     this.props.mutator.constraintIndexValue.replace('LIB');
@@ -136,6 +137,7 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
      * all the reducer and the epic are load in the Redux folder
      * and combine in a  unique reducer and unique epic$
      */
+    // this.context.addReducer(resourceKey, reducer)
     props.root.addReducer(C.STATE_MANAGEMENT.REDUCER, reducer);
     props.root.addEpic(C.STATE_MANAGEMENT.EPIC, epics);
   }
@@ -153,4 +155,11 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
   }
 }
 
-export default withStoreSubscription(connect(MARCCatRouting, C.META.MODULE_NAME));
+/**
+  * we use the @link {withRoot} wrapper to supply all component a root prop for add a reducer and epic
+  * the root prop is in the props object.
+  *
+  * @example: this.props.root
+  * @example: const { state } = this.props.root;
+  */
+export default withRoot(withSubscription(connect(MARCCatRouting, C.META.MODULE_NAME)));

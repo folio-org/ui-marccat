@@ -15,7 +15,7 @@ import { formatSearchQuery } from '../../../Utils/Formatter';
 import * as C from '../../../Utils';
 import LogicalButton from '../button/LogicalButton';
 import css from '../../style/Search.css';
-import AdavnceSearchInput from './AdavnceSearchInput';
+import AdavnceSearchInput from './AdvanceSearchInput';
 
 type AdvanceSerachFormProps = {
     stripes: Object;
@@ -196,7 +196,7 @@ class AdvanceSearchForm extends
               </div>
               <Col xs={12}>
                 <div className={css.colQuery}>
-                  <LogicalButton {...this.props} />
+                  <LogicalButton {...this.props} handleTextAreaValue={this.handleTextAreaValue} />
                   <AdavnceSearchInput onChange={this.handleChange} />
                   <Row>
                     <Col xs={6}>

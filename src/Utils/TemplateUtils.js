@@ -9,5 +9,13 @@ export const getLeader = currentTemp => { // eslint-disable-line
   return leader;
 };
 
-export default getLeader;
-
+export const findLabel = (array, value) => {
+  let label = '';
+  array.map(element => {
+    if (element.value === value) {
+      return label = element.label;
+    }
+    return '';
+  });
+  return label;
+};

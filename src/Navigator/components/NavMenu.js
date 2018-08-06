@@ -80,15 +80,6 @@ class NavMenu extends React.Component<NavMenuProps, NavMenuSatate> {
             />
             <NavItem
               {...this.props}
-              accordionId="indexesSection"
-              label="Indexes"
-              itemLabel="Indexes Guide"
-              open={this.state.section.expandeCollapseAction}
-              activeLink={`${rootPath}/`}
-              path={`${rootPath}/indexList`}
-            />
-            <NavItem
-              {...this.props}
               accordionId="diacriticSection"
               label="Diacritic"
               open={this.state.section.expandeCollapseAction}

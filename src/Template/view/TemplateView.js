@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
+import { Observable } from 'rxjs/Observable';
 import React from 'react';
 import { connect } from '@folio/stripes-connect';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
@@ -15,33 +16,22 @@ import { EditTemplate } from '../';
 import { ToolbarButtonMenu } from '../../Core';
 import { removeById } from '../../Utils/Formatter';
 import * as C from '../../Utils';
-
 import css from '../styles/Template.css';
 
-class TemplateView extends React.Component {
-  static propTypes = {
-    stripes: PropTypes.shape({
-      connect: PropTypes.func.isRequired,
-      intl: PropTypes.object.isRequired,
-    }).isRequired,
-    mutator: PropTypes.shape({
-      currentTemplate: PropTypes.shape({
-        update: PropTypes.func,
-      }),
-      recordsTemplates: PropTypes.shape({
-        POST: PropTypes.func,
-        PUT: PropTypes.func,
-        DELETE: PropTypes.func,
-      }),
-      currentType: PropTypes.string
-    }).isRequired,
-    history: PropTypes.object,
-    resources: PropTypes.object,
-  };
 
+class TemplateView extends React.Component {
   static manifest = Object.freeze({
     currentTemplate: {},
     currentType: {},
+    query: {},
+    templateDetails: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      path: `record-template/%{query}?type=B&lang=${C.ENDPOINT.DEFAULT_LANG}`,
+      headers: C.ENDPOINT.HEADERS,
+      fetch: false,
+      accumulate: true
+    },
     recordsTemplates: {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
@@ -81,6 +71,33 @@ class TemplateView extends React.Component {
     this.hideConfirm = this.hideConfirm.bind(this);
     this.callout = null;
   }
+  static propTypes = {
+    stripes: PropTypes.shape({
+      connect: PropTypes.func.isRequired,
+      intl: PropTypes.object.isRequired,
+    }).isRequired,
+    mutator: PropTypes.shape({
+      currentTemplate: PropTypes.shape({
+        update: PropTypes.func,
+      }),
+      recordsTemplates: PropTypes.shape({
+        POST: PropTypes.func,
+        PUT: PropTypes.func,
+        DELETE: PropTypes.func,
+      }),
+      query: PropTypes.string,
+      templateDetails: PropTypes.shape({
+        reset: PropTypes.func,
+        GET: PropTypes.func,
+        PUT: PropTypes.func,
+      }),
+      currentType: PropTypes.string
+    }).isRequired,
+    history: PropTypes.object,
+    resources: PropTypes.object,
+    actionMenuItems: PropTypes.object
+  };
+
 
   onDelete() {
     const toDelete = this.state.selectedTemplate;
@@ -127,8 +144,20 @@ class TemplateView extends React.Component {
     });
   }
 
-  handleRowClick() {
-    this.setState({});
+  handleRowClick=(c, object) => {
+    this.props.mutator.templateDetails.reset();
+    this.props.mutator.query.replace(object.id);
+    Observable.from(this.props.mutator.templateDetails.GET());
+    this.setState({
+      showTemplateDetail: true,
+      selectedTemplate: object,
+    });
+  }
+
+  update(instance) {
+    this.props.mutator.templateDetails.PUT(instance).then(() => {
+      this.closeEditInstance();
+    });
   }
 
   handleAddTemplate() {
@@ -178,17 +207,6 @@ class TemplateView extends React.Component {
       </PaneMenu>
     );
 
-    const actionMenuItems = [
-      {
-        label: formatMsg({
-          id: 'ui-marccat.template.create',
-        }),
-        onClick: () => {
-          this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE);
-        },
-      },
-    ];
-
     const actionMenuItemsDetail = [
       {
         label: formatMsg({
@@ -215,7 +233,7 @@ class TemplateView extends React.Component {
       className={css.mr15}
       onClick={() => this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE)}
     />;
-
+    const { actionMenuItems } = this.props;
     return (
       <Paneset static>
         <Pane
@@ -239,12 +257,7 @@ class TemplateView extends React.Component {
             visibleColumns={['id', 'name']}
             sortedColumn="name"
             sortOrder="ascending"
-            onRowClick={(c, object) => {
-              this.setState({
-                showTemplateDetail: true,
-                selectedTemplate: object,
-              });
-            }}
+            onRowClick={this.handleRowClick}
             containerRef={ref => {
               this.resultsList = ref;
             }}

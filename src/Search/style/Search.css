@@ -16,13 +16,15 @@
   width: 100%;
 }
 
-.rowButtonBrowsing{
+.rowButtonBrowsing {
   margin-top: 10px;
 }
-.previousButtonBrowsing{
+
+.previousButtonBrowsing {
   float: right;
   width: 30%;
 }
-.nextButtonBrowsing{
+
+.nextButtonBrowsing {
   width: 30%;
 }

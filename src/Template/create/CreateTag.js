@@ -10,7 +10,7 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import Button from '@folio/stripes-components/lib/Button';
 import { FormattedMessage } from 'react-intl';
-import { getLeader } from '../../Utils/TemplateUtils';
+import getLeader from '../../Utils/TemplateUtils';
 import SubfieldSection from '../form/SubfieldSection';
 import * as C from '../../Utils';
 

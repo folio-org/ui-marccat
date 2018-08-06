@@ -9,6 +9,5 @@ const getLeader = currentTemp => {
   return leader;
 };
 
-export {
-  getLeader
-};
+export default getLeader;
+

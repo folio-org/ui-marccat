@@ -9,7 +9,8 @@ const execSync = (cmd) => {
 
 const lunchBuild = () => {
   log.ok('Start Building');
-  execSync('stripes build --output dist/ --sourcemap');
+  execSync('stripes build --output dist/ --sourcemap --languages en');
+  log.ok('End Building for language en-US');
 };
 
 lunchBuild();

@@ -1,7 +1,7 @@
 import React from 'react';
 import { actionMenuItem } from '..';
 
-export const RootContext = React.createContext();
+export const MARCcatContext = React.createContext({});
 
 type Props = {
   root: Object;
@@ -22,14 +22,14 @@ function withSubscription(WrappedComponent) {
       const log = this.props.stripes.logger;
       const commonActionMenuItem = actionMenuItem('ui-marccat.diacritic.title', () => {});
       return (
-        <RootContext.Consumer>
+        <MARCcatContext.Consumer>
           {() => <WrappedComponent
             {...this.props}
             state={state}
             log={log}
             actionMenuItems={commonActionMenuItem}
           /> }
-        </RootContext.Consumer>
+        </MARCcatContext.Consumer>
       );
     }
   }

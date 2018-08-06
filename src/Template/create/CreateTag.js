@@ -333,7 +333,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
 
   onChangeFunctionCode = event => {
     this.setState({ functionCodeSel: Number.parseInt(event.target.value, 10) }); // eslint-disable-line react/no-unused-state
-    this.fetchMarcAssociated(this.state.marcCategorySel, this.state.headingTypeSel, this.state.itemTypeSe, Number.parseInt(event.target.value, 10));
+    this.fetchMarcAssociated(this.state.marcCategorySel, this.state.headingTypeSel, this.state.itemTypeSel, Number.parseInt(event.target.value, 10));
   }
 
   render() {

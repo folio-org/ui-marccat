@@ -115,7 +115,6 @@ class AdvanceSearchForm extends
       let options = {};
       let optionsInnerIndex = {};
       let optionsConstraintIndex = {};
-      const { value } = this.state;
 
       if (categories) {
         options = categories.records.map((element) => (

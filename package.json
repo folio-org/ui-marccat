@@ -36,7 +36,6 @@
     }
   ],
   "scripts": {
-    "prestart": "DEBUG=stripes* stripes serve config/stripes.config.js",
     "start": "node script/js/start",
     "status": "stripes status config/stripes.config.js",
     "build": "node ./script/js/build",
@@ -62,7 +61,6 @@
     "eslint-plugin-react": "7.10.0",
     "lint-staged": "^7.2.0",
     "pre-commit": "^1.2.2",
-    "react-trigger-change": "^1.0.2",
     "semver": "5.x.x"
   },
   "dependencies": {
@@ -77,7 +75,7 @@
     "semafor": "0.0.1",
     "stylelint": "^9.3.0",
     "stylelint-config-standard": "^18.2.0",
-    "suber": "^5.0.1"
+    "xslt-processor": "^0.10.0"
   },
   "peerDependencies": {
     "@folio/stripes-core": "*",

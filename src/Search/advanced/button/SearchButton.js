@@ -10,6 +10,7 @@ import Modal from '@folio/stripes-components/lib/Modal';
 import { FormattedMessage } from 'react-intl';
 import { withCloseHandler } from '../../../Core/';
 import * as C from '../../../Utils';
+import XLSTTrasform from '../../transform/XLSTTrasform';
 
 type Props = {
   mutator: Object;
@@ -61,9 +62,11 @@ class SearchButton extends React.Component<Props, State> {
           <FormattedMessage id="ui-marccat.search.searchButton" />
         </Button>
         {this.state.results &&
-        <Modal dismissible closeOnBackgroundClick onClose={this.handleClose} open={isOpen} label={`Results for: ${this.props.data}`}>
-          <div>{this.state.results && this.state.results[0] ? this.state.results[0].data : 'No Result Found for ' + this.props.data}</div>
-        </Modal>
+          <Modal dismissible closeOnBackgroundClick onClose={this.handleClose} open={isOpen} label={`Results for: ${this.props.data}`}>
+            {this.state.results && this.state.results[0] ?
+              <XLSTTrasform {...this.props} xmlData={this.state.results[0].data} />
+              : <div>{'No Result Found for ' + this.props.data}</div>}
+          </Modal>
         }
       </div>
     );

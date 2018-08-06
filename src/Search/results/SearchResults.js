@@ -2,8 +2,8 @@
  * @format
  * @flow
  */
+/* eslint-disable react/no-deprecated */
 import React from 'react';
-import Icon from '@folio/stripes-components/lib/Icon';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { connect } from '@folio/stripes-connect';
 import Paneset from '@folio/stripes-components/lib/Paneset';
@@ -12,15 +12,30 @@ import * as C from '../../Utils';
 
 type SearchResultsProps = {
   stripes: Object;
+  root: {
+    store: {}
+  };
 };
-type SearchResultsState = {};
-
+type SearchResultsState = {
+  results: Array;
+};
 
 class SearchResults extends React.Component<SearchResultsProps, SearchResultsState> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      results: [] // eslint-disable-line
+    };
+  }
+
   render() {
     const leftMenu = <ToolbarMenu icon={['search']} />;
     const rightMenu = <ToolbarMenu icon={['bookmark', 'gear']} />;
     const formatMsg = this.props.stripes.intl.formatMessage;
+    const { store } = this.props.root;
+    const state = store.getState();
+    const formObserved = state.form.advancedSearchForm;
+    const value = formObserved.values.searchTextArea;
     return (
       <Paneset>
         <Pane
@@ -49,7 +64,9 @@ class SearchResults extends React.Component<SearchResultsProps, SearchResultsSta
             ]}
             striped
           /> */}
-          <Icon icon="spinner-ellipsis" />
+          <div>
+            {'you typed:' + (value || 'anything') }
+          </div>
         </Pane>
       </Paneset>
     );

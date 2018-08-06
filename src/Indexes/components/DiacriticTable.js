@@ -68,6 +68,7 @@ class MultiColumnListDiacritic extends React.Component
     return (
       <Paneset static>
         <Pane
+          defaultWidth="full"
           firstMenu={leftMenu}
           lastMenu={rightMenu}
           paneTitle={formatMsg({

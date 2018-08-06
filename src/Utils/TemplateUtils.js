@@ -8,3 +8,6 @@ export const getLeader = currentTemp => { // eslint-disable-line
   });
   return leader;
 };
+
+export default getLeader;
+

@@ -13,20 +13,23 @@ import * as C from '../../../Utils';
 import XLSTTrasform from '../../transform/XLSTTrasform';
 
 type Props = {
-  disabled: boolean;
   mutator: Object;
   data: string;
+  disabled: boolean;
 };
 
 type State = {
   results: Object;
 };
+
+
 class SearchButton extends React.Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
       results: null,
     };
+
     this.handleSearch = this.handleSearch.bind(this);
   }
 

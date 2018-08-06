@@ -1,9 +1,10 @@
+/* eslint-disable */
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { actionTypes as ActionTypes, nativeActionTypes } from './Actions';
+import { actionTypes as ActionTypes, nativeActionTypes } from './actions/Actions';
 
 
 /**
@@ -460,7 +461,7 @@ export function epic(action$, { getState }) {
 }
 
 /**
- * Theform store reducer simply uses the handlers defined above
+ * The form store reducer
  * @param {Object} state - data store state leaf
  * @param {Object} action - redux action being dispatched
  */
@@ -469,6 +470,7 @@ export function formReducer(state = {}, action = null) {
   case nativeActionTypes.REDUX_FORM_CHANGE:
     return Object.assign({}, state, {
       fieldValue: action.payload,
+      meta: action.meta
     });
   case nativeActionTypes.REDUX_FORM_BLUR:
     return Object.assign({}, state, {

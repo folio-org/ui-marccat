@@ -9,6 +9,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 
+// Da rimuovere con una gestione dello stato migliore
 export class SearchProvider {
   constructor() {
     this.searchTerm = new BehaviorSubject();
@@ -26,12 +27,12 @@ export class SearchProvider {
 
   showResults() {
     return this.searchTerm
-      .debounceTime(500)
+      .debounceTime(200)
       .distinctUntilChanged()
       .switchMap(term => (term
-        ? this.doSearch(term) : Observable.of([])))
-      .catch(error => {
-        console.error(error);
+        ? this.performSearch(term) : Observable.of([])))
+      .catch(() => {
+        // console.error(error);
         return Observable.of([]);
       });
   }

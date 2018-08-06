@@ -6,7 +6,6 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Button from '@folio/stripes-components/lib/Button';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { SearchButton } from '../';
 import * as C from '../../Utils';
 import css from '../style/indexes.css';
@@ -28,18 +27,27 @@ type DiacriticState = {
 };
 
 class Diacritic extends React.Component<DiacriticProps, DiacriticState> {
-  static bus;
+  static unsubscribe;
   constructor(props: DiacriticProps) {
     super(props);
     this.state = {
       value: '',                                                      //eslint-disable-line
       charCopied: '',                                                 //eslint-disable-line
-      isOpen: false,                                                  //eslint-disable-line
+      isOpen: false,                                               //eslint-disable-line
     };
     /** bind handler * */
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+
+    /** observe custom event (remember you must remove the listener) * */
+    this.observe();
   }
+
+  observe = () => {
+    window.addEventListener(C.EVENTS.CHAR_COPIED, (evt) => { // FIX ME
+      this.props.change('charCopied', evt.detail);
+    }, false);
+  };
 
   handleChange = (event) => {
     this.setState({ value: event.target.value });                      //eslint-disable-line

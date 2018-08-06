@@ -4,7 +4,6 @@
  */
 /* eslint-disable react/no-deprecated */
 import React from 'react';
-// import Icon from '@folio/stripes-components/lib/Icon';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { connect } from '@folio/stripes-connect';
 import Paneset from '@folio/stripes-components/lib/Paneset';
@@ -66,7 +65,7 @@ class SearchResults extends React.Component<SearchResultsProps, SearchResultsSta
             striped
           /> */}
           <div>
-            {'you typed:' + value}
+            {'you typed:' + (value || 'anything') }
           </div>
         </Pane>
       </Paneset>

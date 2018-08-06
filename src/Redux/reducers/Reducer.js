@@ -4,7 +4,7 @@ import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { actionTypes as ActionTypes, nativeActionTypes } from './actions/Actions';
+import { actionTypes as ActionTypes, reduxActionTypes } from '../actions/Actions';
 
 
 /**
@@ -467,16 +467,16 @@ export function epic(action$, { getState }) {
  */
 export function formReducer(state = {}, action = null) {
   switch (action.type) {
-  case nativeActionTypes.REDUX_FORM_CHANGE:
+  case reduxActionTypes.REDUX_FORM_CHANGE:
     return Object.assign({}, state, {
       fieldValue: action.payload,
       meta: action.meta
     });
-  case nativeActionTypes.REDUX_FORM_BLUR:
+  case reduxActionTypes.REDUX_FORM_BLUR:
     return Object.assign({}, state, {
       fieldValue: action.payload,
     });
-  case ActionTypes.DIACRITIC_CHAR:
+  case reduxActionTypes.DIACRITIC_CHAR:
     return Object.assign({}, state, {
       charCopied: action.payload,
     });

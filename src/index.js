@@ -4,7 +4,7 @@
  */
 import React from 'react';
 import { connect } from '@folio/stripes-connect';
-import { withRoot as withSubscription } from '@folio/stripes-core/src/components/Root/RootContext';
+import { withRoot as withStoreSubscription } from '@folio/stripes-core/src/components/Root/RootContext';
 import { Settings } from './Settings';
 import { Navigator } from './Navigator/';
 import Router from './router';
@@ -153,4 +153,4 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
   }
 }
 
-export default withSubscription(connect(MARCCatRouting, C.META.MODULE_NAME));
+export default withStoreSubscription(connect(MARCCatRouting, C.META.MODULE_NAME));

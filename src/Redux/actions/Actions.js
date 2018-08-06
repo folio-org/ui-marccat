@@ -12,9 +12,10 @@ export const actionTypes = {
   CLEAR_SEARCH_RESULTS: '@@ui-marccat/CLEAR_SEARCH_RESULTS',
 };
 
-export const nativeActionTypes = {
+export const reduxActionTypes = {
   REDUX_FORM_CHANGE: '@@redux-form/CHANGE',
   REDUX_FORM_BLUR: '@@redux-form/CHANGE',
+  FORM_REDUX_RESET: '@@redux-form/RESET',
 
 };
 

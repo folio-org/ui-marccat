@@ -9,18 +9,6 @@ const getLeader = currentTemp => {
   return leader;
 };
 
-const findLabel = (array, value) => {
-  let label = '';
-  array.map(element => {
-    if (element.value === value) {
-      return label = element.label;
-    }
-    return '';
-  });
-  return label;
-};
-
 export {
-  getLeader,
-  findLabel
+  getLeader
 };

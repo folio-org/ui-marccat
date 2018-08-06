@@ -1,23 +1,15 @@
 import { combineReducers } from 'redux';
 import { combineEpics } from 'redux-observable';
-import {
-  reducer as marccatReducer,
-  formReducer as marccatFormReducer,
-  epic as marccatEpic,
-} from './reducers/Reducer';
+import { reducer as marccatReducer, epic as marccatEpic, search as marccatSearchEpic } from './reducers/Reducer';
+import marccatFormReducer from './reducers/FormReducer';
 
-import {
-  searchInPreFlight as marccatSearchPreflightReducer,
-  userResults
-} from './reducers/SearchPreflight';
 
 export const reducer = combineReducers({
   data: marccatReducer,
-  form: marccatFormReducer,
-  searchInPreFlight: marccatSearchPreflightReducer,
-  userResults
+  form: marccatFormReducer
 });
 
 export const epics = combineEpics(
-  marccatEpic
+  marccatEpic,
+  marccatSearchEpic
 );

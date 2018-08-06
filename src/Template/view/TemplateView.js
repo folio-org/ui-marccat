@@ -95,6 +95,7 @@ class TemplateView extends React.Component {
     }).isRequired,
     history: PropTypes.object,
     resources: PropTypes.object,
+    actionMenuItems: PropTypes.object
   };
 
 
@@ -206,17 +207,6 @@ class TemplateView extends React.Component {
       </PaneMenu>
     );
 
-    const actionMenuItems = [
-      {
-        label: formatMsg({
-          id: 'ui-marccat.template.create',
-        }),
-        onClick: () => {
-          this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE);
-        },
-      },
-    ];
-
     const actionMenuItemsDetail = [
       {
         label: formatMsg({
@@ -243,7 +233,7 @@ class TemplateView extends React.Component {
       className={css.mr15}
       onClick={() => this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE)}
     />;
-
+    const { actionMenuItems } = this.props;
     return (
       <Paneset static>
         <Pane

@@ -424,6 +424,24 @@ export function reducer(state = {}, action) {
   }
 }
 
+export function search(actions$,{ getState }){
+  return actions$
+    .ofType(ActionTypes.FIND)
+    .mergeMap(action => {
+    
+      const request = state.marccat.data[data.type].requests[data.timestamp];
+
+      const promise = fetch(url)
+        .then(response => Promise.all([response.ok, parseResponseBody(response)]))
+        .then(([ok, body]) => (ok ? body : Promise.reject(body.errors))); // eslint-disable-line no-shadow
+
+      // an observable from resolving or rejecting the request payload
+      return Observable.from(promise)
+        .map(responseBody => resolve(request, responseBody, payload))
+        .catch(errors => Observable.of(reject(request, errors, data)));
+      }
+    );
+  }
 /**
  * The epic used to actually make a requests when an action is dispatched
  * @param {Observable} action$ - the observable action
@@ -444,8 +462,7 @@ export function epic(action$, { getState }) {
       const state = getState();
       const method = actionMethods[type];
 
-      // the request object created from this action
-      // const request = state.marccat.data[data.type].requests[data.timestamp];
+      const request = state.marccat.data[data.type].requests[data.timestamp];
 
 
       // request which rejects when not OK
@@ -458,28 +475,4 @@ export function epic(action$, { getState }) {
         .map(responseBody => resolve(request, responseBody, payload))
         .catch(errors => Observable.of(reject(request, errors, data)));
     });
-}
-
-/**
- * The form store reducer
- * @param {Object} state - data store state leaf
- * @param {Object} action - redux action being dispatched
- */
-export function formReducer(state = {}, action = null) {
-  switch (action.type) {
-  case reduxActionTypes.REDUX_FORM_CHANGE:
-    return Object.assign({}, state, {
-      fieldValue: action.payload,
-      meta: action.meta
-    });
-  case reduxActionTypes.REDUX_FORM_BLUR:
-    return Object.assign({}, state, {
-      fieldValue: action.payload,
-    });
-  case reduxActionTypes.DIACRITIC_CHAR:
-    return Object.assign({}, state, {
-      charCopied: action.payload,
-    });
-  default: return state;
-  }
 }

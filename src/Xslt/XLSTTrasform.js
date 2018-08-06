@@ -1,13 +1,11 @@
 import React from 'react';
 import { connect } from '@folio/stripes-connect';
-import { xmlParse } from 'xslt-processor';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
-import * as C from '../../Utils';
+import * as C from '../Utils';
 
 type Props = {
     stripes: Object;
-    xmlData: Object;
 };
 
 type State = {};
@@ -24,16 +22,16 @@ class XLSTTrasform extends React.Component<Props, State> {
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const xml = xmlParse(this.props.xmlData);
+    // const xml = xmlParse(this.props.xmlData);
     return (
       <Paneset static>
         <Pane
-          paneTitle={formatMsg({ id: 'ui-marccat.' })}
-          paneSub={formatMsg({ id: 'ui-marccat.' })}
+          paneTitle={formatMsg({ id: 'ui-marccat.app.title' })}
+          paneSub={formatMsg({ id: 'ui-marccat.app.title' })}
           appIcon={{ app: C.META.ICON_TITLE }}
         >
           <div>
-            {xml}
+            {/* {alert(xml)} */}
           </div>
         </Pane>
       </Paneset>

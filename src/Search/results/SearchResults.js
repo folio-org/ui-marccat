@@ -3,18 +3,23 @@
  * @flow
  */
 /* eslint-disable react/no-deprecated */
+/* eslint-disable react/prop-types */
+
 import React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
-import { connect } from '@folio/stripes-connect';
+import { connect } from 'react-redux';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import { ToolbarMenu } from '../../Core';
-import * as C from '../../Utils';
+import { searchUsers } from '../../Redux/actions/ActionCreator';
+import AdvanceSearchResult from './AdvanceSearchResult';
 
 type SearchResultsProps = {
   stripes: Object;
   root: {
     store: {}
   };
+  query: string;
+  handleSearch: () => void;
 };
 type SearchResultsState = {
   results: Array;
@@ -26,7 +31,23 @@ class SearchResults extends React.Component<SearchResultsProps, SearchResultsSta
     this.state = {
       results: [] // eslint-disable-line
     };
+    this.handleAdvancedSearch = this.handleAdvancedSearch.bind(this);
   }
+
+  componentDidMount() {
+    //this.handleAdvancedSearch(this.props.query);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // if (this.props.query !== nextProps.query) {
+    //   this.handleAdvancedSearch(nextProps.query);
+    // }
+  }
+
+  handleAdvancedSearch(query) {
+    this.props.handleSearch(query);
+  }
+
 
   render() {
     const leftMenu = <ToolbarMenu icon={['search']} />;
@@ -36,6 +57,12 @@ class SearchResults extends React.Component<SearchResultsProps, SearchResultsSta
     const state = store.getState();
     const formObserved = state.form.advancedSearchForm;
     const value = formObserved.values.searchTextArea;
+
+    const {
+      results,
+      searchInPreFlight
+    } = this.props;
+
     return (
       <Paneset>
         <Pane
@@ -48,22 +75,10 @@ class SearchResults extends React.Component<SearchResultsProps, SearchResultsSta
           paneSub="6 Result found"
           appIcon={{ app: 'marccat' }}
         >
-          {/* <MultiColumnList
-            id="search-results"
-            contentData={{}}
-            visibleColumns={[
-              'id',
-              'amicusNumber',
-              'title',
-              'name',
-              'date',
-              'date2',
-              'edition',
-              'serie',
-              'volume',
-            ]}
-            striped
-          /> */}
+          <AdvanceSearchResult
+            results={results}
+            loading={searchInPreFlight}
+          />
           <div>
             {'you typed:' + (value || 'anything') }
           </div>
@@ -74,6 +89,10 @@ class SearchResults extends React.Component<SearchResultsProps, SearchResultsSta
 }
 
 export default connect(
-  SearchResults,
-  C.META.MODULE_NAME,
-);
+  ({ userResults, searchInPreFlight }) => ({
+    query: 'Manzoni',
+    results: userResults,
+    searchInPreFlight
+  }),
+  { searchUsers }
+)(SearchResults);

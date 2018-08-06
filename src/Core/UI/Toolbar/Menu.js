@@ -1,5 +1,5 @@
+/* eslint-disable react/no-unused-prop-types */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Row } from '@folio/stripes-components/lib/LayoutGrid';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
@@ -8,8 +8,17 @@ import IfPermission from '@folio/stripes-components/lib/IfPermission';
 import classNames from 'classnames';
 import { PrinterProvider } from '../..';
 
+type ToolbarMenuProps = {
+  icon: Array,
+  content: React.node,
+  className: string,
+  withPrinter: bool,
+  onClick: () => void;
+  create: bool;
+  stripes: Object;
+};
 
-export const ToolbarMenu = (props) => {
+export const ToolbarMenu = (props: ToolbarMenuProps) => {
   const { icon, onClick, content, withPrinter, className } = props;
   return (
     <PaneMenu>
@@ -29,7 +38,7 @@ export const ToolbarMenu = (props) => {
   );
 };
 
-export const ToolbarButtonMenu = (props) => {
+export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
   const { create, className, onClick } = props;
   const { formatMessage } = props.stripes.intl;
   return (
@@ -50,23 +59,5 @@ export const ToolbarButtonMenu = (props) => {
       </Row>
     </PaneMenu>
   );
-};
-
-ToolbarMenu.propTypes = {
-  icon: PropTypes.array.isRequired,
-  content: PropTypes.node,
-  className: PropTypes.string,
-  withPrinter: PropTypes.bool,
-  onClick: PropTypes.func
-};
-
-ToolbarButtonMenu.propTypes = {
-  create: PropTypes.bool,
-  className: PropTypes.string,
-  onClick: PropTypes.func,
-  stripes: PropTypes.shape({
-    connect: PropTypes.func.isRequired,
-    intl: PropTypes.object.isRequired,
-  })
 };
 

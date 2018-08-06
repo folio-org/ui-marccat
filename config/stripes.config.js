@@ -14,7 +14,7 @@ module.exports = {
       password: 'admin',
     },
     languages: (process.env.NODE_ENV === 'DEBUG') ? ['en'] : ['en'],
-    logCategories: 'redux',
+    logCategories: false,
     logPrefix: false,
     logTimestamp: false,
     showPerms: true,

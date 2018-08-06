@@ -4,7 +4,7 @@ import {
   reducer as marccatReducer,
   formReducer as marccatFormReducer,
   epic as marccatEpic,
-} from './Reducer';
+} from './reducers/Reducer';
 
 export const reducer = combineReducers({
   data: marccatReducer,

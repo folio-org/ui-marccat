@@ -3,23 +3,19 @@
  * @flow
  */
 /* eslint-disable react/no-deprecated */
-/* eslint-disable react/prop-types */
-
 import React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
-import { connect } from 'react-redux';
+import { connect } from '@folio/stripes-connect';
 import Paneset from '@folio/stripes-components/lib/Paneset';
+import { AdvanceSearchResult } from '../';
 import { ToolbarMenu } from '../../Core';
-import { searchUsers } from '../../Redux/actions/ActionCreator';
-import AdvanceSearchResult from './AdvanceSearchResult';
+import * as C from '../../Utils';
 
 type SearchResultsProps = {
   stripes: Object;
   root: {
     store: {}
   };
-  query: string;
-  handleSearch: () => void;
 };
 type SearchResultsState = {
   results: Array;
@@ -31,23 +27,18 @@ class SearchResults extends React.Component<SearchResultsProps, SearchResultsSta
     this.state = {
       results: [] // eslint-disable-line
     };
-    this.handleAdvancedSearch = this.handleAdvancedSearch.bind(this);
+
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
-  componentDidMount() {
-    //this.handleAdvancedSearch(this.props.query);
+  handleSearch = () => {
+    this.props.mutator.query.replace(this.props.data);
+    const observer = Observable.from(this.props.mutator.searchQuery.GET());
+    observer
+      .take(1)
+      .map(r => this.setState({ results: r}))
+      .subscribe();
   }
-
-  componentWillReceiveProps(nextProps) {
-    // if (this.props.query !== nextProps.query) {
-    //   this.handleAdvancedSearch(nextProps.query);
-    // }
-  }
-
-  handleAdvancedSearch(query) {
-    this.props.handleSearch(query);
-  }
-
 
   render() {
     const leftMenu = <ToolbarMenu icon={['search']} />;
@@ -57,12 +48,6 @@ class SearchResults extends React.Component<SearchResultsProps, SearchResultsSta
     const state = store.getState();
     const formObserved = state.form.advancedSearchForm;
     const value = formObserved.values.searchTextArea;
-
-    const {
-      results,
-      searchInPreFlight
-    } = this.props;
-
     return (
       <Paneset>
         <Pane
@@ -75,13 +60,10 @@ class SearchResults extends React.Component<SearchResultsProps, SearchResultsSta
           paneSub="6 Result found"
           appIcon={{ app: 'marccat' }}
         >
-          <AdvanceSearchResult
-            results={results}
-            loading={searchInPreFlight}
-          />
           <div>
             {'you typed:' + (value || 'anything') }
           </div>
+          <AdvanceSearchResult />
         </Pane>
       </Paneset>
     );
@@ -89,10 +71,6 @@ class SearchResults extends React.Component<SearchResultsProps, SearchResultsSta
 }
 
 export default connect(
-  ({ userResults, searchInPreFlight }) => ({
-    query: 'Manzoni',
-    results: userResults,
-    searchInPreFlight
-  }),
-  { searchUsers }
-)(SearchResults);
+  SearchResults,
+  C.META.MODULE_NAME,
+);

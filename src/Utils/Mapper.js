@@ -59,6 +59,18 @@ const remapMultiArray = multiArray => {
   return obj;
 };
 
+const remapTemplateView = json => {
+  const obj = [];
+  const arrayFixedFields = [];
+  const arrayVariableFields = [];
+  arrayFixedFields.push(...json.fixedFields);
+  json.variableFields.forEach((el, index) => {
+    json.variableFields[index].displayValue = marcSeparator(json.variableFields[index].displayValue);
+  });
+  arrayVariableFields.push(...json.variableFields);
+  obj.push(...arrayFixedFields, ...arrayVariableFields);
+  return obj;
+};
 /**
  * map mandatory json in form of template to have a base structure to save
  * @param {} multiArray
@@ -88,5 +100,6 @@ export {
   convertValueToLabel,
   remapCodeLongDescription,
   remapMultiArray,
+  remapTemplateView,
   remapForTemplateMandatory
 };

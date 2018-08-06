@@ -1,4 +1,5 @@
 // MARCCAT UI APP METADADA
+
 export const META = {
   MODULE_NAME: 'ui-marccat',
   ICON_TITLE: 'marccat',
@@ -88,39 +89,6 @@ export const FILTER_CONFIG = [{}];
 export const SEPARATOR = ';;;';
 
 
-// TOASTER MESSAGE
-export const TOASTER_MESSAGE = {
-  INVALID_TEMPLATE_NAME: 'INVALID_TEMPLATE_NAME',
-  INVALID_TEMPLATE: 'INVALID_TEMPLATE',
-  SAVE_FAILURE: 'SAVE_FAILURE',
-  SAVE_SUCCESS: 'SAVE_SUCCESS',
-};
-
-// ANIMATIONS
-export const ANIMATION = {
-  ZOOMIN: 'zoomin',
-  SLIDEIN: 'slidein',
-  SLIDEOUT: 'slideout',
-  FADE: 'fade',
-  SLIDEIN_SPRING: 'slidein-spring',
-  FOUNTAIN: 'fountain',
-};
-
-// POSITION
-export const POSITION = {
-  TOP_RIGHT: 'tr',
-  TOP_LEFT: 'tl',
-  BOTTOM_RIGHT: 'br',
-  BOTTOM_LEFT: 'bl',
-};
-
-// EVENT
-export const EVENT = {
-  HOVER: 'hover',
-  CLICK: 'click',
-  FOCUS: 'focus',
-};
-
 // ERROR MEESSAGE
 export const ERROR_TYPES = {
   INVALID_TEMPLATE_NAME: 1,
@@ -128,8 +96,6 @@ export const ERROR_TYPES = {
   SAVE_FAILURE: 3,
   SAVE_SUCCESS: 4,
 };
-
-// Navigator
 
 // Select Logical View
 export const LOGICAL_VIEW_SELECT = {

@@ -49,7 +49,7 @@
   "template.detail.information.mandatory.table": "Template Mandatory Table",
   "template.delete": "Delete template?",
   "template.delete.modal": "The template will be deleted",
-  "template.delete.button": "Delete",
+  "template.delete.button": "Delete", 
   "template.delete-completed": "The template was successfully deleted.",
 
   "errors.missingRequiredField": "Please fill this in to continue",
@@ -99,5 +99,16 @@
   "diacritic.list.unicode":"Unicode",
 
   "browsing.title":"Browse search",
-  "browsing.subtitle":"Results for: "
+  "browsing.subtitle":"Results for: ",
+  "browsing.col.heading":"Heading",
+  "browsing.col.db":"DB",
+  "browsing.col.nt":"NT",
+  "browsing.col.refs":"Refs",
+  "browsing.col.a":"A",
+  "browsing.col.docs":"Docs",
+  "browsing.col.level":"Level",
+  "browsing.col.index":"Index",
+  "browsing.col.acc":"Acc",
+  "browsing.previous":"Previous",
+  "browsing.next":"Next"
 }

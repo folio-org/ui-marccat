@@ -23,6 +23,14 @@ type RoutingProps = {
       GET: Function,
       reset: Function,
     },
+    previousPage: {
+      GET: Function,
+      reset: Function,
+    },
+    nextPage: {
+      GET: Function,
+      reset: Function,
+    },
     searchQuery:{
       GET: Function,
       reset: Function,
@@ -91,6 +99,24 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
       path: `first-page?mainLibrary=170&view=1&query=%{query}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
+      headers: C.ENDPOINT.HEADERS,
+      records: C.API_RESULT_JSON_KEY.BROWSING,
+      accumulate: true,
+      fetch: false
+    },
+    previousPage: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      path: `previous-page?mainLibrary=170&view=1&query=%{query}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
+      headers: C.ENDPOINT.HEADERS,
+      records: C.API_RESULT_JSON_KEY.BROWSING,
+      accumulate: true,
+      fetch: false
+    },
+    nextPage: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      path: `next-page?mainLibrary=170&view=1&query=%{query}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
       headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.BROWSING,
       accumulate: true,

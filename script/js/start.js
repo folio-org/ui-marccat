@@ -1,15 +1,19 @@
 const cp = require('child_process');
-const semafor = require('semafor');
-
-const log = semafor();
+const os = require('os');
 
 const execSync = (cmd) => {
   cp.execSync(cmd, { stdio: ['inherit', 'inherit', 'inherit'] });
 };
 
-const lunchBuild = () => {
-  log.ok('Start MARCcat Folio Module ....');
-  execSync('stripes serve config/stripes.config.js');
+const setDebugVariable = () => {
+  return (os.platform() === 'win32') ?
+    execSync('set DEBUG=stripes* stripes serve  --languages en config/stripes.config.js ') :
+    execSync('DEBUG=stripes* stripes serve  --languages en config/stripes.config.js');
 };
 
-lunchBuild();
+const startDebug = () => {
+  setDebugVariable();
+  execSync('stripes serve --lint config/stripes.config.js');
+};
+
+startDebug();

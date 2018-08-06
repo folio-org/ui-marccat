@@ -7,7 +7,7 @@ import { AccordionSet, ExpandAllButton } from '@folio/stripes-components/lib/Acc
 import NavList from '@folio/stripes-components/lib/NavList';
 import { Row } from '@folio/stripes-components/lib/LayoutGrid';
 import { connect } from '@folio/stripes-connect';
-import { AdvanceSearchForm } from '../../Search/';
+import { AdvancedSearch } from '../../Search/';
 import NavItem from './NavItem';
 import * as C from '../../Utils';
 import css from '../style/NavStyles.css';
@@ -67,7 +67,7 @@ class NavMenu extends React.Component<NavMenuProps, NavMenuSatate> {
               open={this.state.section.expandeCollapseAction}
               label="Advanced Search"
               path={`${rootPath}/advancedSearch`}
-            ><AdvanceSearchForm {...this.props} />
+            ><AdvancedSearch {...this.props} />
             </NavItem>
             <NavItem
               accordionId="externalSearchSection"

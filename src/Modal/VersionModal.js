@@ -39,7 +39,7 @@ export default class VersionModal extends React.Component<
   render() {
     const { appTitle, appVersion, credits, appIcon } = this.props;
     return (
-      <Modal dismissible closeOnBackgroundClick={this.handleClose} onClose={this.handleClose} open={this.state.isOpen} label="MARCcat">
+      <Modal dismissible closeOnBackgroundClick onClose={this.handleClose} open={this.state.isOpen} label="MARCcat">
         <Row>
           <Row>
             <div className={css.row}>

@@ -10,7 +10,7 @@ type Props = {
   onChange: Function,
 }
 
-export default function AdavnceSearchInput({ defaultValue, onChange } : Props) {
+export default function AdvanceSearchInput({ defaultValue, onChange } : Props) {
   return (
     <Row>
       <Col xs={12}>

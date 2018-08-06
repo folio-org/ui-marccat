@@ -6,9 +6,16 @@ import {
   epic as marccatEpic,
 } from './reducers/Reducer';
 
+import {
+  searchInPreFlight as marccatSearchPreflightReducer,
+  userResults
+} from './reducers/SearchPreflight';
+
 export const reducer = combineReducers({
   data: marccatReducer,
-  form: marccatFormReducer
+  form: marccatFormReducer,
+  searchInPreFlight: marccatSearchPreflightReducer,
+  userResults
 });
 
 export const epics = combineEpics(

@@ -2,6 +2,14 @@ import { actionTypes as ActionTypes } from './Actions';
 
 /* MARCCAT ACTIONS CREATOR */
 
+export function searchUsers(query) {
+  return {
+    type: ActionTypes.SEARCH,
+    payload: {
+      query
+    }
+  };
+}
 /**
  *
  * @param {*} query

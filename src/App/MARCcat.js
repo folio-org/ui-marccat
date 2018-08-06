@@ -10,7 +10,11 @@ import { connect } from '@folio/stripes-connect';
 import { ToolbarMenu, EmptyMessage } from '../Core';
 import * as C from '../Utils';
 
-class MARCcat extends React.Component<*> {
+type Props = {
+  stripes: Object;
+};
+
+class MARCcat extends React.Component<Props, {}> {
   render() {
     const leftMenu = <ToolbarMenu icon={['search']} />;
     const rightMenu = <ToolbarMenu icon={['diacritic', 'indexes']} />;

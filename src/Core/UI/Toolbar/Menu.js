@@ -6,7 +6,7 @@ import IconButton from '@folio/stripes-components/lib/IconButton';
 import Button from '@folio/stripes-components/lib/Button';
 import IfPermission from '@folio/stripes-components/lib/IfPermission';
 import classNames from 'classnames';
-import { PrinterProvider } from '../../';
+import { PrinterProvider } from '../..';
 
 
 export const ToolbarMenu = (props) => {

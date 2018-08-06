@@ -15,6 +15,7 @@ import { formatSearchQuery } from '../../../Utils/Formatter';
 import * as C from '../../../Utils';
 import LogicalButton from '../button/LogicalButton';
 import css from '../../style/Search.css';
+import AdavnceSearchInput from './AdavnceSearchInput';
 
 type AdvanceSerachFormProps = {
     stripes: Object;
@@ -114,7 +115,6 @@ class AdvanceSearchForm extends
       let options = {};
       let optionsInnerIndex = {};
       let optionsConstraintIndex = {};
-      const { value } = this.state;
 
       if (categories) {
         options = categories.records.map((element) => (
@@ -197,20 +197,7 @@ class AdvanceSearchForm extends
               <Col xs={12}>
                 <div className={css.colQuery}>
                   <LogicalButton {...this.props} />
-                  <Row>
-                    <Col xs={12}>
-                      <Field
-                        value={value}
-                        innerRef={el => this.searchTextArea = el}
-                        onChange={this.handleChange}
-                        rows="8"
-                        name="searchTextArea"
-                        id="searchTextArea"
-                        component="textarea"
-                        className={css.largeBox}
-                      />
-                    </Col>
-                  </Row>
+                  <AdavnceSearchInput onChange={this.handleChange} />
                   <Row>
                     <Col xs={6}>
                       <SearchButton

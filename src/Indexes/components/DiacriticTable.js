@@ -8,7 +8,7 @@ import Icon from '@folio/stripes-components/lib/Icon';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { connect } from '@folio/stripes-connect';
-import { ToolbarMenu } from '../../Core';
+import { ToolbarMenu, actionMenuItem } from '../../Core';
 import * as C from '../../Utils';
 
 type MultiColumnListDiacriticProps = {
@@ -71,6 +71,7 @@ class MultiColumnListDiacritic extends React.Component
           defaultWidth="full"
           firstMenu={leftMenu}
           lastMenu={rightMenu}
+          actionMenuItems={this.props.actionMenuItems}
           paneTitle={formatMsg({
             id: 'ui-marccat.diacritic.title',
           })}

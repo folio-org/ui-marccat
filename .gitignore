@@ -5,6 +5,10 @@ yarn-error.log
 package-lock.json
 ModuleDescriptor.json
 
+##vscode
+*.sqlite
+.vsode/
+
 ## macos
 *.DS_Store
 *.icloud

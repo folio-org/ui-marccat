@@ -10,6 +10,7 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import Button from '@folio/stripes-components/lib/Button';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
+import TextArea from '@folio/stripes-components/lib/TextArea';
 import { FormattedMessage } from 'react-intl';
 import { getLeader, findLabel, organize } from '../../Utils/TemplateUtils';
 import SubfieldSection from '../form/SubfieldSection';
@@ -214,8 +215,27 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     );
   }
 
-  renderFixedFieldSelect(input) {
+  renderFixedFieldSelect(input, tag) {
     const toRender = [];
+    // only for 008
+    if (tag && tag.code === '008') {
+      const currentDate = new Date();
+      //TODO
+      const date = currentDate.getFullYear() + '' + currentDate.getMonth() + '' + currentDate.getDay();
+      toRender.push(
+        <Row>
+          <Col xs={4}>
+            <FormattedMessage id="ui-marccat.template.catalogDate" />
+          </Col>
+          <Col xs={8}>
+            <TextArea
+              {...this.props}
+              value={date}
+            />
+          </Col>
+        </Row>
+      );
+    }
     input.map(current => {
       return toRender.push(
         <Row>
@@ -521,7 +541,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
         {resources.fixedFieldSelect &&
           resources.fixedFieldSelect.hasLoaded &&
           <div>
-            {this.renderFixedFieldSelect(this.state.fixedFieldSel) }
+            {this.renderFixedFieldSelect(this.state.fixedFieldSel, this.state.newTag)}
           </div>
         }
 

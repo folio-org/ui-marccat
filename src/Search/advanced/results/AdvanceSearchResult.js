@@ -1,7 +1,8 @@
 import React from 'react';
-import { Controlfield } from '../../../Xslt/XsltMapper';
-import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
+// import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import Icon from '@folio/stripes-components/lib/Icon';
+import { Controlfield, Datafield } from '../../../Xslt/XsltMapper';
+
 
 type Props = {
     resources: Object;
@@ -13,9 +14,12 @@ export default class AdvanceSearchResult extends React.Component<Props, {}> {
     if (!searchQuery || !searchQuery.hasLoaded) return <Icon icon="spinner-ellipsis" />;
 
     const data = searchQuery.records;
-    const result = data[0].data;
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(result, 'application/xml');
+    let result;
+    data
+      .filter(r => r.data !== null)
+      .flatMap(d => result = (d.data))
+      .map(() => new DOMParser().parseFromString(result, 'application/xml'));
+    const doc = new DOMParser().parseFromString(result, 'application/xml');
     const nodeList:NodeList = doc.childNodes;
     const xml = Array.from(nodeList)[0];
     const controlFields = [];
@@ -24,27 +28,12 @@ export default class AdvanceSearchResult extends React.Component<Props, {}> {
       if (e.nodeName === 'controlfield') {
         controlFields.push(new Controlfield(e.attributes[0].textContent, e.textContent));
       } else {
-        dataFields.push(new Controlfield(e.attributes[0].textContent, e.textContent));
+        dataFields.push(new Datafield(e.attributes[0].textContent, e.textContent));
       }
     });
 
     return (
-      <MultiColumnList
-        id="search-results"
-        contentData={{}}
-        visibleColumns={[
-          'id',
-          'amicusNumber',
-          'title',
-          'name',
-          'date',
-          'date2',
-          'edition',
-          'serie',
-          'volume',
-        ]}
-        striped
-      />
+      <Icon icon="spinner-ellipsis" />
     );
   }
 }

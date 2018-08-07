@@ -232,7 +232,7 @@ class TemplateView extends React.Component {
       <Paneset static>
         <Pane
           defaultWidth="fill"
-          actionMenuItems={actionMenuItems}
+          actionMenuItems={this.props.actionMenuItems}
           firstMenu={searchMenu}
           lastMenu={lastMenu}
           paneTitle={formatMsg({

@@ -40,14 +40,13 @@ class TemplateView extends React.Component {
         path: 'record-templates?type=%{currentType}&lang=' + C.ENDPOINT.DEFAULT_LANG
       },
       POST: {
-        path: 'record-template/%{currentTemplate.id}',
+        path: `record-template/%{query}?type=B&lang=${C.ENDPOINT.DEFAULT_LANG}`
       },
       PUT: {
-        path: 'record-template/%{currentTemplate.id}',
+        path: `record-template/%{query}?type=B&lang=${C.ENDPOINT.DEFAULT_LANG}`
       },
       DELETE: {
-        path: 'record-template/%{currentTemplate.id}',
-        params: { lang: C.ENDPOINT.DEFAULT_LANG }
+        path: `record-template/%{query}?type=B&lang=${C.ENDPOINT.DEFAULT_LANG}`
       }
     }
   });
@@ -131,6 +130,9 @@ class TemplateView extends React.Component {
         <FormattedMessage id="ui-marccat.template.delete-completed" />
       </span>
     );
+    this.setState({
+      selectedTemplate: null,
+    });
     this.callout.sendCallout({ message });
   }
 

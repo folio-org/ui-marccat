@@ -7,7 +7,6 @@ import * as C from '../Utils';
 type Props = {
     stripes: Object;
 };
-
 type State = {};
 
 class XLSTTrasform extends React.Component<Props, State> {

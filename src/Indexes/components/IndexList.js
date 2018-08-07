@@ -10,7 +10,7 @@ import { connect } from '@folio/stripes-connect';
 import { Col } from '@folio/stripes-components/lib/LayoutGrid';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
-import PrinterProvider from '../../Core/Provider/withPrinter';
+import { PrinterProvider, ToolbarMenu } from '../../Core/';
 import css from '../style/indexes.css';
 import * as C from '../../Utils';
 
@@ -19,6 +19,7 @@ const secondaryIndexResults = require('../../../config/static/secondary-index-li
 
 type IndexListProps = {
   stripes: Object;
+  actionMenuItems: Object;
 };
 
 type IndexListState = {
@@ -35,20 +36,24 @@ class IndexList extends React.Component<IndexListProps, IndexListState> {
     const printMenu = (
       <PaneMenu {...this.props}>
         <PrinterProvider
-          trigger={() => <IconButton title={formatMsg({ id: 'ui-marccat.indexes.print' })} key="icon-gear" icon="duplicate" />}
+          trigger={() => <IconButton title={formatMsg({ id: 'ui-marccat.indexes.print' })} key="icon-gear" icon="print" />}
           content={() => (this.componentRef)}
         />
       </PaneMenu>
     );
+    const rightMenu = <ToolbarMenu icon={['bookmark', 'gear']} />;
 
     return (
       <Paneset static >
         <Pane
           defaultWidth="fill"
           firstMenu={printMenu}
+          lastMenu={rightMenu}
           paneTitle={formatMsg({
             id: 'ui-marccat.indexes.title',
           })}
+          actionMenuItems={this.props.actionMenuItems}
+          paneSub="Index Guide"
           appIcon={{ app: C.META.ICON_TITLE }}
         >
           <div ref={(el) => this.componentRef = el} >

@@ -1,11 +1,13 @@
 import React from 'react';
 import { actionMenuItem } from '..';
 
-export const RootContext = React.createContext();
+export const MARCcatContext = React.createContext({});
 
 type Props = {
   root: Object;
   stripes: Object;
+  history: Object;
+  match: Object;
 };
 
 type State = {}
@@ -20,16 +22,16 @@ function withSubscription(WrappedComponent) {
       const { store } = this.props.root;
       const state = store.getState();
       const log = this.props.stripes.logger;
-      const commonActionMenuItem = actionMenuItem('ui-marccat.diacritic.title', () => {});
+      const commonActionMenuItem = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title'], [() => this.props.history.push(this.props.match.path + '/indexList'), () => this.props.history.push(this.props.match.path + '/diacritic')]);
       return (
-        <RootContext.Consumer>
+        <MARCcatContext.Consumer>
           {() => <WrappedComponent
             {...this.props}
             state={state}
             log={log}
             actionMenuItems={commonActionMenuItem}
           /> }
-        </RootContext.Consumer>
+        </MARCcatContext.Consumer>
       );
     }
   }

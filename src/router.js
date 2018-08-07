@@ -14,8 +14,10 @@ import { ReportView } from './Report';
 import MARCcat from './App/MARCcat';
 
 export function ConnectedRoute({ id, component: Component, ...props }) {
+  const { store } = props.root;
+  const state = store.getState();
   return (
-    <Route render={() => (<Component {...props} id={id} />)} />
+    <Route render={() => (<Component {...props} id={id} state={state} form={state.form} />)} />
   );
 }
 

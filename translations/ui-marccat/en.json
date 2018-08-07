@@ -46,7 +46,7 @@
   "template.form.secondary.address": "Secondary Address",
 
   "template.detail.information.title": "Template Information",
-  "template.detail.information.mandatory.table": "Template Mandatory Table",
+  "template.detail.information.fields.table": "Template Fields Table",
   "template.delete": "Delete template?",
   "template.delete.modal": "The template will be deleted",
   "template.delete.button": "Delete", 
@@ -183,7 +183,7 @@
   "advancedsearch.categories.select": "Categories",
   "advancedsearch.indexes.select": "Indexes",
   "advancedsearch.codes.select": "Codes",
-  "indexes.title":"INDEX GUIDE",
+  "indexes.title":"Indexes",
   "indexes.main.title":"Main Indexes",
   "indexes.secondary.title":"Secondary Indexes",
   "indexes.print":"Print",

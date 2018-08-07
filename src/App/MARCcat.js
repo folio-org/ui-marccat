@@ -19,7 +19,7 @@ type State = {};
 class MARCcat extends React.Component<Props, State> {
   render() {
     const leftMenu = <ToolbarMenu icon={['search']} />;
-    const rightMenu = <ToolbarMenu icon={['diacritic', 'indexes']} />;
+    const rightMenu = <ToolbarMenu icon={['bookmark', 'gear']} />;
     const { formatMessage } = this.props.stripes.intl;
     const { actionMenuItems } = this.props;
     return (

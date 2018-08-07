@@ -12,10 +12,13 @@ import { SimpleSearch, SearchResults, AdvancedBrowsing } from './Search/';
 import { IndexList, DiacriticTable } from './Indexes/';
 import { ReportView } from './Report';
 import MARCcat from './App/MARCcat';
+import EditTemplateTag from './Template/edit/section/EditTemplateTag';
 
 export function ConnectedRoute({ id, component: Component, ...props }) {
+  const { store } = props.root;
+  const state = store.getState();
   return (
-    <Route render={() => (<Component {...props} id={id} />)} />
+    <Route render={() => (<Component {...props} id={id} state={state} form={state.form} />)} />
   );
 }
 

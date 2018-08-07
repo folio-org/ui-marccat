@@ -41,14 +41,13 @@ class TemplateView extends React.Component {
         path: 'record-templates?type=%{currentType}&lang=' + C.ENDPOINT.DEFAULT_LANG
       },
       POST: {
-        path: 'record-template/%{currentTemplate.id}',
+        path: `record-template/%{query}?type=B&lang=${C.ENDPOINT.DEFAULT_LANG}`
       },
       PUT: {
-        path: 'record-template/%{currentTemplate.id}',
+        path: `record-template/%{query}?type=B&lang=${C.ENDPOINT.DEFAULT_LANG}`
       },
       DELETE: {
-        path: 'record-template/%{currentTemplate.id}',
-        params: { lang: C.ENDPOINT.DEFAULT_LANG }
+        path: `record-template/%{query}?type=B&lang=${C.ENDPOINT.DEFAULT_LANG}`
       }
     }
   });
@@ -148,15 +147,10 @@ class TemplateView extends React.Component {
     this.props.mutator.templateDetails.reset();
     this.props.mutator.query.replace(object.id);
     Observable.from(this.props.mutator.templateDetails.GET());
+    this.props.history.push(`/marccat/templateList/${object.id}`);
     this.setState({
       showTemplateDetail: true,
       selectedTemplate: object,
-    });
-  }
-
-  update(instance) {
-    this.props.mutator.templateDetails.PUT(instance).then(() => {
-      this.closeEditInstance();
     });
   }
 
@@ -233,7 +227,7 @@ class TemplateView extends React.Component {
       className={css.mr15}
       onClick={() => this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE)}
     />;
-    const { actionMenuItems } = this.props;
+
     return (
       <Paneset static>
         <Pane

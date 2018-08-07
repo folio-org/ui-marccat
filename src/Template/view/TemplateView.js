@@ -18,29 +18,7 @@ import { removeById } from '../../Utils/Formatter';
 import * as C from '../../Utils';
 import css from '../styles/Template.css';
 
-
 class TemplateView extends React.Component {
-  static propTypes = {
-    stripes: PropTypes.shape({
-      connect: PropTypes.func.isRequired,
-      intl: PropTypes.object.isRequired,
-    }).isRequired,
-    mutator: PropTypes.shape({
-      currentTemplate: PropTypes.shape({
-        update: PropTypes.func,
-      }),
-      recordsTemplates: PropTypes.shape({
-        POST: PropTypes.func,
-        PUT: PropTypes.func,
-        DELETE: PropTypes.func,
-      }),
-      currentType: PropTypes.string
-    }).isRequired,
-    history: PropTypes.object,
-    resources: PropTypes.object,
-    actionMenuItems: PropTypes.object,
-  };
-
   static manifest = Object.freeze({
     currentTemplate: {},
     currentType: {},
@@ -168,15 +146,10 @@ class TemplateView extends React.Component {
     this.props.mutator.templateDetails.reset();
     this.props.mutator.query.replace(object.id);
     Observable.from(this.props.mutator.templateDetails.GET());
+    this.props.history.push(`/marccat/templateList/${object.id}`);
     this.setState({
       showTemplateDetail: true,
       selectedTemplate: object,
-    });
-  }
-
-  update(instance) {
-    this.props.mutator.templateDetails.PUT(instance).then(() => {
-      this.closeEditInstance();
     });
   }
 
@@ -227,6 +200,17 @@ class TemplateView extends React.Component {
       </PaneMenu>
     );
 
+    const actionMenuItems = [
+      {
+        label: formatMsg({
+          id: 'ui-marccat.template.create',
+        }),
+        onClick: () => {
+          this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE);
+        },
+      },
+    ];
+
     const actionMenuItemsDetail = [
       {
         label: formatMsg({
@@ -253,7 +237,7 @@ class TemplateView extends React.Component {
       className={css.mr15}
       onClick={() => this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE)}
     />;
-    const { actionMenuItems } = this.props;
+
     return (
       <Paneset static>
         <Pane

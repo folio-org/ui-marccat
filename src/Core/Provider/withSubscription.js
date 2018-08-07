@@ -20,7 +20,7 @@ function withSubscription(WrappedComponent) {
       const { store } = this.props.root;
       const state = store.getState();
       const log = this.props.stripes.logger;
-      const commonActionMenuItem = actionMenuItem('ui-marccat.diacritic.title', () => {});
+      const commonActionMenuItem = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title'], () => {});
       return (
         <MARCcatContext.Consumer>
           {() => <WrappedComponent

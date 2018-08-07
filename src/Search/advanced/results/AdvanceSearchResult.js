@@ -1,4 +1,5 @@
 import React from 'react';
+import { Controlfield } from '../../../Xslt/XsltMapper';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import Icon from '@folio/stripes-components/lib/Icon';
 
@@ -17,9 +18,14 @@ export default class AdvanceSearchResult extends React.Component<Props, {}> {
     const doc = parser.parseFromString(result, 'application/xml');
     const nodeList:NodeList = doc.childNodes;
     const xml = Array.from(nodeList)[0];
+    const controlFields = [];
+    const dataFields = [];
     [...xml.childNodes].forEach((e) => {
-      const docs = parser.parseFromString(e, 'application/xml');
-      console.log(docs);
+      if (e.nodeName === 'controlfield') {
+        controlFields.push(new Controlfield(e.attributes[0].textContent, e.textContent));
+      } else {
+        dataFields.push(new Controlfield(e.attributes[0].textContent, e.textContent));
+      }
     });
 
     return (

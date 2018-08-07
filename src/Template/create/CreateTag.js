@@ -11,7 +11,7 @@ import IconButton from '@folio/stripes-components/lib/IconButton';
 import Button from '@folio/stripes-components/lib/Button';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import { FormattedMessage } from 'react-intl';
-import { getLeader, findLabel } from '../../Utils/TemplateUtils';
+import { getLeader, findLabel, organize } from '../../Utils/TemplateUtils';
 import SubfieldSection from '../form/SubfieldSection';
 import css from '../styles/Template.css';
 import * as C from '../../Utils';
@@ -27,6 +27,10 @@ type CreateTagProps = {
   },
   mutator: {
     marcCategories: {
+      GET: Function,
+      reset: Function
+    },
+    fixedFieldSelect: {
       GET: Function,
       reset: Function
     },
@@ -153,6 +157,14 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
       path: `subfield-tag?marcCategory=%{marcCategory}&code1=%{headingType}&code2=%{itemType}&code3=%{functionCode}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
       fetch: false,
       accumulate: true
+    },
+    fixedFieldSelect: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      headers: C.ENDPOINT.HEADERS,
+      path: `fixed-fields-code-groups?code=%{tag}&headerTypeCode=%{headingType}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
+      fetch: false,
+      accumulate: true
     }
   });
 
@@ -164,7 +176,8 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
       headingTypeLoaded: {},
       itemTypeSel: '', // eslint-disable-line react/no-unused-state
       functionCodeSel: '', // eslint-disable-line react/no-unused-state
-      newTag: {}
+      newTag: {},
+      fixedFieldSel: []
     };
 
     this.fetchingMarcCategory = this.fetchingMarcCategory.bind(this);
@@ -175,12 +188,14 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     this.fetchMarcAssociated = this.fetchMarcAssociated.bind(this);
     this.fetchFieldTemplate = this.fetchFieldTemplate.bind(this);
     this.fetchSubfields = this.fetchSubfields.bind(this);
+    this.fetchFixedFieldSelect = this.fetchFixedFieldSelect.bind(this);
     this.onChangeMarcCategory = this.onChangeMarcCategory.bind(this);
     this.onChangeHeadingType = this.onChangeHeadingType.bind(this);
     this.onChangeItemType = this.onChangeItemType.bind(this);
     this.onChangeFunctionCode = this.onChangeFunctionCode.bind(this);
     this.createNewTag = this.createNewTag.bind(this);
     this.createTagObjectFromJson = this.createTagObjectFromJson.bind(this);
+    this.renderFixedFieldSelect = this.renderFixedFieldSelect.bind(this);
   }
 
   componentDidMount() {
@@ -197,6 +212,23 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
         />
       </PaneMenu>
     );
+  }
+
+  renderFixedFieldSelect(input) {
+    const toRender = [];
+    input.map(current => {
+      return toRender.push(
+        <Row>
+          <Col xs={4}>
+            <FormattedMessage id={`ui-marccat.template.${current.label}`} />
+          </Col>
+          <Col xs={8}>
+            <Select dataOptions={current.values} />
+          </Col>
+        </Row>
+      );
+    });
+    return toRender;
   }
 
   createNewTag() {
@@ -225,6 +257,19 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     });
   }
 
+  fetchFixedFieldSelect(tag, headingTypesValue) {
+    this.props.mutator.fixedFieldSelect.reset();
+    this.props.mutator.tag.replace(tag);
+    this.props.mutator.headingType.replace(headingTypesValue);
+    this.props.mutator.fixedFieldSelect.GET().then((fetchResult) => {
+      if (fetchResult) {
+        this.setState({ fixedFieldSel: organize(fetchResult) });
+        return;
+      }
+      this.props.mutator.fixedFieldSelect.reset();
+    });
+  }
+
   fetchFieldTemplate(marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue, tag, ind1, ind2) {
     this.props.mutator.fieldTemplate.reset();
     this.props.mutator.marcCategory.replace(marcCategoryValue);
@@ -237,6 +282,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
       if (fetchResult) {
         if (fetchResult['variable-field']) {
           const res = fetchResult['variable-field'];
+          this.props.mutator.fixedFieldSelect.reset();
           this.fetchSubfields(marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue);
           const tagFetch = this.createTagObjectFromJson(res, marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue);
           tagFetch.type = 'variableField';
@@ -247,12 +293,13 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
         }
         if (fetchResult['fixed-field']) {
           const res = fetchResult['fixed-field'];
+          this.props.mutator.subfields.reset();
+          this.fetchFixedFieldSelect(tag, headingTypesValue);
           const tagFetch = this.createTagObjectFromJson(res, marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue);
           tagFetch.type = 'fixedField';
           this.setState({
             newTag: tagFetch
           });
-          this.props.mutator.subfields.reset();
           return;
         }
       }
@@ -383,8 +430,8 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
       ind2: '',
       displayValue: ''
     };
-    const currenctTag = [];
-    currenctTag.push(this.state.newTag);
+    const currentTag = [];
+    currentTag.push(this.state.newTag);
     /*
     if (marcCategories && marcCategories.hasLoaded && marcCategoriesSelect.value) {
       fetchHeadingTypes(marcCategoriesSelect.value);
@@ -395,7 +442,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
         <Row className={css.mandatoryList}>
           <Col xs={12}>
             <MultiColumnList
-              contentData={currenctTag}
+              contentData={currentTag}
               columnMapping={columnMapping}
               visibleColumns={[
                 'code',
@@ -469,6 +516,13 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
           resources.subfields.hasLoaded &&
           subfields[0].subfields.length > 0 &&
           <SubfieldSection {...this.props} subfields={subfields[0].subfields} />
+        }
+
+        {resources.fixedFieldSelect &&
+          resources.fixedFieldSelect.hasLoaded &&
+          <div>
+            {this.renderFixedFieldSelect(this.state.fixedFieldSel) }
+          </div>
         }
 
         <Row>

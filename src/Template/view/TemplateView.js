@@ -130,9 +130,6 @@ class TemplateView extends React.Component {
         <FormattedMessage id="ui-marccat.template.delete-completed" />
       </span>
     );
-    this.setState({
-      selectedTemplate: null,
-    });
     this.callout.sendCallout({ message });
   }
 

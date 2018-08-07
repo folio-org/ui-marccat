@@ -12,8 +12,6 @@ import { NavMenu, LogicalView } from '../';
 import { VersionModal } from '../../Modal/';
 import * as C from '../../Utils';
 
-import css from '../style/NavStyles.css';
-
 type NavigatorProps = {
   stripes: Object;
   children: Object;

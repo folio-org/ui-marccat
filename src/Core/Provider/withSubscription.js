@@ -6,6 +6,8 @@ export const MARCcatContext = React.createContext({});
 type Props = {
   root: Object;
   stripes: Object;
+  history: Object;
+  match: Object;
 };
 
 type State = {}

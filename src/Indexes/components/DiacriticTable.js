@@ -16,6 +16,7 @@ import * as C from '../../Utils';
 type MultiColumnListDiacriticProps = {
   stripes: Object;
   resources: Object;
+  actionMenuItems: Object;
 };
 
 type MultiColumnListDiacriticState = {

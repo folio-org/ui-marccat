@@ -7,7 +7,6 @@ import * as C from '../Utils';
 type Props = {
     stripes: Object;
 };
-
 type State = {};
 
 class XLSTTrasform extends React.Component<Props, State> {
@@ -29,11 +28,7 @@ class XLSTTrasform extends React.Component<Props, State> {
           paneTitle={formatMsg({ id: 'ui-marccat.app.title' })}
           paneSub={formatMsg({ id: 'ui-marccat.app.title' })}
           appIcon={{ app: C.META.ICON_TITLE }}
-        >
-          <div>
-            {/* {alert(xml)} */}
-          </div>
-        </Pane>
+        />
       </Paneset>
     );
   }

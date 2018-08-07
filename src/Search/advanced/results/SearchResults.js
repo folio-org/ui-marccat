@@ -52,9 +52,9 @@ class SearchResults extends React.Component<SearchResultsProps, SearchResultsSta
   }
 }
 
-
-const mapStateToProps = state => ({
-  searchInput: state.marccat.form.fieldValue || '',
-});
-
-export default connect(mapStateToProps, null)(SearchResults);
+export default connect(
+  (state) => ({
+    searchInput: state.marccat.form.fieldValue || '',
+  }),
+  (dispatch) => ({}), null // eslint-disable-line
+)(SearchResults);

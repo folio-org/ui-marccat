@@ -93,6 +93,7 @@ class AdvanceSearchForm extends
       this.setState({
         value: ''
       });
+      this.props.resources.query = '';
     };
 
     handleChangeRadio = event => {

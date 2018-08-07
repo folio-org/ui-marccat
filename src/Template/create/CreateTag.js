@@ -220,7 +220,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     // only for 008
     if (tag && tag.code === '008') {
       const currentDate = new Date();
-      //TODO
+      // TODO
       const date = currentDate.getFullYear() + '' + currentDate.getMonth() + '' + currentDate.getDay();
       toRender.push(
         <Row>

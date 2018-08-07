@@ -71,7 +71,7 @@ class EditTemplate extends React.Component {
     const { section } = this.state;
     return (
       <div>
-        <form id="editTemplateForm" name="editTemplateForm" onSubmit={this.onSubmit}>
+        <form id="editTemplateForm" name="editTemplateForm">
           <Row end="xs">
             <Col xs>
               <ExpandAllButton accordionStatus={section} onToggle={this.handleExpandAll} />

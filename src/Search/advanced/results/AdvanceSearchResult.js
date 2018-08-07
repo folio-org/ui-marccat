@@ -13,21 +13,15 @@ export default class AdvanceSearchResult extends React.Component<Props, {}> {
 
     const data = searchQuery.records;
     const result = data[0].data;
-    const evaluator = new XPathEvaluator();
-    const results = evaluator.evaluate('//controlfield', document.documentElement, null,
-      XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
-
-    if (results) {
-      let node = results.iterateNext();
-      while (node) {
-        alert(node.tag);
-        node = results.iterateNext();
-      }
-    }
-
     const parser = new DOMParser();
-    const unescaped = unescape(result);
-    const xmlDoc = parser.parseFromString(unescaped, 'application/xml'); // eslint-disable-line
+    const doc = parser.parseFromString(result, 'application/xml');
+    const nodeList:NodeList = doc.childNodes;
+    const xml = Array.from(nodeList)[0];
+    [...xml.childNodes].forEach((e) => {
+      const docs = parser.parseFromString(e, 'application/xml');
+      console.log(docs);
+    });
+
     return (
       <MultiColumnList
         id="search-results"

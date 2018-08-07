@@ -1,0 +1,39 @@
+<record>
+	<controlfield tag="000">00000nam  2200000 i 4500</controlfield>
+	<controlfield tag="001">000006571642</controlfield>
+	<controlfield tag="005">20170223112438.0</controlfield>
+	<datafield ind1=" " ind2=" " tag="040">
+		<subfield code="a">IT-TrCB</subfield>
+		<subfield code="b">ita</subfield>
+	</datafield>
+	<controlfield tag="008">170223s1873    it     e      000 0 ita c</controlfield>
+	<datafield ind1=" " ind2=" " tag="300">
+		<subfield code="a">XXIII p.</subfield>
+		<subfield code="c">19 cm</subfield>
+	</datafield>
+	<datafield ind1=" " ind2=" " tag="500">
+		<subfield code="a">Nome dell'A. e data di pubbl. in calce al testo</subfield>
+	</datafield>
+	<datafield ind1="0" ind2=" " tag="082">
+		<subfield code="a">853.7</subfield>
+		<subfield code="2">22</subfield>
+	</datafield><datafield ind1=" " ind2=" " tag="997">
+	<subfield code="a">CBT-1-dv-ath-ma</subfield>
+</datafield>
+<datafield ind1="1" ind2=" " tag="100">
+	<subfield code="a">Carcano, Giulio</subfield>
+	<subfield code="a">ut. </subfield>
+</datafield>
+<datafield ind1="1" ind2="0" tag="245">
+	<subfield code="a">Vita di Alessandro Manzoni /</subfield>
+	<subfield code="c">[Giulio Carcano]</subfield>
+</datafield>
+<datafield ind1=" " ind2=" " tag="260">
+	<subfield code="a">Milano :</subfield>
+	<subfield code="b">[s.n.],</subfield>
+	<subfield code="c">1873.</subfield>
+</datafield>
+<datafield ind1="1" ind2="4" tag="600">
+	<subfield code="a">Manzoni, Alessandro - Opere del 19. sec.</subfield>
+</datafield>
+</record>

@@ -8,6 +8,7 @@ ModuleDescriptor.json
 ##vscode
 *.sqlite
 .vsode/
+.vs/
 
 ## macos
 *.DS_Store

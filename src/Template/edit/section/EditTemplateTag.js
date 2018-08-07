@@ -16,21 +16,21 @@ class EditTemplateTag extends React.Component {
     onToggle: PropTypes.object.isRequired,
     accordionId: PropTypes.object.isRequired,
     expanded: PropTypes.object.isRequired,
-    resources: PropTypes.object
+    resources: PropTypes.object,
   };
+
 
   static manifest = Object.freeze({
     details: {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
-      path: `record-template/423?type=B&lang=${C.ENDPOINT.DEFAULT_LANG}`,
+      path: `record-template/%{query}?type=B&lang=${C.ENDPOINT.DEFAULT_LANG}`,
       headers: C.ENDPOINT.HEADERS,
     },
   });
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-
     const {
       resources: { details },
     } = this.props; // eslint-disable-line react/prop-types
@@ -39,6 +39,7 @@ class EditTemplateTag extends React.Component {
     const resultTemplateView = remapTemplateView(fields);
 
     const { expanded, onToggle, accordionId } = this.props;
+
     return (
       <Accordion
         label={formatMsg({

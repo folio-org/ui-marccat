@@ -41,14 +41,13 @@ class TemplateView extends React.Component {
         path: 'record-templates?type=%{currentType}&lang=' + C.ENDPOINT.DEFAULT_LANG
       },
       POST: {
-        path: 'record-template/%{currentTemplate.id}',
+        path: `record-template/%{query}?type=B&lang=${C.ENDPOINT.DEFAULT_LANG}`
       },
       PUT: {
-        path: 'record-template/%{currentTemplate.id}',
+        path: `record-template/%{query}?type=B&lang=${C.ENDPOINT.DEFAULT_LANG}`
       },
       DELETE: {
-        path: 'record-template/%{currentTemplate.id}',
-        params: { lang: C.ENDPOINT.DEFAULT_LANG }
+        path: `record-template/%{query}?type=B&lang=${C.ENDPOINT.DEFAULT_LANG}`
       }
     }
   });
@@ -93,9 +92,9 @@ class TemplateView extends React.Component {
       }),
       currentType: PropTypes.string
     }).isRequired,
-    history: PropTypes.object,
+    router: PropTypes.object,
     resources: PropTypes.object,
-    actionMenuItems: PropTypes.object
+    history: PropTypes.object
   };
 
 
@@ -137,16 +136,16 @@ class TemplateView extends React.Component {
   }
 
   handleClose() {
-    this.setState(curState => {
-      const newState = _.cloneDeep(curState);
-      newState.showTemplateDetail = !this.state.showTemplateDetail;
-      return newState;
+    this.props.history.goBack();
+    this.setState({
+      showTemplateDetail: false
     });
   }
 
   handleRowClick=(c, object) => {
     this.props.mutator.templateDetails.reset();
     this.props.mutator.query.replace(object.id);
+    this.props.router.push(`templateList/${object.id}`);
     Observable.from(this.props.mutator.templateDetails.GET());
     this.setState({
       showTemplateDetail: true,
@@ -154,14 +153,8 @@ class TemplateView extends React.Component {
     });
   }
 
-  update(instance) {
-    this.props.mutator.templateDetails.PUT(instance).then(() => {
-      this.closeEditInstance();
-    });
-  }
-
   handleAddTemplate() {
-    this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE);
+    this.props.router.push(C.INTERNAL_URL.ADD_TEMPLATE);
   }
 
   render() {
@@ -233,12 +226,11 @@ class TemplateView extends React.Component {
       className={css.mr15}
       onClick={() => this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE)}
     />;
-    const { actionMenuItems } = this.props;
+
     return (
       <Paneset static>
         <Pane
           defaultWidth="fill"
-          actionMenuItems={actionMenuItems}
           firstMenu={searchMenu}
           lastMenu={lastMenu}
           paneTitle={formatMsg({

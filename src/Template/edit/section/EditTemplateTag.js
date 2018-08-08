@@ -44,7 +44,7 @@ class EditTemplateTag extends React.Component {
       <Accordion
         label={formatMsg({
           id:
-            'ui-marccat.template.detail.information.mandatory.table',
+            'ui-marccat.template.detail.information.fields.table',
         })}
         open={expanded}
         id={accordionId}
@@ -60,7 +60,6 @@ class EditTemplateTag extends React.Component {
                 'description',
                 'displayValue',
               ]}
-              ariaLabel="TemplateNewMandatory"
             />
           </Col>
         </Row>

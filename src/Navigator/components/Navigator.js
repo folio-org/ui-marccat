@@ -8,11 +8,9 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import Icon from '@folio/stripes-components/lib/Icon';
 import { connect } from '@folio/stripes-connect';
 import { NavMenu, LogicalView } from '../';
-import { ToolbarMenu } from '../../Core';
+// import { ToolbarMenu } from '../../Core';
 import { VersionModal } from '../../Modal/';
 import * as C from '../../Utils';
-
-import css from '../style/NavStyles.css';
 
 type NavigatorProps = {
   stripes: Object;
@@ -34,7 +32,7 @@ class Navigator extends React.Component<NavigatorProps, NavigatorState> {
   render() {
     const { formatMessage } = this.props.stripes.intl;
     const isPending = this.props.resources.categories;
-    const rightMenu = <ToolbarMenu icon={['info']} onClick={this.handleVersionModal} className={css.customSize} />;
+    // const rightMenu = <ToolbarMenu icon={['info']} onClick={this.handleVersionModal} className={css.customSize} />;
     return (!isPending || !isPending.hasLoaded) ? (<Icon icon="spinner-ellipsis" />) :
       (
         <Paneset>
@@ -42,7 +40,7 @@ class Navigator extends React.Component<NavigatorProps, NavigatorState> {
             dismissible
             onClose={this.handleClose}
             defaultWidth="30%"
-            lastMenu={rightMenu}
+            // lastMenu={rightMenu}
             paneTitle={formatMessage({
               id: 'ui-marccat.navigator.title',
             })}

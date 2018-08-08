@@ -5,15 +5,18 @@
 import React from 'react';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import Icon from '@folio/stripes-components/lib/Icon';
+import IconButton from '@folio/stripes-components/lib/IconButton';
 import Paneset from '@folio/stripes-components/lib/Paneset';
+import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { connect } from '@folio/stripes-connect';
-import { ToolbarMenu } from '../../Core';
+import { ToolbarMenu, PrinterProvider } from '../../Core';
 import * as C from '../../Utils';
 
 type MultiColumnListDiacriticProps = {
   stripes: Object;
   resources: Object;
+  actionMenuItems: Object;
 };
 
 type MultiColumnListDiacriticState = {
@@ -56,7 +59,15 @@ class MultiColumnListDiacritic extends React.Component
     if (!diacritics || !diacritics.hasLoaded) return <Icon icon="spinner-ellipsis" />;
     const data = diacritics.records;
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const leftMenu = <ToolbarMenu icon={['search']} />;
+    const printMenu = (
+      <PaneMenu {...this.props}>
+        <PrinterProvider
+          trigger={() => <IconButton title={formatMsg({ id: 'ui-marccat.indexes.print' })} key="icon-gear" icon="print" />}
+          content={() => (this.componentRef)}
+        />
+      </PaneMenu>
+    );
+
     const rightMenu = <ToolbarMenu icon={['bookmark', 'gear']} />;
     const columnMapping = {
       value: formatMsg({ id: 'ui-marccat.diacritic.list.id' }),
@@ -66,11 +77,12 @@ class MultiColumnListDiacritic extends React.Component
       unicode: formatMsg({ id: 'ui-marccat.diacritic.list.unicode' }),
     };
     return (
-      <Paneset static>
+      <Paneset static ref={(el) => this.componentRef = el} >
         <Pane
           defaultWidth="full"
-          firstMenu={leftMenu}
+          firstMenu={printMenu}
           lastMenu={rightMenu}
+          actionMenuItems={this.props.actionMenuItems}
           paneTitle={formatMsg({
             id: 'ui-marccat.diacritic.title',
           })}

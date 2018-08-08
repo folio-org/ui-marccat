@@ -257,7 +257,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     textareas.map((current) => {
       const code = current.querySelectorAll('select')[0].value;
       const data = current.querySelectorAll('textarea')[0].value;
-      return displayValue = displayValue.concat(C.MARC_CHARACTER.SEPARATOR + code + data);
+      return displayValue = displayValue.concat(C.MARC.CHARACTER_SEPARATOR + code + data);
     });
     const currentTag = this.state.newTag;
     currentTag.displayValue = displayValue;

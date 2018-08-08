@@ -1,4 +1,4 @@
-import { MARC } from '../Utils/';
+import { MARC } from '../Utils';
 
 export class Subfield {
   code: string;

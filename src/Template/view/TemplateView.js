@@ -1,3 +1,7 @@
+/**
+ * @format
+ * @flow
+ */
 /* eslint-disable */
 import React from 'react';
 import { Observable } from 'rxjs/Observable';
@@ -54,8 +58,6 @@ class TemplateView extends React.Component {
       selectedTemplate: {},
     };
     this.props.mutator.currentType.replace('B');
-
-    this.connectedEditTemplateView = props.stripes.connect(EditTemplate);
     this.handleRowClick = this.handleRowClick.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.showConfirm = this.showConfirm.bind(this);
@@ -101,7 +103,7 @@ class TemplateView extends React.Component {
   handleRowClick = (c, object) => {
     this.props.mutator.templateDetails.reset();
     this.props.mutator.query.replace(object.id);
-    Observable.just(this.props.mutator.templateDetails.GET());
+    Observable.from(this.props.mutator.templateDetails.GET());
     this.setState({
       showTemplateDetail: true,
       selectedTemplate: object,
@@ -119,27 +121,19 @@ class TemplateView extends React.Component {
           formatMsg={formatMsg}
           onClick={() => {}}
         />
-        {this.state.showTemplateDetail && (
-          <Pane
-            defaultWidth="fill"
-            paneTitle={this.state.selectedTemplate.name}
-            paneSub={`Id ${this.state.selectedTemplate.id}`}
-            appIcon={{ app: C.META.ICON_TITLE }}
-            dismissible
-            onClose={this.handleClose}
-          >
-            <this.connectedEditTemplateView
+          <TemplateDetailModal 
               {...this.props}
-              selectedTemplate={this.state.selectedTemplate}
-            />
-            <TemplateDetailModal
               open={this.state.confirming}
               onConfirm={this.onDelete}
               onCancel={this.hideConfirm}
             />
             <Callout ref={(ref) => { this.callout = ref; }} />
-          </Pane>
-        )}
+        {this.state.showTemplateDetail &&
+         <EditTemplate 
+         {...this.props}
+         selectedTemplate={this.state.selectedTemplate}
+         />
+        }
       </Paneset>
     );
   }

@@ -5,7 +5,7 @@
 import React from 'react';
 import _ from 'lodash';
 import { reduxForm } from 'redux-form';
-import PropTypes from 'prop-types';
+import Pane from '@folio/stripes-components/lib/Pane';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
 import EditTemplateInfo from './section/EditTemplateInfo';
@@ -13,11 +13,6 @@ import EditTemplateTag from './section/EditTemplateTag';
 import * as C from '../../Utils';
 
 class EditTemplate extends React.Component {
-  static propTypes = {
-    selectedTemplate: PropTypes.object.isRequired,
-    mutator: PropTypes.object
-  };
-
   static manifest = Object.freeze({
     query: { initialValue: {} },
     resultCount: { initialValue: C.INITIAL_RESULT_COUNT },
@@ -69,8 +64,16 @@ class EditTemplate extends React.Component {
 
   render() {
     const { section } = this.state;
+    const { selectedTemplate } = this.props;
     return (
-      <div>
+      <Pane
+        defaultWidth="fill"
+        paneTitle={selectedTemplate.name}
+        paneSub={`Id ${selectedTemplate.id}`}
+        appIcon={{ app: C.META.ICON_TITLE }}
+        dismissible
+        onClose={this.handleClose}
+      >
         <form id="editTemplateForm" name="editTemplateForm">
           <Row end="xs">
             <Col xs>
@@ -81,17 +84,18 @@ class EditTemplate extends React.Component {
             {...this.props}
             accordionId="editTemplateInfo"
             expanded={section.editTemplateInfo}
-            selectedTemplate={this.props.selectedTemplate}
+            selectedTemplate={selectedTemplate}
+            onToggle={this.handleSectionToggle}
+          />
+          <EditTemplateTag
+            {...this.props}
+            accordionId="editTemplateTag"
+            expanded={section.editTemplateTag}
             onToggle={this.handleSectionToggle}
           />
         </form>
-        <EditTemplateTag
-          {...this.props}
-          accordionId="editTemplateTag"
-          expanded={section.editTemplateTag}
-          onToggle={this.handleSectionToggle}
-        />
-      </div>
+      </Pane>
+
     );
   }
 }

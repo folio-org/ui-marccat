@@ -48,3 +48,20 @@ export const fixedFieldLabelRender = (label) => {
   const lastCharacter = Number.parseInt(label.substr(label.length - 1), 10);
   return (label && Number.isInteger(lastCharacter) && lastCharacter !== 1) ? '' : label;
 };
+
+/*
+* return a date in format for marc21 tag 008
+*/
+
+export const getDateNow = () => {
+  const currentDate = new Date();
+  let month = Number.parseInt(currentDate.getMonth(), 10) + 1;
+  if (month.toString().length === 1) {
+    month = '0' + month;
+  }
+  let day = currentDate.getDate();
+  if (day.toString().length === 1) {
+    day = '0' + day;
+  }
+  return currentDate.getFullYear() + month + day;
+};

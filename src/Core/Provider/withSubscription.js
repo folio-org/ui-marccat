@@ -21,16 +21,14 @@ function withSubscription(WrappedComponent) {
     render() {
       const { store } = this.props.root;
       const state = store.getState();
-      const log = this.props.stripes.logger;
-      const commonActionMenuItem = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title'], [() => this.props.history.push(this.props.match.path + '/indexList'), () => this.props.history.push(this.props.match.path + '/diacritic')]);
+      const router = this.props.history;
       return (
         <MARCcatContext.Consumer>
           {() => <WrappedComponent
             {...this.props}
             state={state}
-            log={log}
-            actionMenuItems={commonActionMenuItem}
-          /> }
+            router={router}
+          />}
         </MARCcatContext.Consumer>
       );
     }

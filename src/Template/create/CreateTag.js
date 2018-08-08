@@ -9,13 +9,13 @@ import Select from '@folio/stripes-components/lib/Select';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import Button from '@folio/stripes-components/lib/Button';
-import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
-import TextArea from '@folio/stripes-components/lib/TextArea';
 import { FormattedMessage } from 'react-intl';
 import { getLeader, findLabel, organize } from '../../Utils/TemplateUtils';
 import SubfieldSection from '../form/SubfieldSection';
 import css from '../styles/Template.css';
 import * as C from '../../Utils';
+import CurrentTagDisplay from './CurrentTagDisplay';
+import FixedFieldForm from './FixedFieldForm';
 
 type CreateTagProps = {
   currentTemplate: Object,
@@ -196,7 +196,6 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     this.onChangeFunctionCode = this.onChangeFunctionCode.bind(this);
     this.createNewTag = this.createNewTag.bind(this);
     this.createTagObjectFromJson = this.createTagObjectFromJson.bind(this);
-    this.renderFixedFieldSelect = this.renderFixedFieldSelect.bind(this);
   }
 
   componentDidMount() {
@@ -213,42 +212,6 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
         />
       </PaneMenu>
     );
-  }
-
-  renderFixedFieldSelect(input, tag) {
-    const toRender = [];
-    // only for 008
-    if (tag && tag.code === '008') {
-      const currentDate = new Date();
-      // TODO
-      const date = currentDate.getFullYear() + '' + currentDate.getMonth() + '' + currentDate.getDay();
-      toRender.push(
-        <Row>
-          <Col xs={4}>
-            <FormattedMessage id="ui-marccat.template.catalogDate" />
-          </Col>
-          <Col xs={8}>
-            <TextArea
-              {...this.props}
-              value={date}
-            />
-          </Col>
-        </Row>
-      );
-    }
-    input.map(current => {
-      return toRender.push(
-        <Row>
-          <Col xs={4}>
-            <FormattedMessage id={`ui-marccat.template.${current.label}`} />
-          </Col>
-          <Col xs={8}>
-            <Select dataOptions={current.values} />
-          </Col>
-        </Row>
-      );
-    });
-    return toRender;
   }
 
   createNewTag() {
@@ -443,15 +406,6 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     const itemTypesValues = (resources.itemTypes || {}).records || [];
     const functionCodesValues = (resources.functionCodes || {}).records || [];
     const subfields = (resources.subfields || {}).records || [];
-    const columnMapping = {
-      code: '',
-      description: '',
-      ind1: '',
-      ind2: '',
-      displayValue: ''
-    };
-    const currentTag = [];
-    currentTag.push(this.state.newTag);
     /*
     if (marcCategories && marcCategories.hasLoaded && marcCategoriesSelect.value) {
       fetchHeadingTypes(marcCategoriesSelect.value);
@@ -461,18 +415,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
       <form name="createTagForm" id="createTagForm" noValidate>
         <Row className={css.mandatoryList}>
           <Col xs={12}>
-            <MultiColumnList
-              contentData={currentTag}
-              columnMapping={columnMapping}
-              visibleColumns={[
-                'code',
-                'description',
-                'ind1',
-                'ind2',
-                'displayValue',
-              ]}
-              columnWidths={{ code: '10%', description: '40%', ind1: '5%', ind2: '5%', displayValue: '40%' }}
-            />
+            <CurrentTagDisplay {...this.props} currentTag={this.state.newTag} />
           </Col>
         </Row>
 
@@ -540,9 +483,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
 
         {resources.fixedFieldSelect &&
           resources.fixedFieldSelect.hasLoaded &&
-          <div>
-            {this.renderFixedFieldSelect(this.state.fixedFieldSel, this.state.newTag)}
-          </div>
+          <FixedFieldForm {...this.props} tag={this.state.newTag} selectArray={this.state.fixedFieldSel} />
         }
 
         <Row>

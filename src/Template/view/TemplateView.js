@@ -7,12 +7,11 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Icon from '@folio/stripes-components/lib/Icon';
 import Callout from '@folio/stripes-components/lib/Callout';
-import ConfirmationModal from '@folio/stripes-components/lib/ConfirmationModal';
 import { FormattedMessage } from 'react-intl';
 import { EditTemplate } from '../';
-import { ToolbarMenu } from '../../Core';
 import { removeById } from '../../Utils/Formatter';
 import TemplateResults from './TemplateResult';
+import TemplateDetailModal from './TemplateDeleteModal';
 import * as C from '../../Utils';
 
 
@@ -156,9 +155,6 @@ class TemplateView extends React.Component {
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const modalHeading = formatMsg({ id: 'ui-marccat.template.delete' });
-    const modalMessage = formatMsg({ id: 'ui-marccat.template.delete.modal' });
-    const confirmLabel = formatMsg({ id: 'ui-marccat.template.delete.button' });
 
     const { resources: { recordsTemplates } } = this.props;
     if (!recordsTemplates || !recordsTemplates.hasLoaded) {
@@ -167,10 +163,8 @@ class TemplateView extends React.Component {
     let templates = recordsTemplates.records;
 
     if (this.props.resources.currentTemplate.id !== undefined) {
-      templates = removeById(templates, this.props.resources.currentTemplate.id);
+      templates = removeById(recordsTemplates.records, this.props.resources.currentTemplate.id);
     }
-
-    const deatilMenu = <ToolbarMenu icon={['trashBin', 'comment', 'edit']} />;
 
     return (
       <Paneset static>
@@ -188,19 +182,15 @@ class TemplateView extends React.Component {
             appIcon={{ app: C.META.ICON_TITLE }}
             dismissible
             onClose={this.handleClose}
-            newButtonMenu={deatilMenu}
           >
             <this.connectedEditTemplateView
               {...this.props}
               selectedTemplate={this.state.selectedTemplate}
             />
-            <ConfirmationModal
+            <TemplateDetailModal
               open={this.state.confirming}
-              heading={modalHeading}
-              message={modalMessage}
               onConfirm={this.onDelete}
               onCancel={this.hideConfirm}
-              confirmLabel={confirmLabel}
             />
             <Callout ref={(ref) => { this.callout = ref; }} />
           </Pane>

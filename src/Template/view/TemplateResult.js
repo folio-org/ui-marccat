@@ -11,11 +11,13 @@ type TemplateReusltProps = {
   templates: Object;
   handleRowClick: () => void;
   onClick: () => void;
-  recordsTemplates: Object;
   stripes: Object;
   resources: Object;
 };
-
+/**
+ *
+ * @param {*} functional components
+ */
 export default function TemplateResults({ handleRowClick, onClick, ...props }: TemplateReusltProps) {
   const searchMenu = <ToolbarMenu icon={['search']} />;
   const newButtonMenu = <ToolbarButtonMenu

@@ -8,7 +8,6 @@ import { connect } from '@folio/stripes-connect';
 import { Observable } from 'rxjs';
 import Modal from '@folio/stripes-components/lib/Modal';
 import { FormattedMessage } from 'react-intl';
-import { withCloseHandler } from '../../../Core/';
 import * as C from '../../../Utils';
 
 type Props = {
@@ -25,6 +24,7 @@ class SearchButton extends React.Component<Props, State> {
     super(props);
     this.state = {
       results: null,
+      isOpen: false
     };
     this.handleSearch = this.handleSearch.bind(this);
   }
@@ -68,4 +68,4 @@ class SearchButton extends React.Component<Props, State> {
   }
 }
 
-export default withCloseHandler(connect(SearchButton, C.META.MODULE_NAME));
+export default connect(SearchButton, C.META.MODULE_NAME);

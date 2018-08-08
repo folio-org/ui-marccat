@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRoot } from '@folio/stripes-core/src/components/Root/RootContext';
 
 export const MARCcatContext = React.createContext({});
 
@@ -33,7 +34,7 @@ function withSubscription(WrappedComponent) {
     }
   }
   WithSubscription.displayName = `WithSubscription(${getDisplayName(WrappedComponent)})`;
-  return WithSubscription;
+  return withRoot(WithSubscription);
 }
 
 export default withSubscription;

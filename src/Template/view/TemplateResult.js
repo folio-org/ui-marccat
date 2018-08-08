@@ -6,7 +6,16 @@ import { ToolbarMenu, ToolbarButtonMenu } from '../../Core';
 import * as C from '../../Utils';
 import css from '../styles/Template.css';
 
-export default function TemplateResults({ templates, formatMsg, handleRowClick, onClick, recordsTemplates, ...props }) {
+
+type TemplateReusltProps = {
+  templates: Object;
+  handleRowClick: () => void;
+  onClick: () => void;
+  recordsTemplates: Object;
+  stripes: Object;
+};
+
+export default function TemplateResults({ templates, handleRowClick, onClick, recordsTemplates, ...props }: TemplateReusltProps) {
   const searchMenu = <ToolbarMenu icon={['search']} />;
   const newButtonMenu = <ToolbarButtonMenu
     {...props}
@@ -19,7 +28,7 @@ export default function TemplateResults({ templates, formatMsg, handleRowClick, 
       defaultWidth="fill"
       firstMenu={searchMenu}
       newButtonMenu={newButtonMenu}
-      paneTitle={formatMsg({
+      paneTitle={props.stripes.intl.formatMessage({
         id: 'ui-marccat.templates.title',
       })}
       paneSub={templates.length + ' Result found'}

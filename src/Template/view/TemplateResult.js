@@ -24,6 +24,7 @@ export default function TemplateResults({ handleRowClick, onClick, ...props }: T
     className={css.mr15}
     onClick={onClick}
   />;
+  const { resources: { recordsTemplates } } = props;
   return (
     <Pane
       defaultWidth="fill"
@@ -32,13 +33,13 @@ export default function TemplateResults({ handleRowClick, onClick, ...props }: T
       paneTitle={props.stripes.intl.formatMessage({
         id: 'ui-marccat.templates.title',
       })}
-      paneSub={props.resources.recordsTemplates.records.length + ' Result found'}
+      paneSub={recordsTemplates.records.length + ' Result found'}
       appIcon={{ app: C.META.ICON_TITLE }}
     >
       <MultiColumnList
         id="list-templates"
-        loading={!props.resources.recordsTemplates.hasLoaded}
-        contentData={props.resources.recordsTemplates.records}
+        loading={!recordsTemplates.hasLoaded}
+        contentData={recordsTemplates.records}
         rowMetadata={['id', 'id']}
         formatter={fakeFormatter}
         ariaLabel="TemplateView"

@@ -1,7 +1,3 @@
-/**
- * @format
- * @flow
- */
 import React from 'react';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import Pane from '@folio/stripes-components/lib/Pane';
@@ -35,7 +31,7 @@ export default function TemplateResults({ handleRowClick, onClick, ...props }: T
     <Pane
       defaultWidth="fill"
       firstMenu={leftMenu}
-      newButtonMenu={newButtonMenu}
+      lastMenu={newButtonMenu}
       paneTitle={props.stripes.intl.formatMessage({
         id: 'ui-marccat.templates.title',
       })}

@@ -62,6 +62,7 @@ class TemplateView extends React.Component {
     this.onDelete = this.onDelete.bind(this);
     this.showConfirm = this.showConfirm.bind(this);
     this.hideConfirm = this.hideConfirm.bind(this);
+    this.handleClose = this.handleClose.bind(this);
     this.callout = null;
   }
 
@@ -73,6 +74,12 @@ class TemplateView extends React.Component {
       .then(() => this.showCalloutMessage())
       .catch(() => this.deleteReject())
       .finally(() => this.hideConfirm());
+  }
+
+  handleClose = () => {
+    this.setState({
+      showTemplateDetail: false
+    })
   }
 
   hideConfirm() {
@@ -132,6 +139,7 @@ class TemplateView extends React.Component {
          <EditTemplate 
          {...this.props}
          selectedTemplate={this.state.selectedTemplate}
+         handleClose={this.handleClose}
          />
         }
       </Paneset>

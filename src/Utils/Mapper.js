@@ -1,8 +1,8 @@
 import * as C from './Constant';
 
 const marcSeparator = stringa => stringa.replace(
-  C.MARC_CHARACTER.SEPARATOR,
-  C.MARC_CHARACTER.DOLLAR,
+  C.MARC.CHARACTER_SEPARATOR,
+  C.MARC.CHARACTER_DOLLAR,
 );
 
 const arrayToObject = arr => {

@@ -24,7 +24,7 @@ export const findLabel = (array, value) => {
 * re-organize data from fixed-field-codes-group API to remove empty select and organize object in array
 */
 
-export const organize = (input) => {
+export const organize = (input, defaultValues) => {
   const result = [];
   const keySet = Object.keys(input);
   keySet.map(key => {
@@ -32,6 +32,7 @@ export const organize = (input) => {
     if (element.length > 0) {
       return result.push({
         label: key,
+        default: defaultValues[key],
         values: element
       });
     }

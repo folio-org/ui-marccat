@@ -106,9 +106,12 @@ export const LOGICAL_VIEW_SELECT = {
 };
 
 // Marc Constants
-export const MARC_CHARACTER = {
-  SEPARATOR: '\u001f',
-  DOLLAR: '$',
+export const MARC = {
+  CHARACTER_SEPARATOR: '\u001f',
+  CHARACTER_DOLLAR: '$',
+  CONTROL_FIELD: 'controlfield',
+  DATA_FIELD: 'datafield',
+
 };
 
 // EVENTS

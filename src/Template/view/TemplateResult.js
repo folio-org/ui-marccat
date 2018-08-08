@@ -13,9 +13,10 @@ type TemplateReusltProps = {
   onClick: () => void;
   recordsTemplates: Object;
   stripes: Object;
+  resources: Object;
 };
 
-export default function TemplateResults({ templates, handleRowClick, onClick, recordsTemplates, ...props }: TemplateReusltProps) {
+export default function TemplateResults({ handleRowClick, onClick, ...props }: TemplateReusltProps) {
   const searchMenu = <ToolbarMenu icon={['search']} />;
   const newButtonMenu = <ToolbarButtonMenu
     {...props}
@@ -31,13 +32,13 @@ export default function TemplateResults({ templates, handleRowClick, onClick, re
       paneTitle={props.stripes.intl.formatMessage({
         id: 'ui-marccat.templates.title',
       })}
-      paneSub={templates.length + ' Result found'}
+      paneSub={props.resources.recordsTemplates.records.length + ' Result found'}
       appIcon={{ app: C.META.ICON_TITLE }}
     >
       <MultiColumnList
         id="list-templates"
-        loading={!recordsTemplates.hasLoaded}
-        contentData={templates}
+        loading={!props.resources.recordsTemplates.hasLoaded}
+        contentData={props.resources.recordsTemplates.records}
         rowMetadata={['id', 'id']}
         formatter={fakeFormatter}
         ariaLabel="TemplateView"

@@ -160,9 +160,7 @@ class TemplateView extends React.Component {
     const modalMessage = formatMsg({ id: 'ui-marccat.template.delete.modal' });
     const confirmLabel = formatMsg({ id: 'ui-marccat.template.delete.button' });
 
-    const {
-      resources: { recordsTemplates },
-    } = this.props;
+    const { resources: { recordsTemplates } } = this.props;
     if (!recordsTemplates || !recordsTemplates.hasLoaded) {
       return <Icon icon="spinner-ellipsis" />;
     }
@@ -178,8 +176,6 @@ class TemplateView extends React.Component {
       <Paneset static>
         <TemplateResults
           {...this.props}
-          templates={templates}
-          recordsTemplates={recordsTemplates}
           handleRowClick={this.handleRowClick}
           formatMsg={formatMsg}
           onClick={() => {}}

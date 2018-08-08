@@ -1,6 +1,5 @@
 {
   "marccat":"MARCcat",
-  "resultCount": "{count, number} {count, plural, one {Record found} other {Records found}}",
   "noResult":"No Result found",
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
@@ -190,7 +189,7 @@
 
   "diacritic.title":"Diacritic",
   "diacritic.subTitle": "Diacritic Table",
-  "diacritic.char.copied":"Char copied ",
+  "diacritic.char.copied":"Char copied",
   "diacritic.list.id":"Id",
   "diacritic.list.character":"Character",
   "diacritic.list.description":"Description",

@@ -4,7 +4,6 @@
  */
 import React from 'react';
 import { connect } from '@folio/stripes-connect';
-import { withRoot } from '@folio/stripes-core/src/components/Root/RootContext';
 import { Settings } from './Settings';
 import { Navigator } from './Navigator/';
 import Router from './router';
@@ -93,8 +92,7 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
       headers: C.ENDPOINT.HEADERS,
       path: 'search?lang=ita&q=%{query}&from=1&to=1&view=1&ml=170&dpo=1',
       records: 'docs',
-      accumulate: true,
-      fetch: false
+      accumulate: true
     },
     firstPage: {
       type: C.RESOURCE_TYPE,
@@ -102,8 +100,7 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
       path: `first-page?mainLibrary=170&view=1&query=%{query}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
       headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.BROWSING,
-      accumulate: true,
-      fetch: false
+      accumulate: true
     },
     previousPage: {
       type: C.RESOURCE_TYPE,
@@ -111,8 +108,7 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
       path: `previous-page?mainLibrary=170&view=1&query=%{query}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
       headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.BROWSING,
-      accumulate: true,
-      fetch: false
+      accumulate: true
     },
     nextPage: {
       type: C.RESOURCE_TYPE,
@@ -121,7 +117,6 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
       headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.BROWSING,
       accumulate: true,
-      fetch: false
     },
   });
 
@@ -162,4 +157,4 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
   * @example: this.props.root
   * @example: const { state } = this.props.root;
   */
-export default withRoot(withSubscription(connect(MARCCatRouting, C.META.MODULE_NAME)));
+export default withSubscription(connect(MARCCatRouting, C.META.MODULE_NAME));

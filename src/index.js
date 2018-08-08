@@ -4,7 +4,6 @@
  */
 import React from 'react';
 import { connect } from '@folio/stripes-connect';
-import PropTypes from 'prop-types';
 import { withRoot } from '@folio/stripes-core/src/components/Root/RootContext';
 import { Settings } from './Settings';
 import { Navigator } from './Navigator/';

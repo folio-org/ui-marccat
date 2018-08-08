@@ -1,5 +1,4 @@
 import React from 'react';
-import { actionMenuItem } from '..';
 
 export const MARCcatContext = React.createContext({});
 

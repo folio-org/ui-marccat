@@ -19,7 +19,7 @@ type TemplateReusltProps = {
  * @param {*} functional components
  */
 export default function TemplateResults({ handleRowClick, onClick, ...props }: TemplateReusltProps) {
-  const searchMenu = <ToolbarMenu icon={['search']} />;
+  const leftMenu = <ToolbarMenu icon={['search']} />;
   const newButtonMenu = <ToolbarButtonMenu
     {...props}
     create
@@ -30,7 +30,7 @@ export default function TemplateResults({ handleRowClick, onClick, ...props }: T
   return (
     <Pane
       defaultWidth="fill"
-      firstMenu={searchMenu}
+      firstMenu={leftMenu}
       newButtonMenu={newButtonMenu}
       paneTitle={props.stripes.intl.formatMessage({
         id: 'ui-marccat.templates.title',

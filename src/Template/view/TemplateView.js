@@ -1,6 +1,6 @@
 /* eslint-disable */
-import { Observable } from 'rxjs/Observable';
 import React from 'react';
+import { Observable } from 'rxjs/Observable';
 import { connect } from '@folio/stripes-connect';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';

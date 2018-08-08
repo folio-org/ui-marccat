@@ -19,6 +19,7 @@ const secondaryIndexResults = require('../../../config/static/secondary-index-li
 
 type IndexListProps = {
   stripes: Object;
+  actionMenuItems: Object;
 };
 
 type IndexListState = {

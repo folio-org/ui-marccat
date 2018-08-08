@@ -94,7 +94,7 @@ class TemplateView extends React.Component {
     }).isRequired,
     router: PropTypes.object,
     resources: PropTypes.object,
-    actionMenuItems: PropTypes.object
+    history: PropTypes.object
   };
 
 
@@ -231,7 +231,6 @@ class TemplateView extends React.Component {
       <Paneset static>
         <Pane
           defaultWidth="fill"
-          actionMenuItems={this.props.actionMenuItems}
           firstMenu={searchMenu}
           lastMenu={lastMenu}
           paneTitle={formatMsg({

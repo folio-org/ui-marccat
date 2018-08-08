@@ -3,20 +3,17 @@ import PropTypes from 'prop-types';
 import { Observable } from 'rxjs/Observable';
 import React from 'react';
 import { connect } from '@folio/stripes-connect';
-import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import Pane from '@folio/stripes-components/lib/Pane';
-import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import Paneset from '@folio/stripes-components/lib/Paneset';
-import IconButton from '@folio/stripes-components/lib/IconButton';
 import Icon from '@folio/stripes-components/lib/Icon';
 import Callout from '@folio/stripes-components/lib/Callout';
 import ConfirmationModal from '@folio/stripes-components/lib/ConfirmationModal';
 import { FormattedMessage } from 'react-intl';
 import { EditTemplate } from '../';
-import { ToolbarButtonMenu } from '../../Core';
+import { ToolbarMenu } from '../../Core';
 import { removeById } from '../../Utils/Formatter';
+import TemplateResults from './TemplateResult';
 import * as C from '../../Utils';
-import css from '../styles/Template.css';
 
 
 class TemplateView extends React.Component {
@@ -142,7 +139,7 @@ class TemplateView extends React.Component {
     });
   }
 
-  handleRowClick=(c, object) => {
+  handleRowClick = (c, object) => {
     this.props.mutator.templateDetails.reset();
     this.props.mutator.query.replace(object.id);
     this.props.router.push(`templateList/${object.id}`);
@@ -171,90 +168,22 @@ class TemplateView extends React.Component {
     }
     let templates = recordsTemplates.records;
 
-
-    const formatter = {
-      'Id: id': x => _.get(x, ['id']),
-      'name: name': x => _.get(x, ['name']),
-    };
-
-    const searchMenu = (
-      <PaneMenu>
-        <IconButton
-          key="icon-search"
-          icon="search"
-          onClick={() => this.props.history.push(C.INTERNAL_URL.ADVANCE_SEARCH)}
-        />
-      </PaneMenu>
-    );
-
-    const deleteMenu = (
-      <PaneMenu>
-        <IconButton
-          key="icon-trash"
-          icon="trashBin"
-          onClick={this.showConfirm}
-        />
-
-        <IconButton key="icon-save" icon="save" />
-        <IconButton key="icon-edit" icon="edit" />
-      </PaneMenu>
-    );
-
-    const actionMenuItemsDetail = [
-      {
-        label: formatMsg({
-          id: 'ui-marccat.template.create',
-        }),
-      },
-      {
-        label: formatMsg({
-          id: 'ui-marccat.template.tag.create',
-        }),
-        onClick: () => {
-          this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE);
-        },
-      },
-    ];
-
     if (this.props.resources.currentTemplate.id !== undefined) {
       templates = removeById(templates, this.props.resources.currentTemplate.id);
     }
 
-    const lastMenu = <ToolbarButtonMenu
-      {...this.props}
-      create
-      className={css.mr15}
-      onClick={() => this.props.history.push(C.INTERNAL_URL.ADD_TEMPLATE)}
-    />;
+    const deatilMenu = <ToolbarMenu icon={['trashBin', 'comment', 'edit']} />;
 
     return (
       <Paneset static>
-        <Pane
-          defaultWidth="fill"
-          firstMenu={searchMenu}
-          lastMenu={lastMenu}
-          paneTitle={formatMsg({
-            id: 'ui-marccat.templates.title',
-          })}
-          paneSub={templates.length + ' Result found'}
-          appIcon={{ app: C.META.ICON_TITLE }}
-        >
-          <MultiColumnList
-            id="list-templates"
-            loading={!recordsTemplates.hasLoaded}
-            contentData={templates}
-            rowMetadata={['id', 'id']}
-            formatter={formatter}
-            ariaLabel="TemplateView"
-            visibleColumns={['id', 'name']}
-            sortedColumn="name"
-            sortOrder="ascending"
-            onRowClick={this.handleRowClick}
-            containerRef={ref => {
-              this.resultsList = ref;
-            }}
-          />
-        </Pane>
+        <TemplateResults
+          {...this.props}
+          templates={templates}
+          recordsTemplates={recordsTemplates}
+          handleRowClick={this.handleRowClick}
+          formatMsg={formatMsg}
+          onClick={() => {}}
+        />
         {this.state.showTemplateDetail && (
           <Pane
             defaultWidth="fill"
@@ -263,8 +192,7 @@ class TemplateView extends React.Component {
             appIcon={{ app: C.META.ICON_TITLE }}
             dismissible
             onClose={this.handleClose}
-            actionMenuItems={actionMenuItemsDetail}
-            lastMenu={deleteMenu}
+            newButtonMenu={deatilMenu}
           >
             <this.connectedEditTemplateView
               {...this.props}

@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import Icon from '@folio/stripes-components/lib/Icon';
 import IconButton from '@folio/stripes-components/lib/IconButton';

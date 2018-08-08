@@ -3,7 +3,7 @@
  * @flow
  */
 /* eslint-disable react/no-deprecated */
-import React from 'react';
+import * as React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { connect } from 'react-redux';
 import Paneset from '@folio/stripes-components/lib/Paneset';

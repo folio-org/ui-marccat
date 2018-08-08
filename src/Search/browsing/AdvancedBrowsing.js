@@ -3,7 +3,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import { connect } from '@folio/stripes-connect';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import Icon from '@folio/stripes-components/lib/Icon';

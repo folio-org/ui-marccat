@@ -3,7 +3,7 @@
  * @flow
  */
 /* eslint-disable */
-import React from 'react';
+import * as React from 'react';
 import { Observable } from 'rxjs/Observable';
 import { connect } from '@folio/stripes-connect';
 import Pane from '@folio/stripes-components/lib/Pane';
@@ -127,7 +127,7 @@ class TemplateView extends React.Component {
           handleRowClick={this.handleRowClick}
           formatMsg={formatMsg}
           onClick={() => {}}
-        />
+        >
           <TemplateDetailModal 
               {...this.props}
               open={this.state.confirming}
@@ -135,6 +135,7 @@ class TemplateView extends React.Component {
               onCancel={this.hideConfirm}
             />
             <Callout ref={(ref) => { this.callout = ref; }} />
+        </TemplateResults>
         {this.state.showTemplateDetail &&
          <EditTemplate 
          {...this.props}

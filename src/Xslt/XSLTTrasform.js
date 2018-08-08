@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { connect } from '@folio/stripes-connect';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';

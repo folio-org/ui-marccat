@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import Button from '@folio/stripes-components/lib/Button';
 import { connect } from '@folio/stripes-connect';
 import { Observable } from 'rxjs';

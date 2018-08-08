@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import ConfirmationModal from '@folio/stripes-components/lib/ConfirmationModal';
 
 type TemplateDetailModalProps = {

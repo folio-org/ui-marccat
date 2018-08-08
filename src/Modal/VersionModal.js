@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import Modal from '@folio/stripes-components/lib/Modal';
 import { Row } from '../../node_modules/react-flexbox-grid';
 

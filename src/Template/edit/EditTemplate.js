@@ -3,9 +3,10 @@
  * @flow
  */
 /* eslint-disable */
-import React from 'react';
+import * as React from 'react';
 import _ from 'lodash';
 import { connect } from '@folio/stripes-connect';
+import Layer from '@folio/stripes-components/lib/Layer';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
@@ -69,6 +70,7 @@ class EditTemplate extends React.Component {
     const { selectedTemplate, handleClose } = this.props;
     const rightMenu = <ToolbarMenu icon={['trashBin', 'comment', 'edit']} />;
     return (
+      <Layer open>
       <Pane
         defaultWidth="fill"
         lastMenu={rightMenu}
@@ -97,6 +99,7 @@ class EditTemplate extends React.Component {
           onToggle={this.handleSectionToggle}
         />
       </Pane>
+      </Layer>
     );
   }
 }

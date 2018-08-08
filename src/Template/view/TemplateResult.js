@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { fakeFormatter } from '../../Utils/Formatter';

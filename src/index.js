@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import { connect } from '@folio/stripes-connect';
 import { Settings } from './Settings';
 import { Navigator } from './Navigator/';

@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';

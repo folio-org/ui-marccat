@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { withRoot } from '@folio/stripes-core/src/components/Root/RootContext';
 
 export const MARCcatContext = React.createContext({});

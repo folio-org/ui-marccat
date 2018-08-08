@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import Select from '@folio/stripes-components/lib/Select';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import TextArea from '@folio/stripes-components/lib/TextArea';

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 // import logger from '@folio/stripes-logger';
 import getDisplayName from '../Utils/utils';
 

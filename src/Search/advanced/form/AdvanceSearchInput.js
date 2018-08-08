@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { Field } from 'redux-form';
 import { connect } from 'react-redux';

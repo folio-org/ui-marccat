@@ -1,5 +1,4 @@
-import _ from 'lodash';
-import PropTypes from 'prop-types';
+/* eslint-disable */
 import { Observable } from 'rxjs/Observable';
 import React from 'react';
 import { connect } from '@folio/stripes-connect';
@@ -9,7 +8,6 @@ import Icon from '@folio/stripes-components/lib/Icon';
 import Callout from '@folio/stripes-components/lib/Callout';
 import { FormattedMessage } from 'react-intl';
 import { EditTemplate } from '../';
-import { removeById } from '../../Utils/Formatter';
 import TemplateResults from './TemplateResult';
 import TemplateDetailModal from './TemplateDeleteModal';
 import * as C from '../../Utils';
@@ -58,41 +56,12 @@ class TemplateView extends React.Component {
     this.props.mutator.currentType.replace('B');
 
     this.connectedEditTemplateView = props.stripes.connect(EditTemplate);
-    this.handleAddTemplate = this.handleAddTemplate.bind(this);
     this.handleRowClick = this.handleRowClick.bind(this);
-    this.handleClose = this.handleClose.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.showConfirm = this.showConfirm.bind(this);
     this.hideConfirm = this.hideConfirm.bind(this);
     this.callout = null;
   }
-  static propTypes = {
-    stripes: PropTypes.shape({
-      connect: PropTypes.func.isRequired,
-      intl: PropTypes.object.isRequired,
-    }).isRequired,
-    mutator: PropTypes.shape({
-      currentTemplate: PropTypes.shape({
-        update: PropTypes.func,
-      }),
-      recordsTemplates: PropTypes.shape({
-        POST: PropTypes.func,
-        PUT: PropTypes.func,
-        DELETE: PropTypes.func,
-      }),
-      query: PropTypes.string,
-      templateDetails: PropTypes.shape({
-        reset: PropTypes.func,
-        GET: PropTypes.func,
-        PUT: PropTypes.func,
-      }),
-      currentType: PropTypes.string
-    }).isRequired,
-    router: PropTypes.object,
-    resources: PropTypes.object,
-    history: PropTypes.object
-  };
-
 
   onDelete() {
     const toDelete = this.state.selectedTemplate;
@@ -109,8 +78,6 @@ class TemplateView extends React.Component {
       confirming: false,
     });
   }
-
-
   showConfirm() {
     this.setState({
       confirming: true,
@@ -131,42 +98,20 @@ class TemplateView extends React.Component {
     this.callout.sendCallout({ message });
   }
 
-  handleClose() {
-    this.props.history.goBack();
-    this.setState({
-      showTemplateDetail: false
-    });
-  }
-
   handleRowClick = (c, object) => {
     this.props.mutator.templateDetails.reset();
     this.props.mutator.query.replace(object.id);
-    this.props.router.push(`templateList/${object.id}`);
-    Observable.from(this.props.mutator.templateDetails.GET());
+    Observable.just(this.props.mutator.templateDetails.GET());
     this.setState({
       showTemplateDetail: true,
       selectedTemplate: object,
     });
   }
 
-  handleAddTemplate() {
-    this.props.router.push(C.INTERNAL_URL.ADD_TEMPLATE);
-  }
-
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-
     const { resources: { recordsTemplates } } = this.props;
-    if (!recordsTemplates || !recordsTemplates.hasLoaded) {
-      return <Icon icon="spinner-ellipsis" />;
-    }
-    let templates = recordsTemplates.records;
-
-    if (this.props.resources.currentTemplate.id !== undefined) {
-      templates = removeById(recordsTemplates.records, this.props.resources.currentTemplate.id);
-    }
-
-    return (
+    return (!recordsTemplates || !recordsTemplates.hasLoaded) ? <Icon icon="spinner-ellipsis" /> : (
       <Paneset static>
         <TemplateResults
           {...this.props}

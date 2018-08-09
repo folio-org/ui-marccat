@@ -148,7 +148,7 @@
   "template.platformConstructionTypeCode": "Platform construction",
   "template.platformUseCode": "Platform use",
   "template.sensorTypeCode": "Sensor",
-  "template.remoteSensingDataTypeCode": "Remote sensing data",
+  "template.remoteSensingDataTypeCodes": "Remote sensing data",
   "template.catalogDate": "Cataloguing date",
   "template.date1": "Date 1",
   "template.date2": "Date 2",

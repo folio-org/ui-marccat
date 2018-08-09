@@ -12,7 +12,10 @@ const l = new Logger(LOGGER_CONFIG.CATEGORY);
 l.setPrefix(LOGGER_CONFIG.PREFIX);
 l.setTimestamp(LOGGER_CONFIG.TIMESTAMP);
 
-
+/**
+ * HOC
+ * @param {WrappedComponent} a Component to inject logger props
+ */
 export function withLogger<Props, Component: React.ComponentType<Props>>(
   WrappedComponent: Component
 ): React.ComponentType<React.ElementConfig<Component>> {
@@ -20,6 +23,7 @@ export function withLogger<Props, Component: React.ComponentType<Props>>(
 }
 
 /**
+ * HOC
  * @param {WrappedComponent} a Component to inject props
  */
 export function injectProp<Props: {}>(Component: React.ComponentType<Props>, prop: Object): React.ComponentType<Props> {
@@ -29,6 +33,7 @@ export function injectProp<Props: {}>(Component: React.ComponentType<Props>, pro
 }
 
 /**
+ * HOC
  * @param {WrappedComponent} a Component to pass props
  */
 export function withNavigation<Props, Component: React.ComponentType<Props>>(
@@ -38,11 +43,12 @@ export function withNavigation<Props, Component: React.ComponentType<Props>>(
 }
 
 /**
+ * HOC
  * @param {WrappedComponent} a Component to pass props
  */
 export function withInheritedManifest<Props, Component: React.ComponentType<Props>>(
   WrappedComponent: Component
 ): React.ComponentType<React.ElementConfig<Component>> {
-  return props => <WrappedComponent {...props} log={{}} />;
+  return props => <WrappedComponent {...props} manifest={{}} />;
 }
 

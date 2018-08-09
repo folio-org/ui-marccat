@@ -1,6 +1,5 @@
 /**
  * @format
- * @flow
  */
 import * as React from 'react';
 import Select from '@folio/stripes-components/lib/Select';
@@ -15,9 +14,7 @@ type FixedFieldFormProps = {
     selectArray: Array
 };
 
-type FixedFieldFormState = {};
-
-class FixedFieldForm extends React.Component<FixedFieldFormProps, FixedFieldFormState> {
+class FixedFieldForm extends React.Component<FixedFieldFormProps, {}> {
   constructor(props) {
     super(props);
     this.renderFixedFieldSelect = this.renderFixedFieldSelect.bind(this);

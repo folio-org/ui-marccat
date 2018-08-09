@@ -1,6 +1,5 @@
 /**
  * @format
- * @flow
  */
 /* eslint-disable */
 import * as React from 'react';
@@ -17,7 +16,7 @@ import TemplateDetailModal from './TemplateDeleteModal';
 import * as C from '../../Utils';
 
 
-class TemplateView extends React.Component {
+class TemplateView extends React.Component<*> {
   static manifest = Object.freeze({
     currentTemplate: {},
     currentType: {},

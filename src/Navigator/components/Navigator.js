@@ -1,6 +1,5 @@
 /**
  * @format
- * @flow
  */
 import * as React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';

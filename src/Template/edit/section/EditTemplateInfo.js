@@ -13,7 +13,7 @@ import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import css from '../../styles/Template.css';
 import * as C from '../../../Utils';
 
-class EditTemplateInfo extends React.Component {
+class EditTemplateInfo extends React.Component<*> {
   static manifest = Object.freeze({
     templateId: {},
     records: {

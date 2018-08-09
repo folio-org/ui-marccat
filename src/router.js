@@ -1,6 +1,5 @@
 /**
  * @format
- * @flow
  */
 /* eslint-disable react/prop-types */
 import * as React from 'react';

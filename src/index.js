@@ -35,9 +35,15 @@ type RoutingProps = {
       GET: Function,
       reset: Function,
     },
-    indexType: string,
-    innerIndexValue: string,
-    constraintIndexValue: string,
+    indexType: {
+      replace: Function,
+    },
+    innerIndexValue: {
+      replace: Function,
+    },
+    constraintIndexValue: {
+      replace: Function,
+    },
   },
   history: {
     goBack: Function,
@@ -116,8 +122,8 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
       path: `next-page?mainLibrary=170&view=1&query=%{query}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
       headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.BROWSING,
-      accumulate: true,
-    },
+      accumulate: true
+    }
   });
 
   constructor(props, context) {

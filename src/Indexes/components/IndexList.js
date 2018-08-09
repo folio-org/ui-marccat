@@ -1,7 +1,6 @@
 
 /**
  * @format
- * @flow
  */
 import * as React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';

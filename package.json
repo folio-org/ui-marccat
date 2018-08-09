@@ -48,7 +48,9 @@
     "gen:authors": ". ./script/sh/authors.sh",
     "clean": "node ./script/js/clean.js",
     "show:descriptor": "stripes mod descriptor --full",
-    "release": "node script/ci/release.js"
+    "release": "node script/ci/release.js",
+    "pre-prepublish": "flow-remove-types src/ -d lib/",
+    "prepublish": "yarn run build"
   },
   "devDependencies": {
     "@folio/eslint-config-stripes": "^1.1.0",

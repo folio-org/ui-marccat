@@ -2,7 +2,6 @@
  * @author: Christian Chiama
  *
  * @format
- * @flow
  */
 import * as React from 'react';
 import { findDOMNode } from 'react-dom';

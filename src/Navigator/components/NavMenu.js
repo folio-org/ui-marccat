@@ -1,6 +1,5 @@
 /**
  * @format
- * @flow
  */
 import * as React from 'react';
 import { AccordionSet, ExpandAllButton } from '@folio/stripes-components/lib/Accordion';

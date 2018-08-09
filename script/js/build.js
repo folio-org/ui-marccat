@@ -7,6 +7,11 @@ const execSync = (cmd) => {
   cp.execSync(cmd, { stdio: ['inherit', 'inherit', 'inherit'] });
 };
 
+const stripFlowType = () => {
+  log.ok('Remove Flow Btypeuilding');
+  execSync('yarn flow-remove-types src/ -d lib/');
+};
+
 const lunchBuild = () => {
   log.ok('Start Building');
   execSync('yarn config set @folio:registry https://repository.folio.org/repository/npm-folioci/');
@@ -15,4 +20,9 @@ const lunchBuild = () => {
   log.ok('End Building for language en-US');
 };
 
-lunchBuild();
+const run = () => {
+  stripFlowType();
+  lunchBuild();
+};
+
+run();

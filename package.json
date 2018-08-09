@@ -49,8 +49,7 @@
     "clean": "node ./script/js/clean.js",
     "show:descriptor": "stripes mod descriptor --full",
     "release": "node script/ci/release.js",
-    "pre-prepublish": "flow-remove-types src/ -d lib/",
-    "prepublish": "yarn run build"
+    "prepublish": "yarn run build;yarn clean"
   },
   "devDependencies": {
     "@folio/eslint-config-stripes": "^1.1.0",
@@ -74,6 +73,7 @@
     "create-subscription": "^16.4.2",
     "eslint-loader": "^2.1.0",
     "flow": "^0.2.3",
+    "flow-remove-types": "^1.2.3",
     "observable-fetch": "^1.1.1",
     "react-intl": "^2.4.0",
     "redux-form": "^7.4.2",

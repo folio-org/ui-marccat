@@ -25,7 +25,6 @@ module.exports = {
 		"react/forbid-prop-types":"off",
 		"spaced-comment": ["error", "always", { "markers": ["/"] }],
     "arrow-parens": "off",
-    "max-len": ["warn", { "code": 120 }],
     "no-return-assign":"off",
     "no-undef": "warn",
     "import/no-named-as-default": "off",

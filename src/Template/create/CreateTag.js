@@ -418,13 +418,13 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     return (
       <form name="createTagForm" id="createTagForm" noValidate>
         <Row className={css.mandatoryList}>
-          <Col xs={12}>
+          <Col xs={7}>
             <CurrentTagDisplay {...this.props} currentTag={this.state.newTag} />
           </Col>
         </Row>
 
         <Row>
-          <Col xs={12}>
+          <Col xs={7}>
             {marcCatValues &&
               <Select
                 name="marcCategoriesSelect"
@@ -437,7 +437,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
         </Row>
 
         <Row>
-          <Col xs={12}>
+          <Col xs={7}>
             {resources.headingTypes && resources.headingTypes.hasLoaded &&
               <Select
                 name="headingTypesSelect"
@@ -450,7 +450,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
         </Row>
 
         <Row>
-          <Col xs={12}>
+          <Col xs={7}>
             {resources.itemTypes &&
               resources.itemTypes.hasLoaded &&
               itemTypesValues.length > 0 &&
@@ -465,7 +465,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
         </Row>
 
         <Row>
-          <Col xs={12}>
+          <Col xs={7}>
             {resources.functionCodes &&
               resources.functionCodes.hasLoaded &&
               functionCodesValues.length > 0 &&

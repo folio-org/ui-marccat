@@ -31,10 +31,10 @@ class FixedFieldForm extends React.Component<FixedFieldFormProps, FixedFieldForm
     if (tag && tag.code === '008') {
       toRender.push(
         <Row>
-          <Col xs={4}>
+          <Col xs={2}>
             <FormattedMessage id="ui-marccat.template.catalogDate" />
           </Col>
-          <Col xs={8}>
+          <Col xs={5}>
             <TextArea
               {...this.props}
               value={getDateNow()}
@@ -44,10 +44,10 @@ class FixedFieldForm extends React.Component<FixedFieldFormProps, FixedFieldForm
       );
       toRender.push(
         <Row>
-          <Col xs={4}>
+          <Col xs={2}>
             <FormattedMessage id="ui-marccat.template.date1" />
           </Col>
-          <Col xs={8}>
+          <Col xs={5}>
             <TextArea
               {...this.props}
             />
@@ -56,10 +56,10 @@ class FixedFieldForm extends React.Component<FixedFieldFormProps, FixedFieldForm
       );
       toRender.push(
         <Row>
-          <Col xs={4}>
+          <Col xs={2}>
             <FormattedMessage id="ui-marccat.template.date2" />
           </Col>
-          <Col xs={8}>
+          <Col xs={5}>
             <TextArea
               {...this.props}
             />
@@ -70,10 +70,10 @@ class FixedFieldForm extends React.Component<FixedFieldFormProps, FixedFieldForm
     arrayInput.map(current => {
       return toRender.push(
         <Row>
-          <Col xs={4}>
+          <Col xs={2}>
             <FormattedMessage id={`ui-marccat.template.${current.label}`} />
           </Col>
-          <Col xs={8}>
+          <Col xs={5}>
             <Select
               dataOptions={current.values}
               value={current.default}

@@ -42,15 +42,15 @@ class SubfieldForm extends React.Component<SubfieldFormProps, SubfieldFormState>
   render() {
     return (
       <Row className="subfieldElement">
-        <Col xs={2}>
+        <Col xs={1}>
           <Select
             dataOptions={this.remapSubfields(this.props.subfields)}
           />
         </Col>
-        <Col xs={6}>
+        <Col xs={5}>
           <Textarea />
         </Col>
-        <Col xs={4}>
+        <Col xs={1}>
           { !this.props.isLast &&
           <Row>
             <Col xs={12}>

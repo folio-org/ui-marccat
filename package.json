@@ -50,7 +50,7 @@
     "show:descriptor": "stripes mod descriptor --full",
     "release": "node script/ci/release.js",
     "pre-prepublish": "flow-remove-types src/ -d lib/",
-    "trigger-publish": "yarn run build"
+    "prepublish": "yarn run build"
   },
   "devDependencies": {
     "@folio/eslint-config-stripes": "^1.1.0",

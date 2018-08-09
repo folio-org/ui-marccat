@@ -1,9 +1,8 @@
 /**
  * @format
- * @flow
  */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import * as React from 'react';
 import Route from 'react-router-dom/Route';
 import Redirect from 'react-router-dom/Redirect';
 import Switch from 'react-router-dom/Switch';

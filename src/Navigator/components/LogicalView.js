@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import Select from '@folio/stripes-components/lib/Select';
 import Icon from '@folio/stripes-components/lib/Icon';
 import { connect } from '@folio/stripes-connect';

@@ -1,8 +1,7 @@
 /**
  * @format
- * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import { connect } from '@folio/stripes-connect';
 import Pane from '@folio/stripes-components/lib/Pane';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';

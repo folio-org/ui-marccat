@@ -1,8 +1,7 @@
 /**
  * @format
- * @flow
  */
-import React from 'react';
+import * as React from 'react';
 
 type RestricionProps = { open: Boolean };
 

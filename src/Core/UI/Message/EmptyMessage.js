@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import Icon from '@folio/stripes-components/lib/Icon';
 import css from './EmptyMessage.css';

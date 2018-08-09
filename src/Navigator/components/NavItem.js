@@ -1,8 +1,7 @@
 /**
  * @format
- * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import { Observable } from 'rxjs';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import NavListSection from '@folio/stripes-components/lib/NavListSection';

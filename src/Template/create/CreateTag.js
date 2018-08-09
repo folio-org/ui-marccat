@@ -1,8 +1,7 @@
 /**
  * @format
- * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import { connect } from '@folio/stripes-connect';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Select from '@folio/stripes-components/lib/Select';

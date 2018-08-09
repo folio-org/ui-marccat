@@ -1,8 +1,7 @@
 /**
  * @format
- * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Headline from '@folio/stripes-components/lib/Headline';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';

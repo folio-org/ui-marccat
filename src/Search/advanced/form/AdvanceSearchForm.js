@@ -1,8 +1,7 @@
 /**
  * @format
- * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import RadioButton from '@folio/stripes-components/lib/RadioButton';
 import RadioButtonGroup from '@folio/stripes-components/lib/RadioButtonGroup';

@@ -1,10 +1,18 @@
-// MARCCAT UI APP METADADA
+const environment = process.env.NODE_ENV;
 
 export const META = {
   MODULE_NAME: 'ui-marccat',
+  NAME: 'marccat',
   ICON_TITLE: 'marccat',
   SRC_PATH: `${__dirname}/src`,
-  STATIC_FOLDER_PATH: `${__dirname}/config/static`
+  STATIC_FOLDER_PATH: `${__dirname}/config/static`,
+  PACKAGE: `${__dirname}/package`,
+};
+
+export const LOGGER_CONFIG = {
+  CATEGORY: 'redux,core,marccat',
+  PREFIX: `@@MARCCAT-LOG[${environment}] :-->:`,
+  TIMESTAMP: false,
 };
 
 // API

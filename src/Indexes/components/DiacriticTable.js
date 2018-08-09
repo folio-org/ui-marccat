@@ -8,9 +8,10 @@ import IconButton from '@folio/stripes-components/lib/IconButton';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import Pane from '@folio/stripes-components/lib/Pane';
-import { connect } from '@folio/stripes-connect';
 import { ToolbarMenu, PrinterProvider } from '../../Core';
 import * as C from '../../Utils';
+import withConnect from '../../Core/Provider/withConnect';
+
 
 type MultiColumnListDiacriticProps = {
   stripes: Object;
@@ -107,4 +108,4 @@ class MultiColumnListDiacritic extends React.Component
     );
   }
 }
-export default connect(MultiColumnListDiacritic, C.META.MODULE_NAME);
+export default withConnect(MultiColumnListDiacritic);

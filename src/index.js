@@ -3,12 +3,11 @@
  * @flow
  */
 import * as React from 'react';
-import { connect } from '@folio/stripes-connect';
 import { Settings } from './Settings';
 import { Navigator } from './Navigator/';
 import Router from './router';
 import { reducer, epics } from './Redux';
-import withSubscription from './Core/Provider/withSubscription';
+import { withConnect } from './Core/';
 import * as C from './Utils';
 
 import './Theme/variables.css';
@@ -163,4 +162,4 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
   * @example: this.props.root
   * @example: const { state } = this.props.root;
   */
-export default withSubscription(connect(MARCCatRouting, C.META.MODULE_NAME));
+export default withConnect(MARCCatRouting);

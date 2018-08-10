@@ -12,13 +12,12 @@ const kill = (process) => { // eslint-disable-line no-unused-vars
   execSyncSilently(`pkill -f "${process}"`);
 };
 
-const killPort = (port) => {
-  execSyncSilently(`lsof -t -i :${port} | xargs kill || true`);
-};
+// const killPort = (port) => {
+//   execSyncSilently(`lsof -t -i :${port} | xargs kill || true`);
+// };
 
 const clean = () => {
-  setDebugVariable();
   execSync('stripes serve --lint config/stripes.config.js');
 };
 
-killPort(3000);
+clean();

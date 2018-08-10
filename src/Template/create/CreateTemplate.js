@@ -13,17 +13,20 @@ import Layer from '@folio/stripes-components/lib/Layer';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Icon from '@folio/stripes-components/lib/Icon';
 import { AccordionSet, Accordion } from '@folio/stripes-components/lib/Accordion';
+import _ from 'lodash';
 import TemplateForm from '../form/TemplateForm';
 import CreateTag from './CreateTag';
 import MandatoryList from '../form/MandatoryList';
 import css from '../styles/Template.css';
 import { remapForTemplateMandatory } from '../../Utils/Mapper';
+import TemplateView from '../view/TemplateView';
 import * as C from '../../Utils';
 
 type CreateTemplateProps = {
   stripes: Object,
   history: Object,
   resources: Object,
+  handleClose: Function,
   getCurrentTemp: Function,
   mutator: {
     mandatory: {
@@ -61,12 +64,14 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
       currentTemplate: {},
       sections: {
         templateAccordion: true,
-        tagAccordion: false,
-      }
+        tagAccordion: false
+      },
+      showPage: true
     };
     this.getCurrentTemp = this.getCurrentTemp.bind(this);
     this.fetchMandatory = this.fetchMandatory.bind(this);
     this.handleSectionToggle = this.handleSectionToggle.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   handleSectionToggle = ({ id }) => {
@@ -87,19 +92,31 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
     this.setState({ currentTemplate: currentTemp });
   }
 
+  handleClose() {
+    this.setState(curState => {
+      const newState = _.cloneDeep(curState);
+      newState.showPage = !this.state.showPage;
+      return newState;
+    });
+    this.props.history.push(C.INTERNAL_URL.VIEW_TEMPLATE);
+  }
+
   preparePaneMenu() {
     return (
       <PaneMenu {...this.props}>
         <IconButton
           key="icon-close"
           icon="closeX"
-          onClick={this.props.history.goBack}
+          onClick={this.handleClose}
         />
       </PaneMenu>
     );
   }
 
   render() {
+    if (!this.state.showPage) {
+      return (<TemplateView {...this.props} />);
+    }
     const { resources: { mandatory } } = this.props;
     if (!mandatory || !mandatory.hasLoaded) return (<Layer isOpen> <Icon icon="spinner-ellipsis" /> </Layer>);
     const fields = mandatory.records;

@@ -34,6 +34,8 @@ class MandatoryList extends React.Component<CreateTemplateProps, CreateTemplateS
           'displayValue',
         ]}
         ariaLabel="TemplateNewMandatory"
+        rowMetadata={['categoryCode', 'code', 'description', 'displayValue', 'headerTypeCode', 'mandatory', 'defaultSubfieldCode', 'subfields']}
+        
       />
     );
   }

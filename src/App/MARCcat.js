@@ -16,6 +16,9 @@ type Props = {
 };
 type State = {};
 
+/**
+ * @module MARCcat
+ */
 class MARCcat extends React.Component<Props, State> {
   render() {
     const leftMenu = <ToolbarMenu icon={['search']} />;

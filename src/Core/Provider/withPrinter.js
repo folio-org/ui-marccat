@@ -37,6 +37,14 @@ type PrinterProviderState = {};
  * will take all of the children of the top level `Route` component,
  * and pass them as the children of the `ParentRoute` component.
  */
+
+export function injectProp<Props: {}>(Component: React.ComponentType<Props>, prop: Object): React.ComponentType<Props> {
+  return function WrapperComponent(props: Props) {
+    const printMenu = null;
+    return <Component {...props} prop={prop}>{this.props.children}</Component>;
+  };
+}
+
 export default class PrinterProvider extends React.Component<PrinterProviderProps, PrinterProviderState> {
   static defaultProps = {
     copyStyles: true,

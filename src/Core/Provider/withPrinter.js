@@ -40,7 +40,6 @@ type PrinterProviderState = {};
 
 export function injectProp<Props: {}>(Component: React.ComponentType<Props>, prop: Object): React.ComponentType<Props> {
   return function WrapperComponent(props: Props) {
-    const printMenu = null;
     return <Component {...props} prop={prop}>{this.props.children}</Component>;
   };
 }

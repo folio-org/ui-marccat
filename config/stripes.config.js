@@ -4,7 +4,7 @@ let url;
 if (environment === 'sandbox') {
   url = 'https://okapi-sandbox.frontside.io';
 } else {
-  url = 'http://192.168.0.28:9130';
+  url = 'http://151.1.163.1:9130';
 }
 module.exports = {
   okapi: { url, tenant: 'diku' },
@@ -14,6 +14,9 @@ module.exports = {
       password: 'admin',
     },
     languages: (process.env.NODE_ENV === 'DEBUG') ? ['en'] : ['en'],
+    logCategories: 'redux',
+    logPrefix: `@@MARCCAT-LOG[${environment}] -->`,
+    logTimestamp: false,
     showPerms: true,
     showHomeLink: true,
     listInvisiblePerms: true,

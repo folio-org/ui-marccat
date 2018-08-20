@@ -38,7 +38,6 @@ type PrinterProviderState = {};
  * and pass them as the children of the `ParentRoute` component.
  */
 
-
 export default class PrinterProvider extends React.Component<PrinterProviderProps, PrinterProviderState> {
   static defaultProps = {
     copyStyles: true,

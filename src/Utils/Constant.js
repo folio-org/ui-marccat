@@ -1,3 +1,4 @@
+import { capitalizeFirstLetter } from './Formatter';
 // MARCCAT UI APP METADADA
 
 export const META = {
@@ -121,3 +122,30 @@ export const EVENTS = {
 };
 
 export const EMPTY_PARAMETER = -1;
+
+export const LANGUAGES = [
+  { code: 'eng', name: 'English' },
+  { code: 'spa', name: 'Spanish' },
+  { code: 'fre', name: 'French' },
+  { code: 'ger', name: 'German' },
+  { code: 'chi', name: 'Mandarin' },
+  { code: 'rus', name: 'Russian' },
+  { code: 'ara', name: 'Arabic' },
+];
+
+export const filterConfigFn = (label:string, data: Object) => {
+  return [
+    {
+      label: capitalizeFirstLetter(label),
+      name: label,
+      cql: label,
+      values: data.map(d => ({ name: d.label })),
+    },
+    {
+      label: 'Language',
+      name: 'language',
+      cql: 'languages',
+      values: LANGUAGES.map(lang => ({ name: lang.name })),
+    }
+  ];
+};

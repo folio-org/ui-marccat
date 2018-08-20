@@ -5,7 +5,6 @@
 import * as React from 'react';
 import { connect } from '@folio/stripes-connect';
 import { Settings } from './Settings';
-import { Navigator } from './Navigator/';
 import Router from './router';
 import { reducer, epics } from './Redux';
 import withSubscription from './Core/Provider/withSubscription';
@@ -71,6 +70,16 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
     indexType: {},
     innerIndexValue: {},
     constraintIndexValue: {},
+    views: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      path: C.ENDPOINT.LOGICAL_VIEW_URL,
+      headers: C.ENDPOINT.HEADERS,
+      records: C.API_RESULT_JSON_KEY.LOGICAL_VIEW,
+      GET: {
+        params: { lang: C.ENDPOINT.DEFAULT_LANG },
+      },
+    },
     categories: {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
@@ -149,9 +158,7 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
       return <Settings {...this.props} />;
     }
     return (
-      <Navigator {...this.props}>
-        <Router {...this.props} />
-      </Navigator>
+      <Router {...this.props} />
     );
   }
 }

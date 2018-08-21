@@ -10,12 +10,14 @@ import { withConnect } from './Core/';
 import * as C from './Utils';
 
 import './Theme/variables.css';
+import MARCcat from './App/MARCcat';
 
 type RoutingProps = {
   stripes: {
     connect: Function,
     intl: Object,
   },
+  resources: Object,
   mutator: {
     firstPage: {
       GET: Function,
@@ -157,7 +159,9 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
       return <Settings {...this.props} />;
     }
     return (
-      <Router {...this.props} />
+      <MARCcat {...this.props}>
+        <Router {...this.props} />
+      </MARCcat>
     );
   }
 }

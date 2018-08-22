@@ -12,6 +12,7 @@ type TabControlProps = {
     children: React.ReactNode;
     translate: Object;
     rootPath: string;
+    activateTab: string;
     router: Object;
 };
 
@@ -24,6 +25,7 @@ export default class TabControl extends React.Component<TabControlProps, { activ
     this.handleActivate = this.handleActivate.bind(this);
     this.renderTabContent = this.renderTabContent.bind(this);
   }
+
   handleActivate({ id }) {
     this.setState({
       activeTab: id,
@@ -51,12 +53,12 @@ handleClick = (path) => {
 };
 
 render() {
-  const { translate } = this.props;
+  const { translate, activateTab } = this.props;
   return (
     <div className={css.tabControlContainer}>
       <SegmentedControl
         className={css.customTab}
-        activeId={this.state.activeTab}
+        activeId={this.state.activeTab || activateTab}
         onActivate={this.handleActivate}
       >
         <Button onClick={() => this.handleClick('/')} id={TAB_CONTROL_ID.DATABASE}>{translate({ id: 'ui-marccat.navigator.database' })}</Button>

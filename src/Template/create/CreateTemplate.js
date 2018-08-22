@@ -25,7 +25,6 @@ type CreateTemplateProps = {
   stripes: Object,
   history: Object,
   resources: Object,
-  handleClose: Function,
   getCurrentTemp: Function,
   mutator: {
     mandatory: {
@@ -73,9 +72,9 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
     this.handleClose = this.handleClose.bind(this);
   }
 
-  handleSectionToggle = ({ id }) => {
-    const next = update(`sections.${id}`, value => !value, this.state);
-    this.setState(next);
+  handleSectionToggle = () => {
+    // const next = update(`sections.${id}`, value => !value, this.state);
+    // this.setState(next);
   }
 
   fetchMandatory() {

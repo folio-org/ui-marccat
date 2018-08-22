@@ -6,7 +6,7 @@ import * as React from 'react';
 import { Settings } from './Settings';
 import Router from './router';
 import { reducer, epics } from './Redux';
-import { withConnect } from './Core/';
+import { injectCommonProp } from './Core';
 import * as C from './Utils';
 
 import './Theme/variables.css';
@@ -143,7 +143,6 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
     this.props.mutator.constraintIndexValue.replace('LIB');
 
     /*
-     * @author: Christian Chiama
      * add epic and reducer to the application store
      * all the reducer and the epic are load in the Redux folder
      * and combine in a  unique reducer and unique epic$
@@ -173,4 +172,4 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
   * @example: this.props.root
   * @example: const { state } = this.props.root;
   */
-export default withConnect(MARCCatRouting);
+export default injectCommonProp(MARCCatRouting);

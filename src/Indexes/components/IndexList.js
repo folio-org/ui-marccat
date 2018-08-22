@@ -5,7 +5,6 @@
 import * as React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
-import { connect } from '@folio/stripes-connect';
 import { Col } from '@folio/stripes-components/lib/LayoutGrid';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
@@ -110,4 +109,4 @@ class IndexList extends React.Component<IndexListProps, IndexListState> {
     );
   }
 }
-export default connect(IndexList, C.META.MODULE_NAME);
+export default IndexList;

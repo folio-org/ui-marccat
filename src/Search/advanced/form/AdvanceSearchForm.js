@@ -15,6 +15,8 @@ import * as C from '../../../Utils';
 import LogicalButton from '../button/LogicalButton';
 import css from '../../style/Search.css';
 import AdavnceSearchInput from './AdvanceSearchInput';
+import CategorySelect from '../select/CategorySelect';
+import IndexesSelect from '../select/IndexesSelect';
 
 type AdvanceSerachFormProps = {
     stripes: Object;
@@ -22,6 +24,7 @@ type AdvanceSerachFormProps = {
     resources: Object;
     onSelectIndex: Function;
     onSelectConstraint: Function;
+    translate: () => void;
     change: Function;
     reset: Function;
 };
@@ -110,23 +113,8 @@ class AdvanceSearchForm extends
     }
 
     render() {
-      const formatMsg = this.props.stripes.intl.formatMessage;
-      const { resources: { categories, innerIndexes, constraintIndexes } } = this.props;
-      let options = {};
-      let optionsInnerIndex = {};
+      const { translate, resources: { categories, innerIndexes, constraintIndexes } } = this.props;
       let optionsConstraintIndex = {};
-
-      if (categories) {
-        options = categories.records.map((element) => (
-          <option key={element.value} value={element.value}>{element.label}</option>
-        ));
-      }
-
-      if (innerIndexes) {
-        optionsInnerIndex = innerIndexes.records.map((element) => (
-          <option key={element.value} value={element.value}>{element.label} ({element.value})</option>
-        ));
-      }
 
       if (constraintIndexes) {
         optionsConstraintIndex = constraintIndexes.records.map((element) => {
@@ -140,9 +128,13 @@ class AdvanceSearchForm extends
         <Row>
           <Col xs={12}>
             <form name="advancedSearchForm" id="advancedSearchForm">
-              <Field name="indexRadio" component={RadioButtonGroup} label={formatMsg({ id: 'ui-marccat.search.indexes' })}>
+              <Field
+                name="indexRadio"
+                component={RadioButtonGroup}
+                label={translate({ id: 'ui-marccat.search.indexes' })}
+              >
                 <RadioButton
-                  label={formatMsg({ id: 'ui-marccat.search.primary' })}
+                  label={translate({ id: 'ui-marccat.search.primary' })}
                   id="actingSponsor001"
                   name="actingSponsor001"
                   value="P"
@@ -151,7 +143,7 @@ class AdvanceSearchForm extends
                   inline
                 />
                 <RadioButton
-                  label={formatMsg({ id: 'ui-marccat.search.secondary' })}
+                  label={translate({ id: 'ui-marccat.search.secondary' })}
                   id="actingSponsor002"
                   value="S"
                   checked={!this.state.checkedFirstRadio}
@@ -160,31 +152,22 @@ class AdvanceSearchForm extends
                 />
               </Field>
               <div className="selectContainer">
-                <Col xs={12} className={css.colFirstSelect}>
-                  {categories &&
-                  <Select
-                    name="categorySelect"
-                    value={this.state.firstSelect}
-                    onChange={this.handleChangeFirstSelect}
-                  >
-                    {options}
-                  </Select>
-                  }
-                </Col>
-                <Col xs={12}>
-                  {innerIndexes &&
-                  <Select
-                    value={this.state.secondSelect}
-                    onChange={this.handleChangeSecondSelect}
-                  >
-                    <option value="">--</option>
-                    {optionsInnerIndex}
-                  </Select>
-                  }
-                </Col>
+                <CategorySelect
+                  {...this.props}
+                  categories={categories}
+                  value={this.state.firstSelect}
+                  onChange={this.handleChangeFirstSelect}
+                />
+                <IndexesSelect
+                  {...this.props}
+                  innerIndexes={innerIndexes}
+                  value={this.state.secondSelect}
+                  onChange={this.handleChangeSecondSelect}
+                />
                 <Col xs={12}>
                   {constraintIndexes && constraintIndexes.records.length > 0 &&
                   <Select
+                    marginBottom0
                     value={this.state.thirdSelect}
                     onChange={this.handleChangeThirdSelect}
                   >

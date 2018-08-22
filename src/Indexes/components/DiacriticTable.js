@@ -10,7 +10,6 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { ToolbarMenu, PrinterProvider } from '../../Core/';
 import * as C from '../../Utils';
-import withConnect from '../../Core/Provider/withConnect';
 
 type MultiColumnListDiacriticProps = {
   stripes: Object;
@@ -107,4 +106,4 @@ class MultiColumnListDiacritic extends React.Component
     );
   }
 }
-export default withConnect(MultiColumnListDiacritic);
+export default (MultiColumnListDiacritic);

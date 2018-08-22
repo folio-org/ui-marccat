@@ -6,14 +6,14 @@
 import * as React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
-import SRStatus from '@folio/stripes-components/lib/SRStatus';
-import TabControl from '../Main/TabControl';
-import { injectCommonProp } from '../Core/';
+import TabControl from '../Switcher/TabControl';
+import { injectCommonProp } from '../Core';
 
 type Props = {
   stripes: Object;
   resources: Object;
-  children: React.ReactNode;
+  translate: (o:Object) => string;
+  children: any;
 };
 type State = {
   filterPaneIsVisible: bool;
@@ -28,7 +28,6 @@ class MARCcat extends React.Component<Props, State> {
     this.state = {
       filterPaneIsVisible: true,
     };
-    this.SRStatus = null; // eslint-disable
     this.toggleFilterPane = this.toggleFilterPane.bind(this);
   }
 
@@ -37,17 +36,16 @@ class MARCcat extends React.Component<Props, State> {
   }
 
   render() {
-    const { formatMessage } = this.props.stripes.intl;
+    const { translate } = this.props;
     const { filterPaneIsVisible } = this.state;
     return (
       <Paneset static>
-        <SRStatus ref={(ref) => { this.SRStatus = ref; }} />
         { filterPaneIsVisible &&
           <Pane
             id="pane-filter"
             dismissible
             defaultWidth="20%"
-            paneTitle={formatMessage({ id: 'stripes-smart-components.searchAndFilter' })}
+            paneTitle={translate({ id: 'stripes-smart-components.searchAndFilter' })}
             onClose={this.toggleFilterPane}
           >
             <TabControl {...this.props} />

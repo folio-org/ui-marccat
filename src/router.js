@@ -10,12 +10,11 @@ import { TemplateView, CreateTemplate, EditTemplate } from './Template/';
 import { SimpleSearch, SearchResults, AdvancedBrowsing } from './Search/';
 import { IndexList, DiacriticTable } from './Indexes/';
 import { ReportView } from './Report';
-import { EmptyMessage, injectCommonProp } from './Core';
+import { EmptyMessage } from './Core';
 
 export function ConnectedRoute({ id, component: Component, ...props }) {
-  const EnanchedComponent = injectCommonProp(Component);
   return (
-    <Route render={() => <EnanchedComponent {...props} id={id} />} />
+    <Route render={() => <Component {...props} id={id} />} />
   );
 }
 

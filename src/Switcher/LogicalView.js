@@ -19,7 +19,7 @@ export default class LogicalView extends React.Component<LogicalViewProps, { fil
     };
   }
 
-  onChangeFilter(e: React.SyntheticEvent<any>) {
+  onChangeFilter(e: any) {
     const filters = Object.assign({}, this.state.filters);
     filters[e.target.name] = e.target.checked;
     this.setState({

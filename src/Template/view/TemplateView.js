@@ -118,14 +118,14 @@ class TemplateView extends React.Component<*> {
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const { resources: { recordsTemplates } } = this.props;
-    return (!recordsTemplates || !recordsTemplates.hasLoaded) ? <Icon icon="spinner-ellipsis" /> : (
+    const { router, resources: { recordsTemplates } } = this.props;
+    return (
       <Paneset static>
         <TemplateResults
           {...this.props}
           handleRowClick={this.handleRowClick}
           formatMsg={formatMsg}
-          onClick={() => {}}
+          onClick={() => router.push(C.INTERNAL_URL.ADD_TEMPLATE)}
         >
           <TemplateDetailModal 
               {...this.props}

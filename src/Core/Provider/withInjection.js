@@ -21,7 +21,12 @@ l.setTimestamp(LOGGER_CONFIG.TIMESTAMP);
  * HOC
  * @param {WrappedComponent} a Component to inject props
  */
-export default function injectCommonProp<Props: {}>(Component: React.ComponentType<Props>): React.ComponentType<Props> {
+export default function injectCommonProp<Props: {
+  root: Object,
+  match: Object,
+  history: Object,
+  stripes: Object
+}>(Component: React.ComponentType<Props>): React.ComponentType<Props> {
   function WrapperComponent(props: Props) {
     const { store } = props.root;
     const state = store.getState();

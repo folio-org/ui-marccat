@@ -9,7 +9,7 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import Button from '@folio/stripes-components/lib/Button';
 import { FormattedMessage } from 'react-intl';
-import { getLeader, findLabel, organize } from '../../Utils/TemplateUtils';
+import { getLeader, findLabel } from '../../Utils/TemplateUtils';
 import SubfieldSection from '../form/SubfieldSection';
 import css from '../styles/Template.css';
 import * as C from '../../Utils';
@@ -177,7 +177,8 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
       itemTypeSel: '', // eslint-disable-line react/no-unused-state
       functionCodeSel: '', // eslint-disable-line react/no-unused-state
       newTag: {},
-      fixedFieldSel: []
+      fixedFieldSel: {},
+      fieldTemplateResponse: {}
     };
 
     this.fetchingMarcCategory = this.fetchingMarcCategory.bind(this);
@@ -245,7 +246,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     this.props.mutator.headingType.replace(headingTypesValue);
     this.props.mutator.fixedFieldSelect.GET().then((fetchResult) => {
       if (fetchResult) {
-        this.setState({ fixedFieldSel: organize(fetchResult) });
+        this.setState({ fixedFieldSel: fetchResult });
         return;
       }
       this.props.mutator.fixedFieldSelect.reset();
@@ -269,7 +270,8 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
           const tagFetch = this.createTagObjectFromJson(res, marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue);
           tagFetch.type = 'variableField';
           this.setState({
-            newTag: tagFetch
+            newTag: tagFetch,
+            fieldTemplateResponse: res
           });
           return;
         }
@@ -278,9 +280,11 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
           this.props.mutator.subfields.reset();
           this.fetchFixedFieldSelect(tag, headingTypesValue);
           const tagFetch = this.createTagObjectFromJson(res, marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue);
+          tagFetch.displayValue = res.displayValue;
           tagFetch.type = 'fixedField';
           this.setState({
-            newTag: tagFetch
+            newTag: tagFetch,
+            fieldTemplateResponse: res
           });
           return;
         }
@@ -413,13 +417,13 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     return (
       <form name="createTagForm" id="createTagForm" noValidate>
         <Row className={css.mandatoryList}>
-          <Col xs={12}>
+          <Col xs={7}>
             <CurrentTagDisplay {...this.props} currentTag={this.state.newTag} />
           </Col>
         </Row>
 
         <Row>
-          <Col xs={12}>
+          <Col xs={7}>
             {marcCatValues &&
               <Select
                 name="marcCategoriesSelect"
@@ -432,7 +436,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
         </Row>
 
         <Row>
-          <Col xs={12}>
+          <Col xs={7}>
             {resources.headingTypes && resources.headingTypes.hasLoaded &&
               <Select
                 name="headingTypesSelect"
@@ -445,7 +449,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
         </Row>
 
         <Row>
-          <Col xs={12}>
+          <Col xs={7}>
             {resources.itemTypes &&
               resources.itemTypes.hasLoaded &&
               itemTypesValues.length > 0 &&
@@ -460,7 +464,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
         </Row>
 
         <Row>
-          <Col xs={12}>
+          <Col xs={7}>
             {resources.functionCodes &&
               resources.functionCodes.hasLoaded &&
               functionCodesValues.length > 0 &&
@@ -482,7 +486,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
 
         {resources.fixedFieldSelect &&
           resources.fixedFieldSelect.hasLoaded &&
-          <FixedFieldForm {...this.props} tag={this.state.newTag} selectArray={this.state.fixedFieldSel} />
+          <FixedFieldForm {...this.props} tag={this.state.newTag} fetchData={this.state.fixedFieldSel} defaultValues={this.state.fieldTemplateResponse} />
         }
 
         <Row>

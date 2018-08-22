@@ -1,5 +1,6 @@
 /**
  * @format
+ * @flow
  */
 import * as React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
@@ -8,21 +9,23 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import { connect } from '@folio/stripes-connect';
 import Layer from '@folio/stripes-components/lib/Layer';
-import { FormattedMessage } from 'react-intl';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import Button from '@folio/stripes-components/lib/Button';
 import Icon from '@folio/stripes-components/lib/Icon';
+import { AccordionSet, Accordion } from '@folio/stripes-components/lib/Accordion';
+import _ from 'lodash';
 import TemplateForm from '../form/TemplateForm';
 import CreateTag from './CreateTag';
 import MandatoryList from '../form/MandatoryList';
 import css from '../styles/Template.css';
 import { remapForTemplateMandatory } from '../../Utils/Mapper';
+import TemplateView from '../view/TemplateView';
 import * as C from '../../Utils';
 
 type CreateTemplateProps = {
   stripes: Object,
   history: Object,
   resources: Object,
+  handleClose: Function,
   getCurrentTemp: Function,
   mutator: {
     mandatory: {
@@ -33,7 +36,7 @@ type CreateTemplateProps = {
 };
 type CreateTemplateState = {
   currentTemplate: Object,
-  showTagForm: Boolean,
+  sections: Object,
   currentTemplate: Object
 };
 
@@ -57,12 +60,22 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
   constructor(props) {
     super(props);
     this.state = {
-      showTagForm: false,
-      currentTemplate: {}
+      currentTemplate: {},
+      sections: {
+        templateAccordion: true,
+        tagAccordion: false
+      },
+      showPage: true
     };
-    this.showTagForm = this.showTagForm.bind(this);
     this.getCurrentTemp = this.getCurrentTemp.bind(this);
     this.fetchMandatory = this.fetchMandatory.bind(this);
+    this.handleSectionToggle = this.handleSectionToggle.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+  }
+
+  handleSectionToggle = ({ id }) => {
+    const next = update(`sections.${id}`, value => !value, this.state);
+    this.setState(next);
   }
 
   fetchMandatory() {
@@ -78,9 +91,13 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
     this.setState({ currentTemplate: currentTemp });
   }
 
-  showTagForm() {
-    const currentShowTagForm = this.state.showTagForm;
-    this.setState({ showTagForm: !currentShowTagForm });
+  handleClose() {
+    this.setState(curState => {
+      const newState = _.cloneDeep(curState);
+      newState.showPage = !this.state.showPage;
+      return newState;
+    });
+    this.props.history.push(C.INTERNAL_URL.VIEW_TEMPLATE);
   }
 
   preparePaneMenu() {
@@ -89,13 +106,16 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
         <IconButton
           key="icon-close"
           icon="closeX"
-          onClick={this.props.history.goBack}
+          onClick={this.handleClose}
         />
       </PaneMenu>
     );
   }
 
   render() {
+    if (!this.state.showPage) {
+      return (<TemplateView {...this.props} />);
+    }
     const { resources: { mandatory } } = this.props;
     if (!mandatory || !mandatory.hasLoaded) return (<Layer isOpen> <Icon icon="spinner-ellipsis" /> </Layer>);
     const fields = mandatory.records;
@@ -137,37 +157,30 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
                 defaultWidth="fill"
                 fluidContentWidth
               >
-                <TemplateForm {...this.props} />
-                <Row className={css.mandatoryList}>
-                  <Col xs={12}>
-                    <MandatoryList {...this.props} fields={fields} />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <Button
-                      {...this.props}
-                      onClick={this.showTagForm}
-                      type="button"
-                      buttonStyle="primary"
-                    >
-                      <FormattedMessage id="ui-marccat.template.tag.create" />
-                    </Button>
-                  </Col>
-                </Row>
+                <AccordionSet>
+                  <Accordion
+                    label={formatMsg({ id: 'ui-marccat.template.detail.information.title' })}
+                    id="templateAccordion"
+                    open={this.state.sections.templateAccordion}
+                    onToggle={this.handleSectionToggle}
+                  >
+                    <TemplateForm {...this.props} />
+                    <Row className={css.mandatoryList}>
+                      <Col xs={12}>
+                        <MandatoryList {...this.props} fields={fields} />
+                      </Col>
+                    </Row>
+                  </Accordion>
+                  <Accordion
+                    label={formatMsg({ id: 'ui-marccat.template.tag.create' })}
+                    id="tagAccordion"
+                    open={this.state.sections.tagAccordion}
+                    onToggle={this.handleSectionToggle}
+                  >
+                    <CreateTag {...this.props} currentTemplate={this.state.currentTemplate} />
+                  </Accordion>
+                </AccordionSet>
               </Pane>
-              { this.state.showTagForm &&
-                <Pane
-                  defaultWidth="50%"
-                  dismissible
-                  onClose={this.showTagForm}
-                  paneTitle={formatMsg({
-                    id: 'ui-marccat.template.tag.create',
-                  })}
-                >
-                  <CreateTag {...this.props} currentTemplate={this.state.currentTemplate} />
-                </Pane>
-              }
             </Paneset>
           </Pane>
         </Paneset>

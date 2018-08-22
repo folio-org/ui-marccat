@@ -32,7 +32,11 @@ export default class LogicalView extends React.Component<LogicalViewProps, { fil
     if (!views || !views.hasLoaded) return <Icon icon="spinner-ellipsis" />;
     const logicalViews = views.records;
     return (
-      <FilterGroups onChangeFilter={this.onChangeFilter} config={filterConfigFn('Database', logicalViews)} filters={this.state.filters} />
+      <FilterGroups
+        onChangeFilter={this.onChangeFilter}
+        config={filterConfigFn('Database', logicalViews)}
+        filters={this.state.filters}
+      />
     );
   }
 }

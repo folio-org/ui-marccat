@@ -3,11 +3,10 @@
  */
 import * as React from 'react';
 import Button from '@folio/stripes-components/lib/Button';
-import { connect } from '@folio/stripes-connect';
 import { Observable } from 'rxjs';
 import Modal from '@folio/stripes-components/lib/Modal';
 import { FormattedMessage } from 'react-intl';
-import * as C from '../../../Utils';
+import { injectCommonProp } from '../../../Core';
 
 type Props = {
   disabled: boolean;
@@ -30,7 +29,6 @@ class SearchButton extends React.Component<Props, State> {
 
   handleSearch = () => {
     this.props.mutator.query.replace(this.props.data);
-    // this.props.history.push('advancedSearch')
     const observer = Observable.from(this.props.mutator.searchQuery.GET());
     observer
       .take(1)
@@ -67,4 +65,4 @@ class SearchButton extends React.Component<Props, State> {
   }
 }
 
-export default connect(SearchButton, C.META.MODULE_NAME);
+export default injectCommonProp(SearchButton);

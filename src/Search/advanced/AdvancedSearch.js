@@ -4,7 +4,6 @@
  */
 import * as React from 'react';
 import { AdvanceSearchForm } from '../';
-import withConnect from '../../Core/Provider/withConnect';
 
 
 class AdvancedSearch extends React.Component<*> {
@@ -15,4 +14,4 @@ class AdvancedSearch extends React.Component<*> {
   }
 }
 
-export default withConnect(AdvancedSearch);
+export default AdvancedSearch;

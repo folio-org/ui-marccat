@@ -133,6 +133,12 @@ export const EVENTS = {
 
 export const EMPTY_PARAMETER = -1;
 
+export const TAB_CONTROL_ID = {
+  SEARCH: 'search',
+  DATABASE: 'database',
+  TEMPLATE: 'template'
+};
+
 export const LANGUAGES = [
   { code: 'eng', name: 'English' },
   { code: 'spa', name: 'Spanish' },
@@ -150,6 +156,7 @@ export const filterConfigFn = (label:string, data: Object) => {
       name: label,
       cql: label,
       values: data.map(d => ({ name: d.label })),
+      restrictWhenAllSelected: true
     },
     {
       label: 'Language',

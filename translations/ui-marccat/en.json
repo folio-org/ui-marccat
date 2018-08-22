@@ -4,16 +4,16 @@
   "noResult":"No Result found",
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
-  "settings.logicalview": "Logical View",
   "settings.modal.version": "Version",
 
   "perms.permissions.template.create": true,
 
-  "initial.title":"Choose a menu item and enter search query to show results",
+  "initial.title":"Choose a filter or enter search query to show results",
   "app.title":"MARCcat",
   "navigator.title": "Menu",
   "navigator.template": "Template",
   "navigator.templateList": "Template List",
+  "navigator.database": "Database",
   "navigator.search": "Search",
   "navigator.simpleSearch": "Simple search",
   "navigator.advancedSearch": "Advanced search",

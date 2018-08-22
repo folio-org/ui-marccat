@@ -6,16 +6,18 @@ import * as React from 'react';
 import { Settings } from './Settings';
 import Router from './router';
 import { reducer, epics } from './Redux';
-import { withConnect } from './Core/';
+import { injectCommonProp } from './Core';
 import * as C from './Utils';
 
 import './Theme/variables.css';
+import MARCcat from './App/MARCcat';
 
 type RoutingProps = {
   stripes: {
     connect: Function,
     intl: Object,
   },
+  resources: Object,
   mutator: {
     firstPage: {
       GET: Function,
@@ -157,7 +159,9 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
       return <Settings {...this.props} />;
     }
     return (
-      <Router {...this.props} />
+      <MARCcat {...this.props}>
+        <Router {...this.props} />
+      </MARCcat>
     );
   }
 }
@@ -169,4 +173,4 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
   * @example: this.props.root
   * @example: const { state } = this.props.root;
   */
-export default withConnect(MARCCatRouting);
+export default injectCommonProp(MARCCatRouting);

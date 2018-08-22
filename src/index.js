@@ -6,7 +6,7 @@ import * as React from 'react';
 import { Settings } from './Settings';
 import Router from './router';
 import { reducer, epics } from './Redux';
-import { withConnect } from './Core';
+import { injectCommonProp } from './Core';
 import * as C from './Utils';
 
 import './Theme/variables.css';
@@ -173,4 +173,4 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
   * @example: this.props.root
   * @example: const { state } = this.props.root;
   */
-export default withConnect(MARCCatRouting);
+export default injectCommonProp(MARCCatRouting);

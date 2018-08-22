@@ -6,7 +6,7 @@ import Button from '@folio/stripes-components/lib/Button';
 import { Observable } from 'rxjs';
 import Modal from '@folio/stripes-components/lib/Modal';
 import { FormattedMessage } from 'react-intl';
-import { withConnect } from '../../../Core';
+import { injectCommonProp } from '../../../Core';
 
 type Props = {
   disabled: boolean;
@@ -65,4 +65,4 @@ class SearchButton extends React.Component<Props, State> {
   }
 }
 
-export default withConnect(SearchButton);
+export default injectCommonProp(SearchButton);

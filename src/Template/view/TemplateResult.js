@@ -3,7 +3,7 @@ import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Icon from '@folio/stripes-components/lib/Icon';
 import { fakeFormatter } from '../../Utils/Formatter';
-import { ToolbarMenu, ToolbarButtonMenu } from '../../Core';
+import { ToolbarMenu, ToolbarButtonMenu, actionMenuItem } from '../../Core';
 import * as C from '../../Utils';
 import css from '../styles/Template.css';
 
@@ -27,6 +27,7 @@ export default function TemplateResults({ handleRowClick, onClick, ...props }: T
     className={css.mr15}
     onClick={onClick}
   />;
+  const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
   const { resources: { recordsTemplates } } = props;
   const isLoadedTemplates = (recordsTemplates === null || !recordsTemplates || !recordsTemplates.hasLoaded);
   return (
@@ -34,6 +35,7 @@ export default function TemplateResults({ handleRowClick, onClick, ...props }: T
       defaultWidth="fill"
       firstMenu={leftMenu}
       lastMenu={newButtonMenu}
+      actionMenuItems={actionMenuItems}
       paneTitle={props.stripes.intl.formatMessage({
         id: 'ui-marccat.templates.title',
       })}

@@ -7,7 +7,7 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import { connect } from 'react-redux';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import { AdvanceSearchResult } from '../../';
-import { ToolbarMenu } from '../../../Core';
+import { ToolbarMenu, actionMenuItem } from '../../../Core';
 
 type SearchResultsProps = {
   stripes: Object;
@@ -31,12 +31,13 @@ class SearchResults extends React.Component<SearchResultsProps, SearchResultsSta
     const leftMenu = <ToolbarMenu icon={['search']} />;
     const rightMenu = <ToolbarMenu icon={['bookmark', 'gear']} />;
     const { translate } = this.props;
-    // const { searchInput, actionMenuItems } = this.props;
+    const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
     return (
       <Paneset>
         <Pane
           firstMenu={leftMenu}
           lastMenu={rightMenu}
+          actionMenuItems={actionMenuItems}
           defaultWidth="fill"
           paneTitle={translate({
             id: 'ui-marccat.search.result',

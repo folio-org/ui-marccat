@@ -7,7 +7,6 @@ import * as React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import TabControl from '../Switcher/TabControl';
-import { injectCommonProp } from '../Core/';
 
 type Props = {
   stripes: Object;
@@ -56,5 +55,5 @@ class MARCcat extends React.Component<Props, State> {
   }
 }
 
-export default injectCommonProp(MARCcat);
+export default MARCcat;
 

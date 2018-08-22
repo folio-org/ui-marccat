@@ -8,7 +8,7 @@
 
   "perms.permissions.template.create": true,
 
-  "initial.title":"Choose a menu item and enter search query to show results",
+  "initial.title":"Choose a filter or enter search query to show results",
   "app.title":"MARCcat",
   "navigator.title": "Menu",
   "navigator.template": "Template",

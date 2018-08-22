@@ -1,6 +1,7 @@
 import * as React from 'react';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import Pane from '@folio/stripes-components/lib/Pane';
+import Icon from '@folio/stripes-components/lib/Icon';
 import { fakeFormatter } from '../../Utils/Formatter';
 import { ToolbarMenu, ToolbarButtonMenu } from '../../Core';
 import * as C from '../../Utils';
@@ -27,6 +28,7 @@ export default function TemplateResults({ handleRowClick, onClick, ...props }: T
     onClick={onClick}
   />;
   const { resources: { recordsTemplates } } = props;
+  const isLoadedTemplates = (recordsTemplates === null || !recordsTemplates || !recordsTemplates.hasLoaded);
   return (
     <Pane
       defaultWidth="fill"
@@ -35,21 +37,23 @@ export default function TemplateResults({ handleRowClick, onClick, ...props }: T
       paneTitle={props.stripes.intl.formatMessage({
         id: 'ui-marccat.templates.title',
       })}
-      paneSub={recordsTemplates.records.length + ' Result found'}
+      paneSub={(!isLoadedTemplates) ? recordsTemplates.records.length + ' Result found' : 'No Result found'}
       appIcon={{ app: C.META.ICON_TITLE }}
     >
-      <MultiColumnList
-        id="list-templates"
-        loading={!recordsTemplates.hasLoaded}
-        contentData={recordsTemplates.records}
-        rowMetadata={['id', 'id']}
-        formatter={fakeFormatter}
-        ariaLabel="TemplateView"
-        visibleColumns={['id', 'name']}
-        sortedColumn="name"
-        sortOrder="ascending"
-        onRowClick={handleRowClick}
-      />
+      {(!recordsTemplates || !recordsTemplates.hasLoaded) ? <Icon icon="spinner-ellipsis" /> :
+        (<MultiColumnList
+          id="list-templates"
+          loading={!recordsTemplates.hasLoaded}
+          contentData={recordsTemplates.records}
+          rowMetadata={['id', 'id']}
+          formatter={fakeFormatter}
+          ariaLabel="TemplateView"
+          visibleColumns={['id', 'name']}
+          sortedColumn="name"
+          sortOrder="ascending"
+          onRowClick={handleRowClick}
+        />)
+      }
     </Pane>
   );
 }

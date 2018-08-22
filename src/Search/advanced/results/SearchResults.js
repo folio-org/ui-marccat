@@ -13,6 +13,7 @@ type SearchResultsProps = {
   stripes: Object;
   searchInput: string;
   actionMenuItems: Object;
+  translate: Object;
 };
 type SearchResultsState = {
   results: Array;
@@ -29,19 +30,18 @@ class SearchResults extends React.Component<SearchResultsProps, SearchResultsSta
   render() {
     const leftMenu = <ToolbarMenu icon={['search']} />;
     const rightMenu = <ToolbarMenu icon={['bookmark', 'gear']} />;
-    const formatMsg = this.props.stripes.intl.formatMessage;
-    const { searchInput, actionMenuItems } = this.props;
+    const { translate } = this.props;
+    // const { searchInput, actionMenuItems } = this.props;
     return (
       <Paneset>
         <Pane
           firstMenu={leftMenu}
           lastMenu={rightMenu}
-          actionMenuItems={actionMenuItems}
           defaultWidth="fill"
-          paneTitle={formatMsg({
+          paneTitle={translate({
             id: 'ui-marccat.search.result',
           })}
-          paneSub={(searchInput) ? 'Result found for: ' + searchInput : 'No Result found'}
+          paneSub="No Result found"
           appIcon={{ app: 'marccat' }}
         >
           <AdvanceSearchResult {...this.props} />

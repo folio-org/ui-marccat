@@ -6,7 +6,7 @@ import * as React from 'react';
 import { Settings } from './Settings';
 import Router from './router';
 import { reducer, epics } from './Redux';
-import { withConnect } from './Core/';
+import { withConnect } from './Core';
 import * as C from './Utils';
 
 import './Theme/variables.css';

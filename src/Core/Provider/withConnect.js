@@ -1,3 +1,8 @@
+/**
+ *
+ * @format
+ * @flow
+ */
 import * as React from 'react';
 import { withRoot } from '@folio/stripes-core/src/components/Root/RootContext';
 import { connect } from '@folio/stripes-connect';
@@ -14,24 +19,15 @@ type Props = {
 
 type State = {}
 
-function getDisplayName(WrappedComponent) {
+function getDisplayName(WrappedComponent: React.ComponentType<Props>) {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 }
 
-function withConnect(WrappedComponent) {
+function withConnect(WrappedComponent: React.ComponentType<Props>) {
   class WithConnect extends React.Component<Props, State> {
     render() {
-      const { store } = this.props.root;
-      const { formatMessage } = this.props.stripes.intl;
-      const state = store.getState();
-      const router = this.props.history;
       return (
-        () => <WrappedComponent
-          {...this.props}
-          state={state}
-          router={router}
-          translate={formatMessage}
-        />
+        <WrappedComponent {...this.props} />
       );
     }
   }

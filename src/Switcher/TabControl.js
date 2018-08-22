@@ -1,16 +1,18 @@
 import * as React from 'react';
 import SegmentedControl from '@folio/stripes-components/lib/SegmentedControl';
 import Button from '@folio/stripes-components/lib/Button';
-import Link from 'react-router-dom/Link';
 import { TAB_CONTROL_ID } from '../Utils/Constant';
 import LogicalView from './LogicalView';
+import { AdvancedSearch } from '../Search';
+import SearchFrom from './component/SearchFrom';
 
-import css from './Style/TabControl.css';
+import css from './Style/Switcher.css';
 
 type TabControlProps = {
     children: React.ReactNode;
     translate: Object;
     rootPath: string;
+    router: Object;
 };
 
 export default class TabControl extends React.Component<TabControlProps, { activeTab: string }> {
@@ -34,7 +36,7 @@ export default class TabControl extends React.Component<TabControlProps, { activ
     case TAB_CONTROL_ID.DATABASE:
       renderComponent = (<LogicalView {...this.props} />); break;
     case TAB_CONTROL_ID.SEARCH:
-      renderComponent = (<div {...this.props}>i m search component</div>); break;
+      renderComponent = (<AdvancedSearch {...this.props} />); break;
     case TAB_CONTROL_ID.TEMPLATE:
       renderComponent = (<LogicalView {...this.props} />); break;
     default:
@@ -44,11 +46,12 @@ export default class TabControl extends React.Component<TabControlProps, { activ
   };
 
 handleClick = (path) => {
-  return this.props.router.push(`${this.props.rootPath}/`.concat(path));
+  const { router, rootPath } = this.props;
+  return router.push(`${rootPath}`.concat(path));
 };
 
 render() {
-  const { translate, rootPath } = this.props;
+  const { translate } = this.props;
   return (
     <div className={css.tabControlContainer}>
       <SegmentedControl
@@ -56,10 +59,13 @@ render() {
         activeId={this.state.activeTab}
         onActivate={this.handleActivate}
       >
-        <Button id={TAB_CONTROL_ID.DATABASE}>{translate({ id: 'ui-marccat.navigator.database' })}</Button>
-        <Button id={TAB_CONTROL_ID.SEARCH}>{translate({ id: 'ui-marccat.navigator.search' })}</Button>
-        <Button onClick={() => this.handleClick('templateList')} id={TAB_CONTROL_ID.TEMPLATE}>{translate({ id: 'ui-marccat.navigator.template' })}</Button>
+        <Button onClick={() => this.handleClick('/')} id={TAB_CONTROL_ID.DATABASE}>{translate({ id: 'ui-marccat.navigator.database' })}</Button>
+        <Button onClick={() => this.handleClick('/advancedSearch')} id={TAB_CONTROL_ID.SEARCH}>{translate({ id: 'ui-marccat.navigator.search' })}</Button>
+        <Button onClick={() => this.handleClick('/templateList')} id={TAB_CONTROL_ID.TEMPLATE}>{translate({ id: 'ui-marccat.navigator.template' })}</Button>
       </SegmentedControl>
+      {this.state.activeTab === TAB_CONTROL_ID.TEMPLATE &&
+      <SearchFrom {...this.props} searchType="template" />
+      }
       <hr />
       {this.renderTabContent(this.state.activeTab)}
     </div>

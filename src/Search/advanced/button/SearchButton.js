@@ -1,15 +1,12 @@
 /**
  * @format
- * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import Button from '@folio/stripes-components/lib/Button';
-import { connect } from '@folio/stripes-connect';
 import { Observable } from 'rxjs';
 import Modal from '@folio/stripes-components/lib/Modal';
 import { FormattedMessage } from 'react-intl';
-import { withCloseHandler } from '../../../Core/';
-import * as C from '../../../Utils';
+import { injectCommonProp } from '../../../Core';
 
 type Props = {
   disabled: boolean;
@@ -25,13 +22,13 @@ class SearchButton extends React.Component<Props, State> {
     super(props);
     this.state = {
       results: null,
+      isOpen: false
     };
     this.handleSearch = this.handleSearch.bind(this);
   }
 
   handleSearch = () => {
     this.props.mutator.query.replace(this.props.data);
-    // this.props.history.push('advancedSearch')
     const observer = Observable.from(this.props.mutator.searchQuery.GET());
     observer
       .take(1)
@@ -68,4 +65,4 @@ class SearchButton extends React.Component<Props, State> {
   }
 }
 
-export default withCloseHandler(connect(SearchButton, C.META.MODULE_NAME));
+export default injectCommonProp(SearchButton);

@@ -1,20 +1,11 @@
 /**
  * @format
- * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import SubfieldForm from '../form/SubfieldForm';
 
-type SubfieldSectionProps = {
-  subfields: Array,
-};
-
-type SubfieldSectionState = {
-  count: Number,
-};
-
-class SubfieldSection extends React.Component<SubfieldSectionProps, SubfieldSectionState> {
+class SubfieldSection extends React.Component<{ subfields: Array }, { count: Number }> {
   constructor(props) {
     super(props);
     this.state = {

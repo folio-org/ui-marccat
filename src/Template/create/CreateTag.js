@@ -1,8 +1,7 @@
 /**
  * @format
- * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import { connect } from '@folio/stripes-connect';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Select from '@folio/stripes-components/lib/Select';
@@ -221,7 +220,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     textareas.map((current) => {
       const code = current.querySelectorAll('select')[0].value;
       const data = current.querySelectorAll('textarea')[0].value;
-      return displayValue = displayValue.concat(C.MARC_CHARACTER.SEPARATOR + code + data);
+      return displayValue = displayValue.concat(C.MARC.CHARACTER_SEPARATOR + code + data);
     });
     const currentTag = this.state.newTag;
     currentTag.displayValue = displayValue;

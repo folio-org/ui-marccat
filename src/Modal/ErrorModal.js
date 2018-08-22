@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import Modal from '@folio/stripes-components/lib/Modal';
 import Button from '@folio/stripes-components/lib/Button';

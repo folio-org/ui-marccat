@@ -1,8 +1,8 @@
 /**
  * @format
- * @flow
+ * @Flow
  */
-import React from 'react';
+import * as React from 'react';
 import Modal from '@folio/stripes-components/lib/Modal';
 import { Row } from '../../node_modules/react-flexbox-grid';
 
@@ -14,14 +14,8 @@ type VersionModalProps = {
   credits: string,
   appIcon: string,
 };
-type VersionModalState = {
-  open: boolean,
-};
 
-export default class VersionModal extends React.Component<
-  VersionModalProps,
-  VersionModalState
-> {
+export default class VersionModal extends React.Component<VersionModalProps, { open: boolean }> {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,7 +24,8 @@ export default class VersionModal extends React.Component<
     this.handleClose = this.handleClose.bind(this);
   }
 
-  handleClose = () => {
+  handleClose = (event: React.SyntheticEvent<HTMLButtonElement>) => {
+    const button:HTMLButtonElement = event.currentTarget; // eslint-disable-line
     this.setState({
       isOpen: false
     });

@@ -1,23 +1,20 @@
 /**
  * @format
- * @flow
  */
-import React from 'react';
+/* eslint-disable */
+import * as React from 'react';
 import _ from 'lodash';
-import { reduxForm } from 'redux-form';
-import PropTypes from 'prop-types';
+import { connect } from '@folio/stripes-connect';
+import Layer from '@folio/stripes-components/lib/Layer';
+import Pane from '@folio/stripes-components/lib/Pane';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
 import EditTemplateInfo from './section/EditTemplateInfo';
 import EditTemplateTag from './section/EditTemplateTag';
+import { ToolbarMenu } from '../../Core';
 import * as C from '../../Utils';
 
 class EditTemplate extends React.Component {
-  static propTypes = {
-    selectedTemplate: PropTypes.object.isRequired,
-    mutator: PropTypes.object
-  };
-
   static manifest = Object.freeze({
     query: { initialValue: {} },
     resultCount: { initialValue: C.INITIAL_RESULT_COUNT },
@@ -69,33 +66,41 @@ class EditTemplate extends React.Component {
 
   render() {
     const { section } = this.state;
+    const { selectedTemplate, handleClose } = this.props;
+    const rightMenu = <ToolbarMenu icon={['trashBin', 'comment', 'edit']} />;
     return (
-      <div>
-        <form id="editTemplateForm" name="editTemplateForm">
-          <Row end="xs">
-            <Col xs>
-              <ExpandAllButton accordionStatus={section} onToggle={this.handleExpandAll} />
-            </Col>
-          </Row>
-          <EditTemplateInfo
-            {...this.props}
-            accordionId="editTemplateInfo"
-            expanded={section.editTemplateInfo}
-            selectedTemplate={this.props.selectedTemplate}
-            onToggle={this.handleSectionToggle}
-          />
-        </form>
+      <Layer open>
+      <Pane
+        defaultWidth="fill"
+        lastMenu={rightMenu}
+        paneTitle={selectedTemplate.name}
+        paneSub={`Id ${selectedTemplate.id}`}
+        appIcon={{ app: C.META.ICON_TITLE }}
+        dismissible
+        onClose={handleClose}
+      >
+        <Row end="xs">
+          <Col xs>
+            <ExpandAllButton accordionStatus={section} onToggle={this.handleExpandAll} />
+          </Col>
+        </Row>
+        <EditTemplateInfo
+          {...this.props}
+          accordionId="editTemplateInfo"
+          expanded={section.editTemplateInfo}
+          selectedTemplate={selectedTemplate}
+          onToggle={this.handleSectionToggle}
+        />
         <EditTemplateTag
           {...this.props}
           accordionId="editTemplateTag"
           expanded={section.editTemplateTag}
           onToggle={this.handleSectionToggle}
         />
-      </div>
+      </Pane>
+      </Layer>
     );
   }
 }
 
-export default reduxForm({
-  form: 'editTemplateForm',
-})(EditTemplate);
+export default connect(EditTemplate, C.META.MODULE_NAME);

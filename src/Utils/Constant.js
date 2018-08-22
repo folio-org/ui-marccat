@@ -1,10 +1,21 @@
+import { capitalizeFirstLetter } from './Formatter';
+
+const environment = process.env.NODE_ENV;
 // MARCCAT UI APP METADADA
 
 export const META = {
   MODULE_NAME: 'ui-marccat',
+  NAME: 'marccat',
   ICON_TITLE: 'marccat',
   SRC_PATH: `${__dirname}/src`,
-  STATIC_FOLDER_PATH: `${__dirname}/config/static`
+  STATIC_FOLDER_PATH: `${__dirname}/config/static`,
+  PACKAGE: `${__dirname}/package`,
+};
+
+export const LOGGER_CONFIG = {
+  CATEGORY: 'redux,core,marccat',
+  PREFIX: `@@MARCCAT-LOG[${environment}] :-->:`,
+  TIMESTAMP: false,
 };
 
 // API
@@ -106,9 +117,12 @@ export const LOGICAL_VIEW_SELECT = {
 };
 
 // Marc Constants
-export const MARC_CHARACTER = {
-  SEPARATOR: '\u001f',
-  DOLLAR: '$',
+export const MARC = {
+  CHARACTER_SEPARATOR: '\u001f',
+  CHARACTER_DOLLAR: '$',
+  CONTROL_FIELD: 'controlfield',
+  DATA_FIELD: 'datafield',
+
 };
 
 // EVENTS
@@ -118,3 +132,37 @@ export const EVENTS = {
 };
 
 export const EMPTY_PARAMETER = -1;
+
+export const TAB_CONTROL_ID = {
+  SEARCH: 'search',
+  DATABASE: 'database',
+  TEMPLATE: 'template'
+};
+
+export const LANGUAGES = [
+  { code: 'eng', name: 'English' },
+  { code: 'spa', name: 'Spanish' },
+  { code: 'fre', name: 'French' },
+  { code: 'ger', name: 'German' },
+  { code: 'chi', name: 'Mandarin' },
+  { code: 'rus', name: 'Russian' },
+  { code: 'ara', name: 'Arabic' },
+];
+
+export const filterConfigFn = (label:string, data: Object) => {
+  return [
+    {
+      label: capitalizeFirstLetter(label),
+      name: label,
+      cql: label,
+      values: data.map(d => ({ name: d.label })),
+      restrictWhenAllSelected: true
+    },
+    {
+      label: 'Language',
+      name: 'language',
+      cql: 'languages',
+      values: LANGUAGES.map(lang => ({ name: lang.name })),
+    }
+  ];
+};

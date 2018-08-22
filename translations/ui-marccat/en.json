@@ -1,19 +1,19 @@
 {
+  "MARCcat":"MARCcat",
   "marccat":"MARCcat",
-  "resultCount": "{count, number} {count, plural, one {Record found} other {Records found}}",
   "noResult":"No Result found",
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
-  "settings.logicalview": "Logical View",
   "settings.modal.version": "Version",
 
   "perms.permissions.template.create": true,
 
-  "initial.title":"Choose a menu item and enter search query to show results",
+  "initial.title":"Choose a filter or enter search query to show results",
   "app.title":"MARCcat",
   "navigator.title": "Menu",
   "navigator.template": "Template",
   "navigator.templateList": "Template List",
+  "navigator.database": "Database",
   "navigator.search": "Search",
   "navigator.simpleSearch": "Simple search",
   "navigator.advancedSearch": "Advanced search",
@@ -192,7 +192,7 @@
 
   "diacritic.title":"Diacritic",
   "diacritic.subTitle": "Diacritic Table",
-  "diacritic.char.copied":"Char copied ",
+  "diacritic.char.copied":"Char copied",
   "diacritic.list.id":"Id",
   "diacritic.list.character":"Character",
   "diacritic.list.description":"Description",

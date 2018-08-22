@@ -7,12 +7,13 @@ import * as React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import TabControl from '../Switcher/TabControl';
+import { injectCommonProp } from '../Core';
 
 type Props = {
   stripes: Object;
   resources: Object;
   translate: (o:Object) => string;
-  children: React.ReactNode;
+  children: any;
 };
 type State = {
   filterPaneIsVisible: bool;
@@ -55,5 +56,5 @@ class MARCcat extends React.Component<Props, State> {
   }
 }
 
-export default MARCcat;
+export default injectCommonProp(MARCcat);
 

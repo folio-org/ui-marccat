@@ -1,5 +1,6 @@
 /**
  * @format
+ * @flow
  */
 import * as React from 'react';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
@@ -24,15 +25,15 @@ type AdvanceSerachFormProps = {
     resources: Object;
     onSelectIndex: Function;
     onSelectConstraint: Function;
-    translate: () => void;
+    translate: (o:Object) => void;
     change: Function;
     reset: Function;
 };
 type AdvanceSerachFormState = {
     value: string;
-    firstSelect: React.node;
-    secondSelect: React.node;
-    thirdSelect: React.node;
+    firstSelect: React.ReactNode;
+    secondSelect: React.ReactNode;
+    thirdSelect: React.ReactNode;
     checkedFirstRadio: boolean;
 };
 
@@ -56,7 +57,7 @@ class AdvanceSearchForm extends
     this.handleClick = this.handleClick.bind(this);
   }
 
-    handleChangeFirstSelect = event => {
+    handleChangeFirstSelect = (event: React.SyntheticEvent<>) => {
       this.setState({
         firstSelect: event.target.value,
       });
@@ -64,7 +65,7 @@ class AdvanceSearchForm extends
       this.props.mutator.constraintIndexValue.replace('LIB');
     };
 
-    handleChangeSecondSelect = event => {
+    handleChangeSecondSelect = (event: React.SyntheticEvent<>) => {
       this.setState({
         secondSelect: event.target.value,
       });
@@ -75,7 +76,7 @@ class AdvanceSearchForm extends
       this.props.onSelectIndex(event.target.value);
     };
 
-    handleChangeThirdSelect = event => {
+    handleChangeThirdSelect = (event: React.SyntheticEvent<>) => {
       const splitted = event.target.value.split(C.SEPARATOR);
       this.setState({
         thirdSelect: event.target.value,
@@ -86,7 +87,7 @@ class AdvanceSearchForm extends
       this.props.onSelectConstraint(splitted[0], splitted[1]);
     }
 
-    handleChange(event) {
+    handleChange = (event: React.SyntheticEvent<>) => {
       this.setState({ value: event.target.value });
     }
 
@@ -98,7 +99,7 @@ class AdvanceSearchForm extends
       this.props.resources.query = '';
     };
 
-    handleChangeRadio = event => {
+    handleChangeRadio = (event: React.SyntheticEvent<>) => {
       this.setState({
         checkedFirstRadio: (event.target.value === 'P'),
       });
@@ -106,8 +107,8 @@ class AdvanceSearchForm extends
       this.props.mutator.constraintIndexValue.replace('LIB');
     };
 
-    handleTextAreaValue = (text) => {
-      const newValue = this.state.value + ' ' + text + ' ';
+    handleTextAreaValue = (text: string) => {
+      const newValue = this.state.value + ' ' + text.toUpperCase() + ' ';
       this.setState({ value: newValue });
       this.props.change('searchTextArea', newValue);
     }

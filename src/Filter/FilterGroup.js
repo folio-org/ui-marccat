@@ -6,16 +6,15 @@ import {
   FilterAccordionHeader,
   RadioButton
 } from '@folio/stripes-components';
-import styles from './Style/Switcher.css';
+import styles from './Style/Filter.css';
 
-export default function SearchFilters({
+export default function FilterGroup({
   searchType,
   activeFilters = {},
-  availableFilters,
-  onUpdate
+  availableFilters
 }) {
   return (
-    <div className={styles['search-filters']} data-test-eholdings-search-filters={searchType}>
+    <div className={styles['search-filters']}>
       {availableFilters.map(({ name, label, defaultValue, options }) => (
         <Accordion
           key={name}
@@ -25,14 +24,14 @@ export default function SearchFilters({
           closedByDefault={false}
           header={FilterAccordionHeader}
           displayClearButton={!!activeFilters[name] && activeFilters[name] !== defaultValue}
-          onClearFilter={() => onUpdate({ ...activeFilters, [name]: undefined })}
+          onClearFilter={() => {}}
           id={`filter-${searchType}-${name}`}
         >
           {options.map(({ label, value }, i) => ( // eslint-disable-line no-shadow
             <RadioButton
               key={i}
               name={name}
-              id={`eholdings-search-filters-${searchType}-${name}-${value}`}
+              id={`marccat-search-filters-${searchType}-${name}-${value}`}
               label={label}
               value={value}
               checked={value === (activeFilters[name] || defaultValue)}
@@ -41,9 +40,8 @@ export default function SearchFilters({
                   ...activeFilters,
                   [name]: value === defaultValue ? undefined : value
                 };
-                const withoutDefault = [].filter(item => item.value !== undefined, replaced);
 
-                return onUpdate(withoutDefault);
+                return replaced;
               }}
             />
           ))}
@@ -53,7 +51,7 @@ export default function SearchFilters({
   );
 }
 
-SearchFilters.propTypes = {
+FilterGroup.propTypes = {
   searchType: PropTypes.string.isRequired,
   activeFilters: PropTypes.object,
   availableFilters: PropTypes.arrayOf(PropTypes.shape({
@@ -65,5 +63,4 @@ SearchFilters.propTypes = {
       value: PropTypes.string.isRequired
     })).isRequired
   })).isRequired,
-  onUpdate: PropTypes.func.isRequired
 };

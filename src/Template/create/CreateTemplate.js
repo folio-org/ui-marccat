@@ -53,7 +53,6 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
   });
 
   componentDidMount() {
-    this.fetchMandatory();
   }
 
   constructor(props) {
@@ -70,6 +69,7 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
     this.fetchMandatory = this.fetchMandatory.bind(this);
     this.handleSectionToggle = this.handleSectionToggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.fetchMandatory();
   }
 
   handleSectionToggle = () => {
@@ -77,7 +77,7 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
     // this.setState(next);
   }
 
-  fetchMandatory() {
+  fetchMandatory = () => {
     this.props.mutator.mandatory.reset();
     this.props.mutator.mandatory.GET().then((fetchResult) => {
       if (fetchResult.length > 0) {
@@ -90,7 +90,7 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
     this.setState({ currentTemplate: currentTemp });
   }
 
-  handleClose() {
+  handleClose = () => {
     this.setState(curState => {
       const newState = _.cloneDeep(curState);
       newState.showPage = !this.state.showPage;

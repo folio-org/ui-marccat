@@ -1,5 +1,80 @@
-@media (min-width: 641px) {
-  .customTab .button {
-    min-height: 28px;
+@import '@folio/stripes-components/lib/variables';
+
+.search-form-container {
+  margin: 0 auto;
+  min-width: 200px;
+  max-width: 640px;
+  padding: 1em;
+
+  & hr {
+    margin: 1.5rem 0;
+  }
+}
+
+.search-switcher {
+  margin: 0 auto 1em;
+  position: relative;
+  vertical-align: middle;
+  width: 100%;
+
+  & a {
+    border: 1px solid var(--primary);
+    border-radius: 0.4em;
+    display: inline-block;
+    flex: 0 1 auto;
+    padding: 0.36em 0.57em;
+    position: relative;
+    text-align: center;
+    user-select: none;
+    text-decoration: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: calc(100% / 3);
+
+    &:first-child {
+      margin-left: 0;
+
+      &:not(:last-child) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+
+    &:last-child:not(:first-child) {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    &:visited {
+      color: var(--primary);
+    }
+
+    &.is-active {
+      background-color: var(--primary);
+      color: #fff;
+    }
+
+    &:not(:first-child):not(:last-child) {
+      border-radius: 0;
+    }
+  }
+
+  & a + a {
+    margin-left: -1px;
+  }
+}
+
+.search-results-list {
+  margin: 1em 0;
+  padding-left: 0;
+}
+
+.search-filters {
+  & section {
+    margin-bottom: 1em;
+  }
+
+  & [role="tabpanel"] {
+    padding-left: 1em;
   }
 }

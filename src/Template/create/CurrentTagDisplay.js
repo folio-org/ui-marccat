@@ -10,20 +10,11 @@ type Props = {
 };
 
 export default function CurrentTagDisplay({ ...props }:Props) {
-  const columnMapping = {
-    code: '',
-    description: '',
-    ind1: '',
-    ind2: '',
-    displayValue: ''
-  };
   const currentTag = [];
-  currentTag.push(props.currentTag);
-
+  currentTag.push(props.currentTag);// ?
   return (
     <MultiColumnList
       contentData={currentTag}
-      columnMapping={columnMapping}
       visibleColumns={[
         'code',
         'description',

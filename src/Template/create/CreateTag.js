@@ -3,18 +3,17 @@
  */
 import * as React from 'react';
 import { connect } from '@folio/stripes-connect';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import Select from '@folio/stripes-components/lib/Select';
-import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
-import IconButton from '@folio/stripes-components/lib/IconButton';
-import Button from '@folio/stripes-components/lib/Button';
-import { FormattedMessage } from 'react-intl';
 import { getLeader, findLabel } from '../../Utils/TemplateUtils';
 import SubfieldSection from '../form/SubfieldSection';
-import css from '../styles/Template.css';
 import * as C from '../../Utils';
-import CurrentTagDisplay from './CurrentTagDisplay';
 import FixedFieldForm from './FixedFieldForm';
+import CreateTagButton from './button/CreateTagButton';
+import {
+  MarcCategorySelect,
+  HeadingTypesSelect,
+  ItemTypesSelect,
+  FunctionCodeSelect
+} from './select/';
 
 type CreateTagProps = {
   currentTemplate: Object,
@@ -85,10 +84,8 @@ type CreateTagProps = {
   }
 };
 
-type CreateTagState = {
-};
 
-class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
+class CreateTag extends React.Component<CreateTagProps, {}> {
   static manifest = Object.freeze({
     marcCategory: {},
     headingType: {},
@@ -172,7 +169,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     super(props);
     this.state = {
       marcCategorySel: '',
-      headingTypeSel: Number,
+      headingTypeSel: 0,
       headingTypeLoaded: {},
       itemTypeSel: '', // eslint-disable-line react/no-unused-state
       functionCodeSel: '', // eslint-disable-line react/no-unused-state
@@ -181,20 +178,10 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
       fieldTemplateResponse: {}
     };
 
-    this.fetchingMarcCategory = this.fetchingMarcCategory.bind(this);
-    this.fetchHeadingTypes = this.fetchHeadingTypes.bind(this);
-    this.fetchHeadingTypes = this.fetchHeadingTypes.bind(this);
-    this.fetchItemTypes = this.fetchItemTypes.bind(this);
-    this.fetchFunctionCodes = this.fetchFunctionCodes.bind(this);
-    this.fetchMarcAssociated = this.fetchMarcAssociated.bind(this);
-    this.fetchFieldTemplate = this.fetchFieldTemplate.bind(this);
-    this.fetchSubfields = this.fetchSubfields.bind(this);
-    this.fetchFixedFieldSelect = this.fetchFixedFieldSelect.bind(this);
     this.onChangeMarcCategory = this.onChangeMarcCategory.bind(this);
     this.onChangeHeadingType = this.onChangeHeadingType.bind(this);
     this.onChangeItemType = this.onChangeItemType.bind(this);
     this.onChangeFunctionCode = this.onChangeFunctionCode.bind(this);
-    this.createNewTag = this.createNewTag.bind(this);
     this.createTagObjectFromJson = this.createTagObjectFromJson.bind(this);
   }
 
@@ -202,30 +189,6 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
     this.fetchingMarcCategory();
   }
 
-  preparePaneMenu() {
-    return (
-      <PaneMenu {...this.props}>
-        <IconButton
-          key="icon-close"
-          icon="closeX"
-          onClick={this.props.history.goBack}
-        />
-      </PaneMenu>
-    );
-  }
-
-  createNewTag() {
-    const textareas = Array.prototype.slice.call(document.getElementById('subfieldsData').querySelectorAll('.subfieldElement'));
-    let displayValue = '';
-    textareas.map((current) => {
-      const code = current.querySelectorAll('select')[0].value;
-      const data = current.querySelectorAll('textarea')[0].value;
-      return displayValue = displayValue.concat(C.MARC.CHARACTER_SEPARATOR + code + data);
-    });
-    const currentTag = this.state.newTag;
-    currentTag.displayValue = displayValue;
-    this.setState({ newTag: currentTag });
-  }
 
   fetchSubfields(marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue) {
     this.props.mutator.subfields.reset();
@@ -382,125 +345,44 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
   }
 
   onChangeMarcCategory = event => {
-    this.fetchHeadingTypes(Number.parseInt(event.target.value, 10));
-    this.setState({ marcCategorySel: Number.parseInt(event.target.value, 10) });
+    this.fetchHeadingTypes(parseInt(event.target.value, 10));
+    this.setState({ marcCategorySel: parseInt(event.target.value, 10) });
   }
 
   onChangeHeadingType = event => {
-    this.setState({ headingTypeSel: Number.parseInt(event.target.value, 10) });
-    this.fetchItemTypes(this.state.marcCategorySel, Number.parseInt(event.target.value, 10));
+    this.setState({ headingTypeSel: parseInt(event.target.value, 10) });
+    this.fetchItemTypes(this.state.marcCategorySel, parseInt(event.target.value, 10));
   }
 
   onChangeItemType = event => {
-    this.setState({ itemTypeSel: Number.parseInt(event.target.value, 10) }); // eslint-disable-line react/no-unused-state
+    this.setState({ itemTypeSel: parseInt(event.target.value, 10) }); // eslint-disable-line react/no-unused-state
     this.fetchFunctionCodes(this.state.marcCategorySel, this.state.headingTypeSel, Number.parseInt(event.target.value, 10));
   }
 
   onChangeFunctionCode = event => {
-    this.setState({ functionCodeSel: Number.parseInt(event.target.value, 10) }); // eslint-disable-line react/no-unused-state
+    this.setState({ functionCodeSel: parseInt(event.target.value, 10) }); // eslint-disable-line react/no-unused-state
     this.fetchMarcAssociated(this.state.marcCategorySel, this.state.headingTypeSel, this.state.itemTypeSel, Number.parseInt(event.target.value, 10));
   }
 
   render() {
-    // const formatMsg = this.props.stripes.intl.formatMessage;
     const { resources } = this.props;
-    const marcCatValues = (resources.marcCategories || {}).records || [];
-    const headingTypesValues = (resources.headingTypes || {}).records || [];
-    const itemTypesValues = (resources.itemTypes || {}).records || [];
-    const functionCodesValues = (resources.functionCodes || {}).records || [];
     const subfields = (resources.subfields || {}).records || [];
-    /*
-    if (marcCategories && marcCategories.hasLoaded && marcCategoriesSelect.value) {
-      fetchHeadingTypes(marcCategoriesSelect.value);
-    }
-    */
     return (
-      <form name="createTagForm" id="createTagForm" noValidate>
-        <Row className={css.mandatoryList}>
-          <Col xs={7}>
-            {/* <CurrentTagDisplay {...this.props} currentTag={this.state.newTag} /> */}
-          </Col>
-        </Row>
+      <div className="tag-select-container">
+        <MarcCategorySelect {...this.props} onChangeMarcCategory={this.onChangeMarcCategory} />
+        <HeadingTypesSelect {...this.props} onChangeHeadingType={this.onChangeHeadingType} />
+        <ItemTypesSelect {...this.props} onChangeItemType={this.onChangeItemType} />
+        <FunctionCodeSelect {...this.props} onChangeFunctionCode={this.onChangeFunctionCode} />
 
-        <Row>
-          <Col xs={7}>
-            {marcCatValues &&
-              <Select
-                name="marcCategoriesSelect"
-                id="marcCategoriesSelect"
-                dataOptions={marcCatValues}
-                onChange={this.onChangeMarcCategory}
-              />
-            }
-          </Col>
-        </Row>
-
-        <Row>
-          <Col xs={7}>
-            {resources.headingTypes && resources.headingTypes.hasLoaded &&
-              <Select
-                name="headingTypesSelect"
-                id="headingTypesSelect"
-                dataOptions={headingTypesValues}
-                onChange={this.onChangeHeadingType}
-              />
-            }
-          </Col>
-        </Row>
-
-        <Row>
-          <Col xs={7}>
-            {resources.itemTypes &&
-              resources.itemTypes.hasLoaded &&
-              itemTypesValues.length > 0 &&
-              <Select
-                name="itemTypesSelect"
-                id="itemTypesSelect"
-                dataOptions={itemTypesValues}
-                onChange={this.onChangeItemType}
-              />
-            }
-          </Col>
-        </Row>
-
-        <Row>
-          <Col xs={7}>
-            {resources.functionCodes &&
-              resources.functionCodes.hasLoaded &&
-              functionCodesValues.length > 0 &&
-              <Select
-                name="functionCodesSelect"
-                id="functionCodesSelect"
-                dataOptions={functionCodesValues}
-                onChange={this.onChangeFunctionCode}
-              />
-            }
-          </Col>
-        </Row>
-
-        {resources.subfields &&
-          resources.subfields.hasLoaded &&
-          subfields[0].subfields.length > 0 &&
+        {resources.subfields && resources.subfields.hasLoaded && subfields[0].subfields.length > 0 &&
           <SubfieldSection {...this.props} subfields={subfields[0].subfields} />
         }
 
-        {resources.fixedFieldSelect &&
-          resources.fixedFieldSelect.hasLoaded &&
+        {resources.fixedFieldSelect && resources.fixedFieldSelect.hasLoaded &&
           <FixedFieldForm {...this.props} tag={this.state.newTag} fetchData={this.state.fixedFieldSel} defaultValues={this.state.fieldTemplateResponse} />
         }
-
-        <Row>
-          <Button
-            {...this.props}
-            onClick={this.createNewTag}
-            type="button"
-            buttonStyle="primary"
-          >
-            <FormattedMessage id="ui-marccat.template.tag.add" />
-          </Button>
-        </Row>
-      </form>
-
+        <CreateTagButton {...this.props} />
+      </div>
     );
   }
 }

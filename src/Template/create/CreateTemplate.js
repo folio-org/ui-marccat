@@ -25,6 +25,7 @@ type CreateTemplateProps = {
   history: Object,
   resources: Object,
   getCurrentTemp: Function,
+  translate: Function;
   mutator: {
     mandatory: {
       GET: Function,
@@ -35,7 +36,8 @@ type CreateTemplateProps = {
 type CreateTemplateState = {
   currentTemplate: Object,
   sections: Object,
-  currentTemplate: Object
+  currentTemplate: Object,
+  showPage: boolean;
 };
 
 class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplateState> {
@@ -114,26 +116,17 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
     if (!this.state.showPage) {
       return (<TemplateView {...this.props} />);
     }
-    const { resources: { mandatory } } = this.props;
+    const { translate, resources: { mandatory } } = this.props;
     if (!mandatory || !mandatory.hasLoaded) return (<Layer isOpen> <Icon icon="spinner-ellipsis" /> </Layer>);
     const fields = mandatory.records;
-    const formatMsg = this.props.stripes.intl.formatMessage;
     const actionMenuItems = [
       {
-        label: formatMsg({
-          id: 'ui-marccat.template.tag.create',
-        }),
-        onClick: () => {
-          this.props.history.pop();
-        },
+        label: translate({ id: 'ui-marccat.template.tag.create' }),
+        onClick: () => { this.props.history.pop(); },
       },
       {
-        label: formatMsg({
-          id: 'ui-marccat.template.save',
-        }),
-        onClick: () => {
-          this.props.history.push(C.INTERNAL_URL.VIEW_TEMPLATE);
-        },
+        label: translate({ id: 'ui-marccat.template.save' }),
+        onClick: () => { this.props.history.push(C.INTERNAL_URL.VIEW_TEMPLATE); },
       }
     ];
     return (
@@ -141,7 +134,7 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
         actionMenuItems={actionMenuItems}
         firstMenu={this.preparePaneMenu()}
         defaultWidth="100%"
-        paneTitle={formatMsg({
+        paneTitle={translate({
           id: 'ui-marccat.template.create',
         })}
         id="templateCreate"
@@ -150,7 +143,7 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
         <Layer isOpen>
           <AccordionSet>
             <Accordion
-              label={formatMsg({ id: 'ui-marccat.template.detail.information.title' })}
+              label={translate({ id: 'ui-marccat.template.detail.information.title' })}
               id="templateAccordion"
               open={this.state.sections.templateAccordion}
               onToggle={this.handleSectionToggle}
@@ -163,7 +156,7 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
               </Row>
             </Accordion>
             <Accordion
-              label={formatMsg({ id: 'ui-marccat.template.tag.create' })}
+              label={translate({ id: 'ui-marccat.template.tag.create' })}
               id="tagAccordion"
               open={this.state.sections.tagAccordion}
               onToggle={this.handleSectionToggle}

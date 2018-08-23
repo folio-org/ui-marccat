@@ -38,3 +38,7 @@
 .button {
   min-height: 28px;
 }
+
+header {
+  z-index: 1 !important;
+}

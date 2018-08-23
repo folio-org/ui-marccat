@@ -1,5 +1,6 @@
 /**
  * @format
+ * @flow
  */
 import * as React from 'react';
 import Select from '@folio/stripes-components/lib/Select';
@@ -11,17 +12,17 @@ import { getDateNow, organize } from '../../Utils/TemplateUtils';
 
 type FixedFieldFormProps = {
     tag: Object,
-    fetchData: Array,
+    fetchData: Array<any>,
     defaultValues: Object
 };
 
 class FixedFieldForm extends React.Component<FixedFieldFormProps, {}> {
-  constructor(props) {
+  constructor(props:FixedFieldFormProps) {
     super(props);
     this.renderFixedFieldSelect = this.renderFixedFieldSelect.bind(this);
   }
 
-  renderFixedFieldSelect(input, tag, defaultValues) {
+  renderFixedFieldSelect = (input:any, tag: Object, defaultValues:any) => {
     const arrayInput = organize(input, defaultValues);
     const toRender = [];
     // only for 008

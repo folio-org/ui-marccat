@@ -3,7 +3,6 @@ import { FormattedMessage } from 'react-intl';
 
 export const validate = (values) => {
   const errors = {};
-
   if (!values.templateName) {
     errors.templateName = <FormattedMessage id="ui-marccat.validation.error.template.name.required" />;
   }

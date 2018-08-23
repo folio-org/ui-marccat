@@ -418,7 +418,7 @@ class CreateTag extends React.Component<CreateTagProps, CreateTagState> {
       <form name="createTagForm" id="createTagForm" noValidate>
         <Row className={css.mandatoryList}>
           <Col xs={7}>
-            <CurrentTagDisplay {...this.props} currentTag={this.state.newTag} />
+            {/* <CurrentTagDisplay {...this.props} currentTag={this.state.newTag} /> */}
           </Col>
         </Row>
 

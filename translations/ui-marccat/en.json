@@ -212,5 +212,6 @@
   "browsing.col.index":"Index",
   "browsing.col.acc":"Acc",
   "browsing.previous":"Previous",
-  "browsing.next":"Next"
+  "browsing.next":"Next",
+  "validation.error.template.name.required": "The name of template is required"
 }

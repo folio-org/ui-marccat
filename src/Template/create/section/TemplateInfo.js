@@ -15,7 +15,7 @@ type TemplateInfoProps = {
     accordionId: string;
 };
 
-const TemplateInfo = ({ translate, expanded, accordionId, onToggle }:TemplateInfoProps) => {
+const TemplateInfo = ({ translate, expanded, accordionId, onToggle }: TemplateInfoProps) => {
   return (
     <Accordion
       label={translate({ id: 'ui-marccat.template.detail.information.title' })}
@@ -30,7 +30,7 @@ const TemplateInfo = ({ translate, expanded, accordionId, onToggle }:TemplateInf
             label={translate({
               id: 'ui-marccat.template.form.name',
             })}
-            name="name"
+            name="templateName"
             placeholder={translate({
               id: 'ui-marccat.template.form.name',
             })}

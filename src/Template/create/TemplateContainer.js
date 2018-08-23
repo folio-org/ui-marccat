@@ -6,28 +6,37 @@ import Layer from '@folio/stripes-components/lib/Layer';
 import stripesForm from '@folio/stripes-form';
 import { ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
+import { TemplateInfo, MandatoryTableInfo, TagInfo } from './section/';
+import { validate, asyncValidate } from './validation/Validator';
 
+type CreateTemplateContainerProps = {
+    router: Object;
+}
 
-import TemplateInfo from './section/TemplateInfo';
-import MandatoryTableInfo from './section/MandatoryTableInfo';
-import TagInfo from './section/TagInfo';
-
-class TemplateForm extends React.Component {
+class CreateTemplateContainer extends React.Component<CreateTemplateContainerProps, {}> {
   constructor(props) {
     super(props);
-
     this.state = {
       sections: {
-        createTemplateInfo: true,
-        mandatoryTableInfo: true,
-        tagInfo: true,
+        createTemplateInfo: false,
+        mandatoryTableInfo: false,
+        tagInfo: false,
       },
+      isOpened: true
     };
 
     this.handleExpandAll = this.handleExpandAll.bind(this);
     this.handleSectionToggle = this.handleSectionToggle.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
+
+  handleClose = () => {
+    this.setState({
+      isOpened: false
+    });
+    this.props.router.goBack();
+  };
 
   handleExpandAll(sections) {
     this.setState({ sections });
@@ -48,10 +57,10 @@ class TemplateForm extends React.Component {
   }
 
   render() {
-    const { sections } = this.state;
+    const { sections, isOpened, onSubmit } = this.state;
     return (
-      <Layer isOpen>
-        <form id="create-template">
+      <Layer isOpen={isOpened}>
+        <form id="create-template" onSubmit={onSubmit}>
           <Paneset isRoot>
             <Pane
               defaultWidth="fill"
@@ -59,7 +68,7 @@ class TemplateForm extends React.Component {
               paneSub="No Result found"
               appIcon={{ app: 'marccat' }}
               dismissible
-              onClose={() => {}}
+              onClose={this.handleClose}
             >
               <Row end="xs">
                 <Col xs>
@@ -79,6 +88,9 @@ class TemplateForm extends React.Component {
 
 export default stripesForm({
   form: 'templateForm',
+  validate,
+  asyncValidate,
+  asyncBlurFields: ['templateName'],
   navigationCheck: true,
   enableReinitialize: true,
-})(TemplateForm);
+})(CreateTemplateContainer);

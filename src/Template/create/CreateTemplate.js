@@ -138,8 +138,6 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
       }
     ];
     return (
-      <Layer isOpen>
-        <Paneset static>
           <Pane
             actionMenuItems={actionMenuItems}
             firstMenu={this.preparePaneMenu()}
@@ -150,12 +148,7 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
             id="templateCreate"
             appIcon={{ app: C.META.ICON_TITLE }}
           >
-            <Paneset static>
-              <Pane
-                id="templateCreate"
-                defaultWidth="fill"
-                fluidContentWidth
-              >
+                <Layer isOpen>
                 <AccordionSet>
                   <Accordion
                     label={formatMsg({ id: 'ui-marccat.template.detail.information.title' })}
@@ -173,18 +166,14 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
                   <Accordion
                     label={formatMsg({ id: 'ui-marccat.template.tag.create' })}
                     id="tagAccordion"
-                    // open={this.state.sections.tagAccordion}
+                    open={this.state.sections.tagAccordion}
                     onToggle={this.handleSectionToggle}
                   >
                     <CreateTag {...this.props} currentTemplate={this.state.currentTemplate} />
                   </Accordion>
                 </AccordionSet>
+                </Layer>
               </Pane>
-            </Paneset>
-          </Pane>
-        </Paneset>
-      </Layer>
-
     );
   }
 }

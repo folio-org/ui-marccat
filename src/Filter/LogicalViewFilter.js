@@ -5,7 +5,6 @@
 import * as React from 'react';
 import Icon from '@folio/stripes-components/lib/Icon';
 import FilterGroup from './FilterGroup';
-import { LANGUAGES } from '../Utils/Constant';
 
 type LogicalViewProps = {
   resources: Object;

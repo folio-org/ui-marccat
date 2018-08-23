@@ -38,7 +38,6 @@ export default function FilterGroup({
               onChange={() => {
                 const replaced = {
                   ...activeFilters,
-                  // if this option is a default, clear the filter
                   [name]: value === defaultValue ? undefined : value
                 };
 

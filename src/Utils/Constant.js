@@ -1,4 +1,3 @@
-import { capitalizeFirstLetter } from './Formatter';
 
 const environment = process.env.NODE_ENV;
 // MARCCAT UI APP METADADA

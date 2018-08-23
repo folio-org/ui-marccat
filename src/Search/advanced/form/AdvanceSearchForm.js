@@ -13,7 +13,7 @@ import ScanButton from '../button/ScanButton';
 import SearchButton from '../button/SearchButton';
 import { formatSearchQuery } from '../../../Utils/Formatter';
 import * as C from '../../../Utils';
-import LogicalSelect from '../select/LogicalSelect';
+import LogicalButton from '../button/LogicalButton';
 import css from '../../style/Search.css';
 import AdavnceSearchInput from './AdvanceSearchInput';
 import CategorySelect from '../select/CategorySelect';
@@ -180,7 +180,7 @@ class AdvanceSearchForm extends
               </div>
               <Col xs={12}>
                 <div className={css.colQuery}>
-                  <LogicalSelect {...this.props} handleTextAreaValue={this.handleTextAreaValue} />
+                  <LogicalButton {...this.props} handleTextAreaValue={this.handleTextAreaValue} />
                   <AdavnceSearchInput onChange={this.handleChange} />
                   <Row>
                     <Col xs={6}>

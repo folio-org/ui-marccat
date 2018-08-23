@@ -3,7 +3,7 @@ import SegmentedControl from '@folio/stripes-components/lib/SegmentedControl';
 import Button from '@folio/stripes-components/lib/Button';
 import { TAB_CONTROL_ID } from '../Utils/Constant';
 import { AdvancedSearch } from '../Search';
-import { SortFilters, LogicalViewFilter, TemplateFilters } from '../Filter/';
+import { LogicalViewFilter, TemplateFilters } from '../Filter/';
 import SearchFrom from './component/SearchFrom';
 
 import css from './Style/Switcher.css';

@@ -10,10 +10,7 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 
 import TemplateInfo from './section/TemplateInfo';
 import MandatoryTableInfo from './section/MandatoryTableInfo';
-
-const TagInfo = () => {
-  return (<div>edit contact</div>);
-};
+import TagInfo from './section/TagInfo';
 
 class TemplateForm extends React.Component {
   constructor(props) {

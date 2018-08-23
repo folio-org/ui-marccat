@@ -4,7 +4,6 @@
  */
 import * as React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
-import Paneset from '@folio/stripes-components/lib/Paneset';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import { connect } from '@folio/stripes-connect';
@@ -138,42 +137,42 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
       }
     ];
     return (
-          <Pane
-            actionMenuItems={actionMenuItems}
-            firstMenu={this.preparePaneMenu()}
-            defaultWidth="100%"
-            paneTitle={formatMsg({
-              id: 'ui-marccat.template.create',
-            })}
-            id="templateCreate"
-            appIcon={{ app: C.META.ICON_TITLE }}
-          >
-                <Layer isOpen>
-                <AccordionSet>
-                  <Accordion
-                    label={formatMsg({ id: 'ui-marccat.template.detail.information.title' })}
-                    id="templateAccordion"
-                    open={this.state.sections.templateAccordion}
-                    onToggle={this.handleSectionToggle}
-                  >
-                    <TemplateForm {...this.props} />
-                    <Row className={css.mandatoryList}>
-                      <Col xs={12}>
-                        <MandatoryList {...this.props} fields={fields} />
-                      </Col>
-                    </Row>
-                  </Accordion>
-                  <Accordion
-                    label={formatMsg({ id: 'ui-marccat.template.tag.create' })}
-                    id="tagAccordion"
-                    open={this.state.sections.tagAccordion}
-                    onToggle={this.handleSectionToggle}
-                  >
-                    <CreateTag {...this.props} currentTemplate={this.state.currentTemplate} />
-                  </Accordion>
-                </AccordionSet>
-                </Layer>
-              </Pane>
+      <Pane
+        actionMenuItems={actionMenuItems}
+        firstMenu={this.preparePaneMenu()}
+        defaultWidth="100%"
+        paneTitle={formatMsg({
+          id: 'ui-marccat.template.create',
+        })}
+        id="templateCreate"
+        appIcon={{ app: C.META.ICON_TITLE }}
+      >
+        <Layer isOpen>
+          <AccordionSet>
+            <Accordion
+              label={formatMsg({ id: 'ui-marccat.template.detail.information.title' })}
+              id="templateAccordion"
+              open={this.state.sections.templateAccordion}
+              onToggle={this.handleSectionToggle}
+            >
+              <TemplateForm {...this.props} />
+              <Row className={css.mandatoryList}>
+                <Col xs={12}>
+                  <MandatoryList {...this.props} fields={fields} />
+                </Col>
+              </Row>
+            </Accordion>
+            <Accordion
+              label={formatMsg({ id: 'ui-marccat.template.tag.create' })}
+              id="tagAccordion"
+              open={this.state.sections.tagAccordion}
+              onToggle={this.handleSectionToggle}
+            >
+              <CreateTag {...this.props} currentTemplate={this.state.currentTemplate} />
+            </Accordion>
+          </AccordionSet>
+        </Layer>
+      </Pane>
     );
   }
 }

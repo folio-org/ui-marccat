@@ -6,7 +6,7 @@ import * as React from 'react';
 import Route from 'react-router-dom/Route';
 import Redirect from 'react-router-dom/Redirect';
 import Switch from 'react-router-dom/Switch';
-import { TemplateView, CreateTemplate, EditTemplate } from './Template/';
+import { TemplateView, EditTemplate } from './Template/';
 import { SimpleSearch, SearchResults, AdvancedBrowsing } from './Search/';
 import { IndexList, DiacriticTable } from './Indexes/';
 import TemplateForm from './Template/create/TemplateContainer';

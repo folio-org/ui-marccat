@@ -2,8 +2,8 @@ import * as React from 'react';
 import SegmentedControl from '@folio/stripes-components/lib/SegmentedControl';
 import Button from '@folio/stripes-components/lib/Button';
 import { TAB_CONTROL_ID } from '../Utils/Constant';
-import LogicalView from './LogicalView';
 import { AdvancedSearch } from '../Search';
+import { SortFilters, LogicalViewFilter, TemplateFilters } from '../Filter/';
 import SearchFrom from './component/SearchFrom';
 
 import css from './Style/Switcher.css';
@@ -12,7 +12,6 @@ type TabControlProps = {
     children: React.ReactNode;
     translate: Object;
     rootPath: string;
-    activateTab: string;
     router: Object;
 };
 
@@ -36,11 +35,11 @@ export default class TabControl extends React.Component<TabControlProps, { activ
     let renderComponent: React.ComponentType<any>;
     switch (id) {
     case TAB_CONTROL_ID.DATABASE:
-      renderComponent = (<LogicalView {...this.props} />); break;
+      renderComponent = (<LogicalViewFilter {...this.props} />); break;
     case TAB_CONTROL_ID.SEARCH:
       renderComponent = (<AdvancedSearch {...this.props} />); break;
     case TAB_CONTROL_ID.TEMPLATE:
-      renderComponent = (<LogicalView {...this.props} />); break;
+      renderComponent = (<TemplateFilters {...this.props} />); break;
     default:
       break;
     }
@@ -53,12 +52,12 @@ handleClick = (path) => {
 };
 
 render() {
-  const { translate, activateTab } = this.props;
+  const { translate } = this.props;
   return (
     <div className={css.tabControlContainer}>
       <SegmentedControl
         className={css.customTab}
-        activeId={this.state.activeTab || activateTab}
+        activeId={this.state.activeTab}
         onActivate={this.handleActivate}
       >
         <Button onClick={() => this.handleClick('/')} id={TAB_CONTROL_ID.DATABASE}>{translate({ id: 'ui-marccat.navigator.database' })}</Button>

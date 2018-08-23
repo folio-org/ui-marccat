@@ -51,6 +51,9 @@ export default function TemplateResults({ handleRowClick, onClick, ...props }: T
           formatter={fakeFormatter}
           ariaLabel="TemplateView"
           visibleColumns={['id', 'name']}
+          autosize
+          virtualize
+          sortDirection="ascending"
           sortedColumn="name"
           sortOrder="ascending"
           onRowClick={handleRowClick}

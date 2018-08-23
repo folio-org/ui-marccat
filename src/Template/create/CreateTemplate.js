@@ -173,7 +173,7 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
                   <Accordion
                     label={formatMsg({ id: 'ui-marccat.template.tag.create' })}
                     id="tagAccordion"
-                    open={this.state.sections.tagAccordion}
+                    // open={this.state.sections.tagAccordion}
                     onToggle={this.handleSectionToggle}
                   >
                     <CreateTag {...this.props} currentTemplate={this.state.currentTemplate} />

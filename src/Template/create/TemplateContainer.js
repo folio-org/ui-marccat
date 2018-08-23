@@ -9,11 +9,7 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 
 
 import TemplateInfo from './section/TemplateInfo';
-
-
-const MandatoryTableInfo = () => {
-  return (<div>edit extended</div>);
-};
+import MandatoryTableInfo from './section/MandatoryTableInfo';
 
 const TagInfo = () => {
   return (<div>edit contact</div>);
@@ -21,16 +17,13 @@ const TagInfo = () => {
 
 class TemplateForm extends React.Component {
   constructor(props) {
-    super();
+    super(props);
 
     this.state = {
       sections: {
         createTemplateInfo: true,
-        extendedInfo: true,
-        contactInfo: true,
-        proxy: false,
-        permissions: false,
-        servicePoints: false,
+        mandatoryTableInfo: true,
+        tagInfo: true,
       },
     };
 
@@ -61,11 +54,11 @@ class TemplateForm extends React.Component {
     const { sections } = this.state;
     return (
       <Layer isOpen>
-        <form id="template-user">
+        <form id="create-template">
           <Paneset isRoot>
             <Pane
               defaultWidth="fill"
-              paneTitle="Create -template"
+              paneTitle="Create Template"
               paneSub="No Result found"
               appIcon={{ app: 'marccat' }}
               dismissible
@@ -76,9 +69,9 @@ class TemplateForm extends React.Component {
                   <ExpandAllButton accordionStatus={sections} onToggle={this.handleExpandAll} />
                 </Col>
               </Row>
-              <TemplateInfo accordionId="createTemplateInfo" expanded={sections.editUserInfo} onToggle={this.handleSectionToggle} {...this.props} />
-              <MandatoryTableInfo accordionId="extendedInfo" expanded={sections.extendedInfo} onToggle={this.handleSectionToggle} {...this.props} />
-              <TagInfo accordionId="contactInfo" expanded={sections.contactInfo} onToggle={this.handleSectionToggle} {...this.props} />
+              <TemplateInfo accordionId="createTemplateInfo" expanded={sections.createTemplateInfo} onToggle={this.handleSectionToggle} {...this.props} />
+              <MandatoryTableInfo accordionId="mandatoryTableInfo" expanded={sections.mandatoryTableInfo} onToggle={this.handleSectionToggle} {...this.props} />
+              <TagInfo accordionId="tagInfo" expanded={sections.tagInfo} onToggle={this.handleSectionToggle} {...this.props} />
             </Pane>
           </Paneset>
         </form>

@@ -15,7 +15,7 @@ export default function MarcCategorySelect({ onChangeMarcCategory, ...props }: C
   const marcCatValues = (props.resources.marcCategories || {}).records || [];
   return (
     <Row>
-      <Col xs={7}>
+      <Col xs={6}>
         {marcCatValues &&
         <Select
           name="marcCategoriesSelect"

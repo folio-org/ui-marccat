@@ -15,7 +15,7 @@ export default function FunctionCodeSelect({ onChangeFunctionCode, ...props }: F
   const functionCodesValues = (props.resources.functionCodes || {}).records || [];
   return (
     <Row>
-      <Col xs={7}>
+      <Col xs={6}>
         {props.resources.functionCodes && props.resources.functionCodes.hasLoaded && functionCodesValues.length > 0 &&
         <Select
           name="functionCodesSelect"

@@ -15,7 +15,7 @@ export default function HeadingTypesSelect({ onChangeHeadingType, ...props }: He
   const headingTypesValues = (props.resources.headingTypes || {}).records || [];
   return (
     <Row>
-      <Col xs={7}>
+      <Col xs={6}>
         {props.resources.headingTypes && props.resources.headingTypes.hasLoaded &&
         <Select
           name="headingTypesSelect"

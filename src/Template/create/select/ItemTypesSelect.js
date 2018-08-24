@@ -15,7 +15,7 @@ export default function ItemTypesSelect({ onChangeItemType, ...props }: ItemType
   const itemTypesValues = (props.resources.itemTypes || {}).records || [];
   return (
     <Row>
-      <Col xs={7}>
+      <Col xs={6}>
         {props.resources.itemTypes && props.resources.itemTypes.hasLoaded &&
         itemTypesValues.length > 0 &&
         <Select

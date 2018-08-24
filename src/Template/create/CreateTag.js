@@ -3,6 +3,7 @@
  */
 import * as React from 'react';
 import { connect } from '@folio/stripes-connect';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { getLeader, findLabel } from '../../Utils/TemplateUtils';
 import SubfieldSection from '../form/SubfieldSection';
 import * as C from '../../Utils';
@@ -270,16 +271,14 @@ class CreateTag extends React.Component<CreateTagProps, {}> {
   }
 
   fetchingMarcCategory() {
-    this.props.mutator.marcCategories.GET().then((fetchResult) => {
-      if (fetchResult.length > 0) {
-        this.setState({ marcCategorySel: fetchResult[0].value });
-        this.fetchHeadingTypes(fetchResult[0].value);
-        return;
-      }
-      this.props.mutator.headingTypes.reset();
-      this.setState({ marcCategorySel: '' });
+    const marcSource = new BehaviorSubject();
+    marcSource.next(this.props.mutator.marcCategories.GET());
+    marcSource.subscribe((d) => {
+      this.setState({ marcCategorySel: d[0].value });
+      this.fetchHeadingTypes(d[0].value);
     });
   }
+
 
   fetchHeadingTypes(marcCategoryValue) {
     this.props.mutator.headingTypes.reset();
@@ -291,10 +290,11 @@ class CreateTag extends React.Component<CreateTagProps, {}> {
         this.setState({ headingTypeLoaded: fetchResult });
         return;
       }
+      const headingType = (fetchResult.length > 0) ? fetchResult : '';
       this.fetchMarcAssociated(marcCategoryValue, C.EMPTY_PARAMETER, C.EMPTY_PARAMETER, C.EMPTY_PARAMETER);
       this.props.mutator.itemTypes.reset();
       this.setState({ headingTypeSel: '' });
-      this.setState({ headingTypeLoaded: '' });
+      this.setState({ headingTypeLoaded: headingType });
     });
   }
 

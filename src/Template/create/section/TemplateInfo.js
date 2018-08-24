@@ -29,7 +29,7 @@ const TemplateInfo = ({ translate, expanded, accordionId, onToggle }: TemplateIn
             className={css.largeField}
             label={translate({
               id: 'ui-marccat.template.form.name',
-            })}
+            }) + '*'}
             name="templateName"
             placeholder={translate({
               id: 'ui-marccat.template.form.name',

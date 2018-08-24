@@ -3,6 +3,7 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
 
 import CreateTag from '../CreateTag';
+import DisplayTag from '../DisplayTag';
 
 type TagInfoProps = {
     translate: () => void;

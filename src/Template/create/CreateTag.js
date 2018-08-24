@@ -3,11 +3,7 @@
  */
 import * as React from 'react';
 import { connect } from '@folio/stripes-connect';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { getLeader, findLabel } from '../../Utils/TemplateUtils';
-import SubfieldSection from '../form/SubfieldSection';
-import * as C from '../../Utils';
-import FixedFieldForm from './FixedFieldForm';
+import { ReplaySubject } from 'rxjs';
 import CreateTagButton from './button/CreateTagButton';
 import {
   MarcCategorySelect,
@@ -15,6 +11,7 @@ import {
   ItemTypesSelect,
   FunctionCodeSelect
 } from './select/';
+import * as C from '../../Utils';
 
 type CreateTagProps = {
   currentTemplate: Object,
@@ -171,19 +168,15 @@ class CreateTag extends React.Component<CreateTagProps, {}> {
     this.state = {
       marcCategorySel: '',
       headingTypeSel: 0,
-      headingTypeLoaded: {},
+      headingTypeLoaded: {}, // eslint-disable-line react/no-unused-state
       itemTypeSel: '', // eslint-disable-line react/no-unused-state
       functionCodeSel: '', // eslint-disable-line react/no-unused-state
-      newTag: {},
-      fixedFieldSel: {},
-      fieldTemplateResponse: {}
     };
 
     this.onChangeMarcCategory = this.onChangeMarcCategory.bind(this);
     this.onChangeHeadingType = this.onChangeHeadingType.bind(this);
     this.onChangeItemType = this.onChangeItemType.bind(this);
     this.onChangeFunctionCode = this.onChangeFunctionCode.bind(this);
-    this.createTagObjectFromJson = this.createTagObjectFromJson.bind(this);
   }
 
   componentDidMount() {
@@ -204,78 +197,11 @@ class CreateTag extends React.Component<CreateTagProps, {}> {
     });
   }
 
-  fetchFixedFieldSelect(tag, headingTypesValue) {
-    this.props.mutator.fixedFieldSelect.reset();
-    this.props.mutator.tag.replace(tag);
-    this.props.mutator.headingType.replace(headingTypesValue);
-    this.props.mutator.fixedFieldSelect.GET().then((fetchResult) => {
-      if (fetchResult) {
-        this.setState({ fixedFieldSel: fetchResult });
-        return;
-      }
-      this.props.mutator.fixedFieldSelect.reset();
-    });
-  }
-
-  fetchFieldTemplate(marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue, tag, ind1, ind2) {
-    this.props.mutator.fieldTemplate.reset();
-    this.props.mutator.marcCategory.replace(marcCategoryValue);
-    this.props.mutator.headingType.replace(headingTypesValue);
-    this.props.mutator.tag.replace(tag);
-    this.props.mutator.ind1.replace(ind1);
-    this.props.mutator.ind2.replace(ind2);
-    this.props.mutator.leader.replace(getLeader(this.props.currentTemplate));
-    this.props.mutator.fieldTemplate.GET().then((fetchResult) => {
-      if (fetchResult) {
-        if (fetchResult['variable-field']) {
-          const res = fetchResult['variable-field'];
-          this.props.mutator.fixedFieldSelect.reset();
-          this.fetchSubfields(marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue);
-          const tagFetch = this.createTagObjectFromJson(res, marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue);
-          tagFetch.type = 'variableField';
-          this.setState({
-            newTag: tagFetch,
-            fieldTemplateResponse: res
-          });
-          return;
-        }
-        if (fetchResult['fixed-field']) {
-          const res = fetchResult['fixed-field'];
-          this.props.mutator.subfields.reset();
-          this.fetchFixedFieldSelect(tag, headingTypesValue);
-          const tagFetch = this.createTagObjectFromJson(res, marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue);
-          tagFetch.displayValue = res.displayValue;
-          tagFetch.type = 'fixedField';
-          this.setState({
-            newTag: tagFetch,
-            fieldTemplateResponse: res
-          });
-          return;
-        }
-      }
-      this.props.mutator.subfields.reset();
-    });
-  }
-
-  createTagObjectFromJson(res, marcCategoryValue, headingTypesValue, itemTypesValue, functionCodeValue) {
-    return {
-      code: res.code,
-      ind1: res.ind1,
-      ind2: res.ind2,
-      categoryCode: marcCategoryValue,
-      headingTypeCode: headingTypesValue,
-      itemTypeCode: itemTypesValue,
-      functionCode: functionCodeValue,
-      description: findLabel(this.state.headingTypeLoaded, headingTypesValue)
-    };
-  }
-
   fetchingMarcCategory() {
-    const marcSource = new BehaviorSubject();
-    marcSource.next(this.props.mutator.marcCategories.GET());
-    marcSource.subscribe((d) => {
-      this.setState({ marcCategorySel: d[0].value });
-      this.fetchHeadingTypes(d[0].value);
+    const source = new ReplaySubject();
+    source.next(this.props.mutator.marcCategories.GET());
+    source.subscribe(() => {
+      this.fetchHeadingTypes();
     });
   }
 
@@ -287,14 +213,14 @@ class CreateTag extends React.Component<CreateTagProps, {}> {
       if (fetchResult.length > 0) {
         this.setState({ headingTypeSel: fetchResult[0].value });
         this.fetchItemTypes(marcCategoryValue, fetchResult[0].value);
-        this.setState({ headingTypeLoaded: fetchResult });
+        this.setState({ headingTypeLoaded: fetchResult }); // eslint-disable-line react/no-unused-state
         return;
       }
       const headingType = (fetchResult.length > 0) ? fetchResult : '';
       this.fetchMarcAssociated(marcCategoryValue, C.EMPTY_PARAMETER, C.EMPTY_PARAMETER, C.EMPTY_PARAMETER);
       this.props.mutator.itemTypes.reset();
       this.setState({ headingTypeSel: '' });
-      this.setState({ headingTypeLoaded: headingType });
+      this.setState({ headingTypeLoaded: headingType }); // eslint-disable-line react/no-unused-state
     });
   }
 
@@ -365,22 +291,12 @@ class CreateTag extends React.Component<CreateTagProps, {}> {
   }
 
   render() {
-    const { resources } = this.props;
-    const subfields = (resources.subfields || {}).records || [];
     return (
       <div className="tag-select-container">
         <MarcCategorySelect {...this.props} onChangeMarcCategory={this.onChangeMarcCategory} />
         <HeadingTypesSelect {...this.props} onChangeHeadingType={this.onChangeHeadingType} />
         <ItemTypesSelect {...this.props} onChangeItemType={this.onChangeItemType} />
         <FunctionCodeSelect {...this.props} onChangeFunctionCode={this.onChangeFunctionCode} />
-
-        {resources.subfields && resources.subfields.hasLoaded && subfields[0].subfields.length > 0 &&
-          <SubfieldSection {...this.props} subfields={subfields[0].subfields} />
-        }
-
-        {resources.fixedFieldSelect && resources.fixedFieldSelect.hasLoaded &&
-          <FixedFieldForm {...this.props} tag={this.state.newTag} fetchData={this.state.fixedFieldSel} defaultValues={this.state.fieldTemplateResponse} />
-        }
         <CreateTagButton {...this.props} />
       </div>
     );

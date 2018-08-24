@@ -46,7 +46,17 @@ class TemplateView extends React.Component<*> {
       DELETE: {
         path: `record-template/%{query}?type=B&lang=${C.ENDPOINT.DEFAULT_LANG}`
       }
-    }
+    },
+    mandatory: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      path: C.ENDPOINT.TEMPLATE_MANDATORY,
+      headers: C.ENDPOINT.HEADERS,
+      records: 'fields',
+      GET: {
+        params: { lang: C.ENDPOINT.DEFAULT_LANG },
+      },
+    },
   });
 
   constructor(props) {

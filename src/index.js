@@ -133,7 +133,16 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
       headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.BROWSING,
       accumulate: true
-    }
+    },
+    mandatory: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      headers: C.ENDPOINT.HEADERS,
+      records: C.API_RESULT_JSON_KEY.FIELDS,
+      GET: {
+        path: 'bibliographic/fields/mandatory?lang=' + C.ENDPOINT.DEFAULT_LANG
+      },
+    },
   });
 
   constructor(props, context) {

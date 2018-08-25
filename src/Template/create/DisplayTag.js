@@ -1,20 +1,20 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import './style/CreateTag.css';
+import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
+import css from './style/CreateTag.css';
 
 type DisplayTagProps = {
 };
 
-const DisplayTag = () => {
+export default function DisplayTag({ ...props }:DisplayTagProps) {
   return (
-    <div className="currentTag">
-      <Row id="section-current-tag">
-        <Col xs={12}>
-          <div>current tag</div>
-        </Col>
-      </Row>
+    <div className={css.currentTag}>
+      <MultiColumnList
+        contentData={{}}
+      />
     </div>
   );
-};
-
-export default DisplayTag;
+}

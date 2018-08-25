@@ -14,11 +14,11 @@ type MandatoryTableInfoProps = {
     onToggle: () => void;
     expanded: boolean;
     accordionId: string;
+    resources: Object;
 };
 
 const MandatoryTableInfo = ({ translate, expanded, accordionId, onToggle, ...props }:MandatoryTableInfoProps) => {
-  const mandatoryFields = props.state.ui_marccat_mandatory.records;
-  const obj = remapMultiArray(mandatoryFields);
+  const { resources: { mandatory } } = props;
   return (
     <Accordion
       label={translate({ id: 'ui-marccat.template.detail.information.fields.table' })}
@@ -29,7 +29,8 @@ const MandatoryTableInfo = ({ translate, expanded, accordionId, onToggle, ...pro
       <Row className={css.mandatoryList}>
         <Col xs={12}>
           <MultiColumnList
-            contentData={obj}
+            loading={!mandatory || !mandatory.hasLoaded}
+            contentData={remapMultiArray(mandatory.records)}
             visibleColumns={[
               'code',
               'description',

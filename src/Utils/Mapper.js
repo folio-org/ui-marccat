@@ -59,6 +59,15 @@ const remapMultiArray = multiArray => {
   return obj;
 };
 
+export const remapSubfield = (data) => {
+  const obj = [{}];
+  data['variable-field'].subfields.map((i) => {
+    return obj.push({
+      value: i, label: i
+    });
+  });
+};
+
 const remapTemplateView = json => {
   const obj = [];
   const arrayFixedFields = [];

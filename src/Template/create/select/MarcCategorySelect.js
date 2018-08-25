@@ -8,10 +8,20 @@ import Select from '@folio/stripes-components/lib/Select';
 
 type CategorySelectProps = {
     resources: Object;
-    onChangeMarcCategory: Function;
+    mutator: Object;
 };
 
-export default function MarcCategorySelect({ onChangeMarcCategory, ...props }: CategorySelectProps) {
+export default function MarcCategorySelect({ ...props }: CategorySelectProps) {
+
+  const onChangeMarcCategory = (e: any) => {
+    const { mutator } = props;
+    const { value } = e.target;
+    mutator.headingTypes.reset();
+    mutator.itemTypes.reset();
+    mutator.marcCategory.replace(value);
+    mutator.headingTypes.GET();
+  };
+
   const marcCatValues = (props.resources.marcCategories || {}).records || [];
   return (
     <Row>

@@ -5,13 +5,30 @@
 import * as React from 'react';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Select from '@folio/stripes-components/lib/Select';
+import { Observable } from 'rxjs';
 
 type FunctionCodeSelectProps = {
-    onChangeFunctionCode: Function;
+    mutator: Object;
     resources: Object;
 };
 
-export default function FunctionCodeSelect({ onChangeFunctionCode, ...props }: FunctionCodeSelectProps) {
+export default function FunctionCodeSelect({ ...props }: FunctionCodeSelectProps) {
+  const onChangeFunctionCode = (e: any) => {
+    const { mutator } = props;
+    const { value } = e.target;
+    mutator.functionCode.replace(value);
+    const source = Observable.fromPromise(mutator.marcAssociated.GET());
+    source
+      .subscribe(k => handleFieldTemplate(k)); // eslint-disable-line
+  };
+
+  const handleFieldTemplate = (k: Object) => {
+    const { mutator } = props;
+    mutator.validationTag.replace(k);
+    mutator.fieldTemplate.GET();
+    mutator.fixedFieldSelect.GET();
+  };
+
   const functionCodesValues = (props.resources.functionCodes || {}).records || [];
   return (
     <Row>

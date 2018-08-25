@@ -7,11 +7,18 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Select from '@folio/stripes-components/lib/Select';
 
 type ItemTypesSelectProps = {
-    onChangeItemType: Function;
+    mutator: Object;
     resources: Object;
 };
 
-export default function ItemTypesSelect({ onChangeItemType, ...props }: ItemTypesSelectProps) {
+export default function ItemTypesSelect({ ...props }: ItemTypesSelectProps) {
+  const onChangeItemType = (e: any) => {
+    const { mutator } = props;
+    const { value } = e.target;
+    mutator.functionCodes.reset();
+    mutator.itemType.replace(value);
+    mutator.functionCodes.GET();
+  };
   const itemTypesValues = (props.resources.itemTypes || {}).records || [];
   return (
     <Row>

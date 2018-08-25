@@ -52,7 +52,7 @@ class TemplateView extends React.Component<*> {
       root: C.ENDPOINT.BASE_URL,
       path: C.ENDPOINT.TEMPLATE_MANDATORY,
       headers: C.ENDPOINT.HEADERS,
-      records: 'fields',
+      records: C.API_RESULT_JSON_KEY.FIELDS,
       GET: {
         params: { lang: C.ENDPOINT.DEFAULT_LANG },
       },
@@ -69,16 +69,16 @@ class TemplateView extends React.Component<*> {
     this.props.mutator.currentType.replace('B');
     this.handleRowClick = this.handleRowClick.bind(this);
     this.onDelete = this.onDelete.bind(this);
-    this.showConfirm = this.showConfirm.bind(this);
     this.hideConfirm = this.hideConfirm.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.callout = null;
   }
 
   onDelete() {
+    const { mutator } = this.props;
     const toDelete = this.state.selectedTemplate;
-    this.props.mutator.currentTemplate.update({ id: toDelete.id });
-    return this.props.mutator.recordsTemplates.DELETE(toDelete)
+    mutator.currentTemplate.update({ id: toDelete.id });
+    return mutator.recordsTemplates.DELETE(toDelete)
       .then(() => this.deleteResolve())
       .then(() => this.showCalloutMessage())
       .catch(() => this.deleteReject())
@@ -119,16 +119,11 @@ class TemplateView extends React.Component<*> {
   handleRowClick = (c, object) => {
     this.props.mutator.templateDetails.reset();
     this.props.mutator.query.replace(object.id);
-    Observable.from(this.props.mutator.templateDetails.GET());
-    this.setState({
-      showTemplateDetail: true,
-      selectedTemplate: object,
-    });
   }
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const { router, resources: { recordsTemplates } } = this.props;
+    const { router, resources: { recordsTemplates, mandatory } } = this.props;
     return (
       <Paneset static>
         <TemplateResults

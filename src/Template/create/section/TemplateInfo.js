@@ -1,3 +1,7 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import { Field } from 'redux-form';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
@@ -9,7 +13,7 @@ import { Accordion } from '@folio/stripes-components/lib/Accordion';
 import css from '../../styles/Template.css';
 
 type TemplateInfoProps = {
-    translate: () => void;
+    translate: (o: Object) => void;
     onToggle: () => void;
     expanded: boolean;
     accordionId: string;
@@ -29,7 +33,7 @@ const TemplateInfo = ({ translate, expanded, accordionId, onToggle }: TemplateIn
             className={css.largeField}
             label={translate({
               id: 'ui-marccat.template.form.name',
-            }) + '*'}
+            })}
             name="templateName"
             placeholder={translate({
               id: 'ui-marccat.template.form.name',

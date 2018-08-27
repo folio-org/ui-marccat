@@ -49,13 +49,13 @@ export default class SubfieldSection extends React.Component<SubfieldSectionProp
     const subfieldMapped = remapSubfield(fieldTemplate.records[0]);
     return (
       <div>
-        {subfield.map((i) => (
+        {subfield.map((i, index) => (
           <React.Fragment>
             <Row id="section-delete-tag" key={i}>
               <Col xs={2}>
                 <Field
                   component={Select}
-                  name="deleteSelectSubfield"
+                  name={`deleteSelectSubfield-${index}`}
                   id="subfield-select-delete-section"
                   dataOptions={[{ value: 'a', label: i }]}
                   onChange={() => {}}
@@ -63,7 +63,7 @@ export default class SubfieldSection extends React.Component<SubfieldSectionProp
               </Col>
               <Col xs={4}>
                 <Field
-                  name="deteleField"
+                  name={`deleteField-${index}`}
                   id="input-delete-field-name"
                   component={TextField}
                 />

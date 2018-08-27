@@ -134,6 +134,24 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
       records: C.API_RESULT_JSON_KEY.BROWSING,
       accumulate: true
     },
+    recordsTemplates: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      headers: C.ENDPOINT.HEADERS,
+      records: C.API_RESULT_JSON_KEY.TEMPLATES,
+      GET: {
+        path: 'record-templates?type=%{currentType}&lang=' + C.ENDPOINT.DEFAULT_LANG
+      },
+      POST: {
+        path: `record-template?type=B&lang=${C.ENDPOINT.DEFAULT_LANG}`
+      },
+      PUT: {
+        path: `record-template/%{query}?type=B&lang=${C.ENDPOINT.DEFAULT_LANG}`
+      },
+      DELETE: {
+        path: `record-template/%{query}?type=B&lang=${C.ENDPOINT.DEFAULT_LANG}`
+      }
+    },
     mandatory: {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,

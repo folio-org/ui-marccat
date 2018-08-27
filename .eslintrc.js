@@ -17,6 +17,7 @@ module.exports = {
   globals: {
     process: true,
     Promise: true,
+    SyntheticEvent: true,
   },
   plugins: ["jsx-a11y" , "import"],
   "rules": {		

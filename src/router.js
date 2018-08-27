@@ -6,9 +6,10 @@ import * as React from 'react';
 import Route from 'react-router-dom/Route';
 import Redirect from 'react-router-dom/Redirect';
 import Switch from 'react-router-dom/Switch';
-import { TemplateView, CreateTemplate, EditTemplate } from './Template/';
+import { TemplateView, EditTemplate } from './Template/';
 import { SimpleSearch, SearchResults, AdvancedBrowsing } from './Search/';
 import { IndexList, DiacriticTable } from './Indexes/';
+import TemplateForm from './Template/create/view/CreateTemplate';
 import { ReportView } from './Report';
 import { EmptyMessage } from './Core';
 
@@ -27,7 +28,7 @@ export default class Router extends React.Component<*> {
         <ConnectedRoute path={`${rootPath}/externalSearch`} {...this.props} component={EmptyMessage} id="external_search_nav_root" />
         <ConnectedRoute path={`${rootPath}/advancedSearch`} {...this.props} component={SearchResults} id="search_result_nav_root" />
         <ConnectedRoute path={`${rootPath}/report`} {...this.props} component={ReportView} id="index_list" />
-        <ConnectedRoute path={`${rootPath}/templateAdd`} {...this.props} component={CreateTemplate} id="template_create_nav_root" />
+        <ConnectedRoute path={`${rootPath}/templateAdd`} {...this.props} component={TemplateForm} id="template_create_nav_root" />
         <ConnectedRoute path={`${rootPath}/templateList`} {...this.props} component={TemplateView} id="template_list_nav_root" />
         <ConnectedRoute path={`${rootPath}/templateList/:{id}`} {...this.props} component={EditTemplate} id="template_list_nav_root" />
         <ConnectedRoute path={`${rootPath}/indexList`} {...this.props} component={IndexList} id="index_list_nav_root" />

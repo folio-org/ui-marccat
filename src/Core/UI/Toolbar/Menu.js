@@ -11,10 +11,13 @@ import { PrinterProvider } from '../..';
 type ToolbarMenuProps = {
   icon: Array,
   content: React.node,
-  className: string,
-  withPrinter: bool,
+  className?: string,
+  withPrinter?: bool,
   onClick: () => void;
+  type?: string;
   create: bool;
+  disabled?: bool;
+  label?: string;
   stripes: Object;
 };
 
@@ -39,7 +42,7 @@ export const ToolbarMenu = (props: ToolbarMenuProps) => {
 };
 
 export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
-  const { create, className, onClick } = props;
+  const { create, className, onClick, label, type, disabled } = props;
   const { formatMessage } = props.stripes.intl;
   return (
     <PaneMenu>
@@ -51,8 +54,10 @@ export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
             id="create-new-template"
             buttonStyle="primary"
             onClick={onClick}
+            type={type || 'button'}
+            disabled={disabled}
             marginBottom0
-          >{formatMessage({ id: 'ui-marccat.button.new' })}
+          >{formatMessage({ id: label })}
           </Button>
         </IfPermission>
         }

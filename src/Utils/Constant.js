@@ -1,4 +1,3 @@
-import { capitalizeFirstLetter } from './Formatter';
 
 const environment = process.env.NODE_ENV;
 // MARCCAT UI APP METADADA
@@ -140,29 +139,12 @@ export const TAB_CONTROL_ID = {
 };
 
 export const LANGUAGES = [
-  { code: 'eng', name: 'English' },
-  { code: 'spa', name: 'Spanish' },
-  { code: 'fre', name: 'French' },
-  { code: 'ger', name: 'German' },
-  { code: 'chi', name: 'Mandarin' },
-  { code: 'rus', name: 'Russian' },
-  { code: 'ara', name: 'Arabic' },
+  { value: 'eng', label: 'English' },
+  { value: 'spa', label: 'Spanish' },
+  { value: 'fre', label: 'French' },
+  { value: 'ger', label: 'German' },
+  { value: 'chi', label: 'Mandarin' },
+  { value: 'rus', label: 'Russian' },
+  { value: 'ara', label: 'Arabic' },
 ];
 
-export const filterConfigFn = (label:string, data: Object) => {
-  return [
-    {
-      label: capitalizeFirstLetter(label),
-      name: label,
-      cql: label,
-      values: data.map(d => ({ name: d.label })),
-      restrictWhenAllSelected: true
-    },
-    {
-      label: 'Language',
-      name: 'language',
-      cql: 'languages',
-      values: LANGUAGES.map(lang => ({ name: lang.name })),
-    }
-  ];
-};

@@ -24,6 +24,7 @@ export default function TemplateResults({ handleRowClick, onClick, ...props }: T
   const newButtonMenu = <ToolbarButtonMenu
     {...props}
     create
+    label="stripes-core.button.new"
     className={css.mr15}
     onClick={onClick}
   />;
@@ -51,6 +52,9 @@ export default function TemplateResults({ handleRowClick, onClick, ...props }: T
           formatter={fakeFormatter}
           ariaLabel="TemplateView"
           visibleColumns={['id', 'name']}
+          autosize
+          virtualize
+          sortDirection="ascending"
           sortedColumn="name"
           sortOrder="ascending"
           onRowClick={handleRowClick}

@@ -8,7 +8,6 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import TabControl from '../Switcher/TabControl';
 import { injectCommonProp } from '../Core';
-import { TAB_CONTROL_ID } from '../Utils/Constant';
 
 type Props = {
   stripes: Object;
@@ -33,17 +32,6 @@ class MARCcat extends React.Component<Props, State> {
     this.toggleFilterPane = this.toggleFilterPane.bind(this);
   }
 
-  handleActiveTab = () => {
-    switch (this.props.location.pathname) {
-    case '/marccat/advancedSearch':
-      return TAB_CONTROL_ID.SEARCH;
-    case '/marccat/templateList':
-      return TAB_CONTROL_ID.TEMPLATE;
-    default:
-      return TAB_CONTROL_ID.DATABASE;
-    }
-  };
-
   toggleFilterPane = () => {
     this.setState(prevState => ({ filterPaneIsVisible: !prevState.filterPaneIsVisible }));
   }
@@ -61,7 +49,7 @@ class MARCcat extends React.Component<Props, State> {
             paneTitle={translate({ id: 'stripes-smart-components.searchAndFilter' })}
             onClose={this.toggleFilterPane}
           >
-            <TabControl {...this.props} activateTab={this.handleActiveTab} />
+            <TabControl {...this.props} />
           </Pane>}
         {this.props.children}
       </Paneset>

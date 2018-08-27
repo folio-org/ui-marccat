@@ -37,7 +37,7 @@ class TemplateView extends React.Component<*> {
         path: 'record-templates?type=%{currentType}&lang=' + C.ENDPOINT.DEFAULT_LANG
       },
       POST: {
-        path: `record-template/%{query}?type=B&lang=${C.ENDPOINT.DEFAULT_LANG}`
+        path: `record-template?type=B&lang=${C.ENDPOINT.DEFAULT_LANG}`
       },
       PUT: {
         path: `record-template/%{query}?type=B&lang=${C.ENDPOINT.DEFAULT_LANG}`
@@ -134,7 +134,7 @@ class TemplateView extends React.Component<*> {
           {...this.props}
           handleRowClick={this.handleRowClick}
           formatMsg={formatMsg}
-          onClick={() => alert('rewerwe')}
+          onClick={() => router.push(C.INTERNAL_URL.ADD_TEMPLATE)}
         >
           <TemplateDetailModal 
               {...this.props}

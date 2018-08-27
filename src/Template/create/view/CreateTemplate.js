@@ -23,6 +23,7 @@ import css from '../../styles/Template.css';
 type CreateTemplateProps = {
     router: Object;
     resources: Object;
+    state: Object;
     submitting: boolean;
     handleExpandAll: () => void;
     handleKeyDown: () => void;
@@ -80,10 +81,8 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
   }
 
   handleFormSubmit = () => {
-    const { state: { form } } = this.props;
+    const { mutator, state: { form } } = this.props;
     const formToSubmit = form.templateForm.values;
-    if(this.props.dirty){alert(this.props.dirty && formToSubmit)}
-    
   };
 
   render() {

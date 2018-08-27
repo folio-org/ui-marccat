@@ -8,7 +8,7 @@ import Button from '@folio/stripes-components/lib/Button';
 
 type CreateTagButtonProps = {
     createNewTag: () => void;
-    dirty: boolean;
+    submitting: boolean;
 };
 
 export default function CreateTagButton({ createNewTag, ...props }: CreateTagButtonProps) {
@@ -19,7 +19,7 @@ export default function CreateTagButton({ createNewTag, ...props }: CreateTagBut
         onClick={createNewTag}
         type="button"
         buttonStyle="primary"
-        disabled={!props.dirty}
+        disabled={!props.submitting}
       >
         <FormattedMessage id="ui-marccat.template.tag.add" />
       </Button>

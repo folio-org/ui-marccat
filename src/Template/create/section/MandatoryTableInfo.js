@@ -6,8 +6,8 @@ import * as React from 'react';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
-import css from '../../styles/Template.css';
 import { remapMultiArray } from '../../../Utils/Mapper';
+import css from '../../styles/Template.css';
 
 type MandatoryTableInfoProps = {
     translate: (o:Object) => void;

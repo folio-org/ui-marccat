@@ -6,13 +6,16 @@ import * as React from 'react';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Select from '@folio/stripes-components/lib/Select';
 import { Observable } from 'rxjs';
+import { Field } from 'redux-form';
+import { injectIntl } from 'react-intl';
 
 type FunctionCodeSelectProps = {
     mutator: Object;
     resources: Object;
+    intl: Object;
 };
 
-export default function FunctionCodeSelect({ ...props }: FunctionCodeSelectProps) {
+function FunctionCodeSelect({ ...props }: FunctionCodeSelectProps) {
   const onChangeFunctionCode = (e: any) => {
     const { mutator } = props;
     const { value } = e.target;
@@ -26,7 +29,6 @@ export default function FunctionCodeSelect({ ...props }: FunctionCodeSelectProps
     const { mutator } = props;
     mutator.validationTag.replace(k);
     mutator.fieldTemplate.GET();
-    mutator.fixedFieldSelect.GET();
   };
 
   const functionCodesValues = (props.resources.functionCodes || {}).records || [];
@@ -34,9 +36,11 @@ export default function FunctionCodeSelect({ ...props }: FunctionCodeSelectProps
     <Row>
       <Col xs={6}>
         {props.resources.functionCodes && props.resources.functionCodes.hasLoaded && functionCodesValues.length > 0 &&
-        <Select
-          name="functionCodesSelect"
-          id="functionCodesSelect"
+        <Field
+          label={props.intl.formatMessage({ id: 'ui-marccat.function.code' })}
+          component={Select}
+          name="functionCode"
+          id="functionCode-id"
           dataOptions={functionCodesValues}
           onChange={onChangeFunctionCode}
         />
@@ -45,3 +49,4 @@ export default function FunctionCodeSelect({ ...props }: FunctionCodeSelectProps
     </Row>
   );
 }
+export default injectIntl(FunctionCodeSelect);

@@ -6,7 +6,7 @@ import React from 'react';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
 
-import CreateTag from '../CreateTag';
+import CreateTag from '../view/CreateTag';
 
 type TagInfoProps = {
     translate: (o: Object) => void;

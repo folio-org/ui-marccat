@@ -201,6 +201,14 @@
   "diacritic.list.charset":"Character Set",
   "diacritic.list.unicode":"Unicode",
 
+  "marc.category": "Item Type",
+  "heading.type": "Heading Type",
+  "item.type": "Item Type",
+  "function.code": "Function Code",
+
+  "marc.category.validation.required": "Please select a marc catgory",
+  "heading.type.validation.required": "Please select an heading type",
+
   "browsing.title":"Browse search",
   "browsing.subtitle":"Results for: ",
   "browsing.col.heading":"Heading",

@@ -19,6 +19,7 @@ import AdavnceSearchInput from './AdvanceSearchInput';
 import CategorySelect from '../select/CategorySelect';
 import IndexesSelect from '../select/IndexesSelect';
 
+
 type AdvanceSerachFormProps = {
     stripes: Object;
     mutator: Object;
@@ -198,7 +199,7 @@ class AdvanceSearchForm extends
                         onClick={this.handleClick}
                         type="button"
                         buttonStyle="primary"
-                        buttonClass={css.largeBox}
+                        fullWidth
                       >
                       Reset
                       </Button>

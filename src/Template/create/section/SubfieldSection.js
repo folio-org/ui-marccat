@@ -19,7 +19,7 @@ export default class SubfieldSection extends React.Component<SubfieldSectionProp
   constructor(props:SubfieldSectionProps) {
     super(props);
     this.state = {
-      subfield: ['']
+      subfield: ['a']
     };
     this.handleDeleteSection = this.handleDeleteSection.bind(this);
   }
@@ -36,7 +36,7 @@ export default class SubfieldSection extends React.Component<SubfieldSectionProp
 
   handleAddSection = (e: any) => {
     e.preventDefault();
-    const subfield = this.state.subfield.concat(['']);
+    const subfield = this.state.subfield.concat(['b']);
     this.setState({
       subfield
     });
@@ -46,16 +46,18 @@ export default class SubfieldSection extends React.Component<SubfieldSectionProp
     const { subfield } = this.state;
     const { resources: { fieldTemplate } } = this.props;
     if (!fieldTemplate || !fieldTemplate.hasLoaded) return <div />;
+    const subfieldMapped = remapSubfield(fieldTemplate.records[0]);
     return (
       <div>
-        <React.Fragment>
-          {subfield.map(() => (
-            <Row id="section-delete-tag">
+        {subfield.map((i) => (
+          <React.Fragment>
+            <Row id="section-delete-tag" key={i}>
               <Col xs={2}>
-                <Select
+                <Field
+                  component={Select}
                   name="deleteSelectSubfield"
                   id="subfield-select-delete-section"
-                  dataOptions={[{ value: 'a', label: 'a' }]}
+                  dataOptions={[{ value: 'a', label: i }]}
                   onChange={() => {}}
                 />
               </Col>
@@ -67,30 +69,23 @@ export default class SubfieldSection extends React.Component<SubfieldSectionProp
                 />
               </Col>
               <Col xs={4}>
-                <Button
-                  {...this.props}
-                  onClick={this.handleDeleteSection}
-                  type="button"
-                >
+                <Button onClick={this.handleDeleteSection} type="button">
                   <FormattedMessage id="ui-marccat.template.tag.delete" />
                 </Button>
-                <Button
-                  {...this.props}
-                  onClick={this.handleDeleteSection}
-                  type="button"
-                >
+                <Button onClick={this.handleDeleteSection} type="button">
                   <FormattedMessage id="ui-marccat.template.tag.open" />
                 </Button>
               </Col>
             </Row>
-          ))}
-        </React.Fragment>
+          </React.Fragment>
+        ))}
         <Row id="section-subfield-tag">
           <Col xs={2}>
-            <Select
-              name="selectAddSubfield"
+            <Field
+              component={Select}
+              name="subfieldSelect"
               id="select-subfield-section-add"
-              dataOptions={remapSubfield(fieldTemplate.records[0])}
+              dataOptions={subfieldMapped}
               onChange={() => {}}
             />
           </Col>
@@ -102,11 +97,7 @@ export default class SubfieldSection extends React.Component<SubfieldSectionProp
             />
           </Col>
           <Col xs={4}>
-            <Button
-              {...this.props}
-              onClick={this.handleAddSection}
-              type="button"
-            >
+            <Button onClick={this.handleAddSection} type="button">
               <FormattedMessage id="ui-marccat.template.add.subfield" />
             </Button>
           </Col>

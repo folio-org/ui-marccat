@@ -2,6 +2,7 @@
  * @format
  * @flow
  */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import _ from 'lodash';
 import React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
@@ -10,15 +11,19 @@ import Layer from '@folio/stripes-components/lib/Layer';
 import stripesForm from '@folio/stripes-form';
 import { ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import { ToolbarButtonMenu } from '../../Core';
-import { TemplateInfo, MandatoryTableInfo, TagInfo } from './section';
-import { validate, asyncValidate } from './validation/Validator';
-import css from '../styles/Template.css';
+import { ToolbarButtonMenu } from '../../../Core';
+import {
+  TemplateInfo,
+  MandatoryTableInfo,
+  TagInfo, validate,
+  asyncValidate
+} from '../';
+import css from '../../styles/Template.css';
 
 type CreateTemplateProps = {
     router: Object;
     resources: Object;
-    pristine: boolean;
+    submitting: boolean;
     handleExpandAll: () => void;
     handleKeyDown: () => void;
     handleSectionToggle: () => void;
@@ -46,6 +51,7 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
     this.handleSectionToggle = this.handleSectionToggle.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
   handleClose = () => {
@@ -73,22 +79,27 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
     });
   }
 
-  handleSubmit = () => {};
+  handleFormSubmit = () => {
+    const { state: { form } } = this.props;
+    const formToSubmit = form.templateForm.values;
+    if(this.props.dirty){alert(this.props.dirty && formToSubmit)}
+    
+  };
 
   render() {
     const { sections, isOpened } = this.state;
-    const { pristine, resources: { mandatory } } = this.props;
+    const { submitting, resources: { mandatory } } = this.props;
     const newButtonMenu = <ToolbarButtonMenu
       {...this.props}
       create
       className={css.mr15}
       label="ui-marccat.template.create"
-      disabled={pristine}
-      onClick={this.handleSubmit}
+      disabled={submitting}
+      onClick={this.handleFormSubmit}
     />;
     return (
       <Layer isOpen={isOpened}>
-        <form id="create-template">
+        <form id="create-template" name="templateForm" onKeyDown={this.handleKeyDown}>
           <Paneset isRoot>
             <Pane
               defaultWidth="fill"
@@ -118,7 +129,7 @@ export default stripesForm({
   form: 'templateForm',
   validate,
   asyncValidate,
-  asyncBlurFields: ['templateName'],
+  asyncBlurFields: ['templateName', 'marcCategory', 'headingType'],
   navigationCheck: true,
-  enableReinitialize: true,
+  enableReinitialize: true
 })(CreateTemplate);

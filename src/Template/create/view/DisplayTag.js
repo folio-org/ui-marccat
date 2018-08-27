@@ -4,7 +4,7 @@
  */
 import React from 'react';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
-import css from './style/CreateTag.css';
+import css from '../../styles/Template.css';
 
 type DisplayTagProps = {
 };

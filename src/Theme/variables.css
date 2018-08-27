@@ -1,44 +1,11 @@
-@import '@folio/stripes-components/lib/variables';
-@import './override.css';
-
-:root {
-  --background-gray: rgba(0, 0, 0, 0.62);
-  --color-border: rgba(0, 0, 0, 0.2);
-  --color-white: #fff;
-  --button-color: #2b75bb;
-  --button-small: 24px;
-  --button-medium: 36px;
-  --button-large: 48px;
-  --font-weight-small: font-weight 100;
-  --font-weight-medium: font-weight 400;
-  --font-weight-large: font-weight 600;
-  --primary: #2b75bb;
-  --secondary: #999;
-  --error: #900;
-  --danger: #900;
-  --warn: #e27c3e;
-  --success: #070;
-  --radius: 6px;
-  --gutter: 15px;
-  --icons-size-small: 18px;
-  --icons-size-medium: 24px;
-  --icons-size-large: 36px;
-  --min-pane-header-height: 45px;
-  --container-height: 100%;
-  --control-height: 28px;
-  --mr-10: 10px;
-  --mr-15: 15px;
-  --mr-20: 20px;
-}
-
 [data-module] {
-  height: var(--container-height);
-}
-
-.button {
-  min-height: 28px;
+  height: 100%;
 }
 
 header {
   z-index: 1 !important;
+}
+
+fieldset legend {
+  margin-bottom: 2px !important;
 }

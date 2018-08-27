@@ -1,19 +1,19 @@
 /**
  * @format
+ * @flow
  */
-/* eslint-disable react/no-unused-state */
 import * as React from 'react';
 import { Observable } from 'rxjs';
 import {
   MarcCategorySelect,
   HeadingTypesSelect,
   ItemTypesSelect,
-  FunctionCodeSelect
-} from './select/';
-import SubfieldSection from './section/SubfieldSection';
-import CreateTagButton from './button/CreateTagButton';
-import injectCommonProp from '../../Core/Provider/withInjection';
-import * as C from '../../Utils';
+  FunctionCodeSelect,
+  SubfieldSection,
+  CreateTagButton
+} from '../';
+import { injectCommonProp } from '../../../Core';
+import * as C from '../../../Utils';
 
 
 type CreateTagProps = {

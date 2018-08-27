@@ -9,7 +9,7 @@ import Switch from 'react-router-dom/Switch';
 import { TemplateView, EditTemplate } from './Template/';
 import { SimpleSearch, SearchResults, AdvancedBrowsing } from './Search/';
 import { IndexList, DiacriticTable } from './Indexes/';
-import TemplateForm from './Template/create/CreateTemplate';
+import TemplateForm from './Template/create/view/CreateTemplate';
 import { ReportView } from './Report';
 import { EmptyMessage } from './Core';
 

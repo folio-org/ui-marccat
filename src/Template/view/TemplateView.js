@@ -10,7 +10,6 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import Icon from '@folio/stripes-components/lib/Icon';
 import Callout from '@folio/stripes-components/lib/Callout';
 import { FormattedMessage } from 'react-intl';
-import { EditTemplate } from '../';
 import TemplateResults from './TemplateResult';
 import TemplateDetailModal from './TemplateDeleteModal';
 import * as C from '../../Utils';
@@ -71,6 +70,7 @@ class TemplateView extends React.Component<*> {
     this.onDelete = this.onDelete.bind(this);
     this.hideConfirm = this.hideConfirm.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.saveTemplate = this.saveTemplate.bind(this);
     this.callout = null;
   }
 
@@ -78,11 +78,13 @@ class TemplateView extends React.Component<*> {
     const { mutator } = this.props;
     const toDelete = this.state.selectedTemplate;
     mutator.currentTemplate.update({ id: toDelete.id });
-    return mutator.recordsTemplates.DELETE(toDelete)
-      .then(() => this.deleteResolve())
-      .then(() => this.showCalloutMessage())
-      .catch(() => this.deleteReject())
-      .finally(() => this.hideConfirm());
+
+    const deleteSubscrition = Observable.fromPromise(mutator.recordsTemplates.DELETE(toDelete));
+
+    deleteSubscrition
+      .catch(this.showCalloutMessage('ui-marccat.template.delete.error'))
+      .finally(this.hideConfirm())
+      .subscribe(s => this.showCalloutMessage());
   }
 
   handleClose = () => {
@@ -107,7 +109,7 @@ class TemplateView extends React.Component<*> {
     return this.deletPromise;
   }
 
-  showCalloutMessage() {
+  showCalloutMessage(msg?: string) {
     const message = (
       <span>
         <FormattedMessage id="ui-marccat.template.delete-completed" />
@@ -121,6 +123,8 @@ class TemplateView extends React.Component<*> {
     this.props.mutator.query.replace(object.id);
   }
 
+  saveTemplate = () => {};
+
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
     const { router, resources: { recordsTemplates, mandatory } } = this.props;
@@ -130,7 +134,7 @@ class TemplateView extends React.Component<*> {
           {...this.props}
           handleRowClick={this.handleRowClick}
           formatMsg={formatMsg}
-          onClick={() => router.push(C.INTERNAL_URL.ADD_TEMPLATE)}
+          onClick={() => alert('rewerwe')}
         >
           <TemplateDetailModal 
               {...this.props}
@@ -140,13 +144,6 @@ class TemplateView extends React.Component<*> {
             />
             <Callout ref={(ref) => { this.callout = ref; }} />
         </TemplateResults>
-        {this.state.showTemplateDetail &&
-         <EditTemplate 
-         {...this.props}
-         selectedTemplate={this.state.selectedTemplate}
-         handleClose={this.handleClose}
-         />
-        }
       </Paneset>
     );
   }

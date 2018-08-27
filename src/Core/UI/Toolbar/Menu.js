@@ -14,6 +14,7 @@ type ToolbarMenuProps = {
   className?: string,
   withPrinter?: bool,
   onClick: () => void;
+  type?: string;
   create: bool;
   disabled?: bool;
   label?: string;
@@ -41,7 +42,7 @@ export const ToolbarMenu = (props: ToolbarMenuProps) => {
 };
 
 export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
-  const { create, className, onClick, label, disabled } = props;
+  const { create, className, onClick, label, type, disabled } = props;
   const { formatMessage } = props.stripes.intl;
   return (
     <PaneMenu>
@@ -53,6 +54,7 @@ export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
             id="create-new-template"
             buttonStyle="primary"
             onClick={onClick}
+            type={type || 'button'}
             disabled={disabled}
             marginBottom0
           >{formatMessage({ id: label })}

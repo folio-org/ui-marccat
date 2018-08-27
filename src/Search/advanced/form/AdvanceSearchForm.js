@@ -19,6 +19,7 @@ import AdavnceSearchInput from './AdvanceSearchInput';
 import CategorySelect from '../select/CategorySelect';
 import IndexesSelect from '../select/IndexesSelect';
 
+
 type AdvanceSerachFormProps = {
     stripes: Object;
     mutator: Object;
@@ -31,9 +32,9 @@ type AdvanceSerachFormProps = {
 };
 type AdvanceSerachFormState = {
     value: string;
-    firstSelect: React.ReactNode;
-    secondSelect: React.ReactNode;
-    thirdSelect: React.ReactNode;
+    firstSelect: any;
+    secondSelect: any;
+    thirdSelect: any;
     checkedFirstRadio: boolean;
 };
 
@@ -57,7 +58,7 @@ class AdvanceSearchForm extends
     this.handleClick = this.handleClick.bind(this);
   }
 
-    handleChangeFirstSelect = (event: React.SyntheticEvent<>) => {
+    handleChangeFirstSelect = (event: any) => {
       this.setState({
         firstSelect: event.target.value,
       });
@@ -65,7 +66,7 @@ class AdvanceSearchForm extends
       this.props.mutator.constraintIndexValue.replace('LIB');
     };
 
-    handleChangeSecondSelect = (event: React.SyntheticEvent<>) => {
+    handleChangeSecondSelect = (event: any) => {
       this.setState({
         secondSelect: event.target.value,
       });
@@ -76,7 +77,7 @@ class AdvanceSearchForm extends
       this.props.onSelectIndex(event.target.value);
     };
 
-    handleChangeThirdSelect = (event: React.SyntheticEvent<>) => {
+    handleChangeThirdSelect = (event: any) => {
       const splitted = event.target.value.split(C.SEPARATOR);
       this.setState({
         thirdSelect: event.target.value,
@@ -87,7 +88,7 @@ class AdvanceSearchForm extends
       this.props.onSelectConstraint(splitted[0], splitted[1]);
     }
 
-    handleChange = (event: React.SyntheticEvent<>) => {
+    handleChange = (event: any) => {
       this.setState({ value: event.target.value });
     }
 
@@ -99,7 +100,7 @@ class AdvanceSearchForm extends
       this.props.resources.query = '';
     };
 
-    handleChangeRadio = (event: React.SyntheticEvent<>) => {
+    handleChangeRadio = (event: any) => {
       this.setState({
         checkedFirstRadio: (event.target.value === 'P'),
       });
@@ -198,7 +199,7 @@ class AdvanceSearchForm extends
                         onClick={this.handleClick}
                         type="button"
                         buttonStyle="primary"
-                        buttonClass={css.largeBox}
+                        fullWidth
                       >
                       Reset
                       </Button>

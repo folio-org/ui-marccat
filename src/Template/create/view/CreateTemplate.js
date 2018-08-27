@@ -1,3 +1,8 @@
+/**
+ * @format
+ * @flow
+ */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import _ from 'lodash';
 import React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
@@ -6,14 +11,32 @@ import Layer from '@folio/stripes-components/lib/Layer';
 import stripesForm from '@folio/stripes-form';
 import { ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import { TemplateInfo, MandatoryTableInfo, TagInfo } from './section/';
-import { validate, asyncValidate } from './validation/Validator';
+import { ToolbarButtonMenu } from '../../../Core';
+import {
+  TemplateInfo,
+  MandatoryTableInfo,
+  TagInfo, validate,
+  asyncValidate
+} from '../';
+import css from '../../styles/Template.css';
 
-type CreateTemplateContainerProps = {
+type CreateTemplateProps = {
     router: Object;
+    resources: Object;
+    state: Object;
+    submitting: boolean;
+    handleExpandAll: () => void;
+    handleKeyDown: () => void;
+    handleSectionToggle: () => void;
+    handleClose: () => void;
 }
 
-class CreateTemplateContainer extends React.Component<CreateTemplateContainerProps, {}> {
+type CreateTemplateState = {
+  sections: Object;
+  isOpened: boolean;
+};
+
+class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplateState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,6 +52,7 @@ class CreateTemplateContainer extends React.Component<CreateTemplateContainerPro
     this.handleSectionToggle = this.handleSectionToggle.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
   handleClose = () => {
@@ -38,17 +62,17 @@ class CreateTemplateContainer extends React.Component<CreateTemplateContainerPro
     this.props.router.goBack();
   };
 
-  handleExpandAll(sections) {
+  handleExpandAll = (sections) => {
     this.setState({ sections });
   }
 
-  handleKeyDown(e) {
+  handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
     }
   }
 
-  handleSectionToggle({ id }) {
+  handleSectionToggle = ({ id }) => {
     this.setState((curState) => {
       const newState = _.cloneDeep(curState);
       newState.sections[id] = !newState.sections[id];
@@ -56,16 +80,30 @@ class CreateTemplateContainer extends React.Component<CreateTemplateContainerPro
     });
   }
 
+  handleFormSubmit = () => {
+    const { mutator, state: { form } } = this.props;
+    const formToSubmit = form.templateForm.values;
+  };
+
   render() {
-    const { sections, isOpened, onSubmit } = this.state;
+    const { sections, isOpened } = this.state;
+    const { submitting, resources: { mandatory } } = this.props;
+    const newButtonMenu = <ToolbarButtonMenu
+      {...this.props}
+      create
+      className={css.mr15}
+      label="ui-marccat.template.create"
+      disabled={submitting}
+      onClick={this.handleFormSubmit}
+    />;
     return (
       <Layer isOpen={isOpened}>
-        <form id="create-template" onSubmit={onSubmit}>
+        <form id="create-template" name="templateForm" onKeyDown={this.handleKeyDown}>
           <Paneset isRoot>
             <Pane
               defaultWidth="fill"
               paneTitle="Create Template"
-              paneSub="No Result found"
+              lastMenu={newButtonMenu}
               appIcon={{ app: 'marccat' }}
               dismissible
               onClose={this.handleClose}
@@ -77,7 +115,7 @@ class CreateTemplateContainer extends React.Component<CreateTemplateContainerPro
               </Row>
               <TemplateInfo accordionId="createTemplateInfo" expanded={sections.createTemplateInfo} onToggle={this.handleSectionToggle} {...this.props} />
               <MandatoryTableInfo accordionId="mandatoryTableInfo" expanded={sections.mandatoryTableInfo} onToggle={this.handleSectionToggle} {...this.props} />
-              <TagInfo accordionId="tagInfo" expanded={sections.tagInfo} onToggle={this.handleSectionToggle} {...this.props} />
+              <TagInfo accordionId="tagInfo" expanded={sections.tagInfo} onToggle={this.handleSectionToggle} mandatory={mandatory} {...this.props} />
             </Pane>
           </Paneset>
         </form>
@@ -90,7 +128,7 @@ export default stripesForm({
   form: 'templateForm',
   validate,
   asyncValidate,
-  asyncBlurFields: ['templateName'],
+  asyncBlurFields: ['templateName', 'marcCategory', 'headingType'],
   navigationCheck: true,
-  enableReinitialize: true,
-})(CreateTemplateContainer);
+  enableReinitialize: true
+})(CreateTemplate);

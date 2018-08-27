@@ -10,7 +10,6 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import Icon from '@folio/stripes-components/lib/Icon';
 import Callout from '@folio/stripes-components/lib/Callout';
 import { FormattedMessage } from 'react-intl';
-import { EditTemplate } from '../';
 import TemplateResults from './TemplateResult';
 import TemplateDetailModal from './TemplateDeleteModal';
 import * as C from '../../Utils';
@@ -38,7 +37,7 @@ class TemplateView extends React.Component<*> {
         path: 'record-templates?type=%{currentType}&lang=' + C.ENDPOINT.DEFAULT_LANG
       },
       POST: {
-        path: `record-template/%{query}?type=B&lang=${C.ENDPOINT.DEFAULT_LANG}`
+        path: `record-template?type=B&lang=${C.ENDPOINT.DEFAULT_LANG}`
       },
       PUT: {
         path: `record-template/%{query}?type=B&lang=${C.ENDPOINT.DEFAULT_LANG}`
@@ -46,7 +45,17 @@ class TemplateView extends React.Component<*> {
       DELETE: {
         path: `record-template/%{query}?type=B&lang=${C.ENDPOINT.DEFAULT_LANG}`
       }
-    }
+    },
+    mandatory: {
+      type: C.RESOURCE_TYPE,
+      root: C.ENDPOINT.BASE_URL,
+      path: C.ENDPOINT.TEMPLATE_MANDATORY,
+      headers: C.ENDPOINT.HEADERS,
+      records: C.API_RESULT_JSON_KEY.FIELDS,
+      GET: {
+        params: { lang: C.ENDPOINT.DEFAULT_LANG },
+      },
+    },
   });
 
   constructor(props) {
@@ -59,20 +68,23 @@ class TemplateView extends React.Component<*> {
     this.props.mutator.currentType.replace('B');
     this.handleRowClick = this.handleRowClick.bind(this);
     this.onDelete = this.onDelete.bind(this);
-    this.showConfirm = this.showConfirm.bind(this);
     this.hideConfirm = this.hideConfirm.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.saveTemplate = this.saveTemplate.bind(this);
     this.callout = null;
   }
 
   onDelete() {
+    const { mutator } = this.props;
     const toDelete = this.state.selectedTemplate;
-    this.props.mutator.currentTemplate.update({ id: toDelete.id });
-    return this.props.mutator.recordsTemplates.DELETE(toDelete)
-      .then(() => this.deleteResolve())
-      .then(() => this.showCalloutMessage())
-      .catch(() => this.deleteReject())
-      .finally(() => this.hideConfirm());
+    mutator.currentTemplate.update({ id: toDelete.id });
+
+    const deleteSubscrition = Observable.fromPromise(mutator.recordsTemplates.DELETE(toDelete));
+
+    deleteSubscrition
+      .catch(this.showCalloutMessage('ui-marccat.template.delete.error'))
+      .finally(this.hideConfirm())
+      .subscribe(s => this.showCalloutMessage());
   }
 
   handleClose = () => {
@@ -97,7 +109,7 @@ class TemplateView extends React.Component<*> {
     return this.deletPromise;
   }
 
-  showCalloutMessage() {
+  showCalloutMessage(msg?: string) {
     const message = (
       <span>
         <FormattedMessage id="ui-marccat.template.delete-completed" />
@@ -109,16 +121,13 @@ class TemplateView extends React.Component<*> {
   handleRowClick = (c, object) => {
     this.props.mutator.templateDetails.reset();
     this.props.mutator.query.replace(object.id);
-    Observable.from(this.props.mutator.templateDetails.GET());
-    this.setState({
-      showTemplateDetail: true,
-      selectedTemplate: object,
-    });
   }
+
+  saveTemplate = () => {};
 
   render() {
     const formatMsg = this.props.stripes.intl.formatMessage;
-    const { router, resources: { recordsTemplates } } = this.props;
+    const { router, resources: { recordsTemplates, mandatory } } = this.props;
     return (
       <Paneset static>
         <TemplateResults
@@ -135,13 +144,6 @@ class TemplateView extends React.Component<*> {
             />
             <Callout ref={(ref) => { this.callout = ref; }} />
         </TemplateResults>
-        {this.state.showTemplateDetail &&
-         <EditTemplate 
-         {...this.props}
-         selectedTemplate={this.state.selectedTemplate}
-         handleClose={this.handleClose}
-         />
-        }
       </Paneset>
     );
   }

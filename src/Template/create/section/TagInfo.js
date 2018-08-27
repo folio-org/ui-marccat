@@ -1,19 +1,24 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { Accordion } from '@folio/stripes-components/lib/Accordion';
 
-import CreateTag from '../CreateTag';
+import CreateTag from '../view/CreateTag';
 
 type TagInfoProps = {
-    translate: () => void;
+    translate: (o: Object) => void;
     onToggle: () => void;
     expanded: boolean;
     accordionId: string;
 };
 
-const TagInfo = ({ translate, expanded, accordionId, onToggle, ...props }:TagInfoProps) => {
+export default function TagInfo({ translate, expanded, accordionId, onToggle, ...props }:TagInfoProps) {
   return (
     <Accordion
+      {...props}
       label={translate({ id: 'ui-marccat.template.information.tag' })}
       open={expanded}
       id={accordionId}
@@ -26,6 +31,4 @@ const TagInfo = ({ translate, expanded, accordionId, onToggle, ...props }:TagInf
       </Row>
     </Accordion>
   );
-};
-
-export default TagInfo;
+}

@@ -24,6 +24,7 @@ export default function TemplateResults({ handleRowClick, onClick, ...props }: T
   const newButtonMenu = <ToolbarButtonMenu
     {...props}
     create
+    label="stripes-core.button.new"
     className={css.mr15}
     onClick={onClick}
   />;

@@ -59,6 +59,16 @@ const remapMultiArray = multiArray => {
   return obj;
 };
 
+export const remapSubfield = (data) => {
+  const obj = [{}];
+  data['variable-field'].subfields.map(i => { // eslint-disable-line
+    obj.push({
+      value: i, label: i
+    });
+  });
+  return obj;
+};
+
 const remapTemplateView = json => {
   const obj = [];
   const arrayFixedFields = [];

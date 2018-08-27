@@ -81,8 +81,6 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
   }
 
   handleFormSubmit = () => {
-    const { mutator, state: { form } } = this.props;
-    const formToSubmit = form.templateForm.values;
   };
 
   render() {

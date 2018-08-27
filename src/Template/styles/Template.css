@@ -5,16 +5,19 @@
 .mr15 {
   margin-right: 15px;
 }
-.currentTag{
+
+.currentTag {
   padding: 10px 20px;
 }
 
 .groupLabel {
   margin-bottom: 0 !important;
 }
+
 .radioGroup {
   margin: 10px;
 }
+
 .radioLabel {
   padding-right: 15px;
 }

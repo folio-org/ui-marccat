@@ -20,8 +20,17 @@ function MarcCategorySelect({ ...props }: CategorySelectProps) {
     const { value } = e.target;
     mutator.headingTypes.reset();
     mutator.itemTypes.reset();
+    mutator.functionCodes.reset();
     mutator.marcCategory.replace(value);
-    mutator.headingTypes.GET();
+    mutator.headingTypes.GET().then(headings => {
+      mutator.headingType.replace(headings[0].value);
+      mutator.itemTypes.GET().then(items => {
+        mutator.itemType.replace(items[0].value);
+        mutator.functionCodes.GET().then(functions => {       
+          mutator.functionCode.replace(functions[0].value);
+        });
+      });
+    });
   };
 
   const marcCatValues = (props.resources.marcCategories || {}).records || [];

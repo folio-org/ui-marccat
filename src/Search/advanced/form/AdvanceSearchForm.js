@@ -26,7 +26,7 @@ type AdvanceSerachFormProps = {
     resources: Object;
     onSelectIndex: Function;
     onSelectConstraint: Function;
-    translate: (o:Object) => void;
+    translate: (o:Object) => string;
     change: Function;
     reset: Function;
 };

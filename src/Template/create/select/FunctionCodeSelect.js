@@ -7,15 +7,14 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Select from '@folio/stripes-components/lib/Select';
 import { Observable } from 'rxjs';
 import { Field } from 'redux-form';
-import { injectIntl } from 'react-intl';
 
 type FunctionCodeSelectProps = {
     mutator: Object;
     resources: Object;
-    intl: Object;
-};
+    translate: () => string;
+  };
 
-function FunctionCodeSelect({ ...props }: FunctionCodeSelectProps) {
+export default function FunctionCodeSelect({ translate, ...props }: FunctionCodeSelectProps) {
   const onChangeFunctionCode = (e: any) => {
     const { mutator } = props;
     const { value } = e.target;
@@ -42,7 +41,7 @@ function FunctionCodeSelect({ ...props }: FunctionCodeSelectProps) {
       <Col xs={6}>
         {props.resources.functionCodes && props.resources.functionCodes.hasLoaded && functionCodesValues.length > 0 &&
         <Field
-          label={props.intl.formatMessage({ id: 'ui-marccat.function.code' })}
+          label={translate({ id: 'ui-marccat.function.code' })}
           component={Select}
           name="functionCode"
           id="functionCode-id"
@@ -54,4 +53,3 @@ function FunctionCodeSelect({ ...props }: FunctionCodeSelectProps) {
     </Row>
   );
 }
-export default injectIntl(FunctionCodeSelect);

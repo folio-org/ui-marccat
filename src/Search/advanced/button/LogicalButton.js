@@ -8,7 +8,7 @@ import Button from '@folio/stripes-components/lib/Button';
 
 type LogicalButtonProps = {
   handleTextAreaValue: () => void;
-  translate: () => void;
+  translate: () => string;
 };
 
 export default function LogicalButton({ handleTextAreaValue, ...props }: LogicalButtonProps) {

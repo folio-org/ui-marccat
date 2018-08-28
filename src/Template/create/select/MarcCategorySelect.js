@@ -26,7 +26,7 @@ function MarcCategorySelect({ ...props }: CategorySelectProps) {
       mutator.headingType.replace(headings[0].value);
       mutator.itemTypes.GET().then(items => {
         mutator.itemType.replace(items[0].value);
-        mutator.functionCodes.GET().then(functions => {       
+        mutator.functionCodes.GET().then(functions => {
           mutator.functionCode.replace(functions[0].value);
         });
       });

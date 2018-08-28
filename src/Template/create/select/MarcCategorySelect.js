@@ -6,15 +6,14 @@ import * as React from 'react';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Select from '@folio/stripes-components/lib/Select';
 import { Field } from 'redux-form';
-import { injectIntl } from 'react-intl';
 
 type CategorySelectProps = {
     resources: Object;
     mutator: Object;
-    intl: Object;
+    translate: () => string;
 };
 
-function MarcCategorySelect({ ...props }: CategorySelectProps) {
+export default function MarcCategorySelect({ translate, ...props }: CategorySelectProps) {
   const onChangeMarcCategory = (e: any) => {
     const { mutator } = props;
     const { value } = e.target;
@@ -30,7 +29,7 @@ function MarcCategorySelect({ ...props }: CategorySelectProps) {
       <Col xs={6}>
         {marcCatValues &&
         <Field
-          label={`${props.intl.formatMessage({ id: 'ui-marccat.marc.category' })} *`}
+          label={`${translate({ id: 'ui-marccat.marc.category' })} *`}
           component={Select}
           name="marcCategory"
           id="marcCategorie-id"
@@ -43,4 +42,3 @@ function MarcCategorySelect({ ...props }: CategorySelectProps) {
     </Row>
   );
 }
-export default injectIntl(MarcCategorySelect);

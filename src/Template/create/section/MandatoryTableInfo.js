@@ -10,14 +10,14 @@ import { remapMultiArray } from '../../../Utils/Mapper';
 import css from '../../styles/Template.css';
 
 type MandatoryTableInfoProps = {
-    translate: (o:Object) => void;
+    translate: (o:Object) => string;
     onToggle: () => void;
     expanded: boolean;
     accordionId: string;
     resources: Object;
 };
 
-const MandatoryTableInfo = ({ translate, expanded, accordionId, onToggle, ...props }:MandatoryTableInfoProps) => {
+export default function MandatoryTableInfo({ translate, expanded, accordionId, onToggle, ...props }:MandatoryTableInfoProps) {
   const { resources: { mandatory } } = props;
   return (
     <Accordion
@@ -45,6 +45,4 @@ const MandatoryTableInfo = ({ translate, expanded, accordionId, onToggle, ...pro
       </Row>
     </Accordion>
   );
-};
-
-export default MandatoryTableInfo;
+}

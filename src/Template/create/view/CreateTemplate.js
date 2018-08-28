@@ -80,6 +80,9 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
     });
   }
 
+  componentDidCatch(error, info) {
+    console.log(info);
+  }
   handleFormSubmit = () => {
     // const { mutator, state: { form } } = this.props;
     // const templateForm = form.templateForm.values;

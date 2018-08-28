@@ -107,13 +107,8 @@ class CreateTag extends React.Component<CreateTagProps, {}> {
     const subscription = Observable.from(mutator.marcCategories.GET());
     subscription.subscribe(c => {
       mutator.marcCategory.replace(c[0].value);
-      this.headingTypesSubscription();
+      mutator.headingTypes.GET();
     });
-  };
-
-  headingTypesSubscription = () => {
-    const { mutator } = this.props;
-    mutator.headingTypes.GET();
   };
 
   render() {

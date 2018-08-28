@@ -6,12 +6,12 @@ export const validate = (values) => {
   if (!values.templateName) {
     errors.templateName = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
   }
-  if (!values.marcCategory || values.marcCategory === '1') {
-    errors.marcCategory = <FormattedMessage id="ui-marccat.marc.category.validation.required" />;
-  }
-  if (!values.headingType || values.headingType === '1') {
-    errors.headingType = <FormattedMessage id="ui-marccat.heading.type.validation.required" />;
-  }
+  // if (!values.marcCategory || values.marcCategory === '1') {
+  //   errors.marcCategory = <FormattedMessage id="ui-marccat.marc.category.validation.required" />;
+  // }
+  // if (!values.headingType || values.headingType === '1') {
+  //   errors.headingType = <FormattedMessage id="ui-marccat.heading.type.validation.required" />;
+  // }
   return errors;
 };
 export function asyncValidate(values, dispatch, props, blurredField) {

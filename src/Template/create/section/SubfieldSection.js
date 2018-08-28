@@ -19,7 +19,7 @@ export default class SubfieldSection extends React.Component<SubfieldSectionProp
   constructor(props:SubfieldSectionProps) {
     super(props);
     this.state = {
-      subfield: ['a']
+      subfield: ['']
     };
     this.handleDeleteSection = this.handleDeleteSection.bind(this);
   }

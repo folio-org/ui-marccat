@@ -15,14 +15,14 @@ import { ToolbarButtonMenu } from '../../../Core';
 import {
   TemplateInfo,
   MandatoryTableInfo,
-  TagInfo, validate,
-  asyncValidate
+  TagInfo, validate
 } from '../';
 import css from '../../styles/Template.css';
 
 type CreateTemplateProps = {
     router: Object;
     resources: Object;
+    mutator: Object;
     state: Object;
     submitting: boolean;
     handleExpandAll: () => void;
@@ -81,6 +81,9 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
   }
 
   handleFormSubmit = () => {
+    // const { mutator, state: { form } } = this.props;
+    // const templateForm = form.templateForm.values;
+    // mutator.recordTemplates.POST();
   };
 
   render() {
@@ -122,11 +125,10 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
   }
 }
 
+
 export default stripesForm({
   form: 'templateForm',
   validate,
-  asyncValidate,
-  asyncBlurFields: ['templateName', 'marcCategory', 'headingType'],
   navigationCheck: true,
   enableReinitialize: true
 })(CreateTemplate);

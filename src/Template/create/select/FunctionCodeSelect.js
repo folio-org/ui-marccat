@@ -31,6 +31,11 @@ function FunctionCodeSelect({ ...props }: FunctionCodeSelectProps) {
     mutator.fieldTemplate.GET();
   };
 
+  // const handleFixedField = () => {
+  //   const { mutator } = props;
+  //   mutator.fixedFieldSelect.GET();
+  // };
+
   const functionCodesValues = (props.resources.functionCodes || {}).records || [];
   return (
     <Row>

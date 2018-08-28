@@ -1,19 +1,19 @@
 {
+  "MARCcat":"MARCcat",
   "marccat":"MARCcat",
-  "resultCount": "{count, number} {count, plural, one {Record found} other {Records found}}",
   "noResult":"No Result found",
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
-  "settings.logicalview": "Logical View",
   "settings.modal.version": "Version",
 
   "perms.permissions.template.create": true,
 
-  "initial.title":"Choose a menu item and enter search query to show results",
+  "initial.title":"Choose a filter or enter search query to show results",
   "app.title":"MARCcat",
   "navigator.title": "Menu",
   "navigator.template": "Template",
   "navigator.templateList": "Template List",
+  "navigator.database": "Database",
   "navigator.search": "Search",
   "navigator.simpleSearch": "Simple search",
   "navigator.advancedSearch": "Advanced search",
@@ -29,12 +29,13 @@
   "templates.title": "Bibliographic templates",
   "template.column.id": "Id",
   "template.column.name": "Name",
-  "template.create": "Create New Template",
+  "template.create": "Create Template",
   "template.subfield.add": "Add subfield",
   "template.save": "Save Template",
   "template.tag.create": "New Tag",
   "template.tag.add": "Save Tag",
   "template.tag.delete": "Delete",
+  "template.tag.open": "Open",
   "template.add.subfield": "Add subfield",
 
   "template.form.name": "Name",
@@ -47,6 +48,7 @@
 
   "template.detail.information.title": "Template Information",
   "template.detail.information.fields.table": "Template Fields Table",
+  "template.information.tag": "Tag Information",
   "template.delete": "Delete template?",
   "template.delete.modal": "The template will be deleted",
   "template.delete.button": "Delete", 
@@ -164,10 +166,10 @@
   "search.searchButton" : "Search",
   "search.scanButton" : "Scan",
   "search.clear" : "Clear",
-  "search.andButton" : "AND",
-  "search.orButton" : "OR",
-  "search.notButton" : "NOT",
-  "search.nearButton" : "NEAR",
+  "search.andButton" : "and",
+  "search.orButton" : "or",
+  "search.notButton" : "not",
+  "search.nearButton" : "near",
   "search.refreshButton":"Refresh",
   "search.wildCard" : "Wild cards",
 
@@ -192,12 +194,20 @@
 
   "diacritic.title":"Diacritic",
   "diacritic.subTitle": "Diacritic Table",
-  "diacritic.char.copied":"Char copied ",
+  "diacritic.char.copied":"Char copied",
   "diacritic.list.id":"Id",
   "diacritic.list.character":"Character",
   "diacritic.list.description":"Description",
   "diacritic.list.charset":"Character Set",
   "diacritic.list.unicode":"Unicode",
+
+  "marc.category": "Item Type",
+  "heading.type": "Heading Type",
+  "item.type": "Item Type",
+  "function.code": "Function Code",
+
+  "marc.category.validation.required": "Please select a marc catgory",
+  "heading.type.validation.required": "Please select an heading type",
 
   "browsing.title":"Browse search",
   "browsing.subtitle":"Results for: ",
@@ -211,5 +221,6 @@
   "browsing.col.index":"Index",
   "browsing.col.acc":"Acc",
   "browsing.previous":"Previous",
-  "browsing.next":"Next"
+  "browsing.next":"Next",
+  "validation.error.template.name.required": "The name of template is required"
 }

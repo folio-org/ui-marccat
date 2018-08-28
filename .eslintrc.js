@@ -17,6 +17,7 @@ module.exports = {
   globals: {
     process: true,
     Promise: true,
+    SyntheticEvent: true,
   },
   plugins: ["jsx-a11y" , "import"],
   "rules": {		
@@ -24,7 +25,7 @@ module.exports = {
     "react/jsx-indent": ["error", 2],
 		"react/forbid-prop-types":"off",
 		"spaced-comment": ["error", "always", { "markers": ["/"] }],
-		"arrow-parens": "off",
+    "arrow-parens": "off",
     "no-return-assign":"off",
     "no-undef": "warn",
     "import/no-named-as-default": "off",

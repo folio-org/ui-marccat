@@ -1,3 +1,7 @@
+select.input {
+  margin-bottom: 0 !important;
+}
+
 .stripes__icon {
   width: 16px;
   height: 16px;
@@ -10,10 +14,6 @@
 
 .colQuery {
   margin-top: 50px;
-}
-
-.largeBox {
-  width: 100%;
 }
 
 .rowButtonBrowsing {

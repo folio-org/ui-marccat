@@ -1,8 +1,8 @@
 import * as C from './Constant';
 
 const marcSeparator = stringa => stringa.replace(
-  C.MARC_CHARACTER.SEPARATOR,
-  C.MARC_CHARACTER.DOLLAR,
+  C.MARC.CHARACTER_SEPARATOR,
+  C.MARC.CHARACTER_DOLLAR,
 );
 
 const arrayToObject = arr => {
@@ -55,6 +55,16 @@ const remapMultiArray = multiArray => {
       ].displayValue = marcSeparator(multiArray[index]['variable-field'].displayValue);
       obj.push(multiArray[index]['variable-field']);
     }
+  });
+  return obj;
+};
+
+export const remapSubfield = (data) => {
+  const obj = [{}];
+  data['variable-field'].subfields.map(i => { // eslint-disable-line
+    obj.push({
+      value: i, label: i
+    });
   });
   return obj;
 };

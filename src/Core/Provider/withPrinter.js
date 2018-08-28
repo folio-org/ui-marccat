@@ -1,10 +1,8 @@
 /**
- * @author: Christian Chiama
  *
  * @format
- * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import { findDOMNode } from 'react-dom';
 
 type PrinterProviderProps = {
@@ -38,6 +36,7 @@ type PrinterProviderState = {};
  * will take all of the children of the top level `Route` component,
  * and pass them as the children of the `ParentRoute` component.
  */
+
 export default class PrinterProvider extends React.Component<PrinterProviderProps, PrinterProviderState> {
   static defaultProps = {
     copyStyles: true,

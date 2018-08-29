@@ -33,7 +33,8 @@
   "template.subfield.add": "Add subfield",
   "template.save": "Save Template",
   "template.tag.create": "New Tag",
-  "template.tag.add": "Save Tag",
+  "template.tag.save": "Save Tag",
+  "template.tag.cancel": "Cancel Tag",
   "template.tag.delete": "Delete",
   "template.tag.open": "Open",
   "template.add.subfield": "Add subfield",
@@ -201,10 +202,11 @@
   "diacritic.list.charset":"Character Set",
   "diacritic.list.unicode":"Unicode",
 
-  "marc.category": "Item Type",
+  "marc.category": "Marc Category",
   "heading.type": "Heading Type",
   "item.type": "Item Type",
   "function.code": "Function Code",
+  "display.tag": "Current Tag",
 
   "marc.category.validation.required": "Please select a marc catgory",
   "heading.type.validation.required": "Please select an heading type",

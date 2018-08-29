@@ -7,15 +7,14 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Select from '@folio/stripes-components/lib/Select';
 import { Field } from 'redux-form';
 import _ from 'lodash';
-import { injectIntl } from 'react-intl';
 
 type ItemTypesSelectProps = {
     mutator: Object;
     resources: Object;
-    intl: Object;
+    translate: (o: Object) => string;
 };
 
-function ItemTypesSelect({ ...props }: ItemTypesSelectProps) {
+export default function ItemTypesSelect({ translate, ...props }: ItemTypesSelectProps) {
   const onChangeItemType = (e: any) => {
     const { mutator } = props;
     const { value } = e.target;
@@ -39,7 +38,7 @@ function ItemTypesSelect({ ...props }: ItemTypesSelectProps) {
         {props.resources.itemTypes && props.resources.itemTypes.hasLoaded &&
         itemTypesValues.length > 0 &&
         <Field
-          label={props.intl.formatMessage({ id: 'ui-marccat.item.type' })}
+          label={translate({ id: 'ui-marccat.item.type' })}
           component={Select}
           name="itemType"
           id="itemType-id"
@@ -51,4 +50,3 @@ function ItemTypesSelect({ ...props }: ItemTypesSelectProps) {
     </Row>
   );
 }
-export default injectIntl(ItemTypesSelect);

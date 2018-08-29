@@ -25,12 +25,8 @@ export default function HeadingTypesSelect({ translate, ...props }: HeadingTypes
       if (r.length > 0) {
         mutator.functionCode.replace(r[0].value);
         mutator.marcAssociated.GET().then((k) => {
-          if (!_.isEmpty(k)) {
-            mutator.validationTag.replace(k);
-            mutator.fieldTemplate.GET();
-          } else {
-            mutator.fieldTemplate.reset();
-          }
+          mutator.validationTag.replace(k);
+          mutator.fieldTemplate.GET();
         });
       } else {
         mutator.fieldTemplate.reset();

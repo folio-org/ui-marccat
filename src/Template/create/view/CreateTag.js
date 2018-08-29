@@ -31,6 +31,9 @@ class CreateTag extends React.Component<CreateTagProps, {}> {
     itemType: {},
     functionCode: {},
     validationTag: {},
+    fixedField: {},
+    fixedFieldGroup: {},
+    variablefield: {},
     leader: {},
     marcCategories: {
       type: C.RESOURCE_TYPE,
@@ -106,7 +109,7 @@ class CreateTag extends React.Component<CreateTagProps, {}> {
     this.marcCategoriesSubscription();
   }
 
-  marcCategoriesSubscription = () => {
+  marcCategoriesSubscription = (): void => {
     const { mutator } = this.props;
     const subscription = Observable.from(mutator.marcCategories.GET());
     subscription.subscribe(c => {
@@ -115,7 +118,7 @@ class CreateTag extends React.Component<CreateTagProps, {}> {
     });
   };
 
-  multiReset = (localResource: string) => {
+  multiReset = (localResource: string):void => {
     const { mutator } = this.props;
     Object.keys(mutator)
       .filter(k => k.endsWith('s') && k !== localResource)
@@ -135,7 +138,12 @@ class CreateTag extends React.Component<CreateTagProps, {}> {
           <FunctionCodeSelect {...this.props} />
           <SubfieldSection {...this.props} />
         </React.Fragment>}
-        <TagButton {...this.props} reset={this.multiReset} tagSectionVisible />
+        <TagButton
+          {...this.props}
+          renewInitialProcess={this.marcCategoriesSubscription}
+          reset={this.multiReset}
+          tagSectionVisible
+        />
       </div>
     );
   }

@@ -107,13 +107,6 @@ export const ERROR_TYPES = {
   SAVE_SUCCESS: 4,
 };
 
-// Select Logical View
-export const LOGICAL_VIEW_SELECT = {
-  ID: 'id_logicalView',
-  LABEL: 'Database',
-  EMPTY_VALUE: { value: '----------', label: '----------' },
-  INITIAL_VALUE: '0',
-};
 
 // Marc Constants
 export const MARC = {
@@ -121,7 +114,8 @@ export const MARC = {
   CHARACTER_DOLLAR: '$',
   CONTROL_FIELD: 'controlfield',
   DATA_FIELD: 'datafield',
-
+  VARIABLE_FIELD: 'variable-field',
+  FIXED_FIELD: 'fixed-field'
 };
 
 // EVENTS

@@ -22,7 +22,7 @@ export default function MarcCategorySelect({ reset, translate, ...props }: Categ
     mutator.marcCategory.replace(value);
     await mutator.headingTypes.GET().then(h => { mutator.headingType.replace(h.length ? h[0].value : 1); });
     await mutator.itemTypes.GET().then(i => { mutator.itemType.replace(i.length ? i[0].value : 1); });
-    await mutator.functionCodes.GET().then(f => { mutator.functionCode.replace(f.length ? f[0].value : 1); });
+    await mutator.functionCodes.GET().then(f => { mutator.functionCode.replace(f.length ? f[0].value : -1); });
     await mutator.marcAssociated.GET().then((k) => { mutator.validationTag.replace(k); });
     await mutator.fieldTemplate.GET();
   };

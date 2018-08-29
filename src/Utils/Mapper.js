@@ -45,15 +45,15 @@ const remapCodeLongDescription = logicalViews => (logicalViews.length > 0
 const remapMultiArray = multiArray => {
   const obj = [];
   multiArray.forEach((el, index) => {
-    if (multiArray[index]['fixed-field'] !== undefined) {
-      obj.push(multiArray[index]['fixed-field']);
+    if (multiArray[index][C.MARC.FIXED_FIELD] !== undefined) {
+      obj.push(multiArray[index][C.MARC.FIXED_FIELD]);
     } else if (
-      multiArray[index]['variable-field'] !== undefined
+      multiArray[index][C.MARC.VARIABLE_FIELD] !== undefined
     ) {
       multiArray[index][ // eslint-disable-line
-        'variable-field'
-      ].displayValue = marcSeparator(multiArray[index]['variable-field'].displayValue);
-      obj.push(multiArray[index]['variable-field']);
+        C.MARC.VARIABLE_FIELD
+      ].displayValue = marcSeparator(multiArray[index][C.MARC.VARIABLE_FIELD].displayValue);
+      obj.push(multiArray[index][C.MARC.VARIABLE_FIELD]);
     }
   });
   return obj;
@@ -61,12 +61,14 @@ const remapMultiArray = multiArray => {
 
 export const remapSubfield = (data) => {
   const obj = [{}];
-  data['variable-field'].subfields.map(i => { // eslint-disable-line
+  const fieldType = data[C.MARC.VARIABLE_FIELD] ? C.MARC.VARIABLE_FIELD : C.MARC.FIXED_FIELD;
+  if (fieldType === C.MARC.FIXED_FIELD) return;
+  data[fieldType].subfields.map(i => { // eslint-disable-line
     obj.push({
       value: i, label: i
     });
   });
-  return obj;
+  return obj; // eslint-disable-line
 };
 
 const remapTemplateView = json => {
@@ -89,12 +91,12 @@ const remapForTemplateMandatory = multiArray => {
   const fixedFields = [];
   const variableFields = [];
   multiArray.forEach((el, index) => {
-    if (multiArray[index]['fixed-field'] !== undefined) {
-      fixedFields.push(multiArray[index]['fixed-field']);
+    if (multiArray[index][C.MARC.FIXED_FIELD] !== undefined) {
+      fixedFields.push(multiArray[index][C.MARC.FIXED_FIELD]);
     } else if (
-      multiArray[index]['variable-field'] !== undefined
+      multiArray[index][C.MARC.VARIABLE_FIELD] !== undefined
     ) {
-      variableFields.push(multiArray[index]['variable-field']);
+      variableFields.push(multiArray[index][C.MARC.VARIABLE_FIELD]);
     }
   });
   const result = {

@@ -5,10 +5,11 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import _ from 'lodash';
 import React from 'react';
+import { connect } from 'react-redux';
+import { reduxForm } from 'redux-form';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Layer from '@folio/stripes-components/lib/Layer';
-import stripesForm from '@folio/stripes-form';
 import { ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { ToolbarButtonMenu } from '../../../Core';
@@ -80,13 +81,9 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
     });
   }
 
-  componentDidCatch(error, info) {
-    console.log(info);
-  }
   handleFormSubmit = () => {
-    // const { mutator, state: { form } } = this.props;
-    // const templateForm = form.templateForm.values;
-    // mutator.recordTemplates.POST();
+    const { mutator, state: { form } } = this.props; // eslint-disable-line
+    const templateForm = form.templateForm.values; // eslint-disable-line
   };
 
   render() {
@@ -128,8 +125,13 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
   }
 }
 
+connect(
+  (state) => ({ // eslint-disable-line
 
-export default stripesForm({
+  })
+)(CreateTemplate);
+
+export default reduxForm({
   form: 'templateForm',
   validate,
   navigationCheck: true,

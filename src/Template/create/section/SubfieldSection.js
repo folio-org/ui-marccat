@@ -45,12 +45,12 @@ export default class SubfieldSection extends React.Component<SubfieldSectionProp
   render() {
     const { subfield } = this.state;
     const { resources: { fieldTemplate } } = this.props;
-    if (!fieldTemplate || !fieldTemplate.hasLoaded) return <div />;
+    if ((!fieldTemplate || !fieldTemplate.hasLoaded)) return <div />;
     const subfieldMapped = remapSubfield(fieldTemplate.records[0]);
     return (
       <div>
         {subfield.map((i, index) => (
-          <React.Fragment>
+          <React.Fragment key={i}>
             <Row id="section-delete-tag" key={i}>
               <Col xs={2}>
                 <Field

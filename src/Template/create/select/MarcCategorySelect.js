@@ -10,17 +10,21 @@ import { Field } from 'redux-form';
 type CategorySelectProps = {
     resources: Object;
     mutator: Object;
-    translate: () => string;
+    reset: () => void;
+    translate: (o: Object) => string;
 };
 
-export default function MarcCategorySelect({ translate, ...props }: CategorySelectProps) {
-  const onChangeMarcCategory = (e: any) => {
+export default function MarcCategorySelect({ reset, translate, ...props }: CategorySelectProps) {
+  const onChangeMarcCategory = async (e: any) => {
     const { mutator } = props;
     const { value } = e.target;
-    mutator.headingTypes.reset();
-    mutator.itemTypes.reset();
+    reset('marcCategories');
     mutator.marcCategory.replace(value);
-    mutator.headingTypes.GET();
+    await mutator.headingTypes.GET().then(headings => { mutator.headingType.replace(headings[0].value); });
+    await mutator.itemTypes.GET().then(items => { mutator.itemType.replace(items.length ? items[0].value : 1); });
+    await mutator.functionCodes.GET().then(functions => { mutator.functionCode.replace(functions[0].value); });
+    await mutator.marcAssociated.GET().then((k) => { mutator.validationTag.replace(k); });
+    await mutator.fieldTemplate.GET();
   };
 
   const marcCatValues = (props.resources.marcCategories || {}).records || [];

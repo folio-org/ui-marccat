@@ -128,7 +128,7 @@ class CreateTag extends React.Component<CreateTagProps, {}> {
       <div className="tag-select-container">
         {tagSection &&
         <React.Fragment>
-          <DisplayTag />
+          <DisplayTag {...this.props} />
           <MarcCategorySelect {...this.props} reset={this.multiReset} />
           <HeadingTypesSelect {...this.props} />
           <ItemTypesSelect {...this.props} />

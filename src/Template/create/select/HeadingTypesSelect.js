@@ -7,6 +7,7 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Select from '@folio/stripes-components/lib/Select';
 import { Field } from 'redux-form';
 import { injectIntl } from 'react-intl';
+import _ from 'lodash';
 
 type HeadingTypesSelectProps = {
     mutator: Object;
@@ -18,9 +19,24 @@ function HeadingTypesSelect({ ...props }: HeadingTypesSelectProps) {
   const onChangeHeadingType = (e: any) => {
     const { mutator } = props;
     const { value } = e.target;
+
     mutator.itemTypes.reset();
     mutator.headingType.replace(value);
-    mutator.itemTypes.GET();
+    mutator.itemTypes.GET().then((r) => {
+      if (r.length > 0) {
+        mutator.functionCode.replace(r[0].value);
+        mutator.marcAssociated.GET().then((k) => {
+          if (!_.isEmpty(k)) {
+            mutator.validationTag.replace(k);
+            mutator.fieldTemplate.GET();
+          } else {
+            mutator.fieldTemplate.reset();
+          }
+        });
+      } else {
+        mutator.fieldTemplate.reset();
+      }
+    });
   };
   return (
     <Row>

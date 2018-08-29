@@ -4,13 +4,15 @@
  */
 import * as React from 'react';
 import { Observable } from 'rxjs';
+import { connect } from 'react-redux';
 import {
   MarcCategorySelect,
   HeadingTypesSelect,
   ItemTypesSelect,
   FunctionCodeSelect,
   SubfieldSection,
-  CreateTagButton
+  TagButton,
+  DisplayTag
 } from '../';
 import { injectCommonProp } from '../../../Core';
 import * as C from '../../../Utils';
@@ -18,6 +20,8 @@ import * as C from '../../../Utils';
 
 type CreateTagProps = {
   mutator: Object;
+  multiReset: () => void;
+  tagSection: boolean;
 };
 
 class CreateTag extends React.Component<CreateTagProps, {}> {
@@ -107,22 +111,38 @@ class CreateTag extends React.Component<CreateTagProps, {}> {
     const subscription = Observable.from(mutator.marcCategories.GET());
     subscription.subscribe(c => {
       mutator.marcCategory.replace(c[0].value);
-      mutator.headingType.replace(mutator.headingTypes.GET()[0].value);
+      mutator.headingTypes.GET();
     });
   };
 
+  multiReset = (localResource: string) => {
+    const { mutator } = this.props;
+    Object.keys(mutator)
+      .filter(k => k.endsWith('s') && k !== localResource)
+      .forEach(z => mutator[z].reset());
+  }
+
   render() {
+    const { tagSection } = this.props;
     return (
       <div className="tag-select-container">
-        <MarcCategorySelect {...this.props} />
-        <HeadingTypesSelect {...this.props} />
-        <ItemTypesSelect {...this.props} />
-        <FunctionCodeSelect {...this.props} />
-        <SubfieldSection {...this.props} />
-        <CreateTagButton {...this.props} />
+        {tagSection &&
+        <React.Fragment>
+          <DisplayTag />
+          <MarcCategorySelect {...this.props} reset={this.multiReset} />
+          <HeadingTypesSelect {...this.props} />
+          <ItemTypesSelect {...this.props} />
+          <FunctionCodeSelect {...this.props} />
+          <SubfieldSection {...this.props} />
+        </React.Fragment>}
+        <TagButton {...this.props} reset={this.multiReset} tagSectionVisible />
       </div>
     );
   }
 }
 
-export default injectCommonProp(CreateTag);
+export default injectCommonProp(connect(
+  (state) => ({
+    tagSection: state.marccat.form.tagSectionVisible || false,
+  }),
+)(CreateTag));

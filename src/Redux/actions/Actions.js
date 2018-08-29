@@ -8,6 +8,7 @@ export const actionTypes = {
   DELETE: '@@ui-marccat/DELETE',
   UPDATE: '@@ui-marccat/UPDATE',
   REJECT: '@@ui-marccat/REJECT',
+  SHOW_TAG_SECTION: '@@ui-marccat/SHOW_TAG_SECTION',
   DIACRITIC_CHAR: '@@ui-marccat/DIACRITIC_CHAR',
   RECEIVED_SEARCH: '@@ui-marccat/RECEIVED_SEARCH',
   CLEAR_SEARCH_RESULTS: '@@ui-marccat/CLEAR_SEARCH_RESULTS',

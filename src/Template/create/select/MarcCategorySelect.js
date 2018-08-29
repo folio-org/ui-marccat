@@ -5,32 +5,29 @@
 import * as React from 'react';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Select from '@folio/stripes-components/lib/Select';
+import { Observable } from 'rxjs';
 import { Field } from 'redux-form';
 import { injectIntl } from 'react-intl';
 
 type CategorySelectProps = {
     resources: Object;
     mutator: Object;
+    reset: () => void;
     intl: Object;
 };
 
-function MarcCategorySelect({ ...props }: CategorySelectProps) {
-  const onChangeMarcCategory = (e: any) => {
+
+function MarcCategorySelect({ reset, ...props }: CategorySelectProps) {
+  const onChangeMarcCategory = async (e: any) => {
     const { mutator } = props;
     const { value } = e.target;
-    mutator.headingTypes.reset();
-    mutator.itemTypes.reset();
-    mutator.functionCodes.reset();
+    reset('marcCategories');
     mutator.marcCategory.replace(value);
-    mutator.headingTypes.GET().then(headings => {
-      mutator.headingType.replace(headings[0].value);
-      mutator.itemTypes.GET().then(items => {
-        mutator.itemType.replace(items[0].value);
-        mutator.functionCodes.GET().then(functions => {
-          mutator.functionCode.replace(functions[0].value);
-        });
-      });
-    });
+    await mutator.headingTypes.GET().then(headings => { mutator.headingType.replace(headings[0].value); });
+    await mutator.itemTypes.GET().then(items => { mutator.itemType.replace(items.length ? items[0].value : 1); });
+    await mutator.functionCodes.GET().then(functions => { mutator.functionCode.replace(functions[0].value); });
+    await mutator.marcAssociated.GET().then((k) => { mutator.validationTag.replace(k); });
+    await mutator.fieldTemplate.GET();
   };
 
   const marcCatValues = (props.resources.marcCategories || {}).records || [];

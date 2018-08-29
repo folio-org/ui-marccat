@@ -22,13 +22,8 @@ export default function ItemTypesSelect({ translate, ...props }: ItemTypesSelect
     mutator.itemType.replace(value);
     mutator.functionCodes.GET();
     mutator.marcAssociated.GET().then((k) => {
-      if (!_.isEmpty(k)) {
-        mutator.validationTag.replace(k);
-        mutator.fieldTemplate.GET();
-      } else {
-        mutator.fieldTemplate.reset();
-        mutator.validationTag.reset();
-      }
+      mutator.validationTag.replace(k);
+      mutator.fieldTemplate.GET();
     });
   };
   const itemTypesValues = (props.resources.itemTypes || {}).records || [];

@@ -11,8 +11,8 @@ import { Field } from 'redux-form';
 type FunctionCodeSelectProps = {
     mutator: Object;
     resources: Object;
-    translate: () => string;
-  };
+    translate: (o: Object) => string;
+};
 
 export default function FunctionCodeSelect({ translate, ...props }: FunctionCodeSelectProps) {
   const onChangeFunctionCode = (e: any) => {

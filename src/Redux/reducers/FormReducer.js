@@ -15,9 +15,9 @@ export default function formReducer(state = {}, action = null) {
     return Object.assign({}, state, {
       fieldValue: action.payload,
     });
-  case ActionTypes.DIACRITIC_CHAR:
+  case ActionTypes.SHOW_TAG_SECTION:
     return Object.assign({}, state, {
-      charCopied: action.payload,
+      tagSectionVisible: action.payload,
     });
   default: return state;
   }

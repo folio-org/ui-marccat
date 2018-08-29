@@ -19,9 +19,12 @@ import {
   TagInfo, validate
 } from '../';
 import css from '../../styles/Template.css';
+import { remapFieldTemplate, normalizeData } from '../../../Utils/TemplateUtils';
+import { MARC } from '../../../Utils';
 
 type CreateTemplateProps = {
     router: Object;
+    stripes: Object;
     resources: Object;
     mutator: Object;
     state: Object;
@@ -46,7 +49,7 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
         mandatoryTableInfo: false,
         tagInfo: false,
       },
-      isOpened: true
+      isOpened: true,
     };
 
     this.handleExpandAll = this.handleExpandAll.bind(this);
@@ -81,10 +84,31 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
     });
   }
 
+
   handleFormSubmit = () => {
-    const { mutator, state: { form } } = this.props; // eslint-disable-line
-    const templateForm = form.templateForm.values; // eslint-disable-line
+    const
+      { resources: { mandatory },
+        mutator, state: { form },// eslint-disable-line
+        state : { ui_marccat_fixedField, ui_marccat_variablefield } }// eslint-disable-line
+      = this.props;
+    const templateFormValues = form.templateForm.values; // eslint-disable-line
+    const generatedFixedField = ui_marccat_fixedField[MARC.FIXED_FIELD] || [];
+    const generatedVariableField = ui_marccat_variablefield[MARC.VARIABLE_FIELD] || [];
+
+    const data = remapFieldTemplate(mandatory, generatedFixedField, generatedVariableField);
+
+    const template = { // eslint-disable-line
+      fixedFields: normalizeData(data.fixed),
+      group: parseInt(templateFormValues.group, 10),
+      name: templateFormValues.name,
+      leader: {
+        value: '',
+        label: ''
+      },
+      variableFields: normalizeData(data.variable),
+    };
   };
+
 
   render() {
     const { sections, isOpened } = this.state;
@@ -125,9 +149,10 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
   }
 }
 
+
 connect(
   (state) => ({ // eslint-disable-line
-
+    templateRecord: state.marccat.form
   })
 )(CreateTemplate);
 

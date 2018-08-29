@@ -1,3 +1,6 @@
+import _ from 'lodash';
+import { MARC } from './Constant';
+
 export const getLeader = currentTemp => { // eslint-disable-line
   let leader = '';
   currentTemp.fixedFields.map(element => {
@@ -65,4 +68,38 @@ export const getDateNow = () => {
     day = '0' + day;
   }
   return currentDate.getFullYear() + month + day;
+};
+
+
+export const remapFieldTemplate = (mandatory, fixedField, variableFields) => {
+  const fixed = [{}];
+  const variable = [{}];
+  mandatory.records.map(k => {
+    return {
+      ...k[MARC.FIXED_FIELD],
+      ...k[MARC.VARIABLE_FIELD],
+    };
+  }).forEach((e) => {
+    if (e.subfields === undefined) {
+      fixed.push(e);
+    } else {
+      variable.push(e);
+    }
+  });
+  fixed.push(fixedField);
+  variable.push(variableFields);
+
+  fixed.filter((k) => Object.keys(k).length !== 0);
+  variable.filter((k) => Object.keys(k).length !== 0);
+
+  return {
+    fixed,
+    variable
+  };
+};
+
+export const normalizeData = (data = [{}]) => {
+  return (_.isObject) ?
+    data.filter((k) => Object.keys(k).length !== 0) :
+    data.filter(k => k.length !== 0);
 };

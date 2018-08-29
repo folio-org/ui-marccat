@@ -19,6 +19,10 @@ export default function formReducer(state = {}, action = null) {
     return Object.assign({}, state, {
       tagSectionVisible: action.payload,
     });
+  case ActionTypes.SAVE_TAG:
+    return Object.assign({}, state, {
+      templateRecord: action.payload,
+    });
   default: return state;
   }
 }

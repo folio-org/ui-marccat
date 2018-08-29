@@ -37,6 +37,9 @@ export default function HeadingTypesSelect({ translate, ...props }: HeadingTypes
     if (x[MARC.FIXED_FIELD]) {
       mutator.fixedField.replace(x);
       mutator.fixedFieldSelect.GET().then(g => mutator.fixedFieldGroup.replace(g));
+    } else {
+      mutator.variablefield.replace(x);
+      mutator.variablefield.GET().then(g => mutator.variablefield.replace(g));
     }
   };
 

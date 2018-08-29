@@ -12,12 +12,12 @@ type TagButtonProps = {
     dispatch: () => void;
     renewInitialProcess: () => void;
     reset: () => void;
-    dirty: boolean;
-    tagSectionVisible: boolean;
+    state: Object;
+    tagSection: boolean;
     mutator: Object;
 };
 
-export default function TagButton({ tagSectionVisible, reset, renewInitialProcess, ...props }: TagButtonProps) {
+export default function TagButton({ tagSection, reset, renewInitialProcess, ...props }: TagButtonProps) {
   const showTagSection = () => {
     props.dispatch({
       type: ActionTypes.SHOW_TAG_SECTION,
@@ -36,7 +36,7 @@ export default function TagButton({ tagSectionVisible, reset, renewInitialProces
 
   return (
     <Row>
-      {tagSectionVisible &&
+      {tagSection &&
       <Button
         {...props}
         onClick={() => showTagSection()}

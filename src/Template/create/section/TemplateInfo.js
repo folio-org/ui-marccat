@@ -22,14 +22,14 @@ export default class TemplateInfo extends React.Component<TemplateInfoProps, {}>
   constructor(props) {
     super(props);
     this.state = {
-      selectedOption: 'W',
+      selectedOption: 3,
     };
     this.handleOption = this.handleOption.bind(this);
   }
 
   handleOption(e) {
     this.setState({
-      selectedOption: e.target.value,
+      selectedOption: parseInt(e.target.value, 10),
     });
   }
 
@@ -48,7 +48,7 @@ export default class TemplateInfo extends React.Component<TemplateInfoProps, {}>
               label={`${translate({
                 id: 'ui-marccat.template.form.name',
               })} *`}
-              name="templateName"
+              name="name"
               placeholder={translate({
                 id: 'ui-marccat.template.form.name',
               })}
@@ -70,8 +70,8 @@ export default class TemplateInfo extends React.Component<TemplateInfoProps, {}>
                     component="input"
                     type="radio"
                     name="group"
-                    value="W"
-                    checked={this.state.selectedOption === 'W'}
+                    value={3}
+                    checked={this.state.selectedOption === 3}
                     onChange={this.handleOption}
                     inline
                   />{' '} W
@@ -81,8 +81,8 @@ export default class TemplateInfo extends React.Component<TemplateInfoProps, {}>
                     component="input"
                     type="radio"
                     name="group"
-                    value="E"
-                    checked={this.state.selectedOption === 'E'}
+                    value={4}
+                    checked={this.state.selectedOption === 4}
                     onChange={this.handleOption}
                     inline
                   />{' '} E
@@ -92,8 +92,8 @@ export default class TemplateInfo extends React.Component<TemplateInfoProps, {}>
                     component="input"
                     type="radio"
                     name="group"
-                    value="M"
-                    checked={this.state.selectedOption === 'M'}
+                    value={5}
+                    checked={this.state.selectedOption === 5}
                     onChange={this.handleOption}
                     inline
                   />{' '} M

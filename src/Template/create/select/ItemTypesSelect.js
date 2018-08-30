@@ -6,7 +6,6 @@ import * as React from 'react';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Select from '@folio/stripes-components/lib/Select';
 import { Field } from 'redux-form';
-import _ from 'lodash';
 
 type ItemTypesSelectProps = {
     mutator: Object;
@@ -22,13 +21,8 @@ export default function ItemTypesSelect({ translate, ...props }: ItemTypesSelect
     mutator.itemType.replace(value);
     mutator.functionCodes.GET();
     mutator.marcAssociated.GET().then((k) => {
-      if (!_.isEmpty(k)) {
-        mutator.validationTag.replace(k);
-        mutator.fieldTemplate.GET();
-      } else {
-        mutator.fieldTemplate.reset();
-        mutator.validationTag.reset();
-      }
+      mutator.validationTag.replace(k);
+      mutator.fieldTemplate.GET();
     });
   };
   const itemTypesValues = (props.resources.itemTypes || {}).records || [];

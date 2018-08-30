@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 export const validate = (values) => {
   const errors = {};
-  if (!values.templateName) {
+  if (!values.name) {
     errors.templateName = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
   }
   // if (!values.marcCategory || values.marcCategory === '1') {
@@ -15,9 +15,9 @@ export const validate = (values) => {
   return errors;
 };
 export function asyncValidate(values, dispatch, props, blurredField) {
-  if (blurredField === 'templateName') {
+  if (blurredField === 'name') {
     return new Promise((resolve, reject) => {
-      if (values.templateName === '') {
+      if (values.name === '') {
         const error = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
         reject(error);
       } else {

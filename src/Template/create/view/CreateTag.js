@@ -31,6 +31,9 @@ class CreateTag extends React.Component<CreateTagProps, {}> {
     itemType: {},
     functionCode: {},
     validationTag: {},
+    fixedField: [{}],
+    fixedFieldGroup: {},
+    variablefield: [{}],
     leader: {},
     marcCategories: {
       type: C.RESOURCE_TYPE,
@@ -106,7 +109,7 @@ class CreateTag extends React.Component<CreateTagProps, {}> {
     this.marcCategoriesSubscription();
   }
 
-  marcCategoriesSubscription = () => {
+  marcCategoriesSubscription = (): void => {
     const { mutator } = this.props;
     const subscription = Observable.from(mutator.marcCategories.GET());
     subscription.subscribe(c => {
@@ -115,30 +118,42 @@ class CreateTag extends React.Component<CreateTagProps, {}> {
     });
   };
 
-  multiReset = (localResource: string) => {
+  multiReset = (localResource: string):void => {
     const { mutator } = this.props;
     Object.keys(mutator)
       .filter(k => k.endsWith('s') && k !== localResource)
       .forEach(z => mutator[z].reset());
   }
 
-  render() {
-    const { tagSection } = this.props;
-    return (
-      <div className="tag-select-container">
-        {tagSection &&
-        <React.Fragment>
-          <DisplayTag {...this.props} />
-          <MarcCategorySelect {...this.props} reset={this.multiReset} />
-          <HeadingTypesSelect {...this.props} />
-          <ItemTypesSelect {...this.props} />
-          <FunctionCodeSelect {...this.props} />
-          <SubfieldSection {...this.props} />
-        </React.Fragment>}
-        <TagButton {...this.props} reset={this.multiReset} tagSectionVisible />
-      </div>
-    );
-  }
+   handleField = (x) => {
+     const { mutator } = this.props;
+     const key = (x[C.MARC.FIXED_FIELD]) ? 'fixedField' : 'variablefield';
+     mutator[key].replace(x);
+     mutator[key].GET().then(k => mutator[key].replace(k));
+   };
+
+   render() {
+     const { tagSection } = this.props;
+     return (
+       <div className="tag-select-container">
+         {tagSection &&
+         <React.Fragment>
+           <DisplayTag {...this.props} />
+           <MarcCategorySelect {...this.props} reset={this.multiReset} />
+           <HeadingTypesSelect {...this.props} />
+           <ItemTypesSelect {...this.props} />
+           <FunctionCodeSelect {...this.props} />
+           <SubfieldSection {...this.props} />
+         </React.Fragment>}
+         <TagButton
+           {...this.props}
+           renewInitialProcess={this.marcCategoriesSubscription}
+           reset={this.multiReset}
+           tagSection
+         />
+       </div>
+     );
+   }
 }
 
 export default injectCommonProp(connect(

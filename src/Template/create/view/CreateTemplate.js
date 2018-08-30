@@ -107,6 +107,7 @@ class CreateTemplate extends React.Component<CreateTemplateProps, CreateTemplate
       },
       variableFields: normalizeData(data.variable),
     };
+    mutator.recordsTemplates.POST(template);
   };
 
 

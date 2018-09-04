@@ -31,7 +31,7 @@ class NextButton extends React.Component<Props, State> {
 
     handleScanNext = () => {
       this.props.mutator.nextPage.reset();
-      this.props.mutator.query.replace(this.props.data);
+      this.props.mutator.query.replace('ti Storia');
       Observable.from(this.props.mutator.nextPage.GET());
     }
     render() {

@@ -56,6 +56,7 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
   static manifest = Object.freeze({
     query: {},
     indexType: {},
+    selectedView: {},
     innerIndexValue: {},
     constraintIndexValue: {},
     categories: {

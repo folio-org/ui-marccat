@@ -32,7 +32,7 @@ class AdvancedBrowsing extends React.Component
     firstPage: {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
-      path: `first-page?mainLibrary=170&view=1&query=%{query}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
+      path: `first-page?mainLibrary=170&view=%{selectedView}&query=%{query}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
       headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.BROWSING,
       accumulate: true,
@@ -41,7 +41,7 @@ class AdvancedBrowsing extends React.Component
     previousPage: {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
-      path: `previous-page?mainLibrary=170&view=1&query=%{query}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
+      path: `previous-page?mainLibrary=170&view=%{selectedView}&query=%{query}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
       headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.BROWSING,
       accumulate: true,
@@ -50,7 +50,7 @@ class AdvancedBrowsing extends React.Component
     nextPage: {
       type: C.RESOURCE_TYPE,
       root: C.ENDPOINT.BASE_URL,
-      path: `next-page?mainLibrary=170&view=1&query=%{query}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
+      path: `next-page?mainLibrary=170&view=%{selectedView}&query=%{query}&lang=${C.ENDPOINT.DEFAULT_LANG}`,
       headers: C.ENDPOINT.HEADERS,
       records: C.API_RESULT_JSON_KEY.BROWSING,
       accumulate: true,
@@ -68,8 +68,8 @@ class AdvancedBrowsing extends React.Component
 
   render() {
     const { resources: { firstPage } } = this.props;
-    const dataFirstPage = firstPage.records;
     if (!firstPage || !firstPage.hasLoaded) return <Icon icon="spinner-ellipsis" />;
+    const dataFirstPage = firstPage.records;
     const formatMsg = this.props.stripes.intl.formatMessage;
     const columnMapping = {
       stringText: formatMsg({ id: 'ui-marccat.browsing.col.heading' }),

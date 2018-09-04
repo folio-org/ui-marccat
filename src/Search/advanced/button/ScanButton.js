@@ -29,10 +29,11 @@ class ScanButton extends React.Component<Props, State> {
   }
 
   handleScan = () => {
-    this.props.mutator.firstPage.reset();
-    this.props.mutator.query.replace(this.props.data);
-    Observable.from(this.props.mutator.firstPage.GET());
-    this.props.history.push(C.INTERNAL_URL.VIEW_BROWSING);
+    const { mutator, data, history } = this.props;
+    mutator.firstPage.reset();
+    mutator.query.replace(data);
+    mutator.firstPage.GET();
+    history.push(C.INTERNAL_URL.VIEW_BROWSING);
   }
   render() {
     return (

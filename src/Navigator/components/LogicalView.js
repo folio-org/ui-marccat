@@ -3,6 +3,7 @@
  * @flow
  */
 import React from 'react';
+import { Field } from 'redux-form';
 import Select from '@folio/stripes-components/lib/Select';
 import Icon from '@folio/stripes-components/lib/Icon';
 import { connect } from '@folio/stripes-connect';
@@ -28,6 +29,15 @@ class LogicalView extends React.Component<LogicalViewProps, LogicalViewState> {
     },
   });
 
+  constructor(props:LogicalViewProps) {
+    super(props);
+    this.onChange = this.onChange.bind(this);
+  }
+
+  onChange = e => {
+    this.props.mutator.selectedView.replace(e.target.value);
+  };
+
   render() {
     const { label, resources: { views } } = this.props;
     if (!views || !views.hasLoaded) return <Icon icon="spinner-ellipsis" />;
@@ -39,6 +49,7 @@ class LogicalView extends React.Component<LogicalViewProps, LogicalViewState> {
             id="logical_view"
             dataOptions={logicalViews}
             label={label}
+            onChange={this.onChange}
           />
         )}
       </div>

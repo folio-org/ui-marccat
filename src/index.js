@@ -7,10 +7,10 @@ import { Settings } from './Settings';
 import Router from './router';
 import { reducer, epics } from './Redux';
 import { injectCommonProp } from './Core';
-import * as C from './Utils';
+import * as C from './Utils/Constant';
+import MARCcat from './App/MARCcat';
 
 import './Theme/variables.css';
-import MARCcat from './App/MARCcat';
 
 type RoutingProps = {
   stripes: {
@@ -65,7 +65,6 @@ type RoutingProps = {
 };
 
 class MARCCatRouting extends React.Component<RoutingProps, {}> {
-  static actionNames = ['advancedSearch', 'diacritcChar'];
   static manifest = Object.freeze({
     query: {},
     indexType: {},

@@ -6,14 +6,10 @@
 import * as React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
-import TabControl from '../Switcher/TabControl';
 import { injectCommonProp } from '../Core';
 
 type Props = {
-  stripes: Object;
-  resources: Object;
   translate: (o:Object) => string;
-  location: Object;
   children: any;
 };
 type State = {
@@ -48,9 +44,7 @@ class MARCcat extends React.Component<Props, State> {
             defaultWidth="20%"
             paneTitle={translate({ id: 'stripes-smart-components.searchAndFilter' })}
             onClose={this.toggleFilterPane}
-          >
-            <TabControl {...this.props} />
-          </Pane>}
+          />}
         {this.props.children}
       </Paneset>
     );

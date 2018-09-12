@@ -6,7 +6,8 @@
 import * as React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
-import { injectCommonProp } from '../Core';
+import { injectCommonProp, EmptyMessage, actionMenuItem } from '../Core';
+import { LogicalView } from '../DB';
 
 type Props = {
   translate: (o:Object) => string;
@@ -35,17 +36,21 @@ class MARCcat extends React.Component<Props, State> {
   render() {
     const { translate } = this.props;
     const { filterPaneIsVisible } = this.state;
+    const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
     return (
       <Paneset static>
         { filterPaneIsVisible &&
           <Pane
             id="pane-filter"
             dismissible
-            defaultWidth="20%"
-            paneTitle={translate({ id: 'stripes-smart-components.searchAndFilter' })}
+            actionMenuItems={actionMenuItems}
+            defaultWidth="25%"
+            paneTitle={translate({ id: 'ui-marccat.searchAndFilter' })}
             onClose={this.toggleFilterPane}
-          />}
-        {this.props.children}
+          >
+            <LogicalView {...this.props} />
+          </Pane>}
+        <EmptyMessage {...this.props} />
       </Paneset>
     );
   }

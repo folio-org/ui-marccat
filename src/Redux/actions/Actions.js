@@ -9,6 +9,8 @@ export const actionTypes = {
   UPDATE: '@@ui-marccat/UPDATE',
   REJECT: '@@ui-marccat/REJECT',
   SAVE_TAG: '@@ui-marccat/SAVE_TAG',
+  REQUEST_LOGICAL_VIEW: '@@ui-marccat/REQUEST_LOGICAL_VIEW',
+  RECEIVED_LOGICAL_VIEW: '@@ui-marccat/RECEIVED_LOGICAL_VIEW',
   SHOW_TAG_SECTION: '@@ui-marccat/SHOW_TAG_SECTION',
   DIACRITIC_CHAR: '@@ui-marccat/DIACRITIC_CHAR',
   RECEIVED_SEARCH: '@@ui-marccat/RECEIVED_SEARCH',

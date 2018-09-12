@@ -1,14 +1,12 @@
 import { combineReducers } from 'redux';
 import { combineEpics } from 'redux-observable';
-import { reducer as marccatReducer, epic as marccatEpic, search as marccatSearchEpic } from './reducers/Reducer';
-import marccatFormReducer from './reducers/FormReducer';
+import { reducer as marccatReducer } from './reducers/Reducer';
+import { epic } from './epic/epic'; //eslint-disable-line
 
 export const reducer = combineReducers({
   data: marccatReducer,
-  form: marccatFormReducer
 });
 
-export const epics = combineEpics(
-  marccatEpic,
-  marccatSearchEpic
-);
+export const epics = combineEpics({
+  epic
+});

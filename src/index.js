@@ -28,6 +28,11 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
     // this.context.addReducer(resourceKey, reducer)
     props.root.addReducer(C.STATE_MANAGEMENT.REDUCER, reducer);
     props.root.addEpic(C.STATE_MANAGEMENT.EPIC, epics);
+
+    // props.root.state.store.dispatch({
+    //   type: 'test',
+    //   payload: 'pippo'
+    // });
   }
 
   render() {

@@ -10,6 +10,9 @@ import { injectCommonProp } from './Core';
 import * as C from './Utils';
 import MARCcat from './App/MARCcat';
 
+
+import './Theme/override.css';
+
 type RoutingProps = {
   root: {
     addReducer: Function,

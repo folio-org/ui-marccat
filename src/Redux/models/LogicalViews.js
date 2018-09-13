@@ -1,5 +1,10 @@
+
+export interface KeyValue<K, V> {
+   label: K;
+   value: V;
+}
+
 export default class LogicalViews {
-    value: number;
-    label: string;
+    views: Array<KeyValue<string, string>>
 }
 

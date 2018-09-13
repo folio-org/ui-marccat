@@ -2,7 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Select from '@folio/stripes-components/lib/Select';
 
-function LogicalView(props) {
+type LogicalViewProps = {};
+
+function LogicalView({}:LogicalViewProps) { // eslint-disable-line
   return (
     <div>
       <Select
@@ -16,12 +18,8 @@ function LogicalView(props) {
   );
 }
 
-function mapStateToProps(state) {
-  return {
-  };
-}
+export default connect(
+  (marccat) => ({// eslint-disable-line
 
-// function mapDispatchToProps(dispatch) {
-// }
-
-export default connect(mapStateToProps)(LogicalView);
+  })
+)(LogicalView);

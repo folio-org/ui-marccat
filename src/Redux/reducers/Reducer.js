@@ -9,9 +9,9 @@ import { ENDPOINT } from '../../Utils/Constant';
 import { receiveLogicalView } from '../actions';
 
 import {
-  FETCH_WHISKIES,
-  FETCH_WHISKIES_FAILURE,
-  FETCH_WHISKIES_SUCCESS
+  FETCH_LOGICAL_VIEWS,
+  FETCH_LOGICAL_VIEWS_FAILURE,
+  FETCH_LOGICAL_VIEWS_SUCCESS
 } from '../actions';
 
 
@@ -119,30 +119,30 @@ export function epic(action$, { getState }) {
 
 
 const initialState = {
-  whiskies: [],
+  views: [{}],
   isLoading: false,
   error: null
 };
 
 export function rootReducer(state = initialState, action) {
   switch (action.type) {
-      case FETCH_WHISKIES:
+      case FETCH_LOGICAL_VIEWS:
           return {
               ...state,
               // whenever we want to fetch the whiskies, set isLoading to true to show a spinner
               isLoading: true,
               error: null
           };
-      case FETCH_WHISKIES_SUCCESS:
+      case FETCH_LOGICAL_VIEWS_SUCCESS:
           return {
-              whiskies: [...action.payload],
+              views: [{...action.payload}],
               // whenever the fetching finishes, we stop showing the spinner and then show the data
               isLoading: false,
               error: null
           };
-      case FETCH_WHISKIES_FAILURE:
+      case FETCH_LOGICAL_VIEWS_FAILURE:
           return {
-              whiskies: [],
+              views: [{}],
               isLoading: false,
               // same as FETCH_WHISKIES_SUCCESS, but instead of data we will show an error message
               error: action.payload

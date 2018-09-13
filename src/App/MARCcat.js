@@ -1,4 +1,3 @@
-
 /**
  * @format
  * @flow
@@ -9,9 +8,9 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import Button from '@folio/stripes-components/lib/Button';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { injectCommonProp, EmptyMessage, actionMenuItem } from '../Core';
 import { LogicalView } from '../DB';
-import { fetchLogicalViewAction, fetchWhiskies } from '../Redux/actions/ActionCreator';
+import { injectCommonProp, actionMenuItem } from '../Core';
+import { fetchLogicalViewAction } from '../Redux/actions/ActionCreator';
 
 type Props = {
   translate: (o:Object) => string;
@@ -35,7 +34,7 @@ class MARCcat extends React.Component<Props, State> {
   }
 
   toggleFilterPane = () => {
-    this.setState(prevState => ({ filterPaneIsVisible: !prevState.filterPaneIsVisible }));
+    this.setState(prevState => ({ filterPaneIsVisible: prevState.filterPaneIsVisible }));
   }
 
   render() {
@@ -58,17 +57,17 @@ class MARCcat extends React.Component<Props, State> {
               {...this.props}
             />
           </Pane>}
-        <Button onClick={() => store.dispatch({ type: 'FETCH_WHISKYS' })}>get logical View</Button>
+        <Button onClick={() => store.dispatch({ type: 'FETCH_LOGICAL_VIEWS' })}>get logical View</Button>
+        <Button onClick={this.toggleFilterPane}>get logical View</Button>
       </Paneset>
     );
   }
 }
-
 const mapStateToProps = state => ({ ...state });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
-    fetchWhiskies
+    fetchLogicalViewAction
   }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(injectCommonProp(MARCcat));

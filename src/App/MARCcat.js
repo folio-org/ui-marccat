@@ -9,7 +9,7 @@ import Button from '@folio/stripes-components/lib/Button';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { LogicalView } from '../DB';
-import { injectCommonProp, actionMenuItem } from '../Core';
+import { injectCommonProp, actionMenuItem, EmptyMessage } from '../Core';
 import { fetchLogicalViewAction } from '../Redux/actions/ActionCreator';
 
 type Props = {
@@ -33,12 +33,18 @@ class MARCcat extends React.Component<Props, State> {
     this.toggleFilterPane = this.toggleFilterPane.bind(this);
   }
 
+
+  componentDidMount() {
+    const { store } = this.props;
+    store.dispatch({ type: '@@ui-marccat/FETCH_LOGICAL_VIEWS' });
+  }
+
   toggleFilterPane = () => {
     this.setState(prevState => ({ filterPaneIsVisible: prevState.filterPaneIsVisible }));
   }
 
   render() {
-    const { translate, store } = this.props;
+    const { translate } = this.props;
     const { filterPaneIsVisible } = this.state;
     const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
     return (
@@ -57,8 +63,7 @@ class MARCcat extends React.Component<Props, State> {
               {...this.props}
             />
           </Pane>}
-        <Button onClick={() => store.dispatch({ type: '@@ui-marccat/FETCH_LOGICAL_VIEWS' })}>get logical View</Button>
-        <Button onClick={this.toggleFilterPane}>get logical View</Button>
+        <EmptyMessage {...this.props} />
       </Paneset>
     );
   }

@@ -111,7 +111,7 @@ export function epic(action$, { getState }) {
 
 
 const initialState = {
-  views: [{}],
+  views: undefined,
   isLoading: false,
   error: null
 };
@@ -121,14 +121,12 @@ export function rootReducer(state = initialState, action) {
       case ActionTypes.FETCH_LOGICAL_VIEWS:
           return {
               ...state,
-              // whenever we want to fetch the whiskies, set isLoading to true to show a spinner
               isLoading: true,
               error: null
           };
       case ActionTypes.FETCH_LOGICAL_VIEWS_SUCCESS:
           return {
-              views: [{...action.payload}],
-              // whenever the fetching finishes, we stop showing the spinner and then show the data
+              views: action.payload,
               isLoading: false,
               error: null
           };
@@ -136,7 +134,6 @@ export function rootReducer(state = initialState, action) {
           return {
               views: [{}],
               isLoading: false,
-              // same as FETCH_WHISKIES_SUCCESS, but instead of data we will show an error message
               error: action.payload
           };
       default:

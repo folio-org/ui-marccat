@@ -11,18 +11,18 @@ import {
   fetchLogicalViewsSuccess
 } from '../actions';
 import { ENDPOINT } from '../../Utils/Constant';
+import LogicalViews from '../models/LogicalViews';
 
-const url = 'http://127.0.0.1:8080/cataloging/logical-views?lang=ita';
+// TODO FIXME
+const URL = ENDPOINT.BASE_URL.concat('/').concat(ENDPOINT.LOGICAL_VIEW_URL).concat('?lang=ita');
 
-export const searched = {};
-
-export function fetchLogicalViewsEpic(action$) {
+export default function fetchLogicalViewsEpic(action$) {
   return action$
     .ofType(ActionTypes.FETCH_LOGICAL_VIEWS)
     .switchMap(() => {
       return ajax
-        .getJSON(url, ENDPOINT.HEADERS)
-        .map(data => data.views);
+        .getJSON(URL, ENDPOINT.HEADERS)
+        .map((data:LogicalViews) => data.views);
     })
     .map(views => fetchLogicalViewsSuccess(views))
     .catch(error => Observable.of(fetchLogicalViewsFailure(error.message)));

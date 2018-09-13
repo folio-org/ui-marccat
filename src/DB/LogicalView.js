@@ -6,26 +6,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Select from '@folio/stripes-components/lib/Select';
+import { DotLoader } from '../Core';
 
 type LogicalViewProps = {
   label: string;
+  views: Array<any>;
 };
 
-function LogicalView({ label }:LogicalViewProps) { // eslint-disable-line
+function LogicalView({ label, ...props }:LogicalViewProps) {
+  const { views } = props;
+  if (!views || views.length === 0) return <DotLoader />;
   return (
     <Select
       label={label}
-      dataOptions={[
-        { value: 'Y', label: 'Yes' },
-        { value: 'N', label: 'No' },
-        { value: 'M', label: 'Maybe', disabled: true }
-      ]}
+      dataOptions={views}
     />
   );
 }
 
 export default connect(
-  (marccat) => ({// eslint-disable-line
-
+  ({ marccat: { root } }) => ({
+    views: root.views
   })
 )(LogicalView);

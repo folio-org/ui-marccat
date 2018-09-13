@@ -1,3 +1,4 @@
+
 const environment = process.env.NODE_ENV;
 // MARCCAT UI APP METADADA
 
@@ -113,8 +114,9 @@ export const MARC = {
   CHARACTER_DOLLAR: '$',
   CONTROL_FIELD: 'controlfield',
   DATA_FIELD: 'datafield',
-  VARIABLE_FIELD: 'variable-field',
-  FIXED_FIELD: 'fixed-field'
+  VARIABLE_FIELD: 'variableField',
+  FIXED_FIELD: 'fixedField',
+  MARCCAT_KEY_STORE: 'ui_marccat_'
 };
 
 // EVENTS

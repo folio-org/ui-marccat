@@ -10,7 +10,7 @@ import { injectCommonProp } from './Core';
 import * as C from './Utils/Constant';
 import MARCcat from './App/MARCcat';
 
-import './Theme/variables.css';
+import MARCcat from './App/MARCcat';
 
 type RoutingProps = {
   showSettings: boolean;

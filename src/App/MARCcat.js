@@ -6,8 +6,7 @@
 import * as React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
-import { injectCommonProp, EmptyMessage, actionMenuItem } from '../Core';
-import { LogicalView } from '../DB';
+import { injectCommonProp } from '../Core';
 
 type Props = {
   translate: (o:Object) => string;
@@ -47,10 +46,8 @@ class MARCcat extends React.Component<Props, State> {
             defaultWidth="25%"
             paneTitle={translate({ id: 'ui-marccat.searchAndFilter' })}
             onClose={this.toggleFilterPane}
-          >
-            <LogicalView {...this.props} />
-          </Pane>}
-        <EmptyMessage {...this.props} />
+          />}
+        {this.props.children}
       </Paneset>
     );
   }

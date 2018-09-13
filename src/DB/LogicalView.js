@@ -1,20 +1,26 @@
+
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import { connect } from 'react-redux';
 import Select from '@folio/stripes-components/lib/Select';
 
-type LogicalViewProps = {};
+type LogicalViewProps = {
+  label: string;
+};
 
-function LogicalView({}:LogicalViewProps) { // eslint-disable-line
+function LogicalView({ label }:LogicalViewProps) { // eslint-disable-line
   return (
-    <div>
-      <Select
-        dataOptions={[
-          { value: 'Y', label: 'Yes' },
-          { value: 'N', label: 'No' },
-          { value: 'M', label: 'Maybe', disabled: true }
-        ]}
-      />
-    </div>
+    <Select
+      label={label}
+      dataOptions={[
+        { value: 'Y', label: 'Yes' },
+        { value: 'N', label: 'No' },
+        { value: 'M', label: 'Maybe', disabled: true }
+      ]}
+    />
   );
 }
 

@@ -6,12 +6,17 @@
 import * as React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
-import { injectCommonProp, EmptyMessage } from '../Core';
+import Button from '@folio/stripes-components/lib/Button';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { injectCommonProp, EmptyMessage, actionMenuItem } from '../Core';
 import { LogicalView } from '../DB';
+import { fetchLogicalViewAction, fetchWhiskies } from '../Redux/actions/ActionCreator';
 
 type Props = {
   translate: (o:Object) => string;
   children: any;
+  store: Object;
 };
 type State = {
   filterPaneIsVisible: bool;
@@ -34,25 +39,37 @@ class MARCcat extends React.Component<Props, State> {
   }
 
   render() {
-    const { translate } = this.props;
+    const { translate, store } = this.props;
     const { filterPaneIsVisible } = this.state;
+    const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
     return (
       <Paneset static>
         { filterPaneIsVisible &&
           <Pane
             id="pane-filter"
             dismissible
-            defaultWidth="20%"
-            paneTitle={translate({ id: 'stripes-smart-components.searchAndFilter' })}
+            actionMenuItems={actionMenuItems}
+            defaultWidth="25%"
+            paneTitle={translate({ id: 'ui-marccat.searchAndFilter' })}
             onClose={this.toggleFilterPane}
           >
-            <LogicalView {...this.props} />
+            <LogicalView
+              label={translate({ id: 'ui-marccat.database.label' })}
+              {...this.props}
+            />
           </Pane>}
-        <EmptyMessage {...this.props} />
+        <Button onClick={() => store.dispatch({ type: 'FETCH_WHISKYS' })}>get logical View</Button>
       </Paneset>
     );
   }
 }
 
-export default injectCommonProp(MARCcat);
+const mapStateToProps = state => ({ ...state });
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({
+    fetchWhiskies
+  }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(injectCommonProp(MARCcat));
 

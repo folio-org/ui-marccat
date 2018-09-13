@@ -9,7 +9,6 @@ import { reducer, epics } from './Redux';
 import { injectCommonProp } from './Core';
 import * as C from './Utils';
 
-import './Theme/variables.css';
 import MARCcat from './App/MARCcat';
 
 type RoutingProps = {

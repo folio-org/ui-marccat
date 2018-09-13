@@ -4,15 +4,7 @@ import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { actionTypes as ActionTypes, reduxActionTypes } from '../actions/Actions';
-import { ENDPOINT } from '../../Utils/Constant';
-import { receiveLogicalView } from '../actions';
-
-import {
-  FETCH_LOGICAL_VIEWS,
-  FETCH_LOGICAL_VIEWS_FAILURE,
-  FETCH_LOGICAL_VIEWS_SUCCESS
-} from '../actions';
+import { actionTypes as ActionTypes } from '../actions/Actions';
 
 
 // reducer handlers
@@ -126,21 +118,21 @@ const initialState = {
 
 export function rootReducer(state = initialState, action) {
   switch (action.type) {
-      case FETCH_LOGICAL_VIEWS:
+      case ActionTypes.FETCH_LOGICAL_VIEWS:
           return {
               ...state,
               // whenever we want to fetch the whiskies, set isLoading to true to show a spinner
               isLoading: true,
               error: null
           };
-      case FETCH_LOGICAL_VIEWS_SUCCESS:
+      case ActionTypes.FETCH_LOGICAL_VIEWS_SUCCESS:
           return {
               views: [{...action.payload}],
               // whenever the fetching finishes, we stop showing the spinner and then show the data
               isLoading: false,
               error: null
           };
-      case FETCH_LOGICAL_VIEWS_FAILURE:
+      case ActionTypes.FETCH_LOGICAL_VIEWS_FAILURE:
           return {
               views: [{}],
               isLoading: false,

@@ -1,8 +1,7 @@
 import { actionTypes as ActionTypes } from './Actions';
 
-export const FETCH_LOGICAL_VIEWS = 'FETCH_LOGICAL_VIEWS';
+const { FETCH_LOGICAL_VIEWS } = ActionTypes;
 
-/* MARCCAT ACTIONS CREATOR */
 export const fetchLogicalViewAction = () => ({
   FETCH_LOGICAL_VIEWS,
 });

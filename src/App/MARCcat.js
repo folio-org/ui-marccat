@@ -57,7 +57,7 @@ class MARCcat extends React.Component<Props, State> {
               {...this.props}
             />
           </Pane>}
-        <Button onClick={() => store.dispatch({ type: 'FETCH_LOGICAL_VIEWS' })}>get logical View</Button>
+        <Button onClick={() => store.dispatch({ type: '@@ui-marccat/FETCH_LOGICAL_VIEWS' })}>get logical View</Button>
         <Button onClick={this.toggleFilterPane}>get logical View</Button>
       </Paneset>
     );

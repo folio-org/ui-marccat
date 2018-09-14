@@ -5,7 +5,7 @@
 import * as React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Icon from '@folio/stripes-components/lib/Icon';
-import { ToolbarMenu, actionMenuItem } from '../../';
+import { ToolbarMenu } from '../../';
 import css from './EmptyMessage.css';
 
 type EmptyMessageProps = {
@@ -18,12 +18,10 @@ const EmptyMessage = (props: EmptyMessageProps) => {
   const { translate } = props;
   const leftMenu = <ToolbarMenu icon={['search']} />;
   const rightMenu = <ToolbarMenu icon={['gear']} />;
-  const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
   return (
     <Pane
       dismissible
       onClose={() => {}}
-      actionMenuItems={actionMenuItems}
       defaultWidth="fill"
       firstMenu={leftMenu}
       lastMenu={rightMenu}

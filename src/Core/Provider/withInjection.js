@@ -23,14 +23,11 @@ export default function injectCommonProp<Props: {
 }>(Component: React.ComponentType<Props>): React.ComponentType<Props> {
   function WrapperComponent(props: Props) {
     const { store } = props.root;
-    const state = store.getState();
-    const rootPath = props.match.path;
     return (
       <Component
         {...props}
-        state={state}
+        store={store}
         router={props.history}
-        rootPath={rootPath}
         translate={props.intl.formatMessage}
       />);
   }

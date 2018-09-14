@@ -1,5 +1,8 @@
 /* MARCCAT ACTIONS TYPES */
-export const actionTypes = {
+
+export const handler = {};
+
+export const ActionTypes = {
   SEARCH: '@@ui-marccat/SEARCH',
   QUERY: '@@ui-marccat/QUERY',
   FIND: '@@ui-marccat/FIND',
@@ -16,10 +19,4 @@ export const actionTypes = {
   DIACRITIC_CHAR: '@@ui-marccat/DIACRITIC_CHAR',
   RECEIVED_SEARCH: '@@ui-marccat/RECEIVED_SEARCH',
   CLEAR_SEARCH_RESULTS: '@@ui-marccat/CLEAR_SEARCH_RESULTS',
-};
-
-export const reduxActionTypes = {
-  REDUX_FORM_CHANGE: '@@redux-form/CHANGE',
-  REDUX_FORM_BLUR: '@@redux-form/CHANGE',
-  FORM_REDUX_RESET: '@@redux-form/RESET',
 };

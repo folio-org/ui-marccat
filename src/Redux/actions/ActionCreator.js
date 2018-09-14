@@ -1,4 +1,4 @@
-import { actionTypes as ActionTypes } from './Actions';
+import { ActionTypes } from './Actions';
 import LogicalViews from '../models/LogicalViews';
 
 const { FETCH_LOGICAL_VIEWS } = ActionTypes;

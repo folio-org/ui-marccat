@@ -4,12 +4,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/catch';
 import { ajax } from 'rxjs/observable/dom/ajax';
-import { actionTypes as ActionTypes } from '../actions/Actions';
-
-import {
-  fetchLogicalViewsFailure,
-  fetchLogicalViewsSuccess
-} from '../actions';
+import { ActionTypes } from '../actions/Actions';
+import { fetchLogicalViewsFailure, fetchLogicalViewsSuccess } from '../actions';
 import { ENDPOINT } from '../../Utils/Constant';
 import LogicalViews from '../models/LogicalViews';
 

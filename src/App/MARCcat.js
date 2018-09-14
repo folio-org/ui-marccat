@@ -5,12 +5,12 @@
 import * as React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
-import Button from '@folio/stripes-components/lib/Button';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { LogicalView } from '../DB';
 import { injectCommonProp, actionMenuItem, EmptyMessage } from '../Core';
 import { fetchLogicalViewAction } from '../Redux/actions/ActionCreator';
+import { ActionTypes } from '../Redux/actions/Actions';
 
 type Props = {
   translate: (o:Object) => string;
@@ -36,7 +36,8 @@ class MARCcat extends React.Component<Props, State> {
 
   componentDidMount() {
     const { store } = this.props;
-    store.dispatch({ type: '@@ui-marccat/FETCH_LOGICAL_VIEWS' });
+    const { FETCH_LOGICAL_VIEWS } = ActionTypes;
+    store.dispatch({ type: FETCH_LOGICAL_VIEWS });
   }
 
   toggleFilterPane = () => {

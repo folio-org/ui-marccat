@@ -1,2 +1,2 @@
-export { actionTypes, reduxActionTypes } from './Actions';
+export { ActionTypes } from './Actions';
 export * from './ActionCreator';

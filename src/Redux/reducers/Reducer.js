@@ -4,7 +4,7 @@ import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { actionTypes as ActionTypes } from '../actions/Actions';
+import { ActionTypes } from '../actions/Actions';
 
 
 // reducer handlers

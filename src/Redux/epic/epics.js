@@ -5,7 +5,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/catch';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import { ActionTypes } from '../actions/Actions';
-import { fetchLogicalViewsFailure, fetchLogicalViewsSuccess } from '../actions';
+import * as marccatActions from '../actions';
 import { ENDPOINT } from '../../Utils/Constant';
 import LogicalViews from '../models/LogicalViews';
 
@@ -20,6 +20,6 @@ export default function fetchLogicalViewsEpic(action$) {
         .getJSON(URL, ENDPOINT.HEADERS)
         .map((data:LogicalViews) => data.views);
     })
-    .map(views => fetchLogicalViewsSuccess(views))
-    .catch(error => Observable.of(fetchLogicalViewsFailure(error.message)));
+    .map(views => marccatActions.fetchLogicalViewsSuccess(views))
+    .catch(error => Observable.of(marccatActions.fetchLogicalViewsFailure(error.message)));
 }

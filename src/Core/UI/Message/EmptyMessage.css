@@ -9,7 +9,7 @@
   left: 0;
   right: 0;
   z-index: -1;
-  background: var(--color-fill);
+  background: #fff;
   flex-direction: column;
 }
 

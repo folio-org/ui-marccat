@@ -11,7 +11,7 @@ type SearchEngineProps = {
 function SearchEngine(props:SearchEngineProps) {
   return (
     <div>
-      <form onSubmit={(evt) => props.handleSubmit(props.inputValue)}>
+      <form onSubmit={() => props.handleSubmit(props.inputValue)}>
         <input value={props.inputValue} onChange={props.handleInputChange} />
       </form>
     </div>

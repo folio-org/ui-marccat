@@ -11,6 +11,7 @@ import { LogicalView } from '../DB';
 import { injectCommonProp, actionMenuItem, EmptyMessage } from '../Core';
 import { fetchLogicalViewAction } from '../Redux/actions/ActionCreator';
 import { ActionTypes } from '../Redux/actions/Actions';
+import SearchEngine from '../Search/SearchEngine';
 
 type Props = {
   translate: (o:Object) => string;
@@ -63,6 +64,7 @@ class MARCcat extends React.Component<Props, State> {
               label={translate({ id: 'ui-marccat.database.label' })}
               {...this.props}
             />
+            <SearchEngine {...this.props} />
           </Pane>}
         <EmptyMessage {...this.props} />
       </Paneset>

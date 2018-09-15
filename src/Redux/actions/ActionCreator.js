@@ -1,10 +1,8 @@
 import { ActionTypes } from './Actions';
 import LogicalViews from '../models/LogicalViews';
 
-const { FETCH_LOGICAL_VIEWS } = ActionTypes;
-
 export const fetchLogicalViewAction = () => ({
-  FETCH_LOGICAL_VIEWS,
+  type: ActionTypes.FETCH_LOGICAL_VIEWS,
 });
 export const fetchLogicalViewsSuccess = (views:LogicalViews) => ({
   type: ActionTypes.FETCH_LOGICAL_VIEWS_SUCCESS,

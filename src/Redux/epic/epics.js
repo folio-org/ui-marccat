@@ -12,7 +12,7 @@ import LogicalViews from '../models/LogicalViews';
 // TODO FIXME
 const URL = ENDPOINT.BASE_URL.concat('/').concat(ENDPOINT.LOGICAL_VIEW_URL).concat('?lang=ita');
 
-export default function fetchLogicalViewsEpic(action$) {
+export function fetchLogicalViewsEpic(action$) {
   return action$
     .ofType(ActionTypes.FETCH_LOGICAL_VIEWS)
     .switchMap(() => {
@@ -22,4 +22,15 @@ export default function fetchLogicalViewsEpic(action$) {
     })
     .map(views => marccatActions.fetchLogicalViewsSuccess(views))
     .catch(error => Observable.of(marccatActions.fetchLogicalViewsFailure(error.message)));
+}
+
+const URL_SEARCH = ENDPOINT.BASE_URL.concat('/').concat(ENDPOINT.LOGICAL_VIEW_URL).concat('?lang=ita&q=manzoni&from=1&to=10&view=1&ml=170&dpo=1');
+
+export function searchEngineEpic(action$) {
+  return action$
+    .ofType('SEARCH')
+    .switchMap(() => {
+      return ajax
+        .getJSON(URL_SEARCH, ENDPOINT.HEADERS);
+    });
 }

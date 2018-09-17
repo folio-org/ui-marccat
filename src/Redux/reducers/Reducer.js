@@ -8,16 +8,18 @@ const initialState = {
   searchInputValue: ''
 };
 
-export const reducer = (state = initialState, action) => {
+export function searchEngineReducer(state = initialState, action) {
   switch (action.type) {
-  case 'SEARCH_INPUT_CHANGE':
-    return Object.assign({}, state, { searchInputValue: action.value });
-  case 'SET_REPOS':
-    return Object.assign({}, state, { repos: action.repos });
+  case 'SEARCH':
+    return {
+      repos: action.repos,
+      isLoading: false,
+      error: null
+    };
   default:
     return state;
   }
-};
+}
 
 export function logicalViewReducer(state = initialState, action) {
   switch (action.type) {

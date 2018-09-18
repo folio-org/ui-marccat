@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { combineEpics } from 'redux-observable';
 import { logicalViewReducer, searchEngineReducer } from './reducers/Reducer';
-import marccatEpic from './epic/epics';
+import { marccatEpic, searchEngineEpic } from './epic/epics';
 
 export const reducer = combineReducers({
   root: logicalViewReducer,
@@ -9,5 +9,6 @@ export const reducer = combineReducers({
 });
 
 export const epics = combineEpics(
-  marccatEpic
+  marccatEpic,
+  searchEngineEpic
 );

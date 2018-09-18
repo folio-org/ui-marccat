@@ -10,10 +10,10 @@ const initialState = {
 
 export function searchEngineReducer(state = initialState, action) {
   switch (action.type) {
-  case 'SEARCH':
+  case '@@ui-marccat/SEARCH':
     return {
       repos: action.repos,
-      isLoading: false,
+      isLoading: true,
       error: null
     };
   default:
@@ -32,14 +32,14 @@ export function logicalViewReducer(state = initialState, action) {
   case ActionTypes.FETCH_LOGICAL_VIEWS_SUCCESS:
     return {
       views: action.payload,
-      isLoading: false,
+      isLoading: true,
       error: null
     };
   case ActionTypes.FETCH_LOGICAL_VIEWS_FAILURE:
     return {
       views: [{}],
       isLoading: false,
-      error: action.payload
+      error: action.error
     };
   default:
     return state;

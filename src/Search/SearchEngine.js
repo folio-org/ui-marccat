@@ -1,38 +1,63 @@
 import React from 'react';
-import Button from '@folio/stripes-components/lib/Button';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import Button from '@folio/stripes-components/lib/Button';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/catch';
+import { Row, Col } from 'react-flexbox-grid';
+import { ENDPOINT } from '../Utils/Constant';
 
 type SearchEngineProps = {
   inputValue: string,
-  handleInputChange: Function,
-  handleSubmit: Function,
+  store: Object,
 }
 
 
 function SearchEngine(props: SearchEngineProps) {
-  function handleSubmit(e) {
-    console.log('rewrwe');
-    props.store.dispatch({
-      type: 'SEARCH',
-      payload: props.store.getState().form['object Object'].values.searchTextArea
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    const query = props.store.getState().form['object Object'].values.searchTextArea;
+    const URL_SEARCH = ENDPOINT.BASE_URL.concat('/').concat(ENDPOINT.SEARCH_URL).concat(`?lang=ita&q=${query}&from=1&to=10&view=1&ml=170&dpo=1`);
+
+    return fetch(URL_SEARCH, {
+      method: 'GET',
+      headers: ENDPOINT.HEADERS
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      props.store.dispatch({ type: '@@ui-marccat/SEARCH', repos: data.docs });
     });
   }
+
   return (
     <form name="advancedSearchForm">
-      <Field
-        fullWidth
-        defaultValue={props.inputValue}
-        onChange={props.handleInputChange}
-        rows="2"
-        name="searchTextArea"
-        id="searchTextArea"
-        component="textarea"
-      />
-      <Button onClick={(evt) => handleSubmit(evt, props.inputValue)}>Search</Button>
+      <Row>
+        <Col xs={12}>
+          <Field
+            style={{ width: '100%', marginBottom: '10px' }}
+            defaultValue={props.inputValue}
+            placeholder="What are you searching for?"
+            rows="2"
+            name="searchTextArea"
+            id="searchTextArea"
+            component="textarea"
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={6}>
+          <Button fullWidth onClick={(evt) => handleSubmit(evt, props.inputValue)}>Search</Button>
+        </Col>
+        <Col xs={6}>
+          <Button fullWidth onClick={(evt) => handleSubmit(evt, props.inputValue)}>Scan</Button>
+        </Col>
+      </Row>
     </form>
   );
 }
+
 
 const mapStateToProps = (state) => {
   return {
@@ -41,11 +66,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = {
-  performSearch: '@@ui-marccat/SEARCH'
-};
 
-connect(mapStateToProps, mapDispatchToProps)(SearchEngine); // eslint disable-line
+connect(mapStateToProps)(SearchEngine); // eslint disable-line
 
 export default reduxForm({
   form: 'advancedSearchForm',

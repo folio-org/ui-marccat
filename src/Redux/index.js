@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { combineEpics } from 'redux-observable';
 import { logicalViewReducer, searchEngineReducer } from './reducers/Reducer';
-import { fetchLogicalViewsEpic, searchEngineEpic } from './epic/epics';
+import fetchLogicalViewsEpic from './epic/epics';
 
 export const reducer = combineReducers({
   root: logicalViewReducer,
@@ -10,5 +10,4 @@ export const reducer = combineReducers({
 
 export const epics = combineEpics(
   fetchLogicalViewsEpic,
-  searchEngineEpic
 );

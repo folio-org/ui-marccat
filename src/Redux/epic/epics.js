@@ -28,7 +28,7 @@ const URL_SEARCH = ENDPOINT.BASE_URL.concat('/').concat(ENDPOINT.LOGICAL_VIEW_UR
 
 export function searchEngineEpic(action$) {
   return action$
-    .ofType('SEARCH')
+    .ofType('@@ui-marccat/SEARCH')
     .switchMap(() => {
       return ajax
         .getJSON(URL_SEARCH, ENDPOINT.HEADERS);

@@ -23,13 +23,3 @@ export default function fetchLogicalViewsEpic(action$) {
     .map(views => marccatActions.fetchLogicalViewsSuccess(views))
     .catch(error => Observable.of(marccatActions.fetchLogicalViewsFailure(error.message)));
 }
-
-
-// export function searchEngineEpic(action$) {
-//   return action$
-//     .ofType('@@ui-marccat/SEARCH')
-//     .switchMap(() => {
-//       return ajax
-//         .getJSON(URL_SEARCH, ENDPOINT.HEADERS);
-//     });
-// }

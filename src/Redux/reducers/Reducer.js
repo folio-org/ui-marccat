@@ -11,11 +11,7 @@ const initialState = {
 export function searchEngineReducer(state = initialState, action) {
   switch (action.type) {
   case '@@ui-marccat/SEARCH':
-    return {
-      repos: action.repos,
-      isLoading: true,
-      error: null
-    };
+    return Object.assign({}, state, { repos: action.repos, isLoading: true });
   default:
     return state;
   }

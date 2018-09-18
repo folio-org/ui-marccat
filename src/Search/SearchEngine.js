@@ -1,7 +1,7 @@
 import React from 'react';
+import Button from '@folio/stripes-components/lib/Button';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import Button from '@folio/stripes-components/lib/Button';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
@@ -12,23 +12,23 @@ import { ENDPOINT } from '../Utils/Constant';
 type SearchEngineProps = {
   inputValue: string,
   store: Object,
+  repos: Object
 }
 
 
 function SearchEngine(props: SearchEngineProps) {
-  function handleSubmit(evt) {
+  function handleSearch(evt) {
     evt.preventDefault();
     const query = props.store.getState().form['object Object'].values.searchTextArea;
     const URL_SEARCH = ENDPOINT.BASE_URL.concat('/').concat(ENDPOINT.SEARCH_URL).concat(`?lang=ita&q=${query}&from=1&to=10&view=1&ml=170&dpo=1`);
-
-    return fetch(URL_SEARCH, {
-      method: 'GET',
-      headers: ENDPOINT.HEADERS
-    }).then((response) => {
+    return fetch(URL_SEARCH, { method: 'GET', headers: ENDPOINT.HEADERS }).then((response) => {
       return response.json();
     }).then((data) => {
       props.store.dispatch({ type: '@@ui-marccat/SEARCH', repos: data.docs });
     });
+  }
+  function handleScan(evt) {
+    evt.preventDefault();
   }
 
   return (
@@ -48,26 +48,25 @@ function SearchEngine(props: SearchEngineProps) {
       </Row>
       <Row>
         <Col xs={6}>
-          <Button fullWidth onClick={(evt) => handleSubmit(evt, props.inputValue)}>Search</Button>
+          <Button fullWidth buttonStyle="primary" onClick={(evt) => handleSearch(evt, props.inputValue)}>Search</Button>
         </Col>
         <Col xs={6}>
-          <Button fullWidth onClick={(evt) => handleSubmit(evt, props.inputValue)}>Scan</Button>
+          <Button fullWidth buttonStyle="primary" onClick={(evt) => handleScan(evt, props.inputValue)}>Scan</Button>
         </Col>
       </Row>
+      <div fullWidth>
+        { props.repos }
+      </div>
     </form>
   );
 }
 
 
-const mapStateToProps = (state) => {
-  return {
-    inputValue: state.searchInputValue,
-    repos: state.repos
-  };
-};
-
-
-connect(mapStateToProps)(SearchEngine); // eslint disable-line
+connect(
+  ({ marccat: { search } }) => ({
+    repos: search.repos
+  })
+)(SearchEngine); // eslint disable-line
 
 export default reduxForm({
   form: 'advancedSearchForm',

@@ -1,8 +1,7 @@
 import React from 'react';
 import Button from '@folio/stripes-components/lib/Button';
 import { connect } from 'react-redux';
-import { Field } from 'redux-form';
-import { ENDPOINT } from '../Utils/Constant';
+import { Field, reduxForm } from 'redux-form';
 
 type SearchEngineProps = {
   inputValue: string,
@@ -10,9 +9,17 @@ type SearchEngineProps = {
   handleSubmit: Function,
 }
 
+
 function SearchEngine(props: SearchEngineProps) {
+  function handleSubmit(e) {
+    console.log('rewrwe');
+    props.store.dispatch({
+      type: 'SEARCH',
+      payload: props.store.getState().form['object Object'].values.searchTextArea
+    });
+  }
   return (
-    <form>
+    <form name="advancedSearchForm">
       <Field
         fullWidth
         defaultValue={props.inputValue}
@@ -22,7 +29,7 @@ function SearchEngine(props: SearchEngineProps) {
         id="searchTextArea"
         component="textarea"
       />
-      <Button onClick={(evt) => props.handleSubmit(evt, props.inputValue)}>Search</Button>
+      <Button onClick={(evt) => handleSubmit(evt, props.inputValue)}>Search</Button>
     </form>
   );
 }
@@ -38,4 +45,11 @@ const mapDispatchToProps = {
   performSearch: '@@ui-marccat/SEARCH'
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchEngine);
+connect(mapStateToProps, mapDispatchToProps)(SearchEngine); // eslint disable-line
+
+export default reduxForm({
+  form: 'advancedSearchForm',
+  initialValues: {},
+  enableReinitialize: true,
+  fields: ['searchTextArea']
+})(SearchEngine);

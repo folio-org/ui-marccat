@@ -12,9 +12,8 @@ import { ENDPOINT } from '../Utils/Constant';
 type SearchEngineProps = {
   inputValue: string,
   store: Object,
-  repos: Object
+  repos: Array<Object>,
 }
-
 
 function SearchEngine(props: SearchEngineProps) {
   function handleSearch(evt) {
@@ -54,19 +53,21 @@ function SearchEngine(props: SearchEngineProps) {
           <Button fullWidth buttonStyle="primary" onClick={(evt) => handleScan(evt, props.inputValue)}>Scan</Button>
         </Col>
       </Row>
-      <div fullWidth>
-        { props.repos }
+      { props.marccat.search.isLoading &&
+      <div>
+        {props.marccat.search.repos[0].data}
       </div>
+      }
     </form>
   );
 }
 
-
 connect(
   ({ marccat: { search } }) => ({
-    repos: search.repos
+    repos: search.repos,
+    isLoading: search.isLoading
   })
-)(SearchEngine); // eslint disable-line
+)(SearchEngine);
 
 export default reduxForm({
   form: 'advancedSearchForm',

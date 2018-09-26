@@ -1,46 +1,77 @@
 import React from 'react';
+import Button from '@folio/stripes-components/lib/Button';
 import { connect } from 'react-redux';
+import { Field, reduxForm } from 'redux-form';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/catch';
+import { Row, Col } from 'react-flexbox-grid';
 import { ENDPOINT } from '../Utils/Constant';
 
 type SearchEngineProps = {
-    inputValue: string,
-    handleInputChange: Function,
-    handleSubmit: Function,
+  inputValue: string,
+  store: Object,
+  repos: Array<Object>,
 }
 
-function SearchEngine(props:SearchEngineProps) {
+function SearchEngine(props: SearchEngineProps) {
+  function handleSearch(evt) {
+    evt.preventDefault();
+    const query = props.store.getState().form['object Object'].values.searchTextArea;
+    const URL_SEARCH = ENDPOINT.BASE_URL.concat('/').concat(ENDPOINT.SEARCH_URL).concat(`?lang=ita&q=${query}&from=1&to=10&view=1&ml=170&dpo=1`);
+    return fetch(URL_SEARCH, { method: 'GET', headers: ENDPOINT.HEADERS }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      props.store.dispatch({ type: '@@ui-marccat/SEARCH', repos: data.docs });
+    });
+  }
+  function handleScan(evt) {
+    evt.preventDefault();
+  }
+
   return (
-    <div>
-      <form onSubmit={() => props.handleSubmit(props.inputValue)}>
-        <input value={props.inputValue} onChange={props.handleInputChange} />
-      </form>
-    </div>
+    <form name="advancedSearchForm">
+      <Row>
+        <Col xs={12}>
+          <Field
+            style={{ width: '100%', marginBottom: '10px' }}
+            defaultValue={props.inputValue}
+            placeholder="What are you searching for?"
+            rows="2"
+            name="searchTextArea"
+            id="searchTextArea"
+            component="textarea"
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={6}>
+          <Button fullWidth buttonStyle="primary" onClick={(evt) => handleSearch(evt, props.inputValue)}>Search</Button>
+        </Col>
+        <Col xs={6}>
+          <Button fullWidth buttonStyle="primary" onClick={(evt) => handleScan(evt, props.inputValue)}>Scan</Button>
+        </Col>
+      </Row>
+      { props.marccat.search.isLoading &&
+      <div>
+        {props.marccat.search.repos[0].data}
+      </div>
+      }
+    </form>
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    inputValue: state.searchInputValue,
-    repos: state.repos
-  };
-};
+connect(
+  ({ marccat: { search } }) => ({
+    repos: search.repos,
+    isLoading: search.isLoading
+  })
+)(SearchEngine);
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    handleInputChange: (evt) => {
-      dispatch({ type: 'SEARCH_INPUT_CHANGE', value: evt.target.value });
-    },
-    handleSubmit: (evt, inputValue) => {
-      evt.preventDefault();
-      fetch(ENDPOINT.BASE_URL.concat('/').concat(ENDPOINT.SEARCH_URL).concat(`?lang=eng&q=${inputValue}&from=1&to=10&view=1&ml=170&dpo=1`))
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          dispatch({ type: 'SET_REPOS', repos: data.docs });
-        });
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchEngine);
+export default reduxForm({
+  form: 'advancedSearchForm',
+  initialValues: {},
+  enableReinitialize: true,
+  fields: ['searchTextArea']
+})(SearchEngine);

@@ -8,16 +8,14 @@ const initialState = {
   searchInputValue: ''
 };
 
-export const reducer = (state = initialState, action) => {
+export function searchEngineReducer(state = initialState, action) {
   switch (action.type) {
-  case 'SEARCH_INPUT_CHANGE':
-    return Object.assign({}, state, { searchInputValue: action.value });
-  case 'SET_REPOS':
-    return Object.assign({}, state, { repos: action.repos });
+  case '@@ui-marccat/SEARCH':
+    return Object.assign({}, state, { repos: action.repos, isLoading: true });
   default:
     return state;
   }
-};
+}
 
 export function logicalViewReducer(state = initialState, action) {
   switch (action.type) {
@@ -30,14 +28,14 @@ export function logicalViewReducer(state = initialState, action) {
   case ActionTypes.FETCH_LOGICAL_VIEWS_SUCCESS:
     return {
       views: action.payload,
-      isLoading: false,
+      isLoading: true,
       error: null
     };
   case ActionTypes.FETCH_LOGICAL_VIEWS_FAILURE:
     return {
       views: [{}],
       isLoading: false,
-      error: action.payload
+      error: action.error
     };
   default:
     return state;

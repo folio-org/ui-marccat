@@ -5,6 +5,7 @@
 import * as React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
+import { AccordionSet, Accordion } from '@folio/stripes-components/lib/Accordion';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { LogicalView } from '../DB';
@@ -14,7 +15,7 @@ import { ActionTypes } from '../Redux/actions/Actions';
 import SearchEngine from '../Search/SearchEngine';
 
 type Props = {
-  translate: (o:Object) => string;
+  translate: (o: Object) => string;
   children: any;
   store: Object;
 };
@@ -51,7 +52,7 @@ class MARCcat extends React.Component<Props, State> {
     const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
     return (
       <Paneset static>
-        { filterPaneIsVisible &&
+        {filterPaneIsVisible &&
           <Pane
             id="pane-filter"
             dismissible
@@ -64,7 +65,11 @@ class MARCcat extends React.Component<Props, State> {
               label={translate({ id: 'ui-marccat.database.label' })}
               {...this.props}
             />
-            <SearchEngine {...this.props} />
+            <AccordionSet>
+              <Accordion label={translate({ id: 'ui-marccat.navigator.search' })}>
+                <SearchEngine {...this.props} />
+              </Accordion>
+            </AccordionSet>
           </Pane>}
         <EmptyMessage {...this.props} />
       </Paneset>

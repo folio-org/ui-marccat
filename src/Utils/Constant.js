@@ -44,6 +44,14 @@ export const ENDPOINT = {
   DEFAULT_PAGINATION: 20,
 };
 
+export const buildUrl = (url:string, params?:string) => {
+  return ENDPOINT.BASE_URL
+    .concat('/')
+    .concat(url)
+    .concat('?')
+    .concat(params);
+};
+
 // REDUX
 export const STATE_MANAGEMENT = {
   REDUCER: 'marccat',

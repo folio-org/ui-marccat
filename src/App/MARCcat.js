@@ -5,12 +5,10 @@
 import * as React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
-import { AccordionSet, Accordion } from '@folio/stripes-components/lib/Accordion';
 import { connect } from 'react-redux';
 import { LogicalView } from '../DB';
 import { injectCommonProp, actionMenuItem, EmptyMessage } from '../Core';
 import { fetchLogicalViewAction } from '../Redux/actions/ActionCreator';
-import SearchEngine from '../Search/SearchEngine';
 import type Props from '../Core/type/props';
 
 
@@ -58,11 +56,6 @@ class MARCcat extends React.Component<P, S> {
               label={translate({ id: 'ui-marccat.database.label' })}
               {...this.props}
             />
-            <AccordionSet>
-              <Accordion label={translate({ id: 'ui-marccat.navigator.search' })}>
-                <SearchEngine {...this.props} />
-              </Accordion>
-            </AccordionSet>
           </Pane>}
         <EmptyMessage {...this.props} />
       </Paneset>

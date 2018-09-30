@@ -23,7 +23,7 @@ export default class MARCcatSelectSettings extends
     {
       route: 'marccat',
       label: this.props.stripes.intl.formatMessage({
-        id: 'ui-marccat.smarccat',
+        id: 'ui-marccat.marccat',
       }),
       component: MARCcatSettings,
     },

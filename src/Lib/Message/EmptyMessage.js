@@ -5,16 +5,11 @@
 import * as React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Icon from '@folio/stripes-components/lib/Icon';
-import { ToolbarMenu } from '../../';
+import { ToolbarMenu } from '..';
 import css from './EmptyMessage.css';
+import type { Props } from '../../Core';
 
-type EmptyMessageProps = {
-  translate: (id:Object) => void;
-
-};
-
-
-const EmptyMessage = (props: EmptyMessageProps) => {
+const EmptyMessage = (props: Props) => {
   const { translate } = props;
   const leftMenu = <ToolbarMenu icon={['search']} />;
   const rightMenu = <ToolbarMenu icon={['gear']} />;
@@ -26,7 +21,7 @@ const EmptyMessage = (props: EmptyMessageProps) => {
       firstMenu={leftMenu}
       lastMenu={rightMenu}
       paneTitle={translate({
-        id: 'ui-marccat.app.title',
+        id: 'ui-marccat.marccat',
       })}
       paneSub={translate({
         id: 'ui-marccat.noResult',

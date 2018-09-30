@@ -5,40 +5,27 @@
 import * as React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { LogicalView } from '../DB';
-import { injectCommonProp, actionMenuItem, EmptyMessage } from '../Core';
-import { fetchLogicalViewAction } from '../Redux/actions/ActionCreator';
-import { ActionTypes } from '../Redux/actions/Actions';
-import SearchEngine from '../Search/SearchEngine';
+import { injectCommonProp } from '../Core';
+import type Props from '../Core/type/props';
+import { actionMenuItem, EmptyMessage } from '../Lib';
 
-type Props = {
-  translate: (o:Object) => string;
-  children: any;
-  store: Object;
-};
-type State = {
+
+type P = Props & {};
+type S = {
   filterPaneIsVisible: bool;
 };
 
 /**
  * @module MARCcat
  */
-class MARCcat extends React.Component<Props, State> {
-  constructor(props) {
+class MARCcat extends React.Component<P, S> {
+  constructor(props:P) {
     super(props);
     this.state = {
       filterPaneIsVisible: true,
     };
     this.toggleFilterPane = this.toggleFilterPane.bind(this);
-  }
-
-
-  componentDidMount() {
-    const { store } = this.props;
-    const { FETCH_LOGICAL_VIEWS } = ActionTypes;
-    store.dispatch({ type: FETCH_LOGICAL_VIEWS });
   }
 
   toggleFilterPane = () => {
@@ -51,7 +38,7 @@ class MARCcat extends React.Component<Props, State> {
     const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
     return (
       <Paneset static>
-        { filterPaneIsVisible &&
+        {filterPaneIsVisible &&
           <Pane
             id="pane-filter"
             dismissible
@@ -64,19 +51,12 @@ class MARCcat extends React.Component<Props, State> {
               label={translate({ id: 'ui-marccat.database.label' })}
               {...this.props}
             />
-            <SearchEngine {...this.props} />
           </Pane>}
         <EmptyMessage {...this.props} />
       </Paneset>
     );
   }
 }
-const mapStateToProps = state => ({ ...state });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({
-    fetchLogicalViewAction
-  }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(injectCommonProp(MARCcat));
+export default injectCommonProp(MARCcat);
 

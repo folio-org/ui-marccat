@@ -1,14 +1,18 @@
 /**
  * @format
+ * @flow
  */
 /* eslint-disable react/prop-types */
 import * as React from 'react';
 import Route from 'react-router-dom/Route';
 import Redirect from 'react-router-dom/Redirect';
 import Switch from 'react-router-dom/Switch';
-import { EmptyMessage } from './Core';
+import type { Props } from './Core/type/props';
+import { EmptyMessage } from './Lib';
 
-export function ConnectedRoute({ id, component: Component, ...props }) {
+type P = Props & {};
+
+export function ConnectedRoute({ id, component: Component, ...props }:P) {
   return (
     <Route render={() => <Component {...props} id={id} />} />
   );

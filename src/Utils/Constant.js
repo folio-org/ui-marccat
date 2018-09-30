@@ -25,7 +25,7 @@ export const ENDPOINT = {
     'Content-Type': 'application/json',
     'x-okapi-tenant': 'tnx',
   },
-  BASE_URL: 'http://127.0.0.1:8080/cataloging',
+  BASE_URL: 'http://127.0.0.1:8085/cataloging',
   TEMPLATE_URL: 'record-templates',
   TEMPLATE_URL_ID: 'record-template/123',
   TEMPLATE_MANDATORY: 'bibliographic/fields/mandatory',
@@ -42,6 +42,14 @@ export const ENDPOINT = {
   BROWSING_FIRST_PAGE: 'first-page',
   DEFAULT_LANG: 'eng',
   DEFAULT_PAGINATION: 20,
+};
+
+export const buildUrl = (url:string, params?:string) => {
+  return ENDPOINT.BASE_URL
+    .concat('/')
+    .concat(url)
+    .concat('?')
+    .concat(params);
 };
 
 // REDUX

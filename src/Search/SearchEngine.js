@@ -1,46 +1,37 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { ENDPOINT } from '../Utils/Constant';
+import Button from '@folio/stripes-components/lib/Button';
+import TextField from '@folio/stripes-components/lib/TextField';
+import { Row, Col } from 'react-flexbox-grid';
+import type { Props } from '../Core/type/props';
 
-type SearchEngineProps = {
-    inputValue: string,
-    handleInputChange: Function,
-    handleSubmit: Function,
+type P = Props & {
+  inputValue: string,
 }
 
-function SearchEngine(props:SearchEngineProps) {
+export default function SearchEngine(props: P) {
   return (
-    <div>
-      <form onSubmit={() => props.handleSubmit(props.inputValue)}>
-        <input value={props.inputValue} onChange={props.handleInputChange} />
-      </form>
-    </div>
+    <Row>
+      <Row>
+        <Col xs={12}>
+          <TextField
+            style={{ width: '100%', marginBottom: '10px' }}
+            defaultValue={props.inputValue}
+            placeholder="What are you searching for?"
+            rows="2"
+            name="searchTextArea"
+            id="searchTextArea"
+            component="textarea"
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={6}>
+          <Button fullWidth buttonStyle="primary" onClick={() => {}}>Search</Button>
+        </Col>
+        <Col xs={6}>
+          <Button fullWidth buttonStyle="primary" onClick={() => {}}>Scan</Button>
+        </Col>
+      </Row>
+    </Row>
   );
 }
-
-const mapStateToProps = (state) => {
-  return {
-    inputValue: state.searchInputValue,
-    repos: state.repos
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    handleInputChange: (evt) => {
-      dispatch({ type: 'SEARCH_INPUT_CHANGE', value: evt.target.value });
-    },
-    handleSubmit: (evt, inputValue) => {
-      evt.preventDefault();
-      fetch(ENDPOINT.BASE_URL.concat('/').concat(ENDPOINT.SEARCH_URL).concat(`?lang=eng&q=${inputValue}&from=1&to=10&view=1&ml=170&dpo=1`))
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          dispatch({ type: 'SET_REPOS', repos: data.docs });
-        });
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchEngine);

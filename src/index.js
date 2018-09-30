@@ -8,8 +8,7 @@ import Router from './router';
 import { reducer, epics } from './Redux';
 import { injectCommonProp } from './Core';
 import * as C from './Utils';
-import MARCcat from './App/MARCcat';
-
+import MARCcat from './App';
 
 import './Theme/override.css';
 

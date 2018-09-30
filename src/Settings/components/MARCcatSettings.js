@@ -6,10 +6,11 @@ import * as React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { FormattedMessage } from 'react-intl';
 
-type GeneralSettingsProps = {
+type MARCcatSettingsProps = {
   label: string,
 };
-export default class GeneralSettings extends React.Component<GeneralSettingsProps, {}> {
+
+export default class MARCcatSettings extends React.Component<MARCcatSettingsProps, {}> {
   render() {
     return (
       <Pane
@@ -18,7 +19,7 @@ export default class GeneralSettings extends React.Component<GeneralSettingsProp
         paneTitle={this.props.label}
       >
         <div id="stripes-new-app-settings-message">
-          <FormattedMessage id="ui-marccat.settings.general" />
+          <FormattedMessage id="ui-marccat.marccat" />
         </div>
       </Pane>
     );

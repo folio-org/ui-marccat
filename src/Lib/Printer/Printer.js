@@ -5,7 +5,7 @@
 import * as React from 'react';
 import { findDOMNode } from 'react-dom';
 
-type PrinterProviderProps = {
+type PrinterProps = {
     copyStyles: bool;
     trigger: Function,
     content: Function,
@@ -16,7 +16,7 @@ type PrinterProviderProps = {
     bodyClass: string,
     debug: bool;
 };
-type PrinterProviderState = {};
+type PrinterState = {};
 
 /**
  * Pass the children of a Route to the component that is responsible for rendering it.
@@ -25,7 +25,7 @@ type PrinterProviderState = {};
  * level layout:
  *
  *    // component.js
- *    <PrinterProvider
+ *    <Printer
  *       trigger={() => <IconButton key="icon-gear" icon="gear" className={css.stripes__icon} />}
  *       content={() => this.componentRef} />
  *
@@ -37,7 +37,7 @@ type PrinterProviderState = {};
  * and pass them as the children of the `ParentRoute` component.
  */
 
-export default class PrinterProvider extends React.Component<PrinterProviderProps, PrinterProviderState> {
+export default class Printer extends React.Component<PrinterProps, PrinterState> {
   static defaultProps = {
     copyStyles: true,
     closeAfterPrint: true,

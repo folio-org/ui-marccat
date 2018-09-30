@@ -17,9 +17,9 @@ import { META } from '../../Utils/Constant';
  */
 export default function injectCommonProp<Props: {
   root: Object,
-  match: Object,
   history: Object,
-  stripes: Object
+  stripes: Object;
+  intl: Object;
 }>(Component: React.ComponentType<Props>): React.ComponentType<Props> {
   function WrapperComponent(props: Props) {
     const { store } = props.root;

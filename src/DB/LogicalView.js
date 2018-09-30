@@ -5,16 +5,21 @@
  */
 import React from 'react';
 import { connect } from 'react-redux';
+import { onComponentDidMount, onComponentWillReceiveProps } from 'react-redux-lifecycle';
 import Select from '@folio/stripes-components/lib/Select';
-import { DotLoader } from '../Core';
+import { Props } from '../Core';
+import { fetchLogicalViewAction } from '../Redux/actions/ActionCreator';
+import { DotLoader } from '../Lib';
 
-type LogicalViewProps = {
+type P = Props & {
   label: string;
   views: Array<any>;
 };
 
-function LogicalView({ label, ...props }:LogicalViewProps) {
+function LogicalView({ label, ...props }:P) {
   const { views } = props;
+  const myAction = { type: 'MY_ACTION' };
+  onComponentWillReceiveProps(myAction);
   if (!views || views.length === 0) return <DotLoader />;
   return (
     <Select
@@ -24,8 +29,8 @@ function LogicalView({ label, ...props }:LogicalViewProps) {
   );
 }
 
-export default connect(
-  ({ marccat: { root } }) => ({
-    views: root.views
+export default (onComponentDidMount(fetchLogicalViewAction))(connect(
+  ({ marccat: { data } }) => ({
+    views: data.views
   })
-)(LogicalView);
+)(LogicalView));

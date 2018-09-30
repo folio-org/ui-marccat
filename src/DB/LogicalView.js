@@ -25,7 +25,7 @@ function LogicalView({ label, ...props }:P) {
 }
 
 export default connect(
-  ({ marccat: { root } }) => ({
-    views: root.views
+  ({ marccat: { data } }) => ({
+    views: data.views
   })
 )(LogicalView);

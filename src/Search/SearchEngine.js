@@ -2,10 +2,6 @@ import React from 'react';
 import Button from '@folio/stripes-components/lib/Button';
 import TextField from '@folio/stripes-components/lib/TextField';
 import { Row, Col } from 'react-flexbox-grid';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/catch';
 import type { Props } from '../Core/type/props';
 
 type P = Props & {

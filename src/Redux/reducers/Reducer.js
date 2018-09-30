@@ -1,23 +1,15 @@
 import { ActionTypes } from '../actions/Actions';
 
-const initialState = {
-  views: undefined,
-  isLoading: false,
-  error: null,
-  repos: [],
-  searchInputValue: ''
-};
-
-export function searchEngineReducer(state = initialState, action) {
+export function searchEngineReducer(state = {}, action) {
   switch (action.type) {
-  case '@@ui-marccat/SEARCH':
-    return Object.assign({}, state, { repos: action.repos, isLoading: true });
+  case ActionTypes.SEARCH:
+    return Object.assign({}, state, { results: action.results, isLoading: true });
   default:
     return state;
   }
 }
 
-export function logicalViewReducer(state = initialState, action) {
+export function logicalViewReducer(state = { resource: 'logical' }, action) {
   switch (action.type) {
   case ActionTypes.FETCH_LOGICAL_VIEWS:
     return {
@@ -28,7 +20,7 @@ export function logicalViewReducer(state = initialState, action) {
   case ActionTypes.FETCH_LOGICAL_VIEWS_SUCCESS:
     return {
       views: action.payload,
-      isLoading: true,
+      isLoading: false,
       error: null
     };
   case ActionTypes.FETCH_LOGICAL_VIEWS_FAILURE:

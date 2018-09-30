@@ -26,8 +26,10 @@ module.exports = {
   modules: {
     '@folio/marccat': {},
   },
-  // branding: {
-  //   logo: {},
-  //   favicon: {},
-  // },
+  branding: {
+    logo: {
+      src: './icons/app.png',
+      alt: 'MARCcat',
+    }
+  },
 };

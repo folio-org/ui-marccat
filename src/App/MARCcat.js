@@ -5,11 +5,10 @@
 import * as React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
-import { connect } from 'react-redux';
 import { LogicalView } from '../DB';
-import { injectCommonProp, actionMenuItem, EmptyMessage } from '../Core';
-import { fetchLogicalViewAction } from '../Redux/actions/ActionCreator';
+import { injectCommonProp } from '../Core';
 import type Props from '../Core/type/props';
+import { actionMenuItem, EmptyMessage } from '../Lib';
 
 
 type P = Props & {};
@@ -27,10 +26,6 @@ class MARCcat extends React.Component<P, S> {
       filterPaneIsVisible: true,
     };
     this.toggleFilterPane = this.toggleFilterPane.bind(this);
-  }
-
-  componentDidMount() {
-    this.props.onLoad();
   }
 
   toggleFilterPane = () => {
@@ -63,12 +58,5 @@ class MARCcat extends React.Component<P, S> {
   }
 }
 
-export default connect(
-  state => ({ ...state }),
-  (dispatch /* ownProps*/) => ({
-    onLoad: () => dispatch((_ /* getState*/) => {
-      dispatch(fetchLogicalViewAction());
-    }),
-  })
-)(injectCommonProp(MARCcat));
+export default injectCommonProp(MARCcat);
 

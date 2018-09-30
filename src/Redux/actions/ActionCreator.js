@@ -1,6 +1,12 @@
 import { ActionTypes } from './Actions';
 import LogicalViews from '../models/LogicalViews';
 
+
+export const fetchPippo = () => {
+  alert('rewrrrwr');
+  return 'rewrwerrewerwewrwer';
+};
+
 export const fetchLogicalViewAction = () => ({
   type: ActionTypes.FETCH_LOGICAL_VIEWS,
 });

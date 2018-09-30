@@ -7,8 +7,8 @@ import * as React from 'react';
 import Route from 'react-router-dom/Route';
 import Redirect from 'react-router-dom/Redirect';
 import Switch from 'react-router-dom/Switch';
-import { EmptyMessage } from './Core';
 import type { Props } from './Core/type/props';
+import { EmptyMessage } from './Lib';
 
 type P = Props & {};
 

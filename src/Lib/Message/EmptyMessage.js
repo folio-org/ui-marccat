@@ -5,7 +5,7 @@
 import * as React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Icon from '@folio/stripes-components/lib/Icon';
-import { ToolbarMenu, Props } from '../../';
+import { ToolbarMenu } from '..';
 import css from './EmptyMessage.css';
 
 const EmptyMessage = (props: Props) => {

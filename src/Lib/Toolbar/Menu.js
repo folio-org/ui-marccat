@@ -6,7 +6,7 @@ import IconButton from '@folio/stripes-components/lib/IconButton';
 import Button from '@folio/stripes-components/lib/Button';
 import IfPermission from '@folio/stripes-components/lib/IfPermission';
 import classNames from 'classnames';
-import { PrinterProvider } from '../..';
+import { Printer } from '..';
 
 type ToolbarMenuProps = {
   icon: Array,
@@ -26,7 +26,7 @@ export const ToolbarMenu = (props: ToolbarMenuProps) => {
   return (
     <PaneMenu>
       {withPrinter &&
-      <PrinterProvider
+      <Printer
         trigger={() => <IconButton key={`icon-${icon[0]}`} icon={icon[0]} className={classNames(className)} />}
         content={content}
       />}

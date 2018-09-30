@@ -7,6 +7,7 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import Icon from '@folio/stripes-components/lib/Icon';
 import { ToolbarMenu } from '..';
 import css from './EmptyMessage.css';
+import type { Props } from '../../Core';
 
 const EmptyMessage = (props: Props) => {
   const { translate } = props;

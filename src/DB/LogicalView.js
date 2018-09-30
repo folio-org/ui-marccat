@@ -6,14 +6,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Select from '@folio/stripes-components/lib/Select';
-import { DotLoader } from '../Core';
+import { DotLoader, Props } from '../Core';
 
-type LogicalViewProps = {
+type P = Props & {
   label: string;
   views: Array<any>;
 };
 
-function LogicalView({ label, ...props }:LogicalViewProps) {
+function LogicalView({ label, ...props }:P) {
   const { views } = props;
   if (!views || views.length === 0) return <DotLoader />;
   return (

@@ -7,27 +7,23 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { AccordionSet, Accordion } from '@folio/stripes-components/lib/Accordion';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { LogicalView } from '../DB';
 import { injectCommonProp, actionMenuItem, EmptyMessage } from '../Core';
 import { fetchLogicalViewAction } from '../Redux/actions/ActionCreator';
-import { ActionTypes } from '../Redux/actions/Actions';
 import SearchEngine from '../Search/SearchEngine';
+import type Props from '../Core/type/props';
 
-type Props = {
-  translate: (o: Object) => string;
-  children: any;
-  store: Object;
-};
-type State = {
+
+type P = Props & {};
+type S = {
   filterPaneIsVisible: bool;
 };
 
 /**
  * @module MARCcat
  */
-class MARCcat extends React.Component<Props, State> {
-  constructor(props) {
+class MARCcat extends React.Component<P, S> {
+  constructor(props:P) {
     super(props);
     this.state = {
       filterPaneIsVisible: true,
@@ -35,11 +31,8 @@ class MARCcat extends React.Component<Props, State> {
     this.toggleFilterPane = this.toggleFilterPane.bind(this);
   }
 
-
   componentDidMount() {
-    const { store } = this.props;
-    const { FETCH_LOGICAL_VIEWS } = ActionTypes;
-    store.dispatch({ type: FETCH_LOGICAL_VIEWS });
+    this.props.onLoad();
   }
 
   toggleFilterPane = () => {
@@ -76,12 +69,13 @@ class MARCcat extends React.Component<Props, State> {
     );
   }
 }
-const mapStateToProps = state => ({ ...state });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({
-    fetchLogicalViewAction
-  }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(injectCommonProp(MARCcat));
+export default connect(
+  state => ({ ...state }),
+  (dispatch /* ownProps*/) => ({
+    onLoad: () => dispatch((_ /* getState*/) => {
+      dispatch(fetchLogicalViewAction());
+    }),
+  })
+)(injectCommonProp(MARCcat));
 

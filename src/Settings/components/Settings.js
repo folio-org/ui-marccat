@@ -5,14 +5,13 @@
 import * as React from 'react';
 import Settings from '@folio/stripes-components/lib/Settings';
 import GeneralSettings from './GeneralSettings';
+import MARCcatSettings from './MARCcatSettings';
 
 type MARCcatSelectSettingsProps = {
   stripes: Object;
 };
-type MARCcatSelectSettingsState = {};
-
 export default class MARCcatSelectSettings extends
-  React.Component<MARCcatSelectSettingsProps, MARCcatSelectSettingsState> {
+  React.Component<MARCcatSelectSettingsProps, {}> {
   pages = [
     {
       route: 'general',
@@ -20,6 +19,13 @@ export default class MARCcatSelectSettings extends
         id: 'ui-marccat.settings.general',
       }),
       component: GeneralSettings,
+    },
+    {
+      route: 'marccat',
+      label: this.props.stripes.intl.formatMessage({
+        id: 'ui-marccat.smarccat',
+      }),
+      component: MARCcatSettings,
     },
   ];
 

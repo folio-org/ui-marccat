@@ -15,9 +15,7 @@ module.exports = {
     jest: true
   },
   globals: {
-    process: true,
     Promise: true,
-    SyntheticEvent: true,
   },
   plugins: ["jsx-a11y" , "import"],
   "rules": {		

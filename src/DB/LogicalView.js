@@ -18,8 +18,6 @@ type P = Props & {
 
 function LogicalView({ label, ...props }:P) {
   const { views } = props;
-  const myAction = { type: 'MY_ACTION' };
-  onComponentWillReceiveProps(myAction);
   if (!views || views.length === 0) return <DotLoader />;
   return (
     <Select

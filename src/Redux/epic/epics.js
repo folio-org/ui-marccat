@@ -20,6 +20,7 @@ export function fetchLogicalViewsEpic(action$) {
     .catch(error => Observable.of(marccatActions.fetchLogicalViewsFailure(error.message)));
 }
 
+// TODO FIXME
 export function epic(action$, { getState }) {
   const actions = {
     [ActionTypes.FETCH_LOGICAL_VIEWS]: ActionTypes.FETCH_LOGICAL_VIEWS,

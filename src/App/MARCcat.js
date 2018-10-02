@@ -5,7 +5,7 @@
 import * as React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
-import { AccordionSet, Accordion } from '@folio/stripes-components/lib/Accordion';
+import { AccordionSet, Accordion, FilterAccordionHeader } from '@folio/stripes-components';
 import InfoPopover from '@folio/stripes-components/lib/InfoPopover';
 import { Row, Col } from 'react-flexbox-grid';
 import PropTypes from 'prop-types';
@@ -16,6 +16,7 @@ import { actionMenuItem, EmptyMessage } from '../Lib';
 import SearchEngine from '../Search/SearchEngine';
 import SearchSelectFields from '../Mock/SearchSelectFields';
 import SearchConditions from '../Mock/SearchConditions';
+import { FormatTypeFilter, SuppressedFilter, LanguageFilter } from '../Search/Filter';
 
 
 type P = Props & {};
@@ -43,8 +44,8 @@ class MARCcat extends React.Component<P, S> {
   }
 
   render() {
-    const { okapi } = this.context.store.getState();
-    console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', okapi);
+    const myState = this.context.store.getState();
+    console.log('MARCCATstate: ', myState);
     const { translate } = this.props;
     const { filterPaneIsVisible } = this.state;
     const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
@@ -76,12 +77,18 @@ class MARCcat extends React.Component<P, S> {
               </Col>
             </Row>
             <AccordionSet>
-              <Accordion label={translate({ id: 'ui-marccat.navigator.search' })}>
+              <Accordion
+                label={translate({ id: 'ui-marccat.navigator.search' })}
+                header={FilterAccordionHeader}
+              >
                 <SearchSelectFields />
                 <SearchConditions />
                 <SearchEngine {...this.props} />
               </Accordion>
             </AccordionSet>
+            <SuppressedFilter />
+            <LanguageFilter />
+            <FormatTypeFilter />
           </Pane>}
         <EmptyMessage {...this.props} />
       </Paneset>

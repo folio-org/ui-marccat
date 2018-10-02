@@ -28,6 +28,7 @@ export default function SearchSelectFields({ label }:P) {
   ];
   return (
     <Select
+      style={{ marginTop: '10px' }}
       label={label}
       dataOptions={options}
     />

@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import { connect } from 'react-redux';
-import { onComponentDidMount, onComponentWillReceiveProps } from 'react-redux-lifecycle';
+import { onComponentDidMount } from 'react-redux-lifecycle';
 import Select from '@folio/stripes-components/lib/Select';
 import { Props } from '../Core';
 import { fetchLogicalViewAction } from '../Redux/actions/ActionCreator';

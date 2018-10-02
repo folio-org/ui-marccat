@@ -20,19 +20,14 @@ export function fetchLogicalViewsEpic(action$) {
     .catch(error => Observable.of(marccatActions.fetchLogicalViewsFailure(error.message)));
 }
 
-// TODO FIXME
-export function epic(action$, { getState }) {
-  const actions = {
-    [ActionTypes.FETCH_LOGICAL_VIEWS]: ActionTypes.FETCH_LOGICAL_VIEWS,
-  };
-
+export function fetchSearchEngineRecords(action$) {
   return action$
-    .filter(({ type }) => actions[type])
-    .mergeMap(({ type, data, payload }) => {
-      const state = getState();
-      const method = actions[type];
-      const request = state.marccat.data;
-
-      return Observable.from(new Promise(() => ({ })));
-    });
+    .ofType(ActionTypes.SEARCH)
+    .switchMap(() => {
+      return ajax
+        .getJSON(buildUrl(ENDPOINT.SEARCH_URL, 'lang=ita&view=1&ml=170&q=Manzoni&from=1&to=1&dpo=1'), ENDPOINT.HEADERS)
+        .map((data) => data.fields);
+    })
+    .map(records => marccatActions.fetchSearchEngineRecords(records))
+    .catch(error => Observable.of(marccatActions.fetchLogicalViewsFailure(error.message)));
 }

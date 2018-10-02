@@ -1,37 +1,50 @@
 import React from 'react';
 import Button from '@folio/stripes-components/lib/Button';
-import TextField from '@folio/stripes-components/lib/TextField';
+import SearchField from '@folio/stripes-components/lib/SearchField';
+import { connect } from 'react-redux';
 import { Row, Col } from 'react-flexbox-grid';
 import type { Props } from '../Core/type/props';
+import { fetchRecords } from '../Redux/actions/ActionCreator';
 
 type P = Props & {
   inputValue: string,
 }
 
-export default function SearchEngine(props: P) {
+function SearchEngine(props: P) {
   return (
-    <Row>
+    <form>
       <Row>
         <Col xs={12}>
-          <TextField
-            style={{ width: '100%', marginBottom: '10px' }}
-            defaultValue={props.inputValue}
+          <SearchField
+            fullWidth
             placeholder="What are you searching for?"
-            rows="2"
             name="searchTextArea"
             id="searchTextArea"
-            component="textarea"
           />
         </Col>
       </Row>
       <Row>
         <Col xs={6}>
-          <Button fullWidth buttonStyle="primary" onClick={() => {}}>Search</Button>
+          <Button fullWidth buttonStyle="primary" onClick={props.performSearch}>Search</Button>
         </Col>
         <Col xs={6}>
-          <Button fullWidth buttonStyle="primary" onClick={() => {}}>Scan</Button>
+          <Button fullWidth buttonStyle="primary" onClick={props.performScan}>Scan</Button>
         </Col>
       </Row>
-    </Row>
+    </form>
   );
 }
+
+export default (connect(
+  ({ marccat: { data } }) => ({
+    fields: data.records
+  }),
+  (dispatch /* ownProps*/) => ({
+    performSearch: () => dispatch((_ /* getState*/) => {
+      dispatch(fetchRecords());
+    }),
+    performScan: () => dispatch((_ /* getState*/) => {
+      dispatch(fetchRecords());
+    }),
+  })
+)(SearchEngine));

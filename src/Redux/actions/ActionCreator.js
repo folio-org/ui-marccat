@@ -19,3 +19,20 @@ export const fetchLogicalViewsFailure = (message) => ({
   type: ActionTypes.FETCH_LOGICAL_VIEWS_FAILURE,
   payload: message
 });
+
+
+/**
+ * Action creator for querying a set of records
+ * @param {String} type - resource type
+ * @param {Object} params - query params
+ * @param {String} options.path - path to use for the query
+ */
+export const fetch = (type, params, { path }) => ({
+  type: ActionTypes.QUERY,
+  data: {
+    type,
+    path,
+    params,
+    timestamp: Date.now()
+  }
+});

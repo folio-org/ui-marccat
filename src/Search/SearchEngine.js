@@ -35,10 +35,7 @@ function SearchEngine(props: P) {
   );
 }
 
-export default (connect(
-  ({ marccat: { search } }) => ({
-    fields: search.records
-  }),
+export default (connect(null,
   (dispatch /* ownProps*/) => ({
     performSearch: () => dispatch((_ /* getState*/) => {
       dispatch(fetchRecords());

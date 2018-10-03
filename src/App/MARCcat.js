@@ -16,7 +16,7 @@ import { actionMenuItem, EmptyMessage } from '../Lib';
 import SearchEngine from '../Search/SearchEngine';
 import SearchSelectFields from '../Mock/SearchSelectFields';
 import SearchConditions from '../Mock/SearchConditions';
-import { FormatTypeFilter, SuppressedFilter, LanguageFilter } from '../Search/Filter';
+import { FormatTypeFilter, SuppressedFilter, LanguageFilter, RecordFilter } from '../Search/Filter';
 
 
 type P = Props & {};
@@ -86,6 +86,7 @@ class MARCcat extends React.Component<P, S> {
                 <SearchEngine {...this.props} />
               </Accordion>
             </AccordionSet>
+            <RecordFilter />
             <SuppressedFilter />
             <LanguageFilter />
             <FormatTypeFilter />

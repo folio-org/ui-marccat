@@ -3,7 +3,17 @@ import { ActionTypes } from '../actions/Actions';
 export function searchEngineReducer(state = {}, action) {
   switch (action.type) {
   case ActionTypes.SEARCH:
-    return Object.assign({}, state, { results: action.results, isLoading: true });
+    return {
+      ...state,
+      isLoading: true,
+      error: null
+    };
+  case ActionTypes.RECORD_SUCCESS:
+    return {
+      records: action.payload,
+      isLoading: false,
+      error: null
+    };
   default:
     return state;
   }

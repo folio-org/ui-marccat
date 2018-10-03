@@ -36,8 +36,8 @@ function SearchEngine(props: P) {
 }
 
 export default (connect(
-  ({ marccat: { data } }) => ({
-    fields: data.records
+  ({ marccat: { search } }) => ({
+    fields: search.records
   }),
   (dispatch /* ownProps*/) => ({
     performSearch: () => dispatch((_ /* getState*/) => {

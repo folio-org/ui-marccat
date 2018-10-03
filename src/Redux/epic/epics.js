@@ -26,7 +26,7 @@ export function fetchSearchEngineRecords(action$) {
     .switchMap(() => {
       return ajax
         .getJSON(buildUrl(ENDPOINT.SEARCH_URL, 'lang=ita&view=1&ml=170&q=Manzoni&from=1&to=1&dpo=1'), ENDPOINT.HEADERS)
-        .map((data) => data.fields);
+        .map((records) => records.docs[0].data);
     })
     .map(records => marccatActions.fetchSearchEngineRecords(records))
     .catch(error => Observable.of(marccatActions.fetchLogicalViewsFailure(error.message)));

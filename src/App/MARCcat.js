@@ -28,9 +28,6 @@ type S = {
  * @module MARCcat
  */
 class MARCcat extends React.Component<P, S> {
-  static contextTypes = {
-    store: PropTypes.object,
-  };
   constructor(props:P) {
     super(props);
     this.state = {
@@ -44,8 +41,6 @@ class MARCcat extends React.Component<P, S> {
   }
 
   render() {
-    const myState = this.context.store.getState();
-    console.log('MARCCATstate: ', myState);
     const { translate } = this.props;
     const { filterPaneIsVisible } = this.state;
     const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);

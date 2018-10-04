@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Row, Col } from 'react-flexbox-grid';
 import { FormattedMessage } from 'react-intl';
 import Pane from '@folio/stripes-components/lib/Pane';
+import { fetchDetails } from '../Redux/actions/ActionCreator';
 import * as C from '../Utils/Constant';
 import { DotLoader } from '../Lib';
 
@@ -20,6 +21,7 @@ type BrowsingTableProps = {
 const columnMapping = {
   stringText: <FormattedMessage id="ui-marccat.browsing.col.heading" />,
   database: <FormattedMessage id="ui-marccat.browsing.col.db" />,
+  headingNumber: <FormattedMessage id="ui-marccat.browsing.col.headingNum" />,
   countTitleNameDocuments: <FormattedMessage id="ui-marccat.browsing.col.nt" />,
   countCrossReferences: <FormattedMessage id="ui-marccat.browsing.col.refs" />,
   countAuthorities: <FormattedMessage id="ui-marccat.browsing.col.a" />,
@@ -42,7 +44,7 @@ function BrowsingTable(props: BrowsingTableProps) {
       >
         <MultiColumnList
           fullWidth
-          onRowClick
+          onRowClick={(evt) => props.getRecordDetails(evt)}
           contentData={props.headings}
           visibleColumns={[
             'stringText',
@@ -54,6 +56,7 @@ function BrowsingTable(props: BrowsingTableProps) {
             'verificationlevel',
             'indexingLanguage',
             'accessPointlanguage',
+            'headingNumber'
           ]}
           columnMapping={columnMapping}
           columnWidths={{
@@ -63,9 +66,10 @@ function BrowsingTable(props: BrowsingTableProps) {
             countCrossReferences: '4%',
             countAuthorities: '4%',
             countDocuments: '4%',
-            verificationlevel: '8%',
+            verificationlevel: '4%',
             indexingLanguage: '7%',
-            accessPointlanguage: '9%'
+            accessPointlanguage: '5%',
+            headingNumber: '8%'
           }}
         />
         {props.dataLoaded &&
@@ -82,9 +86,14 @@ function BrowsingTable(props: BrowsingTableProps) {
     );
   }
 }
-
 export default (connect(
   ({ marccat: { scan } }) => ({
     headings: scan.records
+  }),
+  (dispatch /* ownProps*/) => ({
+    getRecordDetails: (evt) => dispatch((_ /* getState*/) => {
+      dispatch(fetchDetails(evt.currentTarget.lastChild.innerText));
+    })
   })
 )(BrowsingTable));
+

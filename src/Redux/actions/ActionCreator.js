@@ -10,6 +10,14 @@ export const fetchRecords = () => ({
 export const fetchScan = () => ({
   type: ActionTypes.SCAN,
 });
+export const fetchDetails = (query) => ({
+  type: ActionTypes.DETAILS,
+  payload: query
+});
+export const fetchDetailsRecords = (records) => ({
+  type: ActionTypes.DETAILS_BY_TITLE,
+  payload: records
+});
 export const fetchScanBrowsingRecords = (records) => ({
   type: ActionTypes.SCAN_SUCCESS,
   payload: records

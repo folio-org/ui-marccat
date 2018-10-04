@@ -17,6 +17,24 @@ export function searchEngineReducer(state = {}, action) {
   }
 }
 
+export function getDetailsRecord(state = {}, action) {
+  switch (action.type) {
+  case ActionTypes.DETAILS:
+    return {
+      ...state,
+      isLoading: false,
+      query: action.payload
+    };
+  case ActionTypes.DETAILS_BY_TITLE:
+    return {
+      records: action.payload,
+      isLoading: true
+    };
+  default:
+    return state;
+  }
+}
+
 export function scanBrowsingReducer(state = {}, action) {
   switch (action.type) {
   case ActionTypes.SCAN:
@@ -25,6 +43,17 @@ export function scanBrowsingReducer(state = {}, action) {
       isLoading: false
     };
   case ActionTypes.SCAN_SUCCESS:
+    return {
+      records: action.payload,
+      isLoading: true
+    };
+  case ActionTypes.DETAILS:
+    return {
+      ...state,
+      isLoading: false,
+      query: action.payload
+    };
+  case ActionTypes.DETAILS_BY_TITLE:
     return {
       records: action.payload,
       isLoading: true

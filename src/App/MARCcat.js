@@ -12,6 +12,7 @@ import type Props from '../Core/type/props';
 import { actionMenuItem } from '../Lib';
 import SearchEngine from '../Search/SearchEngine';
 import ScanBrowsing from '../Scan/ScanBrowsing';
+import RowDetails from '../Scan/RowDetails';
 
 
 type P = Props & {};
@@ -61,6 +62,7 @@ class MARCcat extends React.Component<P, S> {
             <SearchEngine {...this.props} />
           </Pane>}
         <ScanBrowsing {...this.props} />
+        <RowDetails {...this.props} />
       </Paneset>
     );
   }

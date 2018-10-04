@@ -28,8 +28,7 @@ export function fetchSearchEngineRecords(action$) {
         .getJSON(buildUrl(ENDPOINT.SEARCH_URL, 'lang=ita&view=1&ml=170&q=Manzoni&from=1&to=1&dpo=1'), ENDPOINT.HEADERS)
         .map((records) => records.docs[0].data);
     })
-    .map(records => marccatActions.fetchSearchEngineRecords(records))
-    .catch(error => Observable.of(marccatActions.fetchLogicalViewsFailure(error.message)));
+    .map(records => marccatActions.fetchSearchEngineRecords(records));
 }
 
 export function fetchScanBrowsingRecords(action$) {
@@ -40,7 +39,16 @@ export function fetchScanBrowsingRecords(action$) {
         .getJSON(buildUrl(ENDPOINT.BROWSING_FIRST_PAGE, 'query=ti%20storia&view=1&mainLibrary=170&pageSize=30&lang=eng'), ENDPOINT.HEADERS)
         .map((records) => records.headings);
     })
-    .map(records => marccatActions.fetchScanBrowsingRecords(records))
-    .catch(error => Observable.of(marccatActions.fetchLogicalViewsFailure(error.message)));
+    .map(records => marccatActions.fetchScanBrowsingRecords(records));
 }
 
+export function fetchDetailsRecords(action$) {
+  return action$
+    .ofType(ActionTypes.DETAILS)
+    .switchMap(() => {
+      return ajax
+        .getJSON(buildUrl(ENDPOINT.SEARCH_URL, 'lang=ita&view=1&ml=170&q=tk%201909969&from=1&to=1&dpo=1'), ENDPOINT.HEADERS)
+        .map((records) => records.docs);
+    })
+    .map(records => marccatActions.fetchDetailsRecords(records));
+}

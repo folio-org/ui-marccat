@@ -31,3 +31,16 @@ export function fetchSearchEngineRecords(action$) {
     .map(records => marccatActions.fetchSearchEngineRecords(records))
     .catch(error => Observable.of(marccatActions.fetchLogicalViewsFailure(error.message)));
 }
+
+export function fetchScanBrowsingRecords(action$) {
+  return action$
+    .ofType(ActionTypes.SCAN)
+    .switchMap(() => {
+      return ajax
+        .getJSON(buildUrl(ENDPOINT.BROWSING_FIRST_PAGE, 'query=ti%20storia&view=1&mainLibrary=170&pageSize=30&lang=eng'), ENDPOINT.HEADERS)
+        .map((records) => records.headings);
+    })
+    .map(records => marccatActions.fetchScanBrowsingRecords(records))
+    .catch(error => Observable.of(marccatActions.fetchLogicalViewsFailure(error.message)));
+}
+

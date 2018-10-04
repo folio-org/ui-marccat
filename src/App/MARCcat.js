@@ -5,18 +5,13 @@
 import * as React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
-import { AccordionSet, Accordion, FilterAccordionHeader } from '@folio/stripes-components';
-import InfoPopover from '@folio/stripes-components/lib/InfoPopover';
-import { Row, Col } from 'react-flexbox-grid';
 import PropTypes from 'prop-types';
 import { LogicalView } from '../DB';
 import { injectCommonProp } from '../Core';
 import type Props from '../Core/type/props';
-import { actionMenuItem, EmptyMessage } from '../Lib';
+import { actionMenuItem } from '../Lib';
 import SearchEngine from '../Search/SearchEngine';
-import SearchSelectFields from '../Mock/SearchSelectFields';
-import SearchConditions from '../Mock/SearchConditions';
-import { FormatTypeFilter, SuppressedFilter, LanguageFilter, RecordFilter } from '../Search/Filter';
+import ScanBrowsing from '../Scan/ScanBrowsing';
 
 
 type P = Props & {};
@@ -28,6 +23,9 @@ type S = {
  * @module MARCcat
  */
 class MARCcat extends React.Component<P, S> {
+  static contextTypes = {
+    store: PropTypes.object,
+  };
   constructor(props:P) {
     super(props);
     this.state = {
@@ -44,6 +42,7 @@ class MARCcat extends React.Component<P, S> {
     const { translate } = this.props;
     const { filterPaneIsVisible } = this.state;
     const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
+    const myState = this.context.store.getState();
     return (
       <Paneset static>
         {filterPaneIsVisible &&
@@ -55,38 +54,13 @@ class MARCcat extends React.Component<P, S> {
             paneTitle={translate({ id: 'ui-marccat.searchAndFilter' })}
             onClose={this.toggleFilterPane}
           >
-            <Row>
-              <Col xs={11}>
-                <LogicalView
-                  label={translate({ id: 'ui-marccat.database.label' })}
-                  {...this.props}
-                />
-              </Col>
-              <Col xs={1}>
-                <InfoPopover
-                  content="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                  buttonLabel="Read more"
-                  buttonHref="https://wiki.folio.org/"
-                  buttonTarget="_blank"
-                />
-              </Col>
-            </Row>
-            <AccordionSet>
-              <Accordion
-                label={translate({ id: 'ui-marccat.navigator.search' })}
-                header={FilterAccordionHeader}
-              >
-                <SearchSelectFields />
-                <SearchConditions />
-                <SearchEngine {...this.props} />
-              </Accordion>
-            </AccordionSet>
-            <RecordFilter />
-            <SuppressedFilter />
-            <LanguageFilter />
-            <FormatTypeFilter />
+            <LogicalView
+              label={translate({ id: 'ui-marccat.database.label' })}
+              {...this.props}
+            />
+            <SearchEngine {...this.props} />
           </Pane>}
-        <EmptyMessage {...this.props} />
+        <ScanBrowsing {...this.props} />
       </Paneset>
     );
   }

@@ -4,8 +4,9 @@
  * @flow
  */
 import React from 'react';
-import Select from '@folio/stripes-components/lib/Select';
+import { Selection } from '@folio/stripes-components';
 import { Props } from '../Core';
+
 
 type P = Props & {
   label: string;
@@ -20,7 +21,8 @@ export default function SearchConditions({ label }:P) {
     { label: 'Exact match', value: '3' },
   ];
   return (
-    <Select
+    <Selection
+      placeholder="Select condition..."
       label={label}
       dataOptions={options}
     />

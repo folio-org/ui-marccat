@@ -4,6 +4,8 @@ export const handler = {};
 
 export const ActionTypes = {
   SEARCH: '@@ui-marccat/SEARCH',
+  SCAN: '@@ui-marccat/SCAN',
+  SCAN_SUCCESS: '@@ui-marccat/SCAN_SUCCESS',
   QUERY: '@@ui-marccat/QUERY',
   FIND: '@@ui-marccat/FIND',
   SAVE: '@@ui-marccat/SAVE',

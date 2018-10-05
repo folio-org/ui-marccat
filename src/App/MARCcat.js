@@ -62,6 +62,7 @@ class MARCcat extends React.Component<P, S> {
             <SearchEngine {...this.props} />
           </Pane>}
         <ScanBrowsing {...this.props} />
+        <RowDetails {...this.props} />
       </Paneset>
     );
   }

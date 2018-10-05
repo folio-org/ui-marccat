@@ -48,7 +48,7 @@ export function fetchDetailsRecords(action$) {
     .switchMap(() => {
       return ajax
         .getJSON(buildUrl(ENDPOINT.SEARCH_URL, 'lang=ita&view=1&ml=170&q=tk%201909969&from=1&to=1&dpo=1'), ENDPOINT.HEADERS)
-        .map((records) => records.docs);
+        .map((records) => records.docs[0].data);
     })
     .map(records => marccatActions.fetchDetailsRecords(records));
 }

@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { LogicalView } from '../DB';
 import { injectCommonProp } from '../Core';
 import type Props from '../Core/type/props';
-import { actionMenuItem } from '../Lib';
+import { actionMenuItem, EmptyMessage } from '../Lib';
 import SearchEngine from '../Search/SearchEngine';
 import ScanBrowsing from '../Scan/ScanBrowsing';
 import RowDetails from '../Scan/RowDetails';
@@ -61,6 +61,7 @@ class MARCcat extends React.Component<P, S> {
             />
             <SearchEngine {...this.props} />
           </Pane>}
+        <EmptyMessage {...this.props} />
         <ScanBrowsing {...this.props} />
         <RowDetails {...this.props} />
       </Paneset>

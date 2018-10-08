@@ -1,6 +1,6 @@
 import { ActionTypes } from '../actions/Actions';
 
-export function searchEngineReducer(state = {}, action) {
+export function searchEngineReducer(state = { resource: 'search' }, action) {
   switch (action.type) {
   case ActionTypes.SEARCH:
     return {
@@ -17,7 +17,7 @@ export function searchEngineReducer(state = {}, action) {
   }
 }
 
-export function getDetailsRecord(state = {}, action) {
+export function getDetailsRecord(state = { resource: 'details' }, action) {
   switch (action.type) {
   case ActionTypes.DETAILS:
     return {
@@ -35,7 +35,7 @@ export function getDetailsRecord(state = {}, action) {
   }
 }
 
-export function scanBrowsingReducer(state = {}, action) {
+export function scanBrowsingReducer(state = { resource: 'scan' }, action) {
   switch (action.type) {
   case ActionTypes.SCAN:
     return {
@@ -47,17 +47,17 @@ export function scanBrowsingReducer(state = {}, action) {
       records: action.payload,
       isLoading: true
     };
-  case ActionTypes.DETAILS:
-    return {
-      ...state,
-      isLoading: false,
-      query: action.payload
-    };
-  case ActionTypes.DETAILS_BY_TITLE:
-    return {
-      records: action.payload,
-      isLoading: true
-    };
+  // case ActionTypes.DETAILS:
+  //   return {
+  //     ...state,
+  //     isLoading: false,
+  //     query: action.payload
+  //   };
+  // case ActionTypes.DETAILS_BY_TITLE:
+  //   return {
+  //     records: action.payload,
+  //     isLoading: true
+  //   };
   default:
     return state;
   }

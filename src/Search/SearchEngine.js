@@ -4,11 +4,13 @@ import SearchField from '@folio/stripes-components/lib/SearchField';
 import { AccordionSet, Accordion, FilterAccordionHeader } from '@folio/stripes-components';
 import { connect } from 'react-redux';
 import { Row, Col } from 'react-flexbox-grid';
+import InfoPopover from '@folio/stripes-components/lib/InfoPopover';
 import type { Props } from '../Core/type/props';
-import { fetchRecords, fetchScan } from '../Redux/actions/ActionCreator';
+import { fetchScan } from '../Redux/actions/ActionCreator';
 import SearchSelectFields from '../Mock/SearchSelectFields';
 import SearchConditions from '../Mock/SearchConditions';
 import FiltersContainer from '../Lib/Filter/FiltersContainer';
+import { ActionTypes } from '../Redux/actions';
 
 type P = Props & {
   inputValue: string,
@@ -16,6 +18,7 @@ type P = Props & {
 }
 
 function SearchEngine(props: P) {
+  const { store } = props;
   return (
     <AccordionSet>
       <Accordion
@@ -24,12 +27,20 @@ function SearchEngine(props: P) {
       >
         <form >
           <Row>
-            <Col xs={12}>
+            <Col xs={11}>
               <SearchSelectFields />
+            </Col>
+            <Col xs={1}>
+              <InfoPopover
+                content="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                buttonLabel="Read more"
+                buttonHref="https://wiki.folio.org/"
+                buttonTarget="_blank"
+              />
             </Col>
           </Row>
           <Row>
-            <Col xs={12}>
+            <Col xs={11}>
               <SearchField
                 fullWidth
                 placeholder="What are you searching for?"
@@ -39,16 +50,26 @@ function SearchEngine(props: P) {
             </Col>
           </Row>
           <Row>
-            <Col xs={12}>
+            <Col xs={11}>
               <SearchConditions />
             </Col>
           </Row>
           <Row>
             <Col xs={6}>
-              <Button fullWidth buttonStyle="primary" onClick={props.performSearch}>Search</Button>
+              <Button
+                fullWidth
+                buttonStyle="primary"
+                onClick={(e) => store.dispatch({ type: ActionTypes.SEARCH, query: e.target.form[2].defaultValue })}
+              >Search
+              </Button>
             </Col>
             <Col xs={6}>
-              <Button fullWidth buttonStyle="primary" onClick={props.performScan}>Scan</Button>
+              <Button
+                fullWidth
+                buttonStyle="primary"
+                onClick={(e) => store.dispatch({ type: ActionTypes.SCAN, query: e.target.form[2].defaultValue })}
+              >Scan
+              </Button>
             </Col>
           </Row>
         </form>
@@ -57,12 +78,4 @@ function SearchEngine(props: P) {
     </AccordionSet>
   );
 }
-export default (connect(null,
-  (dispatch /* ownProps*/) => ({
-    performSearch: () => dispatch((_ /* getState*/) => {
-      dispatch(fetchRecords());
-    }),
-    performScan: () => dispatch((_ /* getState*/) => {
-      dispatch(fetchScan());
-    }),
-  }))(SearchEngine));
+export default (connect(null, null)(SearchEngine));

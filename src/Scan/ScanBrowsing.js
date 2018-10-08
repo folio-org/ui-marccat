@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { Row, Col } from 'react-flexbox-grid';
 import { FormattedMessage } from 'react-intl';
 import Pane from '@folio/stripes-components/lib/Pane';
-import { fetchDetails } from '../Redux/actions/ActionCreator';
 import * as C from '../Utils/Constant';
 import { DotLoader } from '../Lib';
+import { ActionTypes } from '../Redux/actions';
 
 
 type BrowsingTableProps = {
@@ -32,6 +32,7 @@ const columnMapping = {
 };
 
 function BrowsingTable(props: BrowsingTableProps) {
+  const { store } = props;
   if (!props.headings || props.headings.length === 0) {
     return <DotLoader />;
   } else {
@@ -44,7 +45,7 @@ function BrowsingTable(props: BrowsingTableProps) {
       >
         <MultiColumnList
           fullWidth
-          onRowClick={(evt) => props.getRecordDetails(evt)}
+          onRowClick={(e) => store.dispatch({ type: ActionTypes.DETAILS, query: e.currentTarget.lastChild.innerText })}
           contentData={props.headings}
           visibleColumns={[
             'stringText',
@@ -89,11 +90,6 @@ function BrowsingTable(props: BrowsingTableProps) {
 export default (connect(
   ({ marccat: { scan } }) => ({
     headings: scan.records
-  }),
-  (dispatch /* ownProps*/) => ({
-    getRecordDetails: (evt) => dispatch((_ /* getState*/) => {
-      dispatch(fetchDetails(evt.currentTarget.lastChild.innerText));
-    })
   })
 )(BrowsingTable));
 

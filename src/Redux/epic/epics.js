@@ -23,9 +23,9 @@ export function fetchLogicalViewsEpic(action$) {
 export function fetchSearchEngineRecords(action$) {
   return action$
     .ofType(ActionTypes.SEARCH)
-    .switchMap(() => {
+    .switchMap((data) => {
       return ajax
-        .getJSON(buildUrl(ENDPOINT.SEARCH_URL, 'lang=ita&view=1&ml=170&q=Manzoni&from=1&to=1&dpo=1'), ENDPOINT.HEADERS)
+        .getJSON(buildUrl(ENDPOINT.SEARCH_URL, `lang=ita&view=1&ml=170&q=${data.query}&from=1&to=1&dpo=1`), ENDPOINT.HEADERS)
         .map((records) => records.docs[0].data);
     })
     .map(records => marccatActions.fetchSearchEngineRecords(records));
@@ -34,9 +34,9 @@ export function fetchSearchEngineRecords(action$) {
 export function fetchScanBrowsingRecords(action$) {
   return action$
     .ofType(ActionTypes.SCAN)
-    .switchMap(() => {
+    .switchMap((data) => {
       return ajax
-        .getJSON(buildUrl(ENDPOINT.BROWSING_FIRST_PAGE, 'query=ti%20storia&view=1&mainLibrary=170&pageSize=30&lang=eng'), ENDPOINT.HEADERS)
+        .getJSON(buildUrl(ENDPOINT.BROWSING_FIRST_PAGE, `query=${data.query}&view=1&mainLibrary=170&pageSize=30&lang=eng`), ENDPOINT.HEADERS)
         .map((records) => records.headings);
     })
     .map(records => marccatActions.fetchScanBrowsingRecords(records));
@@ -45,9 +45,9 @@ export function fetchScanBrowsingRecords(action$) {
 export function fetchDetailsRecords(action$) {
   return action$
     .ofType(ActionTypes.DETAILS)
-    .switchMap(() => {
+    .switchMap((data) => {
       return ajax
-        .getJSON(buildUrl(ENDPOINT.SEARCH_URL, 'lang=ita&view=1&ml=170&q=tk%201909969&from=1&to=1&dpo=1'), ENDPOINT.HEADERS)
+        .getJSON(buildUrl(ENDPOINT.SEARCH_URL, `lang=ita&view=1&ml=170&q=tk%20${data.query}&from=1&to=1&dpo=1`), ENDPOINT.HEADERS)
         .map((records) => records.docs[0].data);
     })
     .map(records => marccatActions.fetchDetailsRecords(records));

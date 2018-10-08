@@ -9,6 +9,7 @@ export function searchEngineReducer(state = { resource: 'search' }, action) {
     };
   case ActionTypes.RECORD_SUCCESS:
     return {
+      ...state,
       records: action.payload,
       isLoading: true
     };
@@ -27,6 +28,7 @@ export function getDetailsRecord(state = { resource: 'details' }, action) {
     };
   case ActionTypes.DETAILS_BY_TITLE:
     return {
+      ...state,
       records: action.payload,
       isLoading: true
     };
@@ -44,20 +46,10 @@ export function scanBrowsingReducer(state = { resource: 'scan' }, action) {
     };
   case ActionTypes.SCAN_SUCCESS:
     return {
+      ...state,
       records: action.payload,
       isLoading: true
     };
-  // case ActionTypes.DETAILS:
-  //   return {
-  //     ...state,
-  //     isLoading: false,
-  //     query: action.payload
-  //   };
-  // case ActionTypes.DETAILS_BY_TITLE:
-  //   return {
-  //     records: action.payload,
-  //     isLoading: true
-  //   };
   default:
     return state;
   }
@@ -73,15 +65,9 @@ export function logicalViewReducer(state = { resource: 'logical' }, action) {
     };
   case ActionTypes.FETCH_LOGICAL_VIEWS_SUCCESS:
     return {
+      ...state,
       views: action.payload,
       isLoading: false,
-      error: null
-    };
-  case ActionTypes.FETCH_LOGICAL_VIEWS_FAILURE:
-    return {
-      views: [{}],
-      isLoading: false,
-      error: action.error
     };
   default:
     return state;

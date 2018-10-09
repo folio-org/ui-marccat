@@ -43,7 +43,6 @@ class MARCcat extends React.Component<P, S> {
     const { translate } = this.props;
     const { filterPaneIsVisible } = this.state;
     const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
-    const myState = this.context.store.getState();
     return (
       <Paneset static>
         {filterPaneIsVisible &&

@@ -8,7 +8,7 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import * as C from '../Utils/Constant';
 import { DotLoader } from '../Lib';
 import { ActionTypes } from '../Redux/actions';
-
+import MARCcat from '../App';
 
 type BrowsingTableProps = {
     headings: Array<any>,
@@ -73,16 +73,14 @@ function BrowsingTable(props: BrowsingTableProps) {
             headingNumber: '8%'
           }}
         />
-        {props.dataLoaded &&
-          <Row>
-            <Col xs={6} >
-              <Button fullWidth buttonStyle="primary" onClick={(evt) => props.getPreviousPage(evt, props.inputValue)}>Previous Page</Button>
-            </Col>
-            <Col xs={6}>
-              <Button fullWidth buttonStyle="primary" onClick={(evt) => props.getNextPage(evt, props.inputValue)}>Next Page</Button>
-            </Col>
-          </Row>
-        }
+        <Row>
+          <Col xs={6} >
+            <Button fullWidth buttonStyle="primary" onClick={() => {}} >Previous Page</Button>
+          </Col>
+          <Col xs={6}>
+            <Button fullWidth buttonStyle="primary" onClick={() => {}} >Next Page</Button>
+          </Col>
+        </Row>
       </Pane>
     );
   }
@@ -90,6 +88,6 @@ function BrowsingTable(props: BrowsingTableProps) {
 export default (connect(
   ({ marccat: { scan } }) => ({
     headings: scan.records
-  })
+  }),
 )(BrowsingTable));
 

@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { Row, Col } from 'react-flexbox-grid';
 import InfoPopover from '@folio/stripes-components/lib/InfoPopover';
 import type { Props } from '../Core/type/props';
-import { fetchScan } from '../Redux/actions/ActionCreator';
 import SearchSelectFields from '../Mock/SearchSelectFields';
 import SearchConditions from '../Mock/SearchConditions';
 import FiltersContainer from '../Lib/Filter/FiltersContainer';

@@ -61,7 +61,6 @@ export function logicalViewReducer(state = { resource: 'logical' }, action) {
     return {
       ...state,
       isLoading: true,
-      error: null
     };
   case ActionTypes.FETCH_LOGICAL_VIEWS_SUCCESS:
     return {

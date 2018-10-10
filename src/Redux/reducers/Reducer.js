@@ -1,6 +1,6 @@
 import { ActionTypes } from '../actions/Actions';
 
-export function searchEngineReducer(state = {}, action) {
+export function searchEngineReducer(state = { resource: 'search' }, action) {
   switch (action.type) {
   case ActionTypes.SEARCH:
     return {
@@ -9,6 +9,7 @@ export function searchEngineReducer(state = {}, action) {
     };
   case ActionTypes.RECORD_SUCCESS:
     return {
+      ...state,
       records: action.payload,
       isLoading: true
     };
@@ -17,7 +18,26 @@ export function searchEngineReducer(state = {}, action) {
   }
 }
 
-export function scanBrowsingReducer(state = {}, action) {
+export function getDetailsRecord(state = { resource: 'details' }, action) {
+  switch (action.type) {
+  case ActionTypes.DETAILS:
+    return {
+      ...state,
+      isLoading: false,
+      query: action.payload
+    };
+  case ActionTypes.DETAILS_BY_TITLE:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: true
+    };
+  default:
+    return state;
+  }
+}
+
+export function scanBrowsingReducer(state = { resource: 'scan' }, action) {
   switch (action.type) {
   case ActionTypes.SCAN:
     return {
@@ -26,6 +46,7 @@ export function scanBrowsingReducer(state = {}, action) {
     };
   case ActionTypes.SCAN_SUCCESS:
     return {
+      ...state,
       records: action.payload,
       isLoading: true
     };
@@ -40,19 +61,12 @@ export function logicalViewReducer(state = { resource: 'logical' }, action) {
     return {
       ...state,
       isLoading: true,
-      error: null
     };
   case ActionTypes.FETCH_LOGICAL_VIEWS_SUCCESS:
     return {
+      ...state,
       views: action.payload,
       isLoading: false,
-      error: null
-    };
-  case ActionTypes.FETCH_LOGICAL_VIEWS_FAILURE:
-    return {
-      views: [{}],
-      isLoading: false,
-      error: action.error
     };
   default:
     return state;

@@ -10,7 +10,7 @@ module.exports = {
   okapi: { url, tenant: 'diku' },
   config: {
     autoLogin: {
-      username: 'diku_admin',
+      username: 'diku',
       password: 'admin',
     },
     languages: (process.env.NODE_ENV === 'DEBUG') ? ['en'] : ['en'],

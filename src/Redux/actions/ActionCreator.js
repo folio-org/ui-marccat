@@ -7,8 +7,9 @@ export const fetchLogicalViewAction = () => ({
 export const fetchRecords = () => ({
   type: ActionTypes.SEARCH,
 });
-export const fetchScan = () => ({
-  type: ActionTypes.SCAN,
+export const fetchDetailsRecords = (records) => ({
+  type: ActionTypes.DETAILS_BY_TITLE,
+  payload: records
 });
 export const fetchScanBrowsingRecords = (records) => ({
   type: ActionTypes.SCAN_SUCCESS,

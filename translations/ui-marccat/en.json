@@ -223,6 +223,8 @@
   "browsing.col.acc":"Acc",
   "browsing.previous":"Previous",
   "browsing.next":"Next",
+  "browsing.detail":"Record details",
+  "browsing.col.headingNum": "Heading num.",
   "validation.error.template.name.required": "The name of template is required",
 
   "perms.permissions.template.create": true

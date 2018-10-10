@@ -6,6 +6,8 @@ export const ActionTypes = {
   SEARCH: '@@ui-marccat/SEARCH',
   SCAN: '@@ui-marccat/SCAN',
   SCAN_SUCCESS: '@@ui-marccat/SCAN_SUCCESS',
+  DETAILS: '@@ui-marccat/DETAILS',
+  DETAILS_BY_TITLE: '@@ui-marccat/DETAILS_BY_TITLE',
   QUERY: '@@ui-marccat/QUERY',
   FIND: '@@ui-marccat/FIND',
   SAVE: '@@ui-marccat/SAVE',

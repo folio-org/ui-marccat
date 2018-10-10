@@ -25,7 +25,8 @@ function RowDetails(props:Props) {
 
 
 export default (connect(
-  ({ marccat: { details } }) => ({
-    items: details.records
+  ({ marccat: { details, scan } }) => ({
+    items: details.records,
+    headings: scan.records
   })
 )(RowDetails));

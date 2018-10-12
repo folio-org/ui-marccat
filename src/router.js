@@ -9,7 +9,6 @@ import Redirect from 'react-router-dom/Redirect';
 import Switch from 'react-router-dom/Switch';
 import type { Props } from './Core/type/props';
 import MARCcat from './App';
-import ScanBrowsing from './Scan/ScanBrowsing';
 
 type P = Props & {};
 
@@ -24,7 +23,6 @@ export default class Router extends React.Component<*> {
     const rootPath = this.props.match.path;
     return (
       <Switch>
-        <ConnectedRoute path={`${rootPath}/browsing`} {...this.props} component={ScanBrowsing} id="browsing_search_nav_root" />
         <ConnectedRoute path={`${rootPath}`} {...this.props} component={MARCcat} id="nav_root" />
         <Route render={() => (<Redirect to={`${rootPath}`} id="nav_root_redirect" />)} />
       </Switch>

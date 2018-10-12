@@ -1,0 +1,10 @@
+.search-filters {
+    & .selectionControl {
+      margin-bottom:0;
+    }
+  
+    & [role="tabpanel"] {
+        margin-bottom:0;
+    }
+  }
+  

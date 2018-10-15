@@ -54,14 +54,9 @@ class MARCcat extends React.Component<P, S> {
             paneTitle={translate({ id: 'ui-marccat.searchAndFilter' })}
             onClose={this.toggleFilterPane}
           >
-            <LogicalView
-              label={translate({ id: 'ui-marccat.database.label' })}
-              {...this.props}
-            />
             <SearchEngine {...this.props} />
           </Pane>}
         <SearchResults {...this.props} />
-        <RowDetails {...this.props} />
       </Paneset>
     );
   }

@@ -7,7 +7,7 @@ export default function LanguageFilter(props) {
       searchType="packages"
       availableFilters={[{
         name: 'languageFilter',
-        label: 'Language',
+        label: 'Language of text',
         defaultValue: '0',
         options: [
           { label: 'English', value: '0' },

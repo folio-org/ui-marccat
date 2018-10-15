@@ -182,7 +182,8 @@
   "search.wildCard.replace1" : "Replace 0.1 or more characters",
   "search.wildCard.replace2" : "Replace one character",
   "search.wildCard.restriction" : "Restriction",
-   
+  "search.record": "Records",
+
   "search.wrong.input":"Wrong input on search field",
   "advancedsearch.categories.select": "Categories",
   "advancedsearch.indexes.select": "Indexes",

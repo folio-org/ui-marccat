@@ -1,6 +1,6 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
 import SearchField from '@folio/stripes-components/lib/SearchField';
-import Button from '@folio/stripes-components/lib/Button';
 import { AccordionSet, Accordion, FilterAccordionHeader } from '@folio/stripes-components';
 import { connect } from 'react-redux';
 import { Row, Col } from 'react-flexbox-grid';
@@ -9,7 +9,7 @@ import type { Props } from '../Core/type/props';
 import SearchSelectFields from '../Mock/SearchSelectFields';
 import SearchConditions from '../Mock/SearchConditions';
 import FiltersContainer from '../Lib/Filter/FiltersContainer';
-import { ActionTypes } from '../Redux/actions';
+import { ActionTypes } from '../Redux/actions/Actions';
 
 import styles from './Search.css';
 
@@ -19,15 +19,23 @@ type P = Props & {
 }
 
 function SearchEngine(props: P) {
-  const { store } = props;
+  function handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const { store } = props;
+      store.dispatch({ type: ActionTypes.SEARCH, query: e.target.form[2].defaultValue });
+    }
+  }
+
   return (
     <div className={styles['search-filters']}>
       <AccordionSet>
         <Accordion
+          separator={false}
           label={props.translate({ id: 'ui-marccat.navigator.search' })}
           header={FilterAccordionHeader}
         >
-          <form >
+          <form onKeyDown={handleKeyDown}>
             <Row>
               <Col xs={11}>
                 <SearchSelectFields />
@@ -54,16 +62,6 @@ function SearchEngine(props: P) {
             <Row>
               <Col xs={11}>
                 <SearchConditions />
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={11}>
-                <Button
-                  fullWidth
-                  buttonStyle="primary"
-                  onClick={(e) => store.dispatch({ type: ActionTypes.SEARCH, query: e.target.form[2].defaultValue })}
-                >Search
-                </Button>
               </Col>
             </Row>
           </form>

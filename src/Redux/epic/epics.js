@@ -36,7 +36,7 @@ export function fetchScanBrowsingRecords(action$) {
     .ofType(ActionTypes.SCAN)
     .switchMap((data) => {
       return ajax
-        .getJSON(buildUrl(ENDPOINT.BROWSING_FIRST_PAGE, `query=${data.query}&view=1&mainLibrary=170&pageSize=30&lang=eng`), ENDPOINT.HEADERS)
+        .getJSON(buildUrl(ENDPOINT.BROWSING_FIRST_PAGE, `query=${data.query}&view=1&mainLibrary=170&pageSize=10&lang=eng`), ENDPOINT.HEADERS)
         .map((records) => records.headings);
     })
     .map(records => marccatActions.fetchScanBrowsingRecords(records));

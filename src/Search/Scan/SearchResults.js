@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars*/
 import React from 'react';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import { connect } from 'react-redux';
@@ -7,7 +8,6 @@ import * as C from '../../Utils/Constant';
 import { ActionTypes } from '../../Redux/actions';
 import type { Props } from '../../Core';
 import { actionMenuItem, ToolbarButtonMenu, EmptyMessage } from '../../Lib';
-import css from '../Search.css';
 
 type P = Props & {
     headings: Array<any>,

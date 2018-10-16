@@ -8,6 +8,7 @@ import * as C from '../../Utils/Constant';
 import { ActionTypes } from '../../Redux/actions';
 import type { Props } from '../../Core';
 import { actionMenuItem, ToolbarButtonMenu, EmptyMessage } from '../../Lib';
+import css from '../../Search/Search.css';
 
 type P = Props & {
     headings: Array<any>,
@@ -34,21 +35,13 @@ function SearchResults(props: P) {
   const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
   const rightMenu = <ToolbarButtonMenu create {...props} label="+ New" style={rightButton} />;
 
-  // icona da utilizzare per record di authority
-  const icon = {
-    src: '../../../icons/authority.png',
-    alt: 'authority',
-    title: 'authority record',
-  };
-
   const resultsFormatter = {
-    source: x => (
+    resultView: x => (
       <AppIcon
-        app={x.source ? 'marccat' : 'marccat'}
-        iconKey={x.source ? 'instance' : 'app'}
+        className={x.recordView === 1 ? css.bibliographic : css.authority}
         size="small"
       >
-        {x.source ? 'Authority' : 'Bibliographic'}
+        {x.recordView === 1 ? 'Bib' : 'Auth'}
       </AppIcon>
     )
   };
@@ -68,7 +61,7 @@ function SearchResults(props: P) {
         contentData={props.headings}
         formatter={resultsFormatter}
         visibleColumns={[
-          'source',
+          'resultView',
           'data'
         ]}
       />

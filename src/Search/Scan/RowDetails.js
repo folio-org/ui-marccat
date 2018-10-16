@@ -1,4 +1,5 @@
 import React from 'react';
+import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import TextArea from '@folio/stripes-components/lib/TextArea';
@@ -16,8 +17,8 @@ function RowDetails(props:Props) {
       paneTitle={<FormattedMessage id="ui-marccat.browsing.detail" />}
       appIcon={{ app: C.META.ICON_TITLE }}
     >
-      <TextArea
-        rows="40"
+      <KeyValue
+        label="Leader"
         value={props.items}
       />
     </Pane>

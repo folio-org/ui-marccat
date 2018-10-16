@@ -15,5 +15,4 @@ const startDebug = () => {
   setDebugVariable();
   execSync('stripes serve --lint config/stripes.config.js');
 };
-
 startDebug();

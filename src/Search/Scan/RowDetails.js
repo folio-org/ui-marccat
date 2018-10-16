@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import TextArea from '@folio/stripes-components/lib/TextArea';
 import Pane from '@folio/stripes-components/lib/Pane';
-import * as C from '../Utils/Constant';
+import * as C from '../../Utils/Constant';
 
 type Props= {
     items:Array<any>,
@@ -17,6 +17,7 @@ function RowDetails(props:Props) {
       appIcon={{ app: C.META.ICON_TITLE }}
     >
       <TextArea
+        rows="40"
         value={props.items}
       />
     </Pane>

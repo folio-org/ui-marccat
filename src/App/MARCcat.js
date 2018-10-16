@@ -11,8 +11,8 @@ import { injectCommonProp } from '../Core';
 import type Props from '../Core/type/props';
 import { actionMenuItem, EmptyMessage } from '../Lib';
 import SearchEngine from '../Search/SearchEngine';
-import ScanBrowsing from '../Scan/ScanBrowsing';
-import RowDetails from '../Scan/RowDetails';
+import SearchResults from '../Search/Scan/SearchResults';
+import RowDetails from '../Search/Scan/RowDetails';
 
 
 type P = Props & {};
@@ -54,15 +54,9 @@ class MARCcat extends React.Component<P, S> {
             paneTitle={translate({ id: 'ui-marccat.searchAndFilter' })}
             onClose={this.toggleFilterPane}
           >
-            <LogicalView
-              label={translate({ id: 'ui-marccat.database.label' })}
-              {...this.props}
-            />
             <SearchEngine {...this.props} />
           </Pane>}
-        <EmptyMessage {...this.props} />
-        <ScanBrowsing {...this.props} />
-        <RowDetails {...this.props} />
+        <SearchResults {...this.props} />
       </Paneset>
     );
   }

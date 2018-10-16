@@ -17,11 +17,23 @@ type P = Props & {
     dataLoaded: boolean,
 }
 
+
 function SearchResults(props: P) {
+  const rightButton = {
+    marginRight: '10px',
+    float: 'right',
+  };
   const { store } = props;
   if (!props.headings || props.headings.length === 0) return <EmptyMessage {...props} />;
+
+  const marcJSONRecords = [];
+  props.headings.forEach(r => marcJSONRecords.push(JSON.parse(r.data)));
+
+  const fields001to009 = marcJSONRecords.fields.filter((field) => (Object.keys(field)[0]).startsWith('00'));
+  const fields010andUp = marcJSONRecords.fields.filter((field) => !(Object.keys(field)[0]).startsWith('00'));
+ 
   const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
-  const rightMenu = <ToolbarButtonMenu create {...props} label="+ New" className={css.mr} />;
+  const rightMenu = <ToolbarButtonMenu create {...props} label="+ New" style={rightButton} />;
   return (
     <Pane
       defaultWidth="fullWidth"

@@ -10,8 +10,8 @@ export default function SuppressedFilter(props) {
         label: 'Record Type',
         defaultValue: '0',
         options: [
-          { label: 'Authority records', value: '1' },
           { label: 'Bibliographic records', value: '0' },
+          { label: 'Authority records', value: '1' }
         ]
       }]}
       {...props}

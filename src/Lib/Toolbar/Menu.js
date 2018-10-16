@@ -11,6 +11,7 @@ type ToolbarMenuProps = {
   icon: Array,
   content: React.node,
   className?: string,
+  style?: Object;
   withPrinter?: bool,
   onClick: () => void;
   type?: string;
@@ -41,14 +42,14 @@ export const ToolbarMenu = (props: ToolbarMenuProps) => {
 };
 
 export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
-  const { create, className, onClick, label, type, disabled } = props;
+  const { create, style, onClick, label, type, disabled } = props;
   const { formatMessage } = props.stripes.intl;
   return (
     <PaneMenu>
       {create &&
         <IfPermission perm="perms.permissions.template.create">
           <Button
-            buttonClass={className}
+            style={style}
             id="create-new-template"
             buttonStyle="primary"
             onClick={onClick}

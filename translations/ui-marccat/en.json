@@ -182,7 +182,8 @@
   "search.wildCard.replace1" : "Replace 0.1 or more characters",
   "search.wildCard.replace2" : "Replace one character",
   "search.wildCard.restriction" : "Restriction",
-   
+  "search.record": "Records",
+
   "search.wrong.input":"Wrong input on search field",
   "advancedsearch.categories.select": "Categories",
   "advancedsearch.indexes.select": "Indexes",
@@ -223,6 +224,8 @@
   "browsing.col.acc":"Acc",
   "browsing.previous":"Previous",
   "browsing.next":"Next",
+  "browsing.detail":"Record details",
+  "browsing.col.headingNum": "Heading num.",
   "validation.error.template.name.required": "The name of template is required",
 
   "perms.permissions.template.create": true

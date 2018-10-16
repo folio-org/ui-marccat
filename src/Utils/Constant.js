@@ -25,7 +25,7 @@ export const ENDPOINT = {
     'Content-Type': 'application/json',
     'x-okapi-tenant': 'tnx',
   },
-  BASE_URL: 'http://127.0.0.1:8085/cataloging',
+  BASE_URL: 'http://127.0.0.1:8080/cataloging',
   TEMPLATE_URL: 'record-templates',
   TEMPLATE_URL_ID: 'record-template/123',
   TEMPLATE_MANDATORY: 'bibliographic/fields/mandatory',

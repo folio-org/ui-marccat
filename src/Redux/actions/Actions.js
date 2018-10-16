@@ -4,6 +4,10 @@ export const handler = {};
 
 export const ActionTypes = {
   SEARCH: '@@ui-marccat/SEARCH',
+  SCAN: '@@ui-marccat/SCAN',
+  SCAN_SUCCESS: '@@ui-marccat/SCAN_SUCCESS',
+  DETAILS: '@@ui-marccat/DETAILS',
+  DETAILS_BY_TITLE: '@@ui-marccat/DETAILS_BY_TITLE',
   QUERY: '@@ui-marccat/QUERY',
   FIND: '@@ui-marccat/FIND',
   SAVE: '@@ui-marccat/SAVE',
@@ -15,7 +19,7 @@ export const ActionTypes = {
   FETCH_LOGICAL_VIEWS: '@@ui-marccat/FETCH_LOGICAL_VIEWS',
   FETCH_LOGICAL_VIEWS_SUCCESS: '@@ui-marccat/FETCH_LOGICAL_VIEWS_SUCCESS',
   FETCH_LOGICAL_VIEWS_FAILURE: '@@ui-marccat/FETCH_LOGICAL_VIEWS_FAILURE',
-  SHOW_TAG_SECTION: '@@ui-marccat/SHOW_TAG_SECTION',
+  RECORD_SUCCESS: '@@ui-marccat/RECORD_SUCCESS',
   DIACRITIC_CHAR: '@@ui-marccat/DIACRITIC_CHAR',
   RECEIVED_SEARCH: '@@ui-marccat/RECEIVED_SEARCH',
   CLEAR_SEARCH_RESULTS: '@@ui-marccat/CLEAR_SEARCH_RESULTS',

@@ -1,14 +1,18 @@
 import { combineReducers } from 'redux';
 import { combineEpics } from 'redux-observable';
-import { logicalViewReducer, searchEngineReducer } from './reducers/Reducer';
-import { fetchLogicalViewsEpic, epic } from './epic/epics';
+import { logicalViewReducer, searchEngineReducer, scanBrowsingReducer, getDetailsRecord } from './reducers/Reducer';
+import { fetchLogicalViewsEpic, fetchSearchEngineRecords, fetchScanBrowsingRecords, fetchDetailsRecords } from './epic/epics';
 
 export const reducer = combineReducers({
   data: logicalViewReducer,
-  search: searchEngineReducer
+  search: searchEngineReducer,
+  scan: scanBrowsingReducer,
+  details: getDetailsRecord
 });
 
 export const epics = combineEpics(
   fetchLogicalViewsEpic,
-  epic
+  fetchSearchEngineRecords,
+  fetchScanBrowsingRecords,
+  fetchDetailsRecords
 );

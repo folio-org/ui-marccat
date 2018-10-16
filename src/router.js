@@ -8,7 +8,7 @@ import Route from 'react-router-dom/Route';
 import Redirect from 'react-router-dom/Redirect';
 import Switch from 'react-router-dom/Switch';
 import type { Props } from './Core/type/props';
-import { EmptyMessage } from './Lib';
+import MARCcat from './App';
 
 type P = Props & {};
 
@@ -23,7 +23,7 @@ export default class Router extends React.Component<*> {
     const rootPath = this.props.match.path;
     return (
       <Switch>
-        <ConnectedRoute path={`${rootPath}`} {...this.props} component={EmptyMessage} id="nav_root" />
+        <ConnectedRoute path={`${rootPath}`} {...this.props} component={MARCcat} id="nav_root" />
         <Route render={() => (<Redirect to={`${rootPath}`} id="nav_root_redirect" />)} />
       </Switch>
     );

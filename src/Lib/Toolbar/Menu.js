@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unused-prop-types */
 import * as React from 'react';
-import { Row } from '@folio/stripes-components/lib/LayoutGrid';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import Button from '@folio/stripes-components/lib/Button';
@@ -12,6 +11,7 @@ type ToolbarMenuProps = {
   icon: Array,
   content: React.node,
   className?: string,
+  style?: Object;
   withPrinter?: bool,
   onClick: () => void;
   type?: string;
@@ -42,15 +42,14 @@ export const ToolbarMenu = (props: ToolbarMenuProps) => {
 };
 
 export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
-  const { create, className, onClick, label, type, disabled } = props;
+  const { create, style, onClick, label, type, disabled } = props;
   const { formatMessage } = props.stripes.intl;
   return (
     <PaneMenu>
-      <Row>
-        {create &&
+      {create &&
         <IfPermission perm="perms.permissions.template.create">
           <Button
-            buttonClass={classNames(className)}
+            style={style}
             id="create-new-template"
             buttonStyle="primary"
             onClick={onClick}
@@ -60,8 +59,7 @@ export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
           >{formatMessage({ id: label })}
           </Button>
         </IfPermission>
-        }
-      </Row>
+      }
     </PaneMenu>
   );
 };

@@ -1,37 +1,74 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
-import Button from '@folio/stripes-components/lib/Button';
-import TextField from '@folio/stripes-components/lib/TextField';
+import SearchField from '@folio/stripes-components/lib/SearchField';
+import { AccordionSet, Accordion, FilterAccordionHeader } from '@folio/stripes-components';
+import { connect } from 'react-redux';
 import { Row, Col } from 'react-flexbox-grid';
+import InfoPopover from '@folio/stripes-components/lib/InfoPopover';
 import type { Props } from '../Core/type/props';
+import SearchSelectFields from '../Mock/SearchSelectFields';
+import SearchConditions from '../Mock/SearchConditions';
+import FiltersContainer from '../Lib/Filter/FiltersContainer';
+import { ActionTypes } from '../Redux/actions/Actions';
+
+import styles from './Search.css';
 
 type P = Props & {
   inputValue: string,
+  translate: Function
 }
 
-export default function SearchEngine(props: P) {
+function SearchEngine(props: P) {
+  function handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const { store } = props;
+      store.dispatch({ type: ActionTypes.SEARCH, query: e.target.form[2].defaultValue });
+    }
+  }
+
   return (
-    <Row>
-      <Row>
-        <Col xs={12}>
-          <TextField
-            style={{ width: '100%', marginBottom: '10px' }}
-            defaultValue={props.inputValue}
-            placeholder="What are you searching for?"
-            rows="2"
-            name="searchTextArea"
-            id="searchTextArea"
-            component="textarea"
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={6}>
-          <Button fullWidth buttonStyle="primary" onClick={() => {}}>Search</Button>
-        </Col>
-        <Col xs={6}>
-          <Button fullWidth buttonStyle="primary" onClick={() => {}}>Scan</Button>
-        </Col>
-      </Row>
-    </Row>
+    <div className={styles['search-filters']}>
+      <AccordionSet>
+        <Accordion
+          separator={false}
+          label={props.translate({ id: 'ui-marccat.navigator.search' })}
+          header={FilterAccordionHeader}
+        >
+          <form onKeyDown={handleKeyDown}>
+            <Row>
+              <Col xs={11}>
+                <SearchSelectFields />
+              </Col>
+              <Col xs={1}>
+                <InfoPopover
+                  content="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                  buttonLabel="Read more"
+                  buttonHref="https://wiki.folio.org/"
+                  buttonTarget="_blank"
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={11}>
+                <SearchField
+                  fullWidth
+                  placeholder="What are you searching for?"
+                  name="searchTextArea"
+                  id="searchTextArea"
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={11}>
+                <SearchConditions />
+              </Col>
+            </Row>
+          </form>
+        </Accordion>
+        <FiltersContainer />
+      </AccordionSet>
+    </div>
   );
 }
+export default (connect(null, null)(SearchEngine));

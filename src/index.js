@@ -5,14 +5,12 @@
 import * as React from 'react';
 import { Settings } from './settings';
 import Router from './router';
-import { reducer, epics } from './Redux';
-import { injectCommonProp } from './Core';
-import * as C from './Utils';
-import MARCcat from './App';
+import { reducer, epics } from './redux';
+import { injectCommonProp } from './core';
+import * as C from './utils';
+import MARCcat from './components/MARCcat';
 
-import './Theme/override.css';
-
-type RoutingProps = {
+type P = {
   root: {
     addReducer: Function,
     addEpic: Function,
@@ -20,7 +18,7 @@ type RoutingProps = {
   showSettings: boolean,
 };
 
-class MARCCatRouting extends React.Component<RoutingProps, {}> {
+class MARCCatRouting extends React.Component<P, {}> {
   constructor(props, context) {
     super(props, context);
     /*
@@ -47,7 +45,7 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
 }
 
 /**
-  * we use the @link {withRoot} wrapper to supply all component a root prop for add a reducer and epic
+  * we use the @link {injectCommonProp} wrapper to supply all component a root prop for add a reducer and epic
   * the root prop is in the props object.
   *
   * @example: this.props.root

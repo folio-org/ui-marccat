@@ -1,13 +1,14 @@
+/* eslint-disable no-unused-vars*/
 import React from 'react';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import AppIcon from '@folio/stripes-components/lib/AppIcon';
 import Pane from '@folio/stripes-components/lib/Pane';
-import * as C from '../../Utils/Constant';
-import { ActionTypes } from '../../Redux/actions';
-import type { Props } from '../../Core';
-import { actionMenuItem, ToolbarButtonMenu, EmptyMessage } from '../../Lib';
+import * as C from '../../../utils/Constant';
+import { ActionTypes } from '../../../redux/actions';
+import type { Props } from '../../../core';
+import { actionMenuItem, ToolbarButtonMenu, EmptyMessage } from '../../lib';
 import css from '../../Search/Search.css';
 
 type P = Props & {

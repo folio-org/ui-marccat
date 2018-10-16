@@ -6,13 +6,11 @@ import * as React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import PropTypes from 'prop-types';
-import { LogicalView } from '../DB';
-import { injectCommonProp } from '../Core';
-import type Props from '../Core/type/props';
-import { actionMenuItem, EmptyMessage } from '../Lib';
-import SearchEngine from '../Search/SearchEngine';
-import SearchResults from '../Search/Scan/SearchResults';
-import RowDetails from '../Search/Scan/RowDetails';
+import { injectCommonProp } from '../core';
+import type Props from '../core/type/props';
+import { actionMenuItem } from './lib';
+import SearchEngine from './Search/SearchEngine';
+import SearchResults from './Search/Scan/SearchResults';
 
 
 type P = Props & {};

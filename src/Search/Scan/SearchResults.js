@@ -2,12 +2,12 @@ import React from 'react';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import AppIcon from '@folio/stripes-components/lib/AppIcon';
 import Pane from '@folio/stripes-components/lib/Pane';
 import * as C from '../../Utils/Constant';
 import { ActionTypes } from '../../Redux/actions';
 import type { Props } from '../../Core';
 import { actionMenuItem, ToolbarButtonMenu, EmptyMessage } from '../../Lib';
-import css from '../Search.css';
 
 type P = Props & {
     headings: Array<any>,
@@ -30,9 +30,28 @@ function SearchResults(props: P) {
   props.headings.forEach(r => marcJSONRecords.push(JSON.parse(r.data)));
   const fields001to009 = [];
   const fields010andUp = [];
- 
+
   const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
   const rightMenu = <ToolbarButtonMenu create {...props} label="+ New" style={rightButton} />;
+
+  // icona da utilizzare per record di authority
+  const icon = {
+    src: '../../../icons/authority.png',
+    alt: 'authority',
+    title: 'authority record',
+  };
+
+  const resultsFormatter = {
+    source: x => (
+      <AppIcon
+        app={x.source ? 'marccat' : 'marccat'}
+        iconKey={x.source ? 'instance' : 'app'}
+        size="small"
+      >
+        {x.source ? 'Authority' : 'Bibliographic'}
+      </AppIcon>
+    )
+  };
   return (
     <Pane
       defaultWidth="fullWidth"
@@ -47,13 +66,10 @@ function SearchResults(props: P) {
         fullWidth
         onRowClick={(e) => store.dispatch({ type: ActionTypes.DETAILS, query: e.currentTarget.lastChild.innerText })}
         contentData={props.headings}
+        formatter={resultsFormatter}
         visibleColumns={[
-          'Title',
-          'Main Entry',
-          'Subject',
-          'Tag',
-          'Bibs',
-          'Headings'
+          'source',
+          'data'
         ]}
       />
     </Pane>

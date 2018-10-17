@@ -1,1 +1,6 @@
 /** FilterContainer.css **/
+.search-filters {
+  & section {
+    margin-bottom: 1em;
+  }
+}

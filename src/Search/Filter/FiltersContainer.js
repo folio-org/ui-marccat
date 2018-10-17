@@ -1,6 +1,8 @@
 import React from 'react';
 import FilterGroups, { initialFilterState } from '@folio/stripes-components/lib/FilterGroups';
 
+import styles from './FiltersContainer.css';
+
 export default class FiltersContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -48,8 +50,9 @@ export default class FiltersContainer extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className={styles['search-filters']}>
         <FilterGroups
+          style={{ marginTop: '1rem' }}
           config={this.config}
           filters={this.state.filters}
           onChangeFilter={this.onChangeFilter}

@@ -52,7 +52,7 @@ function SearchResults(props: P) {
   return (
     <Pane
       defaultWidth="fullWidth"
-      paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
+      paneTitle={<FormattedMessage id="ui-marccat.search.record.keyboard" />}
       paneSub={props.headings.length + ' results'}
       appIcon={{ app: C.META.ICON_TITLE }}
       actionMenuItems={actionMenuItems}

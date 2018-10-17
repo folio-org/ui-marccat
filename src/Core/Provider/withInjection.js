@@ -9,7 +9,7 @@ import { withRoot } from '@folio/stripes-core/src/components/Root/RootContext';
 import { connect } from '@folio/stripes-connect';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import { injectIntl } from 'react-intl';
-import { META } from '../../Utils/Constant';
+import { META } from '../../utils/Constant';
 
 /**
  * HOC

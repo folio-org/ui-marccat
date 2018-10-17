@@ -2,9 +2,8 @@ import React from 'react';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import TextArea from '@folio/stripes-components/lib/TextArea';
 import Pane from '@folio/stripes-components/lib/Pane';
-import * as C from '../../Utils/Constant';
+import * as C from '../../../utils/Constant';
 
 type Props= {
     items:Array<any>,

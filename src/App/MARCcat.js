@@ -21,7 +21,6 @@ type S = {
  * @module MARCcat
  */
 class MARCcat extends React.Component<P, S> {
-
   constructor(props:P) {
     super(props);
     this.state = {

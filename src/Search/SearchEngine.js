@@ -8,7 +8,7 @@ import InfoPopover from '@folio/stripes-components/lib/InfoPopover';
 import type { Props } from '../Core/type/props';
 import SearchSelectFields from '../Mock/SearchSelectFields';
 import SearchConditions from '../Mock/SearchConditions';
-import FiltersContainer from '../Lib/Filter/FiltersContainer';
+import FiltersContainer from './Filter/FiltersContainer';
 import { ActionTypes } from '../Redux/actions/Actions';
 
 import styles from './Search.css';
@@ -38,7 +38,7 @@ function SearchEngine(props: P) {
           <form onKeyDown={handleKeyDown}>
             <Row>
               <Col xs={11}>
-                <SearchSelectFields />
+                <SearchSelectFields {...props} />
               </Col>
               <Col xs={1}>
                 <InfoPopover
@@ -61,12 +61,12 @@ function SearchEngine(props: P) {
             </Row>
             <Row>
               <Col xs={11}>
-                <SearchConditions />
+                <SearchConditions {...props} />
               </Col>
             </Row>
           </form>
         </Accordion>
-        <FiltersContainer />
+        <FiltersContainer {...props} />
       </AccordionSet>
     </div>
   );

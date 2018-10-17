@@ -29,8 +29,6 @@ function SearchResults(props: P) {
 
   const marcJSONRecords = [];
   props.headings.forEach(r => marcJSONRecords.push(JSON.parse(r.data)));
-  const fields001to009 = [];
-  const fields010andUp = [];
 
   const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
   const rightMenu = <ToolbarButtonMenu create {...props} label="+ New" style={rightButton} />;

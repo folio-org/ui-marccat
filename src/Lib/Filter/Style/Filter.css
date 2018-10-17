@@ -1,9 +1,0 @@
-.search-filters {
-  & section {
-    margin-bottom: 1em;
-  }
-
-  & [role="tabpanel"] {
-    padding-left: 1em;
-  }
-}

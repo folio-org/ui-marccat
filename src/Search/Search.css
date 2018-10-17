@@ -11,11 +11,13 @@
 .mr {
   margin-right: 1 rem;
 }
+
 .authority {
   width: 13px;
   height: 13px;
   background: red;
 }
+
 .bibliographic {
   width: 13px;
   height: 13px;

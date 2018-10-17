@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import { ActionTypes } from '../actions/Actions';
 import * as marccatActions from '../actions';
-import { ENDPOINT, buildUrl } from '../../Utils/Constant';
+import { ENDPOINT, buildUrl } from '../../utils/Constant';
 import LogicalViews from '../models/LogicalViews';
 
 const URL = buildUrl(ENDPOINT.LOGICAL_VIEW_URL, 'lang=ita');
@@ -25,7 +25,7 @@ export function fetchSearchEngineRecords(action$) {
     .ofType(ActionTypes.SEARCH)
     .switchMap((data) => {
       return ajax
-        .getJSON(buildUrl(ENDPOINT.SEARCH_URL, `lang=ita&view=1&ml=170&q=${data.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
+        .getJSON(buildUrl(ENDPOINT.SEARCH_URL, `lang=ita&view=1&ml=170&q=${data.query}&from=1&to=3&dpo=1`), ENDPOINT.HEADERS)
         .map((records) => records.docs);
     })
     .map(records => marccatActions.fetchSearchEngineRecords(records));

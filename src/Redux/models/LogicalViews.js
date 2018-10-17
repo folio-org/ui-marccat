@@ -13,14 +13,13 @@ export default class LogicalViews implements Model {
     }
 }
 
-export class SearchRecords {
-  fields: Array<SearchRecordsFields> = [];
-}
-
-export class SearchRecordsFields {
-  tag:string;
+export interface SearchRecordsSubFields {
   ind1:string;
   ind2:string;
-  subfields:Array<any>
+  subfields:Array<Object>;
 }
 
+export class SearchRecords {
+  fields: Array<Object> = [];
+  leader:String = '';
+}

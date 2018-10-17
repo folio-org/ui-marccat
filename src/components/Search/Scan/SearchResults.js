@@ -29,8 +29,11 @@ function SearchResults(props: P) {
   if (!props.headings || props.headings.length === 0) return <EmptyMessage {...props} />;
 
   const marcJSONRecords = [];
+  const marcRecords = [];
   props.headings.forEach(r => marcJSONRecords.push(JSON.parse(r.data)));
+  marcJSONRecords.map(r => marcRecords.push(r.fields));
   const fields001to009 = [];
+  marcRecords.forEach(f => fields001to009.push(f.filter((field) => (Object.keys(field)[0]).startsWith('00'))));
   const fields010andUp = [];
 
   const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
@@ -40,7 +43,7 @@ function SearchResults(props: P) {
     resultView: x => (
       <AppIcon
         className={x.recordView === 1 ? css.bibliographic : css.authority}
-        size="small"
+        size="medium"
       >
         {x.recordView === 1 ? 'Bib' : 'Auth'}
       </AppIcon>

@@ -6,7 +6,6 @@ import styles from './FiltersContainer.css';
 export default class FiltersContainer extends React.Component {
   constructor(props) {
     super(props);
-
     this.config = [
       {
         label: 'Record Type',

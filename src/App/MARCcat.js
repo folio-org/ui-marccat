@@ -5,12 +5,13 @@
 import * as React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
-import PropTypes from 'prop-types';
 import { injectCommonProp } from '../Core';
 import type Props from '../Core/type/props';
 import { actionMenuItem } from '../Lib';
-import SearchEngine from '../Search/SearchEngine';
+import SearchPanel from '../Search/SearchPanel';
 import SearchResults from '../Search/Scan/SearchResults';
+
+import styles from '../Search/Search.css';
 
 
 type P = Props & {};
@@ -22,9 +23,6 @@ type S = {
  * @module MARCcat
  */
 class MARCcat extends React.Component<P, S> {
-  static contextTypes = {
-    store: PropTypes.object,
-  };
   constructor(props:P) {
     super(props);
     this.state = {
@@ -42,20 +40,20 @@ class MARCcat extends React.Component<P, S> {
     const { filterPaneIsVisible } = this.state;
     const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
     return (
-      <Paneset static>
-        {filterPaneIsVisible &&
+      <div className={styles.search} id="search-panel">
+        <Paneset static>
+          {filterPaneIsVisible &&
           <Pane
-            id="pane-filter"
-            dismissible
-            actionMenuItems={actionMenuItems}
             defaultWidth="25%"
-            paneTitle={translate({ id: 'ui-marccat.searchAndFilter' })}
+            actionMenuItems={actionMenuItems}
             onClose={this.toggleFilterPane}
+            paneTitle={translate({ id: 'ui-marccat.searchAndFilter' })}
           >
-            <SearchEngine {...this.props} />
+            <SearchPanel {...this.props} />
           </Pane>}
-        <SearchResults {...this.props} />
-      </Paneset>
+          <SearchResults {...this.props} loading={false} />
+        </Paneset>
+      </div>
     );
   }
 }

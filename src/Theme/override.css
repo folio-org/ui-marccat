@@ -1,3 +1,6 @@
 [data-module] {
   height: 100%;
 }
+span.paneTitleLabel {
+  overflow: visible!important;
+}

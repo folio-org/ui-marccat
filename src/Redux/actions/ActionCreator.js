@@ -15,16 +15,16 @@ export const fetchScanBrowsingRecords = (records) => ({
   type: ActionTypes.SCAN_SUCCESS,
   payload: records
 });
-export const fetchLogicalViewsSuccess = (views:LogicalViews) => ({
-  type: ActionTypes.FETCH_LOGICAL_VIEWS_SUCCESS,
-  payload: views
+export const fetchRequested = (isLoading) => ({
+  type: ActionTypes.FETCH_REQUESTED,
+  payload: isLoading
 });
 export const fetchSearchEngineRecords = (records) => ({
   type: ActionTypes.RECORD_SUCCESS,
   payload: records
 });
-export const fetchLogicalViewsFailure = (message) => ({
-  type: ActionTypes.FETCH_LOGICAL_VIEWS_FAILURE,
+export const fetchFailure = (message) => ({
+  type: ActionTypes.REJECT,
   payload: message
 });
 

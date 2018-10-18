@@ -1,24 +1,32 @@
 import { ActionTypes } from '../actions/Actions';
 
-export function searchEngineReducer(state = { resource: 'search' }, action) {
+const isLoading = false;
+
+export function searchEngineReducer(state = { isLoading }, action) {
   switch (action.type) {
   case ActionTypes.SEARCH:
     return {
       ...state,
       isLoading: false
     };
-  case ActionTypes.RECORD_SUCCESS:
+  case ActionTypes.FETCH_REQUESTED:
     return {
       ...state,
       records: action.payload,
       isLoading: true
+    };
+  case ActionTypes.RECORD_SUCCESS:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: false
     };
   default:
     return state;
   }
 }
 
-export function getDetailsRecord(state = { resource: 'details' }, action) {
+export function getDetailsRecord(state = { isLoading }, action) {
   switch (action.type) {
   case ActionTypes.DETAILS:
     return {
@@ -26,18 +34,24 @@ export function getDetailsRecord(state = { resource: 'details' }, action) {
       isLoading: false,
       query: action.payload
     };
-  case ActionTypes.DETAILS_BY_TITLE:
+  case ActionTypes.FETCH_REQUESTED:
     return {
       ...state,
       records: action.payload,
       isLoading: true
+    };
+  case ActionTypes.DETAILS_BY_TITLE:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: false
     };
   default:
     return state;
   }
 }
 
-export function scanBrowsingReducer(state = { resource: 'scan' }, action) {
+export function scanBrowsingReducer(state = { isLoading }, action) {
   switch (action.type) {
   case ActionTypes.SCAN:
     return {
@@ -49,24 +63,6 @@ export function scanBrowsingReducer(state = { resource: 'scan' }, action) {
       ...state,
       records: action.payload,
       isLoading: true
-    };
-  default:
-    return state;
-  }
-}
-
-export function logicalViewReducer(state = { resource: 'logical' }, action) {
-  switch (action.type) {
-  case ActionTypes.FETCH_LOGICAL_VIEWS:
-    return {
-      ...state,
-      isLoading: true,
-    };
-  case ActionTypes.FETCH_LOGICAL_VIEWS_SUCCESS:
-    return {
-      ...state,
-      views: action.payload,
-      isLoading: false,
     };
   default:
     return state;

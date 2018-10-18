@@ -10,6 +10,7 @@ import { ActionTypes } from '../../Redux/actions';
 import type { Props } from '../../Core';
 import { actionMenuItem, ToolbarButtonMenu, EmptyMessage, DotLoader } from '../../Lib';
 import css from '../../Search/Search.css';
+import { remapForResultList } from '../../Utils/Mapper';
 
 type P = Props & {
     headings: Array<any>,
@@ -50,9 +51,10 @@ export class SearchResults extends React.Component<P, {}> {
     const rightMenu = <ToolbarButtonMenu create {...this.props} label="+ New" style={rightButton} />;
     const rightMenuEdit = <ToolbarButtonMenu create {...this.props} label="Edit" style={rightButton} />;
 
-    const marcJSONRecords = [];
-    if (this.props.headings.length) {
-      this.props.headings.map(e => marcJSONRecords.push(e));
+    let marcJSONRecords = [];
+    if (this.props.headings.length === 10) {
+      marcJSONRecords = remapForResultList(this.props.headings);
+      console.log(marcJSONRecords);
     }
 
     const resultsFormatter = {
@@ -81,11 +83,12 @@ export class SearchResults extends React.Component<P, {}> {
                 autosize
                 columnWidths={{ 'resultView': '10%', 'data': '90%' }}
                 onRowClick={this.handleDeatils}
-                contentData={this.props.headings}
+                contentData={marcJSONRecords}
                 formatter={resultsFormatter}
                 visibleColumns={[
                   'resultView',
-                  'data'
+                  '001',
+                  '245'
                 ]}
               />}
           </Pane>

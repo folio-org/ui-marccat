@@ -98,7 +98,7 @@ export class SearchResults extends React.Component<P, {}> {
             {(this.props.fetching) ?
               <DotLoader {...this.props} /> :
               <MultiColumnList
-                columnWidths={{ 'resultView': '5%', '001': '10%', '245': '10%', 'name': '10%', 'uniformTitle': '10%' }}
+                columnWidths={{ 'resultView': '5%', '001': '10%', '245': '40%', 'name': '20%', 'uniformTitle': '10%' }}
                 onRowClick={this.handleDeatils}
                 contentData={marcJSONRecords}
                 formatter={resultsFormatter}

@@ -15,7 +15,7 @@ export const searchEpic = (action$, store) =>
       concat$(
         of$(marccatActions.fetchRequested(true)),
         ajax
-          .getJSON(buildUrl(ENDPOINT.SEARCH_URL, `lang=ita&view=1&ml=170&q=${d.query}&from=1&to=10&dpo=1`), ENDPOINT.HEADERS)
+          .getJSON(buildUrl(ENDPOINT.SEARCH_URL_JSON, `lang=ita&view=1&ml=170&q=${d.query}&from=1&to=10&dpo=1`), ENDPOINT.HEADERS)
           .map((record) => record.docs)
           .map(record => marccatActions.fetchSearchEngineRecords(record))
           .catch(e => of$(marccatActions.fetchFailure(e))),

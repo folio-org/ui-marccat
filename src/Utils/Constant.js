@@ -37,6 +37,7 @@ export const ENDPOINT = {
   SUBFIELDS_TAGS: 'subfield-tags',
   CATEGORY_URL: 'marc-categories',
   SEARCH_URL: 'searchVertical',
+  SEARCH_URL_JSON: 'search',
   INDEX_CATEGORY: 'index-categories',
   DIACRITIC_LIST_URL: 'diacritics',
   BROWSING_FIRST_PAGE: 'first-page',

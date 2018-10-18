@@ -69,9 +69,42 @@ const remapForTemplateMandatory = multiArray => {
   return result;
 };
 
+/**
+ * concatenate all subfield text data of a tag
+ * @param {*} tagNode
+ */
+const getTagDisplayValue = tagNode => {
+  let result = '';
+  tagNode.subfields.forEach(el => {
+    result = result + ' ' + Object.values(el)[0];
+  });
+  return result;
+};
+
+const remapForResultList = jsonInput => {
+  const result = [];
+  jsonInput.forEach(el => {
+    const record = {};
+    record.recordView = el.recordView;
+    record.leader = el.data.leader;
+    const { fields } = el.data;
+    fields.forEach(field => {
+      const tag = Object.keys(field)[0];
+      if (typeof field[tag] === 'string' || field[tag] instanceof String) {
+        record[tag] = field[tag];
+      } else {
+        record[tag] = getTagDisplayValue(field[tag]);
+      }
+    });
+    result.push(record);
+  });
+
+  return result;
+};
 
 export {
   remapMultiArray,
   remapTemplateView,
-  remapForTemplateMandatory
+  remapForTemplateMandatory,
+  remapForResultList
 };

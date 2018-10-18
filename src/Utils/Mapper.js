@@ -98,7 +98,6 @@ const remapForResultList = jsonInput => {
     });
     result.push(record);
   });
-
   return result;
 };
 

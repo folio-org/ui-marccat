@@ -1,5 +1,4 @@
 import { ActionTypes } from './Actions';
-import LogicalViews from '../models/LogicalViews';
 
 export const fetchLogicalViewAction = () => ({
   type: ActionTypes.FETCH_LOGICAL_VIEWS,
@@ -11,6 +10,8 @@ export const fetchDetailsRecords = (records) => ({
   type: ActionTypes.DETAILS_BY_TITLE,
   payload: records
 });
+
+
 export const fetchScanBrowsingRecords = (records) => ({
   type: ActionTypes.SCAN_SUCCESS,
   payload: records
@@ -18,6 +19,10 @@ export const fetchScanBrowsingRecords = (records) => ({
 export const fetchRequested = (isLoading) => ({
   type: ActionTypes.FETCH_REQUESTED,
   payload: isLoading
+});
+export const fetchRequestedDetail = (isLoadingDetail) => ({
+  type: ActionTypes.FETCH_DETAIL_REQUESTED,
+  payload: isLoadingDetail
 });
 export const fetchSearchEngineRecords = (records) => ({
   type: ActionTypes.RECORD_SUCCESS,

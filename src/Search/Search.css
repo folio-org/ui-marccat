@@ -9,10 +9,9 @@
 
   & section {
     & .paneHeaderCenter {
-      margin:0;
+      margin: 0;
     }
   }
- 
 }
 
 .mr {
@@ -34,9 +33,6 @@
 .search {
   width: 100%;
   height: 100%;
-}
-
-.search {
   & button {
     max-width: none;
   }

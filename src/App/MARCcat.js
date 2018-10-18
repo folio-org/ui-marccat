@@ -9,7 +9,7 @@ import { injectCommonProp } from '../Core';
 import type Props from '../Core/type/props';
 import { actionMenuItem } from '../Lib';
 import SearchPanel from '../Search/SearchPanel';
-import SearchResults from '../Search/Scan/SearchResults';
+import SearchResults from '../Search/Result/SearchResults';
 
 import styles from '../Search/Search.css';
 

@@ -1,6 +1,7 @@
 import { ActionTypes } from '../actions/Actions';
 
 const isLoading = false;
+const isLoadingDetail = false;
 
 export function searchEngineReducer(state = { isLoading }, action) {
   switch (action.type) {
@@ -26,25 +27,25 @@ export function searchEngineReducer(state = { isLoading }, action) {
   }
 }
 
-export function getDetailsRecord(state = { isLoading }, action) {
+export function getDetailsRecord(state = { isLoadingDetail }, action) {
   switch (action.type) {
   case ActionTypes.DETAILS:
     return {
       ...state,
-      isLoading: false,
+      isLoadingDetail: false,
       query: action.payload
     };
-  case ActionTypes.FETCH_REQUESTED:
+  case ActionTypes.FETCH_DETAIL_REQUESTED:
     return {
       ...state,
       records: action.payload,
-      isLoading: true
+      isLoadingDetail: true
     };
   case ActionTypes.DETAILS_BY_TITLE:
     return {
       ...state,
       records: action.payload,
-      isLoading: false
+      isLoadingDetail: false
     };
   default:
     return state;

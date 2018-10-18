@@ -54,17 +54,35 @@ export class SearchResults extends React.Component<P, {}> {
     let marcJSONRecords = [];
     if (this.props.headings.length === 10) {
       marcJSONRecords = remapForResultList(this.props.headings);
-      console.log(marcJSONRecords);
     }
+
+    const columnMapper = {
+      'resultView': '',
+      '001': 'Id. Number (001)',
+      '245': 'Title (245)',
+      'uniformTitle': 'Uniform Title (130, 240)'
+
+    };
 
     const resultsFormatter = {
       resultView: x => (
         <AppIcon
           className={x.recordView === 1 ? css.bibliographic : css.authority}
           size="small"
-        >
-          {x.recordView === 1 ? 'Bib' : 'Auth'}
-        </AppIcon>
+        />
+      ),
+      name: x => (
+        <div>
+          { x['100'] && x['100'] }
+          { x['110'] && x['110'] }
+          { x['111'] && x['111'] }
+        </div>
+      ),
+      uniformTitle: x => (
+        <div>
+          { x['130'] && x['130'] }
+          { x['240'] && x['240'] }
+        </div>
       )
     };
     return (
@@ -80,15 +98,17 @@ export class SearchResults extends React.Component<P, {}> {
             {(this.props.fetching) ?
               <DotLoader {...this.props} /> :
               <MultiColumnList
-                autosize
-                columnWidths={{ 'resultView': '10%', 'data': '90%' }}
+                columnWidths={{ 'resultView': '5%', '001': '10%', '245': '10%', 'name': '10%', 'uniformTitle': '10%' }}
                 onRowClick={this.handleDeatils}
                 contentData={marcJSONRecords}
                 formatter={resultsFormatter}
+                columnMapping={columnMapper}
                 visibleColumns={[
                   'resultView',
                   '001',
-                  '245'
+                  '245',
+                  'name',
+                  'uniformTitle'
                 ]}
               />}
           </Pane>

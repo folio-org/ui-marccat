@@ -20,11 +20,9 @@ type P = Props & {
 class SearchPanel extends React.Component<P, {}> {
   constructor(props:P) {
     super(props);
-    this.state = {
-      keyPress: false,
-    };
+    this.state = {};
     this.handleKeyDown = this.handleKeyDown.bind(this);
-    // this.handleKeyboardClick = this.handleKeyboardClick.bind(this);
+    this.handleKeyboardClick = this.handleKeyboardClick.bind(this);
   }
 
   handleKeyDown(e) {
@@ -36,13 +34,11 @@ class SearchPanel extends React.Component<P, {}> {
   }
 
   handleKeyboardClick(e) {
-    e.preventDefault();
     const { store } = this.props;
     store.dispatch({ type: ActionTypes.SEARCH, query: e.target.form[2].defaultValue });
   }
 
   render() {
-    const { keyPress } = this.state;
     return (
       <div className={styles.search}>
         <AccordionSet>

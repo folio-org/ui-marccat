@@ -183,6 +183,7 @@
   "search.wildCard.replace2" : "Replace one character",
   "search.wildCard.restriction" : "Restriction",
   "search.record": "Records",
+  "record.keyboard": "+ New (CTRL+N)",
 
   "search.wrong.input":"Wrong input on search field",
   "advancedsearch.categories.select": "Categories",

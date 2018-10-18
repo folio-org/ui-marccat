@@ -41,7 +41,7 @@ jobs:
           command: mkdir -p artifacts/stylelint
       - run:
           name: Lint CSS
-          command: yarn stylelint  --silent 
+          command: yarn stylelint  --quiet 
       - store_test_results:
           path: ./artifacts
       - store_artifacts:

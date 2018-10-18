@@ -3,7 +3,7 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import type Props from '../Core/type/props';
 import { actionMenuItem, EmptyMessage } from '../Lib';
-import SearchEngine from '../Search/SearchEngine';
+import SearchPanel from '../Search/SearchPanel';
 
 type P = Props & {};
 type S = {
@@ -24,7 +24,7 @@ export default class Navigator extends React.Component<P, S> {
           paneTitle={translate({ id: 'ui-marccat.searchAndFilter' })}
           onClose={() => {}}
         >
-          <SearchEngine {...this.props} />
+          <SearchPanel {...this.props} />
         </Pane>
         <EmptyMessage {...this.props} />
       </Paneset>

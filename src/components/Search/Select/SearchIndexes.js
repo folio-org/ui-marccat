@@ -5,14 +5,14 @@
  */
 import React from 'react';
 import { Selection } from '@folio/stripes-components';
-import { Props } from '../core';
+import { Props } from '../../../core';
 
 type P = Props & {
   label: string;
   value: number;
 };
 
-export default function SearchSelectFields({ label }:P) {
+export default function SearchIndexes({ label }:P) {
   const options = [
     { label: 'All MARC fields', value: '0' },
     { label: 'Multiple MARC fields [XXX]', value: '1' },

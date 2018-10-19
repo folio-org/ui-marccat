@@ -9,7 +9,7 @@ import { ActionTypes } from '../../../redux/actions';
 import { Props } from '../../../core';
 import { actionMenuItem, ToolbarButtonMenu, EmptyMessage, DotLoader } from '../../lib';
 import { remapForResultList, getFieldPosition } from '../../../utils/Mapper';
-import RowDetails from './RowDetails';
+import RecordDetails from './RecordDetails';
 
 import style from '../Search.css';
 
@@ -163,7 +163,9 @@ export class SearchResults extends React.Component<P, {}> {
             actionMenuItems={actionMenuItems}
             lastMenu={rightMenuEdit}
           >
-            {(this.props.fetchingDetail) ? <DotLoader {...this.props} /> : <RowDetails {...this.props} />}
+            {(this.props.fetchingDetail) ?
+              <DotLoader {...this.props} /> :
+              <RecordDetails {...this.props} />}
           </Pane>}
       </Paneset>
     );

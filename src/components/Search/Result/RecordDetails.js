@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col } from 'react-flexbox-grid';
+import InventoryPluggableBtn from '../Plugin/Inventory';
 
 type Props = {
   items: Array<any>
 }
 
-function RowDetails(props:Props) {
+function RecordDetails(props:Props) {
   const recordDetails = props.items.replace('LEADER', '');
   const recordDetailsArray = recordDetails.split('\n');
   return (
@@ -23,6 +24,7 @@ function RowDetails(props:Props) {
             {!item.substring(6).startsWith('$') ? item.substring(4) : item.substring(6)}
           </Col>
         </Row>)}
+      <InventoryPluggableBtn {...props} buttonLabel="Inventory" />
     </div>
   );
 }
@@ -33,4 +35,4 @@ export default (connect(
     items: details.records,
     headings: scan.records
   })
-)(RowDetails));
+)(RecordDetails));

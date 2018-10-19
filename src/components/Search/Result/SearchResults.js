@@ -68,9 +68,8 @@ export class SearchResults extends React.Component<P, {}> {
 
     const resultsFormatter = {
       resultView: x => (
-        <AppIcon
+        <span
           className={x.recordView === 1 ? style.bibliographic : style.authority}
-          size="small"
         />
       ),
       name: x => (
@@ -136,7 +135,7 @@ export class SearchResults extends React.Component<P, {}> {
             <DotLoader {...this.props} /> :
             <MultiColumnList
               isEmptyMessage=""
-              columnWidths={{ 'resultView': '5%', '001': '10%', '245': '35%', 'name': '15%', 'uniformTitle': '10%', 'subject': '15%', 'date1': '5%', 'date2': '5%' }}
+              columnWidths={{ 'resultView': '6%', '001': '10%', '245': '35%', 'name': '15%', 'uniformTitle': '10%', 'subject': '15%', 'date1': '5%', 'date2': '5%' }}
               onRowClick={this.handleDeatils}
               contentData={marcJSONRecords}
               formatter={resultsFormatter}

@@ -5,8 +5,7 @@
 import * as React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
-import { injectCommonProp } from '../Core';
-import type Props from '../Core/type/props';
+import { injectCommonProp, Props } from '../core';
 import { actionMenuItem } from './lib';
 import SearchPanel from './Search/SearchPanel';
 import SearchResults from './Search/Result/SearchResults';

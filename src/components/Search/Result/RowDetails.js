@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col } from 'react-flexbox-grid';
-import KeyValue from '@folio/stripes-components/lib/KeyValue';
-
 
 type Props = {
   items: Array<any>

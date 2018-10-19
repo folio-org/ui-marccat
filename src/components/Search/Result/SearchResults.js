@@ -4,12 +4,11 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
-import * as C from '../../../Utils/Constant';
-import { ActionTypes } from '../../../Redux/actions';
-import { Props } from '../../../Core';
-import { actionMenuItem, ToolbarButtonMenu, ToolbarMenu, EmptyMessage, DotLoader } from '../../lib';
-import css from '../../Search/Search.css';
-import { remapForResultList, getFieldPosition } from '../../../Utils/Mapper';
+import * as C from '../../../utils/Constant';
+import { ActionTypes } from '../../../redux/actions';
+import { Props } from '../../../core';
+import { actionMenuItem, ToolbarButtonMenu, EmptyMessage, DotLoader } from '../../lib';
+import { remapForResultList, getFieldPosition } from '../../../utils/Mapper';
 import RowDetails from './RowDetails';
 
 import style from '../Search.css';

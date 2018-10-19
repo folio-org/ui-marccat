@@ -48,7 +48,7 @@ export default class FiltersContainer extends React.Component {
   }
 
   onClearFilter = () => {
-    this.setState(s => {
+    this.setState(() => {
       const filters = {};
       return { filters };
     });

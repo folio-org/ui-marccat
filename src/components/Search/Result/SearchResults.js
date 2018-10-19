@@ -5,13 +5,12 @@ import { FormattedMessage } from 'react-intl';
 import AppIcon from '@folio/stripes-components/lib/AppIcon';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
-import * as C from '../../Utils/Constant';
-import { ActionTypes } from '../../Redux/actions';
-import { Props, registerKeybordListener } from '../../Core';
-import { actionMenuItem, ToolbarButtonMenu, EmptyMessage, DotLoader } from '../../Lib';
+import * as C from '../../../utils/Constant';
+import { ActionTypes } from '../../../redux/actions';
+import { Props, registerKeybordListener } from '../../../core';
+import { actionMenuItem, ToolbarButtonMenu, EmptyMessage, DotLoader } from '../../lib';
 import css from '../../Search/Search.css';
-import { remapForResultList } from '../../Utils/Mapper';
-import InventoryPluggableBtn from '../Plugin/Inventory';
+import { remapForResultList } from '../../../utils/Mapper';
 
 type P = Props & {
     headings: Array<any>,
@@ -131,7 +130,6 @@ export class SearchResults extends React.Component<P, {}> {
           >
             {(this.props.fetchingDetail) ? <DotLoader {...this.props} /> : <div />}
           </Pane>}
-fsfsdsdfsdfsdfsssfdfsdfsd
         </Paneset>
       </div>
     );

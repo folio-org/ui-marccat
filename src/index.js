@@ -3,14 +3,14 @@
  * @flow
  */
 import * as React from 'react';
-import { Settings } from './Settings';
+import { Settings } from './settings';
 import Router from './router';
-import { reducer, epics } from './Redux';
-import { injectCommonProp } from './Core';
-import * as C from './Utils';
-import MARCcat from './App';
+import { reducer, epics } from './redux';
+import { injectCommonProp } from './core';
+import * as C from './utils';
+import MARCcat from './components/MARCcat';
 
-import './Theme/override.css';
+import './index.css';
 
 type RoutingProps = {
   root: {

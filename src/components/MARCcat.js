@@ -5,13 +5,13 @@
 import * as React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
-import { injectCommonProp } from '../Core';
-import type Props from '../Core/type/props';
-import { actionMenuItem } from '../Lib';
-import SearchPanel from '../Search/SearchPanel';
-import SearchResults from '../Search/Result/SearchResults';
+import { injectCommonProp } from '../core';
+import type Props from '../core/type/props';
+import { actionMenuItem } from './lib';
+import SearchPanel from './Search/SearchPanel';
+import SearchResults from './Search/Result/SearchResults';
 
-import styles from '../Search/Search.css';
+import styles from './Search/Search.css';
 
 
 type P = Props & {};

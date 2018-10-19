@@ -5,8 +5,7 @@ import { concat as concat$ } from 'rxjs/observable/concat';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import { ActionTypes } from '../actions/Actions';
 import * as marccatActions from '../actions';
-import { ENDPOINT, buildUrl } from '../../Utils/Constant';
-import LogicalViews from '../models/LogicalViews';
+import { ENDPOINT, buildUrl } from '../../utils/Constant';
 import { fetchFailure } from '../actions/ActionCreator';
 
 export const searchEpic = (action$, store) =>

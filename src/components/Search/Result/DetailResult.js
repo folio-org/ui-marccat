@@ -2,8 +2,8 @@ import React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { ToolbarButtonMenu, DotLoader } from '../../Lib';
-import * as C from '../../Utils/Constant';
+import { ToolbarButtonMenu, DotLoader } from '../../lib';
+import * as C from '../../../utils/Constant';
 
 
 function DetailResult({ ...props }) {

@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import { Selection } from '@folio/stripes-components';
-import { Props } from '../Core';
+import { Props } from '../core';
 
 type P = Props & {
   label: string;

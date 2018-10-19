@@ -11,9 +11,6 @@ import { actionMenuItem } from './lib';
 import SearchPanel from './Search/SearchPanel';
 import SearchResults from './Search/Result/SearchResults';
 
-import styles from './Search/Search.css';
-
-
 type P = Props & {};
 type S = {
   filterPaneIsVisible: bool;

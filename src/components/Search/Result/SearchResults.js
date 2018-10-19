@@ -7,7 +7,7 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
-import { Props, registerKeybordListener } from '../../../core';
+import { Props } from '../../../core';
 import { actionMenuItem, ToolbarButtonMenu, ToolbarMenu, EmptyMessage, DotLoader } from '../../lib';
 import css from '../../Search/Search.css';
 import { remapForResultList } from '../../../utils/Mapper';
@@ -28,7 +28,6 @@ export class SearchResults extends React.Component<P, {}> {
       detailPanelIsVisible: false,
     };
     this.handleDeatils = this.handleDeatils.bind(this);
-    registerKeybordListener('ctrl+n', () => alert('you cleck New Record button'));
   }
 
 

@@ -6,12 +6,6 @@
   & [role="tabpanel"] {
     margin-bottom: 0;
   }
-
-  & section {
-    & .paneHeaderCenter {
-      margin: 0;
-    }
-  }
 }
 
 .mr {
@@ -28,4 +22,11 @@
   width: 13px;
   height: 13px;
   background-color: #2b75bb !important;
+}
+
+.select_margin {
+  & * {
+    margin-bottom: 0;
+    border-bottom: 0;
+  }
 }

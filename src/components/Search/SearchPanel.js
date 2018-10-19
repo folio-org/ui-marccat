@@ -53,7 +53,12 @@ class SearchPanel extends React.Component<P, {}> {
           >
             <Row>
               <Col xs={11}>
-                <SearchSelectFields {...this.props} />
+                <div className={styles.select_margin}>
+                  <SearchSelectFields
+                    marginBottom0
+                    {...this.props}
+                  />
+                </div>
               </Col>
               <Col xs={1}>
                 <InfoPopover
@@ -66,13 +71,15 @@ class SearchPanel extends React.Component<P, {}> {
             </Row>
             <Row>
               <Col xs={11}>
-                <SearchField
-                  hasClearIcon
-                  fullWidth
-                  placeholder="What are you searching for?"
-                  name="searchTextArea"
-                  id="searchTextArea"
-                />
+                <div className={styles.select_margin}>
+                  <SearchField
+                    hasClearIcon
+                    fullWidth
+                    placeholder="What are you searching for?"
+                    name="searchTextArea"
+                    id="searchTextArea"
+                  />
+                </div>
               </Col>
             </Row>
             <Row>

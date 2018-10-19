@@ -8,10 +8,10 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import { Props } from '../../../core';
-import { actionMenuItem, ToolbarButtonMenu, ToolbarMenu, EmptyMessage, DotLoader } from '../../lib';
-import style from '../../Search/Search.css';
-import { remapForResultList } from '../../../utils/Mapper';
+import { actionMenuItem, ToolbarButtonMenu, EmptyMessage, DotLoader } from '../../lib';
+import { remapForResultList, getFieldPosition } from '../../../utils/Mapper';
 
+import style from '../Search.css';
 
 type P = Props & {
     headings: Array<any>,
@@ -49,9 +49,7 @@ export class SearchResults extends React.Component<P, {}> {
     const { detailPanelIsVisible } = this.state;
 
     const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
-    const rightMenu = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.new.keyboard" style={rightButton} />;
     const rightMenuEdit = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.edit" style={rightButton} />;
-    const search = <ToolbarMenu icon={['search']}{...this.props} />;
 
     let marcJSONRecords = [];
     if (this.props.headings && this.props.headings.length > 0) {
@@ -62,8 +60,10 @@ export class SearchResults extends React.Component<P, {}> {
       'resultView': '',
       '001': 'Id. Number (001)',
       '245': 'Title (245)',
-      'uniformTitle': 'Uniform Title (130, 240)'
-
+      'uniformTitle': 'Uniform Title (130, 240)',
+      'subject': 'Subject (6xx)',
+      'date1': 'Date 1',
+      'date2': 'Date 2'
     };
 
     const resultsFormatter = {
@@ -85,8 +85,42 @@ export class SearchResults extends React.Component<P, {}> {
           { x['130'] && x['130'] }
           { x['240'] && x['240'] }
         </div>
+      ),
+      date1: x => (
+        <div>
+          {getFieldPosition(x['008'], 7, 11)}
+        </div>
+      ),
+      date2: x => (
+        <div>
+          {getFieldPosition(x['008'], 11, 14)}
+        </div>
+      ),
+      subject: x => (
+        <div>
+          { x['600'] && x['600'] }
+          { x['610'] && x['610'] }
+          { x['611'] && x['611'] }
+          { x['630'] && x['630'] }
+          { x['647'] && x['647'] }
+          { x['648'] && x['648'] }
+          { x['650'] && x['650'] }
+          { x['651'] && x['651'] }
+          { x['653'] && x['653'] }
+          { x['654'] && x['654'] }
+          { x['655'] && x['655'] }
+          { x['651'] && x['651'] }
+          { x['653'] && x['653'] }
+          { x['654'] && x['654'] }
+          { x['655'] && x['655'] }
+          { x['656'] && x['656'] }
+          { x['657'] && x['657'] }
+          { x['658'] && x['658'] }
+          { x['662'] && x['662'] }
+        </div>
       )
     };
+
     return (
       <Paneset static>
         <Pane
@@ -102,7 +136,7 @@ export class SearchResults extends React.Component<P, {}> {
             <DotLoader {...this.props} /> :
             <MultiColumnList
               isEmptyMessage=""
-              columnWidths={{ 'resultView': '5%', '001': '10%', '245': '40%', 'name': '20%', 'uniformTitle': '10%' }}
+              columnWidths={{ 'resultView': '5%', '001': '10%', '245': '35%', 'name': '15%', 'uniformTitle': '10%', 'subject': '15%', 'date1': '5%', 'date2': '5%' }}
               onRowClick={this.handleDeatils}
               contentData={marcJSONRecords}
               formatter={resultsFormatter}
@@ -112,7 +146,10 @@ export class SearchResults extends React.Component<P, {}> {
                 '001',
                 '245',
                 'name',
-                'uniformTitle'
+                'uniformTitle',
+                'subject',
+                'date1',
+                'date2'
               ]}
             />}
         </Pane>
@@ -133,6 +170,7 @@ export class SearchResults extends React.Component<P, {}> {
     );
   }
 }
+
 export default (connect(
   ({ marccat: { search, details } }) => ({
     headings: search.records,

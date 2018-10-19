@@ -101,9 +101,18 @@ const remapForResultList = jsonInput => {
   return result;
 };
 
+const getFieldPosition = (controlField, position1, position2) => {
+  if (!controlField || controlField.length < position2) {
+    return controlField;
+  } else {
+    return controlField.substring(position1, position2);
+  }
+};
+
 export {
   remapMultiArray,
   remapTemplateView,
   remapForTemplateMandatory,
-  remapForResultList
+  remapForResultList,
+  getFieldPosition
 };

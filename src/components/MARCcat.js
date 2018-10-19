@@ -40,10 +40,10 @@ class MARCcat extends React.Component<P, S> {
     const { filterPaneIsVisible } = this.state;
     const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
     return (
-      <div className={styles.search} id="search-panel">
-        <Paneset static>
-          {filterPaneIsVisible &&
+      <Paneset static>
+        {filterPaneIsVisible &&
           <Pane
+            dismissible
             defaultWidth="25%"
             actionMenuItems={actionMenuItems}
             onClose={this.toggleFilterPane}
@@ -51,9 +51,8 @@ class MARCcat extends React.Component<P, S> {
           >
             <SearchPanel {...this.props} />
           </Pane>}
-          <SearchResults {...this.props} loading={false} />
-        </Paneset>
-      </div>
+        <SearchResults {...this.props} loading={false} />
+      </Paneset>
     );
   }
 }

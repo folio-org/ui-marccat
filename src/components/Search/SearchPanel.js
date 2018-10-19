@@ -40,52 +40,50 @@ class SearchPanel extends React.Component<P, {}> {
 
   render() {
     return (
-      <div className={styles.search}>
-        <AccordionSet>
-          <Accordion
-            separator={false}
-            label={this.props.translate({ id: 'ui-marccat.navigator.search' })}
-            header={FilterAccordionHeader}
+      <AccordionSet>
+        <Accordion
+          separator={false}
+          label={this.props.translate({ id: 'ui-marccat.navigator.search' })}
+          header={FilterAccordionHeader}
+        >
+          <form
+            onKeyDown={this.handleKeyDown}
+            // onKeyPress={this.handleKeyboardClick}
+            // onKeyUp={this.handleKeyboardClick}
           >
-            <form
-              onKeyDown={this.handleKeyDown}
-              // onKeyPress={this.handleKeyboardClick}
-              // onKeyUp={this.handleKeyboardClick}
-            >
-              <Row>
-                <Col xs={11}>
-                  <SearchSelectFields {...this.props} />
-                </Col>
-                <Col xs={1}>
-                  <InfoPopover
-                    content="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                    buttonLabel="Read more"
-                    buttonHref="https://wiki.folio.org/"
-                    buttonTarget="_blank"
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={11}>
-                  <SearchField
-                    hasClearIcon
-                    fullWidth
-                    placeholder="What are you searching for?"
-                    name="searchTextArea"
-                    id="searchTextArea"
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={11}>
-                  <SearchConditions {...this.props} />
-                </Col>
-              </Row>
-            </form>
-          </Accordion>
-          <FiltersContainer {...this.props} />
-        </AccordionSet>
-      </div>
+            <Row>
+              <Col xs={11}>
+                <SearchSelectFields {...this.props} />
+              </Col>
+              <Col xs={1}>
+                <InfoPopover
+                  content="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                  buttonLabel="Read more"
+                  buttonHref="https://wiki.folio.org/"
+                  buttonTarget="_blank"
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={11}>
+                <SearchField
+                  hasClearIcon
+                  fullWidth
+                  placeholder="What are you searching for?"
+                  name="searchTextArea"
+                  id="searchTextArea"
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={11}>
+                <SearchConditions {...this.props} />
+              </Col>
+            </Row>
+          </form>
+        </Accordion>
+        <FiltersContainer {...this.props} />
+      </AccordionSet>
     );
   }
 }

@@ -8,7 +8,7 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import { Props, registerKeybordListener } from '../../../core';
-import { actionMenuItem, ToolbarButtonMenu, EmptyMessage, DotLoader } from '../../lib';
+import { actionMenuItem, ToolbarButtonMenu, ToolbarMenu, EmptyMessage, DotLoader } from '../../lib';
 import css from '../../Search/Search.css';
 import { remapForResultList } from '../../../utils/Mapper';
 
@@ -51,6 +51,7 @@ export class SearchResults extends React.Component<P, {}> {
     const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
     const rightMenu = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.new.keyboard" style={rightButton} />;
     const rightMenuEdit = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.edit" style={rightButton} />;
+    const search = <ToolbarMenu icon={['search']}{...this.props} />;
 
     let marcJSONRecords = [];
     if (this.props.headings && this.props.headings.length > 0) {
@@ -87,37 +88,37 @@ export class SearchResults extends React.Component<P, {}> {
       )
     };
     return (
-      <div className={css.search} id="search-result">
-        <Paneset static>
-          <Pane
-            paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
-            paneSub={(this.props.fetching) ? 'Searching....' : (this.props.headings) ? this.props.headings.length + ' Results Found' : 'No Result found'}
-            appIcon={{ app: C.META.ICON_TITLE }}
-            actionMenuItems={actionMenuItems}
-            lastMenu={rightMenu}
-          >
-            {!this.props.headings && !this.props.fetching &&
+      <Paneset static>
+        <Pane
+          paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
+          paneSub={(this.props.fetching) ? 'Searching....' : (this.props.headings) ? this.props.headings.length + ' Results Found' : 'No Result found'}
+          appIcon={{ app: C.META.ICON_TITLE }}
+          firstMenu={search}
+          lastMenu={rightMenu}
+          actionMenuItems={actionMenuItems}
+        >
+          {!this.props.headings && !this.props.fetching &&
             <EmptyMessage {...this.props} />
-            }
-            {(this.props.fetching) ?
-              <DotLoader {...this.props} /> :
-              <MultiColumnList
-                isEmptyMessage=""
-                columnWidths={{ 'resultView': '5%', '001': '10%', '245': '40%', 'name': '20%', 'uniformTitle': '10%' }}
-                onRowClick={this.handleDeatils}
-                contentData={marcJSONRecords}
-                formatter={resultsFormatter}
-                columnMapping={columnMapper}
-                visibleColumns={[
-                  'resultView',
-                  '001',
-                  '245',
-                  'name',
-                  'uniformTitle'
-                ]}
-              />}
-          </Pane>
-          {detailPanelIsVisible &&
+          }
+          {(this.props.fetching) ?
+            <DotLoader {...this.props} /> :
+            <MultiColumnList
+              isEmptyMessage=""
+              columnWidths={{ 'resultView': '5%', '001': '10%', '245': '40%', 'name': '20%', 'uniformTitle': '10%' }}
+              onRowClick={this.handleDeatils}
+              contentData={marcJSONRecords}
+              formatter={resultsFormatter}
+              columnMapping={columnMapper}
+              visibleColumns={[
+                'resultView',
+                '001',
+                '245',
+                'name',
+                'uniformTitle'
+              ]}
+            />}
+        </Pane>
+        {detailPanelIsVisible &&
           <Pane
             id="pane-details"
             paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
@@ -130,8 +131,7 @@ export class SearchResults extends React.Component<P, {}> {
           >
             {(this.props.fetchingDetail) ? <DotLoader {...this.props} /> : <div />}
           </Pane>}
-        </Paneset>
-      </div>
+      </Paneset>
     );
   }
 }

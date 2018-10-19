@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import { Row, Col } from 'react-flexbox-grid';
 import InventoryPluggableBtn from '../Plugin/Inventory';
 
@@ -24,11 +25,10 @@ function RecordDetails(props:Props) {
             {!item.substring(6).startsWith('$') ? item.substring(4) : item.substring(6)}
           </Col>
         </Row>)}
-      <InventoryPluggableBtn {...props} buttonLabel="Inventory" />
+      <InventoryPluggableBtn {...props} buttonLabel={<FormattedMessage id="ui-marccat.search.goto.inventory" />} />
     </div>
   );
 }
-
 
 export default (connect(
   ({ marccat: { details, scan } }) => ({

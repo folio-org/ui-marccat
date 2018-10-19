@@ -9,7 +9,7 @@ import { ActionTypes } from '../../../Redux/actions';
 import { Props } from '../../../Core';
 import { actionMenuItem, ToolbarButtonMenu, ToolbarMenu, EmptyMessage, DotLoader } from '../../lib';
 import css from '../../Search/Search.css';
-import { remapForResultList, getFieldPosition } from '../../../Utils/Mapper';
+import { remapForResultList, getFieldPosition, getFormat } from '../../../Utils/Mapper';
 import RowDetails from './RowDetails';
 
 import style from '../Search.css';
@@ -64,7 +64,8 @@ export class SearchResults extends React.Component<P, {}> {
       'uniformTitle': 'Uniform Title (130, 240)',
       'subject': 'Subject (6xx)',
       'date1': 'Date 1',
-      'date2': 'Date 2'
+      'date2': 'Date 2',
+      'format': 'Format',
     };
 
     const resultsFormatter = {
@@ -92,6 +93,11 @@ export class SearchResults extends React.Component<P, {}> {
       date2: x => (
         <div>
           {getFieldPosition(x['008'], 11, 14)}
+        </div>
+      ),
+      format: x => (
+        <div>
+          {getFormat(x.leader)}
         </div>
       ),
       subject: x => (
@@ -135,7 +141,7 @@ export class SearchResults extends React.Component<P, {}> {
             <MultiColumnList
               defaultWidth="fill"
               isEmptyMessage=""
-              columnWidths={{ 'resultView': '6%', '001': '10%', '245': '35%', 'name': '15%', 'uniformTitle': '10%', 'subject': '15%', 'date1': '5%', 'date2': '5%' }}
+              columnWidths={{ 'resultView': '6%', '001': '10%', '245': '25%', 'name': '15%', 'uniformTitle': '10%', 'subject': '15%', 'date1': '5%', 'date2': '5%', 'format': '10%' }}
               onRowClick={this.handleDeatils}
               contentData={marcJSONRecords}
               formatter={resultsFormatter}
@@ -148,7 +154,8 @@ export class SearchResults extends React.Component<P, {}> {
                 'uniformTitle',
                 'subject',
                 'date1',
-                'date2'
+                'date2',
+                'format'
               ]}
             />}
         </Pane>

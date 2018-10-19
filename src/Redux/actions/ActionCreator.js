@@ -1,5 +1,4 @@
 import { ActionTypes } from './Actions';
-import LogicalViews from '../models/LogicalViews';
 
 export const fetchLogicalViewAction = () => ({
   type: ActionTypes.FETCH_LOGICAL_VIEWS,
@@ -11,20 +10,26 @@ export const fetchDetailsRecords = (records) => ({
   type: ActionTypes.DETAILS_BY_TITLE,
   payload: records
 });
+
+
 export const fetchScanBrowsingRecords = (records) => ({
   type: ActionTypes.SCAN_SUCCESS,
   payload: records
 });
-export const fetchLogicalViewsSuccess = (views:LogicalViews) => ({
-  type: ActionTypes.FETCH_LOGICAL_VIEWS_SUCCESS,
-  payload: views
+export const fetchRequested = (isLoading) => ({
+  type: ActionTypes.FETCH_REQUESTED,
+  payload: isLoading
+});
+export const fetchRequestedDetail = (isLoadingDetail) => ({
+  type: ActionTypes.FETCH_DETAIL_REQUESTED,
+  payload: isLoadingDetail
 });
 export const fetchSearchEngineRecords = (records) => ({
   type: ActionTypes.RECORD_SUCCESS,
   payload: records
 });
-export const fetchLogicalViewsFailure = (message) => ({
-  type: ActionTypes.FETCH_LOGICAL_VIEWS_FAILURE,
+export const fetchFailure = (message) => ({
+  type: ActionTypes.REJECT,
   payload: message
 });
 

@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import { Selection } from '@folio/stripes-components';
-import type { Props } from '../../core';
+import { Props } from '../core';
 
 type P = Props & {
   label: string;
@@ -28,8 +28,9 @@ export default function SearchSelectFields({ label }:P) {
   ];
   return (
     <Selection
+      id="selection-first"
       placeholder="Select a field..."
-      style={{ marginTop: '10px' }}
+      style={{ marginBottm: '0' }}
       label={label}
       dataOptions={options}
     />

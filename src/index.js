@@ -10,7 +10,9 @@ import { injectCommonProp } from './core';
 import * as C from './utils';
 import MARCcat from './components/MARCcat';
 
-type P = {
+import './index.css';
+
+type RoutingProps = {
   root: {
     addReducer: Function,
     addEpic: Function,
@@ -18,7 +20,7 @@ type P = {
   showSettings: boolean,
 };
 
-class MARCCatRouting extends React.Component<P, {}> {
+class MARCCatRouting extends React.Component<RoutingProps, {}> {
   constructor(props, context) {
     super(props, context);
     /*
@@ -45,7 +47,7 @@ class MARCCatRouting extends React.Component<P, {}> {
 }
 
 /**
-  * we use the @link {injectCommonProp} wrapper to supply all component a root prop for add a reducer and epic
+  * we use the @link {withRoot} wrapper to supply all component a root prop for add a reducer and epic
   * the root prop is in the props object.
   *
   * @example: this.props.root

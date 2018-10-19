@@ -1,35 +1,36 @@
 /* eslint-disable no-unused-vars */
 import { Observable } from 'rxjs';
+import { of as of$ } from 'rxjs/observable/of';
+import { concat as concat$ } from 'rxjs/observable/concat';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import { ActionTypes } from '../actions/Actions';
 import * as marccatActions from '../actions';
-import { ENDPOINT, buildUrl } from '../../Utils/Constant';
-import LogicalViews from '../models/LogicalViews';
+import { ENDPOINT, buildUrl } from '../../utils/Constant';
+import { fetchFailure } from '../actions/ActionCreator';
 
-const URL = buildUrl(ENDPOINT.LOGICAL_VIEW_URL, 'lang=ita');
+export const searchEpic = (action$, store) =>
+  action$.ofType(ActionTypes.SEARCH)
+    .switchMap((d) =>
+      concat$(
+        of$(marccatActions.fetchRequested(true)),
+        ajax
+          .getJSON(buildUrl(ENDPOINT.SEARCH_URL_JSON, `lang=ita&view=1&ml=170&q=${d.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
+          .map((record) => record.docs)
+          .map(record => marccatActions.fetchSearchEngineRecords(record))
+          .catch(e => of$(marccatActions.fetchFailure(e))),
+      ));
 
-export function fetchLogicalViewsEpic(action$) {
-  return action$
-    .ofType(ActionTypes.FETCH_LOGICAL_VIEWS)
-    .switchMap(() => {
-      return ajax
-        .getJSON(URL, ENDPOINT.HEADERS)
-        .map((data:LogicalViews) => data.views);
-    })
-    .map(views => marccatActions.fetchLogicalViewsSuccess(views))
-    .catch(error => Observable.of(marccatActions.fetchLogicalViewsFailure(error.message)));
-}
-
-export function fetchSearchEngineRecords(action$) {
-  return action$
-    .ofType(ActionTypes.SEARCH)
-    .switchMap((data) => {
-      return ajax
-        .getJSON(buildUrl(ENDPOINT.SEARCH_URL, `lang=ita&view=1&ml=170&q=${data.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
-        .map((records) => records.docs);
-    })
-    .map(records => marccatActions.fetchSearchEngineRecords(records));
-}
+export const searchDetailEpic = (action$, store) =>
+  action$.ofType(ActionTypes.DETAILS)
+    .switchMap((d) =>
+      concat$(
+        of$(marccatActions.fetchRequestedDetail(true)),
+        ajax
+          .getJSON(buildUrl(ENDPOINT.SEARCH_URL, 'lang=ita&view=1&ml=170&q=an%20000006570036&from=1&to=1&dpo=1'), ENDPOINT.HEADERS)
+          .map((record) => record.docs[0].data)
+          .map(record => marccatActions.fetchDetailsRecords(record))
+          .catch(e => of$(marccatActions.fetchFailure(e))),
+      ));
 
 export function fetchScanBrowsingRecords(action$) {
   return action$
@@ -40,15 +41,4 @@ export function fetchScanBrowsingRecords(action$) {
         .map((records) => records.headings);
     })
     .map(records => marccatActions.fetchScanBrowsingRecords(records));
-}
-
-export function fetchDetailsRecords(action$) {
-  return action$
-    .ofType(ActionTypes.DETAILS)
-    .switchMap((data) => {
-      return ajax
-        .getJSON(buildUrl(ENDPOINT.SEARCH_URL, 'lang=ita&view=1&ml=170&q=an%20000006570036&from=1&to=1&dpo=1'), ENDPOINT.HEADERS)
-        .map((records) => records.docs[0].data);
-    })
-    .map(records => marccatActions.fetchDetailsRecords(records));
 }

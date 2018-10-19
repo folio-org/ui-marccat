@@ -5,13 +5,11 @@
 import * as React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
-import PropTypes from 'prop-types';
 import { injectCommonProp } from '../core';
 import type Props from '../core/type/props';
 import { actionMenuItem } from './lib';
-import SearchEngine from './Search/SearchEngine';
-import SearchResults from './Search/Scan/SearchResults';
-
+import SearchPanel from './Search/SearchPanel';
+import SearchResults from './Search/Result/SearchResults';
 
 type P = Props & {};
 type S = {
@@ -22,9 +20,6 @@ type S = {
  * @module MARCcat
  */
 class MARCcat extends React.Component<P, S> {
-  static contextTypes = {
-    store: PropTypes.object,
-  };
   constructor(props:P) {
     super(props);
     this.state = {
@@ -45,14 +40,12 @@ class MARCcat extends React.Component<P, S> {
       <Paneset static>
         {filterPaneIsVisible &&
           <Pane
-            id="pane-filter"
-            dismissible
-            actionMenuItems={actionMenuItems}
             defaultWidth="25%"
-            paneTitle={translate({ id: 'ui-marccat.searchAndFilter' })}
+            actionMenuItems={actionMenuItems}
             onClose={this.toggleFilterPane}
+            paneTitle={translate({ id: 'ui-marccat.searchAndFilter' })}
           >
-            <SearchEngine {...this.props} />
+            <SearchPanel {...this.props} />
           </Pane>}
         <SearchResults {...this.props} />
       </Paneset>

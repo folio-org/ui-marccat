@@ -109,10 +109,29 @@ const getFieldPosition = (controlField, position1, position2) => {
   }
 };
 
+const getFormat = (leader) => {
+  const position6 = leader.substring(6, 7);
+  if (position6 === 'a') return 'book';
+  if (position6 === 'p') return 'archival manuscript/mixed format';
+  if (position6 === 'g') return 'film or video';
+  if (position6 === 'e') return 'map';
+  if (position6 === 'f') return 'map (manuscript)';
+  if (position6 === 'j') return 'music recording';
+  if (position6 === 'd') return 'music score (manuscript)';
+  if (position6 === 'i') return 'nonmusic recording';
+  if (position6 === 's') return 'periodical or serial';
+  if (position6 === 'k') return 'photograph, print or drawing';
+  if (position6 === 't') return 'rare book or manuscript';
+  if (position6 === 'm') return 'software and e-resource';
+  if (position6 === 'r') return '3d object';
+  return '';
+};
+
 export {
   remapMultiArray,
   remapTemplateView,
   remapForTemplateMandatory,
   remapForResultList,
-  getFieldPosition
+  getFieldPosition,
+  getFormat
 };

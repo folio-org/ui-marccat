@@ -5,11 +5,11 @@ import { AccordionSet, Accordion, FilterAccordionHeader } from '@folio/stripes-c
 import { connect } from 'react-redux';
 import { Row, Col } from 'react-flexbox-grid';
 import InfoPopover from '@folio/stripes-components/lib/InfoPopover';
-import type { Props } from '../../core/type/props';
+import type { Props } from '../../Core/type/props';
 import SearchSelectFields from '../../Mock/SearchSelectFields';
 import SearchConditions from '../../Mock/SearchConditions';
 import FiltersContainer from './Filter/FiltersContainer';
-import { ActionTypes } from '../../redux/actions/Actions';
+import { ActionTypes } from '../../Redux/actions/Actions';
 import styles from './Search.css';
 
 type P = Props & {

@@ -5,12 +5,13 @@ import { FormattedMessage } from 'react-intl';
 import AppIcon from '@folio/stripes-components/lib/AppIcon';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
-import * as C from '../../../utils/Constant';
-import { ActionTypes } from '../../../redux/actions';
-import { Props } from '../../../core';
+import * as C from '../../../Utils/Constant';
+import { ActionTypes } from '../../../Redux/actions';
+import { Props } from '../../../Core';
 import { actionMenuItem, ToolbarButtonMenu, ToolbarMenu, EmptyMessage, DotLoader } from '../../lib';
 import css from '../../Search/Search.css';
-import { remapForResultList, getFieldPosition } from '../../../utils/Mapper';
+import { remapForResultList, getFieldPosition } from '../../../Utils/Mapper';
+import RowDetails from './RowDetails';
 
 type P = Props & {
     headings: Array<any>,
@@ -33,7 +34,7 @@ export class SearchResults extends React.Component<P, {}> {
 
   handleDeatils = (e) => {
     const { store } = this.props;
-    store.dispatch({ type: ActionTypes.DETAILS, query: e.currentTarget.lastChild.innerText });
+    store.dispatch({ type: ActionTypes.DETAILS, query: e.currentTarget.children[1].innerText });
     this.setState(prevState => {
       const detailPanelIsVisible = Object.assign({}, prevState.detailPanelIsVisible);
       return { detailPanelIsVisible };
@@ -138,6 +139,7 @@ export class SearchResults extends React.Component<P, {}> {
           {(this.props.fetching) ?
             <DotLoader {...this.props} /> :
             <MultiColumnList
+              defaultWidth="fill"
               isEmptyMessage=""
               columnWidths={{ 'resultView': '5%', '001': '10%', '245': '35%', 'name': '15%', 'uniformTitle': '10%', 'subject': '15%', 'date1': '5%', 'date2': '5%' }}
               onRowClick={this.handleDeatils}
@@ -159,6 +161,7 @@ export class SearchResults extends React.Component<P, {}> {
         {detailPanelIsVisible &&
           <Pane
             id="pane-details"
+            defaultWidth="30%"
             paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
             paneSub={(this.props.headings) ? this.props.headings.length : 'No results'}
             appIcon={{ app: C.META.ICON_TITLE }}
@@ -167,7 +170,7 @@ export class SearchResults extends React.Component<P, {}> {
             actionMenuItems={actionMenuItems}
             lastMenu={rightMenuEdit}
           >
-            {(this.props.fetchingDetail) ? <DotLoader {...this.props} /> : <div />}
+            {(this.props.fetchingDetail) ? <DotLoader {...this.props} /> : <RowDetails {...this.props} />}
           </Pane>}
       </Paneset>
     );

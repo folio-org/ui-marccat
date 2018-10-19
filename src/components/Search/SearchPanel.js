@@ -60,7 +60,7 @@ class SearchPanel extends React.Component<P, {}> {
                   />
                 </div>
               </Col>
-              <Col xs={1}>
+              <Col xs={1} style={{ paddingLeft: 0 }} className={styles.popover}>
                 <InfoPopover
                   content="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
                   buttonLabel="Read more"

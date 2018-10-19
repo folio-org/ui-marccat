@@ -2,7 +2,6 @@ import React from 'react';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import AppIcon from '@folio/stripes-components/lib/AppIcon';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import * as C from '../../../utils/Constant';
@@ -68,9 +67,7 @@ export class SearchResults extends React.Component<P, {}> {
 
     const resultsFormatter = {
       resultView: x => (
-        <span
-          className={x.recordView === 1 ? style.bibliographic : style.authority}
-        />
+        <span className={x.recordView === 1 ? style.bibliographic : style.authority} />
       ),
       name: x => (
         <div>

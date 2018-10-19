@@ -16,14 +16,14 @@
   width: 24px;
   height: 24px;
   background-color: #f6544c !important;
-  border-radius:25%;
+  border-radius: 25%;
 }
 
 .bibliographic {
   width: 24px;
   height: 24px;
   background-color: #2b75bb !important;
-  border-radius:25%;
+  border-radius: 25%;
 }
 
 .select_margin {
@@ -44,5 +44,14 @@
 
   & span {
     overflow: visible;
+  }
+}
+
+.popover {
+  padding-left: 0;
+
+  & svg {
+    width: 18px;
+    height: 18px;
   }
 }

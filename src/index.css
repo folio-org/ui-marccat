@@ -1,9 +1,3 @@
 [data-module] {
   height: 100%;
 }
-h2.paneTitle {
-    & span {
-        overflow: visible!important;
-    }
-   
-}

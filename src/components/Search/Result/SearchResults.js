@@ -9,8 +9,9 @@ import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import { Props } from '../../../core';
 import { actionMenuItem, ToolbarButtonMenu, ToolbarMenu, EmptyMessage, DotLoader } from '../../lib';
-import css from '../../Search/Search.css';
+import style from '../../Search/Search.css';
 import { remapForResultList } from '../../../utils/Mapper';
+
 
 type P = Props & {
     headings: Array<any>,
@@ -68,7 +69,7 @@ export class SearchResults extends React.Component<P, {}> {
     const resultsFormatter = {
       resultView: x => (
         <AppIcon
-          className={x.recordView === 1 ? css.bibliographic : css.authority}
+          className={x.recordView === 1 ? style.bibliographic : style.authority}
           size="small"
         />
       ),
@@ -92,12 +93,10 @@ export class SearchResults extends React.Component<P, {}> {
           paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
           paneSub={(this.props.fetching) ? 'Searching....' : (this.props.headings) ? this.props.headings.length + ' Results Found' : 'No Result found'}
           appIcon={{ app: C.META.ICON_TITLE }}
-          firstMenu={search}
-          lastMenu={rightMenu}
           actionMenuItems={actionMenuItems}
         >
           {!this.props.headings && !this.props.fetching &&
-            <EmptyMessage {...this.props} />
+          <EmptyMessage {...this.props} />
           }
           {(this.props.fetching) ?
             <DotLoader {...this.props} /> :
@@ -118,18 +117,18 @@ export class SearchResults extends React.Component<P, {}> {
             />}
         </Pane>
         {detailPanelIsVisible &&
-          <Pane
-            id="pane-details"
-            paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
-            paneSub={(this.props.headings) ? this.props.headings.length : 'No results'}
-            appIcon={{ app: C.META.ICON_TITLE }}
-            dismissible
-            onClose={() => this.setState({ detailPanelIsVisible: false })}
-            actionMenuItems={actionMenuItems}
-            lastMenu={rightMenuEdit}
-          >
-            {(this.props.fetchingDetail) ? <DotLoader {...this.props} /> : <div />}
-          </Pane>}
+        <Pane
+          id="pane-details"
+          paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
+          paneSub={(this.props.headings) ? this.props.headings.length : 'No results'}
+          appIcon={{ app: C.META.ICON_TITLE }}
+          dismissible
+          onClose={() => this.setState({ detailPanelIsVisible: false })}
+          actionMenuItems={actionMenuItems}
+          lastMenu={rightMenuEdit}
+        >
+          {(this.props.fetchingDetail) ? <DotLoader {...this.props} /> : <div />}
+        </Pane>}
       </Paneset>
     );
   }

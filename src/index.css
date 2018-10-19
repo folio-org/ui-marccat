@@ -1,11 +1,3 @@
 [data-module] {
   height: 100%;
-  & section {
-    & .paneHeaderCenter{
-        display: none;
-     }
-  }
 }
-input {
-    margin-bottom: 0!important;
-   }

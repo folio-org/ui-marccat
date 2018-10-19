@@ -29,4 +29,16 @@
     margin-bottom: 0;
     border-bottom: 0;
   }
+  & isFocused {
+    border-bottom: 0;
+  }
+}
+
+.searchPanel {
+  width: 100%;
+  height:100%;
+  z-index: 99999;
+  & span {
+    overflow: visible;
+  }
 }

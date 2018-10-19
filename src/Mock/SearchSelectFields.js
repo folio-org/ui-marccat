@@ -28,6 +28,7 @@ export default function SearchSelectFields({ label }:P) {
   ];
   return (
     <Selection
+      id="selection-first"
       placeholder="Select a field..."
       style={{ marginBottm: '0' }}
       label={label}

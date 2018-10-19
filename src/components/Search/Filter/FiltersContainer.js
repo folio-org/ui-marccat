@@ -47,6 +47,13 @@ export default class FiltersContainer extends React.Component {
     });
   }
 
+  onClearFilter = () => {
+    this.setState(s => {
+      const filters = {};
+      return { filters };
+    });
+  }
+
   render() {
     return (
       <div className={styles['search-filters']}>
@@ -55,6 +62,7 @@ export default class FiltersContainer extends React.Component {
           config={this.config}
           filters={this.state.filters}
           onChangeFilter={this.onChangeFilter}
+          onClearFilter={this.onClearFilter}
         />
       </div>
     );

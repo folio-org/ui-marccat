@@ -43,6 +43,7 @@ class MARCcat extends React.Component<P, S> {
       <Paneset static>
         {filterPaneIsVisible &&
           <Pane
+            id="PIPPO"
             dismissible
             defaultWidth="25%"
             actionMenuItems={actionMenuItems}

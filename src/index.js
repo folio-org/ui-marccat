@@ -23,12 +23,6 @@ type RoutingProps = {
 class MARCCatRouting extends React.Component<RoutingProps, {}> {
   constructor(props, context) {
     super(props, context);
-    /*
-     * add epic and reducer to the application store
-     * all the reducer and the epic are load in the Redux folder
-     * and combine in a  unique reducer and unique epic$
-     */
-    // this.context.addReducer(resourceKey, reducer)
     props.root.addReducer(C.STATE_MANAGEMENT.REDUCER, reducer);
     props.root.addEpic(C.STATE_MANAGEMENT.EPIC, epics);
   }

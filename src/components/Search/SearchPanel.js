@@ -2,10 +2,9 @@
 import React from 'react';
 import SearchField from '@folio/stripes-components/lib/SearchField';
 import { AccordionSet, Accordion, FilterAccordionHeader } from '@folio/stripes-components';
-import { connect } from 'react-redux';
 import { Row, Col } from 'react-flexbox-grid';
 import InfoPopover from '@folio/stripes-components/lib/InfoPopover';
-import type { Props } from '../../core/type/props';
+import { Props, injectCommonProp } from '../../core/';
 import SearchSelectFields from './Select/SearchIndexes';
 import SearchConditions from './Select/SearchConditions';
 import FiltersContainer from './Filter/FiltersContainer';
@@ -94,4 +93,4 @@ class SearchPanel extends React.Component<P, {}> {
     );
   }
 }
-export default (connect(null, null)(SearchPanel));
+export default injectCommonProp(SearchPanel);

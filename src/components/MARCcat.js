@@ -39,7 +39,8 @@ class MARCcat extends React.Component<P, S> {
       <Paneset static>
         {filterPaneIsVisible &&
           <Pane
-            defaultWidth="25%"
+            dismissible
+            defaultWidth="20%"
             actionMenuItems={actionMenuItems}
             onClose={this.toggleFilterPane}
             paneTitle={translate({ id: 'ui-marccat.searchAndFilter' })}

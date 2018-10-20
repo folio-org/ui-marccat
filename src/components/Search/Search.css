@@ -37,19 +37,8 @@
   }
 }
 
-.searchPanel {
-  width: 100%;
-  height: 100%;
-  z-index: 99999;
-
-  & span {
-    overflow: visible;
-  }
-}
-
 .popover {
   padding-left: 0;
-
   & svg {
     width: 18px;
     height: 18px;

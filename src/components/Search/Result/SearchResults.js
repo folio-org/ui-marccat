@@ -161,7 +161,7 @@ export class SearchResults extends React.Component<P, {}> {
         {detailPanelIsVisible &&
           <Pane
             id="pane-details"
-            defaultWidth="30%"
+            defaultWidth="35%"
             paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
             paneSub={(this.props.headings) ? this.props.headings.length : 'No results'}
             appIcon={{ app: C.META.ICON_TITLE }}

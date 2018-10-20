@@ -23,6 +23,7 @@ export default function SearchConditions({ label }:P) {
   return (
     <Selection
       placeholder="Select condition..."
+      useValidStyle
       label={label}
       dataOptions={options}
     />

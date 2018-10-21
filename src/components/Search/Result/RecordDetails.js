@@ -1,31 +1,37 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from 'react-flexbox-grid';
 import InventoryPluggableBtn from '../Plugin/Inventory';
+import type { Props } from '../../../core';
+import style from '../Style/Search.css';
 
-type Props = {
+type P = Props & {
   items: Array<any>
 }
 
-function RecordDetails(props:Props) {
+function RecordDetails({ translate, ...props }:P) {
   const recordDetails = props.items.replace('LEADER', '');
   const recordDetailsArray = recordDetails.split('\n');
   return (
-    <div>
+    <div className={style.withSpace}>
+      <KeyValue
+        label="245 title"
+        value="Some value"
+      />
       {recordDetailsArray.map(item =>
         <Row>
-          <Col xs={1}>
+          <Col xs={1} style={{ paddingBottom: '8px' }}>
             {item.substring(0, 4)}
           </Col>
-          <Col xs={1}>
+          <Col xs={1} style={{ paddingBottom: '8px' }}>
             {item.substring(6).startsWith('$') ? item.substring(4, 6) : ''}
           </Col>
-          <Col xs={10}>
+          <Col xs={10} style={{ paddingBottom: '8px' }}>
             {!item.substring(6).startsWith('$') ? item.substring(4) : item.substring(6)}
           </Col>
         </Row>)}
-      <InventoryPluggableBtn {...props} buttonLabel={<FormattedMessage id="ui-marccat.search.goto.inventory" />} />
+      <InventoryPluggableBtn {...props} buttonLabel={translate({ id: 'ui-marccat.search.goto.inventory' })} />
     </div>
   );
 }

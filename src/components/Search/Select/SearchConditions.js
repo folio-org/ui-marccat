@@ -4,27 +4,22 @@
  * @flow
  */
 import React from 'react';
-import { Selection } from '@folio/stripes-components';
-import { Props } from '../../../core';
+import { Field } from 'redux-form';
+import Selection from '@folio/stripes-components/lib/Selection';
 
-
-type P = Props & {
-  label: string;
-  value: number;
-};
-
-export default function SearchConditions({ label }:P) {
+export default function SearchConditions() {
   const options = [
-    { label: 'Start with', value: '0' },
-    { label: 'Contains', value: '1' },
-    { label: 'Does not contain', value: '2' },
-    { label: 'Exact match', value: '3' },
+    { label: 'Start with', value: 'AW' },
+    { label: 'Contains', value: 'AW' },
+    { label: 'Does not contain', value: 'AW' },
+    { label: 'Exact match', value: 'AW' },
   ];
   return (
-    <Selection
+    <Field
+      name="selectCondition"
+      id="selectCondition"
       placeholder="Select condition..."
-      useValidStyle
-      label={label}
+      component={Selection}
       dataOptions={options}
     />
   );

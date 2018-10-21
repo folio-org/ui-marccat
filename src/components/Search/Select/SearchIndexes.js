@@ -4,34 +4,29 @@
  * @flow
  */
 import React from 'react';
-import { Selection } from '@folio/stripes-components';
-import { Props } from '../../../core';
+import { Field } from 'redux-form';
+import Selection from '@folio/stripes-components/lib/Selection';
 
-type P = Props & {
-  label: string;
-  value: number;
-};
-
-export default function SearchIndexes({ label }:P) {
+export default function SearchIndexes() {
   const options = [
-    { label: 'All MARC fields', value: '0' },
-    { label: 'Multiple MARC fields [XXX]', value: '1' },
-    { label: 'ISBN', value: '2' },
-    { label: 'ISSN', value: '3' },
-    { label: 'Keyword', value: '4' },
-    { label: 'Local Number', value: '5' },
-    { label: 'Name', value: '6' },
-    { label: 'Publisher', value: '7' },
-    { label: 'Self location', value: '8' },
-    { label: 'Subject', value: '9' },
-    { label: 'Title', value: '10' }
+    { label: 'All MARC fields', value: 'AW' },
+    { label: 'Multiple MARC fields [XXX]', value: 'AW' },
+    { label: 'ISBN', value: 'BN' },
+    { label: 'ISSN', value: 'SN' },
+    { label: 'Keyword', value: 'AW' },
+    { label: 'Local Number', value: 'AN' },
+    { label: 'Name', value: 'NA' },
+    { label: 'Publisher', value: 'PU' },
+    { label: 'Self location', value: 'LL' },
+    { label: 'Subject', value: 'SU' },
+    { label: 'Title', value: 'TI' }
   ];
   return (
-    <Selection
-      id="selection-first"
+    <Field
+      name="selectIndexes"
+      id="selectIndexes"
       placeholder="Select a field..."
-      style={{ marginBottm: '0' }}
-      label={label}
+      component={Selection}
       dataOptions={options}
     />
   );

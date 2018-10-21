@@ -4,7 +4,7 @@ let url;
 if (environment === 'sandbox') {
   url = 'https://okapi-sandbox.frontside.io';
 } else {
-  url = 'http://151.1.163.1:9130';
+  url = 'http://folio-alpha.aws.indexdata.com:9130';
 }
 module.exports = {
   okapi: { url, tenant: 'diku' },
@@ -13,7 +13,6 @@ module.exports = {
       username: 'diku_admin',
       password: 'admin',
     },
-    languages: (process.env.NODE_ENV === 'DEBUG') ? ['en'] : ['en'],
     logCategories: 'redux',
     logPrefix: `@@MARCCAT-LOG[${environment}] -->`,
     logTimestamp: false,

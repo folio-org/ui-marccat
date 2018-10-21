@@ -172,6 +172,7 @@
   "search.nearButton" : "near",
   "search.refreshButton":"Refresh",
   "search.wildCard" : "Wild cards",
+  "search.lorem": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 
   "search.simple.NT" : "NT Note Keyword",
   "search.simple.PW" : "PW Publ. Name Keyword",

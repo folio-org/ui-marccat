@@ -10,8 +10,6 @@ export const fetchDetailsRecords = (records) => ({
   type: ActionTypes.DETAILS_BY_TITLE,
   payload: records
 });
-
-
 export const fetchScanBrowsingRecords = (records) => ({
   type: ActionTypes.SCAN_SUCCESS,
   payload: records
@@ -33,7 +31,10 @@ export const fetchFailure = (message) => ({
   payload: message
 });
 
-
+export const setLang = (lang) => ({
+  type: ActionTypes.LANGUAGES,
+  payload: lang
+});
 /**
  * Action creator for querying a set of records
  * @param {String} type - resource type

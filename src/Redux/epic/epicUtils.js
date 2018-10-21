@@ -1,3 +1,5 @@
+import querystring from 'query-string';
+
 /**
  * Helper for creating headers when making a request
  * @param {String} method - request method
@@ -5,7 +7,7 @@
  * @param {String} state.okapi.token - the Okapi user token
  * @returns {Object} headers for a new request
  */
-export const getHeaders = (method, { okapi }) => {
+export const querystringgetHeaders = (method, { okapi }) => {
   const headers = {
     'X-Okapi-Tenant': okapi.tenant,
     'X-Okapi-Token': okapi.token
@@ -31,3 +33,12 @@ export const parseResponseBody = (response) => {
   });
 };
 
+export const buildQuery = (store) => {
+  const { form } = store.getState();
+  const { values } = form.searchForm;
+  return querystring.stringify(
+    values.selectIndexes
+      .concat(' ')
+      .concat(values.searchTextArea)
+  );
+};

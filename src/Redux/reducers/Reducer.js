@@ -3,6 +3,14 @@ import { ActionTypes } from '../actions/Actions';
 const isLoading = false;
 const isLoadingDetail = false;
 
+const filter = {
+  recordType: undefined,
+  suppressed: undefined,
+  language: undefined,
+  format: undefined
+};
+
+
 export function searchEngineReducer(state = { isLoading }, action) {
   switch (action.type) {
   case ActionTypes.SEARCH:
@@ -27,6 +35,7 @@ export function searchEngineReducer(state = { isLoading }, action) {
   }
 }
 
+// TOBE REMOVED
 export function getDetailsRecord(state = { isLoadingDetail }, action) {
   switch (action.type) {
   case ActionTypes.DETAILS:
@@ -69,3 +78,16 @@ export function scanBrowsingReducer(state = { isLoading }, action) {
     return state;
   }
 }
+
+export function filterReducer(state = { filter }, action) {
+  switch (action.type) {
+  case ActionTypes.LANGUAGES:
+    return {
+      ...state,
+      lang: action.lang,
+    };
+  default:
+    return state;
+  }
+}
+

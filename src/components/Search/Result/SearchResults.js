@@ -2,15 +2,17 @@ import React from 'react';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import Icon from '@folio/stripes-components/lib/Icon';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import { Props } from '../../../core';
-import { actionMenuItem, ToolbarButtonMenu, EmptyMessage, DotLoader } from '../../lib';
-import { remapForResultList, getFieldPosition } from '../../../utils/Mapper';
+import { actionMenuItem, ToolbarButtonMenu, ToolbarMenu, EmptyMessage } from '../../lib';
+import { remapForResultList, getFieldPosition, getFormat } from '../../../utils/Mapper';
+import RecordDetails from './RecordDetails';
 
-import style from '../Search.css';
+import style from '../Style/Search.css';
 
 type P = Props & {
     headings: Array<any>,
@@ -33,7 +35,7 @@ export class SearchResults extends React.Component<P, {}> {
 
   handleDeatils = (e) => {
     const { store } = this.props;
-    store.dispatch({ type: ActionTypes.DETAILS, query: e.currentTarget.lastChild.innerText });
+    store.dispatch({ type: ActionTypes.DETAILS, query: e.currentTarget.children[1].innerText });
     this.setState(prevState => {
       const detailPanelIsVisible = Object.assign({}, prevState.detailPanelIsVisible);
       return { detailPanelIsVisible };
@@ -48,8 +50,9 @@ export class SearchResults extends React.Component<P, {}> {
     const { detailPanelIsVisible } = this.state;
 
     const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
+    const rightMenu = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.new.keyboard" style={rightButton} />;
     const rightMenuEdit = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.edit" style={rightButton} />;
-
+    const leftMenu = <ToolbarMenu {...this.props} icon={['search']} />;
     let marcJSONRecords = [];
     if (this.props.headings && this.props.headings.length > 0) {
       marcJSONRecords = remapForResultList(this.props.headings);
@@ -62,7 +65,8 @@ export class SearchResults extends React.Component<P, {}> {
       'uniformTitle': 'Uniform Title (130, 240)',
       'subject': 'Subject (6xx)',
       'date1': 'Date 1',
-      'date2': 'Date 2'
+      'date2': 'Date 2',
+      'format': 'Format',
     };
 
     const resultsFormatter = {
@@ -90,6 +94,11 @@ export class SearchResults extends React.Component<P, {}> {
       date2: x => (
         <div>
           {getFieldPosition(x['008'], 11, 14)}
+        </div>
+      ),
+      format: x => (
+        <div>
+          {getFormat(x.leader)}
         </div>
       ),
       subject: x => (
@@ -120,19 +129,23 @@ export class SearchResults extends React.Component<P, {}> {
     return (
       <Paneset static>
         <Pane
+          defaultWidth="fill"
           paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
           paneSub={(this.props.fetching) ? 'Searching....' : (this.props.headings) ? this.props.headings.length + ' Results Found' : 'No Result found'}
           appIcon={{ app: C.META.ICON_TITLE }}
           actionMenuItems={actionMenuItems}
+          firstMenu={leftMenu}
+          lastMenu={rightMenu}
         >
           {!this.props.headings && !this.props.fetching &&
           <EmptyMessage {...this.props} />
           }
           {(this.props.fetching) ?
-            <DotLoader {...this.props} /> :
+            <Icon icon="spinner-ellipsis" /> :
             <MultiColumnList
+              defaultWidth="fill"
               isEmptyMessage=""
-              columnWidths={{ 'resultView': '6%', '001': '10%', '245': '35%', 'name': '15%', 'uniformTitle': '10%', 'subject': '15%', 'date1': '5%', 'date2': '5%' }}
+              columnWidths={{ 'resultView': '5%', '001': '12%', '245': '25%', 'name': '15%', 'uniformTitle': '10%', 'subject': '15%', 'date1': '5%', 'date2': '5%', 'format': '10%' }}
               onRowClick={this.handleDeatils}
               contentData={marcJSONRecords}
               formatter={resultsFormatter}
@@ -145,23 +158,27 @@ export class SearchResults extends React.Component<P, {}> {
                 'uniformTitle',
                 'subject',
                 'date1',
-                'date2'
+                'date2',
+                'format'
               ]}
             />}
         </Pane>
         {detailPanelIsVisible &&
-        <Pane
-          id="pane-details"
-          paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
-          paneSub={(this.props.headings) ? this.props.headings.length : 'No results'}
-          appIcon={{ app: C.META.ICON_TITLE }}
-          dismissible
-          onClose={() => this.setState({ detailPanelIsVisible: false })}
-          actionMenuItems={actionMenuItems}
-          lastMenu={rightMenuEdit}
-        >
-          {(this.props.fetchingDetail) ? <DotLoader {...this.props} /> : <div />}
-        </Pane>}
+          <Pane
+            id="pane-details"
+            defaultWidth="35%"
+            paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
+            paneSub={C.EMPTY_MESSAGE}
+            appIcon={{ app: C.META.ICON_TITLE }}
+            dismissible
+            onClose={() => this.setState({ detailPanelIsVisible: false })}
+            actionMenuItems={actionMenuItems}
+            lastMenu={rightMenuEdit}
+          >
+            {(this.props.fetchingDetail) ?
+              <Icon icon="spinner-ellipsis" /> :
+              <RecordDetails {...this.props} />}
+          </Pane>}
       </Paneset>
     );
   }

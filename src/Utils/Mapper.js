@@ -1,74 +1,5 @@
 import * as C from './Constant';
 
-const marcSeparator = s => s.replace(
-  C.MARC.CHARACTER_SEPARATOR,
-  C.MARC.CHARACTER_DOLLAR,
-);
-
-const remapMultiArray = multiArray => {
-  const obj = [];
-  multiArray.forEach((el, index) => {
-    if (multiArray[index][C.MARC.FIXED_FIELD] !== undefined) {
-      obj.push(multiArray[index][C.MARC.FIXED_FIELD]);
-    } else if (
-      multiArray[index][C.MARC.VARIABLE_FIELD] !== undefined
-    ) {
-      multiArray[index][ // eslint-disable-line
-        C.MARC.VARIABLE_FIELD
-      ].displayValue = marcSeparator(multiArray[index][C.MARC.VARIABLE_FIELD].displayValue);
-      obj.push(multiArray[index][C.MARC.VARIABLE_FIELD]);
-    }
-  });
-  return obj;
-};
-
-export const remapSubfield = (data) => {
-  const obj = [{}];
-  const fieldType = data[C.MARC.VARIABLE_FIELD] ? C.MARC.VARIABLE_FIELD : C.MARC.FIXED_FIELD;
-  if (fieldType === C.MARC.FIXED_FIELD) return;
-  data[fieldType].subfields.map(i => { // eslint-disable-line
-    obj.push({
-      value: i, label: i
-    });
-  });
-  return obj; // eslint-disable-line
-};
-
-const remapTemplateView = json => {
-  const obj = [];
-  const arrayFixedFields = [];
-  const arrayVariableFields = [];
-  arrayFixedFields.push(...json.fixedFields);
-  json.variableFields.forEach((el, index) => {
-    json.variableFields[index].displayValue = marcSeparator(json.variableFields[index].displayValue);
-  });
-  arrayVariableFields.push(...json.variableFields);
-  obj.push(...arrayFixedFields, ...arrayVariableFields);
-  return obj;
-};
-/**
- * map mandatory json in form of template to have a base structure to save
- * @param {} multiArray
- */
-const remapForTemplateMandatory = multiArray => {
-  const fixedFields = [];
-  const variableFields = [];
-  multiArray.forEach((el, index) => {
-    if (multiArray[index][C.MARC.FIXED_FIELD] !== undefined) {
-      fixedFields.push(multiArray[index][C.MARC.FIXED_FIELD]);
-    } else if (
-      multiArray[index][C.MARC.VARIABLE_FIELD] !== undefined
-    ) {
-      variableFields.push(multiArray[index][C.MARC.VARIABLE_FIELD]);
-    }
-  });
-  const result = {
-    fixedFields,
-    variableFields
-  };
-  return result;
-};
-
 /**
  * concatenate all subfield text data of a tag
  * @param {*} tagNode
@@ -81,38 +12,52 @@ const getTagDisplayValue = tagNode => {
   return result;
 };
 
-const remapForResultList = jsonInput => {
+const remapForResultList = i => {
   const result = [];
-  jsonInput.forEach(el => {
-    const record = {};
-    record.recordView = el.recordView;
-    record.leader = el.data.leader;
+  i.forEach(el => {
+    const record = {
+      recordView: el.recordView,
+      leader: el.data.leader
+    };
     const { fields } = el.data;
     fields.forEach(field => {
       const tag = Object.keys(field)[0];
-      if (typeof field[tag] === 'string' || field[tag] instanceof String) {
-        record[tag] = field[tag];
-      } else {
-        record[tag] = getTagDisplayValue(field[tag]);
-      }
+      record[tag] = (typeof field[tag] === 'string' || field[tag] instanceof String)
+        ? field[tag]
+        : getTagDisplayValue(field[tag]);
     });
     result.push(record);
   });
   return result;
 };
 
-const getFieldPosition = (controlField, position1, position2) => {
-  if (!controlField || controlField.length < position2) {
-    return controlField;
-  } else {
-    return controlField.substring(position1, position2);
+const getFieldPosition = (controlField, pos1, pos2) => {
+  return (!controlField || controlField.length < pos2) ? controlField : controlField.substring(pos1, pos2);
+};
+
+const getFormat = (leader) => {
+  const pos = leader.substring(6, 7);
+
+  switch (pos) {
+  case 'a': return 'book';
+  case 'p': return 'archival manuscript/mixed format';
+  case 'g': return 'film or video';
+  case 'e': return 'map';
+  case 'f': return 'map (manuscript)';
+  case 'j': return 'music recording';
+  case 'd': return 'music score (manuscript)';
+  case 'i': return 'nonmusic recording';
+  case 's': return 'periodical or serial';
+  case 'k': return 'photograph, print or drawing';
+  case 't': return 'rare book or manuscript';
+  case 'm': return 'software and e-resource';
+  case 'r': return '3d object';
+  default: return C.EMPTY_MESSAGE;
   }
 };
 
 export {
-  remapMultiArray,
-  remapTemplateView,
-  remapForTemplateMandatory,
   remapForResultList,
-  getFieldPosition
+  getFieldPosition,
+  getFormat
 };

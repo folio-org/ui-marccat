@@ -68,14 +68,14 @@
   },
   "dependencies": {
     "@folio/react-intl-safe-html": "^1.0.0",
-    "@folio/stripes-components": "^3.0.0",
+    "@folio/stripes-components": "^4.2.2000575",
     "@folio/stripes-core": "^2.10.2",
-    "@folio/stripes-form": "^0.8.2",
-    "@folio/stripes-smart-components": "^1.4.23",
+    "@folio/stripes-smart-components": "^1.10.1000297",
     "eslint-loader": "^2.1.0",
     "flow": "^0.2.3",
     "flow-remove-types": "^1.2.3",
     "observable-fetch": "^1.1.1",
+    "query-string": "^6.2.0",
     "react-intl": "^2.4.0",
     "react-redux-lifecycle": "^2.2.0",
     "redux-form": "^7.4.2",
@@ -84,9 +84,6 @@
     "stylelint-config-standard": "^18.2.0"
   },
   "peerDependencies": {
-    "@folio/stripes-connect": "^3.1.1",
-    "@folio/stripes-core": "^2.10.2",
-    "@folio/stripes-logger": "^0.0.2",
     "react": "*"
   },
   "optionalDependencies": {
@@ -118,7 +115,7 @@
     "icons": [
       {
         "name": "app",
-        "alt": "Create, view and manage marccat",
+        "alt": "Create, view and manage marc record",
         "title": "MARCcat"
       }
     ],

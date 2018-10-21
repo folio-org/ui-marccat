@@ -172,6 +172,7 @@
   "search.nearButton" : "near",
   "search.refreshButton":"Refresh",
   "search.wildCard" : "Wild cards",
+  "search.lorem": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 
   "search.simple.NT" : "NT Note Keyword",
   "search.simple.PW" : "PW Publ. Name Keyword",
@@ -186,6 +187,7 @@
   "search.record.preview": "Preview Record",
   "search.record.new.keyboard": "+ New (CTRL+N)",
   "search.record.edit" : "Edit",
+  "search.goto.inventory": "View in Inventory",
 
   "search.wrong.input":"Wrong input on search field",
   "advancedsearch.categories.select": "Categories",

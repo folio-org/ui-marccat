@@ -4,7 +4,6 @@
  */
 import * as React from 'react';
 import { Settings } from './settings';
-import Router from './router';
 import { reducer, epics } from './redux';
 import { injectCommonProp } from './core';
 import * as C from './utils';
@@ -18,6 +17,7 @@ type RoutingProps = {
     addEpic: Function,
   },
   showSettings: boolean,
+  children: React.ReactNode
 };
 
 class MARCCatRouting extends React.Component<RoutingProps, {}> {
@@ -40,7 +40,7 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
     }
     return (
       <MARCcat {...this.props}>
-        <Router {...this.props} />
+        {this.props.children}
       </MARCcat>
     );
   }

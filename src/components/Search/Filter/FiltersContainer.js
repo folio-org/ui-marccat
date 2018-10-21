@@ -1,9 +1,12 @@
 import React from 'react';
 import FilterGroups, { initialFilterState } from '@folio/stripes-components/lib/FilterGroups';
+import { ActionTypes } from '../../../redux/actions';
+import { Props } from '../../../core';
 
 import styles from './FiltersContainer.css';
 
-export default class FiltersContainer extends React.Component {
+type P = Props & {}
+export default class FiltersContainer extends React.Component<P, {}> {
   constructor(props) {
     super(props);
     this.config = [
@@ -40,9 +43,11 @@ export default class FiltersContainer extends React.Component {
 
   onChangeFilter = (e) => {
     const { name, checked } = e.target;
+    const { store } = this.props;
     this.setState(prevState => {
       const filters = Object.assign({}, prevState.filters);
       filters[name] = checked;
+      store.dispatch({ type: ActionTypes.LANGUAGES, lang: name.split('.')[1].substring(0, 3).toLowerCase() });
       return { filters };
     });
   }

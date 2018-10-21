@@ -2,15 +2,15 @@
 import React from 'react';
 import SearchField from '@folio/stripes-components/lib/SearchField';
 import { AccordionSet, Accordion, FilterAccordionHeader } from '@folio/stripes-components';
-import { connect } from 'react-redux';
 import { Row, Col } from 'react-flexbox-grid';
+import { reduxForm, Field } from 'redux-form';
 import InfoPopover from '@folio/stripes-components/lib/InfoPopover';
-import type { Props } from '../../core/type/props';
-import SearchSelectFields from '../../Mock/SearchSelectFields';
-import SearchConditions from '../../Mock/SearchConditions';
-import FiltersContainer from './Filter/FiltersContainer';
-import { ActionTypes } from '../../redux/actions/Actions';
-import styles from './Search.css';
+import { Props, injectCommonProp } from '../../../core';
+import SearchSelectFields from '../Select/SearchIndexes';
+import SearchConditions from '../Select/SearchConditions';
+import FiltersContainer from '../Filter/FiltersContainer';
+import { ActionTypes } from '../../../redux/actions/Actions';
+import styles from '../Style/Search.css';
 
 type P = Props & {
   inputValue: string,
@@ -22,7 +22,6 @@ class SearchPanel extends React.Component<P, {}> {
     super(props);
     this.state = {};
     this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.handleKeyboardClick = this.handleKeyboardClick.bind(this);
   }
 
   handleKeyDown(e) {
@@ -33,12 +32,8 @@ class SearchPanel extends React.Component<P, {}> {
     }
   }
 
-  handleKeyboardClick(e) {
-    const { store } = this.props;
-    store.dispatch({ type: ActionTypes.SEARCH, query: e.target.form[2].defaultValue });
-  }
-
   render() {
+    const { translate } = this.props;
     return (
       <AccordionSet>
         <Accordion
@@ -46,11 +41,7 @@ class SearchPanel extends React.Component<P, {}> {
           label={this.props.translate({ id: 'ui-marccat.navigator.search' })}
           header={FilterAccordionHeader}
         >
-          <form
-            onKeyDown={this.handleKeyDown}
-            // onKeyPress={this.handleKeyboardClick}
-            // onKeyUp={this.handleKeyboardClick}
-          >
+          <form name="searchForm" onKeyDown={this.handleKeyDown}>
             <Row>
               <Col xs={11}>
                 <div className={styles.select_margin}>
@@ -62,9 +53,9 @@ class SearchPanel extends React.Component<P, {}> {
               </Col>
               <Col xs={1} style={{ paddingLeft: 0 }} className={styles.popover}>
                 <InfoPopover
-                  content="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                  buttonLabel="Read more"
-                  buttonHref="https://wiki.folio.org/"
+                  content={translate({ id: 'ui-marccat.search.lorem' })}
+                  buttonLabel={translate({ id: 'ui-marccat.search.scanButton' })}
+                  buttonHref="http://www"
                   buttonTarget="_blank"
                 />
               </Col>
@@ -72,10 +63,10 @@ class SearchPanel extends React.Component<P, {}> {
             <Row>
               <Col xs={11}>
                 <div className={styles.select_margin}>
-                  <SearchField
-                    hasClearIcon
+                  <Field
                     fullWidth
-                    placeholder="What are you searching for?"
+                    component={SearchField}
+                    placeholder="Search..."
                     name="searchTextArea"
                     id="searchTextArea"
                   />
@@ -94,4 +85,7 @@ class SearchPanel extends React.Component<P, {}> {
     );
   }
 }
-export default (connect(null, null)(SearchPanel));
+
+export default reduxForm({
+  form: 'searchForm'
+})(injectCommonProp(SearchPanel));

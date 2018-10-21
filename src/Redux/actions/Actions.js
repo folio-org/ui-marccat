@@ -16,6 +16,7 @@ export const ActionTypes = {
   UPDATE: '@@ui-marccat/UPDATE',
   REJECT: '@@ui-marccat/REJECT',
   SAVE_TAG: '@@ui-marccat/SAVE_TAG',
+  LANGUAGES: '@@ui-marccat/LANGUAGES',
   FETCH_LOGICAL_VIEWS: '@@ui-marccat/FETCH_LOGICAL_VIEWS',
   FETCH_LOGICAL_VIEWS_SUCCESS: '@@ui-marccat/FETCH_LOGICAL_VIEWS_SUCCESS',
   FETCH_LOGICAL_VIEWS_FAILURE: '@@ui-marccat/FETCH_LOGICAL_VIEWS_FAILURE',

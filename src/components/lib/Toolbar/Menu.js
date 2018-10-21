@@ -11,6 +11,7 @@ type ToolbarMenuProps = {
   className?: string,
   style?: Object;
   withPrinter?: bool,
+  badgeCount?: string,
   onClick: () => void;
   type?: string;
   create: bool;
@@ -20,14 +21,25 @@ type ToolbarMenuProps = {
 };
 
 export const ToolbarMenu = (props: ToolbarMenuProps) => {
-  const { icon, onClick, className } = props;
+  const { icon, onClick, className, badgeCount } = props;
   return (
     <PaneMenu>
       {
         icon.map((i) => {
-          return (
-            <IconButton key={`icon-${i}`} icon={i} onClick={onClick} className={classNames(className)} />
-          );
+          return (badgeCount !== undefined) ? (
+            <IconButton
+              key={`icon-${i}`}
+              icon={i}
+              badgeCount={badgeCount}
+              onClick={onClick}
+              className={classNames(className)}
+            />
+          ) : (<IconButton
+            key={`icon-${i}`}
+            icon={i}
+            onClick={onClick}
+            className={classNames(className)}
+          />);
         })
       }
     </PaneMenu>
@@ -35,12 +47,16 @@ export const ToolbarMenu = (props: ToolbarMenuProps) => {
 };
 
 export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
-  const { onClick, style, label, type, disabled } = props;
+  const rightButton = {
+    marginRight: '10px',
+    float: 'right',
+  };
+  const { onClick, label, type, disabled } = props;
   const { formatMessage } = props.stripes.intl;
   return (
     <PaneMenu>
       <Button
-        style={style}
+        style={rightButton}
         id="create-new-template"
         buttonStyle="primary"
         onClick={onClick}

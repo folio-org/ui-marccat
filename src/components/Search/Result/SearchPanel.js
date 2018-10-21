@@ -32,6 +32,14 @@ class SearchPanel extends React.Component<P, {}> {
     }
   }
 
+  handscan = e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const { store } = this.props;
+      store.dispatch({ type: ActionTypes.SCAN, query: e.target.form[2].defaultValue });
+    }
+  }
+
   render() {
     const { translate } = this.props;
     return (
@@ -57,6 +65,7 @@ class SearchPanel extends React.Component<P, {}> {
                   buttonLabel={translate({ id: 'ui-marccat.search.scanButton' })}
                   buttonHref="http://www"
                   buttonTarget="_blank"
+                  onClick={() => alert('ferewewrer')}
                 />
               </Col>
             </Row>

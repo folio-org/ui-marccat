@@ -14,8 +14,18 @@ export const searchEpic = (action$, store) =>
       concat$(
         of$(marccatActions.fetchRequested(true)),
         ajax
-          .getJSON(buildUrl(ENDPOINT.SEARCH_URL_JSON, `lang=${store.getState().form.searchForm.values.selectIndexes}&view=1&ml=170&q=${d.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
+          .getJSON(buildUrl(ENDPOINT.SEARCH_URL_JSON, `lang=ita&view=1&ml=170&q=${d.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
           .map(record => marccatActions.fetchSearchEngineRecords(record.docs))
+          .catch(e => of$(marccatActions.fetchFailure(e))),
+      ));
+export const searchAuthEpic = (action$, store) =>
+  action$.ofType(ActionTypes.SEARCH_AUTH)
+    .switchMap((d) =>
+      concat$(
+        of$(marccatActions.fetchRequested(true)),
+        ajax
+          .getJSON(buildUrl(ENDPOINT.SEARCH_URL_JSON, `lang=ita&view=-1&ml=170&q=${d.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
+          .map(record => marccatActions.fetchSearchAuthEngineRecords(record.docs))
           .catch(e => of$(marccatActions.fetchFailure(e))),
       ));
 // TOBE REMOVED

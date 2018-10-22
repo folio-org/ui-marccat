@@ -11,6 +11,7 @@ import SearchConditions from '../Select/SearchConditions';
 import FiltersContainer from '../Filter/FiltersContainer';
 import { ActionTypes } from '../../../redux/actions/Actions';
 import styles from '../Style/Search.css';
+import findYourQuery from '../../Search/Select/FilterMapper';
 
 type P = Props & {
   inputValue: string,
@@ -28,7 +29,19 @@ class SearchPanel extends React.Component<P, {}> {
     if (e.key === 'Enter') {
       e.preventDefault();
       const { store } = this.props;
-      store.dispatch({ type: ActionTypes.SEARCH, query: e.target.form[2].defaultValue });
+      const indexFilter = store.getState().form.searchForm.values.selectIndexes;
+      const conditionFilter = store.getState().form.searchForm.values.selectCondition;
+      const keyForCheckFilter = indexFilter.concat('-').concat(conditionFilter);
+      let indexForQuery = '';
+      findYourQuery.map(el => {
+        if (el.label === keyForCheckFilter) {
+          indexForQuery = el.value;
+        }
+        return indexForQuery;
+      });
+      const newQuery = indexForQuery + e.target.form[2].defaultValue;
+      store.dispatch({ type: ActionTypes.SEARCH, query: newQuery });
+      store.dispatch({ type: ActionTypes.SEARCH_AUTH, query: newQuery });
     }
   }
 

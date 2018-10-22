@@ -9,10 +9,9 @@ import Selection from '@folio/stripes-components/lib/Selection';
 
 export default function SearchConditions() {
   const options = [
-    { label: 'Start with', value: 'AW' },
-    { label: 'Contains', value: 'AW' },
-    { label: 'Does not contain', value: 'AW' },
-    { label: 'Exact match', value: 'AW' },
+    { label: 'Start with', value: 'START' },
+    { label: 'Contains', value: 'CONTAINS' },
+    { label: 'Exact match', value: 'MATCH' },
   ];
   return (
     <Field

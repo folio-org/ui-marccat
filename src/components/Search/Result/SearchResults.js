@@ -29,6 +29,7 @@ export class SearchResults extends React.Component<P, {}> {
 
     };
     this.handleDeatils = this.handleDeatils.bind(this);
+    this.handleCount = this.handleCount.bind(this);
   }
 
   handleDeatils = (e, meta) => {
@@ -52,12 +53,19 @@ export class SearchResults extends React.Component<P, {}> {
 
   render() {
     const { detailPanelIsVisible } = this.state;
-    const { fetching, headings, fetchingDetail } = this.props;
+    const { fetching, headings, fetchingDetail, authHeadings } = this.props;
     const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
     const rightMenu = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.new.keyboard" />;
     const rightMenuEdit = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.edit" />;
-    const leftMenu = <ToolbarMenu badgeCount={headings ? headings.length : undefined} {...this.props} icon={['search']} />;
-    const marcJSONRecords = (headings && headings.length > 0) ? remapForResultList(headings) : [];
+    const leftMenu = <ToolbarMenu badgeCount={headings ? headings.length : undefined} {...this.props} icon={['search']} />;    
+    let mergedRecord = [];
+    if (authHeadings && authHeadings.length > 0) {
+      mergedRecord = [...mergedRecord, ...authHeadings];
+    }
+    if (headings && headings.length > 0) {
+      mergedRecord = [...mergedRecord, ...headings]
+    }
+    const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForResultList(mergedRecord) : [];
 
 
     return (
@@ -91,8 +99,7 @@ export class SearchResults extends React.Component<P, {}> {
                     'date1': '5%',
                     'date2': '5%',
                     'format': '10%',
-                    'count' : '5%'
-                   }
+                    'count': '5%' }
                 }
                 rowMetadata={['001', 'recordView']}
                 onRowClick={this.handleDeatils}
@@ -140,8 +147,9 @@ export class SearchResults extends React.Component<P, {}> {
 }
 
 export default (connect(
-  ({ marccat: { search, details } }) => ({
+  ({ marccat: { search, details, authSearch } }) => ({
     headings: search.records,
+    authHeadings: authSearch.records,
     fetching: search.isLoading,
     fetchingDetail: details.isLoadingDetail
   }),

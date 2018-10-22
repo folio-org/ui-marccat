@@ -31,17 +31,22 @@ export const resultsFormatter = {
   ),
   date1: x => (
     <div>
-      {getFieldPosition(x['008'], 7, 11)}
+      {x.recordView === 1 && getFieldPosition(x['008'], 7, 11) }
     </div>
   ),
   date2: x => (
     <div>
-      {getFieldPosition(x['008'], 11, 14)}
+      { x.recordView === 1 && getFieldPosition(x['008'], 11, 14) }
     </div>
   ),
   format: x => (
     <div>
-      {getFormat(x.leader)}
+      { x.recordView === 1 && getFormat(x.leader) }
+    </div>
+  ),
+  count: x => (
+    <div>
+      { x.recordView === -1 && x.count}
     </div>
   ),
   subject: x => (

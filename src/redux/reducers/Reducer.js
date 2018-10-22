@@ -35,6 +35,30 @@ export function searchEngineReducer(state = { isLoading }, action) {
   }
 }
 
+export function searchAuthReducer(state = { isLoading }, action) {
+  switch (action.type) {
+  case ActionTypes.SEARCH_AUTH:
+    return {
+      ...state,
+      isLoading: false
+    };
+  case ActionTypes.FETCH_REQUESTED:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: true
+    };
+  case ActionTypes.RECORD_AUTH_SUCCESS:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: false
+    };
+  default:
+    return state;
+  }
+}
+
 // TOBE REMOVED
 export function getDetailsRecord(state = { isLoadingDetail }, action) {
   switch (action.type) {

@@ -4,6 +4,7 @@ export const handler = {};
 
 export const ActionTypes = {
   SEARCH: '@@ui-marccat/SEARCH',
+  SEARCH_AUTH: '@@ui-marccat/SEARCH_AUTH',
   SCAN: '@@ui-marccat/SCAN',
   SCAN_SUCCESS: '@@ui-marccat/SCAN_SUCCESS',
   DETAILS: '@@ui-marccat/DETAILS',
@@ -24,6 +25,7 @@ export const ActionTypes = {
   FETCH_DETAIL_REQUESTED: '@@ui-marccat/FETCH_DETAIL_REQUESTED',
   RECORD_REQUESTED: '@@ui-marccat/RECORD_REQUESTED',
   RECORD_SUCCESS: '@@ui-marccat/RECORD_SUCCESS',
+  RECORD_AUTH_SUCCESS: '@@ui-marccat/RECORD_AUTH_SUCCESS',
   DIACRITIC_CHAR: '@@ui-marccat/DIACRITIC_CHAR',
   RECEIVED_SEARCH: '@@ui-marccat/RECEIVED_SEARCH',
   CLEAR_SEARCH_RESULTS: '@@ui-marccat/CLEAR_SEARCH_RESULTS',

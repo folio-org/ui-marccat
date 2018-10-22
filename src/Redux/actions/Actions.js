@@ -9,7 +9,7 @@ export const ActionTypes = {
   DETAILS: '@@ui-marccat/DETAILS',
   DETAILS_BY_TITLE: '@@ui-marccat/DETAILS_BY_TITLE',
   QUERY: '@@ui-marccat/QUERY',
-  FIND: '@@ui-marccat/FIND',
+  FILTER: '@@ui-marccat/FILTER',
   SAVE: '@@ui-marccat/SAVE',
   CREATE: '@@ui-marccat/CREATE',
   DELETE: '@@ui-marccat/DELETE',

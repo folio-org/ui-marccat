@@ -12,25 +12,25 @@ export default class FiltersContainer extends React.Component<P, {}> {
     this.config = [
       {
         label: 'Record Type',
-        name: 'recordFilter',
+        name: 'record',
         cql: 'record.name',
         values: ['Bibliographic records', 'Authority records'],
       },
       {
         label: 'Suppressed',
-        name: 'suppressedFilter',
+        name: 'suppressed',
         cql: 'suppressed.name',
         values: [{ name: 'Yes', cql: '0' }, 'No'],
       },
       {
         label: 'Language of text',
-        name: 'languageFilter',
+        name: 'lang',
         cql: 'language.name',
         values: ['English', 'Italian', 'Spanish', 'French', 'Hungarian', 'Chinese, simplified', 'Arabic'],
       },
       {
         label: 'Format type',
-        name: 'formatType',
+        name: 'format',
         cql: 'format.name',
         values: ['Audio recording', 'Book', 'Map', 'Monograph', 'Serial', 'Video'],
       },
@@ -47,7 +47,8 @@ export default class FiltersContainer extends React.Component<P, {}> {
     this.setState(prevState => {
       const filters = Object.assign({}, prevState.filters);
       filters[name] = checked;
-      store.dispatch({ type: ActionTypes.LANGUAGES, lang: name.split('.')[1].substring(0, 3).toLowerCase() });
+      const filterType = name.split('.')[0];
+      store.dispatch({ type: ActionTypes.FILTER, filterType });
       return { filters };
     });
   }

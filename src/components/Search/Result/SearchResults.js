@@ -26,16 +26,27 @@ export class SearchResults extends React.Component<P, {}> {
     super(props);
     this.state = {
       detailPanelIsVisible: false,
+
     };
     this.handleDeatils = this.handleDeatils.bind(this);
   }
 
-  handleDeatils = (e) => {
+  handleDeatils = (e, meta) => {
     const { store } = this.props;
-    store.dispatch({ type: ActionTypes.DETAILS, query: e.currentTarget.children[1].innerText });
+    store.dispatch({ type: ActionTypes.DETAILS, query: meta['001'], recordType: meta.recordView });
     this.setState(prevState => {
       const detailPanelIsVisible = Object.assign({}, prevState.detailPanelIsVisible);
       return { detailPanelIsVisible };
+    });
+  };
+
+  handleCount = (recordArray) => {
+    recordArray.forEarch(singleRecord => {
+      if (singleRecord.recordView === 1) {
+        recordArray.count = '';
+      } else {
+        //TO-DO when Carmen will release her function
+      }
     });
   };
 
@@ -47,6 +58,7 @@ export class SearchResults extends React.Component<P, {}> {
     const rightMenuEdit = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.edit" />;
     const leftMenu = <ToolbarMenu badgeCount={headings ? headings.length : undefined} {...this.props} icon={['search']} />;
     const marcJSONRecords = (headings && headings.length > 0) ? remapForResultList(headings) : [];
+
 
     return (
       <Paneset static>
@@ -75,11 +87,14 @@ export class SearchResults extends React.Component<P, {}> {
                     '245': '25%',
                     'name': '15%',
                     'uniformTitle': '10%',
-                    'subject': '15%',
+                    'subject': '10%',
                     'date1': '5%',
                     'date2': '5%',
-                    'format': '10%' }
+                    'format': '10%',
+                    'count' : '5%'
+                   }
                 }
+                rowMetadata={['001', 'recordView']}
                 onRowClick={this.handleDeatils}
                 contentData={marcJSONRecords}
                 formatter={resultsFormatter}
@@ -93,7 +108,8 @@ export class SearchResults extends React.Component<P, {}> {
                   'subject',
                   'date1',
                   'date2',
-                  'format'
+                  'format',
+                  'count'
                 ]}
               />
           }

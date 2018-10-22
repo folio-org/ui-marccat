@@ -1,33 +1,26 @@
 /* eslint-disable no-unused-vars */
-import { Observable } from 'rxjs';
 import { of as of$ } from 'rxjs/observable/of';
-import { concat as concat$ } from 'rxjs/observable/concat';
+import { Observable, concat as concat$, merge as merge$ } from 'rxjs/';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import { ActionTypes } from '../actions/Actions';
 import * as marccatActions from '../actions';
 import { ENDPOINT, buildUrl } from '../../utils/Constant';
 import { fetchFailure } from '../actions/ActionCreator';
 
+
 export const searchEpic = (action$, store) =>
   action$.ofType(ActionTypes.SEARCH)
     .switchMap((d) =>
-      concat$(
+      merge$(concat$(
         of$(marccatActions.fetchRequested(true)),
         ajax
           .getJSON(buildUrl(ENDPOINT.SEARCH_URL_JSON, `lang=ita&view=1&ml=170&q=${d.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
-          .map(record => marccatActions.fetchSearchEngineRecords(record.docs))
-          .catch(e => of$(marccatActions.fetchFailure(e))),
-      ));
-export const searchAuthEpic = (action$, store) =>
-  action$.ofType(ActionTypes.SEARCH_AUTH)
-    .switchMap((d) =>
-      concat$(
-        of$(marccatActions.fetchRequested(true)),
+          .map(record => marccatActions.fetchSearchEngineRecords(record.docs)),
         ajax
-          .getJSON(buildUrl(ENDPOINT.SEARCH_URL_JSON, `lang=ita&view=-1&ml=170&q=${d.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
-          .map(record => marccatActions.fetchSearchAuthEngineRecords(record.docs))
-          .catch(e => of$(marccatActions.fetchFailure(e))),
-      ));
+          .getJSON(buildUrl(ENDPOINT.SEARCH_URL_JSON, `lang=ita&view=-1&ml=2&q=${d.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
+          .map(recordAuth => marccatActions.fetchSearchEngineRecords(recordAuth.docs))
+      ))).catch(e => of$(marccatActions.fetchFailure(e)));
+
 // TOBE REMOVED
 export const searchDetailEpic = (action$, store) =>
   action$.ofType(ActionTypes.DETAILS)

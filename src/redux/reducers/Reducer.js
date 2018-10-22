@@ -22,12 +22,14 @@ export function searchEngineReducer(state = { isLoading }, action) {
     return {
       ...state,
       records: action.payload,
+      recordAuth: action.payload,
       isLoading: true
     };
   case ActionTypes.RECORD_SUCCESS:
     return {
       ...state,
       records: action.payload,
+      recordAuth: action.payload,
       isLoading: false
     };
   default:

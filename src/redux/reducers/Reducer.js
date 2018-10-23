@@ -105,6 +105,12 @@ export function scanBrowsingReducer(state = { isLoading }, action) {
 
 export function filterReducer(state = { filter }, action) {
   switch (action.type) {
+  case ActionTypes.FILTERS:
+    return {
+      ...state,
+      filters: action.payload,
+    };
+  /*
   case ActionTypes.TYPE_FILTER:
     return {
       ...state,
@@ -129,6 +135,7 @@ export function filterReducer(state = { filter }, action) {
       checked: action.inUse,
       format: action.payload,
     };
+    */
   default:
     return state;
   }

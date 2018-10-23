@@ -57,6 +57,22 @@ const getFieldPosition = (controlField, pos1, pos2) => {
   return (!controlField || controlField.length < pos2) ? controlField : controlField.substring(pos1, pos2);
 };
 
+const remapFilters = (filterObject) => {
+  const result = {};
+  Object.keys(filterObject).forEach(element => {
+    const category = element.split('.')[0];
+    const optionCategory = element.split('.')[1];
+    if (!Array.isArray(result[category]) || result[category].length < 1) {
+      result[category] = [];
+    }
+    if (filterObject[element]) {
+      result[category].push({ [optionCategory]: filterObject[element] });
+    }
+  });
+  return result;
+};
+
+
 const getFormat = (leader) => {
   const pos = leader.substring(6, 7);
 
@@ -83,5 +99,6 @@ export {
   getFieldPosition,
   getFormat,
   getTag245,
-  getTitle245
+  getTitle245,
+  remapFilters
 };

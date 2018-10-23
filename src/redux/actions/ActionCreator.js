@@ -35,10 +35,6 @@ export const fetchFailure = (message) => ({
   payload: message
 });
 
-export const setLang = (lang) => ({
-  type: ActionTypes.LANGUAGES,
-  payload: lang
-});
 /**
  * Action creator for querying a set of records
  * @param {String} type - resource type

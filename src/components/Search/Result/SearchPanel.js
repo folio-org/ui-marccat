@@ -39,7 +39,8 @@ class SearchPanel extends React.Component<P, {}> {
         }
         return indexForQuery;
       });
-      const newQuery = indexForQuery + e.target.form[2].defaultValue;
+      let newQuery = indexForQuery + e.target.form[2].defaultValue;
+      newQuery = (conditionFilter === 'MATCH') ? newQuery + '!' : newQuery;
       store.dispatch({ type: ActionTypes.SEARCH, query: newQuery });
       store.dispatch({ type: ActionTypes.SEARCH_AUTH, query: newQuery });
     }

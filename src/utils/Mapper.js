@@ -31,6 +31,28 @@ const remapForResultList = i => {
   return result;
 };
 
+const getTag245 = (bigStringArray) => {
+  let tag245 = '';
+  bigStringArray.map(item => {
+    if (item.substring(0, 4).trim() === '245') {
+      tag245 = item.substring(0, 4);
+    }
+    return tag245;
+  });
+  return tag245;
+};
+
+const getTitle245 = (bigStringArray) => {
+  let titleTag245 = '';
+  bigStringArray.map(item => {
+    if (item.substring(0, 4).trim() === '245') {
+      titleTag245 = item.substring(4);
+    }
+    return titleTag245;
+  });
+  return titleTag245;
+};
+
 const getFieldPosition = (controlField, pos1, pos2) => {
   return (!controlField || controlField.length < pos2) ? controlField : controlField.substring(pos1, pos2);
 };
@@ -59,5 +81,7 @@ const getFormat = (leader) => {
 export {
   remapForResultList,
   getFieldPosition,
-  getFormat
+  getFormat,
+  getTag245,
+  getTitle245
 };

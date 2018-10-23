@@ -12,7 +12,7 @@ export default class FiltersContainer extends React.Component<P, {}> {
     this.config = [
       {
         label: 'Record Type',
-        name: 'recordFilter',
+        name: 'recordType',
         cql: 'record.name',
         values: ['Bibliographic records', 'Authority records'],
       },
@@ -47,7 +47,22 @@ export default class FiltersContainer extends React.Component<P, {}> {
     this.setState(prevState => {
       const filters = Object.assign({}, prevState.filters);
       filters[name] = checked;
-      store.dispatch({ type: ActionTypes.LANGUAGES, lang: name.split('.')[1].substring(0, 3).toLowerCase() });
+      switch (name.split('.')[0]) {
+      case 'recordType':
+        store.dispatch({ type: ActionTypes.TYPE_FILTER, payload: name.split('.')[1].substring(0, 3).toLowerCase(), inUse: checked });
+        break;
+      case 'suppressedFilter':
+        store.dispatch({ type: ActionTypes.SUPPRESSED_FILTER, payload: name.split('.')[1].substring(0, 3).toLowerCase(), inUse: checked });
+        break;
+      case 'languageFilter':
+        store.dispatch({ type: ActionTypes.LANGUAGE_FILTER, payload: name.split('.')[1].substring(0, 3).toLowerCase(), inUse: checked });
+        break;
+      case 'formatType':
+        store.dispatch({ type: ActionTypes.FORMAT_FILTER, payload: name.split('.')[1].substring(0, 3).toLowerCase(), inUse: checked });
+        break;
+      default:
+        return { filters };
+      }
       return { filters };
     });
   }

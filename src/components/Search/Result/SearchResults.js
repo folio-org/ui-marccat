@@ -14,15 +14,15 @@ import { resultsFormatter, columnMapper } from '../../../utils/Formatter';
 import RecordDetails from './RecordDetails';
 
 type P = Props & {
-    headings: Array<any>,
-    inputValue: string,
-    getPreviousPage: Function,
-    getNextPage: Function,
-    dataLoaded: boolean,
+  headings: Array<any>,
+  inputValue: string,
+  getPreviousPage: Function,
+  getNextPage: Function,
+  dataLoaded: boolean,
 }
 
 export class SearchResults extends React.Component<P, {}> {
-  constructor(props:P) {
+  constructor(props: P) {
     super(props);
     this.state = {
       detailPanelIsVisible: false,
@@ -30,6 +30,11 @@ export class SearchResults extends React.Component<P, {}> {
     };
     this.handleDeatils = this.handleDeatils.bind(this);
     this.handleCount = this.handleCount.bind(this);
+    this.handleMoreData = this.handleMoreData.bind(this);
+  }
+
+  handleMoreData = (e) => {
+    console.log(e);
   }
 
   handleDeatils = (e, meta) => {
@@ -42,13 +47,21 @@ export class SearchResults extends React.Component<P, {}> {
   };
 
   handleCount = (recordArray) => {
-    recordArray.forEarch(singleRecord => {
-      if (singleRecord.recordView === 1) {
-        recordArray.count = '';
-      } else {
-        // TO-DO when Carmen will release her function
-      }
-    });
+    if (recordArray) {
+      recordArray.forEach(singleRecord => {
+        if (singleRecord.recordView === 1) {
+          singleRecord.count = '';
+        } else {
+          // TO-DO when Carmen will release her function
+          const { store } = this.props;
+          store.dispatch({ type: ActionTypes.COUNT_DOC, query: singleRecord['001'] });
+          if (this.props.countRecord) {
+            singleRecord.count = this.props.countRecord.countDocuments;
+            singleRecord.query = this.props.countRecord.query;
+          }
+        }
+      });
+    }
   };
 
   render() {
@@ -66,8 +79,7 @@ export class SearchResults extends React.Component<P, {}> {
       mergedRecord = [...mergedRecord, ...headings];
     }
     const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForResultList(mergedRecord) : [];
-
-
+    this.handleCount(marcJSONRecords);
     return (
       <Paneset static>
         <Pane
@@ -87,10 +99,13 @@ export class SearchResults extends React.Component<P, {}> {
             (this.props.fetching) ?
               <Icon icon="spinner-ellipsis" /> :
               <MultiColumnList
+                id="tabella"
                 defaultWidth="fill"
+                onNeedMoreData={this.handleMoreData}
                 isEmptyMessage=""
                 columnWidths={
-                  { 'resultView': '5%',
+                  {
+                    'resultView': '5%',
                     '001': '10%',
                     '245': '25%',
                     'name': '15%',
@@ -99,7 +114,8 @@ export class SearchResults extends React.Component<P, {}> {
                     'date1': '5%',
                     'date2': '5%',
                     'format': '10%',
-                    'count': '5%' }
+                    'count': '5%'
+                  }
                 }
                 rowMetadata={['001', 'recordView']}
                 onRowClick={this.handleDeatils}
@@ -147,11 +163,12 @@ export class SearchResults extends React.Component<P, {}> {
 }
 
 export default (connect(
-  ({ marccat: { search, details, authSearch } }) => ({
+  ({ marccat: { search, details, authSearch, countDoc } }) => ({
     headings: search.records,
     authHeadings: authSearch.records,
     fetching: search.isLoading,
-    fetchingDetail: details.isLoadingDetail
+    fetchingDetail: details.isLoadingDetail,
+    countRecord: countDoc.records
   }),
 )(SearchResults));
 

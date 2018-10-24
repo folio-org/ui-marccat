@@ -33,4 +33,7 @@ export const ActionTypes = {
   DIACRITIC_CHAR: '@@ui-marccat/DIACRITIC_CHAR',
   RECEIVED_SEARCH: '@@ui-marccat/RECEIVED_SEARCH',
   CLEAR_SEARCH_RESULTS: '@@ui-marccat/CLEAR_SEARCH_RESULTS',
+  COUNT_DOC: '@@ui-marccat/COUNT_DOC',
+  COUNT_DOC_SUCCESS: '@@ui-marccat/COUNT_DOC_SUCCESS',
+  FETCH_COUNT_DOC: '@@ui-marccat/FETCH_COUNT_DOC',
 };

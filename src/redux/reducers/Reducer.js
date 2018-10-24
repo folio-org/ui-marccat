@@ -10,6 +10,30 @@ const filter = {
   format: undefined
 };
 
+export function countDocReducer(state = { isLoading }, action) {
+  switch (action.type) {
+  case ActionTypes.COUNT_DOC:
+    return {
+      ...state,
+      isLoading: false,
+      query: action.payload
+    };
+  case ActionTypes.FETCH_COUNT_DOC:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: true
+    };
+  case ActionTypes.COUNT_DOC_SUCCESS:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: false
+    };
+  default:
+    return state;
+  }
+}
 
 export function searchEngineReducer(state = { isLoading }, action) {
   switch (action.type) {

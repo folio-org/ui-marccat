@@ -62,10 +62,10 @@ const remapFilters = (filterObject) => {
   Object.keys(filterObject).forEach(element => {
     const category = element.split('.')[0];
     const optionCategory = element.split('.')[1];
-    if (!Array.isArray(result[category]) || result[category].length < 1) {
-      result[category] = [];
-    }
     if (filterObject[element]) {
+      if (!Array.isArray(result[category]) || result[category].length < 1) {
+        result[category] = [];
+      }
       result[category].push({ [optionCategory]: filterObject[element] });
     }
   });

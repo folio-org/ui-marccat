@@ -79,7 +79,7 @@ export class SearchResults extends React.Component<P, {}> {
       mergedRecord = [...mergedRecord, ...headings];
     }
     const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForResultList(mergedRecord) : [];
-    this.handleCount(marcJSONRecords);
+    // this.handleCount(marcJSONRecords);
     return (
       <Paneset static>
         <Pane

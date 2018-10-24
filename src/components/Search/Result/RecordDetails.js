@@ -5,20 +5,22 @@ import { Row, Col } from 'react-flexbox-grid';
 import InventoryPluggableBtn from '../Plugin/Inventory';
 import type { Props } from '../../../core';
 import style from '../Style/Search.css';
+import { getTag245, getTitle245 } from '../../../utils/Mapper';
 
 type P = Props & {
   items: Array<any>
 }
 
-function RecordDetails({ translate, ...props }:P) {
+function RecordDetails({ translate, ...props }: P) {
   const recordDetails = props.items.replace('LEADER', '');
   const recordDetailsArray = recordDetails.split('\n');
   return (
     <div className={style.withSpace}>
       <KeyValue
-        label="245 title"
-        value="Some value"
-      />
+        label={getTag245(recordDetailsArray)}
+      >
+        <h2>{getTitle245(recordDetailsArray)}</h2>
+      </KeyValue>
       {recordDetailsArray.map(item =>
         <Row>
           <Col xs={1} style={{ paddingBottom: '8px' }}>

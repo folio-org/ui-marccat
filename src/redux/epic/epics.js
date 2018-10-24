@@ -33,6 +33,17 @@ export const searchDetailEpic = (action$, store) =>
           .catch(e => of$(marccatActions.fetchFailure(e))),
       ));
 
+export const countDocEpic = (action$, store) =>
+  action$.ofType(ActionTypes.COUNT_DOC)
+    .switchMap((d) =>
+      concat$(
+        of$(marccatActions.fetchRequestedCountDoc(true)),
+        ajax
+          .getJSON(buildUrl(ENDPOINT.DOC_COUNT_URL, `view=1&id=${d.query}`), ENDPOINT.HEADERS)
+          .map(record => marccatActions.fetchCountDocRecords(record.docs[0].data))
+          .catch(e => of$(marccatActions.fetchFailure(e))),
+      ));
+
 export function fetchScanBrowsingRecords(action$) {
   return action$
     .ofType(ActionTypes.SCAN)

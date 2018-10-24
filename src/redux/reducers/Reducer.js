@@ -3,13 +3,31 @@ import { ActionTypes } from '../actions/Actions';
 const isLoading = false;
 const isLoadingDetail = false;
 
-const filter = {
-  recordType: undefined,
-  suppressed: undefined,
-  language: undefined,
-  format: undefined
-};
 
+export function countDocReducer(state = { isLoading }, action) {
+  switch (action.type) {
+  case ActionTypes.COUNT_DOC:
+    return {
+      ...state,
+      isLoading: false,
+      query: action.payload
+    };
+  case ActionTypes.FETCH_COUNT_DOC:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: true
+    };
+  case ActionTypes.COUNT_DOC_SUCCESS:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: false
+    };
+  default:
+    return state;
+  }
+}
 
 export function searchEngineReducer(state = { isLoading }, action) {
   switch (action.type) {
@@ -105,12 +123,12 @@ export function scanBrowsingReducer(state = { isLoading }, action) {
   }
 }
 
-export function filterReducer(state = { filter }, action) {
+export function filterReducer(state = { isLoading }, action) {
   switch (action.type) {
-  case ActionTypes.LANGUAGES:
+  case ActionTypes.FILTERS:
     return {
       ...state,
-      lang: action.lang,
+      filters: action.payload,
     };
   default:
     return state;

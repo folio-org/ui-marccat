@@ -14,15 +14,15 @@ import { resultsFormatter, columnMapper } from '../../../utils/Formatter';
 import RecordDetails from './RecordDetails';
 
 type P = Props & {
-    headings: Array<any>,
-    inputValue: string,
-    getPreviousPage: Function,
-    getNextPage: Function,
-    dataLoaded: boolean,
+  headings: Array<any>,
+  inputValue: string,
+  getPreviousPage: Function,
+  getNextPage: Function,
+  dataLoaded: boolean,
 }
 
 export class SearchResults extends React.Component<P, {}> {
-  constructor(props:P) {
+  constructor(props: P) {
     super(props);
     this.state = {
       detailPanelIsVisible: false,
@@ -30,6 +30,11 @@ export class SearchResults extends React.Component<P, {}> {
     };
     this.handleDeatils = this.handleDeatils.bind(this);
     this.handleCount = this.handleCount.bind(this);
+    this.handleMoreData = this.handleMoreData.bind(this);
+  }
+
+  handleMoreData = (e) => {
+    console.log(e);
   }
 
   handleDeatils = (e, meta) => {
@@ -42,22 +47,30 @@ export class SearchResults extends React.Component<P, {}> {
   };
 
   handleCount = (recordArray) => {
-    recordArray.forEarch(singleRecord => {
-      if (singleRecord.recordView === 1) {
-        recordArray.count = '';
-      } else {
-        // TO-DO when Carmen will release her function
-      }
-    });
+    if (recordArray) {
+      recordArray.forEach(singleRecord => {
+        if (singleRecord.recordView === 1) {
+          singleRecord.count = '';
+        } else {
+          // TO-DO when Carmen will release her function
+          const { store } = this.props;
+          store.dispatch({ type: ActionTypes.COUNT_DOC, query: singleRecord['001'] });
+          if (this.props.countRecord) {
+            singleRecord.count = this.props.countRecord.countDocuments;
+            singleRecord.query = this.props.countRecord.query;
+          }
+        }
+      });
+    }
   };
 
   render() {
     const { detailPanelIsVisible } = this.state;
-    const { fetching, headings, fetchingDetail, authHeadings } = this.props;
+    const { fetching, headings, fetchingDetail, authHeadings, authFetching } = this.props;
     const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
     const rightMenu = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.new.keyboard" />;
     const rightMenuEdit = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.edit" />;
-    const leftMenu = <ToolbarMenu badgeCount={headings ? headings.length : undefined} {...this.props} icon={['search']} />;    
+    const leftMenu = <ToolbarMenu badgeCount={headings ? headings.length : undefined} {...this.props} icon={['search']} />;
     let mergedRecord = [];
     if (authHeadings && authHeadings.length > 0) {
       mergedRecord = [...mergedRecord, ...authHeadings];
@@ -66,14 +79,13 @@ export class SearchResults extends React.Component<P, {}> {
       mergedRecord = [...mergedRecord, ...headings];
     }
     const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForResultList(mergedRecord) : [];
-
-
+    // his.handleCount(marcJSONRecords);
     return (
       <Paneset static>
         <Pane
           defaultWidth="fill"
           paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
-          paneSub={(fetching) ? 'Searching....' : (headings) ? headings.length + ' Results Found' : 'No Result found'}
+          paneSub={(fetching || authFetching) ? 'Searching....' : (headings) ? headings.length + ' Results Found' : 'No Result found'}
           appIcon={{ app: C.META.ICON_TITLE }}
           actionMenuItems={actionMenuItems}
           firstMenu={leftMenu}
@@ -84,14 +96,17 @@ export class SearchResults extends React.Component<P, {}> {
             <EmptyMessage {...this.props} />
           }
           {
-            (this.props.fetching) ?
+            (this.props.fetching && this.props.authFetching) ?
               <Icon icon="spinner-ellipsis" /> :
               <MultiColumnList
+                id="tabella"
                 defaultWidth="fill"
+                onNeedMoreData={this.handleMoreData}
                 isEmptyMessage=""
                 columnWidths={
-                  { 'resultView': '5%',
-                    '001': '12%',
+                  {
+                    'resultView': '5%',
+                    '001': '10%',
                     '245': '25%',
                     'name': '15%',
                     'uniformTitle': '10%',
@@ -99,7 +114,8 @@ export class SearchResults extends React.Component<P, {}> {
                     'date1': '5%',
                     'date2': '5%',
                     'format': '10%',
-                    'count': '5%' }
+                    'count': '5%'
+                  }
                 }
                 rowMetadata={['001', 'recordView']}
                 onRowClick={this.handleDeatils}
@@ -147,11 +163,13 @@ export class SearchResults extends React.Component<P, {}> {
 }
 
 export default (connect(
-  ({ marccat: { search, details, authSearch } }) => ({
+  ({ marccat: { search, details, authSearch, countDoc } }) => ({
     headings: search.records,
     authHeadings: authSearch.records,
     fetching: search.isLoading,
-    fetchingDetail: details.isLoadingDetail
+    authFetching: authSearch.isLoading,
+    fetchingDetail: details.isLoadingDetail,
+    countRecord: countDoc.records
   }),
 )(SearchResults));
 

@@ -10,6 +10,10 @@ export const fetchDetailsRecords = (records) => ({
   type: ActionTypes.DETAILS_BY_TITLE,
   payload: records
 });
+export const fetchCountDocRecords = (records) => ({
+  type: ActionTypes.COUNT_DOC_SUCCESS,
+  payload: records
+});
 export const fetchScanBrowsingRecords = (records) => ({
   type: ActionTypes.SCAN_SUCCESS,
   payload: records
@@ -21,6 +25,10 @@ export const fetchRequested = (isLoading) => ({
 export const fetchRequestedDetail = (isLoadingDetail) => ({
   type: ActionTypes.FETCH_DETAIL_REQUESTED,
   payload: isLoadingDetail
+});
+export const fetchRequestedCountDoc = (isLoading) => ({
+  type: ActionTypes.FETCH_COUNT_DOC,
+  payload: isLoading
 });
 export const fetchSearchEngineRecords = (records) => ({
   type: ActionTypes.RECORD_SUCCESS,
@@ -35,10 +43,6 @@ export const fetchFailure = (message) => ({
   payload: message
 });
 
-export const setLang = (lang) => ({
-  type: ActionTypes.LANGUAGES,
-  payload: lang
-});
 /**
  * Action creator for querying a set of records
  * @param {String} type - resource type

@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable no-alert */
 import React from 'react';
 import SearchField from '@folio/stripes-components/lib/SearchField';
 import { AccordionSet, Accordion, FilterAccordionHeader } from '@folio/stripes-components';
@@ -11,7 +12,9 @@ import SearchConditions from '../Select/SearchConditions';
 import FiltersContainer from '../Filter/FiltersContainer';
 import { ActionTypes } from '../../../redux/actions/Actions';
 import styles from '../Style/Search.css';
-import findYourQuery from '../../Search/Select/FilterMapper';
+import { findYourQuery } from '../../Search/Select/FilterMapper';
+import { remapFilters } from '../../../utils/Mapper';
+import { getLanguageFilterQuery, getFormatFilterQuery } from '../../../utils/SearchUtils';
 
 type P = Props & {
   inputValue: string,
@@ -31,17 +34,42 @@ class SearchPanel extends React.Component<P, {}> {
       const { store } = this.props;
       const indexFilter = store.getState().form.searchForm.values.selectIndexes;
       const conditionFilter = store.getState().form.searchForm.values.selectCondition;
-      const keyForCheckFilter = indexFilter.concat('-').concat(conditionFilter);
-      let indexForQuery = '';
-      findYourQuery.map(el => {
-        if (el.label === keyForCheckFilter) {
-          indexForQuery = el.value;
+
+      const indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
+      let baseQuery = indexForQuery + e.target.form[2].defaultValue;
+      // when MATCH index add "!" to term
+      baseQuery = (conditionFilter === 'MATCH') ? baseQuery + '!' : baseQuery;
+
+      let bibQuery = baseQuery;
+      const authQuery = baseQuery;
+
+      let recordTypeControl = {};
+
+      // regular filters
+      if (store.getState().marccat.filter && store.getState().marccat.filter.filters) {
+        const { languageFilter, formatType, recordType } = remapFilters(store.getState().marccat.filter.filters);
+        recordTypeControl = recordType;
+        if (languageFilter && languageFilter.length) {
+          bibQuery = bibQuery + ' AND (' + getLanguageFilterQuery(languageFilter) + ')';
         }
-        return indexForQuery;
-      });
-      const newQuery = indexForQuery + e.target.form[2].defaultValue;
-      store.dispatch({ type: ActionTypes.SEARCH, query: newQuery });
-      store.dispatch({ type: ActionTypes.SEARCH_AUTH, query: newQuery });
+        if (formatType && formatType.length) {
+          bibQuery = bibQuery + ' AND (' + getFormatFilterQuery(formatType) + ')';
+        }
+      }
+
+      if (recordTypeControl && recordTypeControl.length) {
+        recordTypeControl.forEach(element => {
+          if (Object.keys(element)[0] === 'Bibliographic records') {
+            store.dispatch({ type: ActionTypes.SEARCH, query: bibQuery });
+          }
+          if (Object.keys(element)[0] === 'Authority records') {
+            store.dispatch({ type: ActionTypes.SEARCH_AUTH, query: authQuery });
+          }
+        });
+      } else {
+        store.dispatch({ type: ActionTypes.SEARCH, query: bibQuery });
+        store.dispatch({ type: ActionTypes.SEARCH_AUTH, query: authQuery });
+      }
     }
   }
 

@@ -35,6 +35,7 @@ export const ENDPOINT = {
   BROWSING_FIRST_PAGE: 'first-page',
   DEFAULT_LANG: 'eng',
   DEFAULT_PAGINATION: 20,
+  DOC_COUNT_URL: 'document-count-by-id'
 };
 
 export const buildUrl = (url:string, params?:string) => {

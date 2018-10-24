@@ -7,6 +7,7 @@ export const columnMapper = {
   '001': 'Id. Number (001)',
   '245': 'Title (245)',
   'uniformTitle': 'Uniform Title (130, 240)',
+  'name': 'Name (100, 110, 111)',
   'subject': 'Subject (6xx)',
   'date1': 'Date 1',
   'date2': 'Date 2',

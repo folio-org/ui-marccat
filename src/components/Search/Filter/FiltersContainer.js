@@ -12,7 +12,7 @@ export default class FiltersContainer extends React.Component<P, {}> {
     this.config = [
       {
         label: 'Record Type',
-        name: 'recordFilter',
+        name: 'recordType',
         cql: 'record.name',
         values: ['Bibliographic records', 'Authority records'],
       },
@@ -32,7 +32,7 @@ export default class FiltersContainer extends React.Component<P, {}> {
         label: 'Format type',
         name: 'formatType',
         cql: 'format.name',
-        values: ['Audio recording', 'Book', 'Map', 'Monograph', 'Serial', 'Video'],
+        values: ['All text', 'Books', 'Archival Manuscript/ Mixed Formats', 'Film or Video', 'Map', 'Map(Manuscript)', 'Music Recording', 'Music Score', 'Music Score (Manuscript)', 'Nonmusic recording', 'Periodical or Serials', 'Photograph, Print, or Drawing', 'Rare Book or Manuscript', 'Software or E-Resource', '3-D Object'],
       },
     ];
 
@@ -47,7 +47,7 @@ export default class FiltersContainer extends React.Component<P, {}> {
     this.setState(prevState => {
       const filters = Object.assign({}, prevState.filters);
       filters[name] = checked;
-      store.dispatch({ type: ActionTypes.LANGUAGES, lang: name.split('.')[1].substring(0, 3).toLowerCase() });
+      store.dispatch({ type: ActionTypes.FILTERS, payload: filters });
       return { filters };
     });
   }

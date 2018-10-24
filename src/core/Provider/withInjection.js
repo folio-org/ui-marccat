@@ -29,6 +29,7 @@ export default function injectCommonProp<Props: {
         {...props}
         store={store}
         data={data}
+        form={state.form}
         router={props.history}
         translate={props.intl.formatMessage}
       />);

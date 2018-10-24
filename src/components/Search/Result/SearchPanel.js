@@ -21,6 +21,14 @@ type P = Props & {
   translate: Function
 }
 
+const validate = values => {
+  const errors = {};
+  if (!values.searchTextArea) {
+    errors.searchTextArea = 'Required';
+  }
+  return errors;
+};
+
 class SearchPanel extends React.Component<P, {}> {
   constructor(props:P) {
     super(props);
@@ -28,17 +36,33 @@ class SearchPanel extends React.Component<P, {}> {
     this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
+  // questo metodo va ripulito e sistemato meglio
+  // utilizzate concat anziche il +
   handleKeyDown(e) {
     if (e.key === 'Enter') {
       e.preventDefault();
       const { store } = this.props;
-      const indexFilter = store.getState().form.searchForm.values.selectIndexes;
-      const conditionFilter = store.getState().form.searchForm.values.selectCondition;
+      let baseQuery;
+      let indexForQuery;
+      let conditionFilter;
+      let indexFilter;
+      if (store.getState().form.searchForm.values) {
+        if (store.getState().form.searchForm.values.selectIndexes) {
+          indexFilter = store.getState().form.searchForm.values.selectIndexes;
+        }
+        if (store.getState().form.searchForm.values.selectCondition) {
+          conditionFilter = store.getState().form.searchForm.values.selectCondition;
+          indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
+          // when MATCH index add "!" to term
+          baseQuery = indexForQuery + e.target.form[2].defaultValue;
+          baseQuery = (conditionFilter === 'MATCH') ? baseQuery + '!' : baseQuery;
+        } else {
+          baseQuery = e.target.form[2].defaultValue;
+        }
+      } else {
+        baseQuery = e.target.form[2].defaultValue;
+      }
 
-      const indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
-      let baseQuery = indexForQuery + e.target.form[2].defaultValue;
-      // when MATCH index add "!" to term
-      baseQuery = (conditionFilter === 'MATCH') ? baseQuery + '!' : baseQuery;
 
       let bibQuery = baseQuery;
       const authQuery = baseQuery;
@@ -50,10 +74,10 @@ class SearchPanel extends React.Component<P, {}> {
         const { languageFilter, formatType, recordType } = remapFilters(store.getState().marccat.filter.filters);
         recordTypeControl = recordType;
         if (languageFilter && languageFilter.length) {
-          bibQuery = bibQuery + ' AND (' + getLanguageFilterQuery(languageFilter) + ')';
+          bibQuery += ' AND (' + getLanguageFilterQuery(languageFilter) + ')';
         }
         if (formatType && formatType.length) {
-          bibQuery = bibQuery + ' AND (' + getFormatFilterQuery(formatType) + ')';
+          bibQuery += ' AND (' + getFormatFilterQuery(formatType) + ')';
         }
       }
 
@@ -106,7 +130,6 @@ class SearchPanel extends React.Component<P, {}> {
                   buttonLabel={translate({ id: 'ui-marccat.search.scanButton' })}
                   buttonHref="http://www"
                   buttonTarget="_blank"
-                  onClick={() => alert('ferewewrer')}
                 />
               </Col>
             </Row>
@@ -137,5 +160,6 @@ class SearchPanel extends React.Component<P, {}> {
 }
 
 export default reduxForm({
-  form: 'searchForm'
+  form: 'searchForm',
+  validate
 })(injectCommonProp(SearchPanel));

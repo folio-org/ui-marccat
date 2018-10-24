@@ -66,7 +66,7 @@ export class SearchResults extends React.Component<P, {}> {
 
   render() {
     const { detailPanelIsVisible } = this.state;
-    const { fetching, headings, fetchingDetail, authHeadings } = this.props;
+    const { fetching, headings, fetchingDetail, authHeadings, authFetching } = this.props;
     const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
     const rightMenu = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.new.keyboard" />;
     const rightMenuEdit = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.edit" />;
@@ -79,13 +79,13 @@ export class SearchResults extends React.Component<P, {}> {
       mergedRecord = [...mergedRecord, ...headings];
     }
     const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForResultList(mergedRecord) : [];
-    // this.handleCount(marcJSONRecords);
+    // his.handleCount(marcJSONRecords);
     return (
       <Paneset static>
         <Pane
           defaultWidth="fill"
           paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
-          paneSub={(fetching) ? 'Searching....' : (headings) ? headings.length + ' Results Found' : 'No Result found'}
+          paneSub={(fetching || authFetching) ? 'Searching....' : (headings) ? headings.length + ' Results Found' : 'No Result found'}
           appIcon={{ app: C.META.ICON_TITLE }}
           actionMenuItems={actionMenuItems}
           firstMenu={leftMenu}
@@ -96,7 +96,7 @@ export class SearchResults extends React.Component<P, {}> {
             <EmptyMessage {...this.props} />
           }
           {
-            (this.props.fetching) ?
+            (this.props.fetching && this.props.authFetching) ?
               <Icon icon="spinner-ellipsis" /> :
               <MultiColumnList
                 id="tabella"
@@ -167,6 +167,7 @@ export default (connect(
     headings: search.records,
     authHeadings: authSearch.records,
     fetching: search.isLoading,
+    authFetching: authSearch.isLoading,
     fetchingDetail: details.isLoadingDetail,
     countRecord: countDoc.records
   }),

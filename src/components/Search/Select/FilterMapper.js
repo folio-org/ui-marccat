@@ -1,3 +1,12 @@
+const languageFilterMap = { 'English': 'eng',
+  'Italian': 'ita',
+  'Spanish': 'spa',
+  'French': 'fre',
+  'Hungarian': 'hun',
+  'Chinese simplified': 'chi',
+  'Arabic': 'ara' };
+
+
 const findYourQuery = [
   // FOR START KEY
   { label: 'ALL-START', value: 'AW ' },
@@ -43,5 +52,8 @@ const findYourQuery = [
   { label: 'COPY-MATCH', value: 'CP ' },
 ];
 
-export default findYourQuery;
+export {
+  findYourQuery,
+  languageFilterMap
+};
 

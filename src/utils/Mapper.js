@@ -31,9 +31,47 @@ const remapForResultList = i => {
   return result;
 };
 
+const getTag245 = (bigStringArray) => {
+  let tag245 = '';
+  bigStringArray.map(item => {
+    if (item.substring(0, 4).trim() === '245') {
+      tag245 = item.substring(0, 4);
+    }
+    return tag245;
+  });
+  return tag245;
+};
+
+const getTitle245 = (bigStringArray) => {
+  let titleTag245 = '';
+  bigStringArray.map(item => {
+    if (item.substring(0, 4).trim() === '245') {
+      titleTag245 = item.substring(4);
+    }
+    return titleTag245;
+  });
+  return titleTag245;
+};
+
 const getFieldPosition = (controlField, pos1, pos2) => {
   return (!controlField || controlField.length < pos2) ? controlField : controlField.substring(pos1, pos2);
 };
+
+const remapFilters = (filterObject) => {
+  const result = {};
+  Object.keys(filterObject).forEach(element => {
+    const category = element.split('.')[0];
+    const optionCategory = element.split('.')[1];
+    if (!Array.isArray(result[category]) || result[category].length < 1) {
+      result[category] = [];
+    }
+    if (filterObject[element]) {
+      result[category].push({ [optionCategory]: filterObject[element] });
+    }
+  });
+  return result;
+};
+
 
 const getFormat = (leader) => {
   const pos = leader.substring(6, 7);
@@ -59,5 +97,8 @@ const getFormat = (leader) => {
 export {
   remapForResultList,
   getFieldPosition,
-  getFormat
+  getFormat,
+  getTag245,
+  getTitle245,
+  remapFilters
 };

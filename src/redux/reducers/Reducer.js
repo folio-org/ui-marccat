@@ -105,11 +105,37 @@ export function scanBrowsingReducer(state = { isLoading }, action) {
 
 export function filterReducer(state = { filter }, action) {
   switch (action.type) {
-  case ActionTypes.LANGUAGES:
+  case ActionTypes.FILTERS:
     return {
       ...state,
-      lang: action.lang,
+      filters: action.payload,
     };
+  /*
+  case ActionTypes.TYPE_FILTER:
+    return {
+      ...state,
+      checked: action.inUse,
+      recordType: action.payload,
+    };
+  case ActionTypes.SUPPRESSED_FILTER:
+    return {
+      ...state,
+      checked: action.inUse,
+      suppressed: action.payload,
+    };
+  case ActionTypes.LANGUAGE_FILTER:
+    return {
+      ...state,
+      checked: action.inUse,
+      language: action.payload,
+    };
+  case ActionTypes.FORMAT_FILTER:
+    return {
+      ...state,
+      checked: action.inUse,
+      format: action.payload,
+    };
+    */
   default:
     return state;
   }

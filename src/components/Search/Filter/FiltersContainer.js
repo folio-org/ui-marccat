@@ -12,7 +12,7 @@ export default class FiltersContainer extends React.Component<P, {}> {
     this.config = [
       {
         label: 'Record Type',
-        name: 'recordFilter',
+        name: 'recordType',
         cql: 'record.name',
         values: ['Bibliographic records', 'Authority records'],
       },
@@ -47,7 +47,7 @@ export default class FiltersContainer extends React.Component<P, {}> {
     this.setState(prevState => {
       const filters = Object.assign({}, prevState.filters);
       filters[name] = checked;
-      store.dispatch({ type: ActionTypes.LANGUAGES, lang: name.split('.')[1].substring(0, 3).toLowerCase() });
+      store.dispatch({ type: ActionTypes.FILTERS, payload: filters });
       return { filters };
     });
   }

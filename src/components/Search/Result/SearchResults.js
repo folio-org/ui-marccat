@@ -30,11 +30,6 @@ export class SearchResults extends React.Component<P, {}> {
     };
     this.handleDeatils = this.handleDeatils.bind(this);
     this.handleCount = this.handleCount.bind(this);
-    this.handleMoreData = this.handleMoreData.bind(this);
-  }
-
-  handleMoreData = (e) => {
-    console.log(e);
   }
 
   handleDeatils = (e, meta) => {
@@ -101,7 +96,6 @@ export class SearchResults extends React.Component<P, {}> {
               <MultiColumnList
                 id="tabella"
                 defaultWidth="fill"
-                onNeedMoreData={this.handleMoreData}
                 isEmptyMessage=""
                 columnWidths={
                   {
@@ -114,7 +108,7 @@ export class SearchResults extends React.Component<P, {}> {
                     'date1': '5%',
                     'date2': '5%',
                     'format': '10%',
-                    'count': '5%'
+                    'countDoc': '5%'
                   }
                 }
                 rowMetadata={['001', 'recordView']}
@@ -132,7 +126,7 @@ export class SearchResults extends React.Component<P, {}> {
                   'date1',
                   'date2',
                   'format',
-                  'count'
+                  'countDoc'
                 ]}
               />
           }

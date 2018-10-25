@@ -12,6 +12,7 @@ export const columnMapper = {
   'date1': 'Date 1',
   'date2': 'Date 2',
   'format': 'Format',
+  'countDoc': 'Count'
 };
 export const resultsFormatter = {
   resultView: x => (
@@ -45,9 +46,9 @@ export const resultsFormatter = {
       { x.recordView === 1 && getFormat(x.leader) }
     </div>
   ),
-  count: x => (
+  countDoc: x => (
     <div>
-      { x.recordView === -1 && x.count}
+      { x.recordView === -1 && x.countDoc}
     </div>
   ),
   subject: x => (

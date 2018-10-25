@@ -17,7 +17,7 @@ import { remapFilters } from '../../../utils/Mapper';
 import { getLanguageFilterQuery, getFormatFilterQuery } from '../../../utils/SearchUtils';
 
 type P = Props & {
-  inputValue: string,
+  inputErrorCheck: string,
   translate: Function
 }
 
@@ -25,6 +25,10 @@ const validate = values => {
   const errors = {};
   if (!values.searchTextArea) {
     errors.searchTextArea = 'Required';
+  } if (!values.selectIndexes) {
+    errors.selectIndexes = 'Required';
+  } if (!values.selectCondition) {
+    errors.selectCondition = 'Required';
   }
   return errors;
 };
@@ -35,64 +39,78 @@ class SearchPanel extends React.Component<P, {}> {
     this.state = {};
     this.handleKeyDown = this.handleKeyDown.bind(this);
   }
-
+  checkEmptyForm(store) {
+    let check = true;
+    if (store.getState().form.searchForm.syncErrors &&
+    (store.getState().form.searchForm.syncErrors.selectIndexes === 'Required' ||
+    store.getState().form.searchForm.syncErrors.selectCondition === 'Required' ||
+    store.getState().form.searchForm.values === undefined)) {
+      check = false;
+    } else if (store.getState().form.searchForm.values === undefined) {
+      check = false;
+    }
+    return check;
+  }
   // questo metodo va ripulito e sistemato meglio
   // utilizzate concat anziche il +
   handleKeyDown(e) {
     if (e.key === 'Enter') {
-      e.preventDefault();
       const { store } = this.props;
+      e.preventDefault();
+      const check = this.checkEmptyForm(store);
       let baseQuery;
       let indexForQuery;
       let conditionFilter;
       let indexFilter;
-      if (store.getState().form.searchForm.values) {
-        if (store.getState().form.searchForm.values.selectIndexes) {
-          indexFilter = store.getState().form.searchForm.values.selectIndexes;
-        }
-        if (store.getState().form.searchForm.values.selectCondition) {
-          conditionFilter = store.getState().form.searchForm.values.selectCondition;
-          indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
-          // when MATCH index add "!" to term
-          baseQuery = indexForQuery + e.target.form[2].defaultValue;
-          baseQuery = (conditionFilter === 'MATCH') ? baseQuery + '!' : baseQuery;
+      if (check) {
+        if (store.getState().form.searchForm.values) {
+          if (store.getState().form.searchForm.values.selectIndexes) {
+            indexFilter = store.getState().form.searchForm.values.selectIndexes;
+          }
+          if (store.getState().form.searchForm.values.selectCondition) {
+            conditionFilter = store.getState().form.searchForm.values.selectCondition;
+            indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
+            // when MATCH index add "!" to term
+            baseQuery = indexForQuery + e.target.form[2].defaultValue;
+            baseQuery = (conditionFilter === 'MATCH') ? baseQuery + '!' : baseQuery;
+          } else {
+            baseQuery = e.target.form[2].defaultValue;
+          }
         } else {
           baseQuery = e.target.form[2].defaultValue;
         }
-      } else {
-        baseQuery = e.target.form[2].defaultValue;
-      }
 
 
-      let bibQuery = baseQuery;
-      const authQuery = baseQuery;
+        let bibQuery = baseQuery;
+        const authQuery = baseQuery;
 
-      let recordTypeControl = {};
+        let recordTypeControl = {};
 
-      // regular filters
-      if (store.getState().marccat.filter && store.getState().marccat.filter.filters) {
-        const { languageFilter, formatType, recordType } = remapFilters(store.getState().marccat.filter.filters);
-        recordTypeControl = recordType;
-        if (languageFilter && languageFilter.length) {
-          bibQuery += ' AND (' + getLanguageFilterQuery(languageFilter) + ')';
-        }
-        if (formatType && formatType.length) {
-          bibQuery += ' AND (' + getFormatFilterQuery(formatType) + ')';
-        }
-      }
-
-      if (recordTypeControl && recordTypeControl.length) {
-        recordTypeControl.forEach(element => {
-          if (Object.keys(element)[0] === 'Bibliographic records') {
-            store.dispatch({ type: ActionTypes.SEARCH, query: bibQuery });
+        // regular filters
+        if (store.getState().marccat.filter && store.getState().marccat.filter.filters) {
+          const { languageFilter, formatType, recordType } = remapFilters(store.getState().marccat.filter.filters);
+          recordTypeControl = recordType;
+          if (languageFilter && languageFilter.length) {
+            bibQuery += ' AND (' + getLanguageFilterQuery(languageFilter) + ')';
           }
-          if (Object.keys(element)[0] === 'Authority records') {
-            store.dispatch({ type: ActionTypes.SEARCH_AUTH, query: authQuery });
+          if (formatType && formatType.length) {
+            bibQuery += ' AND (' + getFormatFilterQuery(formatType) + ')';
           }
-        });
-      } else {
-        store.dispatch({ type: ActionTypes.SEARCH, query: bibQuery });
-        store.dispatch({ type: ActionTypes.SEARCH_AUTH, query: authQuery });
+        }
+
+        if (recordTypeControl && recordTypeControl.length) {
+          recordTypeControl.forEach(element => {
+            if (Object.keys(element)[0] === 'Bibliographic records') {
+              store.dispatch({ type: ActionTypes.SEARCH, query: bibQuery });
+            }
+            if (Object.keys(element)[0] === 'Authority records') {
+              store.dispatch({ type: ActionTypes.SEARCH_AUTH, query: authQuery });
+            }
+          });
+        } else {
+          store.dispatch({ type: ActionTypes.SEARCH, query: bibQuery });
+          store.dispatch({ type: ActionTypes.SEARCH_AUTH, query: authQuery });
+        }
       }
     }
   }

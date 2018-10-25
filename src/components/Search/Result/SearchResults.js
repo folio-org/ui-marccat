@@ -30,11 +30,6 @@ export class SearchResults extends React.Component<P, {}> {
     };
     this.handleDeatils = this.handleDeatils.bind(this);
     this.handleCount = this.handleCount.bind(this);
-    this.handleMoreData = this.handleMoreData.bind(this);
-  }
-
-  handleMoreData = (e) => {
-    console.log(e);
   }
 
   handleDeatils = (e, meta) => {
@@ -101,7 +96,6 @@ export class SearchResults extends React.Component<P, {}> {
               <MultiColumnList
                 id="tabella"
                 defaultWidth="fill"
-                onNeedMoreData={this.handleMoreData}
                 isEmptyMessage=""
                 columnWidths={
                   {

@@ -108,7 +108,7 @@ export class SearchResults extends React.Component<P, {}> {
                     'date1': '5%',
                     'date2': '5%',
                     'format': '10%',
-                    'count': '5%'
+                    'countDoc': '5%'
                   }
                 }
                 rowMetadata={['001', 'recordView']}
@@ -126,7 +126,7 @@ export class SearchResults extends React.Component<P, {}> {
                   'date1',
                   'date2',
                   'format',
-                  'count'
+                  'countDoc'
                 ]}
               />
           }

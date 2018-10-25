@@ -16,6 +16,8 @@ const remapForResultList = i => {
   const result = [];
   i.forEach(el => {
     const record = {
+      countDoc: el.countDoc,
+      queryForBibs: el.queryForAssociatedDoc,
       recordView: el.recordView,
       leader: el.data.leader
     };

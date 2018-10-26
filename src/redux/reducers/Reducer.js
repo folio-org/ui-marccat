@@ -2,7 +2,7 @@ import { ActionTypes } from '../actions/Actions';
 
 const isLoading = false;
 const isLoadingDetail = false;
-
+const isLoadingAssociatedBibRecords = false;
 
 export function countDocReducer(state = { isLoading }, action) {
   switch (action.type) {
@@ -98,7 +98,33 @@ export function getDetailsRecord(state = { isLoadingDetail }, action) {
     return {
       ...state,
       records: action.payload,
-      isLoadingDetail: false
+      isLoadingDetail: false,
+      recordType: action.recType
+    };
+  default:
+    return state;
+  }
+}
+export function getAssociatedBibRecord(state = { isLoadingAssociatedBibRecords }, action) {
+  switch (action.type) {
+  case ActionTypes.ASSOCIATED_BIB_REC:
+    return {
+      ...state,
+      isLoadingAssociatedBibRecords: false,
+      query: action.payload
+    };
+  case ActionTypes.FETCH_ASSOCIATED_BIB_REQUESTED:
+    return {
+      ...state,
+      records: action.payload,
+      isLoadingAssociatedBibRecords: true
+    };
+  case ActionTypes.ASSOCIATED_BIB_REC_SUCCESS:
+    return {
+      ...state,
+      records: action.payload,
+      isLoadingAssociatedBibRecords: false,
+      recordType: action.recType
     };
   default:
     return state;

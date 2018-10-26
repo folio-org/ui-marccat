@@ -29,34 +29,18 @@ export class SearchResults extends React.Component<P, {}> {
 
     };
     this.handleDeatils = this.handleDeatils.bind(this);
-    this.handleCount = this.handleCount.bind(this);
   }
 
   handleDeatils = (e, meta) => {
     const { store } = this.props;
     store.dispatch({ type: ActionTypes.DETAILS, query: meta['001'], recordType: meta.recordView });
+    if (meta.recordView === -1) {
+      store.dispatch({ type: ActionTypes.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView });
+    }
     this.setState(prevState => {
       const detailPanelIsVisible = Object.assign({}, prevState.detailPanelIsVisible);
       return { detailPanelIsVisible };
     });
-  };
-
-  handleCount = (recordArray) => {
-    if (recordArray) {
-      recordArray.forEach(singleRecord => {
-        if (singleRecord.recordView === 1) {
-          singleRecord.count = '';
-        } else {
-          // TO-DO when Carmen will release her function
-          const { store } = this.props;
-          store.dispatch({ type: ActionTypes.COUNT_DOC, query: singleRecord['001'] });
-          if (this.props.countRecord) {
-            singleRecord.count = this.props.countRecord.countDocuments;
-            singleRecord.query = this.props.countRecord.query;
-          }
-        }
-      });
-    }
   };
 
   render() {
@@ -74,7 +58,6 @@ export class SearchResults extends React.Component<P, {}> {
       mergedRecord = [...mergedRecord, ...headings];
     }
     const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForResultList(mergedRecord) : [];
-    // his.handleCount(marcJSONRecords);
     return (
       <Paneset static>
         <Pane

@@ -6,9 +6,19 @@ export const fetchLogicalViewAction = () => ({
 export const fetchRecords = () => ({
   type: ActionTypes.SEARCH,
 });
-export const fetchDetailsRecords = (records) => ({
+export const fetchDetailsRecords = (records, recordType) => ({
   type: ActionTypes.DETAILS_BY_TITLE,
-  payload: records
+  payload: records,
+  recType: recordType
+});
+export const fetchAssociatedBibRecords = (records, recordType) => ({
+  type: ActionTypes.ASSOCIATED_BIB_REC_SUCCESS,
+  payload: records,
+  recType: recordType
+});
+export const fetchRequestedAssociatedBibRecords = (isLoadingAssociatedBibRecords) => ({
+  type: ActionTypes.FETCH_ASSOCIATED_BIB_REQUESTED,
+  payload: isLoadingAssociatedBibRecords
 });
 export const fetchCountDocRecords = (records) => ({
   type: ActionTypes.COUNT_DOC_SUCCESS,

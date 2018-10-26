@@ -188,7 +188,9 @@
   "search.record.new.keyboard": "+ New (CTRL+N)",
   "search.record.edit" : "Edit",
   "search.goto.inventory": "View in Inventory",
-
+  "search.details.bibliographic":"Bibliographic record",
+  "search.details.authority":"Authority record",
+  "search.associated.bibliographic":"Associated bibliographic records",
   "search.wrong.input":"Wrong input on search field",
   "advancedsearch.categories.select": "Categories",
   "advancedsearch.indexes.select": "Indexes",

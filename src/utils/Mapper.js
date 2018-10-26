@@ -33,6 +33,26 @@ const remapForResultList = i => {
   return result;
 };
 
+const remapForAssociatedBibList = i => {
+  const result = [];
+  i.forEach(el => {
+    const record = {
+      countDoc: el.countDoc,
+      recordView: el.recordView,
+      leader: el.data.leader
+    };
+    const { fields } = el.data;
+    fields.forEach(field => {
+      const tag = Object.keys(field)[0];
+      record[tag] = (typeof field[tag] === 'string' || field[tag] instanceof String)
+        ? field[tag]
+        : getTagDisplayValue(field[tag]);
+    });
+    result.push(record);
+  });
+  return result;
+};
+
 const getTag245 = (bigStringArray) => {
   let tag245 = '';
   bigStringArray.map(item => {
@@ -102,5 +122,6 @@ export {
   getFormat,
   getTag245,
   getTitle245,
-  remapFilters
+  remapFilters,
+  remapForAssociatedBibList
 };

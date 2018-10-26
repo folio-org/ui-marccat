@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Accordion } from '@folio/stripes-components';
+import { Accordion, MultiColumnList } from '@folio/stripes-components';
 import type { Props } from '../../../core';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
+import { resultsFormatterForAssociated, columnMapperForAssociated } from '../../../utils/Formatter';
+
 
 type P = Props & {
     checkRecordType: Array<any>,
@@ -20,10 +22,29 @@ function AssociatedBib({ ...props }: P) {
       label="Associated bibliographic records"
     >
       {resultRemapped &&
-      <ul>
-        {resultRemapped.map(element =>
-          <li>{element[245]}</li>)}
-      </ul>}
+      <MultiColumnList
+        id="tabella"
+        defaultWidth="fill"
+        isEmptyMessage=""
+        columnWidths={
+          {
+            'resultView': '10%',
+            '245': '60%',
+            'name': '20%',
+            'format': '10%'
+          }
+        }
+        rowMetadata={['001', 'recordView']}
+        contentData={resultRemapped}
+        formatter={resultsFormatterForAssociated}
+        columnMapping={columnMapperForAssociated}
+        visibleColumns={[
+          'resultView',
+          '245',
+          'name',
+          'format'
+        ]}
+      />}
     </Accordion>
   );
 }

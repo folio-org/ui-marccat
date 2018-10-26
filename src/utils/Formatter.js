@@ -14,6 +14,54 @@ export const columnMapper = {
   'format': 'Format',
   'countDoc': 'Count'
 };
+export const columnMapperForAssociated = {
+  'resultView': '',
+  '245': '',
+  'name': '',
+  'subject': '',
+  'format': '',
+};
+export const resultsFormatterForAssociated = {
+  resultView: x => (
+    <span className={x.recordView === 1 ? style.bibliographic : style.authority} />
+  ),
+  name: x => (
+    <div>
+      { x['100'] && x['100'] }
+      { x['110'] && x['110'] }
+      { x['111'] && x['111'] }
+    </div>
+  ),
+  format: x => (
+    <div>
+      { x.recordView === 1 && getFormat(x.leader) }
+    </div>
+  ),
+  subject: x => (
+    <div>
+      { x['600'] && x['600'] }
+      { x['610'] && x['610'] }
+      { x['611'] && x['611'] }
+      { x['630'] && x['630'] }
+      { x['647'] && x['647'] }
+      { x['648'] && x['648'] }
+      { x['650'] && x['650'] }
+      { x['651'] && x['651'] }
+      { x['653'] && x['653'] }
+      { x['654'] && x['654'] }
+      { x['655'] && x['655'] }
+      { x['651'] && x['651'] }
+      { x['653'] && x['653'] }
+      { x['654'] && x['654'] }
+      { x['655'] && x['655'] }
+      { x['656'] && x['656'] }
+      { x['657'] && x['657'] }
+      { x['658'] && x['658'] }
+      { x['662'] && x['662'] }
+    </div>
+  )
+};
+
 export const resultsFormatter = {
   resultView: x => (
     <span className={x.recordView === 1 ? style.bibliographic : style.authority} />

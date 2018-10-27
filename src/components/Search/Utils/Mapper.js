@@ -1,4 +1,4 @@
-import * as C from './Constant';
+import * as C from '../../../utils/Constant';
 
 /**
  * concatenate all subfield text data of a tag

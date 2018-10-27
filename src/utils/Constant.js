@@ -1,6 +1,4 @@
-
 // MARCCAT UI APP METADADA
-
 export const META = {
   MODULE_NAME: 'ui-marccat',
   NAME: 'marccat',

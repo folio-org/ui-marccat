@@ -6,7 +6,7 @@ import { Row, Col } from 'react-flexbox-grid';
 import InventoryPluggableBtn from '../Plugin/Inventory';
 import type { Props } from '../../../core';
 import style from '../Style/Search.css';
-import { getTag245, getTitle245 } from '../../../utils/Mapper';
+import { getTag245, getTitle245 } from '../Utils/Mapper';
 import AssociatedBib from './AssociatedBib';
 
 type P = Props & {

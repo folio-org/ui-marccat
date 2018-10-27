@@ -13,25 +13,13 @@ import FiltersContainer from '../Filter/FiltersContainer';
 import { ActionTypes } from '../../../redux/actions/Actions';
 import styles from '../Style/Search.css';
 import { findYourQuery } from '../../Search/Select/FilterMapper';
-import { remapFilters } from '../../../utils/Mapper';
-import { getLanguageFilterQuery, getFormatFilterQuery } from '../../../utils/SearchUtils';
+import { remapFilters } from '../Utils/Mapper';
+import { getLanguageFilterQuery, getFormatFilterQuery } from '../Utils/SearchUtils';
 
 type P = Props & {
   inputErrorCheck: string,
   translate: Function
 }
-
-const validate = values => {
-  const errors = {};
-  if (!values.searchTextArea) {
-    errors.searchTextArea = 'Required';
-  } if (!values.selectIndexes) {
-    errors.selectIndexes = 'Required';
-  } if (!values.selectCondition) {
-    errors.selectCondition = 'Required';
-  }
-  return errors;
-};
 
 class SearchPanel extends React.Component<P, {}> {
   constructor(props:P) {
@@ -51,8 +39,7 @@ class SearchPanel extends React.Component<P, {}> {
     }
     return check;
   }
-  // questo metodo va ripulito e sistemato meglio
-  // utilizzate concat anziche il +
+
   handleKeyDown(e) {
     if (e.key === 'Enter') {
       const { store } = this.props;
@@ -179,5 +166,4 @@ class SearchPanel extends React.Component<P, {}> {
 
 export default reduxForm({
   form: 'searchForm',
-  validate
 })(injectCommonProp(SearchPanel));

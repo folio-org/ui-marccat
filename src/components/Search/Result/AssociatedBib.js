@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Accordion, MultiColumnList } from '@folio/stripes-components';
+import { Accordion, FilterAccordionHeader, MultiColumnList } from '@folio/stripes-components';
 import type { Props } from '../../../core';
-import { remapForAssociatedBibList } from '../../../utils/Mapper';
-import { resultsFormatterForAssociated, columnMapperForAssociated } from '../../../utils/Formatter';
+import { remapForAssociatedBibList } from '../Utils/Mapper';
+import { resultsFormatterForAssociated, columnMapperForAssociated } from '../Utils/Formatter';
+import { EMPTY_MESSAGE } from '../../../utils/Constant';
 
 
 type P = Props & {
@@ -12,20 +13,21 @@ type P = Props & {
 
 function AssociatedBib({ ...props }: P) {
   const associatedBibRecords = props.bibRecords;
-  let resultRemapped;
-  if (associatedBibRecords && associatedBibRecords.length > 0) {
-    resultRemapped = remapForAssociatedBibList(associatedBibRecords);
-  }
+  const resultRemapped = (associatedBibRecords && associatedBibRecords.length > 0)
+    ? remapForAssociatedBibList(associatedBibRecords)
+    : undefined;
+
   return (
     <Accordion
       separator={false}
+      header={FilterAccordionHeader}
       label="Associated bibliographic records"
     >
       {resultRemapped &&
       <MultiColumnList
-        id="tabella"
+        id="bib-associated"
         defaultWidth="fill"
-        isEmptyMessage=""
+        isEmptyMessage={EMPTY_MESSAGE}
         columnWidths={
           {
             'resultView': '10%',

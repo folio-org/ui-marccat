@@ -1,6 +1,6 @@
 import React from 'react';
 import { getFieldPosition, getFormat } from './Mapper';
-import style from '../components/Search/Style/Search.css';
+import style from '../Style/Search.css';
 
 export const columnMapper = {
   'resultView': '',

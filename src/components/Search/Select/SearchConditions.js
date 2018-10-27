@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import { Field } from 'redux-form';
-import Selection from '@folio/stripes-components/lib/Selection';
+import Select from '@folio/stripes-components/lib/Select';
 
 export default function SearchConditions() {
   const options = [
@@ -18,7 +18,7 @@ export default function SearchConditions() {
       name="selectCondition"
       id="selectCondition"
       placeholder="Select condition..."
-      component={Selection}
+      component={Select}
       dataOptions={options}
     />
   );

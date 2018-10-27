@@ -7,11 +7,12 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
-import { Props } from '../../../core';
+import type { Props } from '../../../core';
 import { actionMenuItem, ToolbarButtonMenu, ToolbarMenu, EmptyMessage } from '../../Lib';
-import { remapForResultList } from '../../../utils/Mapper';
-import { resultsFormatter, columnMapper } from '../../../utils/Formatter';
+import { remapForResultList } from '../Utils/Mapper';
+import { resultsFormatter, columnMapper } from '../Utils/Formatter';
 import RecordDetails from './RecordDetails';
+import { injectCommonProp } from '../../../core';
 
 type P = Props & {
   headings: Array<any>,
@@ -26,7 +27,6 @@ export class SearchResults extends React.Component<P, {}> {
     super(props);
     this.state = {
       detailPanelIsVisible: false,
-
     };
     this.handleDeatils = this.handleDeatils.bind(this);
   }
@@ -148,5 +148,5 @@ export default (connect(
     fetchingDetail: details.isLoadingDetail,
     countRecord: countDoc.records
   }),
-)(SearchResults));
+)(injectCommonProp(SearchResults)));
 

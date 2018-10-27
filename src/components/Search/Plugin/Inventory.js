@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@folio/stripes-components/lib/Button';
-import { Props } from '../../../core';
+import type { Props } from '../../../core';
 
 type P = Props & {};
 

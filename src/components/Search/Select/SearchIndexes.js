@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import { Field } from 'redux-form';
-import Selection from '@folio/stripes-components/lib/Selection';
+import Select from '@folio/stripes-components/lib/Select';
 
 export default function SearchIndexes() {
   const options = [
@@ -29,7 +29,7 @@ export default function SearchIndexes() {
       name="selectIndexes"
       id="selectIndexes"
       placeholder="Select a field..."
-      component={Selection}
+      component={Select}
       dataOptions={options}
     />
   );

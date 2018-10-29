@@ -1,7 +1,7 @@
 import React from 'react';
 import FilterGroups, { initialFilterState } from '@folio/stripes-components/lib/FilterGroups';
 import { ActionTypes } from '../../../redux/actions';
-import type { Props } from '../../../core';
+import { Props } from '../../../core';
 
 import styles from './FiltersContainer.css';
 
@@ -41,6 +41,30 @@ export default class FiltersContainer extends React.Component<P, {}> {
     };
   }
 
+  handleRecordTypeChecked = (recTypeFilters) => {
+    Object.keys(recTypeFilters).forEach(element => {
+      const { store } = this.props;
+      const optionCategory = element.split('.')[1];
+      if (optionCategory === 'Bibliographic records') {
+        this.setState(store.getState().marccat.authSearch = {});
+      } else if (optionCategory === 'Authority records') {
+        this.setState(store.getState().marccat.search = {});
+      }
+    });
+  }
+
+  // handleRecordTypeUnChecked = (recTypeFilters) => {
+  //   Object.keys(recTypeFilters).forEach(element => {
+  //     const { store } = this.props;
+  //     const optionCategory = element.split('.')[1];
+  //     if (optionCategory === 'Bibliographic records') {
+  //       store.dispatch({ type: ActionTypes.SEARCH_AUTH, query: store.getState().marccat.searchForm.values.searchTextArea });
+  //     } else if (optionCategory === 'Authority records') {
+  //       store.dispatch({ type: ActionTypes.SEARCH, query: store.getState().marccat.searchForm.values.searchTextArea });
+  //     }
+  //   });
+  // }
+
   onChangeFilter = (e) => {
     const { name, checked } = e.target;
     const { store } = this.props;
@@ -48,6 +72,11 @@ export default class FiltersContainer extends React.Component<P, {}> {
       const filters = Object.assign({}, prevState.filters);
       filters[name] = checked;
       store.dispatch({ type: ActionTypes.FILTERS, payload: filters });
+      if (name.split('.')[0] === 'recordType' && checked === true) {
+        this.handleRecordTypeChecked(filters);
+      } else if (name.split('.')[0] === 'recordType' && checked === false) {
+        this.handleRecordTypeUnChecked(filters);
+      }
       return { filters };
     });
   }

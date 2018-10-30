@@ -48,6 +48,10 @@ export const fetchSearchAuthEngineRecords = (records) => ({
   type: ActionTypes.RECORD_AUTH_SUCCESS,
   payload: records
 });
+export const fetchSuccess = (message) => ({
+  type: ActionTypes.SUCCESS,
+  payload: message
+});
 export const fetchFailure = (message) => ({
   type: ActionTypes.REJECT,
   payload: message

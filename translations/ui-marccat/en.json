@@ -183,7 +183,7 @@
   "search.wildCard.replace1" : "Replace 0.1 or more characters",
   "search.wildCard.replace2" : "Replace one character",
   "search.wildCard.restriction" : "Restriction",
-  "search.record": "Bib. Records",
+  "search.record": "Records",
   "search.record.preview": "Preview Record",
   "search.record.new.keyboard": "+ New (CTRL+N)",
   "search.record.edit" : "Edit",

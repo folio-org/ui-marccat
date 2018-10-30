@@ -19,7 +19,7 @@ export const ActionTypes = {
   DELETE: '@@ui-marccat/DELETE',
   UPDATE: '@@ui-marccat/UPDATE',
   REJECT: '@@ui-marccat/REJECT',
-  SAVE_TAG: '@@ui-marccat/SAVE_TAG',
+  SUCCESS: '@@ui-marccat/SUCCESS',
   // TYPE_FILTER: '@@ui-marccat/TYPE_FILTER',
   // SUPPRESSED_FILTER: '@@ui-marccat/SUPPRESSED_FILTER',
   // LANGUAGE_FILTER: '@@ui-marccat/LANGUAGE_FILTER',

@@ -15,11 +15,14 @@ import RecordDetails from './RecordDetails';
 import { injectCommonProp } from '../../../core';
 
 type P = Props & {
-  headings: Array<any>,
-  inputValue: string,
-  getPreviousPage: Function,
-  getNextPage: Function,
-  dataLoaded: boolean,
+  headings: Array<any>;
+  inputValue: string;
+  getPreviousPage: Function;
+  getNextPage: Function;
+  dataLoaded: boolean;
+  loading: boolean;
+  isPanelOpen: boolean;
+  onClicks: () => void;
 }
 
 export class SearchResults extends React.Component<P, {}> {
@@ -27,8 +30,10 @@ export class SearchResults extends React.Component<P, {}> {
     super(props);
     this.state = {
       detailPanelIsVisible: false,
+      loading: false
     };
     this.handleDeatils = this.handleDeatils.bind(this);
+    this.onNeedMoreData = this.onNeedMoreData.bind(this);
   }
 
   handleDeatils = (e, meta) => {
@@ -43,13 +48,17 @@ export class SearchResults extends React.Component<P, {}> {
     });
   };
 
+  onNeedMoreData = (initialData:Array<any>) => {
+    return initialData.slice(10, 20);
+  };
+
   render() {
     const { detailPanelIsVisible } = this.state;
-    const { fetching, headings, fetchingDetail, authHeadings, authFetching } = this.props;
+    const { fetching, headings, fetchingDetail, authHeadings, authFetching, isVisible } = this.props;
     const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
     const rightMenu = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.new.keyboard" />;
     const rightMenuEdit = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.edit" />;
-    const leftMenu = <ToolbarMenu badgeCount={headings ? headings.length : undefined} {...this.props} icon={['search']} />;
+    const leftMenu = <ToolbarMenu badgeCount={headings ? headings.length : undefined} {...this.props} icon={['search']} onClick={() => isVisible === !isVisible} />;
     let mergedRecord = [];
     if (authHeadings && authHeadings.length > 0) {
       mergedRecord = [...mergedRecord, ...authHeadings];
@@ -58,12 +67,13 @@ export class SearchResults extends React.Component<P, {}> {
       mergedRecord = [...mergedRecord, ...headings];
     }
     const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForResultList(mergedRecord) : [];
+    const message = (mergedRecord.length > 0) ? mergedRecord.length + ' Results Found' : 'No Result found';
     return (
       <Paneset static>
         <Pane
           defaultWidth="fill"
           paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
-          paneSub={(fetching || authFetching) ? 'Searching....' : (headings) ? headings.length + ' Results Found' : 'No Result found'}
+          paneSub={message}
           appIcon={{ app: C.META.ICON_TITLE }}
           actionMenuItems={actionMenuItems}
           firstMenu={leftMenu}
@@ -74,9 +84,10 @@ export class SearchResults extends React.Component<P, {}> {
             <EmptyMessage {...this.props} />
           }
           {
-            (this.props.fetching && this.props.authFetching) ?
+            (fetching && authFetching) ?
               <Icon icon="spinner-ellipsis" /> :
               <MultiColumnList
+                autosize
                 id="tabella"
                 defaultWidth="fill"
                 isEmptyMessage=""
@@ -99,6 +110,9 @@ export class SearchResults extends React.Component<P, {}> {
                 contentData={marcJSONRecords}
                 formatter={resultsFormatter}
                 columnMapping={columnMapper}
+                onNeedMoreData={() => this.onNeedMoreData(marcJSONRecords)}
+                virtualize
+                loading={this.state.loading}
                 visibleColumns={[
                   'resultView',
                   '001',

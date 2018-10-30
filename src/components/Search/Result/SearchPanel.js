@@ -15,6 +15,7 @@ import styles from '../Style/Search.css';
 import { findYourQuery } from '../../Search/Select/FilterMapper';
 import { remapFilters } from '../Utils/Mapper';
 import { getLanguageFilterQuery, getFormatFilterQuery } from '../Utils/SearchUtils';
+import { EmptyMessage } from '../../Lib';
 
 type P = Props & {
   inputErrorCheck: string,
@@ -22,17 +23,19 @@ type P = Props & {
 }
 
 class SearchPanel extends React.Component<P, {}> {
-  constructor(props:P) {
+  constructor(props: P) {
     super(props);
     this.state = {};
     this.handleKeyDown = this.handleKeyDown.bind(this);
   }
-  checkEmptyForm(store) {
+
+  checkEmptyForm(store, e) {
     let check = true;
+    const inputValueForQuery = e.target.form[2].defaultValue;
     if (store.getState().form.searchForm.syncErrors &&
-    (store.getState().form.searchForm.syncErrors.selectIndexes === 'Required' ||
-    store.getState().form.searchForm.syncErrors.selectCondition === 'Required' ||
-    store.getState().form.searchForm.values === undefined)) {
+      (store.getState().form.searchForm.syncErrors.selectIndexes === 'Required' ||
+        store.getState().form.searchForm.syncErrors.selectCondition === 'Required' ||
+        store.getState().form.searchForm.values === undefined)) {
       check = false;
     } else if (store.getState().form.searchForm.values === undefined) {
       check = false;
@@ -44,7 +47,7 @@ class SearchPanel extends React.Component<P, {}> {
     if (e.key === 'Enter') {
       const { store } = this.props;
       e.preventDefault();
-      const check = this.checkEmptyForm(store);
+      const check = this.checkEmptyForm(store, e);
       let baseQuery;
       let indexForQuery;
       let conditionFilter;

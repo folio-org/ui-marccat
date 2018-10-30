@@ -62,9 +62,11 @@ export class SearchResults extends React.Component<P, {}> {
     let mergedRecord = [];
     if (authHeadings && authHeadings.length > 0) {
       mergedRecord = [...mergedRecord, ...authHeadings];
+      authRecordReady = true;
     }
     if (headings && headings.length > 0) {
       mergedRecord = [...mergedRecord, ...headings];
+      bibRecordReady = true;
     }
     const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForResultList(mergedRecord) : [];
     const message = (mergedRecord.length > 0) ? mergedRecord.length + ' Results Found' : 'No Result found';
@@ -131,25 +133,98 @@ export class SearchResults extends React.Component<P, {}> {
         {
           detailPanelIsVisible &&
           <Pane
-            id="pane-details"
-            defaultWidth="35%"
-            paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
-            paneSub={C.EMPTY_MESSAGE}
+            defaultWidth="fill"
+            paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
+            paneSub={bibRecordReady || authRecordReady ? message + ' / ' + messageAuthority : blankMessage}
             appIcon={{ app: C.META.ICON_TITLE }}
-            dismissible
-            onClose={() => this.setState({ detailPanelIsVisible: false })}
             actionMenuItems={actionMenuItems}
-            lastMenu={rightMenuEdit}
+            firstMenu={leftMenu}
+            lastMenu={rightMenu}
           >
             {
-              (fetchingDetail) ?
+              !headings && !fetching &&
+              <EmptyMessage {...this.props} />
+            }
+            {
+              (fetching && authFetching) ?
                 <Icon icon="spinner-ellipsis" /> :
-                <RecordDetails {...this.props} />
+                <MultiColumnList
+                  id="tabella"
+                  defaultWidth="fill"
+                  isEmptyMessage=""
+                  columnWidths={
+                    {
+                      'resultView': '5%',
+                      '001': '10%',
+                      '245': '25%',
+                      'name': '15%',
+                      'uniformTitle': '10%',
+                      'subject': '10%',
+                      'date1': '5%',
+                      'date2': '5%',
+                      'format': '10%',
+                      'countDoc': '5%'
+                    }
+                  }
+                  rowMetadata={['001', 'recordView']}
+                  onRowClick={this.handleDeatils}
+                  contentData={marcJSONRecords}
+                  formatter={resultsFormatter}
+                  columnMapping={columnMapper}
+                  loading
+                  visibleColumns={[
+                    'resultView',
+                    '001',
+                    '245',
+                    'name',
+                    'uniformTitle',
+                    'subject',
+                    'date1',
+                    'date2',
+                    'format',
+                    'countDoc'
+                  ]}
+                />
             }
           </Pane>
-        }
-      </Paneset>
-    );
+          {
+            detailPanelIsVisible &&
+            <Pane
+              id="pane-details"
+              defaultWidth="35%"
+              paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
+              paneSub={C.EMPTY_MESSAGE}
+              appIcon={{ app: C.META.ICON_TITLE }}
+              dismissible
+              onClose={() => this.setState({ detailPanelIsVisible: false })}
+              actionMenuItems={actionMenuItems}
+              lastMenu={rightMenuEdit}
+            >
+              {
+                (fetchingDetail) ?
+                  <Icon icon="spinner-ellipsis" /> :
+                  <RecordDetails {...this.props} />
+              }
+            </Pane>
+          }
+        </Paneset>
+      );
+    } else {
+      return (
+        <Paneset static>
+          <Pane
+            defaultWidth="fill"
+            paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
+            paneSub={blankMessage}
+            appIcon={{ app: C.META.ICON_TITLE }}
+            actionMenuItems={actionMenuItems}
+            firstMenu={leftMenu}
+            lastMenu={rightMenu}
+          >
+            <EmptyMessage {...this.props} />
+          </Pane>
+        </Paneset>);
+    }
   }
 }
 

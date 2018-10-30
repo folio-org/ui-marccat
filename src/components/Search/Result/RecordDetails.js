@@ -14,7 +14,7 @@ type P = Props & {
 }
 
 function RecordDetails({ translate, ...props }: P) {
-  const recordDetails = props.items.replace('LEADER', '');
+  const recordDetails = props.items.replace('LEADER', '   ');
   const recordDetailsArray = recordDetails.split('\n');
   return (
     <AccordionSet>
@@ -31,13 +31,13 @@ function RecordDetails({ translate, ...props }: P) {
           {recordDetailsArray.map(item =>
             <Row>
               <Col xs={1} style={{ paddingBottom: '8px' }}>
-                {item.substring(0, 4)}
+                {item.substring(0, 3)}
               </Col>
               <Col xs={1} style={{ paddingBottom: '8px' }}>
-                {item.substring(6).startsWith('$') ? item.substring(4, 6) : ''}
+                {item.substring(6).startsWith('$') ? item.substring(3, 6) : ''}
               </Col>
               <Col xs={10} style={{ paddingBottom: '8px' }}>
-                {!item.substring(6).startsWith('$') ? item.substring(4) : item.substring(6)}
+                {!item.substring(6).startsWith('$') ? item.substring(3) : item.substring(6)}
               </Col>
             </Row>)}
 

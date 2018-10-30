@@ -15,18 +15,19 @@ import RecordDetails from './RecordDetails';
 import { injectCommonProp } from '../../../core';
 
 type P = Props & {
-  headings: Array<any>,
-  inputValue: string,
-  getPreviousPage: Function,
-  getNextPage: Function,
-  dataLoaded: boolean,
+  headings: Array<any>;
+  inputValue: string;
+  getPreviousPage: Function;
+  getNextPage: Function;
+  dataLoaded: boolean;
+  isPanelOpen: boolean;
 }
 
 export class SearchResults extends React.Component<P, {}> {
   constructor(props: P) {
     super(props);
     this.state = {
-      detailPanelIsVisible: false,
+      detailPanelIsVisible: false
     };
     this.handleDeatils = this.handleDeatils.bind(this);
   }
@@ -58,12 +59,13 @@ export class SearchResults extends React.Component<P, {}> {
       mergedRecord = [...mergedRecord, ...headings];
     }
     const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForResultList(mergedRecord) : [];
+    const message = (fetching || authFetching) ? 'Searching....' : (headings) ? headings.length + ' Results Found' : 'No Result found';
     return (
       <Paneset static>
         <Pane
           defaultWidth="fill"
           paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
-          paneSub={(fetching || authFetching) ? 'Searching....' : (headings) ? headings.length + ' Results Found' : 'No Result found'}
+          paneSub={message}
           appIcon={{ app: C.META.ICON_TITLE }}
           actionMenuItems={actionMenuItems}
           firstMenu={leftMenu}
@@ -74,7 +76,7 @@ export class SearchResults extends React.Component<P, {}> {
             <EmptyMessage {...this.props} />
           }
           {
-            (this.props.fetching && this.props.authFetching) ?
+            (fetching && authFetching) ?
               <Icon icon="spinner-ellipsis" /> :
               <MultiColumnList
                 id="tabella"
@@ -99,6 +101,7 @@ export class SearchResults extends React.Component<P, {}> {
                 contentData={marcJSONRecords}
                 formatter={resultsFormatter}
                 columnMapping={columnMapper}
+                loading
                 visibleColumns={[
                   'resultView',
                   '001',

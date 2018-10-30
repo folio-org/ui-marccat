@@ -46,9 +46,9 @@ export default class FiltersContainer extends React.Component<P, {}> {
       const { store } = this.props;
       const optionCategory = element.split('.')[1];
       if (optionCategory === 'Bibliographic records') {
-        this.setState(store.getState().marccat.authSearch = {});
+        store.getState().marccat.authSearch = {};
       } else if (optionCategory === 'Authority records') {
-        this.setState(store.getState().marccat.search = {});
+        store.getState().marccat.search = {};
       }
     });
   }

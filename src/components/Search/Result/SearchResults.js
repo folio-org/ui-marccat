@@ -50,95 +50,118 @@ export class SearchResults extends React.Component<P, {}> {
     const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
     const rightMenu = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.new.keyboard" />;
     const rightMenuEdit = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.edit" />;
-    const leftMenu = <ToolbarMenu badgeCount={headings ? headings.length : undefined} {...this.props} icon={['search']} />;
+    const leftMenu = <ToolbarMenu {...this.props} icon={['search']} />;
+    let authRecordReady = false;
+    let bibRecordReady = false;
     let mergedRecord = [];
     if (authHeadings && authHeadings.length > 0) {
       mergedRecord = [...mergedRecord, ...authHeadings];
+      authRecordReady = true;
     }
     if (headings && headings.length > 0) {
       mergedRecord = [...mergedRecord, ...headings];
+      bibRecordReady = true;
     }
     const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForResultList(mergedRecord) : [];
-    const message = (fetching || authFetching) ? 'Searching....' : (headings) ? headings.length + ' Results Found' : 'No Result found';
-    return (
-      <Paneset static>
-        <Pane
-          defaultWidth="fill"
-          paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
-          paneSub={message}
-          appIcon={{ app: C.META.ICON_TITLE }}
-          actionMenuItems={actionMenuItems}
-          firstMenu={leftMenu}
-          lastMenu={rightMenu}
-        >
-          {
-            !headings && !fetching &&
-            <EmptyMessage {...this.props} />
-          }
-          {
-            (fetching && authFetching) ?
-              <Icon icon="spinner-ellipsis" /> :
-              <MultiColumnList
-                id="tabella"
-                defaultWidth="fill"
-                isEmptyMessage=""
-                columnWidths={
-                  {
-                    'resultView': '5%',
-                    '001': '10%',
-                    '245': '25%',
-                    'name': '15%',
-                    'uniformTitle': '10%',
-                    'subject': '10%',
-                    'date1': '5%',
-                    'date2': '5%',
-                    'format': '10%',
-                    'countDoc': '5%'
-                  }
-                }
-                rowMetadata={['001', 'recordView']}
-                onRowClick={this.handleDeatils}
-                contentData={marcJSONRecords}
-                formatter={resultsFormatter}
-                columnMapping={columnMapper}
-                loading
-                visibleColumns={[
-                  'resultView',
-                  '001',
-                  '245',
-                  'name',
-                  'uniformTitle',
-                  'subject',
-                  'date1',
-                  'date2',
-                  'format',
-                  'countDoc'
-                ]}
-              />
-          }
-        </Pane>
-        {
-          detailPanelIsVisible &&
+    const blankMessage = '';
+    const message = (fetching || authFetching) ? 'Searching....' : (headings) ? headings.length + ' Bibliographic' : 'No Bibliographic results found';
+    const messageAuthority = (fetching || authFetching) ? 'Searching....' : (authHeadings) ? authHeadings.length + ' Authority' : 'No Authority results found';
+    if ((authHeadings && authHeadings.length > 0) || (headings && headings.length > 0)) {
+      return (
+        <Paneset static>
           <Pane
-            id="pane-details"
-            defaultWidth="35%"
-            paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
-            paneSub={C.EMPTY_MESSAGE}
+            defaultWidth="fill"
+            paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
+            paneSub={bibRecordReady || authRecordReady ? message + ' / ' + messageAuthority : blankMessage}
             appIcon={{ app: C.META.ICON_TITLE }}
-            dismissible
-            onClose={() => this.setState({ detailPanelIsVisible: false })}
             actionMenuItems={actionMenuItems}
-            lastMenu={rightMenuEdit}
+            firstMenu={leftMenu}
+            lastMenu={rightMenu}
           >
             {
-              (fetchingDetail) ?
+              !headings && !fetching &&
+              <EmptyMessage {...this.props} />
+            }
+            {
+              (fetching && authFetching) ?
                 <Icon icon="spinner-ellipsis" /> :
-                <RecordDetails {...this.props} />
+                <MultiColumnList
+                  id="tabella"
+                  defaultWidth="fill"
+                  isEmptyMessage=""
+                  columnWidths={
+                    {
+                      'resultView': '5%',
+                      '001': '10%',
+                      '245': '25%',
+                      'name': '15%',
+                      'uniformTitle': '10%',
+                      'subject': '10%',
+                      'date1': '5%',
+                      'date2': '5%',
+                      'format': '10%',
+                      'countDoc': '5%'
+                    }
+                  }
+                  rowMetadata={['001', 'recordView']}
+                  onRowClick={this.handleDeatils}
+                  contentData={marcJSONRecords}
+                  formatter={resultsFormatter}
+                  columnMapping={columnMapper}
+                  loading
+                  visibleColumns={[
+                    'resultView',
+                    '001',
+                    '245',
+                    'name',
+                    'uniformTitle',
+                    'subject',
+                    'date1',
+                    'date2',
+                    'format',
+                    'countDoc'
+                  ]}
+                />
             }
           </Pane>
-        }
-      </Paneset>
-    );
+          {
+            detailPanelIsVisible &&
+            <Pane
+              id="pane-details"
+              defaultWidth="35%"
+              paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
+              paneSub={C.EMPTY_MESSAGE}
+              appIcon={{ app: C.META.ICON_TITLE }}
+              dismissible
+              onClose={() => this.setState({ detailPanelIsVisible: false })}
+              actionMenuItems={actionMenuItems}
+              lastMenu={rightMenuEdit}
+            >
+              {
+                (fetchingDetail) ?
+                  <Icon icon="spinner-ellipsis" /> :
+                  <RecordDetails {...this.props} />
+              }
+            </Pane>
+          }
+        </Paneset>
+      );
+    } else {
+      return (
+        <Paneset static>
+          <Pane
+            defaultWidth="fill"
+            paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
+            paneSub={blankMessage}
+            appIcon={{ app: C.META.ICON_TITLE }}
+            actionMenuItems={actionMenuItems}
+            firstMenu={leftMenu}
+            lastMenu={rightMenu}
+          >
+            <EmptyMessage {...this.props} />
+          </Pane>
+        </Paneset>);
+    }
   }
 }
 

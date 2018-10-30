@@ -75,7 +75,7 @@ export default class FiltersContainer extends React.Component<P, {}> {
       if (name.split('.')[0] === 'recordType' && checked === true) {
         this.handleRecordTypeChecked(filters);
       } else if (name.split('.')[0] === 'recordType' && checked === false) {
-        this.handleRecordTypeUnChecked(filters);
+        // this.handleRecordTypeUnChecked(filters);
       }
       return { filters };
     });

@@ -24,7 +24,7 @@ function RecordDetails({ translate, ...props }: P) {
       >
         <div className={style.withSpace}>
           <KeyValue
-            label={getTag245(recordDetailsArray)}
+            label={getTag245(recordDetailsArray) + 'Title'}
           >
             <h2>{getTitle245(recordDetailsArray)}</h2>
           </KeyValue>

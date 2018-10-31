@@ -11,10 +11,11 @@ export const fetchDetailsRecords = (records, recordType) => ({
   payload: records,
   recType: recordType
 });
-export const fetchAssociatedBibRecords = (records, recordType) => ({
+export const fetchAssociatedBibRecords = (records, recordType, count) => ({
   type: ActionTypes.ASSOCIATED_BIB_REC_SUCCESS,
   payload: records,
-  recType: recordType
+  recType: recordType,
+  countDoc: count
 });
 export const fetchRequestedAssociatedBibRecords = (isLoadingAssociatedBibRecords) => ({
   type: ActionTypes.FETCH_ASSOCIATED_BIB_REQUESTED,
@@ -45,6 +46,14 @@ export const fetchSearchEngineRecords = (records) => ({
   payload: records
 });
 export const fetchSearchAuthEngineRecords = (records) => ({
+  type: ActionTypes.RECORD_AUTH_SUCCESS,
+  payload: records
+});
+export const fetchRequestedTemplateView = (isLoadingTemplate) => ({
+  type: ActionTypes.FETCH_VIEW_TEMPLATE,
+  payload: isLoadingTemplate
+});
+export const fetchTemplateView = (records) => ({
   type: ActionTypes.RECORD_AUTH_SUCCESS,
   payload: records
 });

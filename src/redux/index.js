@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { combineEpics } from 'redux-observable';
-import { searchEngineReducer, scanBrowsingReducer, filterReducer, getDetailsRecord, searchAuthReducer, countDocReducer, getAssociatedBibRecord } from './reducers/Reducer';
-import { searchEpic, fetchScanBrowsingRecords, searchDetailEpic, searchAuthEpic, countDocEpic, searchAssociatedBibRecords } from './epic/epics';
+import { searchEngineReducer, scanBrowsingReducer, filterReducer, getDetailsRecord, searchAuthReducer, countDocReducer, getAssociatedBibRecord, templateViewReducer } from './reducers/Reducer';
+import { searchEpic, fetchScanBrowsingRecords, searchDetailEpic, searchAuthEpic, countDocEpic, searchAssociatedBibRecords, templateViewEpic } from './epic/epics';
 
 export const reducer = combineReducers({
   search: searchEngineReducer,
@@ -10,7 +10,8 @@ export const reducer = combineReducers({
   details: getDetailsRecord,
   filter: filterReducer,
   countDoc: countDocReducer,
-  associatedRecords: getAssociatedBibRecord
+  associatedRecords: getAssociatedBibRecord,
+  template: templateViewReducer
 });
 
 export const epics = combineEpics(
@@ -19,5 +20,6 @@ export const epics = combineEpics(
   fetchScanBrowsingRecords,
   searchDetailEpic,
   countDocEpic,
-  searchAssociatedBibRecords
+  searchAssociatedBibRecords,
+  templateViewEpic
 );

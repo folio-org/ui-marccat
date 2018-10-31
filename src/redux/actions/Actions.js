@@ -39,4 +39,7 @@ export const ActionTypes = {
   COUNT_DOC: '@@ui-marccat/COUNT_DOC',
   COUNT_DOC_SUCCESS: '@@ui-marccat/COUNT_DOC_SUCCESS',
   FETCH_COUNT_DOC: '@@ui-marccat/FETCH_COUNT_DOC',
+  VIEW_TEMPLATE: '@@ui-marccat/VIEW_TEMPLATE',
+  VIEW_TEMPLATE_SUCCESS: '@@ui-marccat/VIEW_TEMPLATE_SUCCESS',
+  FETCH_VIEW_TEMPLATE: '@@ui-marccat/FETCH_VIEW_TEMPLATE',
 };

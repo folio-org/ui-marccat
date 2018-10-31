@@ -16,6 +16,7 @@ export const ENDPOINT = {
     'x-okapi-tenant': 'tnx',
   },
   BASE_URL: 'http://151.1.165.20:8080/cataloging',
+  VIEW_TEMPLATE_URL: 'fixed-fields-code-groups',
   TEMPLATE_URL: 'record-templates',
   TEMPLATE_URL_ID: 'record-template/123',
   TEMPLATE_MANDATORY: 'bibliographic/fields/mandatory',

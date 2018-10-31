@@ -31,7 +31,7 @@ class SearchPanel extends React.Component<P, {}> {
 
   checkEmptyForm(store, e) {
     let check = true;
-    const inputValueForQuery = e.target.form[2].defaultValue;
+    // const inputValueForQuery = e.target.form[2].defaultValue;
     if (store.getState().form.searchForm.syncErrors &&
       (store.getState().form.searchForm.syncErrors.selectIndexes === 'Required' ||
         store.getState().form.searchForm.syncErrors.selectCondition === 'Required' ||

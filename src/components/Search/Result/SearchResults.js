@@ -13,6 +13,8 @@ import { remapForResultList } from '../Utils/Mapper';
 import { resultsFormatter, columnMapper } from '../Utils/Formatter';
 import RecordDetails from './RecordDetails';
 import { injectCommonProp } from '../../../core';
+import TemplateManager from '../../Template/TemplateManager';
+
 
 type P = Props & {
   headings: Array<any>;
@@ -27,16 +29,23 @@ export class SearchResults extends React.Component<P, {}> {
   constructor(props: P) {
     super(props);
     this.state = {
-      detailPanelIsVisible: false
+      detailPanelIsVisible: false,
+      switchToTemplate: false
     };
     this.handleDeatils = this.handleDeatils.bind(this);
+  }
+
+  handleClickEdit = (e) => {
+    this.setState(prevState => ({ switchToTemplate: !prevState.switchToTemplate }));
+    const { store } = this.props;
+    store.dispatch({ type: ActionTypes.VIEW_TEMPLATE, query: '000' }); // LEADER AL MOMENTO SEMPRE 000
   }
 
   handleDeatils = (e, meta) => {
     const { store } = this.props;
     store.dispatch({ type: ActionTypes.DETAILS, query: meta['001'], recordType: meta.recordView });
     if (meta.recordView === -1) {
-      store.dispatch({ type: ActionTypes.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView });
+      store.dispatch({ type: ActionTypes.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView, count: meta.countDoc });
     }
     this.setState(prevState => {
       const detailPanelIsVisible = Object.assign({}, prevState.detailPanelIsVisible);
@@ -49,7 +58,7 @@ export class SearchResults extends React.Component<P, {}> {
     const { fetching, headings, fetchingDetail, authHeadings, authFetching } = this.props;
     const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
     const rightMenu = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.new.keyboard" />;
-    const rightMenuEdit = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.edit" />;
+    const rightMenuEdit = <ToolbarButtonMenu create {...this.props} onClick={this.handleClickEdit} label="ui-marccat.search.record.edit" />;
     const leftMenu = <ToolbarMenu {...this.props} icon={['search']} />;
     let authRecordReady = false;
     let bibRecordReady = false;
@@ -66,13 +75,15 @@ export class SearchResults extends React.Component<P, {}> {
     const blankMessage = '';
     const message = (fetching || authFetching) ? 'Searching....' : (headings) ? headings.length + ' Bibliographic' : 'No Bibliographic results found';
     const messageAuthority = (fetching || authFetching) ? 'Searching....' : (authHeadings) ? authHeadings.length + ' Authority' : 'No Authority results found';
+    if (this.state.switchToTemplate) return <TemplateManager {...this.props} />;
+    else
     if ((authHeadings && authHeadings.length > 0) || (headings && headings.length > 0)) {
       return (
         <Paneset static>
           <Pane
             defaultWidth="fill"
             paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
-            paneSub={bibRecordReady || authRecordReady ? message + ' / ' + messageAuthority : blankMessage}
+            paneSub={bibRecordReady || authRecordReady ? messageAuthority + ' / ' + message : blankMessage}
             appIcon={{ app: C.META.ICON_TITLE }}
             actionMenuItems={actionMenuItems}
             firstMenu={leftMenu}

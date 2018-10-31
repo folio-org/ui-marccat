@@ -47,7 +47,18 @@ export const searchAssociatedBibRecords = (action$, store) =>
         of$(marccatActions.fetchRequestedAssociatedBibRecords(true)),
         ajax
           .getJSON(buildUrl(ENDPOINT.SEARCH_URL_JSON, `lang=ita&view=1&ml=170&q=${d.query}&from=1&to=10&dpo=1`), ENDPOINT.HEADERS)
-          .map(record => marccatActions.fetchAssociatedBibRecords(record.docs, d.recordType))
+          .map(record => marccatActions.fetchAssociatedBibRecords(record.docs, d.recordType, d.count))
+          .catch(e => of$(marccatActions.fetchFailure(e))),
+      ));
+
+export const templateViewEpic = (action$, store) =>
+  action$.ofType(ActionTypes.VIEW_TEMPLATE)
+    .switchMap((d) =>
+      concat$(
+        of$(marccatActions.fetchRequestedTemplateView(true)),
+        ajax
+          .getJSON(buildUrl(ENDPOINT.VIEW_TEMPLATE_URL, `code=${d.query}&headerTypeCode=15&lang=ita`), ENDPOINT.HEADERS)
+          .map(record => marccatActions.fetchTemplateView(record.docs))
           .catch(e => of$(marccatActions.fetchFailure(e))),
       ));
 

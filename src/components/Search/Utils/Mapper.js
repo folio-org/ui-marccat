@@ -56,23 +56,45 @@ const remapForAssociatedBibList = i => {
 const getTag245 = (bigStringArray) => {
   let tag245 = '';
   bigStringArray.map(item => {
-    if (item.substring(0, 4).trim() === '245') {
-      tag245 = item.substring(0, 4);
+    if (item.substring(0, 3).trim() === '245') {
+      tag245 = item.substring(0, 3);
     }
     return tag245;
   });
   return tag245;
 };
 
+const getTag100 = (bigStringArray) => {
+  let tag100 = '';
+  bigStringArray.map(item => {
+    if (item.substring(0, 3).trim() === '100') {
+      tag100 = item.substring(0, 3);
+    }
+    return tag100;
+  });
+  return tag100;
+};
+
 const getTitle245 = (bigStringArray) => {
   let titleTag245 = '';
   bigStringArray.map(item => {
-    if (item.substring(0, 4).trim() === '245') {
-      titleTag245 = item.substring(4);
+    if (item.substring(0, 3).trim() === '245') {
+      titleTag245 = item.substring(3);
     }
     return titleTag245;
   });
   return titleTag245;
+};
+
+const getTitle100 = (bigStringArray) => {
+  let titleTag100 = '';
+  bigStringArray.map(item => {
+    if (item.substring(0, 3).trim() === '100') {
+      titleTag100 = item.substring(3);
+    }
+    return titleTag100;
+  });
+  return titleTag100;
 };
 
 const getFieldPosition = (controlField, pos1, pos2) => {
@@ -122,6 +144,8 @@ export {
   getFormat,
   getTag245,
   getTitle245,
+  getTag100,
+  getTitle100,
   remapFilters,
   remapForAssociatedBibList
 };

@@ -6,7 +6,7 @@ import { Row, Col } from 'react-flexbox-grid';
 import InventoryPluggableBtn from '../Plugin/Inventory';
 import type { Props } from '../../../core';
 import style from '../Style/Search.css';
-import { getTag245, getTitle245 } from '../Utils/Mapper';
+import { getTag245, getTitle245, getTag100, getTitle100 } from '../Utils/Mapper';
 import AssociatedBib from './AssociatedBib';
 
 type P = Props & {
@@ -14,8 +14,10 @@ type P = Props & {
 }
 
 function RecordDetails({ translate, ...props }: P) {
-  const recordDetails = props.items.replace('LEADER', '   ');
+  const recordDetails = props.items.replace('LEADER', '000');
   const recordDetailsArray = recordDetails.split('\n');
+  const tag245 = getTag245(recordDetailsArray);
+  const title245 = getTitle245(recordDetailsArray);
   return (
     <AccordionSet>
       <Accordion
@@ -24,9 +26,9 @@ function RecordDetails({ translate, ...props }: P) {
       >
         <div className={style.withSpace}>
           <KeyValue
-            label={getTag245(recordDetailsArray) + 'Title'}
+            label={tag245 === '' ? getTag100(recordDetailsArray) : tag245 + 'Title'}
           >
-            <h2>{getTitle245(recordDetailsArray)}</h2>
+            <h2>{title245 === '' ? getTitle100(recordDetailsArray) : title245}</h2>
           </KeyValue>
           {recordDetailsArray.map(item =>
             <Row>
@@ -40,7 +42,6 @@ function RecordDetails({ translate, ...props }: P) {
                 {!item.substring(6).startsWith('$') ? item.substring(3) : item.substring(6)}
               </Col>
             </Row>)}
-
           <InventoryPluggableBtn {...props} buttonLabel={translate({ id: 'ui-marccat.search.goto.inventory' })} />
         </div>
       </Accordion>

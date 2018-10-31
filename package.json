@@ -3,7 +3,7 @@
   "appName": "MARCcat",
   "version": "1.0.0",
   "company": "@Cult",
-  "description": "MARCcat Cataloging Module",
+  "description": "Cataloging Module",
   "repository": "folio-org/ui-marccat",
   "publishConfig": {
     "registry": "https://repository.folio.org/repository/npm-folio/"

@@ -68,9 +68,6 @@
     "**/isarray": "*",
     "**/warning": "^4.0.1"
   },
-  "pre-commit": {
-    "run": "lint, stylelint"
-  },
   "stripes": {
     "type": "app",
     "displayName": "MARCcat",
@@ -79,10 +76,6 @@
     "defaultPreviewWidth": "40%",
     "helpPage": "https://wiki.folio.org/pages/",
     "hasSettings": true,
-    "actionNames": [
-      "advancedSearch",
-      "diacritcChar"
-    ],
     "okapiInterfaces": {
       "marccat": "1.0.0"
     },

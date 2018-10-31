@@ -47,7 +47,7 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
 }
 
 /**
-  * we use the @link {withRoot} wrapper to supply all component a root prop for add a reducer and epic
+  * we use the @link {injectCommonProp} wrapper to supply all component a root prop for add a reducer and epic
   * the root prop is in the props object.
   *
   * @example: this.props.root

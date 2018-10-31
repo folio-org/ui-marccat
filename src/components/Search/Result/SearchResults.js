@@ -54,11 +54,11 @@ export class SearchResults extends React.Component<P, {}> {
 
   render() {
     const { detailPanelIsVisible } = this.state;
-    const { fetching, headings, fetchingDetail, authHeadings, authFetching, isVisible } = this.props;
+    const { fetching, headings, fetchingDetail, authHeadings, authFetching } = this.props;
     const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
     const rightMenu = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.new.keyboard" />;
     const rightMenuEdit = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.edit" />;
-    const leftMenu = <ToolbarMenu badgeCount={headings ? headings.length : undefined} {...this.props} icon={['search']} onClick={() => isVisible === !isVisible} />;
+    const leftMenu = <ToolbarMenu icon={['search']} />;
     let mergedRecord = [];
     if (authHeadings && authHeadings.length > 0) {
       mergedRecord = [...mergedRecord, ...authHeadings];
@@ -67,7 +67,7 @@ export class SearchResults extends React.Component<P, {}> {
       mergedRecord = [...mergedRecord, ...headings];
     }
     const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForResultList(mergedRecord) : [];
-    const message = (mergedRecord.length > 0) ? mergedRecord.length + ' Results Found' : 'No Result found';
+    const message = (mergedRecord.length > 0) ? this.props.headingsRecods + ' Results Found' : 'No Result found';
     return (
       <Paneset static>
         <Pane
@@ -156,6 +156,7 @@ export class SearchResults extends React.Component<P, {}> {
 export default (connect(
   ({ marccat: { search, details, authSearch, countDoc } }) => ({
     headings: search.records,
+    headingsRecods: search.count,
     authHeadings: authSearch.records,
     fetching: search.isLoading,
     authFetching: authSearch.isLoading,

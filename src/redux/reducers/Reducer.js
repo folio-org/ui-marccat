@@ -46,6 +46,7 @@ export function searchEngineReducer(state = { isLoading }, action) {
     return {
       ...state,
       records: action.payload,
+      count: action.count,
       isLoading: false
     };
   default:

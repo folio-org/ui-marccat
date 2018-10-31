@@ -40,9 +40,10 @@ export const fetchRequestedCountDoc = (isLoading) => ({
   type: ActionTypes.FETCH_COUNT_DOC,
   payload: isLoading
 });
-export const fetchSearchEngineRecords = (records) => ({
+export const fetchSearchEngineRecords = (records, numFound) => ({
   type: ActionTypes.RECORD_SUCCESS,
-  payload: records
+  payload: records,
+  count: numFound
 });
 export const fetchSearchAuthEngineRecords = (records) => ({
   type: ActionTypes.RECORD_AUTH_SUCCESS,

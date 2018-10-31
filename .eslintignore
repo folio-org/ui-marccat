@@ -3,3 +3,5 @@ dist/**/*.js
 /node_modules/**/*.js
 lib/**/*.js
 src/locale/*
+/artifacts
+/dist

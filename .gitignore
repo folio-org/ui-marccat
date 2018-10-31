@@ -7,7 +7,7 @@ ModuleDescriptor.json
 
 ##vscode
 *.sqlite
-.vsode/
+.vscode/
 .vs/
 
 ## macos

@@ -3,7 +3,7 @@
   "appName": "MARCcat",
   "version": "1.0.0",
   "company": "@Cult",
-  "description": "MARCcat Cataloging Module",
+  "description": "Cataloging Module",
   "repository": "folio-org/ui-marccat",
   "publishConfig": {
     "registry": "https://repository.folio.org/repository/npm-folio/"
@@ -40,7 +40,6 @@
     "status": "stripes status config/stripes.config.js",
     "build": "node ./script/js/build",
     "build:analizer": "stripes build config/stripes.config.js ./dist/analyze/ui-marccat-analyze --analyze --sourcemap",
-    "test": "stripes test karma",
     "lint": "yarn eslint && yarn stylelint",
     "eslint": "eslint --fix ./",
     "stylelint": "stylelint --fix \"src/**/*.css\"",
@@ -48,10 +47,7 @@
     "gen:authors": ". ./script/sh/authors.sh",
     "clean": "rm -rf lib/",
     "show:descriptor": "stripes mod descriptor --full",
-    "release": "node script/ci/release.js",
-    "trigger-prepublish": "yarn run build;yarn clean",
-    "pre-prepublish": "flow-remove-types src/ -d lib/",
-    "prepublish": "echo 'build'"
+    "release": "node script/ci/release.js"
   },
   "devDependencies": {
     "@folio/eslint-config-stripes": "^1.1.0",

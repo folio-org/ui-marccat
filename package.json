@@ -32,7 +32,6 @@
     "@folio/eslint-config-stripes": "^1.1.0",
     "@folio/react-intl-safe-html": "^1.0.0",
     "@folio/stripes-components": "^4.2.2000575",
-    "@folio/stripes-core": "^2.10.2",
     "@folio/stripes-smart-components": "^1.10.1000297",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.5",
@@ -40,10 +39,14 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
     "eslint": "^4.8.0",
-    "eslint-plugin-react": "7.10.0",
+    "stylelint": "^9.5.0",
+    "stylelint-config-standard": "^18.2.0",
+    "stylelint-junit-formatter": "^0.2.1",
     "flow-bin": "^0.78.0",
-    "pre-commit": "^1.2.2",
-    "semver": "5.x.x"
+    "react-redux": "^5.0.7",
+    "redux": "^3.0.0",
+    "rxjs": "^5.0.0",
+    "semafor": "0.0.1"
   },
   "dependencies": {
     "eslint-loader": "^2.1.0",
@@ -51,22 +54,16 @@
     "flow-remove-types": "^1.2.3",
     "query-string": "^6.2.0",
     "react-intl": "^2.4.0",
-    "redux-form": "^7.4.2",
-    "semafor": "0.0.1",
-    "stylelint": "^9.3.0",
-    "stylelint-config-standard": "^18.2.0",
-    "redux-observable": "^1.0.0"
+    "redux-form": "^7.4.2"
   },
   "peerDependencies": {
+    "@folio/stripes-core": "^2.15.3",
     "react": "*"
   },
-  "optionalDependencies": {
-    "@folio/plugin-find-user": "^1.1.0"
-  },
   "resolutions": {
-    "**/domelementtype": "*",
-    "**/isarray": "*",
-    "**/warning": "^4.0.1"
+    "**/fbjs": "1.0.0",
+    "**/hoist-non-react-statics": "3.0.1",
+    "**/apollo-utilities": "1.0.23"
   },
   "stripes": {
     "type": "app",

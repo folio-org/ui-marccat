@@ -16,6 +16,12 @@ const VERSION_INC = 'patch';
 const NPM_EMAIL = '';
 const NPM_TOKEN = '';
 
+const RELEASE_DEV = {
+  name: 'Christian Chiama',
+  email: 'christian.chiama@atcult.it',
+  username: 'cchiama'
+};
+
 const execSync = (cmd) => {
   cp.execSync(cmd, { stdio: ['inherit', 'inherit', 'inherit'] });
 };
@@ -32,9 +38,9 @@ const prepareNpmEnvironment = () => {
   process.env.MAJOR_VERSION = pkg.version;
   process.env.NPM_PACKAGE_NAME = pkg.name;
   process.env.FOLIO_MODULE = pkg.appName;
-  process.env.GIT_NAME = pkg.contributors[0].name;
-  process.env.GIT_EMAIL = pkg.contributors[0].email;
-  process.env.GIT_USERNAME = pkg.contributors[0].username;
+  process.env.GIT_NAME = RELEASE_DEV.name;
+  process.env.GIT_EMAIL = RELEASE_DEV.email;
+  process.env.GIT_USERNAME = RELEASE_DEV.username;
   process.env.DEV_REPOSITORY = pkg.repository;
   process.env.GIT_BRANCH = ONLY_ON_MASTER;
 

@@ -3,38 +3,17 @@
   "appName": "MARCcat",
   "version": "1.0.0",
   "company": "@Cult",
-  "description": "Cataloging Module",
+  "description": "FOLIO UI module for Cataloging Marc records",
   "repository": "folio-org/ui-marccat",
   "publishConfig": {
     "registry": "https://repository.folio.org/repository/npm-folio/"
   },
   "main": "src/index.js",
   "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://issues.folio.org/projects/MARCCATUI",
-    "email": "info@atcult.it"
-  },
   "engines": {
     "node": ">=6.0.0"
   },
-  "contributors": [
-    {
-      "name": "Christian Chiama",
-      "email": "christian.chiama@atcult.it",
-      "url": "http://www.atcult.it",
-      "username": "cchiama"
-    },
-    {
-      "name": "Matteo Pascucci",
-      "email": "matteo.pascucci@atcult.it",
-      "url": "http://www.atcult.it"
-    },
-    {
-      "name": "Alice Guercio",
-      "email": "alice.guercio@atcult.it",
-      "url": "http://www.atcult.it"
-    }
-  ],
+
   "scripts": {
     "start": "node script/js/start",
     "status": "stripes status config/stripes.config.js",
@@ -51,6 +30,10 @@
   },
   "devDependencies": {
     "@folio/eslint-config-stripes": "^1.1.0",
+    "@folio/react-intl-safe-html": "^1.0.0",
+    "@folio/stripes-components": "^4.2.2000575",
+    "@folio/stripes-core": "^2.10.2",
+    "@folio/stripes-smart-components": "^1.10.1000297",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.5",
     "babel-preset-es2015": "^6.18.0",
@@ -63,21 +46,16 @@
     "semver": "5.x.x"
   },
   "dependencies": {
-    "@folio/react-intl-safe-html": "^1.0.0",
-    "@folio/stripes-components": "^4.2.2000575",
-    "@folio/stripes-core": "^2.10.2",
-    "@folio/stripes-smart-components": "^1.10.1000297",
     "eslint-loader": "^2.1.0",
     "flow": "^0.2.3",
     "flow-remove-types": "^1.2.3",
-    "observable-fetch": "^1.1.1",
     "query-string": "^6.2.0",
     "react-intl": "^2.4.0",
-    "react-redux-lifecycle": "^2.2.0",
     "redux-form": "^7.4.2",
     "semafor": "0.0.1",
     "stylelint": "^9.3.0",
-    "stylelint-config-standard": "^18.2.0"
+    "stylelint-config-standard": "^18.2.0",
+    "redux-observable": "^1.0.0"
   },
   "peerDependencies": {
     "react": "*"
@@ -111,7 +89,7 @@
     "icons": [
       {
         "name": "app",
-        "alt": "Create, view and manage marc record",
+        "alt": "FOLIO UI module for create, view and manage marc record",
         "title": "MARCcat"
       }
     ],

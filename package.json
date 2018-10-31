@@ -17,6 +17,24 @@
   "engines": {
     "node": ">=6.0.0"
   },
+  "contributors": [
+    {
+      "name": "Christian Chiama",
+      "email": "christian.chiama@atcult.it",
+      "url": "http://www.atcult.it",
+      "username": "cchiama"
+    },
+    {
+      "name": "Matteo Pascucci",
+      "email": "matteo.pascucci@atcult.it",
+      "url": "http://www.atcult.it"
+    },
+    {
+      "name": "Alice Guercio",
+      "email": "alice.guercio@atcult.it",
+      "url": "http://www.atcult.it"
+    }
+  ],
   "scripts": {
     "start": "node script/js/start",
     "status": "stripes status config/stripes.config.js",

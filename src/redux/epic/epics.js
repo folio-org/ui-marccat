@@ -5,7 +5,8 @@ import { concat as concat$ } from 'rxjs/observable/concat';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import { ActionTypes } from '../actions/Actions';
 import * as marccatActions from '../actions';
-import { ENDPOINT, buildUrl } from '../../utils/Constant';
+import { buildUrl } from '../helpers';
+import { ENDPOINT } from '../../utils';
 import { fetchFailure } from '../actions/ActionCreator';
 
 export const searchEpic = (action$, store) =>
@@ -18,6 +19,7 @@ export const searchEpic = (action$, store) =>
           .map(record => marccatActions.fetchSearchEngineRecords(record.docs, record.numFound))
           .catch(e => of$(marccatActions.fetchFailure(e))),
       ));
+// TOBE REMOVED
 export const searchAuthEpic = (action$, store) =>
   action$.ofType(ActionTypes.SEARCH_AUTH)
     .switchMap((d) =>
@@ -39,7 +41,7 @@ export const searchDetailEpic = (action$, store) =>
           .map(record => marccatActions.fetchDetailsRecords(record.docs[0].data, d.recordType))
           .catch(e => of$(marccatActions.fetchFailure(e))),
       ));
-
+// TOBE REMOVED
 export const searchAssociatedBibRecords = (action$, store) =>
   action$.ofType(ActionTypes.ASSOCIATED_BIB_REC)
     .switchMap((d) =>
@@ -61,14 +63,3 @@ export const countDocEpic = (action$, store) =>
           .map(record => marccatActions.fetchCountDocRecords(record.docs[0].data))
           .catch(e => of$(marccatActions.fetchFailure(e))),
       ));
-
-export function fetchScanBrowsingRecords(action$) {
-  return action$
-    .ofType(ActionTypes.SCAN)
-    .switchMap((data) => {
-      return ajax
-        .getJSON(buildUrl(ENDPOINT.BROWSING_FIRST_PAGE, `query=${data.query}&view=1&mainLibrary=170&pageSize=10&lang=eng`), ENDPOINT.HEADERS)
-        .map((records) => records.headings);
-    })
-    .map(records => marccatActions.fetchScanBrowsingRecords(records));
-}

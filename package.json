@@ -59,9 +59,8 @@
     "react": "*"
   },
   "resolutions": {
-    "**/fbjs": "1.0.0",
-    "**/hoist-non-react-statics": "3.0.1",
-    "**/apollo-utilities": "1.0.23"
+    "**/fbjs": "^1.0.0 ",
+    "**/hoist-non-react-statics": "3.0.1"
   },
   "stripes": {
     "type": "app",

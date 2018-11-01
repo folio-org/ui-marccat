@@ -7,4 +7,4 @@
 ## [1.0.0](https://github.com/folio-org/ui-marccat/tree/v1.0.0) (2018-31-10)
 
 * First version to have a documented change-log.
-* Release first version of search functionaity.
+* Release first version of search functionality.

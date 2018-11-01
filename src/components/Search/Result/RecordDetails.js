@@ -31,8 +31,8 @@ function RecordDetails({ translate, ...props }: P) {
             label={tag245 === EMPTY_MESSAGE ? getTag100(recordDetailsArray) : tag245 + 'Title'}
             value={title245 === EMPTY_MESSAGE ? getTitle100(recordDetailsArray) : title245}
           />
-          {recordDetailsArray.map(item =>
-            <Row>
+          {recordDetailsArray.map((item, i) =>
+            <Row key={i}>
               <Col xs={1} className={style.padding8}>
                 {item.trim().substring(0, 3)}
               </Col>

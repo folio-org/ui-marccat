@@ -123,7 +123,8 @@ export function getAssociatedBibRecord(state = { isLoadingAssociatedBibRecords }
       ...state,
       records: action.payload,
       isLoadingAssociatedBibRecords: false,
-      recordType: action.recType
+      recordType: action.recType,
+      count: action.countDoc
     };
   default:
     return state;

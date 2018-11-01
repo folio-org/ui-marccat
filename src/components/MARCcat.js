@@ -29,7 +29,7 @@ class MARCcat extends React.Component<P, S> {
   }
 
   toggleFilterPane = () => {
-    this.setState(prevState => ({ filterPaneIsVisible: prevState.filterPaneIsVisible }));
+    this.setState(prevState => ({ filterPaneIsVisible: !prevState.filterPaneIsVisible }));
   }
 
   render() {

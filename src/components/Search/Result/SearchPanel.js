@@ -15,7 +15,6 @@ import styles from '../Style/Search.css';
 import { findYourQuery } from '../../Search/Select/FilterMapper';
 import { remapFilters } from '../Utils/Mapper';
 import { getLanguageFilterQuery, getFormatFilterQuery } from '../Utils/SearchUtils';
-import { EmptyMessage } from '../../Lib';
 
 type P = Props & {
   inputErrorCheck: string,
@@ -29,87 +28,63 @@ class SearchPanel extends React.Component<P, {}> {
     this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
-  checkEmptyForm(store, e) {
-    let check = true;
-    // const inputValueForQuery = e.target.form[2].defaultValue;
-    if (store.getState().form.searchForm.syncErrors &&
-      (store.getState().form.searchForm.syncErrors.selectIndexes === 'Required' ||
-        store.getState().form.searchForm.syncErrors.selectCondition === 'Required' ||
-        store.getState().form.searchForm.values === undefined)) {
-      check = false;
-    } else if (store.getState().form.searchForm.values === undefined) {
-      check = false;
-    }
-    return check;
-  }
-
+  // TODO FIXME
   handleKeyDown(e) {
     if (e.key === 'Enter') {
-      const { store } = this.props;
       e.preventDefault();
-      const check = this.checkEmptyForm(store, e);
+      const inputValue = e.target.form[2].defaultValue;
+      const { store, dispatch } = this.props;
       let baseQuery;
       let indexForQuery;
       let conditionFilter;
       let indexFilter;
-      if (check) {
-        if (store.getState().form.searchForm.values) {
-          if (store.getState().form.searchForm.values.selectIndexes) {
-            indexFilter = store.getState().form.searchForm.values.selectIndexes;
-          }
-          if (store.getState().form.searchForm.values.selectCondition) {
-            conditionFilter = store.getState().form.searchForm.values.selectCondition;
-            indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
-            // when MATCH index add "!" to term
-            baseQuery = indexForQuery + e.target.form[2].defaultValue;
-            baseQuery = (conditionFilter === 'MATCH') ? baseQuery + '!' : baseQuery;
-          } else {
-            baseQuery = e.target.form[2].defaultValue;
-          }
-        } else {
-          baseQuery = e.target.form[2].defaultValue;
+      if (store.getState().form.searchForm.values) {
+        if (store.getState().form.searchForm.values.selectIndexes) {
+          indexFilter = store.getState().form.searchForm.values.selectIndexes;
         }
-
-
-        let bibQuery = baseQuery;
-        const authQuery = baseQuery;
-
-        let recordTypeControl = {};
-
-        // regular filters
-        if (store.getState().marccat.filter && store.getState().marccat.filter.filters) {
-          const { languageFilter, formatType, recordType } = remapFilters(store.getState().marccat.filter.filters);
-          recordTypeControl = recordType;
-          if (languageFilter && languageFilter.length) {
-            bibQuery += ' AND (' + getLanguageFilterQuery(languageFilter) + ')';
-          }
-          if (formatType && formatType.length) {
-            bibQuery += ' AND (' + getFormatFilterQuery(formatType) + ')';
-          }
-        }
-
-        if (recordTypeControl && recordTypeControl.length) {
-          recordTypeControl.forEach(element => {
-            if (Object.keys(element)[0] === 'Bibliographic records') {
-              store.dispatch({ type: ActionTypes.SEARCH, query: bibQuery });
-            }
-            if (Object.keys(element)[0] === 'Authority records') {
-              store.dispatch({ type: ActionTypes.SEARCH_AUTH, query: authQuery });
-            }
-          });
+        if (store.getState().form.searchForm.values.selectCondition) {
+          conditionFilter = store.getState().form.searchForm.values.selectCondition;
+          indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
+          // when MATCH index add "!" to term
+          baseQuery = indexForQuery + inputValue;
+          baseQuery = (conditionFilter === 'MATCH') ? baseQuery + '!' : baseQuery;
         } else {
-          store.dispatch({ type: ActionTypes.SEARCH, query: bibQuery });
-          store.dispatch({ type: ActionTypes.SEARCH_AUTH, query: authQuery });
+          baseQuery = inputValue;
+        }
+      } else {
+        baseQuery = inputValue;
+      }
+
+      let bibQuery = baseQuery;
+      const authQuery = baseQuery;
+
+      let recordTypeControl = {};
+
+      // regular filters
+      if (store.getState().marccat.filter && store.getState().marccat.filter.filters) {
+        const { languageFilter, formatType, recordType } = remapFilters(store.getState().marccat.filter.filters);
+        recordTypeControl = recordType;
+        if (languageFilter && languageFilter.length) {
+          bibQuery += ' AND (' + getLanguageFilterQuery(languageFilter) + ')';
+        }
+        if (formatType && formatType.length) {
+          bibQuery += ' AND (' + getFormatFilterQuery(formatType) + ')';
         }
       }
-    }
-  }
 
-  handscan = e => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      const { store } = this.props;
-      store.dispatch({ type: ActionTypes.SCAN, query: e.target.form[2].defaultValue });
+      if (recordTypeControl && recordTypeControl.length) {
+        recordTypeControl.forEach(element => {
+          if (Object.keys(element)[0] === 'Bibliographic records') {
+            dispatch({ type: ActionTypes.SEARCH, query: bibQuery });
+          }
+          if (Object.keys(element)[0] === 'Authority records') {
+            dispatch({ type: ActionTypes.SEARCH_AUTH, query: authQuery });
+          }
+        });
+      } else {
+        dispatch({ type: ActionTypes.SEARCH, query: bibQuery });
+        dispatch({ type: ActionTypes.SEARCH_AUTH, query: authQuery });
+      }
     }
   }
 
@@ -118,6 +93,7 @@ class SearchPanel extends React.Component<P, {}> {
     return (
       <AccordionSet>
         <Accordion
+          {...this.props.rest}
           separator={false}
           label={this.props.translate({ id: 'ui-marccat.navigator.search' })}
           header={FilterAccordionHeader}

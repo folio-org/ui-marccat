@@ -29,7 +29,7 @@ class MARCcat extends React.Component<P, S> {
   }
 
   toggleFilterPane = () => {
-    this.setState(prevState => ({ filterPaneIsVisible: !prevState.filterPaneIsVisible }));
+    this.setState(prevState => ({ filterPaneIsVisible: prevState.filterPaneIsVisible }));
   }
 
   render() {
@@ -49,7 +49,7 @@ class MARCcat extends React.Component<P, S> {
           >
             <SearchPanel {...this.props} />
           </Pane>}
-        <SearchResults {...this.props} isPanelOpen={filterPaneIsVisible} />
+        <SearchResults {...this.props} />
       </Paneset>
     );
   }

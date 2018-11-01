@@ -3,8 +3,6 @@ import { ActionTypes } from '../actions/Actions';
 const isLoading = false;
 const isLoadingDetail = false;
 const isLoadingAssociatedBibRecords = false;
-const isLoadingTemplate = false;
-
 
 export function countDocReducer(state = { isLoading }, action) {
   switch (action.type) {
@@ -48,6 +46,7 @@ export function searchEngineReducer(state = { isLoading }, action) {
     return {
       ...state,
       records: action.payload,
+      count: action.count,
       isLoading: false
     };
   default:
@@ -105,32 +104,6 @@ export function getDetailsRecord(state = { isLoadingDetail }, action) {
     return state;
   }
 }
-
-export function templateViewReducer(state = { isLoadingTemplate }, action) {
-  switch (action.type) {
-  case ActionTypes.VIEW_TEMPLATE:
-    return {
-      ...state,
-      isLoadingTemplate: false,
-      query: action.payload
-    };
-  case ActionTypes.FETCH_VIEW_TEMPLATE:
-    return {
-      ...state,
-      records: action.payload,
-      isLoadingTemplate: true
-    };
-  case ActionTypes.VIEW_TEMPLATE_SUCCESS:
-    return {
-      ...state,
-      records: action.payload,
-      isLoadingTemplate: false,
-    };
-  default:
-    return state;
-  }
-}
-
 export function getAssociatedBibRecord(state = { isLoadingAssociatedBibRecords }, action) {
   switch (action.type) {
   case ActionTypes.ASSOCIATED_BIB_REC:
@@ -150,8 +123,7 @@ export function getAssociatedBibRecord(state = { isLoadingAssociatedBibRecords }
       ...state,
       records: action.payload,
       isLoadingAssociatedBibRecords: false,
-      recordType: action.recType,
-      count: action.countDoc
+      recordType: action.recType
     };
   default:
     return state;

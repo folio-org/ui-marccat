@@ -11,11 +11,10 @@ export const fetchDetailsRecords = (records, recordType) => ({
   payload: records,
   recType: recordType
 });
-export const fetchAssociatedBibRecords = (records, recordType, count) => ({
+export const fetchAssociatedBibRecords = (records, recordType) => ({
   type: ActionTypes.ASSOCIATED_BIB_REC_SUCCESS,
   payload: records,
-  recType: recordType,
-  countDoc: count
+  recType: recordType
 });
 export const fetchRequestedAssociatedBibRecords = (isLoadingAssociatedBibRecords) => ({
   type: ActionTypes.FETCH_ASSOCIATED_BIB_REQUESTED,
@@ -41,21 +40,18 @@ export const fetchRequestedCountDoc = (isLoading) => ({
   type: ActionTypes.FETCH_COUNT_DOC,
   payload: isLoading
 });
-export const fetchSearchEngineRecords = (records) => ({
+export const fetchSearchEngineRecords = (records, numFound) => ({
   type: ActionTypes.RECORD_SUCCESS,
-  payload: records
+  payload: records,
+  count: numFound
 });
 export const fetchSearchAuthEngineRecords = (records) => ({
   type: ActionTypes.RECORD_AUTH_SUCCESS,
   payload: records
 });
-export const fetchRequestedTemplateView = (isLoadingTemplate) => ({
-  type: ActionTypes.FETCH_VIEW_TEMPLATE,
-  payload: isLoadingTemplate
-});
-export const fetchTemplateView = (records) => ({
-  type: ActionTypes.RECORD_AUTH_SUCCESS,
-  payload: records
+export const fetchSuccess = (message) => ({
+  type: ActionTypes.SUCCESS,
+  payload: message
 });
 export const fetchFailure = (message) => ({
   type: ActionTypes.REJECT,

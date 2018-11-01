@@ -20,7 +20,7 @@ export default class FiltersContainer extends React.Component<P, {}> {
         label: 'Suppressed',
         name: 'suppressedFilter',
         cql: 'suppressed.name',
-        values: [{ name: 'Yes', cql: '0' }, 'No'],
+        values: ['Yes', 'No'],
       },
       {
         label: 'Language of text',
@@ -41,42 +41,13 @@ export default class FiltersContainer extends React.Component<P, {}> {
     };
   }
 
-  handleRecordTypeChecked = (recTypeFilters) => {
-    Object.keys(recTypeFilters).forEach(element => {
-      const { store } = this.props;
-      const optionCategory = element.split('.')[1];
-      if (optionCategory === 'Bibliographic records') {
-        store.getState().marccat.authSearch = {};
-      } else if (optionCategory === 'Authority records') {
-        store.getState().marccat.search = {};
-      }
-    });
-  }
-
-  // handleRecordTypeUnChecked = (recTypeFilters) => {
-  //   Object.keys(recTypeFilters).forEach(element => {
-  //     const { store } = this.props;
-  //     const optionCategory = element.split('.')[1];
-  //     if (optionCategory === 'Bibliographic records') {
-  //       store.dispatch({ type: ActionTypes.SEARCH_AUTH, query: store.getState().marccat.searchForm.values.searchTextArea });
-  //     } else if (optionCategory === 'Authority records') {
-  //       store.dispatch({ type: ActionTypes.SEARCH, query: store.getState().marccat.searchForm.values.searchTextArea });
-  //     }
-  //   });
-  // }
-
   onChangeFilter = (e) => {
     const { name, checked } = e.target;
-    const { store } = this.props;
+    const { dispatch } = this.props;
     this.setState(prevState => {
       const filters = Object.assign({}, prevState.filters);
       filters[name] = checked;
-      store.dispatch({ type: ActionTypes.FILTERS, payload: filters });
-      if (name.split('.')[0] === 'recordType' && checked === true) {
-        this.handleRecordTypeChecked(filters);
-      } else if (name.split('.')[0] === 'recordType' && checked === false) {
-        // this.handleRecordTypeUnChecked(filters);
-      }
+      dispatch({ type: ActionTypes.FILTERS, payload: filters });
       return { filters };
     });
   }
@@ -92,7 +63,6 @@ export default class FiltersContainer extends React.Component<P, {}> {
     return (
       <div className={styles['search-filters']}>
         <FilterGroups
-          style={{ marginTop: '1rem' }}
           config={this.config}
           filters={this.state.filters}
           onChangeFilter={this.onChangeFilter}

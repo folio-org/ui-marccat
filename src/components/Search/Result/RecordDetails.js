@@ -1,44 +1,44 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
-import { AccordionSet, Accordion } from '@folio/stripes-components';
+import { AccordionSet, FilterAccordionHeader, Accordion } from '@folio/stripes-components';
 import { Row, Col } from 'react-flexbox-grid';
 import InventoryPluggableBtn from '../Plugin/Inventory';
 import type { Props } from '../../../core';
-import style from '../Style/Search.css';
-import { getTag245, getTitle245, getTag100, getTitle100 } from '../Utils/Mapper';
+import { getTag245, getTitle245 } from '../Utils/Mapper';
 import AssociatedBib from './AssociatedBib';
+
+import style from '../Style/Search.css';
 
 type P = Props & {
   items: Array<any>,
 }
 
 function RecordDetails({ translate, ...props }: P) {
-  const recordDetails = props.items.replace('LEADER', '000');
+  const recordDetails = props.items.replace('LEADER', '   ');
   const recordDetailsArray = recordDetails.split('\n');
-  const tag245 = getTag245(recordDetailsArray);
-  const title245 = getTitle245(recordDetailsArray);
   return (
     <AccordionSet>
       <Accordion
+        {...props.rest}
         separator={false}
+        header={FilterAccordionHeader}
         label={props.checkDetailsInRow !== props.checkDetailsBibRec ? translate({ id: 'ui-marccat.search.details.bibliographic' }) : translate({ id: 'ui-marccat.search.details.authority' })}
       >
         <div className={style.withSpace}>
           <KeyValue
-            label={tag245 === '' ? getTag100(recordDetailsArray) : tag245 + 'Title'}
-          >
-            <h2>{title245 === '' ? getTitle100(recordDetailsArray) : title245}</h2>
-          </KeyValue>
-          {recordDetailsArray.map(item =>
-            <Row>
-              <Col xs={1} style={{ paddingBottom: '8px' }}>
-                {item.substring(0, 3)}
+            label={getTag245(recordDetailsArray)}
+            value={getTitle245(recordDetailsArray)}
+          />
+          {recordDetailsArray.map((item, i) =>
+            <Row key={i}>
+              <Col xs={1} className={style.padding8}>
+                {item.trim().substring(0, 3)}
               </Col>
-              <Col xs={1} style={{ paddingBottom: '8px' }}>
+              <Col xs={1} className={style.padding8}>
                 {item.substring(6).startsWith('$') ? item.substring(3, 6) : ''}
               </Col>
-              <Col xs={10} style={{ paddingBottom: '8px' }}>
+              <Col xs={10} className={style.padding8}>
                 {!item.substring(6).startsWith('$') ? item.substring(3) : item.substring(6)}
               </Col>
             </Row>)}
@@ -52,9 +52,8 @@ function RecordDetails({ translate, ...props }: P) {
 }
 
 export default (connect(
-  ({ marccat: { details, scan, associatedRecords } }) => ({
+  ({ marccat: { details, associatedRecords } }) => ({
     items: details.records,
-    headings: scan.records,
     checkDetailsInRow: details.recordType,
     checkDetailsBibRec: associatedRecords.recordType
   })

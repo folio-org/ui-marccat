@@ -29,7 +29,7 @@ export default function injectCommonProp<Props: {
         {...props}
         store={store}
         data={data}
-        mergeObj={{}}
+        isVisible
         router={props.history}
         translate={props.intl.formatMessage}
       />);

@@ -9,8 +9,9 @@ import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
 import { actionMenuItem, ToolbarButtonMenu, ToolbarMenu, EmptyMessage } from '../../Lib';
-import { remapForResultList } from '../Utils/Mapper';
+import { remapForAssociatedBibList } from '../Utils/Mapper';
 import { resultsFormatter, columnMapper } from '../Utils/Formatter';
+import { isAuthorityRecord } from '../Utils/SearchUtils';
 import RecordDetails from './RecordDetails';
 import { injectCommonProp } from '../../../core';
 
@@ -19,10 +20,10 @@ type P = Props & {
   inputValue: string;
   getPreviousPage: Function;
   getNextPage: Function;
+  detail: Object;
   dataLoaded: boolean;
   loading: boolean;
   isPanelOpen: boolean;
-  onClicks: () => void;
 }
 
 export class SearchResults extends React.Component<P, {}> {
@@ -30,17 +31,25 @@ export class SearchResults extends React.Component<P, {}> {
     super(props);
     this.state = {
       detailPanelIsVisible: false,
-      loading: false
+      loading: false,
+      detail: {},
     };
     this.handleDeatils = this.handleDeatils.bind(this);
     this.onNeedMoreData = this.onNeedMoreData.bind(this);
   }
 
   handleDeatils = (e, meta) => {
-    const { store } = this.props;
-    store.dispatch({ type: ActionTypes.DETAILS, query: meta['001'], recordType: meta.recordView });
-    if (meta.recordView === -1) {
-      store.dispatch({ type: ActionTypes.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView });
+    const { dispatch } = this.props;
+    // fetch detail from store (todo continue in this way)
+    const id = meta['001'];
+    const detail = this.props.data.search.records.filter(item => id === item.data.fields[0]['001']);
+    this.setState({
+      detail
+    });
+
+    dispatch({ type: ActionTypes.DETAILS, query: id, recordType: meta.recordView });
+    if (isAuthorityRecord(meta)) {
+      dispatch({ type: ActionTypes.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView });
     }
     this.setState(prevState => {
       const detailPanelIsVisible = Object.assign({}, prevState.detailPanelIsVisible);
@@ -66,7 +75,7 @@ export class SearchResults extends React.Component<P, {}> {
     if (headings && headings.length > 0) {
       mergedRecord = [...mergedRecord, ...headings];
     }
-    const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForResultList(mergedRecord) : [];
+    const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForAssociatedBibList(mergedRecord) : [];
     const message = (mergedRecord.length > 0) ? this.props.headingsRecods + ' Results Found' : 'No Result found';
     return (
       <Paneset static>
@@ -138,13 +147,12 @@ export class SearchResults extends React.Component<P, {}> {
             appIcon={{ app: C.META.ICON_TITLE }}
             dismissible
             onClose={() => this.setState({ detailPanelIsVisible: false })}
-            actionMenuItems={actionMenuItems}
             lastMenu={rightMenuEdit}
           >
             {
               (fetchingDetail) ?
                 <Icon icon="spinner-ellipsis" /> :
-                <RecordDetails {...this.props} />
+                <RecordDetails {...this.props} detail={this.state.detail} />
             }
           </Pane>
         }

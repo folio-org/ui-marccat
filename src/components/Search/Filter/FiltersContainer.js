@@ -20,7 +20,7 @@ export default class FiltersContainer extends React.Component<P, {}> {
         label: 'Suppressed',
         name: 'suppressedFilter',
         cql: 'suppressed.name',
-        values: [{ name: 'Yes', cql: '0' }, 'No'],
+        values: ['Yes', 'No'],
       },
       {
         label: 'Language of text',
@@ -43,11 +43,11 @@ export default class FiltersContainer extends React.Component<P, {}> {
 
   onChangeFilter = (e) => {
     const { name, checked } = e.target;
-    const { store } = this.props;
+    const { dispatch } = this.props;
     this.setState(prevState => {
       const filters = Object.assign({}, prevState.filters);
       filters[name] = checked;
-      store.dispatch({ type: ActionTypes.FILTERS, payload: filters });
+      dispatch({ type: ActionTypes.FILTERS, payload: filters });
       return { filters };
     });
   }
@@ -63,7 +63,6 @@ export default class FiltersContainer extends React.Component<P, {}> {
     return (
       <div className={styles['search-filters']}>
         <FilterGroups
-          style={{ marginTop: '1rem' }}
           config={this.config}
           filters={this.state.filters}
           onChangeFilter={this.onChangeFilter}

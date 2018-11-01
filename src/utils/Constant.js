@@ -16,21 +16,8 @@ export const ENDPOINT = {
     'x-okapi-tenant': 'tnx',
   },
   BASE_URL: 'http://151.1.165.20:8080/cataloging',
-  TEMPLATE_URL: 'record-templates',
-  TEMPLATE_URL_ID: 'record-template/123',
-  TEMPLATE_MANDATORY: 'bibliographic/fields/mandatory',
-  CREATE_TEMPLATE: 'record-template',
-  LOGICAL_VIEW_URL: 'logical-views',
-  HEADING_TYPES: 'heading-types',
-  FUNCTION_CODES: 'function-codes',
-  ITEM_TYPES: 'item-types',
-  SUBFIELDS_TAGS: 'subfield-tags',
-  CATEGORY_URL: 'marc-categories',
   SEARCH_URL: 'searchVertical',
   SEARCH_URL_JSON: 'search',
-  INDEX_CATEGORY: 'index-categories',
-  DIACRITIC_LIST_URL: 'diacritics',
-  BROWSING_FIRST_PAGE: 'first-page',
   DEFAULT_LANG: 'eng',
   DEFAULT_PAGINATION: 20,
   DOC_COUNT_URL: 'document-count-by-id'
@@ -69,9 +56,3 @@ export const MARC = {
 
 export const EMPTY_PARAMETER = -1;
 export const EMPTY_MESSAGE = '';
-
-export const TAB_CONTROL_ID = {
-  SEARCH: 'search',
-  DATABASE: 'database',
-  TEMPLATE: 'template'
-};

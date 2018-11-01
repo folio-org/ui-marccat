@@ -63,7 +63,6 @@ export default class FiltersContainer extends React.Component<P, {}> {
     return (
       <div className={styles['search-filters']}>
         <FilterGroups
-          style={{ marginTop: '1rem' }}
           config={this.config}
           filters={this.state.filters}
           onChangeFilter={this.onChangeFilter}

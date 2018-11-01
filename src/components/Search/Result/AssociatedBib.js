@@ -19,6 +19,7 @@ function AssociatedBib({ ...props }: P) {
 
   return (
     <Accordion
+      {...props.rest}
       separator={false}
       header={FilterAccordionHeader}
       label="Associated bibliographic records"

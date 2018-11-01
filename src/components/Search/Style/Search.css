@@ -22,10 +22,15 @@
   }
 }
 
-/* .popover {
+.popover {
   padding-left: 0;
+
   & svg {
     width: 18px;
     height: 18px;
   }
-} */
+}
+
+.padding8 {
+  padding-bottom: 8px;
+}

@@ -16,7 +16,12 @@ const getFormatFilterQuery = (formatFilter) => {
     .join(' OR ');
 };
 
+const isAuthorityRecord = (meta) => {
+  return meta.recordView === -1;
+};
+
 export {
   getLanguageFilterQuery,
-  getFormatFilterQuery
+  getFormatFilterQuery,
+  isAuthorityRecord
 };

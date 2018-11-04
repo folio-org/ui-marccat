@@ -11,7 +11,7 @@ module.exports = (config) => {
     preprocessors,
 
     browserStack: {
-      project: 'ui-eholdings'
+      project: 'ui-marccat'
     },
 
     browserDisconnectTimeout: 3e5,
@@ -50,7 +50,7 @@ module.exports = (config) => {
   if (configuration.coverageIstanbulReporter) {
     configuration.coverageIstanbulReporter.thresholds.global = {
       statements: 95,
-      branches: 85, // should be raised after getting this % up
+      branches: 85,
       functions: 95,
       lines: 95
     };

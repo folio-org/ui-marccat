@@ -8,16 +8,16 @@ export const META = {
 };
 
 // API
-export const RESOURCE_TYPE = 'rest';
+export const RESOURCE_TYPE = 'okapi';
 export const ENDPOINT = {
   HEADERS: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
     'x-okapi-tenant': 'tnx',
   },
-  BASE_URL: 'http://151.1.165.20:8080/cataloging',
-  SEARCH_URL: 'searchVertical',
-  SEARCH_URL_JSON: 'search',
+  BASE_URL: 'marccat',
+  SEARCH_URL: '/searchVertical',
+  SEARCH_URL_JSON: '/search',
   DOC_COUNT_URL: 'document-count-by-id'
 };
 

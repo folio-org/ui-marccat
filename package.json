@@ -59,8 +59,12 @@
     "react": "*"
   },
   "resolutions": {
-    "**/fbjs": "^1.0.0 ",
-    "**/hoist-non-react-statics": "3.0.1"
+    "**/domelementtype": "*",
+    "**/isarray": "*",
+    "**/warning": "*",
+    "**/fbjs": "*",
+    "**/hoist-non-react-statics": "*"
+    
   },
   "stripes": {
     "type": "app",

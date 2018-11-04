@@ -8,7 +8,7 @@ const execSync = (cmd) => {
 };
 
 const stripFlowType = () => {
-  log.ok('Remove Flow Btypeuilding');
+  log.ok('Remove Flow type');
   execSync('yarn flow-remove-types src/ -d lib/');
 };
 

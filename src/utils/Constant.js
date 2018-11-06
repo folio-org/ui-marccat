@@ -15,7 +15,7 @@ export const ENDPOINT = {
     'Content-Type': 'application/json',
     'x-okapi-tenant': 'tnx',
   },
-  BASE_URL: 'marccat',
+  BASE_URL: 'http://localhost:8080/cataloging',
   SEARCH_URL: '/searchVertical',
   SEARCH_URL_JSON: '/search',
   DOC_COUNT_URL: 'document-count-by-id'

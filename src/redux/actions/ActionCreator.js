@@ -11,6 +11,11 @@ export const fetchDetailsRecords = (records, recordType) => ({
   payload: records,
   recType: recordType
 });
+export const fetchAssociatedBibDetails = (records, associatedBibPreview) => ({
+  type: ActionTypes.ASSOCIATED_DETAILS_SUCCESS,
+  payload: records,
+  detailsAssociatedBibIsPresent: associatedBibPreview
+});
 export const fetchAssociatedBibRecords = (records, recordType) => ({
   type: ActionTypes.ASSOCIATED_BIB_REC_SUCCESS,
   payload: records,
@@ -35,6 +40,10 @@ export const fetchRequested = (isLoading) => ({
 export const fetchRequestedDetail = (isLoadingDetail) => ({
   type: ActionTypes.FETCH_DETAIL_REQUESTED,
   payload: isLoadingDetail
+});
+export const fetchRequestedAssociatedBibDetails = (isLoadingBibAssociatedDetails) => ({
+  type: ActionTypes.FETCH_ASSOCIATED_DETAILS_REQUESTED,
+  payload: isLoadingBibAssociatedDetails
 });
 export const fetchRequestedCountDoc = (isLoading) => ({
   type: ActionTypes.FETCH_COUNT_DOC,

@@ -41,6 +41,17 @@ export const searchDetailEpic = (action$, store) =>
           .catch(e => of$(marccatActions.fetchFailure(e))),
       ));
 
+export const searchAssociatedBibDetailEpic = (action$) =>
+  action$.ofType(ActionTypes.ASSOCIATED_DETAILS)
+    .switchMap((d) =>
+      concat$(
+        of$(marccatActions.fetchRequestedAssociatedBibDetails(true)),
+        ajax
+          .getJSON(buildUrl(ENDPOINT.SEARCH_URL, `lang=ita&view=1&ml=170&q=an%20${d.query}&from=1&to=1&dpo=1`), ENDPOINT.HEADERS)
+          .map(record => marccatActions.fetchAssociatedBibDetails(record.docs[0].data, d.associatedBibPreview))
+          .catch(e => of$(marccatActions.fetchFailure(e))),
+      ));
+
 export const searchAssociatedBibRecords = (action$, store) =>
   action$.ofType(ActionTypes.ASSOCIATED_BIB_REC)
     .switchMap((d) =>

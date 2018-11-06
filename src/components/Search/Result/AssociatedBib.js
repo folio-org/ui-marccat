@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Accordion, FilterAccordionHeader, MultiColumnList } from '@folio/stripes-components';
 import type { Props } from '../../../core';
+import { ActionTypes } from '../../../redux/actions';
 import { remapForAssociatedBibList } from '../Utils/Mapper';
 import { resultsFormatterForAssociated, columnMapperForAssociated } from '../Utils/Formatter';
 import { EMPTY_MESSAGE } from '../../../utils/Constant';
@@ -29,6 +30,11 @@ function AssociatedBib({ ...props }: P) {
         id="bib-associated"
         defaultWidth="fill"
         isEmptyMessage={EMPTY_MESSAGE}
+        onRowClick={(e, meta) => {
+          const { dispatch } = props;
+          const id = meta['001'];
+          dispatch({ type: ActionTypes.ASSOCIATED_DETAILS, query: id, associatedBibPreview: true });
+        }}
         columnWidths={
           {
             'resultView': '10%',

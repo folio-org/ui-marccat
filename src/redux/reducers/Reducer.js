@@ -3,6 +3,7 @@ import { ActionTypes } from '../actions/Actions';
 const isLoading = false;
 const isLoadingDetail = false;
 const isLoadingAssociatedBibRecords = false;
+const isLoadingBibAssociatedDetails = false;
 
 export function countDocReducer(state = { isLoading }, action) {
   switch (action.type) {
@@ -98,7 +99,31 @@ export function getDetailsRecord(state = { isLoadingDetail }, action) {
       ...state,
       records: action.payload,
       isLoadingDetail: false,
-      recordType: action.recType
+    };
+  default:
+    return state;
+  }
+}
+export function detailsAssociatedReducer(state = { isLoadingBibAssociatedDetails }, action) {
+  switch (action.type) {
+  case ActionTypes.ASSOCIATED_DETAILS:
+    return {
+      ...state,
+      isLoadingBibAssociatedDetails: false,
+      query: action.payload
+    };
+  case ActionTypes.FETCH_ASSOCIATED_DETAILS_REQUESTED:
+    return {
+      ...state,
+      records: action.payload,
+      isLoadingBibAssociatedDetails: true
+    };
+  case ActionTypes.ASSOCIATED_DETAILS_SUCCESS:
+    return {
+      ...state,
+      records: action.payload,
+      isLoadingBibAssociatedDetails: false,
+      associatedDetailsReady: action.detailsAssociatedBibIsPresent
     };
   default:
     return state;
@@ -123,7 +148,6 @@ export function getAssociatedBibRecord(state = { isLoadingAssociatedBibRecords }
       ...state,
       records: action.payload,
       isLoadingAssociatedBibRecords: false,
-      recordType: action.recType,
       count: action.countDoc
     };
   default:

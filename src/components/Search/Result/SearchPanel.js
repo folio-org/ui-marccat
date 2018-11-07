@@ -32,7 +32,7 @@ class SearchPanel extends React.Component<P, {}> {
   handleKeyDown(e) {
     if (e.key === 'Enter') {
       e.preventDefault();
-      const inputValue = e.target.form[2].defaultValue;
+      const inputValue = e.target.form[3].defaultValue;
       const { store, dispatch } = this.props;
       let baseQuery;
       let indexForQuery;
@@ -117,6 +117,11 @@ class SearchPanel extends React.Component<P, {}> {
                 />
               </Col>
             </Row>
+            <Row style={{ height: '30px' }}>
+              <Col xs={11}>
+                <SearchConditions {...this.props} />
+              </Col>
+            </Row>
             <Row>
               <Col xs={11}>
                 <div className={styles.select_margin}>
@@ -128,11 +133,6 @@ class SearchPanel extends React.Component<P, {}> {
                     id="searchTextArea"
                   />
                 </div>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={11}>
-                <SearchConditions {...this.props} />
               </Col>
             </Row>
           </form>

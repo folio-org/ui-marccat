@@ -6,11 +6,6 @@ export const fetchLogicalViewAction = () => ({
 export const fetchRecords = () => ({
   type: ActionTypes.SEARCH,
 });
-export const fetchDetailsRecords = (records, recordType) => ({
-  type: ActionTypes.DETAILS_BY_TITLE,
-  payload: records,
-  recType: recordType
-});
 export const fetchAssociatedBibRecords = (records, recordType) => ({
   type: ActionTypes.ASSOCIATED_BIB_REC_SUCCESS,
   payload: records,
@@ -35,6 +30,21 @@ export const fetchRequested = (isLoading) => ({
 export const fetchRequestedDetail = (isLoadingDetail) => ({
   type: ActionTypes.FETCH_DETAIL_REQUESTED,
   payload: isLoadingDetail
+});
+export const fetchDetailsRecords = (records, recordType) => ({
+  type: ActionTypes.DETAILS_BY_TITLE,
+  payload: records,
+  recType: recordType
+});
+export const fetchRequestedAssociatedBibDetail = (isLoadingDetailsForAssociated) => ({
+  type: ActionTypes.FETCH_ASSOCIATED_DETAILS_REQUESTED,
+  payload: isLoadingDetailsForAssociated
+});
+export const fetchAssociatedBibDetailsRecords = (records, recordType, mustOpenPanel) => ({
+  type: ActionTypes.ASSOCIATED_DETAILS_SUCCESS,
+  payload: records,
+  recType: recordType,
+  isDetailBibAssOpen: mustOpenPanel
 });
 export const fetchRequestedCountDoc = (isLoading) => ({
   type: ActionTypes.FETCH_COUNT_DOC,

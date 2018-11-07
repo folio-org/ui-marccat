@@ -3,6 +3,7 @@ import { ActionTypes } from '../actions/Actions';
 const isLoading = false;
 const isLoadingDetail = false;
 const isLoadingAssociatedBibRecords = false;
+const isLoadingDetailsForAssociated = false;
 
 export function countDocReducer(state = { isLoading }, action) {
   switch (action.type) {
@@ -99,6 +100,32 @@ export function getDetailsRecord(state = { isLoadingDetail }, action) {
       records: action.payload,
       isLoadingDetail: false,
       recordType: action.recType
+    };
+  default:
+    return state;
+  }
+}
+export function detailsAssociatedReducer(state = { isLoadingDetailsForAssociated }, action) {
+  switch (action.type) {
+  case ActionTypes.ASSOCIATED_DETAILS:
+    return {
+      ...state,
+      isLoadingDetailsForAssociated: false,
+      query: action.payload
+    };
+  case ActionTypes.FETCH_ASSOCIATED_DETAILS_REQUESTED:
+    return {
+      ...state,
+      records: action.payload,
+      isLoadingDetailsForAssociated: true
+    };
+  case ActionTypes.ASSOCIATED_DETAILS_SUCCESS:
+    return {
+      ...state,
+      records: action.payload,
+      isLoadingDetailsForAssociated: false,
+      recordType: action.recType,
+      mustOpenPanel: action.isDetailBibAssOpen
     };
   default:
     return state;

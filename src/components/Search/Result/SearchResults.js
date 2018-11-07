@@ -14,6 +14,7 @@ import { resultsFormatter, columnMapper } from '../Utils/Formatter';
 import { isAuthorityRecord } from '../Utils/SearchUtils';
 import RecordDetails from './RecordDetails';
 import { injectCommonProp } from '../../../core';
+import AssociatedBibDetails from './AssociatedBibDetails';
 
 type P = Props & {
   headings: Array<any>;
@@ -31,6 +32,8 @@ export class SearchResults extends React.Component<P, {}> {
     super(props);
     this.state = {
       detailPanelIsVisible: false,
+      checkBibAssociatedReady: false,
+      enableSecondPreview: false,
       loading: false,
       detail: {},
     };
@@ -57,13 +60,16 @@ export class SearchResults extends React.Component<P, {}> {
     });
   };
 
-  onNeedMoreData = (initialData:Array<any>) => {
+  onNeedMoreData = (initialData: Array<any>) => {
     return initialData.slice(10, 20);
   };
 
   render() {
-    const { detailPanelIsVisible } = this.state;
+    const { detailPanelIsVisible, enableSecondPreview } = this.state;
     const { fetching, headings, fetchingDetail, authHeadings, authFetching } = this.props;
+    if (this.props.detailsRecordsAssociatedBib) {
+      this.state.mustOpenPanelBibAssDetails = this.props.isPanelBibAssOpen;
+    }
     const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
     const rightMenu = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.new.keyboard" />;
     const rightMenuEdit = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.edit" />;
@@ -77,6 +83,8 @@ export class SearchResults extends React.Component<P, {}> {
     }
     const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForAssociatedBibList(mergedRecord) : [];
     const message = (mergedRecord.length > 0) ? this.props.headingsRecods + ' Results Found' : 'No Result found';
+    this.state.checkBibAssociatedReady = this.props.isPanelBibAssOpen;
+    const { checkBibAssociatedReady } = this.state;
     return (
       <Paneset static>
         <Pane
@@ -141,7 +149,7 @@ export class SearchResults extends React.Component<P, {}> {
           detailPanelIsVisible &&
           <Pane
             id="pane-details"
-            defaultWidth="35%"
+            defaultWidth="25%"
             paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
             paneSub={C.EMPTY_MESSAGE}
             appIcon={{ app: C.META.ICON_TITLE }}
@@ -156,20 +164,42 @@ export class SearchResults extends React.Component<P, {}> {
             }
           </Pane>
         }
+        {
+          checkBibAssociatedReady &&
+          <Pane
+            id="pane-details"
+            defaultWidth="25%"
+            paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
+            paneSub={C.EMPTY_MESSAGE}
+            appIcon={{ app: C.META.ICON_TITLE }}
+            dismissible
+            onClose={() => this.setState({ checkBibAssociatedReady: false, enableSecondPreview: true })}
+            lastMenu={rightMenuEdit}
+          >
+            {
+              (this.props.detailsForAssociatedBib) ?
+                <Icon icon="spinner-ellipsis" /> :
+                <AssociatedBibDetails {...this.props} />
+            }
+          </Pane>
+        }
       </Paneset>
     );
   }
 }
 
 export default (connect(
-  ({ marccat: { search, details, authSearch, countDoc } }) => ({
+  ({ marccat: { search, details, authSearch, countDoc, associatedBibDetails } }) => ({
     headings: search.records,
     headingsRecods: search.count,
     authHeadings: authSearch.records,
     fetching: search.isLoading,
     authFetching: authSearch.isLoading,
     fetchingDetail: details.isLoadingDetail,
-    countRecord: countDoc.records
+    countRecord: countDoc.records,
+    detailsForAssociatedBib: associatedBibDetails.isLoadingDetailsForAssociated,
+    detailsRecordsAssociatedBib: associatedBibDetails.records,
+    isPanelBibAssOpen: associatedBibDetails.mustOpenPanel
   }),
 )(injectCommonProp(SearchResults)));
 

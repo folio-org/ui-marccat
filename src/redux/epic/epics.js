@@ -40,6 +40,17 @@ export const searchDetailEpic = (action$, store) =>
           .map(record => marccatActions.fetchDetailsRecords(record.docs[0].data, d.recordType))
           .catch(e => of$(marccatActions.fetchFailure(e))),
       ));
+export const associatedBibDetailEpic = (action$, store) =>
+  action$.ofType(ActionTypes.ASSOCIATED_DETAILS)
+    .switchMap((d) =>
+      concat$(
+        of$(marccatActions.fetchRequestedAssociatedBibDetail(true)),
+        ajax
+          .getJSON(buildUrl(ENDPOINT.SEARCH_URL, `lang=ita&view=${d.recordType}&ml=170&q=an%20${d.query}&from=1&to=1&dpo=1`), ENDPOINT.HEADERS)
+          .map(record => marccatActions.fetchAssociatedBibDetailsRecords(record.docs[0].data, d.recordType, d.mustOpenPanel))
+          .catch(e => of$(marccatActions.fetchFailure(e))),
+      ));
+
 
 export const searchAssociatedBibRecords = (action$, store) =>
   action$.ofType(ActionTypes.ASSOCIATED_BIB_REC)

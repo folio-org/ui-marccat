@@ -9,7 +9,7 @@ import { FormattedMessage } from 'react-intl';
 type GeneralSettingsProps = {
   label: string,
 };
-export default class GeneralSettings extends React.Component<GeneralSettingsProps, {}> {
+export default class DefaultTemplate extends React.Component<GeneralSettingsProps, {}> {
   render() {
     return (
       <Pane

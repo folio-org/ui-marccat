@@ -47,14 +47,7 @@ export default class FiltersContainer extends React.Component<P, {}> {
     this.setState(prevState => {
       const filters = Object.assign({}, prevState.filters);
       filters[name] = checked;
-      dispatch({ type: ActionTypes.FILTERS, payload: filters });
-      return { filters };
-    });
-  }
-
-  onClearFilter = () => {
-    this.setState(() => {
-      const filters = {};
+      dispatch({ type: ActionTypes.FILTERS, payload: filters, filterName: name, filterChecked: checked });
       return { filters };
     });
   }
@@ -66,7 +59,6 @@ export default class FiltersContainer extends React.Component<P, {}> {
           config={this.config}
           filters={this.state.filters}
           onChangeFilter={this.onChangeFilter}
-          onClearFilter={this.onClearFilter}
         />
       </div>
     );

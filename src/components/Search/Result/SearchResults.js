@@ -34,6 +34,8 @@ export class SearchResults extends React.Component<P, {}> {
       detailPanelIsVisible: false,
       checkBibAssociatedReady: false,
       noResults: false,
+      bibsOnly: false,
+      autOnly: false,
       loading: false,
     };
     this.handleDeatils = this.handleDeatils.bind(this);
@@ -61,7 +63,19 @@ export class SearchResults extends React.Component<P, {}> {
 
   render() {
     const { detailPanelIsVisible } = this.state;
-    const { fetching, headings, fetchingDetail, authHeadings, authFetching } = this.props;
+    const { fetching, headings, fetchingDetail, authHeadings, authFetching, activeFilter, activeFilterName, activeFilterChecked } = this.props;
+    if (activeFilter) {
+      if (activeFilterName === 'recordType.Bibliographic records' && activeFilterChecked) {
+        this.state.bibsOnly = true;
+      } else if (activeFilterName === 'recordType.Bibliographic records' && !activeFilterChecked) {
+        this.state.bibsOnly = false;
+      }
+      if (activeFilterName === 'recordType.Authority records' && activeFilterChecked) {
+        this.state.autOnly = true;
+      } else if (activeFilterName === 'recordType.Authority records' && !activeFilterChecked) {
+        this.state.autOnly = false;
+      }
+    }
     if ((headings && (headings.length === undefined || headings.length === 0)) && ((authHeadings && (authHeadings.length === undefined || authHeadings.length === 0)))) {
       this.state.noResults = true;
       this.state.detailPanelIsVisible = false;
@@ -73,16 +87,23 @@ export class SearchResults extends React.Component<P, {}> {
     const rightMenuEdit = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.edit" />;
     const leftMenu = <ToolbarMenu icon={['search']} />;
     let mergedRecord = [];
-    if (authHeadings && authHeadings.length > 0) {
-      mergedRecord = [...mergedRecord, ...authHeadings];
+    const { bibsOnly, autOnly } = this.state;
+    if (!bibsOnly) {
+      if (authHeadings && authHeadings.length > 0) {
+        mergedRecord = [...mergedRecord, ...authHeadings];
+      }
     }
-    if (headings && headings.length > 0) {
-      mergedRecord = [...mergedRecord, ...headings];
+    if (!autOnly) {
+      if (headings && headings.length > 0) {
+        mergedRecord = [...mergedRecord, ...headings];
+      }
     }
     const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForAssociatedBibList(mergedRecord) : [];
     const message = (mergedRecord.length > 0) ? this.props.headingsRecods + ' Results Found' : 'No Result found';
-    if (this.props.detailsRecordsAssociatedBib) {
-      this.state.checkBibAssociatedReady = this.props.isPanelBibAssOpen;
+    // temporary fix
+    const { detailsRecordsAssociatedBib, isPanelBibAssOpen } = this.props;
+    if (detailsRecordsAssociatedBib === true) {
+      this.state.checkBibAssociatedReady = isPanelBibAssOpen;
       if (this.state.checkBibAssociatedReady === undefined) {
         this.state.checkBibAssociatedReady = true;
       }
@@ -194,13 +215,16 @@ export class SearchResults extends React.Component<P, {}> {
 }
 
 export default (connect(
-  ({ marccat: { search, details, authSearch, countDoc, associatedBibDetails } }) => ({
+  ({ marccat: { search, details, authSearch, countDoc, filter, associatedBibDetails } }) => ({
     headings: search.records,
     headingsRecods: search.count,
     authHeadings: authSearch.records,
     fetching: search.isLoading,
     authFetching: authSearch.isLoading,
     fetchingDetail: details.isLoadingDetail,
+    activeFilter: filter.filters,
+    activeFilterName: filter.name,
+    activeFilterChecked: filter.checked,
     countRecord: countDoc.records,
     detailsForAssociatedBib: associatedBibDetails.isLoadingDetailsForAssociated,
     detailsRecordsAssociatedBib: associatedBibDetails.records,

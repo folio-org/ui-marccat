@@ -53,9 +53,8 @@ function RecordDetails({ translate, ...props }: P) {
 }
 
 export default (connect(
-  ({ marccat: { details, scan, associatedRecords } }) => ({
+  ({ marccat: { details, associatedRecords } }) => ({
     items: details.records,
-    headings: scan.records,
     checkDetailsInRow: details.recordType,
     checkDetailsBibRec: associatedRecords.recordType
   })

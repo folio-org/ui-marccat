@@ -3,7 +3,7 @@
  * @flow
  */
 import * as React from 'react';
-import { Settings } from './settings';
+import Settings from './settings';
 import { reducer, epics } from './redux';
 import { injectCommonProp } from './core';
 import * as C from './utils';

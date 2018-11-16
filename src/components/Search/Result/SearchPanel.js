@@ -26,16 +26,8 @@ class SearchPanel extends React.Component<P, {}> {
     super(props);
     this.state = {};
     this.handleKeyDown = this.handleKeyDown.bind(this);
-    // this.handleOnFocus = this.handleOnFocus.bind(this);
   }
 
-  // TODO FIXME
-  // eslint-disable-next-line consistent-return
-  // handleOnFocus(e) {
-  //   const inputValue = e.target.form[3].defaultValue;
-  //   if (inputValue === '' || inputValue === undefined) {
-  //   }
-  // }
   handleKeyDown(e) {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -82,15 +74,15 @@ class SearchPanel extends React.Component<P, {}> {
       if (recordTypeControl && recordTypeControl.length) {
         recordTypeControl.forEach(element => {
           if (Object.keys(element)[0] === 'Bibliographic records') {
-            dispatch({ type: ActionTypes.SEARCH, query: bibQuery, showDetailPanels: false });
+            dispatch({ type: ActionTypes.SEARCH, query: bibQuery });
           }
           if (Object.keys(element)[0] === 'Authority records') {
-            dispatch({ type: ActionTypes.SEARCH_AUTH, query: authQuery, showDetailPanels: false });
+            dispatch({ type: ActionTypes.SEARCH_AUTH, query: authQuery });
           }
         });
       } else {
-        dispatch({ type: ActionTypes.SEARCH, query: bibQuery, showDetailPanels: false });
-        dispatch({ type: ActionTypes.SEARCH_AUTH, query: authQuery, showDetailPanels: false });
+        dispatch({ type: ActionTypes.SEARCH, query: bibQuery });
+        dispatch({ type: ActionTypes.SEARCH_AUTH, query: authQuery });
       }
     }
   }

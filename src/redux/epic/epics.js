@@ -26,7 +26,7 @@ export const searchAuthEpic = (action$, store) =>
         of$(marccatActions.isfetchingRequest(true)),
         ajax
           .getJSON(buildUrl(ENDPOINT.SEARCH_URL_JSON, `lang=ita&view=-1&ml=170&q=${d.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
-          .map(record => marccatActions.fetchSearchAuthEngineRecords(record.docs))
+          .map(record => marccatActions.fetchSearchAuthEngineRecords(record.docs, record.numFound))
           .catch(e => of$(marccatActions.fetchFailure(e))),
       ));
 // TOBE REMOVED

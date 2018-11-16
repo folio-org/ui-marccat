@@ -67,6 +67,7 @@ export function searchAuthReducer(state = { isLoading, isReady }, action) {
     return {
       ...state,
       records: action.payload,
+      count: action.count,
       isLoading: false,
       isReady: true
     };

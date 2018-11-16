@@ -32,7 +32,6 @@ export class SearchResults extends React.Component<P, {}> {
     super(props);
     this.state = {
       detailPanelIsVisible: false,
-      checkBibAssociatedReady: false,
       noResults: false,
       bibsOnly: false,
       autOnly: false,
@@ -44,17 +43,13 @@ export class SearchResults extends React.Component<P, {}> {
 
   handleDeatils = (e, meta) => {
     const { dispatch } = this.props;
-    // fetch detail from store (todo continue in this way)
     const id = meta['001'];
-
     dispatch({ type: ActionTypes.DETAILS, query: id, recordType: meta.recordView });
     if (isAuthorityRecord(meta)) {
       dispatch({ type: ActionTypes.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView });
     }
-    this.setState(prevState => {
-      const detailPanelIsVisible = Object.assign({}, prevState.detailPanelIsVisible);
-      return { detailPanelIsVisible };
-    });
+    dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
+    this.setState({ detailPanelIsVisible: true });
   };
 
   onNeedMoreData = (initialData: Array<any>) => {
@@ -62,53 +57,43 @@ export class SearchResults extends React.Component<P, {}> {
   };
 
   render() {
-    const { detailPanelIsVisible } = this.state;
-    const { fetching, headings, fetchingDetail, authHeadings, authFetching, activeFilter, activeFilterName, activeFilterChecked } = this.props;
+    let { bibsOnly, autOnly, detailPanelIsVisible, noResults } = this.state;
+    const { activeFilter, activeFilterName, activeFilterChecked, bibliographicResults, authorityResults, isFetchingBibliographic, isReadyBibliographic, isReadyAuthority, isFetchingAuthority, isPanelBibAssOpen, totalRecordCount, isReadyDetail, isFetchingDetail, isLoadingAssociatedRecord, isReadyAssociatedRecord } = this.props;
     if (activeFilter) {
       if (activeFilterName === 'recordType.Bibliographic records' && activeFilterChecked) {
-        this.state.bibsOnly = true;
+        bibsOnly = true;
       } else if (activeFilterName === 'recordType.Bibliographic records' && !activeFilterChecked) {
-        this.state.bibsOnly = false;
+        bibsOnly = false;
       }
       if (activeFilterName === 'recordType.Authority records' && activeFilterChecked) {
-        this.state.autOnly = true;
+        autOnly = true;
       } else if (activeFilterName === 'recordType.Authority records' && !activeFilterChecked) {
-        this.state.autOnly = false;
+        autOnly = false;
       }
     }
-    if ((headings && (headings.length === undefined || headings.length === 0)) && ((authHeadings && (authHeadings.length === undefined || authHeadings.length === 0)))) {
-      this.state.noResults = true;
-      this.state.detailPanelIsVisible = false;
+    if ((bibliographicResults && (bibliographicResults.length === undefined || bibliographicResults.length === 0)) && ((authorityResults && (authorityResults.length === undefined || authorityResults.length === 0)))) {
+      noResults = true;
+      detailPanelIsVisible = false;
     } else {
-      this.state.noResults = false;
+      noResults = false;
     }
+    let mergedRecord = [];
+    if (!bibsOnly) {
+      if (authorityResults && authorityResults.length > 0) {
+        mergedRecord = [...mergedRecord, ...authorityResults];
+      }
+    }
+    if (!autOnly) {
+      if (bibliographicResults && bibliographicResults.length > 0) {
+        mergedRecord = [...mergedRecord, ...bibliographicResults];
+      }
+    }
+    const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForAssociatedBibList(mergedRecord) : [];
+    const message = (mergedRecord.length > 0) ? totalRecordCount + ' Results Found' : 'No Result found';
     const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
     const rightMenu = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.new.keyboard" />;
     const rightMenuEdit = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.edit" />;
     const leftMenu = <ToolbarMenu icon={['search']} />;
-    let mergedRecord = [];
-    const { bibsOnly, autOnly } = this.state;
-    if (!bibsOnly) {
-      if (authHeadings && authHeadings.length > 0) {
-        mergedRecord = [...mergedRecord, ...authHeadings];
-      }
-    }
-    if (!autOnly) {
-      if (headings && headings.length > 0) {
-        mergedRecord = [...mergedRecord, ...headings];
-      }
-    }
-    const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForAssociatedBibList(mergedRecord) : [];
-    const message = (mergedRecord.length > 0) ? this.props.headingsRecods + ' Results Found' : 'No Result found';
-    // temporary fix
-    const { detailsRecordsAssociatedBib, isPanelBibAssOpen } = this.props;
-    if (detailsRecordsAssociatedBib === true) {
-      this.state.checkBibAssociatedReady = isPanelBibAssOpen;
-      if (this.state.checkBibAssociatedReady === undefined) {
-        this.state.checkBibAssociatedReady = true;
-      }
-    }
-    const { checkBibAssociatedReady } = this.state;
     return (
       <Paneset static>
         <Pane
@@ -116,98 +101,99 @@ export class SearchResults extends React.Component<P, {}> {
           paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
           paneSub={message}
           appIcon={{ app: C.META.ICON_TITLE }}
-          actionMenuItems={actionMenuItems}
+          actionMenu={actionMenuItems}
           firstMenu={leftMenu}
           lastMenu={rightMenu}
         >
           {
-            !headings && !fetching &&
-            <EmptyMessage {...this.props} />
+            (isFetchingAuthority || isFetchingBibliographic) && (!isReadyBibliographic || !isReadyAuthority) &&
+            <Icon icon="spinner-ellipsis" />
           }
           {
-            (headings && authHeadings && this.state.noResults) ?
+            (noResults) ?
               <EmptyMessage {...this.props} /> :
-              (fetching && authFetching) ?
-                <Icon icon="spinner-ellipsis" /> :
-                <MultiColumnList
-                  autosize
-                  id="tabella"
-                  defaultWidth="fill"
-                  isEmptyMessage=""
-                  columnWidths={
-                    {
-                      'resultView': '5%',
-                      '001': '10%',
-                      '245': '25%',
-                      'name': '15%',
-                      'uniformTitle': '10%',
-                      'subject': '10%',
-                      'date1': '5%',
-                      'date2': '5%',
-                      'format': '10%',
-                      'countDoc': '5%'
-                    }
+              (isReadyBibliographic || isReadyAuthority) &&
+              <MultiColumnList
+                autosize
+                id="tabella"
+                defaultWidth="fill"
+                isEmptyMessage=""
+                columnWidths={
+                  {
+                    'resultView': '5%',
+                    '001': '10%',
+                    '245': '25%',
+                    'name': '15%',
+                    'uniformTitle': '10%',
+                    'subject': '10%',
+                    'date1': '5%',
+                    'date2': '5%',
+                    'format': '10%',
+                    'countDoc': '5%'
                   }
-                  rowMetadata={['001', 'recordView']}
-                  onRowClick={this.handleDeatils}
-                  contentData={marcJSONRecords}
-                  formatter={resultsFormatter}
-                  columnMapping={columnMapper}
-                  onNeedMoreData={() => this.onNeedMoreData(marcJSONRecords)}
-                  virtualize
-                  loading={this.state.loading}
-                  visibleColumns={[
-                    'resultView',
-                    '001',
-                    '245',
-                    'name',
-                    'uniformTitle',
-                    'subject',
-                    'date1',
-                    'date2',
-                    'format',
-                    'countDoc'
-                  ]}
-                />
+                }
+                rowMetadata={['001', 'recordView']}
+                onRowClick={this.handleDeatils}
+                contentData={marcJSONRecords}
+                formatter={resultsFormatter}
+                columnMapping={columnMapper}
+                onNeedMoreData={() => this.onNeedMoreData(marcJSONRecords)}
+                virtualize
+                loading={this.state.loading}
+                visibleColumns={[
+                  'resultView',
+                  '001',
+                  '245',
+                  'name',
+                  'uniformTitle',
+                  'subject',
+                  'date1',
+                  'date2',
+                  'format',
+                  'countDoc'
+                ]}
+              />}
+        </Pane>
+
+        {detailPanelIsVisible &&
+        <Pane
+          id="pane-details"
+          defaultWidth="25%"
+          paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
+          paneSub={C.EMPTY_MESSAGE}
+          appIcon={{ app: C.META.ICON_TITLE }}
+          dismissible
+          onClose={() => this.setState({ detailPanelIsVisible: false })}
+          lastMenu={rightMenuEdit}
+        >
+          {(isFetchingDetail) ?
+            <Icon icon="spinner-ellipsis" /> :
+            (isReadyDetail) ?
+              <RecordDetails {...this.props} /> : null
           }
         </Pane>
-        { this.state.noResults ? <EmptyMessage {...this.props} /> :
-          detailPanelIsVisible &&
-          <Pane
-            id="pane-details"
-            defaultWidth="25%"
-            paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
-            paneSub={C.EMPTY_MESSAGE}
-            appIcon={{ app: C.META.ICON_TITLE }}
-            dismissible
-            onClose={() => this.setState({ detailPanelIsVisible: false })}
-            lastMenu={rightMenuEdit}
-          >
-            {
-              (fetchingDetail) ?
-                <Icon icon="spinner-ellipsis" /> :
-                <RecordDetails {...this.props} />
-            }
-          </Pane>
         }
-        { this.state.noResults ? <EmptyMessage {...this.props} /> :
-          checkBibAssociatedReady && detailPanelIsVisible &&
-          <Pane
-            id="pane-details"
-            defaultWidth="25%"
-            paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
-            paneSub={C.EMPTY_MESSAGE}
-            appIcon={{ app: C.META.ICON_TITLE }}
-            dismissible
-            onClose={() => this.setState({ checkBibAssociatedReady: false })}
-            lastMenu={rightMenuEdit}
-          >
-            {
-              (this.props.detailsForAssociatedBib) ?
-                <Icon icon="spinner-ellipsis" /> :
-                <AssociatedBibDetails {...this.props} />
-            }
-          </Pane>
+
+        {isPanelBibAssOpen && !noResults &&
+        <Pane
+          id="pane-details"
+          defaultWidth="25%"
+          paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
+          paneSub={C.EMPTY_MESSAGE}
+          appIcon={{ app: C.META.ICON_TITLE }}
+          dismissible
+          onClose={() => {
+            const { dispatch } = this.props;
+            dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
+          }}
+          lastMenu={rightMenuEdit}
+        >
+          {(isLoadingAssociatedRecord) ?
+            <Icon icon="spinner-ellipsis" /> :
+            (isReadyAssociatedRecord) ?
+              <AssociatedBibDetails {...this.props} /> : null
+          }
+        </Pane>
         }
       </Paneset>
     );
@@ -216,18 +202,24 @@ export class SearchResults extends React.Component<P, {}> {
 
 export default (connect(
   ({ marccat: { search, details, authSearch, countDoc, filter, associatedBibDetails } }) => ({
-    headings: search.records,
-    headingsRecods: search.count,
-    authHeadings: authSearch.records,
-    fetching: search.isLoading,
-    authFetching: authSearch.isLoading,
-    fetchingDetail: details.isLoadingDetail,
+    bibliographicResults: search.records,
+    totalRecordCount: search.count,
+    authorityResults: authSearch.records,
+    isFetchingBibliographic: search.isLoading,
+    isFetchingAuthority: authSearch.isLoading,
+    isReadyBibliographic: search.isReady,
+    isReadyAuthority: authSearch.isReady,
+    isFetchingDetail: details.isLoading,
+    isReadyDetail: details.isReady,
+
     activeFilter: filter.filters,
     activeFilterName: filter.name,
     activeFilterChecked: filter.checked,
     countRecord: countDoc.records,
-    detailsForAssociatedBib: associatedBibDetails.isLoadingDetailsForAssociated,
-    detailsRecordsAssociatedBib: associatedBibDetails.records,
+
+    isLoadingAssociatedRecord: associatedBibDetails.isLoading,
+    isReadyAssociatedRecord: associatedBibDetails.isReady,
+    associatedRecordDetails: associatedBibDetails.records,
     isPanelBibAssOpen: associatedBibDetails.mustOpenPanel,
   }),
 )(injectCommonProp(SearchResults)));

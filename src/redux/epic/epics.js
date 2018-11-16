@@ -13,7 +13,7 @@ export const searchEpic = (action$, store) =>
   action$.ofType(ActionTypes.SEARCH)
     .switchMap((d) =>
       concat$(
-        of$(marccatActions.fetchRequested(true)),
+        of$(marccatActions.isfetchingRequest(true)),
         ajax
           .getJSON(buildUrl(ENDPOINT.SEARCH_URL_JSON, `lang=ita&view=1&ml=170&q=${d.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
           .map(record => marccatActions.fetchSearchEngineRecords(record.docs, record.numFound))
@@ -23,7 +23,7 @@ export const searchAuthEpic = (action$, store) =>
   action$.ofType(ActionTypes.SEARCH_AUTH)
     .switchMap((d) =>
       concat$(
-        of$(marccatActions.fetchRequested(true)),
+        of$(marccatActions.isfetchingRequest(true)),
         ajax
           .getJSON(buildUrl(ENDPOINT.SEARCH_URL_JSON, `lang=ita&view=-1&ml=170&q=${d.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
           .map(record => marccatActions.fetchSearchAuthEngineRecords(record.docs))
@@ -34,7 +34,7 @@ export const searchDetailEpic = (action$, store) =>
   action$.ofType(ActionTypes.DETAILS)
     .switchMap((d) =>
       concat$(
-        of$(marccatActions.fetchRequestedDetail(true)),
+        of$(marccatActions.isfetchingRequest(true)),
         ajax
           .getJSON(buildUrl(ENDPOINT.SEARCH_URL, `lang=ita&view=${d.recordType}&ml=170&q=an%20${d.query}&from=1&to=1&dpo=1`), ENDPOINT.HEADERS)
           .map(record => marccatActions.fetchDetailsRecords(record.docs[0].data, d.recordType))
@@ -44,7 +44,7 @@ export const associatedBibDetailEpic = (action$, store) =>
   action$.ofType(ActionTypes.ASSOCIATED_DETAILS)
     .switchMap((d) =>
       concat$(
-        of$(marccatActions.fetchRequestedAssociatedBibDetail(true)),
+        of$(marccatActions.isfetchingRequest(true)),
         ajax
           .getJSON(buildUrl(ENDPOINT.SEARCH_URL, `lang=ita&view=${d.recordType}&ml=170&q=an%20${d.query}&from=1&to=1&dpo=1`), ENDPOINT.HEADERS)
           .map(record => marccatActions.fetchAssociatedBibDetailsRecords(record.docs[0].data, d.recordType, d.mustOpenPanel))
@@ -56,7 +56,7 @@ export const searchAssociatedBibRecords = (action$, store) =>
   action$.ofType(ActionTypes.ASSOCIATED_BIB_REC)
     .switchMap((d) =>
       concat$(
-        of$(marccatActions.fetchRequestedAssociatedBibRecords(true)),
+        of$(marccatActions.isfetchingRequest(true)),
         ajax
           .getJSON(buildUrl(ENDPOINT.SEARCH_URL_JSON, `lang=ita&view=1&ml=170&q=${d.query}&from=1&to=10&dpo=1`), ENDPOINT.HEADERS)
           .map(record => marccatActions.fetchAssociatedBibRecords(record.docs, d.recordType, d.count))
@@ -67,20 +67,10 @@ export const countDocEpic = (action$, store) =>
   action$.ofType(ActionTypes.COUNT_DOC)
     .switchMap((d) =>
       concat$(
-        of$(marccatActions.fetchRequestedCountDoc(true)),
+        of$(marccatActions.isfetchingRequest(true)),
         ajax
           .getJSON(buildUrl(ENDPOINT.DOC_COUNT_URL, `view=1&id=${d.query}`), ENDPOINT.HEADERS)
           .map(record => marccatActions.fetchCountDocRecords(record.docs[0].data))
           .catch(e => of$(marccatActions.fetchFailure(e))),
       ));
 
-export function fetchScanBrowsingRecords(action$) {
-  return action$
-    .ofType(ActionTypes.SCAN)
-    .switchMap((data) => {
-      return ajax
-        .getJSON(buildUrl(ENDPOINT.BROWSING_FIRST_PAGE, `query=${data.query}&view=1&mainLibrary=170&pageSize=10&lang=eng`), ENDPOINT.HEADERS)
-        .map((records) => records.headings);
-    })
-    .map(records => marccatActions.fetchScanBrowsingRecords(records));
-}

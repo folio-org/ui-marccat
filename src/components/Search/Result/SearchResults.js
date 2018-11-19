@@ -58,7 +58,7 @@ export class SearchResults extends React.Component<P, {}> {
 
   render() {
     let { bibsOnly, autOnly, detailPanelIsVisible, noResults } = this.state;
-    const { activeFilter, activeFilterName, activeFilterChecked, totalAuthCount, totalBibCount, bibliographicResults, authorityResults, isFetchingBibliographic, isReadyBibliographic, isReadyAuthority, isFetchingAuthority, isPanelBibAssOpen, isReadyDetail, isFetchingDetail, isLoadingAssociatedRecord, isReadyAssociatedRecord } = this.props;
+    const { activeFilter, activeFilterName, activeFilterChecked, totalAuthCount, totalBibCount, bibliographicResults, authorityResults, isFetching, isReady, isPanelBibAssOpen, isReadyDetail, isFetchingDetail, isLoadingAssociatedRecord, isReadyAssociatedRecord } = this.props;
     if (activeFilter) {
       if (activeFilterName === 'recordType.Bibliographic records' && activeFilterChecked) {
         bibsOnly = true;
@@ -110,13 +110,13 @@ export class SearchResults extends React.Component<P, {}> {
           lastMenu={rightMenu}
         >
           {
-            (isFetchingAuthority || isFetchingBibliographic) && (!isReadyBibliographic || !isReadyAuthority) &&
-            <Icon icon="spinner-ellipsis" />
+            (noResults) &&
+            <EmptyMessage {...this.props} />
           }
           {
-            (noResults) ?
-              <EmptyMessage {...this.props} /> :
-              (isReadyBibliographic || isReadyAuthority) ?
+            (isFetching) ?
+              <Icon icon="spinner-ellipsis" /> :
+              (isReady) ?
                 <MultiColumnList
                   autosize
                   id="tabella"
@@ -124,9 +124,9 @@ export class SearchResults extends React.Component<P, {}> {
                   isEmptyMessage=""
                   columnWidths={
                     {
-                      'resultView': '5%',
+                      'resultView': '3%',
                       '001': '10%',
-                      '245': '25%',
+                      '245': '27%',
                       'name': '15%',
                       'uniformTitle': '10%',
                       'subject': '10%',
@@ -205,15 +205,13 @@ export class SearchResults extends React.Component<P, {}> {
 }
 
 export default (connect(
-  ({ marccat: { search, details, authSearch, countDoc, filter, associatedBibDetails } }) => ({
-    bibliographicResults: search.records,
-    totalBibCount: search.count,
-    totalAuthCount: authSearch.count,
-    authorityResults: authSearch.records,
-    isFetchingBibliographic: search.isLoading,
-    isFetchingAuthority: authSearch.isLoading,
-    isReadyBibliographic: search.isReady,
-    isReadyAuthority: authSearch.isReady,
+  ({ marccat: { search, details, countDoc, filter, associatedBibDetails } }) => ({
+    bibliographicResults: search.bibliographicResults,
+    totalBibCount: search.bibCounter,
+    totalAuthCount: search.authCounter,
+    authorityResults: search.authorityResults,
+    isFetching: search.isLoading,
+    isReady: search.isReady,
     isFetchingDetail: details.isLoading,
     isReadyDetail: details.isReady,
 

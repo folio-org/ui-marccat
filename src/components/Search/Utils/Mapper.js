@@ -100,10 +100,11 @@ const remapFilters = (filterObject) => {
 
 
 const getFormat = (leader) => {
-  const pos = leader.substring(6, 7);
-
-  switch (pos) {
-  case 'a': return 'book';
+  const pos6 = leader.substring(6, 7);
+  const pos7 = leader.substring(7, 8);
+  switch (pos6) {
+  case 'a':
+    return (pos7 === 's' || pos7 === 'b') ? 'serial' : 'book';
   case 'p': return 'archival manuscript/mixed format';
   case 'g': return 'film or video';
   case 'e': return 'map';
@@ -119,6 +120,7 @@ const getFormat = (leader) => {
   default: return C.EMPTY_MESSAGE;
   }
 };
+
 
 export {
   getFieldPosition,

@@ -15,21 +15,11 @@ export const searchEpic = (action$, store) =>
       concat$(
         of$(marccatActions.isfetchingRequest(true)),
         ajax
-          .getJSON(buildUrl(ENDPOINT.SEARCH_URL_JSON, `lang=ita&view=1&ml=170&q=${d.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
-          .map(record => marccatActions.fetchSearchEngineRecords(record.docs, record.numFound))
+          .getJSON(buildUrl(ENDPOINT.MERGED_SEARCH_URL, `lang=ita&ml=170&q=${d.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
+          .map(record => marccatActions.fetchSearchEngineRecords(record[1].docs, record[1].numFound, record[0].docs, record[0].numFound))
           .catch(e => of$(marccatActions.fetchFailure(e))),
       ));
-export const searchAuthEpic = (action$, store) =>
-  action$.ofType(ActionTypes.SEARCH_AUTH)
-    .switchMap((d) =>
-      concat$(
-        of$(marccatActions.isfetchingRequest(true)),
-        ajax
-          .getJSON(buildUrl(ENDPOINT.SEARCH_URL_JSON, `lang=ita&view=-1&ml=170&q=${d.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
-          .map(record => marccatActions.fetchSearchAuthEngineRecords(record.docs, record.numFound))
-          .catch(e => of$(marccatActions.fetchFailure(e))),
-      ));
-// TOBE REMOVED
+
 export const searchDetailEpic = (action$, store) =>
   action$.ofType(ActionTypes.DETAILS)
     .switchMap((d) =>
@@ -40,6 +30,7 @@ export const searchDetailEpic = (action$, store) =>
           .map(record => marccatActions.fetchDetailsRecords(record.docs[0].data, d.recordType))
           .catch(e => of$(marccatActions.fetchFailure(e))),
       ));
+
 export const associatedBibDetailEpic = (action$, store) =>
   action$.ofType(ActionTypes.ASSOCIATED_DETAILS)
     .switchMap((d) =>
@@ -50,7 +41,6 @@ export const associatedBibDetailEpic = (action$, store) =>
           .map(record => marccatActions.fetchAssociatedBibDetailsRecords(record.docs[0].data, d.recordType, d.mustOpenPanel))
           .catch(e => of$(marccatActions.fetchFailure(e))),
       ));
-
 
 export const searchAssociatedBibRecords = (action$, store) =>
   action$.ofType(ActionTypes.ASSOCIATED_BIB_REC)

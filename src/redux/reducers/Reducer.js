@@ -33,17 +33,22 @@ export function searchEngineReducer(state = { isLoading, isReady }, action) {
   case ActionTypes.SEARCH:
     return {
       ...state,
+      isReady: false,
+      isLoading: false
     };
   case ActionTypes.FETCH_REQUESTED:
     return {
       ...state,
+      isReady: false,
       isLoading: action.payload,
     };
   case ActionTypes.RECORD_SUCCESS:
     return {
       ...state,
-      records: action.payload,
-      count: action.count,
+      bibliographicResults: action.bibliographicResults,
+      authorityResults: action.authorityResults,
+      bibCounter: action.bibCounter,
+      authCounter: action.authCounter,
       isLoading: false,
       isReady: true
     };
@@ -52,31 +57,6 @@ export function searchEngineReducer(state = { isLoading, isReady }, action) {
   }
 }
 
-export function searchAuthReducer(state = { isLoading, isReady }, action) {
-  switch (action.type) {
-  case ActionTypes.SEARCH_AUTH:
-    return {
-      ...state,
-    };
-  case ActionTypes.FETCH_REQUESTED:
-    return {
-      ...state,
-      isLoading: action.payload,
-    };
-  case ActionTypes.RECORD_AUTH_SUCCESS:
-    return {
-      ...state,
-      records: action.payload,
-      count: action.count,
-      isLoading: false,
-      isReady: true
-    };
-  default:
-    return state;
-  }
-}
-
-// TOBE REMOVED
 export function getDetailsRecord(state = { isLoading, isReady }, action) {
   switch (action.type) {
   case ActionTypes.DETAILS:
@@ -100,6 +80,7 @@ export function getDetailsRecord(state = { isLoading, isReady }, action) {
     return state;
   }
 }
+
 export function detailsAssociatedReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
   case ActionTypes.ASSOCIATED_DETAILS:
@@ -129,6 +110,7 @@ export function detailsAssociatedReducer(state = { isLoading, isReady }, action)
     return state;
   }
 }
+
 export function getAssociatedBibRecord(state = { isLoading, isReady }, action) {
   switch (action.type) {
   case ActionTypes.ASSOCIATED_BIB_REC:

@@ -29,9 +29,10 @@ export const fetchSearchEngineRecords = (records, numFound) => ({
   payload: records,
   count: numFound
 });
-export const fetchSearchAuthEngineRecords = (records) => ({
+export const fetchSearchAuthEngineRecords = (records, numFound) => ({
   type: ActionTypes.RECORD_AUTH_SUCCESS,
-  payload: records
+  payload: records,
+  count: numFound
 });
 export const fetchSuccess = (message) => ({
   type: ActionTypes.SUCCESS,

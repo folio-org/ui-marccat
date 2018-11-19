@@ -58,7 +58,7 @@ export class SearchResults extends React.Component<P, {}> {
 
   render() {
     let { bibsOnly, autOnly, detailPanelIsVisible, noResults } = this.state;
-    const { activeFilter, activeFilterName, activeFilterChecked, bibliographicResults, authorityResults, isFetchingBibliographic, isReadyBibliographic, isReadyAuthority, isFetchingAuthority, isPanelBibAssOpen, totalRecordCount, isReadyDetail, isFetchingDetail, isLoadingAssociatedRecord, isReadyAssociatedRecord } = this.props;
+    const { activeFilter, activeFilterName, activeFilterChecked, totalAuthCount, totalBibCount, bibliographicResults, authorityResults, isFetchingBibliographic, isReadyBibliographic, isReadyAuthority, isFetchingAuthority, isPanelBibAssOpen, isReadyDetail, isFetchingDetail, isLoadingAssociatedRecord, isReadyAssociatedRecord } = this.props;
     if (activeFilter) {
       if (activeFilterName === 'recordType.Bibliographic records' && activeFilterChecked) {
         bibsOnly = true;
@@ -89,7 +89,11 @@ export class SearchResults extends React.Component<P, {}> {
       }
     }
     const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForAssociatedBibList(mergedRecord) : [];
-    const message = (mergedRecord.length > 0) ? totalRecordCount + ' Results Found' : 'No Result found';
+    const messageAuth = (totalAuthCount && totalAuthCount > 0) ? totalAuthCount + ' Authority records ' : ' NO Authority records found ';
+    const messageBib = (totalBibCount && totalBibCount > 0) ? totalBibCount + ' Bibliographic records ' : ' NO Bibliographic records found ';
+
+    const message = messageAuth + ' / ' + messageBib;
+    const messageNoContent = '';
     const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
     const rightMenu = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.new.keyboard" />;
     const rightMenuEdit = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.edit" />;
@@ -99,7 +103,7 @@ export class SearchResults extends React.Component<P, {}> {
         <Pane
           defaultWidth="fill"
           paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
-          paneSub={message}
+          paneSub={(mergedRecord && mergedRecord.length > 0) ? message : messageNoContent}
           appIcon={{ app: C.META.ICON_TITLE }}
           actionMenu={actionMenuItems}
           firstMenu={leftMenu}
@@ -112,47 +116,47 @@ export class SearchResults extends React.Component<P, {}> {
           {
             (noResults) ?
               <EmptyMessage {...this.props} /> :
-              (isReadyBibliographic || isReadyAuthority) &&
-              <MultiColumnList
-                autosize
-                id="tabella"
-                defaultWidth="fill"
-                isEmptyMessage=""
-                columnWidths={
-                  {
-                    'resultView': '5%',
-                    '001': '10%',
-                    '245': '25%',
-                    'name': '15%',
-                    'uniformTitle': '10%',
-                    'subject': '10%',
-                    'date1': '5%',
-                    'date2': '5%',
-                    'format': '10%',
-                    'countDoc': '5%'
+              (isReadyBibliographic || isReadyAuthority) ?
+                <MultiColumnList
+                  autosize
+                  id="tabella"
+                  defaultWidth="fill"
+                  isEmptyMessage=""
+                  columnWidths={
+                    {
+                      'resultView': '5%',
+                      '001': '10%',
+                      '245': '25%',
+                      'name': '15%',
+                      'uniformTitle': '10%',
+                      'subject': '10%',
+                      'date1': '5%',
+                      'date2': '5%',
+                      'format': '10%',
+                      'countDoc': '5%'
+                    }
                   }
-                }
-                rowMetadata={['001', 'recordView']}
-                onRowClick={this.handleDeatils}
-                contentData={marcJSONRecords}
-                formatter={resultsFormatter}
-                columnMapping={columnMapper}
-                onNeedMoreData={() => this.onNeedMoreData(marcJSONRecords)}
-                virtualize
-                loading={this.state.loading}
-                visibleColumns={[
-                  'resultView',
-                  '001',
-                  '245',
-                  'name',
-                  'uniformTitle',
-                  'subject',
-                  'date1',
-                  'date2',
-                  'format',
-                  'countDoc'
-                ]}
-              />}
+                  rowMetadata={['001', 'recordView']}
+                  onRowClick={this.handleDeatils}
+                  contentData={marcJSONRecords}
+                  formatter={resultsFormatter}
+                  columnMapping={columnMapper}
+                  onNeedMoreData={() => this.onNeedMoreData(marcJSONRecords)}
+                  virtualize
+                  loading={this.state.loading}
+                  visibleColumns={[
+                    'resultView',
+                    '001',
+                    '245',
+                    'name',
+                    'uniformTitle',
+                    'subject',
+                    'date1',
+                    'date2',
+                    'format',
+                    'countDoc'
+                  ]}
+                /> : <EmptyMessage {...this.props} />}
         </Pane>
 
         {detailPanelIsVisible &&
@@ -203,7 +207,8 @@ export class SearchResults extends React.Component<P, {}> {
 export default (connect(
   ({ marccat: { search, details, authSearch, countDoc, filter, associatedBibDetails } }) => ({
     bibliographicResults: search.records,
-    totalRecordCount: search.count,
+    totalBibCount: search.count,
+    totalAuthCount: authSearch.count,
     authorityResults: authSearch.records,
     isFetchingBibliographic: search.isLoading,
     isFetchingAuthority: authSearch.isLoading,

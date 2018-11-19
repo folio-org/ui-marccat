@@ -7,10 +7,9 @@ const languageFilterMap = {
   'Chinese simplified': 'chi',
   'Arabic': 'ara'
 };
-
 const formatFilterMap = {
   'All text': 'MAT "a"',
-  'Books': '[(MAT "a" OR MAT "t") AND (BIB "m" OR BIB "c" OR BIB "d")]',
+  'Books': '((MAT "a" OR MAT "t") AND (BIB "m" OR BIB "c" OR BIB "d"))',
   'Archival Manuscript/ Mixed Formats': 'MAT "p"',
   'Film or Video': 'MAT "g"',
   'Map': 'MAT "e"',
@@ -19,14 +18,12 @@ const formatFilterMap = {
   'Music Score': 'MAT "c"',
   'Music Score (Manuscript)': 'MAT "d"',
   'Nonmusic recording': 'MAT "i"',
-  'Periodical or Serials': 'MAT "s"',
+  'Periodical or Serials': '(BIB "s" or BIB "b")',
   'Photograph, Print, or Drawing': 'MAT "k"',
   'Rare Book or Manuscript': 'MAT "t"',
   'Software or E-Resource': 'MAT "m"',
   '3-D Object': 'MAT "r"'
 };
-
-
 const findYourQuery = {
   // FOR START KEY
   'ALL-START': 'AW ',
@@ -71,10 +68,8 @@ const findYourQuery = {
   'BARCODE-MATCH': 'BC ',
   'COPY-MATCH': 'CP ',
 };
-
 export {
   findYourQuery,
   languageFilterMap,
   formatFilterMap
 };
-

@@ -24,15 +24,12 @@ export const fetchAssociatedBibDetailsRecords = (records, recordType, mustOpenPa
   recType: recordType,
   isDetailBibAssOpen: mustOpenPanel
 });
-export const fetchSearchEngineRecords = (records, numFound) => ({
+export const fetchSearchEngineRecords = (bibliographicResults, bibCounter, authorityResults, authCounter) => ({
   type: ActionTypes.RECORD_SUCCESS,
-  payload: records,
-  count: numFound
-});
-export const fetchSearchAuthEngineRecords = (records, numFound) => ({
-  type: ActionTypes.RECORD_AUTH_SUCCESS,
-  payload: records,
-  count: numFound
+  bibliographicResults,
+  bibCounter,
+  authorityResults,
+  authCounter
 });
 export const fetchSuccess = (message) => ({
   type: ActionTypes.SUCCESS,

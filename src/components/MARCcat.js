@@ -6,7 +6,7 @@ import * as React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { injectCommonProp, Props } from '../core';
-import { actionMenuItem } from './Lib';
+import { actionMenuItem, ToolbarMenu } from './Lib';
 import SearchPanel from './Search/Result/SearchPanel';
 import SearchResults from './Search/Result/SearchResults';
 import * as C from '../utils/Constant';
@@ -27,7 +27,6 @@ class MARCcat extends React.Component<P, S> {
     };
     this.toggleFilterPane = this.toggleFilterPane.bind(this);
   }
-
   toggleFilterPane = () => {
     this.setState(prevState => ({ filterPaneIsVisible: !prevState.filterPaneIsVisible }));
   }
@@ -35,6 +34,11 @@ class MARCcat extends React.Component<P, S> {
   render() {
     const { translate } = this.props;
     const { filterPaneIsVisible } = this.state;
+    const leftMenu =
+      <ToolbarMenu
+        icon={['search']}
+        onClick={this.toggleFilterPane}
+      />;
     const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
     return (
       <Paneset static>
@@ -49,11 +53,10 @@ class MARCcat extends React.Component<P, S> {
           >
             <SearchPanel {...this.props} />
           </Pane>}
-        <SearchResults {...this.props} />
+        <SearchResults firstMenu={leftMenu} {...this.props} />
       </Paneset>
     );
   }
 }
-
 export default injectCommonProp(MARCcat);
 

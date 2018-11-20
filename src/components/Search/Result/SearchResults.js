@@ -8,7 +8,7 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
-import { actionMenuItem, ToolbarButtonMenu, ToolbarMenu, EmptyMessage } from '../../Lib';
+import { actionMenuItem, ToolbarButtonMenu, EmptyMessage } from '../../Lib';
 import { remapForAssociatedBibList } from '../Utils/Mapper';
 import { resultsFormatter, columnMapper } from '../Utils/Formatter';
 import { isAuthorityRecord } from '../Utils/SearchUtils';
@@ -71,7 +71,7 @@ export class SearchResults extends React.Component<P, {}> {
         autOnly = false;
       }
     }
-    if ((bibliographicResults && (bibliographicResults.length === undefined || bibliographicResults.length === 0)) && ((authorityResults && (authorityResults.length === undefined || authorityResults.length === 0)))) {
+    if ((bibliographicResults === undefined && authorityResults === undefined) || (bibliographicResults && (bibliographicResults.length === undefined || bibliographicResults.length === 0) && (authorityResults && (authorityResults.length === undefined || authorityResults.length === 0)))) {
       noResults = true;
       detailPanelIsVisible = false;
     } else {
@@ -97,7 +97,6 @@ export class SearchResults extends React.Component<P, {}> {
     const actionMenuItems = actionMenuItem(['ui-marccat.indexes.title', 'ui-marccat.diacritic.title']);
     const rightMenu = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.new.keyboard" />;
     const rightMenuEdit = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.edit" />;
-    const leftMenu = <ToolbarMenu icon={['search']} />;
     return (
       <Paneset static>
         <Pane
@@ -106,7 +105,7 @@ export class SearchResults extends React.Component<P, {}> {
           paneSub={(mergedRecord && mergedRecord.length > 0) ? message : messageNoContent}
           appIcon={{ app: C.META.ICON_TITLE }}
           actionMenu={actionMenuItems}
-          firstMenu={leftMenu}
+          firstMenu={this.props.firstMenu}
           lastMenu={rightMenu}
         >
           {
@@ -114,7 +113,7 @@ export class SearchResults extends React.Component<P, {}> {
             <EmptyMessage {...this.props} />
           }
           {
-            (isFetching) ?
+            (isFetching && !noResults) ?
               <Icon icon="spinner-ellipsis" /> :
               (isReady) ?
                 <MultiColumnList
@@ -223,7 +222,7 @@ export default (connect(
     isLoadingAssociatedRecord: associatedBibDetails.isLoading,
     isReadyAssociatedRecord: associatedBibDetails.isReady,
     associatedRecordDetails: associatedBibDetails.records,
-    isPanelBibAssOpen: associatedBibDetails.mustOpenPanel,
+    isPanelBibAssOpen: associatedBibDetails.mustOpenPanel
   }),
 )(injectCommonProp(SearchResults)));
 

@@ -11,7 +11,7 @@ export function countDocReducer(state = { isLoading, isReady }, action) {
       isLoading: false,
       query: action.payload
     };
-  case ActionTypes.FETCH_COUNT_DOC:
+  case ActionTypes.FETCH_COUNTER_REQUESTED:
     return {
       ...state,
       records: action.payload,
@@ -36,7 +36,7 @@ export function searchEngineReducer(state = { isLoading, isReady }, action) {
       isReady: false,
       isLoading: false
     };
-  case ActionTypes.FETCH_REQUESTED:
+  case ActionTypes.FETCH_SEARCH_REQUESTED:
     return {
       ...state,
       isReady: false,
@@ -62,11 +62,14 @@ export function getDetailsRecord(state = { isLoading, isReady }, action) {
   case ActionTypes.DETAILS:
     return {
       ...state,
+      isLoading: false,
+      isReady: false
     };
-  case ActionTypes.FETCH_DETAIL_REQUESTED:
+  case ActionTypes.FETCH_DETAILS_REQUESTED:
     return {
       ...state,
       isLoading: action.payload,
+      isReady: false
     };
   case ActionTypes.DETAILS_BY_TITLE:
     return {
@@ -86,11 +89,14 @@ export function detailsAssociatedReducer(state = { isLoading, isReady }, action)
   case ActionTypes.ASSOCIATED_DETAILS:
     return {
       ...state,
+      isLoading: false,
+      isReady: false
     };
-  case ActionTypes.FETCH_ASSOCIATED_DETAILS_REQUESTED:
+  case ActionTypes.FETCH_DETAILS_ASSOCIATED_REQUESTED:
     return {
       ...state,
       isLoading: action.payload,
+      isReady: false
     };
   case ActionTypes.ASSOCIATED_DETAILS_SUCCESS:
     return {
@@ -116,11 +122,14 @@ export function getAssociatedBibRecord(state = { isLoading, isReady }, action) {
   case ActionTypes.ASSOCIATED_BIB_REC:
     return {
       ...state,
+      isLoading: false,
+      isReady: false
     };
-  case ActionTypes.FETCH_ASSOCIATED_BIB_REQUESTED:
+  case ActionTypes.FETCH_ASSOCIATED_REQUESTED:
     return {
       ...state,
       isLoading: action.payload,
+      isReady: false
     };
   case ActionTypes.ASSOCIATED_BIB_REC_SUCCESS:
     return {
@@ -149,4 +158,3 @@ export function filterReducer(state = { isLoading }, action) {
     return state;
   }
 }
-

@@ -126,7 +126,6 @@ class SearchPanel extends React.Component<P, {}> {
                 <div className={styles.select_margin}>
                   <Field
                     fullWidth
-                    onFocus={this.handleOnFocus}
                     component={SearchField}
                     placeholder="Search..."
                     name="searchTextArea"

@@ -1,7 +1,23 @@
 import { ActionTypes } from './Actions';
 
-export const isfetchingRequest = (isLoading) => ({
-  type: ActionTypes.FETCH_REQUESTED,
+export const isfetchingSearchRequest = (isLoading) => ({
+  type: ActionTypes.FETCH_SEARCH_REQUESTED,
+  payload: isLoading
+});
+export const isfetchingDetailsRequest = (isLoading) => ({
+  type: ActionTypes.FETCH_DETAILS_REQUESTED,
+  payload: isLoading
+});
+export const isfetchingDetailsAssociatedRequest = (isLoading) => ({
+  type: ActionTypes.FETCH_DETAILS_ASSOCIATED_REQUESTED,
+  payload: isLoading
+});
+export const isfetchingAssociatedRequest = (isLoading) => ({
+  type: ActionTypes.FETCH_ASSOCIATED_REQUESTED,
+  payload: isLoading
+});
+export const isfetchingCounterRequest = (isLoading) => ({
+  type: ActionTypes.FETCH_COUNTER_REQUESTED,
   payload: isLoading
 });
 export const fetchAssociatedBibRecords = (records, recordType) => ({

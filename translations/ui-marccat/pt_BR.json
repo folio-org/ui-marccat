@@ -1,39 +1,26 @@
 {
-    "MARCcat":"MARCcat",
-    "marccat":"MARCcat",
-    "noResult":"No Result found",
-    "settings.general": "General",
-    "settings.general.message": "These are your general app settings.",
-    "searchAndFilter": "Search & Filter",
-  
-    "initial.title":"Choose a filter or enter search query to show results",
-  
-    "button.new": "+ New",
-    "button.close": "Close",
-    "button.cancel": "Cancel",
+    "MARCcat": "MARCcat",
+    "marccat": "MARCcat",
+    "noResult": "Nenhum resultado encontrado",
+    "initial.title": "Escolha um filtro ou digite os termos de pesquisa para mostrar os resultados",
     "button.new.tag": "+ Tag",
-    "button.backto": "Close",
-  
-    "navigator.search": "Search",
-    "search.result" : "Search Result",
-    "search.indexes" : "Indexes",
-    "search.searchButton" : "Search",
-    "search.scanButton" : "Scan",
-    "search.clear" : "Clear",
-    "search.refreshButton":"Refresh",
+    "button.backto": "Fechar",
+    "navigator.search": "Pesquisar",
+    "search.result": "Resultado da pesquisa",
+    "search.indexes": "Índices",
+    "search.searchButton": "Pesquisar",
+    "search.scanButton": "Escanear",
+    "search.clear": "Limpar",
+    "search.refreshButton": "Atualizar",
     "search.lorem": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  
-    "search.record": "Records",
-    "search.record.preview": "Preview Record",
-    "search.record.new.keyboard": "+ New (CTRL+N)",
-    "search.record.edit" : "Edit",
-    "search.goto.inventory": "View in Inventory",
-    "search.details.bibliographic":"Bibliographic record",
-    "search.details.authority":"Authority record",
-    "search.associated.bibliographic":"Associated bibliographic records",
-    
-    "indexes.title":"Indexes",
-    "diacritic.title":"Diacritic"
-  
-  }
-  
+    "search.record": "Registros",
+    "search.record.preview": "Pré-visualizar o registro",
+    "search.record.new.keyboard": "+ Novo (CTRL+N)",
+    "search.record.edit": "Editar",
+    "search.goto.inventory": "Ver no Inventário",
+    "search.details.bibliographic": "Registro bibliográfico",
+    "search.details.authority": "Registro de autoridade",
+    "search.associated.bibliographic": "Registros bibliográficos associados",
+    "indexes.title": "Índices",
+    "diacritic.title": "Diacrítico"
+}

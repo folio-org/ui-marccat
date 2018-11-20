@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Accordion, FilterAccordionHeader, MultiColumnList } from '@folio/stripes-components';
 import type { Props } from '../../../core';
+import { ActionTypes } from '../../../redux/actions';
 import { remapForAssociatedBibList } from '../Utils/Mapper';
 import { resultsFormatterForAssociated, columnMapperForAssociated } from '../Utils/Formatter';
 import { EMPTY_MESSAGE } from '../../../utils/Constant';
@@ -22,7 +23,7 @@ function AssociatedBib({ ...props }: P) {
       {...props.rest}
       separator={false}
       header={FilterAccordionHeader}
-      label="Associated bibliographic records"
+      label={'(' + props.bibRecords.length + ') Associated bibliographic records'}
     >
       {resultRemapped &&
       <MultiColumnList
@@ -37,6 +38,11 @@ function AssociatedBib({ ...props }: P) {
             'format': '10%'
           }
         }
+        onRowClick={(e, meta) => {
+          const { dispatch } = props;
+          const id = meta['001'];
+          dispatch({ type: ActionTypes.ASSOCIATED_DETAILS, query: id, recordType: meta.recordView, mustOpenPanel: true });
+        }}
         rowMetadata={['001', 'recordView']}
         contentData={resultRemapped}
         formatter={resultsFormatterForAssociated}
@@ -54,7 +60,6 @@ function AssociatedBib({ ...props }: P) {
 
 export default (connect(
   ({ marccat: { associatedRecords } }) => ({
-    checkRecordType: associatedRecords.recordType,
-    bibRecords: associatedRecords.records
+    bibRecords: associatedRecords.records,
   })
 )(AssociatedBib));

@@ -1,10 +1,9 @@
 import { ActionTypes } from '../actions/Actions';
 
 const isLoading = false;
-const isLoadingDetail = false;
-const isLoadingAssociatedBibRecords = false;
+const isReady = false;
 
-export function countDocReducer(state = { isLoading }, action) {
+export function countDocReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
   case ActionTypes.COUNT_DOC:
     return {
@@ -12,7 +11,7 @@ export function countDocReducer(state = { isLoading }, action) {
       isLoading: false,
       query: action.payload
     };
-  case ActionTypes.FETCH_COUNT_DOC:
+  case ActionTypes.FETCH_COUNTER_REQUESTED:
     return {
       ...state,
       records: action.payload,
@@ -29,119 +28,117 @@ export function countDocReducer(state = { isLoading }, action) {
   }
 }
 
-export function searchEngineReducer(state = { isLoading }, action) {
+export function searchEngineReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
   case ActionTypes.SEARCH:
     return {
       ...state,
+      isReady: false,
       isLoading: false
     };
-  case ActionTypes.FETCH_REQUESTED:
+  case ActionTypes.FETCH_SEARCH_REQUESTED:
     return {
       ...state,
-      records: action.payload,
-      isLoading: true
+      isReady: false,
+      isLoading: action.payload,
     };
   case ActionTypes.RECORD_SUCCESS:
     return {
       ...state,
-      records: action.payload,
-      count: action.count,
-      isLoading: false
+      bibliographicResults: action.bibliographicResults,
+      authorityResults: action.authorityResults,
+      bibCounter: action.bibCounter,
+      authCounter: action.authCounter,
+      isLoading: false,
+      isReady: true
     };
   default:
     return state;
   }
 }
 
-export function searchAuthReducer(state = { isLoading }, action) {
-  switch (action.type) {
-  case ActionTypes.SEARCH_AUTH:
-    return {
-      ...state,
-      isLoading: false
-    };
-  case ActionTypes.FETCH_REQUESTED:
-    return {
-      ...state,
-      records: action.payload,
-      isLoading: true
-    };
-  case ActionTypes.RECORD_AUTH_SUCCESS:
-    return {
-      ...state,
-      records: action.payload,
-      isLoading: false
-    };
-  default:
-    return state;
-  }
-}
-
-// TOBE REMOVED
-export function getDetailsRecord(state = { isLoadingDetail }, action) {
+export function getDetailsRecord(state = { isLoading, isReady }, action) {
   switch (action.type) {
   case ActionTypes.DETAILS:
     return {
       ...state,
-      isLoadingDetail: false,
-      query: action.payload
+      isLoading: false,
+      isReady: false
     };
-  case ActionTypes.FETCH_DETAIL_REQUESTED:
+  case ActionTypes.FETCH_DETAILS_REQUESTED:
     return {
       ...state,
-      records: action.payload,
-      isLoadingDetail: true
+      isLoading: action.payload,
+      isReady: false
     };
   case ActionTypes.DETAILS_BY_TITLE:
     return {
       ...state,
       records: action.payload,
-      isLoadingDetail: false,
-      recordType: action.recType
-    };
-  default:
-    return state;
-  }
-}
-export function getAssociatedBibRecord(state = { isLoadingAssociatedBibRecords }, action) {
-  switch (action.type) {
-  case ActionTypes.ASSOCIATED_BIB_REC:
-    return {
-      ...state,
-      isLoadingAssociatedBibRecords: false,
-      query: action.payload
-    };
-  case ActionTypes.FETCH_ASSOCIATED_BIB_REQUESTED:
-    return {
-      ...state,
-      records: action.payload,
-      isLoadingAssociatedBibRecords: true
-    };
-  case ActionTypes.ASSOCIATED_BIB_REC_SUCCESS:
-    return {
-      ...state,
-      records: action.payload,
-      isLoadingAssociatedBibRecords: false,
-      recordType: action.recType
+      recordType: action.recType,
+      isLoading: false,
+      isReady: true
     };
   default:
     return state;
   }
 }
 
-export function scanBrowsingReducer(state = { isLoading }, action) {
+export function detailsAssociatedReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
-  case ActionTypes.SCAN:
+  case ActionTypes.ASSOCIATED_DETAILS:
     return {
       ...state,
-      isLoading: false
+      isLoading: false,
+      isReady: false
     };
-  case ActionTypes.SCAN_SUCCESS:
+  case ActionTypes.FETCH_DETAILS_ASSOCIATED_REQUESTED:
+    return {
+      ...state,
+      isLoading: action.payload,
+      isReady: false
+    };
+  case ActionTypes.ASSOCIATED_DETAILS_SUCCESS:
     return {
       ...state,
       records: action.payload,
-      isLoading: true
+      isLoading: false,
+      isReady: true,
+      recordType: action.recType,
+      mustOpenPanel: action.isDetailBibAssOpen
+    };
+  case ActionTypes.CLOSE_ASSOCIATED_DETAILS:
+    return {
+      ...state,
+      mustOpenPanel: action.openPanel
+    };
+  default:
+    return state;
+  }
+}
+
+export function getAssociatedBibRecord(state = { isLoading, isReady }, action) {
+  switch (action.type) {
+  case ActionTypes.ASSOCIATED_BIB_REC:
+    return {
+      ...state,
+      isLoading: false,
+      isReady: false
+    };
+  case ActionTypes.FETCH_ASSOCIATED_REQUESTED:
+    return {
+      ...state,
+      isLoading: action.payload,
+      isReady: false
+    };
+  case ActionTypes.ASSOCIATED_BIB_REC_SUCCESS:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: false,
+      isReady: true,
+      recordType: action.recType,
+      count: action.countDoc
     };
   default:
     return state;
@@ -154,9 +151,10 @@ export function filterReducer(state = { isLoading }, action) {
     return {
       ...state,
       filters: action.payload,
+      name: action.filterName,
+      checked: action.filterChecked
     };
   default:
     return state;
   }
 }
-

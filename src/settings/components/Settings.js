@@ -4,8 +4,10 @@
  */
 import * as React from 'react';
 import Settings from '@folio/stripes-smart-components/lib/Settings';
-import GeneralSettings from './GeneralSettings';
-import MARCcatSettings from './MARCcatSettings';
+import FieldGroupings from './FieldGroupings';
+import DefaultTemplate from './DefaultTemplate';
+import RecordsOverlayRules from './RecordOverlayRules';
+import LocalAuthorityRecords from './LocalAuthorityRecords';
 
 type MARCcatSelectSettingsProps = {
   stripes: Object;
@@ -16,16 +18,30 @@ export default class MARCcatSelectSettings extends
     {
       route: 'general',
       label: this.props.stripes.intl.formatMessage({
-        id: 'ui-marccat.settings.general',
+        id: 'ui-marccat.settings.field.groupings',
       }),
-      component: GeneralSettings,
+      component: FieldGroupings,
     },
     {
-      route: 'marccat',
+      route: 'defaultTemplate',
       label: this.props.stripes.intl.formatMessage({
-        id: 'ui-marccat.marccat',
+        id: 'ui-marccat.settings.default.record.template',
       }),
-      component: MARCcatSettings,
+      component: DefaultTemplate,
+    },
+    {
+      route: 'overlayRules',
+      label: this.props.stripes.intl.formatMessage({
+        id: 'ui-marccat.settings.overlay.rules',
+      }),
+      component: RecordsOverlayRules,
+    },
+    {
+      route: 'authorityRecords',
+      label: this.props.stripes.intl.formatMessage({
+        id: 'ui-marccat.settings.authority.records',
+      }),
+      component: LocalAuthorityRecords,
     },
   ];
 
@@ -33,6 +49,7 @@ export default class MARCcatSelectSettings extends
     return (
       <Settings
         {...this.props}
+        navPaneWidth="20%"
         pages={this.pages}
         paneTitle={this.props.stripes.intl.formatMessage({
           id: 'ui-marccat.settings.general',

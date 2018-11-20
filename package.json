@@ -1,9 +1,7 @@
 {
   "name": "@folio/marccat",
-  "appName": "MARCcat",
-  "version": "1.0.0",
-  "company": "@Cult",
-  "description": "FOLIO UI module for Cataloging Marc records",
+  "version": "1.1.0",
+  "description": "FOLIO UI module for Cataloging",
   "repository": "folio-org/ui-marccat",
   "publishConfig": {
     "registry": "https://repository.folio.org/repository/npm-folio/"
@@ -13,13 +11,13 @@
   "engines": {
     "node": ">=6.0.0"
   },
-
   "scripts": {
     "start": "node script/js/start",
     "status": "stripes status config/stripes.config.js",
     "build": "node ./script/js/build",
     "build:analizer": "stripes build config/stripes.config.js ./dist/analyze/ui-marccat-analyze --analyze --sourcemap",
     "lint": "yarn eslint && yarn stylelint",
+    "test": "echo 'No unit tests implemented'",
     "eslint": "eslint --fix ./",
     "stylelint": "stylelint --fix \"src/**/*.css\"",
     "flow": "flow status ./src/",
@@ -61,9 +59,12 @@
     "react": "*"
   },
   "resolutions": {
-    "**/fbjs": "1.0.0",
-    "**/hoist-non-react-statics": "3.0.1",
-    "**/apollo-utilities": "1.0.23"
+    "**/domelementtype": "*",
+    "**/isarray": "*",
+    "**/warning": "*",
+    "**/fbjs": "*",
+    "**/hoist-non-react-statics": "*"
+    
   },
   "stripes": {
     "type": "app",

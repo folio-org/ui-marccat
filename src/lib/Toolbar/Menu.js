@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unused-prop-types */
 import * as React from 'react';
-import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
-import IconButton from '@folio/stripes-components/lib/IconButton';
+import { PaneMenu, IconButton, Icon } from '@folio/stripes-components';
 import Button from '@folio/stripes-components/lib/Button';
 import classNames from 'classnames';
 
@@ -64,6 +63,11 @@ export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
         disabled={disabled}
         marginBottom0
       >{formatMessage({ id: label })}
+        <Icon
+          icon="down-caret"
+          size="small"
+          iconClassName="myClass"
+        />
       </Button>
     </PaneMenu>
   );

@@ -7,7 +7,7 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { injectCommonProp, Props } from './core';
 import { actionMenuItem, ToolbarMenu } from './lib';
-import { SearchPanel, SearchResults } from './components/Search/';
+import { SearchPanel } from './components/Search/';
 import * as C from './utils/Constant';
 import BrowseResults from './components/Browse/Result/BrowseResults';
 

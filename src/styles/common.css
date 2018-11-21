@@ -16,6 +16,11 @@
   border-radius: 25%;
 }
 
+.myClass {
+  padding-left: 4px;
+  padding-top: 3px;
+}
+
 .select_margin {
   & * {
     margin-bottom: 0;

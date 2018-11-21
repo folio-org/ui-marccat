@@ -31,13 +31,20 @@
 
   "search.record": "Records",
   "search.record.preview": "Preview Record",
-  "search.record.new.keyboard": "+ New (CTRL+N)",
+  "search.record.new.keyboard": "+ New",
   "search.record.edit" : "Edit",
   "search.goto.inventory": "View in Inventory",
   "search.details.bibliographic":"Bibliographic record",
   "search.details.authority":"Authority record",
   "search.associated.bibliographic":"Associated bibliographic records",
   
+  "browse.results.title":"Access Point",
+  "browse.record.create" : "Create",
+  "browse.actionmenu.export.mrc":"Export as .mrc file (single file, multiple records)",
+  "browse.actionmenu.export.csv":"Export as .csv file (single file, multiple records)",
+  "browse.actionmenu.export.dat":"Export as .dat",
+  "browse.actionmenu.printall":"Print all",
+  "browse.actionmenu.merge":"Merge",
   "indexes.title":"Indexes",
   "diacritic.title":"Diacritic"
 

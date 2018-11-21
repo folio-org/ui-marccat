@@ -1,3 +1,7 @@
+[data-module] {
+  height: 100%;
+}
+
 .authority {
   width: 18px;
   height: 18px;
@@ -33,4 +37,8 @@
 
 .padding8 {
   padding-bottom: 8px;
+}
+
+.max-width {
+  width: 100%;
 }

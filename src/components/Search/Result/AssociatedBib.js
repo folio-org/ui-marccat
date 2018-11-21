@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import { Accordion, FilterAccordionHeader, MultiColumnList } from '@folio/stripes-components';
 import type { Props } from '../../../core';
 import { ActionTypes } from '../../../redux/actions';
-import { remapForAssociatedBibList } from '../Utils/Mapper';
-import { resultsFormatterForAssociated, columnMapperForAssociated } from '../Utils/Formatter';
+import { remapForAssociatedBibList } from '../../../utils/Mapper';
+import { resultsFormatterForAssociated, columnMapperForAssociated } from '../../../utils/Formatter';
 import { EMPTY_MESSAGE } from '../../../utils/Constant';
-
 
 type P = Props & {
     checkRecordType: Array<any>,

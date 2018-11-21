@@ -11,10 +11,10 @@ import SearchSelectFields from '../Select/SearchIndexes';
 import SearchConditions from '../Select/SearchConditions';
 import FiltersContainer from '../Filter/FiltersContainer';
 import { ActionTypes } from '../../../redux/actions/Actions';
-import styles from '../Style/Search.css';
 import { findYourQuery } from '../../Search/Select/FilterMapper';
-import { remapFilters } from '../Utils/Mapper';
-import { getLanguageFilterQuery, getFormatFilterQuery } from '../Utils/SearchUtils';
+import { remapFilters } from '../../../utils/Mapper';
+import { getLanguageFilterQuery, getFormatFilterQuery } from '../../../utils/SearchUtils';
+import styles from '../../../styles/common.css';
 
 type P = Props & {
   inputErrorCheck: string,

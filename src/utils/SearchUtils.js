@@ -1,4 +1,4 @@
-import { languageFilterMap, formatFilterMap } from '../Select/FilterMapper';
+import { languageFilterMap, formatFilterMap } from '../components/Search/Select/FilterMapper';
 
 const getLanguageFilterQuery = (languageFilter) => {
   return languageFilter

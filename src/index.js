@@ -7,9 +7,9 @@ import Settings from './settings';
 import { reducer, epics } from './redux';
 import { injectCommonProp } from './core';
 import * as C from './utils';
-import MARCcat from './components/MARCcat';
+import MARCcat from './MARCcat';
 
-import './index.css';
+import './styles/common.css';
 
 type RoutingProps = {
   root: {

@@ -5,7 +5,7 @@
 import * as React from 'react';
 import Icon from '@folio/stripes-components/lib/Icon';
 import css from './EmptyMessage.css';
-import type { Props } from '../../../core';
+import type { Props } from '../../core';
 
 type P = Props & {};
 

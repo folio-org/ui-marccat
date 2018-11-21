@@ -5,11 +5,11 @@
 import * as React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
-import { injectCommonProp, Props } from '../core';
-import { actionMenuItem, ToolbarMenu } from './Lib';
-import SearchPanel from './Search/Result/SearchPanel';
-import SearchResults from './Search/Result/SearchResults';
-import * as C from '../utils/Constant';
+import { injectCommonProp, Props } from './core';
+import { actionMenuItem, ToolbarMenu } from './lib';
+import { SearchPanel, SearchResults } from './components/Search/';
+import * as C from './utils/Constant';
+import BrowseResults from './components/Browse/Result/BrowseResults';
 
 type P = Props & {};
 type S = {
@@ -53,7 +53,7 @@ class MARCcat extends React.Component<P, S> {
           >
             <SearchPanel {...this.props} />
           </Pane>}
-        <SearchResults firstMenu={leftMenu} {...this.props} />
+        <BrowseResults firstMenu={leftMenu} {...this.props} />
       </Paneset>
     );
   }

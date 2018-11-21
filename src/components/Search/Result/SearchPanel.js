@@ -70,7 +70,9 @@ class SearchPanel extends React.Component<P, {}> {
           bibQuery += ' AND (' + getFormatFilterQuery(formatType) + ')';
         }
       }
-
+      if (conditionFilter === 'BROWSE') {
+        dispatch({ type: ActionTypes.BROWSE_FIRST_PAGE, query: 'ti ' + inputValue });
+      }
       if (recordTypeControl && recordTypeControl.length) {
         recordTypeControl.forEach(element => {
           if (Object.keys(element)[0] === 'Bibliographic records') {

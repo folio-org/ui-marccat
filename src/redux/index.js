@@ -5,12 +5,14 @@ import { searchEngineReducer,
   getDetailsRecord,
   countDocReducer,
   getAssociatedBibRecord,
+  scanBrowseReducer,
   detailsAssociatedReducer } from './reducers/Reducer';
 import { searchEpic,
   searchDetailEpic,
   countDocEpic,
   searchAssociatedBibRecords,
-  associatedBibDetailEpic } from './epic/epics';
+  associatedBibDetailEpic,
+  scanBrowsingRecords } from './epic/epics';
 
 export const reducer = combineReducers({
   search: searchEngineReducer,
@@ -18,7 +20,8 @@ export const reducer = combineReducers({
   filter: filterReducer,
   countDoc: countDocReducer,
   associatedRecords: getAssociatedBibRecord,
-  associatedBibDetails: detailsAssociatedReducer
+  associatedBibDetails: detailsAssociatedReducer,
+  browse: scanBrowseReducer
 });
 
 export const epics = combineEpics(
@@ -26,5 +29,6 @@ export const epics = combineEpics(
   searchDetailEpic,
   countDocEpic,
   searchAssociatedBibRecords,
-  associatedBibDetailEpic
+  associatedBibDetailEpic,
+  scanBrowsingRecords
 );

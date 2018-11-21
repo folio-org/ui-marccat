@@ -53,7 +53,7 @@ class MARCcat extends React.Component<P, S> {
           >
             <SearchPanel {...this.props} />
           </Pane>}
-        <BrowseResults firstMenu={leftMenu} {...this.props} />
+        <SearchResults firstMenu={leftMenu} {...this.props} />
       </Paneset>
     );
   }

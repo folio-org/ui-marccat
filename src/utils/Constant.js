@@ -16,9 +16,11 @@ export const ENDPOINT = {
     'x-okapi-tenant': 'tnx',
   },
   BASE_URL: 'marccat',
+  MERGED_SEARCH_URL: '/mergedSearch',
   SEARCH_URL: '/searchVertical',
   SEARCH_URL_JSON: '/search',
-  DOC_COUNT_URL: 'document-count-by-id'
+  DOC_COUNT_URL: 'document-count-by-id',
+  BROWSE_FIRST_PAGE_URL: '/first-page'
 };
 
 // REDUX DATA STORE MANAGEMENT

@@ -20,10 +20,18 @@ export const isfetchingCounterRequest = (isLoading) => ({
   type: ActionTypes.FETCH_COUNTER_REQUESTED,
   payload: isLoading
 });
+export const isfetchingScanBrowseRequest = (isLoading) => ({
+  type: ActionTypes.FETCH_BROWSE_FIRST_PAGE,
+  payload: isLoading
+});
 export const fetchAssociatedBibRecords = (records, recordType) => ({
   type: ActionTypes.ASSOCIATED_BIB_REC_SUCCESS,
   payload: records,
   recType: recordType
+});
+export const fetchScanBrowsingRecords = (records) => ({
+  type: ActionTypes.BROWSE_FIRST_PAGE_SUCCESS,
+  payload: records
 });
 export const fetchCountDocRecords = (records) => ({
   type: ActionTypes.COUNT_DOC_SUCCESS,

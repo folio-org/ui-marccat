@@ -6,7 +6,6 @@ import BrowseItemDetail from './BrowseItemDetail';
 import { EMPTY_MESSAGE } from '../../../utils/Constant';
 import { ToolbarButtonMenu } from '../../../lib';
 import { browseResultsFormatter } from '../../../utils/Formatter';
-import { browseResults } from '../../Mock/browseData';
 
 type P = Props & {};
 type S = {
@@ -65,7 +64,6 @@ export class BrowseResults extends React.Component<P, S> {
   render() {
     const { browseDetailPanelIsVisible, rowClicked, browseDetail } = this.state;
     const { translate, firstMenu } = this.props;
-    console.log(this.props.browseRecords);
     return (
       <Paneset static>
         <Pane

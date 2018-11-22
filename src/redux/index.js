@@ -5,7 +5,7 @@ import { searchEngineReducer,
   getDetailsRecord,
   countDocReducer,
   getAssociatedBibRecord,
-  scanBrowseReducer,
+  scanBrowsingReducer,
   detailsAssociatedReducer } from './reducers/Reducer';
 import { searchEpic,
   searchDetailEpic,
@@ -21,7 +21,7 @@ export const reducer = combineReducers({
   countDoc: countDocReducer,
   associatedRecords: getAssociatedBibRecord,
   associatedBibDetails: detailsAssociatedReducer,
-  browse: scanBrowseReducer
+  browse: scanBrowsingReducer
 });
 
 export const epics = combineEpics(

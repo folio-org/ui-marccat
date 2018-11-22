@@ -19,6 +19,7 @@
   "button.cancel": "Cancel",
   "button.new.tag": "+ Tag",
   "button.backto": "Close",
+  "button.remove": "Remove",
 
   "navigator.search": "Search",
   "search.result" : "Search Result",

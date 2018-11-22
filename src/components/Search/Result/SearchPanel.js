@@ -1,15 +1,13 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable no-alert */
 import React from 'react';
-import SearchField from '@folio/stripes-components/lib/SearchField';
-import { AccordionSet, Accordion, FilterAccordionHeader } from '@folio/stripes-components';
+import { SearchField,
+  Button,
+  AccordionSet,
+  Accordion,
+  FilterAccordionHeader, InfoPopover } from '@folio/stripes-components';
 import { Row, Col } from 'react-flexbox-grid';
 import { reduxForm, Field } from 'redux-form';
-import InfoPopover from '@folio/stripes-components/lib/InfoPopover';
-import { Props, injectCommonProp } from '../../../core';
-import SearchSelectFields from '../Select/SearchIndexes';
-import SearchConditions from '../Select/SearchConditions';
-import FiltersContainer from '../Filter/FiltersContainer';
+import type { Props } from '../../../core';
+import { SearchIndexes, SearchConditions, FiltersContainer } from '../';
 import { ActionTypes } from '../../../redux/actions/Actions';
 import { findYourQuery } from '../../Search/Select/FilterMapper';
 import { remapFilters } from '../../../utils/Mapper';
@@ -20,12 +18,20 @@ type P = Props & {
   inputErrorCheck: string,
   translate: Function
 }
+type S = {
+  filterCount: number;
+};
 
-class SearchPanel extends React.Component<P, {}> {
+class SearchPanel extends React.Component<P, S> {
   constructor(props: P) {
     super(props);
-    this.state = {};
+    this.state = {
+      searchForm: [{ name: '' }],
+      filterCount: undefined
+    };
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleAddSearchForm = this.handleAddSearchForm.bind(this);
+    this.handleRemoveSearchForm = this.handleRemoveSearchForm.bind(this);
   }
 
   handleKeyDown(e) {
@@ -89,6 +95,20 @@ class SearchPanel extends React.Component<P, {}> {
     }
   }
 
+  handleAddSearchForm = () => {
+    this.setState({
+      searchForm: this.state.searchForm.concat([{ name: '' }])
+    });
+  }
+
+  handleRemoveSearchForm = (idx) => () => {
+    const { searchForm } = this.state;
+    delete searchForm[idx];
+    this.setState({
+      searchForm
+    });
+  }
+
   render() {
     const { translate } = this.props;
     return (
@@ -99,46 +119,61 @@ class SearchPanel extends React.Component<P, {}> {
           label={this.props.translate({ id: 'ui-marccat.navigator.search' })}
           header={FilterAccordionHeader}
         >
-          <form name="searchForm" onKeyDown={this.handleKeyDown}>
-            <Row>
-              <Col xs={11}>
-                <div className={styles.select_margin}>
-                  <SearchSelectFields
-                    marginBottom0
-                    {...this.props}
+          {this.state.searchForm.map((form, idx) => (
+            <form name="searchForm" onKeyDown={this.handleKeyDown} key={idx}>
+              <Row>
+                <Col xs={11}>
+                  <div className={styles.select_margin}>
+                    <SearchIndexes
+                      marginBottom0
+                      {...this.props}
+                    />
+                  </div>
+                </Col>
+                <Col xs={1} style={{ paddingLeft: 0 }} className={styles.popover}>
+                  <InfoPopover
+                    content={translate({ id: 'ui-marccat.search.lorem' })}
+                    buttonLabel={translate({ id: 'ui-marccat.search.scanButton' })}
+                    buttonHref="http://www"
+                    buttonTarget="_blank"
                   />
-                </div>
-              </Col>
-              <Col xs={1} style={{ paddingLeft: 0 }} className={styles.popover}>
-                <InfoPopover
-                  content={translate({ id: 'ui-marccat.search.lorem' })}
-                  buttonLabel={translate({ id: 'ui-marccat.search.scanButton' })}
-                  buttonHref="http://www"
-                  buttonTarget="_blank"
-                />
-              </Col>
-            </Row>
-            <Row style={{ height: '30px' }}>
+                </Col>
+              </Row>
+              <Row style={{ height: '30px' }}>
+                <Col xs={11}>
+                  <SearchConditions {...this.props} />
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={11}>
+                  <div className={styles.select_margin}>
+                    <Field
+                      fullWidth
+                      component={SearchField}
+                      placeholder="Search..."
+                      name="searchTextArea"
+                      id="searchTextArea"
+                    />
+                  </div>
+                </Col>
+              </Row>
               <Col xs={11}>
-                <SearchConditions {...this.props} />
+                <Button
+                  buttonClass={styles.rightPosition}
+                  onClick={this.handleAddSearchForm}
+                >{translate({ id: 'ui-marccat.button.add' })}
+                </Button>
+                {idx !== 0 &&
+                <Button
+                  buttonClass={styles.rightPositionTop}
+                  onClick={this.handleRemoveSearchForm(idx)}
+                >{translate({ id: 'ui-marccat.button.remove' })}
+                </Button>}
               </Col>
-            </Row>
-            <Row>
-              <Col xs={11}>
-                <div className={styles.select_margin}>
-                  <Field
-                    fullWidth
-                    component={SearchField}
-                    placeholder="Search..."
-                    name="searchTextArea"
-                    id="searchTextArea"
-                  />
-                </div>
-              </Col>
-            </Row>
-          </form>
+            </form>
+          ))}
         </Accordion>
-        <FiltersContainer {...this.props} />
+        <FiltersContainer {...this.props} filterCount={filterCount}/>
       </AccordionSet>
     );
   }
@@ -146,4 +181,4 @@ class SearchPanel extends React.Component<P, {}> {
 
 export default reduxForm({
   form: 'searchForm',
-})(injectCommonProp(SearchPanel));
+})(SearchPanel);

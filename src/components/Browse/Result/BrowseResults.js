@@ -1,10 +1,10 @@
 import React from 'react';
-import { MultiColumnList, Pane, Paneset } from '@folio/stripes-components';
+import { MultiColumnList, Pane, Paneset, Icon } from '@folio/stripes-components';
 import { connect } from 'react-redux';
 import { injectCommonProp, Props } from '../../../core';
 import BrowseItemDetail from './BrowseItemDetail';
 import { EMPTY_MESSAGE } from '../../../utils/Constant';
-import { ToolbarButtonMenu } from '../../../lib';
+import { ToolbarButtonMenu, EmptyMessage } from '../../../lib';
 import { browseResultsFormatter } from '../../../utils/Formatter';
 
 type P = Props & {};
@@ -14,7 +14,7 @@ type S = {
 };
 
 export class BrowseResults extends React.Component<P, S> {
-  constructor(props:P) {
+  constructor(props: P) {
     super(props);
     this.state = {
       browseDetailPanelIsVisible: false,
@@ -63,7 +63,7 @@ export class BrowseResults extends React.Component<P, S> {
 
   render() {
     const { browseDetailPanelIsVisible, rowClicked, browseDetail } = this.state;
-    const { translate, firstMenu } = this.props;
+    const { translate, firstMenu, isFetchingBrowse, isReadyBrowse } = this.props;
     return (
       <Paneset static>
         <Pane
@@ -74,37 +74,55 @@ export class BrowseResults extends React.Component<P, S> {
           firstMenu={firstMenu}
           lastMenu={this.renderButtonMenu()}
         >
-          <MultiColumnList
-            contentData={this.props.browseRecords}
-            defaultWidth="fill"
-            isEmptyMessage={EMPTY_MESSAGE}
-            formatter={browseResultsFormatter}
-            onRowClick={this.handlePanelDetails}
-            rowMetadata={['Access point', 'Authority Records', 'Bibliographic Records']}
-            columnWidths={
-              {
-                'type': '8%',
-                'Access point': '30%',
-                'Authority Records': '30%',
-                'Bibliographic Records': '30%',
-              }
-            }
-            visibleColumns={[
-              'type',
-              'Access point',
-              'Authority Records',
-              'Bibliographic Records'
-            ]}
-          />
+          {
+            (isFetchingBrowse) ?
+              <Icon icon="spinner-ellipsis" /> :
+              (isReadyBrowse) ?
+                <MultiColumnList
+                  contentData={this.props.browseRecords}
+                  autosize
+                  isEmptyMessage={EMPTY_MESSAGE}
+                  formatter={browseResultsFormatter}
+                  onRowClick={this.handlePanelDetails}
+                  rowMetadata={['Access point', 'Authority Records', 'Bibliographic Records']}
+                  columnWidths={
+                    {
+                      'type': '5%',
+                      'headingNumber': '10%',
+                      'database': '15%',
+                      'stringText': '10%',
+                      'verificationlevel': '10%',
+                      'accessPointlanguage': '5%',
+                      'countAuthorities': '5%',
+                      'countCrossReferences': '5%',
+                      'countDocuments': '5%',
+                      'countTitleNameDocuments': '5%',
+                      'indexingLanguage': '10%',
+                    }
+                  }
+                  visibleColumns={[
+                    'type',
+                    'headingNumber',
+                    'database',
+                    'stringText',
+                    'verificationlevel',
+                    'accessPointlanguage',
+                    'countAuthorities',
+                    'countCrossReferences',
+                    'countDocuments',
+                    'countTitleNameDocuments',
+                    'indexingLanguage',
+                  ]}
+                /> : <EmptyMessage {...this.props} />}
         </Pane>
         {browseDetailPanelIsVisible && !rowClicked &&
-        <BrowseItemDetail
-          {...this.props}
-          translate={translate}
-          itemDetail={browseDetail}
-          onClose={this.handleBrowseDetails}
-          actionMenuItems={this.renderActionMenuItems()}
-        />
+          <BrowseItemDetail
+            {...this.props}
+            translate={translate}
+            itemDetail={browseDetail}
+            onClose={this.handleBrowseDetails}
+            actionMenuItems={this.renderActionMenuItems()}
+          />
         }
       </Paneset>
     );
@@ -112,6 +130,8 @@ export class BrowseResults extends React.Component<P, S> {
 }
 export default (connect(
   ({ marccat: { browse } }) => ({
-    browseRecords: browse.records
+    browseRecords: browse.records,
+    isFetchingBrowse: browse.isLoading,
+    isReadyBrowse: browse.isReady
   }),
 )(injectCommonProp(BrowseResults)));

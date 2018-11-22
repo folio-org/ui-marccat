@@ -15,22 +15,25 @@
   background-color: #2b75bb;
   border-radius: 25%;
 }
+
 .rightPosition {
   float: right;
   margin-right: -7px;
-  margin-top:10px;
+  margin-top: 10px;
   height: 24px;
   max-height: 24px;
   line-height: 0;
 }
+
 .rightPositionTop {
   float: right;
   margin-right: 7px;
-  margin-top:10px;
+  margin-top: 10px;
   height: 24px;
   max-height: 24px;
   line-height: 0;
 }
+
 .select_margin {
   & * {
     margin-bottom: 0;

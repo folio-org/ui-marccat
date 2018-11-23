@@ -64,3 +64,14 @@ export const countDocEpic = (action$, store) =>
           .catch(e => of$(marccatActions.fetchFailure(e))),
       ));
 
+export const scanBrowsingRecords = (action$, store) =>
+  action$.ofType(ActionTypes.BROWSE_FIRST_PAGE)
+    .switchMap((d) =>
+      concat$(
+        of$(marccatActions.isfetchingScanBrowseRequest(true)),
+        ajax
+          .getJSON(buildUrl(ENDPOINT.BROWSE_FIRST_PAGE_URL, `query=${d.query}&view=1&mainLibrary=170&pageSize=20&lang=eng`), ENDPOINT.HEADERS)
+          .map(record => marccatActions.fetchScanBrowsingRecords(record.headings))
+          .catch(e => of$(marccatActions.fetchFailure(e))),
+      ));
+

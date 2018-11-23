@@ -1,11 +1,11 @@
 import React from 'react';
 import { MultiColumnList, Pane, Paneset } from '@folio/stripes-components';
+import { connect } from 'react-redux';
 import { injectCommonProp, Props } from '../../../core';
 import BrowseItemDetail from './BrowseItemDetail';
 import { EMPTY_MESSAGE } from '../../../utils/Constant';
 import { ToolbarButtonMenu } from '../../../lib';
 import { browseResultsFormatter } from '../../../utils/Formatter';
-import { browseResults } from '../../Mock/browseData';
 
 type P = Props & {};
 type S = {
@@ -13,7 +13,7 @@ type S = {
   rowClicked: bool;
 };
 
-class BrowseResults extends React.Component<P, S> {
+export class BrowseResults extends React.Component<P, S> {
   constructor(props:P) {
     super(props);
     this.state = {
@@ -75,7 +75,7 @@ class BrowseResults extends React.Component<P, S> {
           lastMenu={this.renderButtonMenu()}
         >
           <MultiColumnList
-            contentData={browseResults}
+            contentData={this.props.browseRecords}
             defaultWidth="fill"
             isEmptyMessage={EMPTY_MESSAGE}
             formatter={browseResultsFormatter}
@@ -110,4 +110,8 @@ class BrowseResults extends React.Component<P, S> {
     );
   }
 }
-export default injectCommonProp(BrowseResults);
+export default (connect(
+  ({ marccat: { browse } }) => ({
+    browseRecords: browse.records
+  }),
+)(injectCommonProp(BrowseResults)));

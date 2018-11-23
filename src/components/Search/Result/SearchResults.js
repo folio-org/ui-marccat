@@ -121,14 +121,14 @@ export class SearchResults extends React.Component<P, {}> {
                     {
                       'resultView': '3%',
                       '001': '10%',
-                      '245': '27%',
+                      '245': '35%',
                       'name': '15%',
-                      'uniformTitle': '10%',
+                      'uniformTitle': '5%',
                       'subject': '10%',
                       'date1': '5%',
                       'date2': '5%',
-                      'format': '10%',
-                      'countDoc': '5%'
+                      'format': '8%',
+                      'countDoc': '4%'
                     }
                   }
                   rowMetadata={['001', 'recordView']}

@@ -145,6 +145,32 @@ export function getAssociatedBibRecord(state = { isLoading, isReady }, action) {
   }
 }
 
+export function scanBrowsingReducer(state = { isLoading, isReady }, action) {
+  switch (action.type) {
+  case ActionTypes.BROWSE_FIRST_PAGE:
+    return {
+      ...state,
+      isLoading: false,
+      isReady: false
+    };
+  case ActionTypes.FETCH_BROWSE_FIRST_PAGE:
+    return {
+      ...state,
+      isLoading: action.payload,
+      isReady: false
+    };
+  case ActionTypes.BROWSE_FIRST_PAGE_SUCCESS:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: false,
+      isReady: true,
+    };
+  default:
+    return state;
+  }
+}
+
 export function filterReducer(state = { isLoading }, action) {
   switch (action.type) {
   case ActionTypes.FILTERS:

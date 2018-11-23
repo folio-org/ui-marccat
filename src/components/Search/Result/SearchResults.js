@@ -105,10 +105,6 @@ export class SearchResults extends React.Component<P, {}> {
           lastMenu={rightMenu}
         >
           {
-            (noResults) &&
-            <EmptyMessage {...this.props} />
-          }
-          {
             (isFetching && !noResults) ?
               <Icon icon="spinner-ellipsis" /> :
               (isReady) ?

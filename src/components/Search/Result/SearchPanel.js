@@ -16,18 +16,17 @@ import styles from '../../../styles/common.css';
 
 type P = Props & {
   inputErrorCheck: string,
-  translate: Function
+  translate: Function,
 }
 type S = {
-  filterCount: number;
 };
 
 class SearchPanel extends React.Component<P, S> {
   constructor(props: P) {
     super(props);
     this.state = {
+      isBrowseRequested: false,
       searchForm: [{ name: '' }],
-      filterCount: undefined
     };
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleAddSearchForm = this.handleAddSearchForm.bind(this);
@@ -39,6 +38,8 @@ class SearchPanel extends React.Component<P, S> {
       e.preventDefault();
       const inputValue = e.target.form[3].defaultValue;
       const { store, dispatch } = this.props;
+      let { isBrowseRequested } = this.state;
+      isBrowseRequested = false;
       let baseQuery;
       let indexForQuery;
       let conditionFilter;
@@ -62,7 +63,6 @@ class SearchPanel extends React.Component<P, S> {
 
       let bibQuery = baseQuery;
       const authQuery = baseQuery;
-
       let recordTypeControl = {};
 
       // regular filters
@@ -77,20 +77,25 @@ class SearchPanel extends React.Component<P, S> {
         }
       }
       if (conditionFilter === 'BROWSE') {
-        dispatch({ type: ActionTypes.BROWSE_FIRST_PAGE, query: 'ti ' + inputValue });
+        isBrowseRequested = true;
+        dispatch({ type: ActionTypes.BROWSE_FIRST_PAGE, query: bibQuery });
+        this.props.history.push('/marccat/browse');
       }
-      if (recordTypeControl && recordTypeControl.length) {
+      if (recordTypeControl && recordTypeControl.length && !isBrowseRequested) {
         recordTypeControl.forEach(element => {
           if (Object.keys(element)[0] === 'Bibliographic records') {
             dispatch({ type: ActionTypes.SEARCH, query: bibQuery });
+            this.props.history.push('/marccat/search');
           }
           if (Object.keys(element)[0] === 'Authority records') {
             dispatch({ type: ActionTypes.SEARCH_AUTH, query: authQuery });
+            this.props.history.push('/marccat/search');
           }
         });
-      } else {
+      } else if (!isBrowseRequested) {
         dispatch({ type: ActionTypes.SEARCH, query: bibQuery });
         dispatch({ type: ActionTypes.SEARCH_AUTH, query: authQuery });
+        this.props.history.push('/marccat/search');
       }
     }
   }
@@ -171,9 +176,10 @@ class SearchPanel extends React.Component<P, S> {
                 </Button>}
               </Col>
             </form>
-          ))}
+          ))
+          }
         </Accordion>
-        <FiltersContainer {...this.props} filterCount={filterCount}/>
+        <FiltersContainer {...this.props} />
       </AccordionSet>
     );
   }

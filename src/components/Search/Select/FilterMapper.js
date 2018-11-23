@@ -67,4 +67,18 @@ export const findYourQuery = {
   'TITLE-MATCH': 'TI ',
   'BARCODE-MATCH': 'BC ',
   'COPY-MATCH': 'CP ',
+  // FOR BROWSE KEY
+  'ALL-BROWSE': 'AW ',
+  'MULTI-BROWSE': 'AW ',
+  'ISBN-BROWSE': 'BN ',
+  'ISSN-BROWSE': 'SN ',
+  'KEY-BROWSE': 'AW ',
+  'NUMID-BROWSE': 'AN ',
+  'NAME-BROWSE': 'NA ',
+  'PUB-BROWSE': 'PU ',
+  'LOC-BROWSE': 'LL ',
+  'SUB-BROWSE': 'SU ',
+  'TITLE-BROWSE': 'TI ',
+  'BARCODE-BROWSE': 'BC ',
+  'COPY-BROWSE': 'CP ',
 };

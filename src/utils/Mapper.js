@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import * as C from '../../../utils/Constant';
+import * as C from './Constant';
 
 /**
  * concatenate all subfield text data of a tag

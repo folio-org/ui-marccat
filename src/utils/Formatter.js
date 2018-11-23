@@ -1,6 +1,6 @@
 import React from 'react';
 import { getFieldPosition, getFormat } from './Mapper';
-import style from '../Style/Search.css';
+import style from '../styles/common.css';
 
 export const columnMapper = {
   'resultView': '',
@@ -59,6 +59,17 @@ export const resultsFormatterForAssociated = {
       { x['658'] && x['658'] }
       { x['662'] && x['662'] }
     </div>
+  )
+};
+
+export const browseResultsFormatter = {
+  'type': () => (
+    <span className={style.authority} />
+  )
+};
+export const browseDetailResultsFormatter = {
+  'type': () => (
+    <span className={style.bibliographic} />
   )
 };
 

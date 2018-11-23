@@ -1,31 +1,36 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable no-alert */
 import React from 'react';
-import SearchField from '@folio/stripes-components/lib/SearchField';
-import { AccordionSet, Accordion, FilterAccordionHeader } from '@folio/stripes-components';
+import { SearchField,
+  Button,
+  AccordionSet,
+  Accordion,
+  FilterAccordionHeader, InfoPopover } from '@folio/stripes-components';
 import { Row, Col } from 'react-flexbox-grid';
 import { reduxForm, Field } from 'redux-form';
-import InfoPopover from '@folio/stripes-components/lib/InfoPopover';
-import { Props, injectCommonProp } from '../../../core';
-import SearchSelectFields from '../Select/SearchIndexes';
-import SearchConditions from '../Select/SearchConditions';
-import FiltersContainer from '../Filter/FiltersContainer';
+import type { Props } from '../../../core';
+import { SearchIndexes, SearchConditions, FiltersContainer } from '../';
 import { ActionTypes } from '../../../redux/actions/Actions';
-import styles from '../Style/Search.css';
 import { findYourQuery } from '../../Search/Select/FilterMapper';
-import { remapFilters } from '../Utils/Mapper';
-import { getLanguageFilterQuery, getFormatFilterQuery } from '../Utils/SearchUtils';
+import { remapFilters } from '../../../utils/Mapper';
+import { getLanguageFilterQuery, getFormatFilterQuery } from '../../../utils/SearchUtils';
+import styles from '../../../styles/common.css';
 
 type P = Props & {
   inputErrorCheck: string,
-  translate: Function
+  translate: Function,
 }
+type S = {
+};
 
-class SearchPanel extends React.Component<P, {}> {
+class SearchPanel extends React.Component<P, S> {
   constructor(props: P) {
     super(props);
-    this.state = {};
+    this.state = {
+      isBrowseRequested: false,
+      searchForm: [{ name: '' }],
+    };
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleAddSearchForm = this.handleAddSearchForm.bind(this);
+    this.handleRemoveSearchForm = this.handleRemoveSearchForm.bind(this);
   }
 
   handleKeyDown(e) {
@@ -33,6 +38,8 @@ class SearchPanel extends React.Component<P, {}> {
       e.preventDefault();
       const inputValue = e.target.form[3].defaultValue;
       const { store, dispatch } = this.props;
+      let { isBrowseRequested } = this.state;
+      isBrowseRequested = false;
       let baseQuery;
       let indexForQuery;
       let conditionFilter;
@@ -56,7 +63,6 @@ class SearchPanel extends React.Component<P, {}> {
 
       let bibQuery = baseQuery;
       const authQuery = baseQuery;
-
       let recordTypeControl = {};
 
       // regular filters
@@ -70,21 +76,42 @@ class SearchPanel extends React.Component<P, {}> {
           bibQuery += ' AND (' + getFormatFilterQuery(formatType) + ')';
         }
       }
-
-      if (recordTypeControl && recordTypeControl.length) {
+      if (conditionFilter === 'BROWSE') {
+        isBrowseRequested = true;
+        dispatch({ type: ActionTypes.BROWSE_FIRST_PAGE, query: bibQuery });
+        this.props.history.push('/marccat/browse');
+      }
+      if (recordTypeControl && recordTypeControl.length && !isBrowseRequested) {
         recordTypeControl.forEach(element => {
           if (Object.keys(element)[0] === 'Bibliographic records') {
             dispatch({ type: ActionTypes.SEARCH, query: bibQuery });
+            this.props.history.push('/marccat/search');
           }
           if (Object.keys(element)[0] === 'Authority records') {
             dispatch({ type: ActionTypes.SEARCH_AUTH, query: authQuery });
+            this.props.history.push('/marccat/search');
           }
         });
-      } else {
+      } else if (!isBrowseRequested) {
         dispatch({ type: ActionTypes.SEARCH, query: bibQuery });
         dispatch({ type: ActionTypes.SEARCH_AUTH, query: authQuery });
+        this.props.history.push('/marccat/search');
       }
     }
+  }
+
+  handleAddSearchForm = () => {
+    this.setState({
+      searchForm: this.state.searchForm.concat([{ name: '' }])
+    });
+  }
+
+  handleRemoveSearchForm = (idx) => () => {
+    const { searchForm } = this.state;
+    delete searchForm[idx];
+    this.setState({
+      searchForm
+    });
   }
 
   render() {
@@ -97,44 +124,60 @@ class SearchPanel extends React.Component<P, {}> {
           label={this.props.translate({ id: 'ui-marccat.navigator.search' })}
           header={FilterAccordionHeader}
         >
-          <form name="searchForm" onKeyDown={this.handleKeyDown}>
-            <Row>
-              <Col xs={11}>
-                <div className={styles.select_margin}>
-                  <SearchSelectFields
-                    marginBottom0
-                    {...this.props}
+          {this.state.searchForm.map((form, idx) => (
+            <form name="searchForm" onKeyDown={this.handleKeyDown} key={idx}>
+              <Row>
+                <Col xs={11}>
+                  <div className={styles.select_margin}>
+                    <SearchIndexes
+                      marginBottom0
+                      {...this.props}
+                    />
+                  </div>
+                </Col>
+                <Col xs={1} style={{ paddingLeft: 0 }} className={styles.popover}>
+                  <InfoPopover
+                    content={translate({ id: 'ui-marccat.search.lorem' })}
+                    buttonLabel={translate({ id: 'ui-marccat.search.scanButton' })}
+                    buttonHref="http://www"
+                    buttonTarget="_blank"
                   />
-                </div>
-              </Col>
-              <Col xs={1} style={{ paddingLeft: 0 }} className={styles.popover}>
-                <InfoPopover
-                  content={translate({ id: 'ui-marccat.search.lorem' })}
-                  buttonLabel={translate({ id: 'ui-marccat.search.scanButton' })}
-                  buttonHref="http://www"
-                  buttonTarget="_blank"
-                />
-              </Col>
-            </Row>
-            <Row style={{ height: '30px' }}>
+                </Col>
+              </Row>
+              <Row style={{ height: '30px' }}>
+                <Col xs={11}>
+                  <SearchConditions {...this.props} />
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={11}>
+                  <div className={styles.select_margin}>
+                    <Field
+                      fullWidth
+                      component={SearchField}
+                      placeholder="Search..."
+                      name="searchTextArea"
+                      id="searchTextArea"
+                    />
+                  </div>
+                </Col>
+              </Row>
               <Col xs={11}>
-                <SearchConditions {...this.props} />
+                <Button
+                  buttonClass={styles.rightPosition}
+                  onClick={this.handleAddSearchForm}
+                >{translate({ id: 'ui-marccat.button.add' })}
+                </Button>
+                {idx !== 0 &&
+                <Button
+                  buttonClass={styles.rightPositionTop}
+                  onClick={this.handleRemoveSearchForm(idx)}
+                >{translate({ id: 'ui-marccat.button.remove' })}
+                </Button>}
               </Col>
-            </Row>
-            <Row>
-              <Col xs={11}>
-                <div className={styles.select_margin}>
-                  <Field
-                    fullWidth
-                    component={SearchField}
-                    placeholder="Search..."
-                    name="searchTextArea"
-                    id="searchTextArea"
-                  />
-                </div>
-              </Col>
-            </Row>
-          </form>
+            </form>
+          ))
+          }
         </Accordion>
         <FiltersContainer {...this.props} />
       </AccordionSet>
@@ -144,4 +187,4 @@ class SearchPanel extends React.Component<P, {}> {
 
 export default reduxForm({
   form: 'searchForm',
-})(injectCommonProp(SearchPanel));
+})(SearchPanel);

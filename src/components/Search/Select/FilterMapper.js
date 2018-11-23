@@ -1,4 +1,4 @@
-const languageFilterMap = {
+export const languageFilterMap = {
   'English': 'eng',
   'Italian': 'ita',
   'Spanish': 'spa',
@@ -7,7 +7,7 @@ const languageFilterMap = {
   'Chinese simplified': 'chi',
   'Arabic': 'ara'
 };
-const formatFilterMap = {
+export const formatFilterMap = {
   'All text': 'MAT "a"',
   'Books': '((MAT "a" OR MAT "t") AND (BIB "m" OR BIB "c" OR BIB "d"))',
   'Archival Manuscript/ Mixed Formats': 'MAT "p"',
@@ -24,7 +24,7 @@ const formatFilterMap = {
   'Software or E-Resource': 'MAT "m"',
   '3-D Object': 'MAT "r"'
 };
-const findYourQuery = {
+export const findYourQuery = {
   // FOR START KEY
   'ALL-START': 'AW ',
   'MULTI-START': 'AW ',
@@ -67,9 +67,18 @@ const findYourQuery = {
   'TITLE-MATCH': 'TI ',
   'BARCODE-MATCH': 'BC ',
   'COPY-MATCH': 'CP ',
-};
-export {
-  findYourQuery,
-  languageFilterMap,
-  formatFilterMap
+  // FOR BROWSE KEY
+  'ALL-BROWSE': 'AW ',
+  'MULTI-BROWSE': 'AW ',
+  'ISBN-BROWSE': 'BN ',
+  'ISSN-BROWSE': 'SN ',
+  'KEY-BROWSE': 'AW ',
+  'NUMID-BROWSE': 'AN ',
+  'NAME-BROWSE': 'NA ',
+  'PUB-BROWSE': 'PU ',
+  'LOC-BROWSE': 'LL ',
+  'SUB-BROWSE': 'SU ',
+  'TITLE-BROWSE': 'TI ',
+  'BARCODE-BROWSE': 'BC ',
+  'COPY-BROWSE': 'CP ',
 };

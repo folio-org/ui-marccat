@@ -5,8 +5,9 @@ import { AccordionSet, FilterAccordionHeader, Accordion } from '@folio/stripes-c
 import { Row, Col } from 'react-flexbox-grid';
 import InventoryPluggableBtn from '../Plugin/Inventory';
 import type { Props } from '../../../core';
-import style from '../Style/Search.css';
-import { getTag245, getTitle245 } from '../Utils/Mapper';
+import { getTag245, getTitle245 } from '../../../utils/Mapper';
+
+import style from '../../../styles/common.css';
 
 type P = Props & {
   items: Array<any>,

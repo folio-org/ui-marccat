@@ -5,7 +5,7 @@
 import * as React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
-import { ToolbarButtonMenu } from '../../components/Lib';
+import { ToolbarButtonMenu } from '../../lib';
 
 type P = {
   label: string,

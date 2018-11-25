@@ -6,7 +6,7 @@ const url = (environment === 'sandbox') ?
 module.exports = {
   okapi: { url, tenant: 'diku' },
   config: {
-    logCategorie: '',
+    logCategorie: 'redux',
     hasAllPerms: true,
   },
   branding: {

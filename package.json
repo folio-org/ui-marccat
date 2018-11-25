@@ -87,14 +87,71 @@
     "permissionSets": [
       {
         "permissionName": "module.marccat.enabled",
-        "displayName": "UI: ui-marccat module is enabled",
+        "displayName": "UI: MARCcat module is enabled"
+      },
+      {
+        "permissionName": "ui-marccat.view.search.records",
+        "displayName": "MARCcat: Can search and view search results",
+        "subPermissions": [
+          "module.marccat.enabled"
+        ],
         "visible": true
       },
       {
-        "permissionName": "settings.marccat.enabled",
-        "displayName": "Settings (marccat): display list of settings pages",
+        "permissionName": "ui-marccat.view.search.detail",
+        "displayName": "MARCcat: Can view details of search results",
         "subPermissions": [
-          "settings.enabled"
+          "ui-marccat.view.search.records",
+          "module.marccat.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-marccat.view.browse.records",
+        "displayName": "MARCcat: Can search and view browse results",
+        "subPermissions": [
+          "module.marccat.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-marccat.view.browse.detail",
+        "displayName": "MARCcat: Can view details of search results",
+        "subPermissions": [
+          "ui-marccat.view.browse.records",
+          "module.marccat.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-marccat.settings.field-groupings",
+        "displayName": "Settings (MARCcat): Can set up field group",
+        "subPermissions": [
+          "module.marccat.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-marccat.settings.default.template",
+        "displayName": "Settings (MARCcat): Can choose a default template",
+        "subPermissions": [
+          "module.marccat.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-marccat.settings.local.authority,records",
+        "displayName": "Settings (MARCcat): Can setup local authority records",
+        "subPermissions": [
+          "module.marccat.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-marccat.settings.record.overlayrules",
+        "displayName": "Settings (MARCcat): Can setting up rules for record overlay",
+        "subPermissions": [
+          "module.marccat.enabled"
         ],
         "visible": true
       }

@@ -31,7 +31,7 @@
     "@bigtest/mirage": "^0.0.1",
     "@bigtest/mocha": "^0.5.1",
     "@bigtest/react": "^0.1.2",
-    "@folio/eslint-config-stripes": "^^3.2.1",
+    "@folio/eslint-config-stripes": "^3.2.1",
     "@folio/react-intl-safe-html": "^1.0.0",
     "@folio/stripes-components": "^4.2.2000575",
     "@folio/stripes-smart-components": "^1.10.1000297",

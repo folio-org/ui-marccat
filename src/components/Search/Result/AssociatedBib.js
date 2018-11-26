@@ -27,12 +27,12 @@ function AssociatedBib({ ...props }: P) {
       {resultRemapped &&
       <MultiColumnList
         id="bib-associated"
-        defaultWidth="fill"
+        defaultWidth="30%"
         isEmptyMessage={EMPTY_MESSAGE}
         columnWidths={
           {
-            'resultView': '10%',
-            '245': '60%',
+            'resultView': '20%',
+            '245': '50%',
             'name': '20%',
             'format': '10%'
           }

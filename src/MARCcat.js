@@ -6,7 +6,7 @@ import * as React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { injectCommonProp, Props } from './core';
-import { SearchPanel } from './components/Search/';
+import { SearchPanel } from './components/Search';
 import * as C from './utils/Constant';
 
 type P = Props & {};
@@ -50,4 +50,3 @@ class MARCcat extends React.Component<P, S> {
   }
 }
 export default injectCommonProp(MARCcat);
-

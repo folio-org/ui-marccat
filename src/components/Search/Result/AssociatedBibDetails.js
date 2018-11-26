@@ -31,7 +31,7 @@ function AssociatedBibDetails({ translate, ...props }: P) {
               label={tag245 + 'Title'}
               value={title245}
             />
-            {recordDetailsArray.map((item, i) =>
+            {recordDetailsArray.map((item, i) => (
               <Row key={i}>
                 <Col xs={1} className={style.padding8}>
                   {item.trim().substring(0, 3)}
@@ -42,7 +42,8 @@ function AssociatedBibDetails({ translate, ...props }: P) {
                 <Col xs={10} className={style.padding8}>
                   {!item.substring(6).startsWith('$') ? item.substring(3) : item.substring(6)}
                 </Col>
-              </Row>)}
+              </Row>
+            ))}
             <InventoryPluggableBtn {...props} buttonLabel={translate({ id: 'ui-marccat.search.goto.inventory' })} />
           </div>
         </Accordion>

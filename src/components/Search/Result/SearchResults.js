@@ -13,6 +13,7 @@ import RecordDetails from './RecordDetails';
 import { injectCommonProp } from '../../../core';
 import AssociatedBibDetails from './AssociatedBibDetails';
 
+import styles from '../../../styles/common.css';
 
 type P = Props & {
   headings: Array<any>;
@@ -97,6 +98,7 @@ export class SearchResults extends React.Component<P, {}> {
     return (
       <Paneset static>
         <Pane
+          className={styles.headerWhite}
           defaultWidth="fill"
           paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
           paneSub={(mergedRecord && mergedRecord.length > 0) ? message : messageNoContent}
@@ -105,7 +107,7 @@ export class SearchResults extends React.Component<P, {}> {
           lastMenu={rightMenu}
         >
           {
-            (isFetching && !noResults) ?
+            (isFetching) ?
               <Icon icon="spinner-ellipsis" /> :
               (isReady) ?
                 <MultiColumnList
@@ -115,9 +117,9 @@ export class SearchResults extends React.Component<P, {}> {
                   isEmptyMessage={C.EMPTY_MESSAGE}
                   columnWidths={
                     {
-                      'resultView': '3%',
+                      'resultView': '8%',
                       '001': '10%',
-                      '245': '35%',
+                      '245': '30%',
                       'name': '15%',
                       'uniformTitle': '5%',
                       'subject': '10%',
@@ -153,7 +155,7 @@ export class SearchResults extends React.Component<P, {}> {
         {detailPanelIsVisible &&
         <Pane
           id="pane-details"
-          defaultWidth="25%"
+          defaultWidth="30%"
           paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
           paneSub={C.EMPTY_MESSAGE}
           appIcon={{ app: C.META.ICON_TITLE }}
@@ -217,4 +219,3 @@ export default (connect(
     isPanelBibAssOpen: associatedBibDetails.mustOpenPanel
   }),
 )(injectCommonProp(SearchResults)));
-

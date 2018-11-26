@@ -24,4 +24,3 @@ export const forkEpicBind = (epicFactory, props, ...actions) => {
   const actions$ = new ActionsObservable(input$);
   return epicFactory(actions$);
 };
-

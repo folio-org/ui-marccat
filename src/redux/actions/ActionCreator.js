@@ -8,6 +8,10 @@ export const isfetchingDetailsRequest = (isLoading) => ({
   type: ActionTypes.FETCH_DETAILS_REQUESTED,
   payload: isLoading
 });
+export const isfetchingBrowseRequest = (isLoading) => ({
+  type: ActionTypes.FETCH_DETAILS_BROWSE_REQUESTED,
+  payload: isLoading
+});
 export const isfetchingDetailsAssociatedRequest = (isLoading) => ({
   type: ActionTypes.FETCH_DETAILS_ASSOCIATED_REQUESTED,
   payload: isLoading
@@ -54,6 +58,11 @@ export const fetchSearchEngineRecords = (bibliographicResults, bibCounter, autho
   bibCounter,
   authorityResults,
   authCounter
+});
+export const fetchBrowseDetail = (results, counter) => ({
+  type: ActionTypes.DETAILS_BROWSE_SUCCESS,
+  payload: results,
+  count: counter
 });
 export const fetchSuccess = (message) => ({
   type: ActionTypes.SUCCESS,

@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import { injectCommonProp } from '../../../core';
 import { Props } from '../../../core/type/props';
 import BrowseItemDetail from './BrowseItemDetail';
+import { ActionTypes } from '../../../redux/actions/Actions';
+import { findYourQueryFromBrowse } from '../../Search/Select/FilterMapper';
 import { EMPTY_MESSAGE } from '../../../utils/Constant';
 import { ToolbarButtonMenu, EmptyMessage } from '../../../lib';
-import { browseResultsFormatter } from '../../../utils/Formatter';
+import { browseFormatter, browseColMapper } from '../../../utils/Formatter';
 
 type P = Props & {};
 type S = {
@@ -20,32 +22,29 @@ export class BrowseResults extends React.Component<P, S> {
     this.state = {
       browseDetailPanelIsVisible: false,
       rowClicked: false,
-      browseDetail: {
-        accessPoint: undefined,
-        authorityRecord: undefined,
-        bibliographicRecord: undefined,
-      }
     };
 
     this.handleBrowseDetails = this.handleBrowseDetails.bind(this);
   }
 
-  handlePanelDetails = (event, data) => {
+  handlePanelDetails = () => {
     this.setState({
       browseDetailPanelIsVisible: true,
       rowClicked: false,
-      browseDetail: {
-        accessPoint: data['Access point'],
-        authorityRecord: data['Authority Records'],
-        bibliographicRecord: data['Bibliographic Records'],
-      }
     });
   };
 
-  handleBrowseDetails = () => {
+  handleBrowseDetails = (e, meta) => {
+    const { dispatch, store } = this.props;
+    const id = meta.headingNumber;
+    const indexFilter = store.getState().form.searchForm.values.selectIndexes;
+    const conditionFilter = store.getState().form.searchForm.values.selectCondition;
+    const indexForQuery = findYourQueryFromBrowse[indexFilter.concat('-').concat(conditionFilter)];
+    const baseQuery = indexForQuery + id;
+    dispatch({ type: ActionTypes.DETAILS_BROWSE, query: baseQuery });
     this.setState({
-      browseDetailPanelIsVisible: false,
-      rowClicked: true
+      browseDetailPanelIsVisible: true,
+      rowClicked: false
     });
   };
 
@@ -64,12 +63,12 @@ export class BrowseResults extends React.Component<P, S> {
   };
 
   render() {
-    const { browseDetailPanelIsVisible, rowClicked, browseDetail } = this.state;
+    const { browseDetailPanelIsVisible, rowClicked } = this.state;
     const { translate, firstMenu, isFetchingBrowse, isReadyBrowse, browseRecords } = this.props;
     return (
       <Paneset static>
         <Pane
-          padContent={(browseRecords.length > 0) || isFetchingBrowse}
+          padContent={(browseRecords) || isFetchingBrowse}
           defaultWidth="fill"
           actionMenuItems={this.renderActionMenuItems()}
           paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
@@ -85,56 +84,52 @@ export class BrowseResults extends React.Component<P, S> {
                   contentData={browseRecords}
                   autosize
                   isEmptyMessage={EMPTY_MESSAGE}
-                  formatter={browseResultsFormatter}
-                  onRowClick={this.handlePanelDetails}
+                  formatter={browseFormatter}
+                  onRowClick={this.handleBrowseDetails}
                   rowMetadata={['Access point', 'Authority Records', 'Bibliographic Records']}
+                  columnMapping={browseColMapper}
                   columnWidths={
                     {
-                      'type': '5%',
-                      'headingNumber': '10%',
-                      'database': '15%',
-                      'stringText': '10%',
-                      'verificationlevel': '10%',
-                      'accessPointlanguage': '5%',
-                      'countAuthorities': '5%',
-                      'countCrossReferences': '5%',
-                      'countDocuments': '5%',
-                      'countTitleNameDocuments': '5%',
-                      'indexingLanguage': '10%',
+                      'type': '10%',
+                      'headingNumber': '15%',
+                      'stringText': '25%',
+                      'countAuthorities': '25%',
+                      'countDocuments': '25%',
                     }
                   }
                   visibleColumns={[
                     'type',
                     'headingNumber',
-                    'database',
                     'stringText',
-                    'verificationlevel',
-                    'accessPointlanguage',
                     'countAuthorities',
-                    'countCrossReferences',
-                    'countDocuments',
-                    'countTitleNameDocuments',
-                    'indexingLanguage',
+                    'countDocuments'
                   ]}
                 /> : <EmptyMessage {...this.props} />}
         </Pane>
         {browseDetailPanelIsVisible && !rowClicked &&
-          <BrowseItemDetail
-            {...this.props}
-            translate={translate}
-            itemDetail={browseDetail}
-            onClose={this.handleBrowseDetails}
-            actionMenuItems={this.renderActionMenuItems()}
-          />
+          <Pane
+            dismissible
+            defaultWidth="35%"
+            paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
+            paneSub={EMPTY_MESSAGE}
+            lastMenu={this.renderButtonMenu()}
+          >
+            {this.props.isReadyBrowseDetails === true &&
+            <BrowseItemDetail {...this.props} />
+            }
+          </Pane>
         }
       </Paneset>
     );
   }
 }
 export default (connect(
-  ({ marccat: { browse } }) => ({
+  ({ marccat: { browse, browseDetails } }) => ({
     browseRecords: browse.records,
     isFetchingBrowse: browse.isLoading,
-    isReadyBrowse: browse.isReady
+    isReadyBrowse: browse.isReady,
+    browseDetailRecords: browseDetails.results,
+    isFetchingBrowseDetails: browseDetails.isLoading,
+    isReadyBrowseDetails: browseDetails.isReady,
   }),
 )(injectCommonProp(BrowseResults)));

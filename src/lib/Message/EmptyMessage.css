@@ -3,12 +3,12 @@
 .emptyMessage {
   padding: 15px;
   color: #222;
-  position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: -1;
+  height: 100%;
   background: #f9f9f9;
   flex-direction: column;
 }

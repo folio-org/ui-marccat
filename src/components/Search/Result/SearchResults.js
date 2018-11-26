@@ -13,7 +13,6 @@ import RecordDetails from './RecordDetails';
 import { injectCommonProp } from '../../../core';
 import AssociatedBibDetails from './AssociatedBibDetails';
 
-import styles from '../../../styles/common.css';
 
 type P = Props & {
   headings: Array<any>;
@@ -98,7 +97,7 @@ export class SearchResults extends React.Component<P, {}> {
     return (
       <Paneset static>
         <Pane
-          className={styles.headerWhite}
+          padContent={(marcJSONRecords.length > 0) || isFetching}
           defaultWidth="fill"
           paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
           paneSub={(mergedRecord && mergedRecord.length > 0) ? message : messageNoContent}

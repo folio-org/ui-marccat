@@ -57,6 +57,7 @@ export class BrowseResults extends React.Component<P, S> {
       { label: this.props.translate({ id: 'ui-marccat.browse.actionmenu.merge' }) },
     ];
   };
+
   renderButtonMenu = () => {
     return (<ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.new.keyboard" />);
   };

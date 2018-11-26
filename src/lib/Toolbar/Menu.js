@@ -62,7 +62,8 @@ export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
         type={type || 'button'}
         disabled={disabled}
         marginBottom0
-      >{formatMessage({ id: label })}
+      >
+        {formatMessage({ id: label })}
         <Icon
           icon="down-caret"
           size="small"
@@ -72,4 +73,3 @@ export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
     </PaneMenu>
   );
 };
-

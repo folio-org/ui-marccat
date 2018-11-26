@@ -7,9 +7,9 @@ import { SearchField,
 import { Row, Col } from 'react-flexbox-grid';
 import { reduxForm, Field } from 'redux-form';
 import type { Props } from '../../../core';
-import { SearchIndexes, SearchConditions, FiltersContainer } from '../';
+import { SearchIndexes, SearchConditions, FiltersContainer } from '..';
 import { ActionTypes } from '../../../redux/actions/Actions';
-import { findYourQuery } from '../../Search/Select/FilterMapper';
+import { findYourQuery } from '../Select/FilterMapper';
 import { remapFilters } from '../../../utils/Mapper';
 import { getLanguageFilterQuery, getFormatFilterQuery } from '../../../utils/SearchUtils';
 import styles from '../../../styles/common.css';
@@ -101,8 +101,9 @@ class SearchPanel extends React.Component<P, S> {
   }
 
   handleAddSearchForm = () => {
+    const { searchForm } = this.state;
     this.setState({
-      searchForm: this.state.searchForm.concat([{ name: '' }])
+      searchForm: searchForm.concat([{ name: '' }])
     });
   }
 
@@ -166,13 +167,15 @@ class SearchPanel extends React.Component<P, S> {
                 <Button
                   buttonClass={styles.rightPosition}
                   onClick={this.handleAddSearchForm}
-                >{translate({ id: 'ui-marccat.button.add' })}
+                >
+                  {translate({ id: 'ui-marccat.button.add' })}
                 </Button>
                 {idx !== 0 &&
                 <Button
                   buttonClass={styles.rightPositionTop}
                   onClick={this.handleRemoveSearchForm(idx)}
-                >{translate({ id: 'ui-marccat.button.remove' })}
+                >
+                  {translate({ id: 'ui-marccat.button.remove' })}
                 </Button>}
               </Col>
             </form>

@@ -1,7 +1,8 @@
 import React from 'react';
 import { MultiColumnList, Pane, Paneset, Icon } from '@folio/stripes-components';
 import { connect } from 'react-redux';
-import { injectCommonProp, Props } from '../../../core';
+import { injectCommonProp } from '../../../core';
+import { Props } from '../../../core/type/props';
 import BrowseItemDetail from './BrowseItemDetail';
 import { EMPTY_MESSAGE } from '../../../utils/Constant';
 import { ToolbarButtonMenu, EmptyMessage } from '../../../lib';
@@ -64,10 +65,11 @@ export class BrowseResults extends React.Component<P, S> {
 
   render() {
     const { browseDetailPanelIsVisible, rowClicked, browseDetail } = this.state;
-    const { translate, firstMenu, isFetchingBrowse, isReadyBrowse } = this.props;
+    const { translate, firstMenu, isFetchingBrowse, isReadyBrowse, browseRecords } = this.props;
     return (
       <Paneset static>
         <Pane
+          padContent={(browseRecords.length > 0) || isFetchingBrowse}
           defaultWidth="fill"
           actionMenuItems={this.renderActionMenuItems()}
           paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
@@ -80,7 +82,7 @@ export class BrowseResults extends React.Component<P, S> {
               <Icon icon="spinner-ellipsis" /> :
               (isReadyBrowse) ?
                 <MultiColumnList
-                  contentData={this.props.browseRecords}
+                  contentData={browseRecords}
                   autosize
                   isEmptyMessage={EMPTY_MESSAGE}
                   formatter={browseResultsFormatter}

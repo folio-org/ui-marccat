@@ -3,7 +3,7 @@ const webpack = require('webpack');
 
 const url = (environment === 'sandbox') ?
   'http://folio.atcult.it' :
-  'http://folio.atcult.it:9130';
+  'http://folio-alpha.aws.indexdata.com:9130';
 
 function mirage(config, enabled = false) {
   if (enabled) {

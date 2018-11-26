@@ -39,6 +39,21 @@ export class SearchResults extends React.Component<P, {}> {
     this.onNeedMoreData = this.onNeedMoreData.bind(this);
   }
 
+  renderActionMenuItems = () => {
+    const { translate } = this.props;
+    return [
+      { label: translate({ id: 'ui-marccat.search.actionmenu.export.mrc' }) },
+      { label: translate({ id: 'ui-marccat.search.actionmenu.export.csv' }) },
+      { label: translate({ id: 'ui-marccat.search.actionmenu.export.dat' }) },
+      { label: translate({ id: 'ui-marccat.search.actionmenu.print' }) },
+      { label: translate({ id: 'ui-marccat.search.actionmenu.opac' }) },
+      { label: translate({ id: 'ui-marccat.search.actionmenu.duplicate' }) },
+      { label: translate({ id: 'ui-marccat.search.actionmenu.holdings' }) },
+      { label: translate({ id: 'ui-marccat.search.actionmenu.instances' }) },
+      { label: translate({ id: 'ui-marccat.search.actionmenu.authority.records' }) },
+    ];
+  };
+
   handleDetails = (e, meta) => {
     const { dispatch } = this.props;
     const id = meta['001'];
@@ -153,12 +168,13 @@ export class SearchResults extends React.Component<P, {}> {
 
         {detailPanelIsVisible &&
         <Pane
+          dismissible
           id="pane-details"
           defaultWidth="30%"
           paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
           paneSub={C.EMPTY_MESSAGE}
           appIcon={{ app: C.META.ICON_TITLE }}
-          dismissible
+          actionMenuItems={this.renderActionMenuItems()}
           onClose={() => this.setState({ detailPanelIsVisible: false })}
           lastMenu={rightMenuEdit}
         >

@@ -12,7 +12,7 @@ export const columnMapper = {
   'date1': 'Date 1',
   'date2': 'Date 2',
   'format': 'Format',
-  'tagHighlighted': 'tag',
+  'tagHighlighted': 'Field',
   'countDoc': 'Count'
 };
 export const columnMapperForAssociated = {

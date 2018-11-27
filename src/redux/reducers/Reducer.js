@@ -65,6 +65,12 @@ export function detailsBrowseSearchReducer(state = { isLoading, isReady }, actio
       isReady: false,
       isLoading: false
     };
+  case ActionTypes.AUTH_DETAILS_BROWSE:
+    return {
+      ...state,
+      isReady: false,
+      isLoading: false
+    };
   case ActionTypes.FETCH_DETAILS_BROWSE_REQUESTED:
     return {
       ...state,
@@ -77,7 +83,16 @@ export function detailsBrowseSearchReducer(state = { isLoading, isReady }, actio
       results: action.payload,
       counter: action.count,
       isLoading: false,
-      isReady: true
+      isReady: true,
+      isAuthority: action.isAuthority
+    };
+  case ActionTypes.AUTH_DETAILS_BROWSE_SUCCESS:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: false,
+      isReady: true,
+      isAuthority: action.isAuthority
     };
   default:
     return state;

@@ -41,6 +41,11 @@ export const fetchCountDocRecords = (records) => ({
   type: ActionTypes.COUNT_DOC_SUCCESS,
   payload: records
 });
+export const fetchBrowseAuthorityDetail = (records, isAuthority) => ({
+  type: ActionTypes.AUTH_DETAILS_BROWSE_SUCCESS,
+  payload: records,
+  isAuthority
+});
 export const fetchDetailsRecords = (records, recordType) => ({
   type: ActionTypes.DETAILS_BY_TITLE,
   payload: records,
@@ -59,10 +64,11 @@ export const fetchSearchEngineRecords = (bibliographicResults, bibCounter, autho
   authorityResults,
   authCounter
 });
-export const fetchBrowseDetail = (results, counter) => ({
+export const fetchBrowseDetail = (results, counter, isAuthority) => ({
   type: ActionTypes.DETAILS_BROWSE_SUCCESS,
   payload: results,
-  count: counter
+  count: counter,
+  isAuthority
 });
 export const fetchSuccess = (message) => ({
   type: ActionTypes.SUCCESS,

@@ -23,25 +23,31 @@ export class BrowseResults extends React.Component<P, S> {
       browseDetailPanelIsVisible: false,
       rowClicked: false,
     };
-
+    this.handleClosePanelDetails = this.handleClosePanelDetails.bind(this);
     this.handleBrowseDetails = this.handleBrowseDetails.bind(this);
   }
 
-  handlePanelDetails = () => {
+  handleClosePanelDetails = () => {
     this.setState({
-      browseDetailPanelIsVisible: true,
-      rowClicked: false,
+      browseDetailPanelIsVisible: false,
+      rowClicked: true,
     });
   };
 
   handleBrowseDetails = (e, meta) => {
     const { dispatch, store } = this.props;
     const id = meta.headingNumber;
+    const containsAuthorities = meta.countAuthorities > 0;
     const indexFilter = store.getState().form.searchForm.values.selectIndexes;
     const conditionFilter = store.getState().form.searchForm.values.selectCondition;
     const indexForQuery = findYourQueryFromBrowse[indexFilter.concat('-').concat(conditionFilter)];
     const baseQuery = indexForQuery + id;
-    dispatch({ type: ActionTypes.DETAILS_BROWSE, query: baseQuery });
+    if (containsAuthorities) {
+      dispatch({ type: ActionTypes.AUTH_DETAILS_BROWSE, query: baseQuery, isAuthority: true });
+      dispatch({ type: ActionTypes.DETAILS_BROWSE, query: baseQuery, isAuthority: true });
+    } else {
+      dispatch({ type: ActionTypes.DETAILS_BROWSE, query: baseQuery, isAuthority: false });
+    }
     this.setState({
       browseDetailPanelIsVisible: true,
       rowClicked: false
@@ -64,7 +70,7 @@ export class BrowseResults extends React.Component<P, S> {
 
   render() {
     const { browseDetailPanelIsVisible, rowClicked } = this.state;
-    const { translate, firstMenu, isFetchingBrowse, isReadyBrowse, browseRecords } = this.props;
+    const { translate, firstMenu, isFetchingBrowse, isReadyBrowse, browseRecords, isFetchingBrowseDetails, isReadyBrowseDetails } = this.props;
     return (
       <Paneset static>
         <Pane
@@ -113,9 +119,13 @@ export class BrowseResults extends React.Component<P, S> {
             paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
             paneSub={EMPTY_MESSAGE}
             lastMenu={this.renderButtonMenu()}
+            onClose={this.handleClosePanelDetails}
           >
-            {this.props.isReadyBrowseDetails === true &&
-            <BrowseItemDetail {...this.props} />
+            {
+              (isFetchingBrowseDetails) ?
+                <Icon icon="spinner-ellipsis" /> :
+                (isReadyBrowseDetails) ?
+                  <BrowseItemDetail {...this.props} /> : null
             }
           </Pane>
         }
@@ -131,5 +141,8 @@ export default (connect(
     browseDetailRecords: browseDetails.results,
     isFetchingBrowseDetails: browseDetails.isLoading,
     isReadyBrowseDetails: browseDetails.isReady,
+    authorityBrowseDetails: browseDetails.records,
+    isLoadingForAuthority: browseDetails.isLoading,
+    isReadyForAuthority: browseDetails.isReady
   }),
 )(injectCommonProp(BrowseResults)));

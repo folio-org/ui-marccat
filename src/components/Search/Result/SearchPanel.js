@@ -36,7 +36,7 @@ class SearchPanel extends React.Component<P, S> {
   handleKeyDown(e) {
     if (e.key === 'Enter') {
       e.preventDefault();
-      const inputValue = e.target.form[3].defaultValue;
+      const inputValue = '"' + e.target.form[3].defaultValue + '"';
       const { store, dispatch } = this.props;
       let { isBrowseRequested } = this.state;
       isBrowseRequested = false;

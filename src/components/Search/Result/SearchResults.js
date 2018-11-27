@@ -116,15 +116,16 @@ export class SearchResults extends React.Component<P, {}> {
                   isEmptyMessage={C.EMPTY_MESSAGE}
                   columnWidths={
                     {
-                      'resultView': '8%',
+                      'resultView': '5%',
                       '001': '10%',
                       '245': '30%',
                       'name': '15%',
                       'uniformTitle': '5%',
-                      'subject': '10%',
+                      'subject': '8%',
                       'date1': '5%',
                       'date2': '5%',
                       'format': '8%',
+                      'tagHighlighted': '5%',
                       'countDoc': '4%'
                     }
                   }
@@ -146,6 +147,7 @@ export class SearchResults extends React.Component<P, {}> {
                     'date1',
                     'date2',
                     'format',
+                    'tagHighlighted',
                     'countDoc'
                   ]}
                 /> : <EmptyMessage {...this.props} />}

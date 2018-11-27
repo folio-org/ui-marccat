@@ -70,10 +70,10 @@ class SearchPanel extends React.Component<P, S> {
         const { languageFilter, formatType, recordType } = remapFilters(store.getState().marccat.filter.filters);
         recordTypeControl = recordType;
         if (languageFilter && languageFilter.length) {
-          bibQuery += ' AND (' + getLanguageFilterQuery(languageFilter) + ')';
+          bibQuery += ' AND ( ' + getLanguageFilterQuery(languageFilter) + ' ) ';
         }
         if (formatType && formatType.length) {
-          bibQuery += ' AND (' + getFormatFilterQuery(formatType) + ')';
+          bibQuery += ' AND ( ' + getFormatFilterQuery(formatType) + ' ) ';
         }
       }
       if (conditionFilter === 'BROWSE') {

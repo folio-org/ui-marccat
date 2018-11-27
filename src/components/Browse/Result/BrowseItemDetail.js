@@ -10,9 +10,16 @@ import { ToolbarButtonMenu } from '../../../lib';
 import { resultsFormatterForAssociated, columnMapperForAssociated } from '../../../utils/Formatter';
 import style from '../../../styles/common.css';
 
-type P = Props & {}
+type P = Props & {
+}
 
 export class BrowseItemDetail extends React.Component<P, {}> {
+  constructor(props: P) {
+    super(props);
+    this.state = {
+      recordDetailsArray: Array
+    };
+  }
   renderButtonMenu = () => {
     return (<ToolbarButtonMenu create {...this.props} label="ui-marccat.browse.record.create" />);
   };
@@ -21,36 +28,39 @@ export class BrowseItemDetail extends React.Component<P, {}> {
       ? remapForAssociatedBibList(this.props.browseDetailRecords)
       : undefined;
     const { isAuthority } = this.props;
-    const recordDetails = this.props.authorityDetails;
-    const recordDetailsArray = recordDetails.split('\n');
+    if (isAuthority) {
+      const recordDetails = this.props.authorityDetails.replace('LEADER', '000');
+      this.state.recordDetailsArray = recordDetails.split('\n');
+    }
+    const { recordDetailsArray } = this.state;
     return (
       <AccordionSet>
         {isAuthority &&
-        <Accordion
-          separator={false}
-          header={FilterAccordionHeader}
-          label="Authority Record"
-        >
-          <div className={style.withSpace}>
-            <KeyValue
-              label={getTag100(recordDetailsArray) + 'Title'}
-              value={getTitle100(recordDetailsArray)}
-            />
-            {recordDetailsArray.map((item, i) => (
-              <Row key={i}>
-                <Col xs={1} className={style.padding8}>
-                  {item.trim().substring(0, 3)}
-                </Col>
-                <Col xs={1} className={style.padding8}>
-                  {item.substring(6).startsWith('$') ? item.substring(3, 6) : ''}
-                </Col>
-                <Col xs={10} className={style.padding8}>
-                  {!item.substring(6).startsWith('$') ? item.substring(3) : item.substring(6)}
-                </Col>
-              </Row>
-            ))}
-          </div>
-        </Accordion>
+          <Accordion
+            separator={false}
+            header={FilterAccordionHeader}
+            label="Authority Record"
+          >
+            <div className={style.withSpace}>
+              <KeyValue
+                label={getTag100(recordDetailsArray) + 'Title'}
+                value={getTitle100(recordDetailsArray)}
+              />
+              {recordDetailsArray.map((item, i) => (
+                <Row key={i}>
+                  <Col xs={1} className={style.padding8}>
+                    {item.trim().substring(0, 3)}
+                  </Col>
+                  <Col xs={1} className={style.padding8}>
+                    {item.substring(6).startsWith('$') ? item.substring(3, 6) : ''}
+                  </Col>
+                  <Col xs={10} className={style.padding8}>
+                    {!item.substring(6).startsWith('$') ? item.substring(3) : item.substring(6)}
+                  </Col>
+                </Row>
+              ))}
+            </div>
+          </Accordion>
         }
         <div>
           <Accordion

@@ -4,7 +4,6 @@ import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { AccordionSet, FilterAccordionHeader, Accordion } from '@folio/stripes-components';
 import { Row, Col } from 'react-flexbox-grid';
 import InventoryPluggableBtn from '../Button/Inventory';
-import ExpandCollapseButton from '../Button/Expand';
 import type { Props } from '../../../core';
 import { getTag245, getTitle245, getTag100, getTitle100 } from '../../../utils/Mapper';
 import AssociatedBib from './AssociatedBib';

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { AccordionSet, FilterAccordionHeader, Accordion } from '@folio/stripes-components';
 import { Row, Col } from 'react-flexbox-grid';
-import InventoryPluggableBtn from '../Plugin/Inventory';
+import InventoryPluggableBtn from '../Button/Inventory';
 import type { Props } from '../../../core';
 import { getTag245, getTitle245 } from '../../../utils/Mapper';
 

@@ -22,7 +22,7 @@ function AssociatedBib({ ...props }: P) {
       {...props.rest}
       separator={false}
       header={FilterAccordionHeader}
-      label={'(' + props.bibRecords.length + ') Associated bibliographic records'}
+      label={props.bibRecords.length + ' Associated bibliographic records'}
     >
       {resultRemapped &&
       <MultiColumnList

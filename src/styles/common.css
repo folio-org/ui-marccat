@@ -34,14 +34,6 @@
   line-height: 0;
 }
 
-.paneset {
-  & section {
-    & .paneHeader {
-      background-color: #fff;
-    }
-  }
-}
-
 .select_margin {
   & * {
     margin-bottom: 0;

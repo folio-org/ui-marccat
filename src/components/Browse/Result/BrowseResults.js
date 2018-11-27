@@ -69,7 +69,7 @@ export class BrowseResults extends React.Component<P, S> {
     return (
       <Paneset static>
         <Pane
-          padContent={(browseRecords.length > 0) || isFetchingBrowse}
+          padContent={(browseRecords) || isFetchingBrowse}
           defaultWidth="fill"
           actionMenuItems={this.renderActionMenuItems()}
           paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}

@@ -41,5 +41,15 @@
     "browse.actionmenu.export.csv": "Exportar como arquivo. csv (arquivo único, vários registros)",
     "browse.actionmenu.export.dat": "Exportar como .dat",
     "browse.actionmenu.printall": "Imprimir tudo",
-    "browse.actionmenu.merge": "Mesclar"
+    "browse.actionmenu.merge": "Mesclar",
+    "search.actionmenu.export.mrc": "Exportar como .mrc",
+    "search.actionmenu.export.csv": "Exportar como .csv",
+    "search.actionmenu.export.dat": "Exportar como .dat",
+    "search.actionmenu.print": "Imprimir",
+    "search.actionmenu.opac": "Revelar no OPAC",
+    "search.actionmenu.duplicate": "Duplicar",
+    "search.actionmenu.holdings": "Acervo",
+    "search.actionmenu.instances": "Instâncias",
+    "search.actionmenu.authority.records": "Registros de autoridade",
+    "search.initial.message": "Insira os critérios de pesquisa para iniciar a pesquisa"
 }

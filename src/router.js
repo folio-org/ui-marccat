@@ -20,7 +20,7 @@ export function ConnectedRoute({ id, component: Component, ...props }:P) {
 }
 
 export function Router({ ...props }:P) {
-  const { toggleFilterPane, match : { path } } = props;
+  const { toggleFilterPane, match: { path } } = props;
   const renderSearchIconMenu = () => {
     return (<ToolbarMenu icon={['search']} {...props} onClick={toggleFilterPane} />);
   };

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Pane, Paneset, Icon, MultiColumnList } from '@folio/stripes-components';
+import { Row } from 'react-flexbox-grid';
 import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
@@ -39,19 +40,46 @@ export class SearchResults extends React.Component<P, {}> {
     this.onNeedMoreData = this.onNeedMoreData.bind(this);
   }
 
-  renderActionMenuItems = () => {
-    const { translate } = this.props;
-    return [
-      { label: translate({ id: 'ui-marccat.search.actionmenu.export.mrc' }) },
-      { label: translate({ id: 'ui-marccat.search.actionmenu.export.csv' }) },
-      { label: translate({ id: 'ui-marccat.search.actionmenu.export.dat' }) },
-      { label: translate({ id: 'ui-marccat.search.actionmenu.print' }) },
-      { label: translate({ id: 'ui-marccat.search.actionmenu.opac' }) },
-      { label: translate({ id: 'ui-marccat.search.actionmenu.duplicate' }) },
-      { label: translate({ id: 'ui-marccat.search.actionmenu.holdings' }) },
-      { label: translate({ id: 'ui-marccat.search.actionmenu.instances' }) },
-      { label: translate({ id: 'ui-marccat.search.actionmenu.authority.records' }) },
-    ];
+  myActionMenu = () => {
+    return (
+      <div>
+        <Row>
+          <FormattedMessage id="ui-marccat.search.actionmenu.export.mrc" />
+        </Row>
+        <br />
+        <Row>
+          <FormattedMessage id="ui-marccat.browse.actionmenu.export.csv" />
+        </Row>
+        <br />
+        <Row>
+          <FormattedMessage id="ui-marccat.browse.actionmenu.export.dat" />
+        </Row>
+        <br />
+        <Row>
+          <FormattedMessage id="ui-marccat.search.actionmenu.print" />
+        </Row>
+        <br />
+        <Row>
+          <FormattedMessage id="ui-marccat.search.actionmenu.opac" />
+        </Row>
+        <br />
+        <Row>
+          <FormattedMessage id="ui-marccat.search.actionmenu.duplicate" />
+        </Row>
+        <br />
+        <Row>
+          <FormattedMessage id="ui-marccat.search.actionmenu.holdings" />
+        </Row>
+        <br />
+        <Row>
+          <FormattedMessage id="ui-marccat.search.actionmenu.instances" />
+        </Row>
+        <br />
+        <Row>
+          <FormattedMessage id="ui-marccat.search.actionmenu.authority.records" />
+        </Row>
+      </div>
+    );
   };
 
   handleDetails = (e, meta) => {
@@ -123,7 +151,7 @@ export class SearchResults extends React.Component<P, {}> {
     const messageBib = (totalBibCount && totalBibCount > 0) ? totalBibCount + ' Bibliographic records ' : ' No Bibliographic records found ';
 
     const message = messageAuth + ' / ' + messageBib;
-    const messageNoContent = '';
+    const messageNoContent = <FormattedMessage id="ui-marccat.search.initial.message" />;
     const rightMenu = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.new.keyboard" />;
     const rightMenuEdit = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.edit" />;
     return (
@@ -192,7 +220,7 @@ export class SearchResults extends React.Component<P, {}> {
           paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
           paneSub={C.EMPTY_MESSAGE}
           appIcon={{ app: C.META.ICON_TITLE }}
-          actionMenuItems={this.renderActionMenuItems()}
+          actionMenu={this.myActionMenu}
           dismissible
           onClose={() => this.setState({ detailPanelIsVisible: false })}
           lastMenu={rightMenuEdit}
@@ -212,7 +240,7 @@ export class SearchResults extends React.Component<P, {}> {
           paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
           paneSub={C.EMPTY_MESSAGE}
           appIcon={{ app: C.META.ICON_TITLE }}
-          actionMenuItems={this.renderActionMenuItems()}
+          actionMenu={this.myActionMenu}
           dismissible
           onClose={() => {
             const { dispatch } = this.props;

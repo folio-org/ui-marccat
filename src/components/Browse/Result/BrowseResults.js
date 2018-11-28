@@ -1,6 +1,8 @@
 import React from 'react';
 import { MultiColumnList, Pane, Paneset, Icon } from '@folio/stripes-components';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
+import { Row } from 'react-flexbox-grid';
 import { injectCommonProp } from '../../../core';
 import { Props } from '../../../core/type/props';
 import BrowseItemDetail from './BrowseItemDetail';
@@ -54,15 +56,30 @@ export class BrowseResults extends React.Component<P, S> {
     });
   };
 
-  renderActionMenuItems = () => {
-    const { translate } = this.props;
-    return [
-      { label: translate({ id: 'ui-marccat.browse.actionmenu.export.mrc' }) },
-      { label: translate({ id: 'ui-marccat.browse.actionmenu.export.csv' }) },
-      { label: translate({ id: 'ui-marccat.browse.actionmenu.export.dat' }) },
-      { label: translate({ id: 'ui-marccat.browse.actionmenu.printall' }) },
-      { label: translate({ id: 'ui-marccat.browse.actionmenu.merge' }) },
-    ];
+  myActionMenu = () => {
+    return (
+      <div>
+        <Row>
+          <FormattedMessage id="ui-marccat.browse.actionmenu.export.mrc" />
+        </Row>
+        <br />
+        <Row>
+          <FormattedMessage id="ui-marccat.browse.actionmenu.export.csv" />
+        </Row>
+        <br />
+        <Row>
+          <FormattedMessage id="ui-marccat.browse.actionmenu.export.dat" />
+        </Row>
+        <br />
+        <Row>
+          <FormattedMessage id="ui-marccat.browse.actionmenu.printall" />
+        </Row>
+        <br />
+        <Row>
+          <FormattedMessage id="ui-marccat.browse.actionmenu.merge" />
+        </Row>
+      </div>
+    );
   };
 
   renderButtonMenu = () => {
@@ -72,14 +89,15 @@ export class BrowseResults extends React.Component<P, S> {
   render() {
     const { browseDetailPanelIsVisible, rowClicked } = this.state;
     const { translate, firstMenu, isFetchingBrowse, isReadyBrowse, browseRecords, isFetchingBrowseDetails, isReadyBrowseDetails } = this.props;
+    const messageNoContent = <FormattedMessage id="ui-marccat.search.initial.message" />;
     return (
       <Paneset static>
         <Pane
           padContent={(browseRecords) || isFetchingBrowse}
           defaultWidth="fill"
-          actionMenuItems={this.renderActionMenuItems()}
+          actionMenu={this.myActionMenu}
           paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
-          paneSub={EMPTY_MESSAGE}
+          paneSub={messageNoContent}
           firstMenu={firstMenu}
           lastMenu={this.renderButtonMenu()}
         >

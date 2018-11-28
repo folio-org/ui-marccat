@@ -6,14 +6,15 @@ import type { Props } from '../../../core';
 type P = Props & {};
 
 const ExpandCollapseButton = ({ buttonLabel, toggleFn, ...props }:P) => {
+  const { buttonTarget, style } = props;
   return (
     <Button
-      target={props.buttonTarget}
+      target={buttonTarget}
       buttonStyle="primary"
       fullWidth
       paddingSide0
       marginBottom0
-      buttonClass={props.style}
+      buttonClass={style}
       onClick={toggleFn}
     >
       <Icon

@@ -10,12 +10,13 @@ import type { Props } from '../../core';
 type P = Props & {};
 
 const EmptyMessage = ({ ...props }:P) => {
+  const { translate } = props;
   return (
     <div className={css.emptyMessage}>
       <div className={css.emptyMessageLabelWrap}>
         <Icon iconRootClass={css.emptyMessageIcon} icon="left-arrow" />
         <span className={css.emptyMessageLabel}>
-          {props.translate({
+          {translate({
             id: 'ui-marccat.initial.title',
           })}
         </span>

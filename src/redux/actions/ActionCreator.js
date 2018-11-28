@@ -8,6 +8,10 @@ export const isfetchingDetailsRequest = (isLoading) => ({
   type: ActionTypes.FETCH_DETAILS_REQUESTED,
   payload: isLoading
 });
+export const isfetchingBrowseRequest = (isLoading) => ({
+  type: ActionTypes.FETCH_DETAILS_BROWSE_REQUESTED,
+  payload: isLoading
+});
 export const isfetchingDetailsAssociatedRequest = (isLoading) => ({
   type: ActionTypes.FETCH_DETAILS_ASSOCIATED_REQUESTED,
   payload: isLoading
@@ -37,6 +41,11 @@ export const fetchCountDocRecords = (records) => ({
   type: ActionTypes.COUNT_DOC_SUCCESS,
   payload: records
 });
+export const fetchBrowseAuthorityDetail = (records, isAuthority) => ({
+  type: ActionTypes.AUTH_DETAILS_BROWSE_SUCCESS,
+  payload: records,
+  isAuthority
+});
 export const fetchDetailsRecords = (records, recordType) => ({
   type: ActionTypes.DETAILS_BY_TITLE,
   payload: records,
@@ -54,6 +63,12 @@ export const fetchSearchEngineRecords = (bibliographicResults, bibCounter, autho
   bibCounter,
   authorityResults,
   authCounter
+});
+export const fetchBrowseDetail = (results, counter, isAuthority) => ({
+  type: ActionTypes.DETAILS_BROWSE_SUCCESS,
+  payload: results,
+  count: counter,
+  isAuthority
 });
 export const fetchSuccess = (message) => ({
   type: ActionTypes.SUCCESS,

@@ -12,6 +12,7 @@ export const columnMapper = {
   'date1': 'Date 1',
   'date2': 'Date 2',
   'format': 'Format',
+  'tagHighlighted': 'Field',
   'countDoc': 'Count'
 };
 export const columnMapperForAssociated = {
@@ -20,6 +21,13 @@ export const columnMapperForAssociated = {
   'name': '',
   'subject': '',
   'format': '',
+};
+export const browseColMapper = {
+  'type': '',
+  'headingNumber': 'Heading #',
+  'stringText': 'Access point',
+  'countAuthorities': 'Authority Records',
+  'countDocuments': 'Bibliographic Records'
 };
 export const resultsFormatterForAssociated = {
   resultView: x => (
@@ -59,17 +67,6 @@ export const resultsFormatterForAssociated = {
       { x['658'] && x['658'] }
       { x['662'] && x['662'] }
     </div>
-  )
-};
-
-export const browseResultsFormatter = {
-  'type': () => (
-    <span className={style.authority} />
-  )
-};
-export const browseDetailResultsFormatter = {
-  'type': () => (
-    <span className={style.bibliographic} />
   )
 };
 
@@ -132,5 +129,11 @@ export const resultsFormatter = {
       { x['658'] && x['658'] }
       { x['662'] && x['662'] }
     </div>
+  )
+};
+
+export const browseFormatter = {
+  type: x => (
+    <span className={x.countAuthorities === 0 ? style.bibliographic : style.authority} />
   )
 };

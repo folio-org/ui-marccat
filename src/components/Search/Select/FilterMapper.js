@@ -82,3 +82,10 @@ export const findYourQuery = {
   'BARCODE-BROWSE': 'BC ',
   'COPY-BROWSE': 'CP ',
 };
+
+export const findYourQueryFromBrowse = {
+  // FOR START KEY
+  'NAME-BROWSE': 'NK ',
+  'SUB-BROWSE': 'SK ',
+  'TITLE-BROWSE': 'TK '
+};

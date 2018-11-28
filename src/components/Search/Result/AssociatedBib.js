@@ -12,17 +12,18 @@ type P = Props & {
 }
 
 function AssociatedBib({ ...props }: P) {
-  const associatedBibRecords = props.bibRecords;
+  const { bibRecords, ...rest } = props;
+  const associatedBibRecords = bibRecords;
   const resultRemapped = (associatedBibRecords && associatedBibRecords.length > 0)
     ? remapForAssociatedBibList(associatedBibRecords)
     : undefined;
 
   return (
     <Accordion
-      {...props.rest}
+      {...rest}
       separator={false}
       header={FilterAccordionHeader}
-      label={props.bibRecords.length + ' Associated bibliographic records'}
+      label={'(' + bibRecords.length + ') Associated bibliographic records'}
     >
       {resultRemapped &&
       <MultiColumnList

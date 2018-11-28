@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Pane, Paneset, Icon, MultiColumnList } from '@folio/stripes-components';
+import { Row } from 'react-flexbox-grid';
 import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
@@ -39,19 +40,46 @@ export class SearchResults extends React.Component<P, {}> {
     this.onNeedMoreData = this.onNeedMoreData.bind(this);
   }
 
-  renderActionMenuItems = () => {
-    const { translate } = this.props;
-    return [
-      { label: translate({ id: 'ui-marccat.search.actionmenu.export.mrc' }) },
-      { label: translate({ id: 'ui-marccat.search.actionmenu.export.csv' }) },
-      { label: translate({ id: 'ui-marccat.search.actionmenu.export.dat' }) },
-      { label: translate({ id: 'ui-marccat.search.actionmenu.print' }) },
-      { label: translate({ id: 'ui-marccat.search.actionmenu.opac' }) },
-      { label: translate({ id: 'ui-marccat.search.actionmenu.duplicate' }) },
-      { label: translate({ id: 'ui-marccat.search.actionmenu.holdings' }) },
-      { label: translate({ id: 'ui-marccat.search.actionmenu.instances' }) },
-      { label: translate({ id: 'ui-marccat.search.actionmenu.authority.records' }) },
-    ];
+  myActionMenu = () => {
+    return (
+      <div>
+        <Row>
+          <FormattedMessage id="ui-marccat.search.actionmenu.export.mrc" />
+        </Row>
+        <br />
+        <Row>
+          <FormattedMessage id="ui-marccat.browse.actionmenu.export.csv" />
+        </Row>
+        <br />
+        <Row>
+          <FormattedMessage id="ui-marccat.browse.actionmenu.export.dat" />
+        </Row>
+        <br />
+        <Row>
+          <FormattedMessage id="ui-marccat.search.actionmenu.print" />
+        </Row>
+        <br />
+        <Row>
+          <FormattedMessage id="ui-marccat.search.actionmenu.opac" />
+        </Row>
+        <br />
+        <Row>
+          <FormattedMessage id="ui-marccat.search.actionmenu.duplicate" />
+        </Row>
+        <br />
+        <Row>
+          <FormattedMessage id="ui-marccat.search.actionmenu.holdings" />
+        </Row>
+        <br />
+        <Row>
+          <FormattedMessage id="ui-marccat.search.actionmenu.instances" />
+        </Row>
+        <br />
+        <Row>
+          <FormattedMessage id="ui-marccat.search.actionmenu.authority.records" />
+        </Row>
+      </div>
+    );
   };
 
   handleDetails = (e, meta) => {
@@ -70,8 +98,25 @@ export class SearchResults extends React.Component<P, {}> {
   };
 
   render() {
-    let { bibsOnly, autOnly, detailPanelIsVisible, noResults } = this.state;
-    const { activeFilter, activeFilterName, activeFilterChecked, totalAuthCount, totalBibCount, bibliographicResults, authorityResults, isFetching, isReady, isPanelBibAssOpen, isReadyDetail, isFetchingDetail, isLoadingAssociatedRecord, isReadyAssociatedRecord } = this.props;
+    /* eslint-disable-next-line prefer-const */
+    let { bibsOnly, autOnly, detailPanelIsVisible, noResults, loading } = this.state;
+    const {
+      activeFilter,
+      activeFilterName,
+      activeFilterChecked,
+      totalAuthCount,
+      totalBibCount,
+      bibliographicResults,
+      authorityResults,
+      firstMenu,
+      isFetching,
+      isReady,
+      isPanelBibAssOpen,
+      isReadyDetail,
+      isFetchingDetail,
+      isLoadingAssociatedRecord,
+      isReadyAssociatedRecord
+    } = this.props;
     if (activeFilter) {
       if (activeFilterName === 'recordType.Bibliographic records' && activeFilterChecked) {
         bibsOnly = true;
@@ -106,7 +151,7 @@ export class SearchResults extends React.Component<P, {}> {
     const messageBib = (totalBibCount && totalBibCount > 0) ? totalBibCount + ' Bibliographic records ' : ' No Bibliographic records found ';
 
     const message = messageAuth + ' / ' + messageBib;
-    const messageNoContent = '';
+    const messageNoContent = <FormattedMessage id="ui-marccat.search.initial.message" />;
     const rightMenu = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.new.keyboard" />;
     const rightMenuEdit = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.edit" />;
     return (
@@ -117,7 +162,7 @@ export class SearchResults extends React.Component<P, {}> {
           paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
           paneSub={(mergedRecord && mergedRecord.length > 0) ? message : messageNoContent}
           appIcon={{ app: C.META.ICON_TITLE }}
-          firstMenu={this.props.firstMenu}
+          firstMenu={firstMenu}
           lastMenu={rightMenu}
         >
           {
@@ -131,15 +176,16 @@ export class SearchResults extends React.Component<P, {}> {
                   isEmptyMessage={C.EMPTY_MESSAGE}
                   columnWidths={
                     {
-                      'resultView': '8%',
+                      'resultView': '5%',
                       '001': '10%',
                       '245': '30%',
                       'name': '15%',
                       'uniformTitle': '5%',
-                      'subject': '10%',
+                      'subject': '8%',
                       'date1': '5%',
                       'date2': '5%',
                       'format': '8%',
+                      'tagHighlighted': '5%',
                       'countDoc': '4%'
                     }
                   }
@@ -150,7 +196,7 @@ export class SearchResults extends React.Component<P, {}> {
                   columnMapping={columnMapper}
                   onNeedMoreData={() => this.onNeedMoreData(marcJSONRecords)}
                   virtualize
-                  loading={this.state.loading}
+                  loading={loading}
                   visibleColumns={[
                     'resultView',
                     '001',
@@ -161,6 +207,7 @@ export class SearchResults extends React.Component<P, {}> {
                     'date1',
                     'date2',
                     'format',
+                    'tagHighlighted',
                     'countDoc'
                   ]}
                 /> : <EmptyMessage {...this.props} />}
@@ -174,7 +221,8 @@ export class SearchResults extends React.Component<P, {}> {
           paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
           paneSub={C.EMPTY_MESSAGE}
           appIcon={{ app: C.META.ICON_TITLE }}
-          actionMenuItems={this.renderActionMenuItems()}
+          actionMenu={this.myActionMenu}
+          dismissible
           onClose={() => this.setState({ detailPanelIsVisible: false })}
           lastMenu={rightMenuEdit}
         >
@@ -193,6 +241,7 @@ export class SearchResults extends React.Component<P, {}> {
           paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
           paneSub={C.EMPTY_MESSAGE}
           appIcon={{ app: C.META.ICON_TITLE }}
+          actionMenu={this.myActionMenu}
           dismissible
           onClose={() => {
             const { dispatch } = this.props;

@@ -50,8 +50,7 @@ export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
     marginRight: '10px',
     float: 'right',
   };
-  const { onClick, label, type, disabled } = props;
-  const { formatMessage } = props.stripes.intl;
+  const { onClick, label, type, disabled, stripes: { intl: { formatMessage } } } = props;
   return (
     <PaneMenu>
       <Button

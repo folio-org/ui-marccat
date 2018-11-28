@@ -18,6 +18,7 @@ const remapForAssociatedBibList = i => {
   i.forEach(el => {
     const record = {
       countDoc: el.countDoc,
+      tagHighlighted: el.tagHighlighted,
       queryForBibs: el.queryForAssociatedDoc,
       recordView: el.recordView,
       leader: el.data.leader

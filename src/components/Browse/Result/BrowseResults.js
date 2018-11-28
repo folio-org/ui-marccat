@@ -1,12 +1,16 @@
 import React from 'react';
 import { MultiColumnList, Pane, Paneset, Icon } from '@folio/stripes-components';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
+import { Row } from 'react-flexbox-grid';
 import { injectCommonProp } from '../../../core';
 import { Props } from '../../../core/type/props';
 import BrowseItemDetail from './BrowseItemDetail';
+import { ActionTypes } from '../../../redux/actions/Actions';
+import { findYourQueryFromBrowse } from '../../Search/Select/FilterMapper';
 import { EMPTY_MESSAGE } from '../../../utils/Constant';
 import { ToolbarButtonMenu, EmptyMessage } from '../../../lib';
-import { browseResultsFormatter } from '../../../utils/Formatter';
+import { browseFormatter, browseColMapper } from '../../../utils/Formatter';
 
 type P = Props & {};
 type S = {
@@ -20,43 +24,62 @@ export class BrowseResults extends React.Component<P, S> {
     this.state = {
       browseDetailPanelIsVisible: false,
       rowClicked: false,
-      browseDetail: {
-        accessPoint: undefined,
-        authorityRecord: undefined,
-        bibliographicRecord: undefined,
-      }
     };
-
+    this.handleClosePanelDetails = this.handleClosePanelDetails.bind(this);
     this.handleBrowseDetails = this.handleBrowseDetails.bind(this);
   }
 
-  handlePanelDetails = (event, data) => {
-    this.setState({
-      browseDetailPanelIsVisible: true,
-      rowClicked: false,
-      browseDetail: {
-        accessPoint: data['Access point'],
-        authorityRecord: data['Authority Records'],
-        bibliographicRecord: data['Bibliographic Records'],
-      }
-    });
-  };
-
-  handleBrowseDetails = () => {
+  handleClosePanelDetails = () => {
     this.setState({
       browseDetailPanelIsVisible: false,
-      rowClicked: true
+      rowClicked: true,
     });
   };
 
-  renderActionMenuItems = () => {
-    return [
-      { label: this.props.translate({ id: 'ui-marccat.browse.actionmenu.export.mrc' }) },
-      { label: this.props.translate({ id: 'ui-marccat.browse.actionmenu.export.csv' }) },
-      { label: this.props.translate({ id: 'ui-marccat.browse.actionmenu.export.dat' }) },
-      { label: this.props.translate({ id: 'ui-marccat.browse.actionmenu.printall' }) },
-      { label: this.props.translate({ id: 'ui-marccat.browse.actionmenu.merge' }) },
-    ];
+  handleBrowseDetails = (e, meta) => {
+    const { dispatch, store } = this.props;
+    const id = meta.headingNumber;
+    const containsAuthorities = meta.countAuthorities > 0;
+    const indexFilter = store.getState().form.searchForm.values.selectIndexes;
+    const conditionFilter = store.getState().form.searchForm.values.selectCondition;
+    const indexForQuery = findYourQueryFromBrowse[indexFilter.concat('-').concat(conditionFilter)];
+    const baseQuery = indexForQuery + id;
+    if (containsAuthorities) {
+      dispatch({ type: ActionTypes.AUTH_DETAILS_BROWSE, query: baseQuery, isAuthority: true });
+      dispatch({ type: ActionTypes.DETAILS_BROWSE, query: baseQuery, isAuthority: true });
+    } else {
+      dispatch({ type: ActionTypes.DETAILS_BROWSE, query: baseQuery, isAuthority: false });
+    }
+    this.setState({
+      browseDetailPanelIsVisible: true,
+      rowClicked: false
+    });
+  };
+
+  myActionMenu = () => {
+    return (
+      <div>
+        <Row>
+          <FormattedMessage id="ui-marccat.browse.actionmenu.export.mrc" />
+        </Row>
+        <br />
+        <Row>
+          <FormattedMessage id="ui-marccat.browse.actionmenu.export.csv" />
+        </Row>
+        <br />
+        <Row>
+          <FormattedMessage id="ui-marccat.browse.actionmenu.export.dat" />
+        </Row>
+        <br />
+        <Row>
+          <FormattedMessage id="ui-marccat.browse.actionmenu.printall" />
+        </Row>
+        <br />
+        <Row>
+          <FormattedMessage id="ui-marccat.browse.actionmenu.merge" />
+        </Row>
+      </div>
+    );
   };
 
   renderButtonMenu = () => {
@@ -64,16 +87,17 @@ export class BrowseResults extends React.Component<P, S> {
   };
 
   render() {
-    const { browseDetailPanelIsVisible, rowClicked, browseDetail } = this.state;
-    const { translate, firstMenu, isFetchingBrowse, isReadyBrowse, browseRecords } = this.props;
+    const { browseDetailPanelIsVisible, rowClicked } = this.state;
+    const { translate, firstMenu, isFetchingBrowse, isReadyBrowse, browseRecords, isFetchingBrowseDetails, isReadyBrowseDetails } = this.props;
+    const messageNoContent = <FormattedMessage id="ui-marccat.search.initial.message" />;
     return (
       <Paneset static>
         <Pane
           padContent={(browseRecords) || isFetchingBrowse}
           defaultWidth="fill"
-          actionMenuItems={this.renderActionMenuItems()}
+          actionMenu={this.myActionMenu}
           paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
-          paneSub={EMPTY_MESSAGE}
+          paneSub={messageNoContent}
           firstMenu={firstMenu}
           lastMenu={this.renderButtonMenu()}
         >
@@ -85,56 +109,59 @@ export class BrowseResults extends React.Component<P, S> {
                   contentData={browseRecords}
                   autosize
                   isEmptyMessage={EMPTY_MESSAGE}
-                  formatter={browseResultsFormatter}
-                  onRowClick={this.handlePanelDetails}
+                  formatter={browseFormatter}
+                  onRowClick={this.handleBrowseDetails}
                   rowMetadata={['Access point', 'Authority Records', 'Bibliographic Records']}
+                  columnMapping={browseColMapper}
                   columnWidths={
                     {
-                      'type': '5%',
-                      'headingNumber': '10%',
-                      'database': '15%',
-                      'stringText': '10%',
-                      'verificationlevel': '10%',
-                      'accessPointlanguage': '5%',
-                      'countAuthorities': '5%',
-                      'countCrossReferences': '5%',
-                      'countDocuments': '5%',
-                      'countTitleNameDocuments': '5%',
-                      'indexingLanguage': '10%',
+                      'type': '10%',
+                      'headingNumber': '15%',
+                      'stringText': '25%',
+                      'countAuthorities': '25%',
+                      'countDocuments': '25%',
                     }
                   }
                   visibleColumns={[
                     'type',
                     'headingNumber',
-                    'database',
                     'stringText',
-                    'verificationlevel',
-                    'accessPointlanguage',
                     'countAuthorities',
-                    'countCrossReferences',
-                    'countDocuments',
-                    'countTitleNameDocuments',
-                    'indexingLanguage',
+                    'countDocuments'
                   ]}
                 /> : <EmptyMessage {...this.props} />}
         </Pane>
         {browseDetailPanelIsVisible && !rowClicked &&
-          <BrowseItemDetail
-            {...this.props}
-            translate={translate}
-            itemDetail={browseDetail}
-            onClose={this.handleBrowseDetails}
-            actionMenuItems={this.renderActionMenuItems()}
-          />
+          <Pane
+            dismissible
+            defaultWidth="35%"
+            paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
+            paneSub={EMPTY_MESSAGE}
+            lastMenu={this.renderButtonMenu()}
+            onClose={this.handleClosePanelDetails}
+          >
+            {
+              (isFetchingBrowseDetails) ?
+                <Icon icon="spinner-ellipsis" /> :
+                (isReadyBrowseDetails) ?
+                  <BrowseItemDetail {...this.props} /> : null
+            }
+          </Pane>
         }
       </Paneset>
     );
   }
 }
 export default (connect(
-  ({ marccat: { browse } }) => ({
+  ({ marccat: { browse, browseDetails } }) => ({
     browseRecords: browse.records,
     isFetchingBrowse: browse.isLoading,
-    isReadyBrowse: browse.isReady
+    isReadyBrowse: browse.isReady,
+    browseDetailRecords: browseDetails.results,
+    isFetchingBrowseDetails: browseDetails.isLoading,
+    isReadyBrowseDetails: browseDetails.isReady,
+    authorityBrowseDetails: browseDetails.records,
+    isLoadingForAuthority: browseDetails.isLoading,
+    isReadyForAuthority: browseDetails.isReady
   }),
 )(injectCommonProp(BrowseResults)));

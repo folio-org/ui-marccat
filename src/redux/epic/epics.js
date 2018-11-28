@@ -62,3 +62,18 @@ export const scanBrowsingRecords = (action$, store) => action$.ofType(ActionType
       .map(record => marccatActions.fetchScanBrowsingRecords(record.headings))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
+
+export const browseDetailEpic = (action$, store) => action$.ofType(ActionTypes.DETAILS_BROWSE)
+  .switchMap((d) => concat$(
+    of$(marccatActions.isfetchingBrowseRequest(true)),
+    ajax
+      .getJSON(buildUrl(ENDPOINT.SEARCH_URL_JSON, `lang=ita&ml=170&q=${d.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
+      .map(record => marccatActions.fetchBrowseDetail(record.docs, record.numFound, d.isAuthority))
+      .catch(e => of$(marccatActions.fetchFailure(e))),
+  ));
+
+export const browseAuthorityDetailEpic = (action$, store) => action$.ofType(ActionTypes.AUTH_DETAILS_BROWSE)
+  .switchMap((d) => ajax
+    .getJSON(buildUrl(ENDPOINT.SEARCH_URL, `lang=ita&view=-1&ml=170&q=${d.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
+    .map(record => marccatActions.fetchBrowseAuthorityDetail(record.docs[0].data, d.isAuthority))
+    .catch(e => of$(marccatActions.fetchFailure(e))));

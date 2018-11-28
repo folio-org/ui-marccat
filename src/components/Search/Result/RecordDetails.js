@@ -17,7 +17,8 @@ type P = Props & {
 }
 
 function RecordDetails({ translate, ...props }: P) {
-  const recordDetails = props.items.replace('LEADER', '000');
+  const { items, checkDetailsInRow, checkDetailsBibRec } = props;
+  const recordDetails = items.replace('LEADER', '000');
   const recordDetailsArray = recordDetails.split('\n');
   const tag245 = getTag245(recordDetailsArray);
   const title245 = getTitle245(recordDetailsArray);
@@ -26,7 +27,7 @@ function RecordDetails({ translate, ...props }: P) {
       <Accordion
         separator={false}
         header={FilterAccordionHeader}
-        label={props.checkDetailsInRow !== props.checkDetailsBibRec ? translate({ id: 'ui-marccat.search.details.bibliographic' }) : translate({ id: 'ui-marccat.search.details.authority' })}
+        label={checkDetailsInRow !== checkDetailsBibRec ? translate({ id: 'ui-marccat.search.details.bibliographic' }) : translate({ id: 'ui-marccat.search.details.authority' })}
       >
         <div className={style.withSpace}>
           <KeyValue
@@ -49,7 +50,7 @@ function RecordDetails({ translate, ...props }: P) {
         </div>
         <InventoryPluggableBtn {...props} buttonLabel={translate({ id: 'ui-marccat.search.goto.inventory' })} />
       </Accordion>
-      {props.checkDetailsBibRec === props.checkDetailsInRow &&
+      {checkDetailsBibRec === checkDetailsInRow &&
       <AssociatedBib {...props} />}
     </AccordionSet>
   );

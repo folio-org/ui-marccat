@@ -3,14 +3,15 @@ import { MultiColumnList, Pane, Paneset, Icon } from '@folio/stripes-components'
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Row } from 'react-flexbox-grid';
+import * as C from '../../../utils/Constant';
 import { injectCommonProp } from '../../../core';
 import { Props } from '../../../core/type/props';
 import BrowseItemDetail from './BrowseItemDetail';
 import { ActionTypes } from '../../../redux/actions/Actions';
 import { findYourQueryFromBrowse } from '../../Search/Select/FilterMapper';
-import { EMPTY_MESSAGE } from '../../../utils/Constant';
 import { ToolbarButtonMenu, EmptyMessage } from '../../../lib';
 import { browseFormatter, browseColMapper } from '../../../utils/Formatter';
+import BrowseAssociatedItemDetail from './BrowseAssociatedItemDetail';
 
 type P = Props & {};
 type S = {
@@ -88,7 +89,7 @@ export class BrowseResults extends React.Component<P, S> {
 
   render() {
     const { browseDetailPanelIsVisible, rowClicked } = this.state;
-    const { translate, firstMenu, isFetchingBrowse, isReadyBrowse, browseRecords, isFetchingBrowseDetails, isReadyBrowseDetails } = this.props;
+    const { translate, firstMenu, isFetchingBrowse, isReadyBrowse, browseRecords, isPanelOpen, isFetchingBrowseDetails, isReadyBrowseDetails, isLoadingAssociated, isReadyAssociated } = this.props;
     const messageNoContent = <FormattedMessage id="ui-marccat.search.initial.message" />;
     return (
       <Paneset static>
@@ -108,7 +109,7 @@ export class BrowseResults extends React.Component<P, S> {
                 <MultiColumnList
                   contentData={browseRecords}
                   autosize
-                  isEmptyMessage={EMPTY_MESSAGE}
+                  isEmptyMessage={C.EMPTY_MESSAGE}
                   formatter={browseFormatter}
                   onRowClick={this.handleBrowseDetails}
                   rowMetadata={['Access point', 'Authority Records', 'Bibliographic Records']}
@@ -134,9 +135,9 @@ export class BrowseResults extends React.Component<P, S> {
         {browseDetailPanelIsVisible && !rowClicked &&
           <Pane
             dismissible
-            defaultWidth="35%"
+            defaultWidth="25%"
             paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
-            paneSub={EMPTY_MESSAGE}
+            paneSub={C.EMPTY_MESSAGE}
             lastMenu={this.renderButtonMenu()}
             onClose={this.handleClosePanelDetails}
           >
@@ -148,12 +149,33 @@ export class BrowseResults extends React.Component<P, S> {
             }
           </Pane>
         }
+        {browseDetailPanelIsVisible && isPanelOpen &&
+        <Pane
+          id="pane-details"
+          defaultWidth="25%"
+          paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
+          paneSub={C.EMPTY_MESSAGE}
+          appIcon={{ app: C.META.ICON_TITLE }}
+          actionMenu={this.myActionMenu}
+          dismissible
+          onClose={() => {
+            const { dispatch } = this.props;
+            dispatch({ type: ActionTypes.CLOSE_BROWSE_ASSOCIATED_DETAILS, openPanel: false });
+          }}
+        >
+          {(isLoadingAssociated) ?
+            <Icon icon="spinner-ellipsis" /> :
+            (isReadyAssociated) ?
+              <BrowseAssociatedItemDetail {...this.props} /> : null
+          }
+        </Pane>
+        }
       </Paneset>
     );
   }
 }
 export default (connect(
-  ({ marccat: { browse, browseDetails } }) => ({
+  ({ marccat: { browse, browseDetails, browseDetailsAssociated } }) => ({
     browseRecords: browse.records,
     isFetchingBrowse: browse.isLoading,
     isReadyBrowse: browse.isReady,
@@ -162,6 +184,10 @@ export default (connect(
     isReadyBrowseDetails: browseDetails.isReady,
     authorityBrowseDetails: browseDetails.records,
     isLoadingForAuthority: browseDetails.isLoading,
-    isReadyForAuthority: browseDetails.isReady
+    isReadyForAuthority: browseDetails.isReady,
+    isLoadingAssociated: browseDetailsAssociated.isLoading,
+    isReadyAssociated: browseDetailsAssociated.isReady,
+    items: browseDetailsAssociated.records,
+    isPanelOpen: browseDetailsAssociated.mustOpenPanel
   }),
 )(injectCommonProp(BrowseResults)));

@@ -159,6 +159,38 @@ export function detailsAssociatedReducer(state = { isLoading, isReady }, action)
   }
 }
 
+export function browseDetailsAssociatedReducer(state = { isLoading, isReady }, action) {
+  switch (action.type) {
+  case ActionTypes.BROWSE_ASSOCIATED_DETAILS:
+    return {
+      ...state,
+      isLoading: false,
+      isReady: false
+    };
+  case ActionTypes.FETCH_BROWSE_DETAILS_ASSOCIATED_REQUESTED:
+    return {
+      ...state,
+      isLoading: action.payload,
+      isReady: false
+    };
+  case ActionTypes.BROWSE_ASSOCIATED_DETAILS_SUCCESS:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: false,
+      isReady: true,
+      mustOpenPanel: action.mustOpenPanel
+    };
+  case ActionTypes.CLOSE_BROWSE_ASSOCIATED_DETAILS:
+    return {
+      ...state,
+      mustOpenPanel: action.openPanel
+    };
+  default:
+    return state;
+  }
+}
+
 export function getAssociatedBibRecord(state = { isLoading, isReady }, action) {
   switch (action.type) {
   case ActionTypes.ASSOCIATED_BIB_REC:

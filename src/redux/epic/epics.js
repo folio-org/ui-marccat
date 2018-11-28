@@ -77,3 +77,12 @@ export const browseAuthorityDetailEpic = (action$, store) => action$.ofType(Acti
     .getJSON(buildUrl(ENDPOINT.SEARCH_URL, `lang=ita&view=-1&ml=170&q=${d.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
     .map(record => marccatActions.fetchBrowseAuthorityDetail(record.docs[0].data, d.isAuthority))
     .catch(e => of$(marccatActions.fetchFailure(e))));
+
+export const browseDetailAssociatedEpic = (action$, store) => action$.ofType(ActionTypes.BROWSE_ASSOCIATED_DETAILS)
+  .switchMap((d) => concat$(
+    of$(marccatActions.isfetchingBrowseDetailsAssociatedRequest(true)),
+    ajax
+      .getJSON(buildUrl(ENDPOINT.SEARCH_URL, `lang=ita&view=1&ml=170&q=an%20${d.query}&from=1&to=1&dpo=1`), ENDPOINT.HEADERS)
+      .map(record => marccatActions.fetchBrowseDetailAssociatedRecords(record.docs[0].data, d.mustOpenPanel))
+      .catch(e => of$(marccatActions.fetchFailure(e))),
+  ));

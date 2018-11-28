@@ -215,6 +215,7 @@ export class SearchResults extends React.Component<P, {}> {
 
         {detailPanelIsVisible &&
         <Pane
+          dismissible
           id="pane-details"
           defaultWidth="30%"
           paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}

@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /**
  * @author: Christian Chiama
  *

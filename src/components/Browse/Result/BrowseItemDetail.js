@@ -20,16 +20,19 @@ export class BrowseItemDetail extends React.Component<P, {}> {
       recordDetailsArray: Array
     };
   }
+
   renderButtonMenu = () => {
     return (<ToolbarButtonMenu create {...this.props} label="ui-marccat.browse.record.create" />);
   };
+
   render() {
-    const resultRemapped = (this.props.browseDetailRecords && this.props.browseDetailRecords.length > 0)
-      ? remapForAssociatedBibList(this.props.browseDetailRecords)
+    const { browseDetailRecords, authorityDetails } = this.props;
+    const resultRemapped = (browseDetailRecords && browseDetailRecords.length > 0)
+      ? remapForAssociatedBibList(browseDetailRecords)
       : undefined;
     const { isAuthority } = this.props;
     if (isAuthority) {
-      const recordDetails = this.props.authorityDetails.replace('LEADER', '000');
+      const recordDetails = authorityDetails.replace('LEADER', '000');
       this.state.recordDetailsArray = recordDetails.split('\n');
     }
     const { recordDetailsArray } = this.state;
@@ -104,4 +107,3 @@ export default (connect(
     isAuthority: browseDetails.isAuthority,
   })
 )(BrowseItemDetail));
-

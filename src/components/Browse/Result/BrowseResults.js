@@ -55,12 +55,13 @@ export class BrowseResults extends React.Component<P, S> {
   };
 
   renderActionMenuItems = () => {
+    const { translate } = this.props;
     return [
-      { label: this.props.translate({ id: 'ui-marccat.browse.actionmenu.export.mrc' }) },
-      { label: this.props.translate({ id: 'ui-marccat.browse.actionmenu.export.csv' }) },
-      { label: this.props.translate({ id: 'ui-marccat.browse.actionmenu.export.dat' }) },
-      { label: this.props.translate({ id: 'ui-marccat.browse.actionmenu.printall' }) },
-      { label: this.props.translate({ id: 'ui-marccat.browse.actionmenu.merge' }) },
+      { label: translate({ id: 'ui-marccat.browse.actionmenu.export.mrc' }) },
+      { label: translate({ id: 'ui-marccat.browse.actionmenu.export.csv' }) },
+      { label: translate({ id: 'ui-marccat.browse.actionmenu.export.dat' }) },
+      { label: translate({ id: 'ui-marccat.browse.actionmenu.printall' }) },
+      { label: translate({ id: 'ui-marccat.browse.actionmenu.merge' }) },
     ];
   };
 
@@ -76,7 +77,7 @@ export class BrowseResults extends React.Component<P, S> {
         <Pane
           padContent={(browseRecords) || isFetchingBrowse}
           defaultWidth="fill"
-          actionMenu={this.renderActionMenuItems()}
+          actionMenuItems={this.renderActionMenuItems()}
           paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
           paneSub={EMPTY_MESSAGE}
           firstMenu={firstMenu}

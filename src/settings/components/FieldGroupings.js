@@ -6,9 +6,10 @@ import * as React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import { ToolbarButtonMenu } from '../../lib';
+import { Props, injectCommonProp } from '../../core';
 
-type P = {
-  label: string,
+type P = Props & {
+  label: string;
 };
 const data = [
   { 'Name': 'Title', 'Description': 'Lorem ipsum dolor sit amet', 'Heading Fields': '130, 130, 130, 130', 'Title Fields': 'James Edward' },
@@ -18,14 +19,15 @@ const data = [
   { 'Name': 'Donor name', 'Description': 'Lorem ipsum dolor sit amet', 'Heading Fields': '130, 130, 130, 130', 'Title Fields': 'James Edward' },
   { 'Name': 'Subject', 'Description': 'Lorem ipsum dolor sit amet', 'Heading Fields': '130, 130, 130, 130', 'Title Fields': 'James Edward' },
 ];
-export default class FieldGroupings extends React.Component<P, {}> {
+class FieldGroupings extends React.Component<P, {}> {
   render() {
+    const { label } = this.props;
     const rightMenu = <ToolbarButtonMenu create {...this.props} label="ui-marccat.button.add" />;
     return (
       <Pane
         defaultWidth="fill"
         fluidContentWidth
-        paneTitle={this.props.label}
+        paneTitle={label}
         lastMenu={rightMenu}
       >
         <MultiColumnList
@@ -51,3 +53,4 @@ export default class FieldGroupings extends React.Component<P, {}> {
     );
   }
 }
+export default injectCommonProp(FieldGroupings);

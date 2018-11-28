@@ -73,9 +73,7 @@ export const browseDetailEpic = (action$, store) => action$.ofType(ActionTypes.D
   ));
 
 export const browseAuthorityDetailEpic = (action$, store) => action$.ofType(ActionTypes.AUTH_DETAILS_BROWSE)
-  .switchMap((d) =>
-    ajax
-      .getJSON(buildUrl(ENDPOINT.SEARCH_URL, `lang=ita&view=-1&ml=170&q=${d.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
-      .map(record => marccatActions.fetchBrowseAuthorityDetail(record.docs[0].data, d.isAuthority))
-      .catch(e => of$(marccatActions.fetchFailure(e))));
-
+  .switchMap((d) => ajax
+    .getJSON(buildUrl(ENDPOINT.SEARCH_URL, `lang=ita&view=-1&ml=170&q=${d.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
+    .map(record => marccatActions.fetchBrowseAuthorityDetail(record.docs[0].data, d.isAuthority))
+    .catch(e => of$(marccatActions.fetchFailure(e))));

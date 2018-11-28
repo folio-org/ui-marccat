@@ -55,8 +55,25 @@ export class SearchResults extends React.Component<P, {}> {
   };
 
   render() {
-    let { bibsOnly, autOnly, detailPanelIsVisible, noResults } = this.state;
-    const { activeFilter, activeFilterName, activeFilterChecked, totalAuthCount, totalBibCount, bibliographicResults, authorityResults, isFetching, isReady, isPanelBibAssOpen, isReadyDetail, isFetchingDetail, isLoadingAssociatedRecord, isReadyAssociatedRecord } = this.props;
+    /* eslint-disable-next-line prefer-const */
+    let { bibsOnly, autOnly, detailPanelIsVisible, noResults, loading } = this.state;
+    const {
+      activeFilter,
+      activeFilterName,
+      activeFilterChecked,
+      totalAuthCount,
+      totalBibCount,
+      bibliographicResults,
+      authorityResults,
+      firstMenu,
+      isFetching,
+      isReady,
+      isPanelBibAssOpen,
+      isReadyDetail,
+      isFetchingDetail,
+      isLoadingAssociatedRecord,
+      isReadyAssociatedRecord
+    } = this.props;
     if (activeFilter) {
       if (activeFilterName === 'recordType.Bibliographic records' && activeFilterChecked) {
         bibsOnly = true;
@@ -102,7 +119,7 @@ export class SearchResults extends React.Component<P, {}> {
           paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
           paneSub={(mergedRecord && mergedRecord.length > 0) ? message : messageNoContent}
           appIcon={{ app: C.META.ICON_TITLE }}
-          firstMenu={this.props.firstMenu}
+          firstMenu={firstMenu}
           lastMenu={rightMenu}
         >
           {
@@ -136,7 +153,7 @@ export class SearchResults extends React.Component<P, {}> {
                   columnMapping={columnMapper}
                   onNeedMoreData={() => this.onNeedMoreData(marcJSONRecords)}
                   virtualize
-                  loading={this.state.loading}
+                  loading={loading}
                   visibleColumns={[
                     'resultView',
                     '001',

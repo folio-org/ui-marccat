@@ -23,28 +23,29 @@ class MARCcat extends React.Component<P, S> {
   }
 
   renderActionMenuItems = () => {
+    const { translate } = this.props;
     return [
-      { label: this.props.translate({ id: 'ui-marccat.indexes.title' }) },
-      { label: this.props.translate({ id: 'ui-marccat.diacritic.title' }) }
+      { label: translate({ id: 'ui-marccat.indexes.title' }) },
+      { label: translate({ id: 'ui-marccat.diacritic.title' }) }
     ];
   };
 
   render() {
-    const { translate, filterPaneIsVisible, toggleFilterPane } = this.props;
+    const { translate, filterPaneIsVisible, toggleFilterPane, children } = this.props;
     return (
       <Paneset static>
         {filterPaneIsVisible &&
           <Pane
             dismissible
             defaultWidth="18%"
-            actionMenu={this.renderActionMenuItems()}
+            actionMenuItems={this.renderActionMenuItems()}
             onClose={toggleFilterPane}
             paneTitle={translate({ id: 'ui-marccat.searchAndFilter' })}
             paneSub={C.EMPTY_MESSAGE}
           >
             <SearchPanel {...this.props} />
           </Pane>}
-        {...this.props.children}
+        {...children}
       </Paneset>
     );
   }

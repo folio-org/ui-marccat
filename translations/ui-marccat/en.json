@@ -46,6 +46,17 @@
   "browse.actionmenu.export.dat":"Export as .dat",
   "browse.actionmenu.printall":"Print all",
   "browse.actionmenu.merge":"Merge",
+
+  "search.actionmenu.export.mrc":"Export as .mrc",
+  "search.actionmenu.export.csv":"Export as .csv",
+  "search.actionmenu.export.dat":"Export as .dat",
+  "search.actionmenu.print":"Print",
+  "search.actionmenu.opac":"Reveal in OPAC",
+  "search.actionmenu.duplicate":"Duplicate",
+  "search.actionmenu.holdings":"Holdings",
+  "search.actionmenu.instances":"Instances",
+  "search.actionmenu.authority.records":"Authority Records",
+
   "indexes.title":"Indexes",
   "diacritic.title":"Diacritic"
 

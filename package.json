@@ -64,7 +64,8 @@
     "redux-form": "^7.4.2"
   },
   "peerDependencies": {
-    "@folio/stripes-core": "^2.15.3",
+    "@folio/stripes-core": "*",
+    "react-dom": "*",
     "react": "*"
   },
   "resolutions": {
@@ -72,6 +73,8 @@
     "**/isarray": "*",
     "**/warning": "*",
     "**/fbjs": "*",
+    "**/@folio/stripes-react-hotkeys": "*",
+    "**/@folio/stripes-components":"*",
     "**/hoist-non-react-statics": "*"
   },
   "stripes": {

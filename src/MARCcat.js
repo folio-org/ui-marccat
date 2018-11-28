@@ -17,11 +17,6 @@ type S = {
  * @module MARCcat
  */
 class MARCcat extends React.Component<P, S> {
-  constructor(props:P) {
-    super(props);
-    this.renderActionMenuItems = this.renderActionMenuItems.bind(this);
-  }
-
   renderActionMenuItems = () => {
     const { translate } = this.props;
     return [

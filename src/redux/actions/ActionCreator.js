@@ -16,6 +16,10 @@ export const isfetchingDetailsAssociatedRequest = (isLoading) => ({
   type: ActionTypes.FETCH_DETAILS_ASSOCIATED_REQUESTED,
   payload: isLoading
 });
+export const isfetchingBrowseDetailsAssociatedRequest = (isLoading) => ({
+  type: ActionTypes.FETCH_BROWSE_DETAILS_ASSOCIATED_REQUESTED,
+  payload: isLoading
+});
 export const isfetchingAssociatedRequest = (isLoading) => ({
   type: ActionTypes.FETCH_ASSOCIATED_REQUESTED,
   payload: isLoading
@@ -56,6 +60,11 @@ export const fetchAssociatedBibDetailsRecords = (records, recordType, mustOpenPa
   payload: records,
   recType: recordType,
   isDetailBibAssOpen: mustOpenPanel
+});
+export const fetchBrowseDetailAssociatedRecords = (records, mustOpenPanel) => ({
+  type: ActionTypes.BROWSE_ASSOCIATED_DETAILS_SUCCESS,
+  payload: records,
+  mustOpenPanel
 });
 export const fetchSearchEngineRecords = (bibliographicResults, bibCounter, authorityResults, authCounter) => ({
   type: ActionTypes.RECORD_SUCCESS,

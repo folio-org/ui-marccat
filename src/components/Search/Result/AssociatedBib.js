@@ -3,37 +3,37 @@ import { connect } from 'react-redux';
 import { Accordion, FilterAccordionHeader, MultiColumnList } from '@folio/stripes-components';
 import type { Props } from '../../../core';
 import { ActionTypes } from '../../../redux/actions';
-import { remapForAssociatedBibList } from '../Utils/Mapper';
-import { resultsFormatterForAssociated, columnMapperForAssociated } from '../Utils/Formatter';
+import { remapForAssociatedBibList } from '../../../utils/Mapper';
+import { resultsFormatterForAssociated, columnMapperForAssociated } from '../../../utils/Formatter';
 import { EMPTY_MESSAGE } from '../../../utils/Constant';
-
 
 type P = Props & {
     checkRecordType: Array<any>,
 }
 
 function AssociatedBib({ ...props }: P) {
-  const associatedBibRecords = props.bibRecords;
+  const { bibRecords, ...rest } = props;
+  const associatedBibRecords = bibRecords;
   const resultRemapped = (associatedBibRecords && associatedBibRecords.length > 0)
     ? remapForAssociatedBibList(associatedBibRecords)
     : undefined;
 
   return (
     <Accordion
-      {...props.rest}
+      {...rest}
       separator={false}
       header={FilterAccordionHeader}
-      label={'(' + props.bibRecords.length + ') Associated bibliographic records'}
+      label={'(' + bibRecords.length + ') Associated bibliographic records'}
     >
       {resultRemapped &&
       <MultiColumnList
         id="bib-associated"
-        defaultWidth="fill"
+        defaultWidth="30%"
         isEmptyMessage={EMPTY_MESSAGE}
         columnWidths={
           {
-            'resultView': '10%',
-            '245': '60%',
+            'resultView': '20%',
+            '245': '50%',
             'name': '20%',
             'format': '10%'
           }

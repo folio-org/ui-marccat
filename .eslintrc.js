@@ -25,21 +25,12 @@ module.exports = {
 		"spaced-comment": ["error", "always", { "markers": ["/"] }],
     "arrow-parens": "off",
     "no-return-assign":"off",
+    "jsx-a11y/no-noninteractive-element-interactions":"off",
     "no-undef": "warn",
+    "object-curly-newline": "off",
     "import/no-named-as-default": "off",
     "import/no-extraneous-dependencies": "off",
 		"react/sort-comp": "off",
-		"prefer-destructuring": ["error", {
-      "VariableDeclarator": {
-        "array": false,
-        "object": true
-      },
-      "AssignmentExpression": {
-        "array": true,
-        "object": false
-      }
-    }, {
-      "enforceForRenamedProperties": false
-    }]
+    "react/destructuring-assignment": ["error"],
 	}
 }

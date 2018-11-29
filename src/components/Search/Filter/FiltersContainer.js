@@ -1,7 +1,7 @@
 import React from 'react';
 import FilterGroups, { initialFilterState } from '@folio/stripes-components/lib/FilterGroups';
 import { ActionTypes } from '../../../redux/actions';
-import { Props } from '../../../core';
+import { Props } from '../../../core/type/props';
 
 import styles from './FiltersContainer.css';
 
@@ -60,11 +60,13 @@ export default class FiltersContainer extends React.Component<P, {}> {
   }
 
   render() {
+    const { filters } = this.state;
+    // const filterCount = Object.keys(filters).length;
     return (
       <div className={styles['search-filters']}>
         <FilterGroups
           config={this.config}
-          filters={this.state.filters}
+          filters={filters}
           onChangeFilter={this.onChangeFilter}
           onClearFilter={this.onClearFilter}
         />

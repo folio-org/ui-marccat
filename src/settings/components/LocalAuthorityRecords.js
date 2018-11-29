@@ -4,23 +4,25 @@
  */
 import * as React from 'react';
 import Pane from '@folio/stripes-components/lib/Pane';
-import { FormattedMessage } from 'react-intl';
+import { Props, injectCommonProp } from '../../core';
 
-type GeneralSettingsProps = {
-  label: string,
+type P = Props & {
+  label: string;
 };
-export default class LocalAuthorityRecords extends React.Component<GeneralSettingsProps, {}> {
+class LocalAuthorityRecords extends React.Component<P, {}> {
   render() {
+    const { label, translate } = this.props;
     return (
       <Pane
         defaultWidth="fill"
         fluidContentWidth
-        paneTitle={this.props.label}
+        paneTitle={label}
       >
-        <div id="stripes-new-app-settings-message">
-          <FormattedMessage id="ui-marccat.settings.general" />
+        <div id="data-test-settings-authority-records">
+          {translate({ id: 'ui-marccat.settings.authority.records' }) }
         </div>
       </Pane>
     );
   }
 }
+export default injectCommonProp(LocalAuthorityRecords);

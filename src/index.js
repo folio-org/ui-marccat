@@ -4,26 +4,31 @@
  */
 import * as React from 'react';
 import Settings from './settings';
+import { Router } from './router';
 import { reducer, epics } from './redux';
 import { injectCommonProp } from './core';
 import * as C from './utils';
-import MARCcat from './components/MARCcat';
+import MARCcat from './MARCcat';
 
-import './index.css';
+import './styles/common.css';
 
 type RoutingProps = {
   root: {
-    addReducer: Function,
-    addEpic: Function,
+    addReducer: Function;
+    addEpic: Function;
   },
-  showSettings: boolean,
-  children: React.ReactNode
+  filterPaneIsVisible: boolean;
+  showSettings: boolean;
+  children: React.ReactNode;
 };
 
 
 class MARCCatRouting extends React.Component<RoutingProps, {}> {
   constructor(props, context) {
     super(props, context);
+    this.state = {
+      filterPaneIsVisible: true,
+    };
     /*
      * add epic and reducer to the application store
      * all the reducer and the epic are load in the Redux folder
@@ -32,16 +37,30 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
     // this.context.addReducer(resourceKey, reducer)
     props.root.addReducer(C.STATE_MANAGEMENT.REDUCER, reducer);
     props.root.addEpic(C.STATE_MANAGEMENT.EPIC, epics);
+
+    this.toggleFilterPane = this.toggleFilterPane.bind(this);
+  }
+
+  toggleFilterPane = () => {
+    this.setState(prevState => ({ filterPaneIsVisible: !prevState.filterPaneIsVisible }));
   }
 
   render() {
     const { showSettings } = this.props;
+    const { filterPaneIsVisible } = this.state;
     if (showSettings) {
       return <Settings {...this.props} />;
     }
     return (
-      <MARCcat {...this.props}>
-        {this.props.children}
+      <MARCcat
+        {...this.props}
+        filterPaneIsVisible={filterPaneIsVisible}
+        toggleFilterPane={this.toggleFilterPane}
+      >
+        <Router
+          {...this.props}
+          toggleFilterPane={this.toggleFilterPane}
+        />
       </MARCcat>
     );
   }

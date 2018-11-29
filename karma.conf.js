@@ -45,7 +45,6 @@ module.exports = (config) => {
   };
 
   configuration.plugins = config.plugins;
-  configuration.plugins.push('karma-browserstack-launcher');
 
   if (configuration.coverageIstanbulReporter) {
     configuration.coverageIstanbulReporter.thresholds.global = {

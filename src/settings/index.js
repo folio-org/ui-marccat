@@ -1,1 +1,1 @@
-export { default } from './components/Settings';
+export { default } from './components/MarcatSettings';

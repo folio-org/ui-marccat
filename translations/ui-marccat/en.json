@@ -11,6 +11,7 @@
 
   "searchAndFilter": "Search & Filter",
 
+  "error.noresults.message":"Search returned no results",
   "initial.title":"Choose a filter or enter search query to show results",
   "search.initial.message": "Enter search criteria to start search",
   

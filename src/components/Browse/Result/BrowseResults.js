@@ -9,7 +9,7 @@ import { Props } from '../../../core/type/props';
 import BrowseItemDetail from './BrowseItemDetail';
 import { ActionTypes } from '../../../redux/actions/Actions';
 import { findYourQueryFromBrowse } from '../../Search/Select/FilterMapper';
-import { ToolbarButtonMenu, EmptyMessage } from '../../../lib';
+import { ToolbarButtonMenu, EmptyMessage, NoResultsMessage } from '../../../lib';
 import { browseFormatter, browseColMapper } from '../../../utils/Formatter';
 import BrowseAssociatedItemDetail from './BrowseAssociatedItemDetail';
 
@@ -17,6 +17,8 @@ type P = Props & {};
 type S = {
   browseDetailPanelIsVisible: bool;
   rowClicked: bool;
+  noResults: bool;
+  isPadRequired: bool;
 };
 
 export class BrowseResults extends React.Component<P, S> {
@@ -25,6 +27,8 @@ export class BrowseResults extends React.Component<P, S> {
     this.state = {
       browseDetailPanelIsVisible: false,
       rowClicked: false,
+      noResults: false,
+      isPadRequired: false
     };
     this.handleClosePanelDetails = this.handleClosePanelDetails.bind(this);
     this.handleBrowseDetails = this.handleBrowseDetails.bind(this);
@@ -90,11 +94,18 @@ export class BrowseResults extends React.Component<P, S> {
   render() {
     const { browseDetailPanelIsVisible, rowClicked } = this.state;
     const { translate, firstMenu, isFetchingBrowse, isReadyBrowse, browseRecords, isPanelOpen, isFetchingBrowseDetails, isReadyBrowseDetails, isLoadingAssociated, isReadyAssociated } = this.props;
+    let { noResults, isPadRequired } = this.state;
     const messageNoContent = <FormattedMessage id="ui-marccat.search.initial.message" />;
+
+    if (browseRecords !== undefined && browseRecords.length === 0) {
+      noResults = true;
+    } else if (browseRecords !== undefined && browseRecords.length > 0) {
+      isPadRequired = true;
+    }
     return (
       <Paneset static>
         <Pane
-          padContent={(browseRecords) || isFetchingBrowse}
+          padContent={isFetchingBrowse || isPadRequired}
           defaultWidth="fill"
           actionMenu={this.myActionMenu}
           paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
@@ -105,32 +116,34 @@ export class BrowseResults extends React.Component<P, S> {
           {
             (isFetchingBrowse) ?
               <Icon icon="spinner-ellipsis" /> :
-              (isReadyBrowse) ?
-                <MultiColumnList
-                  contentData={browseRecords}
-                  autosize
-                  isEmptyMessage={C.EMPTY_MESSAGE}
-                  formatter={browseFormatter}
-                  onRowClick={this.handleBrowseDetails}
-                  rowMetadata={['Access point', 'Authority Records', 'Bibliographic Records']}
-                  columnMapping={browseColMapper}
-                  columnWidths={
-                    {
-                      'type': '10%',
-                      'headingNumber': '15%',
-                      'stringText': '25%',
-                      'countAuthorities': '25%',
-                      'countDocuments': '25%',
+              (!isFetchingBrowse && noResults) ?
+                <NoResultsMessage {...this.props} /> :
+                (isReadyBrowse) ?
+                  <MultiColumnList
+                    contentData={browseRecords}
+                    autosize
+                    isEmptyMessage={C.EMPTY_MESSAGE}
+                    formatter={browseFormatter}
+                    onRowClick={this.handleBrowseDetails}
+                    rowMetadata={['Access point', 'Authority Records', 'Bibliographic Records']}
+                    columnMapping={browseColMapper}
+                    columnWidths={
+                      {
+                        'type': '10%',
+                        'headingNumber': '15%',
+                        'stringText': '25%',
+                        'countAuthorities': '25%',
+                        'countDocuments': '25%',
+                      }
                     }
-                  }
-                  visibleColumns={[
-                    'type',
-                    'headingNumber',
-                    'stringText',
-                    'countAuthorities',
-                    'countDocuments'
-                  ]}
-                /> : <EmptyMessage {...this.props} />}
+                    visibleColumns={[
+                      'type',
+                      'headingNumber',
+                      'stringText',
+                      'countAuthorities',
+                      'countDocuments'
+                    ]}
+                  /> : <EmptyMessage {...this.props} />}
         </Pane>
         {browseDetailPanelIsVisible && !rowClicked &&
           <Pane

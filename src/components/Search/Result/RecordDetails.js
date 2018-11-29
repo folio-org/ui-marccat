@@ -47,8 +47,8 @@ function RecordDetails({ translate, ...props }: P) {
               </Col>
             </Row>
           ))}
-          <InventoryPluggableBtn {...props} buttonLabel={translate({ id: 'ui-marccat.search.goto.inventory' })} />
         </div>
+        <InventoryPluggableBtn {...props} buttonLabel={translate({ id: 'ui-marccat.search.goto.inventory' })} />
       </Accordion>
       {checkDetailsBibRec === checkDetailsInRow &&
       <AssociatedBib {...props} />}

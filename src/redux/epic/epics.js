@@ -86,3 +86,12 @@ export const browseDetailAssociatedEpic = (action$, store) => action$.ofType(Act
       .map(record => marccatActions.fetchBrowseDetailAssociatedRecords(record.docs[0].data, d.mustOpenPanel))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
+
+export const templateViewEpic = (action$, store) => action$.ofType(ActionTypes.VIEW_TEMPLATE)
+  .switchMap((d) => concat$(
+    of$(marccatActions.isFetchingTemplateViewRequest(true)),
+    ajax
+      .getJSON(buildUrl(ENDPOINT.VIEW_TEMPLATE_URL, `code=${d.query}&headerTypeCode=15&lang=ita`), ENDPOINT.HEADERS)
+      .map(record => marccatActions.fetchTemplateView(record.docs))
+      .catch(e => of$(marccatActions.fetchFailure(e))),
+  ));

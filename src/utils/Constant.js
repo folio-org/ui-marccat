@@ -20,7 +20,8 @@ export const ENDPOINT = {
   SEARCH_URL: '/searchVertical',
   SEARCH_URL_JSON: '/search',
   DOC_COUNT_URL: 'document-count-by-id',
-  BROWSE_FIRST_PAGE_URL: '/browse'
+  BROWSE_FIRST_PAGE_URL: '/browse',
+  VIEW_TEMPLATE_URL: 'fixed-fields-code-groups',
 };
 
 // REDUX DATA STORE MANAGEMENT

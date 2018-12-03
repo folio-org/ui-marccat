@@ -79,6 +79,14 @@ export const fetchBrowseDetail = (results, counter, isAuthority) => ({
   count: counter,
   isAuthority
 });
+export const isFetchingTemplateViewRequest = (isLoading) => ({
+  type: ActionTypes.FETCH_VIEW_TEMPLATE,
+  payload: isLoading
+});
+export const fetchTemplateView = (records) => ({
+  type: ActionTypes.VIEW_TEMPLATE_SUCCESS,
+  payload: records
+});
 export const fetchSuccess = (message) => ({
   type: ActionTypes.SUCCESS,
   payload: message

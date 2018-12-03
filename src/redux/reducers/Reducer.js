@@ -245,6 +245,32 @@ export function scanBrowsingReducer(state = { isLoading, isReady }, action) {
   }
 }
 
+export function templateViewReducer(state = { isLoading, isReady }, action) {
+  switch (action.type) {
+  case ActionTypes.VIEW_TEMPLATE:
+    return {
+      ...state,
+      isLoading: false,
+      isReady: false
+    };
+  case ActionTypes.FETCH_VIEW_TEMPLATE:
+    return {
+      ...state,
+      isLoading: action.payload,
+      isReady: false
+    };
+  case ActionTypes.VIEW_TEMPLATE_SUCCESS:
+    return {
+      ...state,
+      isLoading: false,
+      isReady: true,
+      records: action.payload,
+    };
+  default:
+    return state;
+  }
+}
+
 export function filterReducer(state = { isLoading }, action) {
   switch (action.type) {
   case ActionTypes.FILTERS:

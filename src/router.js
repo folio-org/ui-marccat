@@ -5,7 +5,7 @@ import * as React from 'react';
 import Route from 'react-router-dom/Route';
 import Redirect from 'react-router-dom/Redirect';
 import Switch from 'react-router-dom/Switch';
-import { Search, Browse } from './components';
+import { Search, Browse, Template } from './components';
 import { ToolbarMenu } from './lib';
 import type { Props } from './core';
 
@@ -30,6 +30,7 @@ export function Router({ ...props }:P) {
     <Switch>
       <ConnectedRoute path={`${path}/search`} {...props} component={Search} firstMenu={searchMenu} id="search_component_root" />
       <ConnectedRoute path={`${path}/browse`} {...props} component={Browse} firstMenu={searchMenu} id="browsing_component_root" />
+      <ConnectedRoute path={`${path}/template`} {...props} component={Template} firstMenu={searchMenu} id="browsing_component_root" />
       <Route render={() => (<Redirect to={`${path}/search`} id="nav_root_redirect" />)} />
     </Switch>
   );

@@ -83,6 +83,12 @@ export class SearchResults extends React.Component<P, {}> {
     );
   };
 
+  handleClickEdit = () => {
+    const { dispatch, history } = this.props;
+    dispatch({ type: ActionTypes.VIEW_TEMPLATE, query: '000' });
+    history.push('/marccat/template');
+  }
+
   handleDetails = (e, meta) => {
     const { dispatch } = this.props;
     const id = meta['001'];
@@ -154,7 +160,7 @@ export class SearchResults extends React.Component<P, {}> {
     const message = messageAuth + ' / ' + messageBib;
     const messageNoContent = <FormattedMessage id="ui-marccat.search.initial.message" />;
     const rightMenu = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.new.keyboard" />;
-    const rightMenuEdit = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.edit" />;
+    const rightMenuEdit = <ToolbarButtonMenu create {...this.props} onClick={this.handleClickEdit} label="ui-marccat.search.record.edit" />;
     return (
       <Paneset static>
         <Pane
@@ -263,6 +269,7 @@ export class SearchResults extends React.Component<P, {}> {
     );
   }
 }
+
 
 export default (connect(
   ({ marccat: { search, details, countDoc, filter, associatedBibDetails } }) => ({

@@ -91,7 +91,16 @@ export const templateViewEpic = (action$, store) => action$.ofType(ActionTypes.V
   .switchMap((d) => concat$(
     of$(marccatActions.isFetchingTemplateViewRequest(true)),
     ajax
-      .getJSON(buildUrl(ENDPOINT.VIEW_TEMPLATE_URL, `code=${d.query}&headerTypeCode=15&lang=ita`), ENDPOINT.HEADERS)
-      .map(record => marccatActions.fetchTemplateView(record.docs))
+      .getJSON(buildUrl(ENDPOINT.VIEW_TEMPLATE_URL, 'type=B&lang=ita'), ENDPOINT.HEADERS)
+      .map(record => marccatActions.fetchTemplateView(record.recordTemplates))
+      .catch(e => of$(marccatActions.fetchFailure(e))),
+  ));
+
+export const templateByIdEpic = (action$, store) => action$.ofType(ActionTypes.TEMPLATE_GET_BY_ID)
+  .switchMap((d) => concat$(
+    of$(marccatActions.isFetchingTemplateByIdRequest(true)),
+    ajax
+      .getJSON(buildUrl(ENDPOINT.VIEW_TEMPLATE_URL, 'type=B&lang=ita'), ENDPOINT.HEADERS)
+      .map(record => marccatActions.fetchTemplateById(record.recordTemplates))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));

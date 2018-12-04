@@ -253,7 +253,19 @@ export function templateViewReducer(state = { isLoading, isReady }, action) {
       isLoading: false,
       isReady: false
     };
+  case ActionTypes.TEMPLATE_GET_BY_ID:
+    return {
+      ...state,
+      isLoading: false,
+      isReady: false
+    };
   case ActionTypes.FETCH_VIEW_TEMPLATE:
+    return {
+      ...state,
+      isLoading: action.payload,
+      isReady: false
+    };
+  case ActionTypes.FETCH_TEMPLATE_GET_BY_ID:
     return {
       ...state,
       isLoading: action.payload,
@@ -265,6 +277,13 @@ export function templateViewReducer(state = { isLoading, isReady }, action) {
       isLoading: false,
       isReady: true,
       records: action.payload,
+    };
+  case ActionTypes.TEMPLATE_GET_BY_ID_SUCCESS:
+    return {
+      ...state,
+      isLoading: false,
+      isReady: true,
+      recordsById: action.payload,
     };
   default:
     return state;

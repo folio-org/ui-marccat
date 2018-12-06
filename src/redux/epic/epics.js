@@ -100,7 +100,7 @@ export const templateByIdEpic = (action$, store) => action$.ofType(ActionTypes.T
   .switchMap((d) => concat$(
     of$(marccatActions.isFetchingTemplateByIdRequest(true)),
     ajax
-      .getJSON(buildUrl(ENDPOINT.VIEW_TEMPLATE_URL, 'type=B&lang=ita'), ENDPOINT.HEADERS)
-      .map(record => marccatActions.fetchTemplateById(record.recordTemplates))
+      .getJSON(buildUrl(ENDPOINT.VIEW_TEMPLATE_URL_BY_ID + `${d.query}`, 'type=B&lang=ita'), ENDPOINT.HEADERS)
+      .map(record => marccatActions.fetchTemplateById(record))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));

@@ -28,7 +28,7 @@ class DefaultTemplate extends React.Component<P, {}> {
               <MultiColumnList
                 contentData={defaultTemplateData}
                 rowMetadata={['id', 'name', 'fields']}
-                onRowClick={(meta) => {
+                onRowClick={(e, meta) => {
                   const { store, history } = this.props;
                   const id = meta.id;
                   store.dispatch({ type: ActionTypes.TEMPLATE_GET_BY_ID, query: id });
@@ -54,6 +54,7 @@ class DefaultTemplate extends React.Component<P, {}> {
 export default (connect(
   ({ marccat: { template } }) => ({
     defaultTemplateData: template.records,
-    isReadyData: template.isReady
+    isReadyData: template.isReady,
+    isLoadingData: template.isLoading
   }),
 )(injectCommonProp(DefaultTemplate)));

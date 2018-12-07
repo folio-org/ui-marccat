@@ -104,3 +104,12 @@ export const templateByIdEpic = (action$, store) => action$.ofType(ActionTypes.T
       .map(record => marccatActions.fetchTemplateById(record))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
+
+export const templateGetValuesFromTagEpic = (action$, store) => action$.ofType(ActionTypes.TEMPLATE_VALUES_FROM_TAG)
+  .switchMap((d) => concat$(
+    of$(marccatActions.isFetchingTemplateTagRequest(true)),
+    ajax
+      .getJSON(buildUrl(ENDPOINT.TEMPLATE_TAG_URL, `fixed-fields-code-groups?code=${d.code}&headerTypeCode=${d.typeCode}&lang=ita`), ENDPOINT.HEADERS)
+      .map(record => marccatActions.fetchTemplateFromTag(record))
+      .catch(e => of$(marccatActions.fetchFailure(e))),
+  ));

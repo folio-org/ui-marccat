@@ -83,6 +83,10 @@ export const fetchBrowseDetail = (results, counter, isAuthority) => ({
   count: counter,
   isAuthority
 });
+export const isFetchingTemplateTagRequest = (isLoading) => ({
+  type: ActionTypes.FETCH_TEMPLATE_VALUES_FROM_TAG,
+  payload: isLoading
+});
 export const isFetchingTemplateViewRequest = (isLoading) => ({
   type: ActionTypes.FETCH_VIEW_TEMPLATE,
   payload: isLoading
@@ -93,6 +97,10 @@ export const fetchTemplateView = (records) => ({
 });
 export const fetchTemplateById = (records) => ({
   type: ActionTypes.TEMPLATE_GET_BY_ID_SUCCESS,
+  payload: records
+});
+export const fetchTemplateFromTag = (records) => ({
+  type: ActionTypes.TEMPLATE_VALUES_FROM_TAG_SUCCESS,
   payload: records
 });
 export const fetchSuccess = (message) => ({

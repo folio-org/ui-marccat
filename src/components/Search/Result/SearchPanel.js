@@ -79,7 +79,11 @@ class SearchPanel extends React.Component<P, S> {
         dispatch({ type: ActionTypes.BROWSE_FIRST_PAGE, query: bibQuery });
         history.push('/marccat/browse');
       } else if (!isBrowseRequested) {
-        dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: authQuery });
+        if (indexForQuery === 'BN ' || indexForQuery === 'SN ' || indexForQuery === 'PU ' || indexForQuery === 'LL ' || indexForQuery === 'BC ' || indexForQuery === 'CP ' || indexForQuery === 'PW ') {
+          dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: '' });
+        } else {
+          dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: authQuery });
+        }
         history.push('/marccat/search');
       }
     }

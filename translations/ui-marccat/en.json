@@ -68,5 +68,6 @@
   "template.actionmenu.mypersonal":"My personal once",
   "template.actionmenu.save":"Save template",
   "template.actionmenu.import.overlay":"Import and overlay .marc or .mrc file",
-  "template.actionmenu.import.oclc":"Import from OCLC"
+  "template.actionmenu.import.oclc":"Import from OCLC",
+  "template.bib.accordion":"Bibliographic default templates"
 }

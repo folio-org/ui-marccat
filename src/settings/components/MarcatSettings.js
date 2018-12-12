@@ -8,11 +8,18 @@ import FieldGroupings from './FieldGroupings';
 import DefaultTemplate from './DefaultTemplate';
 import RecordsOverlayRules from './RecordOverlayRules';
 import LocalAuthorityRecords from './LocalAuthorityRecords';
+import { ActionTypes } from '../../redux/actions/Actions';
+
 
 type P = {
   stripes: Object;
 };
 export default class MARCcatSettings extends React.Component<P, {}> {
+  handleOnClick = () => {
+    const { store } = this.props;
+    store.dispatch({ type: ActionTypes.VIEW_TEMPLATE });
+  }
+
   renderSettingsPages = () => {
     const { translate } = this.props;
     return [
@@ -53,6 +60,7 @@ export default class MARCcatSettings extends React.Component<P, {}> {
       <Settings
         {...this.props}
         navPaneWidth="20%"
+        onClick={this.handleOnClick()}
         pages={this.renderSettingsPages()}
         paneTitle={translate({
           id: 'ui-marccat.settings.general',

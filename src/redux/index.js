@@ -19,7 +19,10 @@ import { searchEpic,
   browseDetailEpic,
   browseAuthorityDetailEpic,
   browseDetailAssociatedEpic,
-  templateViewEpic } from './epic/epics';
+  templateViewEpic,
+  templateGetValuesFromTagEpic,
+  templateByIdEpic,
+} from './epic/epics';
 
 export const reducer = combineReducers({
   search: searchEngineReducer,
@@ -44,5 +47,7 @@ export const epics = combineEpics(
   browseDetailEpic,
   browseAuthorityDetailEpic,
   browseDetailAssociatedEpic,
-  templateViewEpic
+  templateViewEpic,
+  templateByIdEpic,
+  templateGetValuesFromTagEpic
 );

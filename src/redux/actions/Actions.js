@@ -4,7 +4,6 @@ export const handler = {};
 
 export const ActionTypes = {
   SEARCH: '@@ui-marccat/SEARCH',
-  SEARCH_AUTH: '@@ui-marccat/SEARCH_AUTH',
   SCAN: '@@ui-marccat/SCAN',
   SCAN_SUCCESS: '@@ui-marccat/SCAN_SUCCESS',
   DETAILS: '@@ui-marccat/DETAILS',
@@ -48,4 +47,10 @@ export const ActionTypes = {
   VIEW_TEMPLATE: '@@ui-marccat/VIEW_TEMPLATE',
   VIEW_TEMPLATE_SUCCESS: '@@ui-marccat/VIEW_TEMPLATE_SUCCESS',
   FETCH_VIEW_TEMPLATE: '@@ui-marccat/FETCH_VIEW_TEMPLATE',
+  TEMPLATE_GET_BY_ID: '@@ui-marccat/TEMPLATE_GET_BY_ID',
+  FETCH_TEMPLATE_GET_BY_ID: '@@ui-marccat/FETCH_TEMPLATE_GET_BY_ID',
+  TEMPLATE_GET_BY_ID_SUCCESS: '@@ui-marccat/TEMPLATE_GET_BY_ID_SUCCESS',
+  TEMPLATE_VALUES_FROM_TAG: '@@ui-marccat/TEMPLATE_VALUES_FROM_TAG',
+  FETCH_TEMPLATE_VALUES_FROM_TAG: '@@ui-marccat/FETCH_TEMPLATE_VALUES_FROM_TAG',
+  TEMPLATE_VALUES_FROM_TAG_SUCCESS: '@@ui-marccat/TEMPLATE_VALUES_FROM_TAG_SUCCESS',
 };

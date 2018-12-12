@@ -1,5 +1,5 @@
 import React from 'react';
-import { getFieldPosition, getFormat } from './Mapper';
+import { getFieldPosition, getFormat, getMicroformat } from './Mapper';
 import style from '../styles/common.css';
 
 export const columnMapper = {
@@ -100,6 +100,7 @@ export const resultsFormatter = {
   format: x => (
     <div>
       { x.recordView === 1 && getFormat(x.leader) }
+      { x.recordView === 1 && getMicroformat(x['007']) }
     </div>
   ),
   countDoc: x => (

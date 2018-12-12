@@ -63,12 +63,10 @@ class SearchPanel extends React.Component<P, S> {
 
       let bibQuery = baseQuery;
       const authQuery = baseQuery;
-      let recordTypeControl = {};
 
       // regular filters
       if (store.getState().marccat.filter && store.getState().marccat.filter.filters) {
-        const { languageFilter, formatType, recordType } = remapFilters(store.getState().marccat.filter.filters);
-        recordTypeControl = recordType;
+        const { languageFilter, formatType } = remapFilters(store.getState().marccat.filter.filters);
         if (languageFilter && languageFilter.length) {
           bibQuery += ' AND ( ' + getLanguageFilterQuery(languageFilter) + ' ) ';
         }
@@ -80,21 +78,8 @@ class SearchPanel extends React.Component<P, S> {
         isBrowseRequested = true;
         dispatch({ type: ActionTypes.BROWSE_FIRST_PAGE, query: bibQuery });
         history.push('/marccat/browse');
-      }
-      if (recordTypeControl && recordTypeControl.length && !isBrowseRequested) {
-        recordTypeControl.forEach(element => {
-          if (Object.keys(element)[0] === 'Bibliographic records') {
-            dispatch({ type: ActionTypes.SEARCH, query: bibQuery });
-            history.push('/marccat/search');
-          }
-          if (Object.keys(element)[0] === 'Authority records') {
-            dispatch({ type: ActionTypes.SEARCH_AUTH, query: authQuery });
-            history.push('/marccat/search');
-          }
-        });
       } else if (!isBrowseRequested) {
-        dispatch({ type: ActionTypes.SEARCH, query: bibQuery });
-        dispatch({ type: ActionTypes.SEARCH_AUTH, query: authQuery });
+        dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: authQuery });
         history.push('/marccat/search');
       }
     }

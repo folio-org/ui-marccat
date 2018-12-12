@@ -51,5 +51,13 @@
     "search.actionmenu.holdings": "Acervo",
     "search.actionmenu.instances": "Instâncias",
     "search.actionmenu.authority.records": "Registros de autoridade",
-    "search.initial.message": "Insira os critérios de pesquisa para iniciar a pesquisa"
+    "search.initial.message": "Insira os critérios de pesquisa para iniciar a pesquisa",
+    "error.noresults.message": "A pesquisa não retornou resultados",
+    "template.actionmenu.load": "Carregar modelo ...",
+    "template.actionmenu.load.shortcut": "CTRL + L",
+    "template.actionmenu.organization": "Em toda a organização",
+    "template.actionmenu.mypersonal": "Meu pessoal uma vez",
+    "template.actionmenu.save": "Salvar modelo",
+    "template.actionmenu.import.overlay": "Importar e sobrepor arquivo .marc ou .mrc",
+    "template.actionmenu.import.oclc": "Importar da OCLC"
 }

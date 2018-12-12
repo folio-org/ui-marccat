@@ -11,7 +11,7 @@ export default function SearchConditions({ ...props }) {
   const { rest } = props;
   const options = [
     { label: 'Browse', value: 'BROWSE' },
-    { label: 'Start with', value: 'START' },
+    { label: 'Begins with', value: 'START' },
     { label: 'Contains', value: 'CONTAINS' },
     { label: 'Exact match', value: 'MATCH' }
   ];

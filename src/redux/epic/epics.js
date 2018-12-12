@@ -13,7 +13,7 @@ export const searchEpic = (action$, store) => action$.ofType(ActionTypes.SEARCH)
   .switchMap((d) => concat$(
     of$(marccatActions.isfetchingSearchRequest(true)),
     ajax
-      .getJSON(buildUrl(ENDPOINT.MERGED_SEARCH_URL, `lang=ita&ml=170&q=${d.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
+      .getJSON(buildUrl(ENDPOINT.MERGED_SEARCH_URL, `lang=ita&ml=170&qbib=${d.queryBib}&qauth=${d.queryAuth}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
       .map(record => marccatActions.fetchSearchEngineRecords(record[1].docs, record[1].numFound, record[0].docs, record[0].numFound))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));

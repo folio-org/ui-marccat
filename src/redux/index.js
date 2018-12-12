@@ -21,7 +21,8 @@ import { searchEpic,
   browseDetailAssociatedEpic,
   templateViewEpic,
   templateGetValuesFromTagEpic,
-  templateByIdEpic } from './epic/epics';
+  templateByIdEpic,
+} from './epic/epics';
 
 export const reducer = combineReducers({
   search: searchEngineReducer,

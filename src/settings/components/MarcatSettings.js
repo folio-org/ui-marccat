@@ -3,7 +3,7 @@
  * @flow
  */
 import * as React from 'react';
-import Settings from '@folio/stripes-smart-components/lib/Settings';
+import { Settings } from '@folio/stripes-smart-components';
 import FieldGroupings from './FieldGroupings';
 import DefaultTemplate from './DefaultTemplate';
 import RecordsOverlayRules from './RecordOverlayRules';
@@ -14,15 +14,13 @@ import { ActionTypes } from '../../redux/actions/Actions';
 type P = {
   stripes: Object;
 };
-export default class MARCcatSettings extends React.Component<P, {}> {
-  handleOnClick = () => {
-    const { store } = this.props;
-    store.dispatch({ type: ActionTypes.VIEW_TEMPLATE });
-  }
 
-  renderSettingsPages = () => {
+export default class MARCcatSettings extends React.Component<P, {}> {
+  constructor(props) {
+    super(props);
+
     const { translate } = this.props;
-    return [
+    this.pages = [
       {
         route: 'general',
         label: translate({
@@ -52,19 +50,21 @@ export default class MARCcatSettings extends React.Component<P, {}> {
         component: LocalAuthorityRecords,
       },
     ];
-  };
+  }
+
+  handleOnClick = () => {
+    const { store } = this.props;
+    store.dispatch({ type: ActionTypes.VIEW_TEMPLATE });
+  }
+
 
   render() {
-    const { translate } = this.props;
     return (
       <Settings
         {...this.props}
         navPaneWidth="20%"
         onClick={this.handleOnClick()}
-        pages={this.renderSettingsPages()}
-        paneTitle={translate({
-          id: 'ui-marccat.settings.general',
-        })}
+        pages={this.pages}
       />
     );
   }

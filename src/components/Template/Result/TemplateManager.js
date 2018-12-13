@@ -7,12 +7,15 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Checkbox from '@folio/stripes-components/lib/Checkbox';
 import { AccordionSet, Accordion } from '@folio/stripes-components/lib/Accordion';
-import { KeyValue, Icon, TextField } from '@folio/stripes-components';
+import { KeyValue, Icon, TextField, Button } from '@folio/stripes-components';
 import { Row, Col } from 'react-flexbox-grid';
+import Collapsible from 'react-collapsible';
 import * as C from '../../../utils/Constant';
 import type { Props } from '../../../core';
 import { injectCommonProp } from '../../../core';
 import myActionMenuTemplate from '../MyActionMenuTemplate';
+import { CustomTagComponent } from './CustomTagComponent';
+import style from './style.css';
 
 type P = Props & {
 }
@@ -61,15 +64,23 @@ export class TemplateManager extends React.Component<P, {}> {
                 <Checkbox label="Suppress from Discovery" />
               </Accordion>
               <Accordion label="Leader" id="leader">
-                <Row>
-                  <Col xs={4}>
-                    <TextField
-                      type="text"
-                      label={templateById.leader.code}
-                      value={templateById.leader.value}
-                    />
-                  </Col>
-                </Row>
+                <Collapsible
+                  trigger={
+                    <Col xs={4}>
+                      <div className={style.titleCollapsiblePanel} id="titleCollapsiblePanel">
+                        <TextField
+                          type="text"
+                          label={templateById.leader.code}
+                          value={templateById.leader.value}
+                          readOnly
+                        />
+                      </div>
+                    </Col>
+                  }
+                >
+                  <hr />
+                  <CustomTagComponent {...this.props} />
+                </Collapsible>
               </Accordion>
               <Accordion label="Control fields" id="control-field">
                 {templateById.fields.map(el => {
@@ -77,13 +88,24 @@ export class TemplateManager extends React.Component<P, {}> {
                     return (
                       <Row>
                         <Col xs={4}>
-                          <TextField
-                            type="text"
-                            label={el.fixedField.code}
-                            value={el.fixedField.displayValue}
-                          />
+                          <div className={style.titleCollapsiblePanel} id="titleCollapsiblePanel">
+                            <TextField
+                              type="text"
+                              label={el.fixedField.code}
+                              value={el.fixedField.displayValue}
+                              readOnly
+                            />
+                            <Collapsible
+                              trigger={<Button>ExpandTag</Button>}
+                            >
+                              <hr />
+                              <CustomTagComponent {...this.props} />
+                            </Collapsible>
+                          </div>
                         </Col>
+                        <div><br /></div>
                       </Row>
+
                     );
                   }
                 })

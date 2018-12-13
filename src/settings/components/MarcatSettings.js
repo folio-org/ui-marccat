@@ -59,12 +59,16 @@ export default class MARCcatSettings extends React.Component<P, {}> {
 
 
   render() {
+    const { translate } = this.props;
     return (
       <Settings
         {...this.props}
         navPaneWidth="20%"
         onClick={this.handleOnClick()}
         pages={this.pages}
+        paneTitle={translate({
+          id: 'ui-marccat.settings.general',
+        })}
       />
     );
   }

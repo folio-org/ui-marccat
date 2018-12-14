@@ -7,9 +7,10 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Checkbox from '@folio/stripes-components/lib/Checkbox';
 import { AccordionSet, Accordion } from '@folio/stripes-components/lib/Accordion';
-import { KeyValue, Icon, TextField, Button } from '@folio/stripes-components';
+import { KeyValue, Icon, TextField } from '@folio/stripes-components';
 import { Row, Col } from 'react-flexbox-grid';
 import Collapsible from 'react-collapsible';
+import Draggable from 'react-draggable';
 import * as C from '../../../utils/Constant';
 import type { Props } from '../../../core';
 import { injectCommonProp } from '../../../core';
@@ -24,12 +25,7 @@ export class TemplateManager extends React.Component<P, {}> {
   constructor(props: P) {
     super(props);
     this.state = {
-      isOpen: true
     };
-  }
-
-  handleOnToggle = () => {
-    this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   }
 
   render() {
@@ -70,15 +66,19 @@ export class TemplateManager extends React.Component<P, {}> {
                       <div className={style.titleCollapsiblePanel} id="titleCollapsiblePanel">
                         <TextField
                           type="text"
-                          label={templateById.leader.code}
+                          label={<h3>{templateById.leader.code}</h3>}
                           value={templateById.leader.value}
                           readOnly
+                        />
+                        <Icon
+                          icon="down-caret"
+                          size="small"
+                          iconClassName="myClass"
                         />
                       </div>
                     </Col>
                   }
                 >
-                  <hr />
                   <CustomTagComponent {...this.props} />
                 </Collapsible>
               </Accordion>
@@ -86,26 +86,28 @@ export class TemplateManager extends React.Component<P, {}> {
                 {templateById.fields.map(el => {
                   if (el.variableField === undefined) {
                     return (
-                      <Row>
-                        <Col xs={4}>
-                          <div className={style.titleCollapsiblePanel} id="titleCollapsiblePanel">
-                            <TextField
-                              type="text"
-                              label={el.fixedField.code}
-                              value={el.fixedField.displayValue}
-                              readOnly
-                            />
-                            <Collapsible
-                              trigger={<Button>ExpandTag</Button>}
-                            >
-                              <hr />
-                              <CustomTagComponent {...this.props} />
-                            </Collapsible>
-                          </div>
-                        </Col>
-                        <div><br /></div>
-                      </Row>
-
+                      <Collapsible
+                        trigger={
+                          <Col xs={4}>
+                            <br />
+                            <div className={style.titleCollapsiblePanel} id="titleCollapsiblePanel">
+                              <TextField
+                                type="text"
+                                label={<h3>{el.fixedField.code}</h3>}
+                                value={el.fixedField.displayValue}
+                                readOnly
+                              />
+                              <Icon
+                                icon="down-caret"
+                                size="small"
+                                iconClassName="myClass"
+                              />
+                            </div>
+                          </Col>
+                        }
+                      >
+                        <CustomTagComponent {...this.props} />
+                      </Collapsible>
                     );
                   }
                 })
@@ -115,17 +117,34 @@ export class TemplateManager extends React.Component<P, {}> {
                 {templateById.fields.map(el => {
                   if (el.fixedField === undefined) {
                     return (
-                      <Row>
-                        <Col xs={1}>
-                          <h4>{el.variableField.code}</h4>
-                        </Col>
-                        <Col xs={4} style={{ marginTop: '15px' }}>
-                          <TextField
-                            type="text"
-                            value={el.variableField.displayValue}
-                          />
-                        </Col>
-                      </Row>
+                      <Draggable>
+                        <Row>
+                          <Col xs={1}>
+                            <TextField
+                              type="text"
+                              value={el.variableField.code}
+                            />
+                          </Col>
+                          <Col xs={1}>
+                            <TextField
+                              type="text"
+                              value=""
+                            />
+                          </Col>
+                          <Col xs={1}>
+                            <TextField
+                              type="text"
+                              value=""
+                            />
+                          </Col>
+                          <Col xs={4}>
+                            <TextField
+                              type="text"
+                              value={el.variableField.displayValue}
+                            />
+                          </Col>
+                        </Row>
+                      </Draggable>
                     );
                   }
                 })

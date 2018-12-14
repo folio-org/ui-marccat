@@ -20,39 +20,25 @@ export class CustomTagComponent extends React.Component<P, {}> {
     return (
       <div className={style.rcornerspanel} id="rcornerspanel">
         <Row>
-          <Col xs={4}>
+          <Col xs={3}>
             <TextField
               type="text"
               label="Type"
             />
           </Col>
-          <Col xs={4}>
+          <Col xs={3}>
             <TextField
               type="text"
               label="Type"
             />
           </Col>
-          <Col xs={4}>
+          <Col xs={3}>
             <TextField
               type="text"
               label="Type"
             />
           </Col>
-        </Row>
-        <Row>
-          <Col xs={4}>
-            <TextField
-              type="text"
-              label="Type"
-            />
-          </Col>
-          <Col xs={4}>
-            <TextField
-              type="text"
-              label="Type"
-            />
-          </Col>
-          <Col xs={4}>
+          <Col xs={3}>
             <TextField
               type="text"
               label="Type"
@@ -60,19 +46,51 @@ export class CustomTagComponent extends React.Component<P, {}> {
           </Col>
         </Row>
         <Row>
-          <Col xs={4}>
+          <Col xs={3}>
             <TextField
               type="text"
               label="Type"
             />
           </Col>
-          <Col xs={4}>
+          <Col xs={3}>
             <TextField
               type="text"
               label="Type"
             />
           </Col>
-          <Col xs={4}>
+          <Col xs={3}>
+            <TextField
+              type="text"
+              label="Type"
+            />
+          </Col>
+          <Col xs={3}>
+            <TextField
+              type="text"
+              label="Type"
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={3}>
+            <TextField
+              type="text"
+              label="Type"
+            />
+          </Col>
+          <Col xs={3}>
+            <TextField
+              type="text"
+              label="Type"
+            />
+          </Col>
+          <Col xs={3}>
+            <TextField
+              type="text"
+              label="Type"
+            />
+          </Col>
+          <Col xs={3}>
             <TextField
               type="text"
               label="Type"

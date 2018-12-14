@@ -57,6 +57,7 @@
     "flow-remove-types": "^1.2.3",
     "query-string": "^6.2.0",
     "react-collapsible": "^2.3.2",
+    "react-draggable": "^3.0.5",
     "react-hot-loader": "^4.3.12",
     "react-intl": "^2.4.0",
     "react-router-dom": "^4.0.0",

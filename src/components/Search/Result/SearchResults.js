@@ -25,6 +25,7 @@ type P = Props & {
   dataLoaded: boolean;
   loading: boolean;
   isPanelOpen: boolean;
+  openDropDown: boolean;
 }
 
 export class SearchResults extends React.Component<P, {}> {

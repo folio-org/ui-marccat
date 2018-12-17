@@ -14,12 +14,12 @@
   "error.noresults.message":"Search returned no results",
   "initial.title":"Choose a filter or enter search query to show results",
   "search.initial.message": "Enter search criteria to start search",
-  
-  "button.add": "+ Add",
-  "button.new": "+ New",
+
+  "button.add": "Add",
+  "button.new": "New",
   "button.close": "Close",
   "button.cancel": "Cancel",
-  "button.new.tag": "+ Tag",
+  "button.new.tag": "Tag",
   "button.backto": "Close",
   "button.remove": "Remove",
 
@@ -34,13 +34,13 @@
 
   "search.record": "Records",
   "search.record.preview": "Preview Record",
-  "search.record.new.keyboard": "+ New",
+  "search.record.new.keyboard": "New",
   "search.record.edit" : "Edit",
   "search.goto.inventory": "View in Inventory",
   "search.details.bibliographic":"Bibliographic record",
   "search.details.authority":"Authority record",
   "search.associated.bibliographic":"Associated bibliographic records",
-  
+
   "browse.results.title":"Access Point",
   "browse.record.create" : "Create",
   "browse.actionmenu.export.mrc":"Export as .mrc file (single file, multiple records)",

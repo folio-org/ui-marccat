@@ -3,7 +3,10 @@ import { SearchField,
   Button,
   AccordionSet,
   Accordion,
-  FilterAccordionHeader, InfoPopover } from '@folio/stripes-components';
+  FilterAccordionHeader,
+  InfoPopover,
+  Icon,
+} from '@folio/stripes-components';
 import { Row, Col } from 'react-flexbox-grid';
 import { reduxForm, Field } from 'redux-form';
 import type { Props } from '../../../core';
@@ -158,7 +161,9 @@ class SearchPanel extends React.Component<P, S> {
                   buttonClass={styles.rightPosition}
                   onClick={this.handleAddSearchForm}
                 >
-                  {translate({ id: 'ui-marccat.button.add' })}
+                  <Icon icon="plus-sign">
+                    {translate({ id: 'ui-marccat.button.add' })}
+                  </Icon>
                 </Button>
                 {idx !== 0 &&
                 <Button

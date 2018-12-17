@@ -6,6 +6,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Pane from '@folio/stripes-components/lib/Pane';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
+import Icon from '@folio/stripes-components/lib/Icon';
 import { ToolbarButtonMenu } from '../../lib';
 import { Props, injectCommonProp } from '../../core';
 
@@ -27,7 +28,11 @@ class FieldGroupings extends React.Component<P, {}> {
       <ToolbarButtonMenu
         create
         {...this.props}
-        label={<FormattedMessage id="ui-marccat.button.add" />}
+        label={
+          <Icon icon="plus-sign">
+            <FormattedMessage id="ui-marccat.button.add" />
+          </Icon>
+        }
       />
     );
     return (

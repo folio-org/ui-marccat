@@ -92,7 +92,11 @@ export class BrowseResults extends React.Component<P, S> {
       <ToolbarButtonMenu
         create
         {...this.props}
-        label={<FormattedMessage id="ui-marccat.search.record.new.keyboard" />}
+        label={
+          <Icon icon="plus-sign">
+            <FormattedMessage id="ui-marccat.search.record.new.keyboard" />
+          </Icon>
+        }
       />
     );
   };

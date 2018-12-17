@@ -164,7 +164,11 @@ export class SearchResults extends React.Component<P, {}> {
       <ToolbarButtonMenu
         create
         {...this.props}
-        label={<FormattedMessage id="ui-marccat.search.record.new.keyboard" />}
+        label={
+          <Icon icon="plus-sign">
+            <FormattedMessage id="ui-marccat.search.record.new.keyboard" />
+          </Icon>
+        }
       />
     );
     const rightMenuEdit = (

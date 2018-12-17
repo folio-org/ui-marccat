@@ -290,6 +290,32 @@ export function templateViewReducer(state = { isLoading, isReady }, action) {
   }
 }
 
+export function tagValuesReducer(state = { isLoading, isReady }, action) {
+  switch (action.type) {
+  case ActionTypes.TEMPLATE_VALUES_FROM_TAG:
+    return {
+      ...state,
+      isLoading: false,
+      isReady: false
+    };
+  case ActionTypes.FETCH_TEMPLATE_VALUES_FROM_TAG:
+    return {
+      ...state,
+      isLoading: action.payload,
+      isReady: false
+    };
+  case ActionTypes.TEMPLATE_VALUES_FROM_TAG_SUCCESS:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: false,
+      isReady: true,
+    };
+  default:
+    return state;
+  }
+}
+
 export function filterReducer(state = { isLoading }, action) {
   switch (action.type) {
   case ActionTypes.FILTERS:

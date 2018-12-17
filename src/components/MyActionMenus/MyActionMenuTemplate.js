@@ -3,7 +3,7 @@ import { Row, Col } from 'react-flexbox-grid';
 import { FormattedMessage } from 'react-intl';
 import { SearchField } from '@folio/stripes-components';
 
-export default function myActionMenuTemplate() {
+export default function MyActionMenuTemplate() {
   return (
     <div>
       <Row>

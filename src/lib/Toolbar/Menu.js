@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unused-prop-types */
 import * as React from 'react';
-import { PaneMenu, IconButton, Icon, Dropdown, DropdownMenu } from '@folio/stripes-components';
+import { PaneMenu, IconButton, Icon } from '@folio/stripes-components';
 import Button from '@folio/stripes-components/lib/Button';
 import classNames from 'classnames';
 
@@ -12,11 +12,9 @@ type ToolbarMenuProps = {
   withPrinter?: bool,
   badgeCount?: string,
   onClick: () => void;
-  onToggle: () => void;
   type?: string;
   create: bool;
   disabled?: bool;
-  openDropDown: bool;
   label?: string;
   stripes: Object;
 };
@@ -53,45 +51,26 @@ export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
     float: 'right',
   };
 
-  const { onClick, onToggle, openDropDown, label, type, disabled, stripes: { intl: { formatMessage } } } = props;
+  const { onClick, label, type, disabled, stripes: { intl: { formatMessage } } } = props;
 
   return (
     <PaneMenu>
-      <Dropdown
-        id="AddPermissionDropdown"
-        open={openDropDown}
-        onToggle={onToggle}
-        group
-        style={{ float: 'right' }}
-        pullRight
+      <Button
+        style={rightButton}
+        id="create-new-template"
+        buttonStyle="primary"
+        onClick={onClick}
+        type={type || 'button'}
+        disabled={disabled}
+        marginBottom0
       >
-        <Button
-          style={rightButton}
-          id="create-new-template"
-          buttonStyle="primary"
-          onClick={onClick}
-          type={type || 'button'}
-          disabled={disabled}
-          marginBottom0
-        >
-          {formatMessage({ id: label })}
-          <Icon
-            icon="down-caret"
-            size="small"
-            iconClassName="myClass"
-          />
-        </Button>
-        <DropdownMenu
-          data-role="menu"
-          aria-label="available permissions"
-          onToggle={onToggle}
-        >
-          <ul>
-            <li>Authority record        CTRL+A</li>
-            <li>Bibliographic record    CTRL+B</li>
-          </ul>
-        </DropdownMenu>
-      </Dropdown>
+        {formatMessage({ id: label })}
+        <Icon
+          icon="down-caret"
+          size="small"
+          iconClassName="myClass"
+        />
+      </Button>
     </PaneMenu>
   );
 };

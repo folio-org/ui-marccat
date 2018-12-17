@@ -11,10 +11,11 @@ import { KeyValue, Icon, TextField } from '@folio/stripes-components';
 import { Row, Col } from 'react-flexbox-grid';
 import Collapsible from 'react-collapsible';
 import Draggable from 'react-draggable';
+import { ActionTypes } from '../../../redux/actions';
 import * as C from '../../../utils/Constant';
 import type { Props } from '../../../core';
 import { injectCommonProp } from '../../../core';
-import myActionMenuTemplate from '../MyActionMenuTemplate';
+import MyActionMenuTemplate from '../../MyActionMenus/MyActionMenuTemplate';
 import { CustomTagComponent } from './CustomTagComponent';
 import style from './style.css';
 
@@ -38,7 +39,7 @@ export class TemplateManager extends React.Component<P, {}> {
             paneTitle="Template Manager"
             paneSub="ID"
             appIcon={{ app: C.META.ICON_TITLE }}
-            actionMenu={myActionMenuTemplate}
+            actionMenu={MyActionMenuTemplate}
           >
             <Icon icon="spinner-ellipsis" />
           </Pane>
@@ -50,7 +51,7 @@ export class TemplateManager extends React.Component<P, {}> {
             defaultWidth="fullWidth"
             paneTitle={templateById.name}
             appIcon={{ app: C.META.ICON_TITLE }}
-            actionMenu={myActionMenuTemplate}
+            actionMenu={MyActionMenuTemplate}
           >
             <AccordionSet>
               <KeyValue
@@ -61,6 +62,10 @@ export class TemplateManager extends React.Component<P, {}> {
               </Accordion>
               <Accordion label="Leader" id="leader">
                 <Collapsible
+                  onOpen={() => {
+                    const { dispatch } = this.props;
+                    dispatch({ type: ActionTypes.TEMPLATE_VALUES_FROM_TAG, leader: templateById.leader.value, code: templateById.leader.code, typeCode: '15' });
+                  }}
                   trigger={
                     <Col xs={4}>
                       <div className={style.titleCollapsiblePanel} id="titleCollapsiblePanel">
@@ -160,7 +165,8 @@ export class TemplateManager extends React.Component<P, {}> {
 
 
 export default (connect(
-  ({ marccat: { template } }) => ({
+  ({ marccat: { template, tagValues } }) => ({
     templateById: template.recordsById,
+    tagValuesResults: tagValues.records.results
   }),
 )(injectCommonProp(TemplateManager)));

@@ -10,13 +10,14 @@ type P = Props & {
 }
 
 export class CustomTagComponent extends React.Component<P, {}> {
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this.state = {
     };
   }
 
   render() {
+    const { tagValuesResults } = this.props;
     return (
       <div className={style.rcornerspanel} id="rcornerspanel">
         <Row>
@@ -103,7 +104,7 @@ export class CustomTagComponent extends React.Component<P, {}> {
 }
 
 export default (connect(
-  ({ marccat: { template } }) => ({
-    templateById: template.recordsById,
+  ({ marccat: { tagValues } }) => ({
+    tagValuesResults: tagValues.records.results
   }),
 )(injectCommonProp(CustomTagComponent)));

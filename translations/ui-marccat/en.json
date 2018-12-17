@@ -17,6 +17,10 @@
   
   "button.add": "+ Add",
   "button.new": "+ New",
+  "button.new.auth": "Authority record",
+  "button.new.bib": "Bibliographic record",
+  "button.new.short.auth": "CTRL + A",
+  "button.new.short.bib": "CTRL + B",
   "button.close": "Close",
   "button.cancel": "Cancel",
   "button.new.tag": "+ Tag",
@@ -35,6 +39,7 @@
   "search.record": "Records",
   "search.record.preview": "Preview Record",
   "search.record.new.keyboard": "+ New",
+  "search.record.actions": "Actions",
   "search.record.edit" : "Edit",
   "search.goto.inventory": "View in Inventory",
   "search.details.bibliographic":"Bibliographic record",

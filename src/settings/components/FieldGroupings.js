@@ -3,6 +3,7 @@
  * @flow
  */
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import Pane from '@folio/stripes-components/lib/Pane';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
 import { ToolbarButtonMenu } from '../../lib';
@@ -22,7 +23,13 @@ const data = [
 class FieldGroupings extends React.Component<P, {}> {
   render() {
     const { label } = this.props;
-    const rightMenu = <ToolbarButtonMenu create {...this.props} label="ui-marccat.button.add" />;
+    const rightMenu = (
+      <ToolbarButtonMenu
+        create
+        {...this.props}
+        label={<FormattedMessage id="ui-marccat.button.add" />}
+      />
+    );
     return (
       <Pane
         defaultWidth="fill"

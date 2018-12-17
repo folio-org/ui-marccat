@@ -53,7 +53,7 @@ export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
     float: 'right',
   };
 
-  const { onClick, onToggle, openDropDown, label, type, disabled, stripes: { intl: { formatMessage } } } = props;
+  const { onClick, onToggle, openDropDown, label, type, disabled } = props;
 
   return (
     <PaneMenu>
@@ -74,7 +74,7 @@ export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
           disabled={disabled}
           marginBottom0
         >
-          {formatMessage({ id: label })}
+          {label}
           <Icon
             icon="down-caret"
             size="small"

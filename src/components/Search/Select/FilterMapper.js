@@ -22,7 +22,8 @@ export const formatFilterMap = {
   'Photograph, Print, or Drawing': 'MAT "k"',
   'Rare Book or Manuscript': 'MAT "t"',
   'Software or E-Resource': 'MAT "m"',
-  '3-D Object': 'MAT "r"'
+  '3-D Object': 'MAT "r"',
+  'Microform': 'MIC "h"'
 };
 export const findYourQuery = {
   // FOR START KEY
@@ -81,4 +82,11 @@ export const findYourQuery = {
   'TITLE-BROWSE': 'TI ',
   'BARCODE-BROWSE': 'BC ',
   'COPY-BROWSE': 'CP ',
+};
+
+export const findYourQueryFromBrowse = {
+  // FOR START KEY
+  'NAME-BROWSE': 'NK ',
+  'SUB-BROWSE': 'SK ',
+  'TITLE-BROWSE': 'TK '
 };

@@ -57,6 +57,48 @@ export function searchEngineReducer(state = { isLoading, isReady }, action) {
   }
 }
 
+export function detailsBrowseSearchReducer(state = { isLoading, isReady }, action) {
+  switch (action.type) {
+  case ActionTypes.DETAILS_BROWSE:
+    return {
+      ...state,
+      isReady: false,
+      isLoading: false
+    };
+  case ActionTypes.AUTH_DETAILS_BROWSE:
+    return {
+      ...state,
+      isReady: false,
+      isLoading: false
+    };
+  case ActionTypes.FETCH_DETAILS_BROWSE_REQUESTED:
+    return {
+      ...state,
+      isReady: false,
+      isLoading: action.payload,
+    };
+  case ActionTypes.DETAILS_BROWSE_SUCCESS:
+    return {
+      ...state,
+      results: action.payload,
+      counter: action.count,
+      isLoading: false,
+      isReady: true,
+      isAuthority: action.isAuthority
+    };
+  case ActionTypes.AUTH_DETAILS_BROWSE_SUCCESS:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: false,
+      isReady: true,
+      isAuthority: action.isAuthority
+    };
+  default:
+    return state;
+  }
+}
+
 export function getDetailsRecord(state = { isLoading, isReady }, action) {
   switch (action.type) {
   case ActionTypes.DETAILS:
@@ -117,6 +159,38 @@ export function detailsAssociatedReducer(state = { isLoading, isReady }, action)
   }
 }
 
+export function browseDetailsAssociatedReducer(state = { isLoading, isReady }, action) {
+  switch (action.type) {
+  case ActionTypes.BROWSE_ASSOCIATED_DETAILS:
+    return {
+      ...state,
+      isLoading: false,
+      isReady: false
+    };
+  case ActionTypes.FETCH_BROWSE_DETAILS_ASSOCIATED_REQUESTED:
+    return {
+      ...state,
+      isLoading: action.payload,
+      isReady: false
+    };
+  case ActionTypes.BROWSE_ASSOCIATED_DETAILS_SUCCESS:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: false,
+      isReady: true,
+      mustOpenPanel: action.mustOpenPanel
+    };
+  case ActionTypes.CLOSE_BROWSE_ASSOCIATED_DETAILS:
+    return {
+      ...state,
+      mustOpenPanel: action.openPanel
+    };
+  default:
+    return state;
+  }
+}
+
 export function getAssociatedBibRecord(state = { isLoading, isReady }, action) {
   switch (action.type) {
   case ActionTypes.ASSOCIATED_BIB_REC:
@@ -165,6 +239,51 @@ export function scanBrowsingReducer(state = { isLoading, isReady }, action) {
       records: action.payload,
       isLoading: false,
       isReady: true,
+    };
+  default:
+    return state;
+  }
+}
+
+export function templateViewReducer(state = { isLoading, isReady }, action) {
+  switch (action.type) {
+  case ActionTypes.VIEW_TEMPLATE:
+    return {
+      ...state,
+      isLoading: false,
+      isReady: false
+    };
+  case ActionTypes.TEMPLATE_GET_BY_ID:
+    return {
+      ...state,
+      isLoading: false,
+      isReady: false
+    };
+  case ActionTypes.FETCH_VIEW_TEMPLATE:
+    return {
+      ...state,
+      isLoading: action.payload,
+      isReady: false
+    };
+  case ActionTypes.FETCH_TEMPLATE_GET_BY_ID:
+    return {
+      ...state,
+      isLoading: action.payload,
+      isReady: false
+    };
+  case ActionTypes.VIEW_TEMPLATE_SUCCESS:
+    return {
+      ...state,
+      isLoading: false,
+      isReady: true,
+      records: action.payload,
+    };
+  case ActionTypes.TEMPLATE_GET_BY_ID_SUCCESS:
+    return {
+      ...state,
+      isLoading: false,
+      isReady: true,
+      recordsById: action.payload,
     };
   default:
     return state;

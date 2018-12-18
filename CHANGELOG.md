@@ -1,5 +1,10 @@
 # Change history for ui-marccat
 
+## [1.2.0](https://github.com/folio-org/ui-marccat/tree/v1.1.0) (2018-14-12)
+* improvement search functionality, logic and UX side.
+* Start with cataloguing functionality.
+* Add base component for template management
+* Browse fix.
 
 ## [1.1.0](https://github.com/folio-org/ui-marccat/tree/v1.1.0) (2018-01-11)
 * improvement search functionality, logic and UX side.

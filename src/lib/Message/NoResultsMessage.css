@@ -1,8 +1,6 @@
-
-/* Empty Message */
-.emptyMessage {
+.noResultsMessage {
   padding: 15px;
-  color: #222;
+  color: #8b0000;
   top: 0;
   bottom: 0;
   left: 0;
@@ -13,22 +11,22 @@
   flex-direction: column;
 }
 
-.emptyMessage,
-.emptyMessageLabelWrap {
+.noResultsMessage,
+.noResultsMessageLabelWrap {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.emptyMessageLabelWrap {
+.noResultsMessageLabelWrap {
   font-size: 22px;
 }
 
-.emptyMessageIcon,
-.emptyMessageLabel {
+.noResultsMessageIcon,
+.noResultsMessageLabel {
   margin: 0 4px;
 }
 
-.emptyMessageButton {
+.noResultsMessageButton {
   margin-top: 15px;
 }

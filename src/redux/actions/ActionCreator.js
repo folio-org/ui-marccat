@@ -8,8 +8,20 @@ export const isfetchingDetailsRequest = (isLoading) => ({
   type: ActionTypes.FETCH_DETAILS_REQUESTED,
   payload: isLoading
 });
+export const isfetchingBrowseRequest = (isLoading) => ({
+  type: ActionTypes.FETCH_DETAILS_BROWSE_REQUESTED,
+  payload: isLoading
+});
+export const isFetchingTemplateByIdRequest = (isLoading) => ({
+  type: ActionTypes.FETCH_TEMPLATE_GET_BY_ID,
+  payload: isLoading
+});
 export const isfetchingDetailsAssociatedRequest = (isLoading) => ({
   type: ActionTypes.FETCH_DETAILS_ASSOCIATED_REQUESTED,
+  payload: isLoading
+});
+export const isfetchingBrowseDetailsAssociatedRequest = (isLoading) => ({
+  type: ActionTypes.FETCH_BROWSE_DETAILS_ASSOCIATED_REQUESTED,
   payload: isLoading
 });
 export const isfetchingAssociatedRequest = (isLoading) => ({
@@ -37,6 +49,11 @@ export const fetchCountDocRecords = (records) => ({
   type: ActionTypes.COUNT_DOC_SUCCESS,
   payload: records
 });
+export const fetchBrowseAuthorityDetail = (records, isAuthority) => ({
+  type: ActionTypes.AUTH_DETAILS_BROWSE_SUCCESS,
+  payload: records,
+  isAuthority
+});
 export const fetchDetailsRecords = (records, recordType) => ({
   type: ActionTypes.DETAILS_BY_TITLE,
   payload: records,
@@ -48,12 +65,43 @@ export const fetchAssociatedBibDetailsRecords = (records, recordType, mustOpenPa
   recType: recordType,
   isDetailBibAssOpen: mustOpenPanel
 });
+export const fetchBrowseDetailAssociatedRecords = (records, mustOpenPanel) => ({
+  type: ActionTypes.BROWSE_ASSOCIATED_DETAILS_SUCCESS,
+  payload: records,
+  mustOpenPanel
+});
 export const fetchSearchEngineRecords = (bibliographicResults, bibCounter, authorityResults, authCounter) => ({
   type: ActionTypes.RECORD_SUCCESS,
   bibliographicResults,
   bibCounter,
   authorityResults,
   authCounter
+});
+export const fetchBrowseDetail = (results, counter, isAuthority) => ({
+  type: ActionTypes.DETAILS_BROWSE_SUCCESS,
+  payload: results,
+  count: counter,
+  isAuthority
+});
+export const isFetchingTemplateTagRequest = (isLoading) => ({
+  type: ActionTypes.FETCH_TEMPLATE_VALUES_FROM_TAG,
+  payload: isLoading
+});
+export const isFetchingTemplateViewRequest = (isLoading) => ({
+  type: ActionTypes.FETCH_VIEW_TEMPLATE,
+  payload: isLoading
+});
+export const fetchTemplateView = (records) => ({
+  type: ActionTypes.VIEW_TEMPLATE_SUCCESS,
+  payload: records
+});
+export const fetchTemplateById = (records) => ({
+  type: ActionTypes.TEMPLATE_GET_BY_ID_SUCCESS,
+  payload: records
+});
+export const fetchTemplateFromTag = (records) => ({
+  type: ActionTypes.TEMPLATE_VALUES_FROM_TAG_SUCCESS,
+  payload: records
 });
 export const fetchSuccess = (message) => ({
   type: ActionTypes.SUCCESS,

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { AccordionSet, FilterAccordionHeader, Accordion } from '@folio/stripes-components';
 import { Row, Col } from 'react-flexbox-grid';
-import InventoryPluggableBtn from '../Plugin/Inventory';
+import InventoryPluggableBtn from '../Button/Inventory';
 import type { Props } from '../../../core';
 import { getTag245, getTitle245, getTag100, getTitle100 } from '../../../utils/Mapper';
 import AssociatedBib from './AssociatedBib';
@@ -17,7 +17,8 @@ type P = Props & {
 }
 
 function RecordDetails({ translate, ...props }: P) {
-  const recordDetails = props.items.replace('LEADER', '000');
+  const { items, checkDetailsInRow, checkDetailsBibRec } = props;
+  const recordDetails = items.replace('LEADER', '000');
   const recordDetailsArray = recordDetails.split('\n');
   const tag245 = getTag245(recordDetailsArray);
   const title245 = getTitle245(recordDetailsArray);
@@ -26,7 +27,7 @@ function RecordDetails({ translate, ...props }: P) {
       <Accordion
         separator={false}
         header={FilterAccordionHeader}
-        label={props.checkDetailsInRow !== props.checkDetailsBibRec ? translate({ id: 'ui-marccat.search.details.bibliographic' }) : translate({ id: 'ui-marccat.search.details.authority' })}
+        label={checkDetailsInRow !== checkDetailsBibRec ? translate({ id: 'ui-marccat.search.details.bibliographic' }) : translate({ id: 'ui-marccat.search.details.authority' })}
       >
         <div className={style.withSpace}>
           <KeyValue
@@ -46,10 +47,10 @@ function RecordDetails({ translate, ...props }: P) {
               </Col>
             </Row>
           ))}
-          <InventoryPluggableBtn {...props} buttonLabel={translate({ id: 'ui-marccat.search.goto.inventory' })} />
         </div>
+        <InventoryPluggableBtn {...props} buttonLabel={translate({ id: 'ui-marccat.search.goto.inventory' })} />
       </Accordion>
-      {props.checkDetailsBibRec === props.checkDetailsInRow &&
+      {checkDetailsBibRec === checkDetailsInRow &&
       <AssociatedBib {...props} />}
     </AccordionSet>
   );

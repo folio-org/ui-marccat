@@ -13,7 +13,7 @@ export const searchEpic = (action$, store) => action$.ofType(ActionTypes.SEARCH)
   .switchMap((d) => concat$(
     of$(marccatActions.isfetchingSearchRequest(true)),
     ajax
-      .getJSON(buildUrl(ENDPOINT.MERGED_SEARCH_URL, `lang=ita&ml=170&q=${d.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
+      .getJSON(buildUrl(ENDPOINT.MERGED_SEARCH_URL, `lang=ita&ml=170&qbib=${d.queryBib}&qauth=${d.queryAuth}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
       .map(record => marccatActions.fetchSearchEngineRecords(record[1].docs, record[1].numFound, record[0].docs, record[0].numFound))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
@@ -60,5 +60,56 @@ export const scanBrowsingRecords = (action$, store) => action$.ofType(ActionType
     ajax
       .getJSON(buildUrl(ENDPOINT.BROWSE_FIRST_PAGE_URL, `query=${d.query}&view=1&mainLibrary=170&pageSize=20&lang=eng`), ENDPOINT.HEADERS)
       .map(record => marccatActions.fetchScanBrowsingRecords(record.headings))
+      .catch(e => of$(marccatActions.fetchFailure(e))),
+  ));
+
+export const browseDetailEpic = (action$, store) => action$.ofType(ActionTypes.DETAILS_BROWSE)
+  .switchMap((d) => concat$(
+    of$(marccatActions.isfetchingBrowseRequest(true)),
+    ajax
+      .getJSON(buildUrl(ENDPOINT.SEARCH_URL_JSON, `lang=ita&ml=170&q=${d.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
+      .map(record => marccatActions.fetchBrowseDetail(record.docs, record.numFound, d.isAuthority))
+      .catch(e => of$(marccatActions.fetchFailure(e))),
+  ));
+
+export const browseAuthorityDetailEpic = (action$, store) => action$.ofType(ActionTypes.AUTH_DETAILS_BROWSE)
+  .switchMap((d) => ajax
+    .getJSON(buildUrl(ENDPOINT.SEARCH_URL, `lang=ita&view=-1&ml=170&q=${d.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
+    .map(record => marccatActions.fetchBrowseAuthorityDetail(record.docs[0].data, d.isAuthority))
+    .catch(e => of$(marccatActions.fetchFailure(e))));
+
+export const browseDetailAssociatedEpic = (action$, store) => action$.ofType(ActionTypes.BROWSE_ASSOCIATED_DETAILS)
+  .switchMap((d) => concat$(
+    of$(marccatActions.isfetchingBrowseDetailsAssociatedRequest(true)),
+    ajax
+      .getJSON(buildUrl(ENDPOINT.SEARCH_URL, `lang=ita&view=1&ml=170&q=an%20${d.query}&from=1&to=1&dpo=1`), ENDPOINT.HEADERS)
+      .map(record => marccatActions.fetchBrowseDetailAssociatedRecords(record.docs[0].data, d.mustOpenPanel))
+      .catch(e => of$(marccatActions.fetchFailure(e))),
+  ));
+
+export const templateViewEpic = (action$, store) => action$.ofType(ActionTypes.VIEW_TEMPLATE)
+  .switchMap((d) => concat$(
+    of$(marccatActions.isFetchingTemplateViewRequest(true)),
+    ajax
+      .getJSON(buildUrl(ENDPOINT.VIEW_TEMPLATE_URL, 'type=B&lang=ita'), ENDPOINT.HEADERS)
+      .map(record => marccatActions.fetchTemplateView(record.recordTemplates))
+      .catch(e => of$(marccatActions.fetchFailure(e))),
+  ));
+
+export const templateByIdEpic = (action$, store) => action$.ofType(ActionTypes.TEMPLATE_GET_BY_ID)
+  .switchMap((d) => concat$(
+    of$(marccatActions.isFetchingTemplateByIdRequest(true)),
+    ajax
+      .getJSON(buildUrl(ENDPOINT.VIEW_TEMPLATE_URL_BY_ID + `${d.query}`, 'type=B&lang=ita'), ENDPOINT.HEADERS)
+      .map(record => marccatActions.fetchTemplateById(record))
+      .catch(e => of$(marccatActions.fetchFailure(e))),
+  ));
+
+export const templateGetValuesFromTagEpic = (action$, store) => action$.ofType(ActionTypes.TEMPLATE_VALUES_FROM_TAG)
+  .switchMap((d) => concat$(
+    of$(marccatActions.isFetchingTemplateTagRequest(true)),
+    ajax
+      .getJSON(buildUrl(ENDPOINT.TEMPLATE_TAG_URL, `fixed-fields-code-groups?code=${d.code}&headerTypeCode=${d.typeCode}&lang=ita`), ENDPOINT.HEADERS)
+      .map(record => marccatActions.fetchTemplateFromTag(record))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));

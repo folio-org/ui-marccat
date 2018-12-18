@@ -8,6 +8,7 @@ import { Field } from 'redux-form';
 import { Select } from '@folio/stripes-components';
 
 export default function SearchIndexes({ ...props }) {
+  const { rest } = props;
   const options = [
     { label: 'All MARC fields', value: 'ALL' },
     { label: 'Multiple MARC fields [XXX]', value: 'MULTI' },
@@ -31,7 +32,7 @@ export default function SearchIndexes({ ...props }) {
       placeholder="Select a field..."
       component={Select}
       dataOptions={options}
-      {...props.rest}
+      {...rest}
     />
   );
 }

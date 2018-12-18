@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { AccordionSet, FilterAccordionHeader, Accordion } from '@folio/stripes-components';
 import { Row, Col } from 'react-flexbox-grid';
-import InventoryPluggableBtn from '../Button/Inventory';
 import type { Props } from '../../../core';
 import { getTag245, getTitle245 } from '../../../utils/Mapper';
 
@@ -13,7 +12,7 @@ type P = Props & {
   items: Array<any>,
 }
 
-function AssociatedBibDetails({ translate, ...props }: P) {
+function BrowseAssociatedItemDetail({ translate, ...props }: P) {
   if (props.items !== undefined) {
     const recordDetails = props.items.replace('LEADER', '000');
     const recordDetailsArray = recordDetails.split('\n');
@@ -44,7 +43,6 @@ function AssociatedBibDetails({ translate, ...props }: P) {
                 </Col>
               </Row>
             ))}
-            <InventoryPluggableBtn {...props} buttonLabel={translate({ id: 'ui-marccat.search.goto.inventory' })} />
           </div>
         </Accordion>
       </AccordionSet>
@@ -53,7 +51,7 @@ function AssociatedBibDetails({ translate, ...props }: P) {
 }
 
 export default (connect(
-  ({ marccat: { associatedBibDetails } }) => ({
-    items: associatedBibDetails.records,
+  ({ marccat: { browseDetailsAssociated } }) => ({
+    items: browseDetailsAssociated.records,
   })
-)(AssociatedBibDetails));
+)(BrowseAssociatedItemDetail));

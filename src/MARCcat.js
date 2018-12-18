@@ -5,6 +5,9 @@
 import * as React from 'react';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
+import { FormattedMessage } from 'react-intl';
+import { Row, Col } from 'react-flexbox-grid';
+import { Icon } from '@folio/stripes-components';
 import { injectCommonProp, Props } from './core';
 import { SearchPanel } from './components/Search';
 import * as C from './utils/Constant';
@@ -17,34 +20,46 @@ type S = {
  * @module MARCcat
  */
 class MARCcat extends React.Component<P, S> {
-  constructor(props:P) {
-    super(props);
-    this.renderActionMenuItems = this.renderActionMenuItems.bind(this);
-  }
-
-  renderActionMenuItems = () => {
-    return [
-      { label: this.props.translate({ id: 'ui-marccat.indexes.title' }) },
-      { label: this.props.translate({ id: 'ui-marccat.diacritic.title' }) }
-    ];
+  searchPanelActionMenu = () => {
+    return (
+      <div>
+        <Row>
+          <Col xs={2}>
+            <Icon icon="diacritic" />
+          </Col>
+          <Col xs={10}>
+            <FormattedMessage id="ui-marccat.diacritic.title" />
+          </Col>
+        </Row>
+        <br />
+        <Row>
+          <Col xs={2}>
+            <Icon icon="indexes" />
+          </Col>
+          <Col xs={10}>
+            <FormattedMessage id="ui-marccat.indexes.title" />
+          </Col>
+        </Row>
+      </div>
+    );
   };
 
   render() {
-    const { translate, filterPaneIsVisible, toggleFilterPane } = this.props;
+    const { translate, filterPaneIsVisible, toggleFilterPane, children } = this.props;
     return (
       <Paneset static>
         {filterPaneIsVisible &&
           <Pane
             dismissible
             defaultWidth="18%"
-            actionMenuItems={this.renderActionMenuItems()}
+            actionMenu={this.searchPanelActionMenu}
             onClose={toggleFilterPane}
             paneTitle={translate({ id: 'ui-marccat.searchAndFilter' })}
             paneSub={C.EMPTY_MESSAGE}
           >
             <SearchPanel {...this.props} />
           </Pane>}
-        {...this.props.children}
+        {...children}
       </Paneset>
     );
   }

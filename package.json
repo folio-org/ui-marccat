@@ -1,6 +1,6 @@
 {
   "name": "@folio/marccat",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "FOLIO UI module for Cataloging",
   "repository": "folio-org/ui-marccat",
   "publishConfig": {
@@ -32,46 +32,54 @@
     "@bigtest/mocha": "^0.5.1",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^3.2.1",
-    "@folio/react-intl-safe-html": "^1.0.0",
-    "@folio/stripes-components": "^4.2.2000575",
-    "@folio/stripes-smart-components": "^1.10.1000297",
+    "@folio/stripes": "^1.0.0",
+    "@folio/stripes-cli": "^1.5.0",
+    "@folio/stripes-core": "^2.15.5",
     "babel-cli": "^6.26.0",
-    "babel-eslint": "^9.0.0",
+    "babel-eslint": "^10.0.1",
     "babel-polyfill": "^6.26.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
     "chai": "^4.2.0",
-    "eslint": "^5.6.0",
+    "eslint": "^5.9.0",
     "flow-bin": "^0.78.0",
     "mocha": "^5.2.0",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0",
     "react-redux": "^5.0.7",
-    "redux": "^3.0.0",
-    "rxjs": "^5.0.0",
-    "semafor": "0.0.1",
-    "sinon": "^7.1.1",
-    "stylelint": "^9.5.0",
-    "stylelint-config-standard": "^18.2.0",
-    "stylelint-junit-formatter": "^0.2.1",
-    "webpack": "^4.0.0"
+    "redux": "^4.0.0",
+    "sinon": "^7.0.0"
   },
   "dependencies": {
     "eslint-loader": "^2.1.0",
     "flow": "^0.2.3",
     "flow-remove-types": "^1.2.3",
     "query-string": "^6.2.0",
+    "react-collapsible": "^2.3.2",
+    "react-draggable": "^3.0.5",
+    "react-hot-loader": "^4.3.12",
     "react-intl": "^2.4.0",
-    "redux-form": "^7.4.2"
+    "react-router-dom": "^4.0.0",
+    "redux-form": "^7.4.2",
+    "stylelint": "^9.9.0",
+    "stylelint-config-standard": "^18.2.0",
+    "webpack": "^4.0.0"
   },
   "peerDependencies": {
-    "@folio/stripes-core": "^2.15.3",
-    "react": "*"
+    "@folio/stripes": "^1.0.0",
+    "react": "*",
+    "react-dom": "*"
   },
   "resolutions": {
     "**/domelementtype": "*",
     "**/isarray": "*",
+    "**/redux": "*",
+    "**/react-transition-group": "*",
     "**/warning": "*",
     "**/fbjs": "*",
+    "**/@folio/stripes-react-hotkeys": "*",
+    "**/@folio/stripes-components": "*",
     "**/hoist-non-react-statics": "*"
   },
   "stripes": {

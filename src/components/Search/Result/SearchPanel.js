@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-state */
 import React from 'react';
 import { SearchField,
   Button,
@@ -108,10 +109,9 @@ class SearchPanel extends React.Component<P, S> {
       searchForm
     });
   }
-  handleOnChange = (idx) => () => {
-   
-  }
-  
+
+  handleOnChange = () => () => {};
+
   render() {
     const { translate, disableFilter, ...rest } = this.props;
     const { searchForm } = this.state;

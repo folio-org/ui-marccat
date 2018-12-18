@@ -51,9 +51,7 @@ export class SearchResults extends React.Component<P, {}> {
     };
   }
 
-  createRecord = () => {
-    alert('new record');
-  };
+  createRecord = () => {};
 
   myActionMenu = () => {
     return (

@@ -14,6 +14,8 @@ import { isAuthorityRecord } from '../../../utils/SearchUtils';
 import RecordDetails from './RecordDetails';
 import { injectCommonProp } from '../../../core';
 import AssociatedBibDetails from './AssociatedBibDetails';
+import MyActionMenu from '../../MyActionMenus/MyActionMenu';
+import MyNewButtonMenu from '../../MyActionMenus/MyNewButtonMenu';
 
 
 type P = Props & {
@@ -25,7 +27,6 @@ type P = Props & {
   dataLoaded: boolean;
   loading: boolean;
   isPanelOpen: boolean;
-  openDropDown: boolean;
 }
 
 export class SearchResults extends React.Component<P, {}> {
@@ -37,6 +38,7 @@ export class SearchResults extends React.Component<P, {}> {
       bibsOnly: false,
       autOnly: false,
       loading: false,
+      openDropDownMenu: false,
     };
     this.handleDetails = this.handleDetails.bind(this);
     this.onNeedMoreData = this.onNeedMoreData.bind(this);
@@ -53,52 +55,14 @@ export class SearchResults extends React.Component<P, {}> {
 
   createRecord = () => {};
 
-  myActionMenu = () => {
-    return (
-      <div>
-        <Row>
-          <FormattedMessage id="ui-marccat.search.actionmenu.export.mrc" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.browse.actionmenu.export.csv" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.browse.actionmenu.export.dat" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.search.actionmenu.print" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.search.actionmenu.opac" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.search.actionmenu.duplicate" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.search.actionmenu.holdings" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.search.actionmenu.instances" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.search.actionmenu.authority.records" />
-        </Row>
-      </div>
-    );
-  };
-
   handleClickEdit = () => {
     const { dispatch, history } = this.props;
     dispatch({ type: ActionTypes.VIEW_TEMPLATE, query: '000' });
     history.push('/marccat/template');
+  }
+
+  handleOnToggle = () => {
+    this.setState(prevState => ({ openDropDownMenu: !prevState.openDropDownMenu }));
   }
 
   handleDetails = (e, meta) => {
@@ -118,7 +82,7 @@ export class SearchResults extends React.Component<P, {}> {
 
   render() {
     /* eslint-disable-next-line prefer-const */
-    let { bibsOnly, autOnly, detailPanelIsVisible, noResults, loading } = this.state;
+    let { bibsOnly, autOnly, detailPanelIsVisible, noResults, loading, openDropDownMenu } = this.state;
     const {
       activeFilter,
       activeFilterName,
@@ -171,7 +135,6 @@ export class SearchResults extends React.Component<P, {}> {
 
     const message = messageAuth + ' / ' + messageBib;
     const messageNoContent = <FormattedMessage id="ui-marccat.search.initial.message" />;
-    const rightMenu = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.new.keyboard" />;
     const rightMenuEdit = <ToolbarButtonMenu create {...this.props} onClick={this.handleClickEdit} label="ui-marccat.search.record.edit" />;
     return (
       <HotKeys keyMap={this.keys} handlers={this.handlers} style={{ width: 100 + '%' }}>
@@ -243,7 +206,7 @@ export class SearchResults extends React.Component<P, {}> {
             paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
             paneSub={C.EMPTY_MESSAGE}
             appIcon={{ app: C.META.ICON_TITLE }}
-            actionMenu={this.myActionMenu}
+            actionMenu={MyActionMenu}
             dismissible
             onClose={() => this.setState({ detailPanelIsVisible: false })}
             lastMenu={rightMenuEdit}
@@ -263,7 +226,7 @@ export class SearchResults extends React.Component<P, {}> {
             paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
             paneSub={C.EMPTY_MESSAGE}
             appIcon={{ app: C.META.ICON_TITLE }}
-            actionMenu={this.myActionMenu}
+            actionMenu={MyActionMenu}
             dismissible
             onClose={() => {
               const { dispatch } = this.props;

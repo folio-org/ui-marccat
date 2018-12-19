@@ -6,14 +6,14 @@ import { SearchField,
   Accordion,
   FilterAccordionHeader,
   InfoPopover,
+  Row, Col,
   Icon,
 } from '@folio/stripes-components';
-import { Row, Col } from 'react-flexbox-grid';
 import { reduxForm, Field } from 'redux-form';
 import type { Props } from '../../../core';
 import { SearchIndexes, SearchConditions, FiltersContainer } from '..';
 import { ActionTypes } from '../../../redux/actions/Actions';
-import { findYourQuery } from '../Select/FilterMapper';
+import { findYourQuery } from '../Filter';
 import { remapFilters } from '../../../utils/Mapper';
 import { getLanguageFilterQuery, getFormatFilterQuery } from '../../../utils/SearchUtils';
 import styles from '../../../styles/common.css';

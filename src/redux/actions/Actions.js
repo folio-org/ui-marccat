@@ -1,11 +1,9 @@
 /* MARCCAT ACTIONS TYPES */
 
-export const handler = {};
-
+// eslint-disable-next-line import/prefer-default-export
 export const ActionTypes = {
   SEARCH: '@@ui-marccat/SEARCH',
   SCAN: '@@ui-marccat/SCAN',
-  SCAN_SUCCESS: '@@ui-marccat/SCAN_SUCCESS',
   DETAILS: '@@ui-marccat/DETAILS',
   DETAILS_BY_TITLE: '@@ui-marccat/DETAILS_BY_TITLE',
   QUERY: '@@ui-marccat/QUERY',
@@ -21,12 +19,7 @@ export const ActionTypes = {
   ASSOCIATED_DETAILS_SUCCESS: '@@ui-marccat/ASSOCIATED_DETAILS_SUCCESS',
   FETCH_SEARCH_REQUESTED: '@@ui-marccat/FETCH_SEARCH_REQUESTED',
   FETCH_DETAILS_REQUESTED: '@@ui-marccat/FETCH_DETAILS_REQUESTED',
-  RECORD_REQUESTED: '@@ui-marccat/RECORD_REQUESTED',
   RECORD_SUCCESS: '@@ui-marccat/RECORD_SUCCESS',
-  RECORD_AUTH_SUCCESS: '@@ui-marccat/RECORD_AUTH_SUCCESS',
-  DIACRITIC_CHAR: '@@ui-marccat/DIACRITIC_CHAR',
-  RECEIVED_SEARCH: '@@ui-marccat/RECEIVED_SEARCH',
-  CLEAR_SEARCH_RESULTS: '@@ui-marccat/CLEAR_SEARCH_RESULTS',
   COUNT_DOC: '@@ui-marccat/COUNT_DOC',
   COUNT_DOC_SUCCESS: '@@ui-marccat/COUNT_DOC_SUCCESS',
   FETCH_COUNTER_REQUESTED: '@@ui-marccat/FETCH_COUNTER_REQUESTED',

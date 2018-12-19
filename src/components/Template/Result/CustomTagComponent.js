@@ -1,9 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Icon, Selection } from '@folio/stripes-components';
-import { Row, Col } from 'react-flexbox-grid';
-import type { Props } from '../../../core';
-import { injectCommonProp } from '../../../core';
+import { Row, Col, Icon, Selection } from '@folio/stripes-components';
+import { injectCommonProp, Props } from '../../../core';
 import style from './style.css';
 
 type P = Props & {

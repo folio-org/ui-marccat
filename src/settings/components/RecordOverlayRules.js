@@ -3,7 +3,7 @@
  * @flow
  */
 import * as React from 'react';
-import Pane from '@folio/stripes-components/lib/Pane';
+import { Pane } from '@folio/stripes-components';
 import { Props, injectCommonProp } from '../../core';
 
 type P = Props & {

@@ -1,3 +1,3 @@
 
-export { default as injectCommonProp } from './Provider/withInjection';
+export { default as injectCommonProp } from './hoc/withInjection';
 export { Props } from './type/props';

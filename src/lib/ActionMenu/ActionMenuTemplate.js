@@ -1,9 +1,8 @@
 import React from 'react';
-import { Row, Col } from 'react-flexbox-grid';
+import { Row, Col, SearchField } from '@folio/stripes-components';
 import { FormattedMessage } from 'react-intl';
-import { SearchField } from '@folio/stripes-components';
 
-export default function MyActionMenuTemplate() {
+export default function ActionMenuTemplate() {
   return (
     <div>
       <Row>

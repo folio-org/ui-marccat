@@ -26,11 +26,22 @@ export class TemplateManager extends React.Component<P, {}> {
   constructor(props: P) {
     super(props);
     this.state = {
+      resultNotReady: false,
+      isPresent006: false,
+      isPresent007: false,
+      isPresent008: false,
     };
   }
 
   render() {
-    const { templateById } = this.props;
+    const { templateById, tagValuesResults, tagIsLoading } = this.props;
+    let { resultNotReady, isPresent006, isPresent007, isPresent008 } = this.state;
+
+    if (tagValuesResults === undefined) {
+      resultNotReady = true;
+    } else {
+      resultNotReady = false;
+    }
     if (templateById === undefined) {
       return (
         <Paneset static>
@@ -84,36 +95,135 @@ export class TemplateManager extends React.Component<P, {}> {
                     </Col>
                   }
                 >
-                  <CustomTagComponent {...this.props} />
+                  {
+                    tagIsLoading || resultNotReady ?
+                      <Icon icon="spinner-ellipsis" /> :
+                      <CustomTagComponent {...this.props} />
+                  }
                 </Collapsible>
               </Accordion>
               <Accordion label="Control fields" id="control-field">
                 {templateById.fields.map(el => {
                   if (el.variableField === undefined) {
-                    return (
-                      <Collapsible
-                        trigger={
-                          <Col xs={4}>
-                            <br />
-                            <div className={style.titleCollapsiblePanel} id="titleCollapsiblePanel">
-                              <TextField
-                                type="text"
-                                label={<h3>{el.fixedField.code}</h3>}
-                                value={el.fixedField.displayValue}
-                                readOnly
-                              />
-                              <Icon
-                                icon="down-caret"
-                                size="small"
-                                iconClassName="myClass"
-                              />
-                            </div>
-                          </Col>
-                        }
-                      >
-                        <CustomTagComponent {...this.props} />
-                      </Collapsible>
-                    );
+                    if (el.fixedField.code === '001' || el.fixedField.code === '003' || el.fixedField.code === '005') {
+                      return (
+                        <Col xs={4}>
+                          <br />
+                          <div id="titleCollapsiblePanel">
+                            <TextField
+                              type="text"
+                              label={<h3>{el.fixedField.code}</h3>}
+                              value={el.fixedField.displayValue}
+                              readOnly
+                            />
+                          </div>
+                        </Col>
+                      );
+                    } else if (el.fixedField.code === '006' || el.fixedField.code === '007' || el.fixedField.code === '008') {
+                      if (el.fixedField.code === '006') {
+                        isPresent006 = true;
+                      } else if (el.fixedField.code === '007') {
+                        isPresent007 = true;
+                      } else if (el.fixedField.code === '008') {
+                        isPresent008 = true;
+                      }
+                      return (
+                        <Collapsible
+                          trigger={
+                            <Col xs={4}>
+                              {
+                                (!isPresent006) ?
+                                  <div className={style.titleCollapsiblePanel} id="titleCollapsiblePanel">
+                                    <TextField
+                                      type="text"
+                                      label={<h3>006</h3>}
+                                      value=""
+                                      readOnly
+                                    />
+                                    <Icon
+                                      icon="down-caret"
+                                      size="small"
+                                      iconClassName="myClass"
+                                    />
+                                  </div> :
+                                  <div className={style.titleCollapsiblePanel} id="titleCollapsiblePanel">
+                                    <TextField
+                                      type="text"
+                                      label={<h3>{el.fixedField.code}</h3>}
+                                      value={el.fixedField.displayValue}
+                                      readOnly
+                                    />
+                                    <Icon
+                                      icon="down-caret"
+                                      size="small"
+                                      iconClassName="myClass"
+                                    />
+                                  </div>}
+                              {
+                                (!isPresent007) ?
+                                  <div className={style.titleCollapsiblePanel} id="titleCollapsiblePanel">
+                                    <TextField
+                                      type="text"
+                                      label={<h3>007</h3>}
+                                      value=""
+                                      readOnly
+                                    />
+                                    <Icon
+                                      icon="down-caret"
+                                      size="small"
+                                      iconClassName="myClass"
+                                    />
+                                  </div> :
+                                  <div className={style.titleCollapsiblePanel} id="titleCollapsiblePanel">
+                                    <TextField
+                                      type="text"
+                                      label={<h3>{el.fixedField.code}</h3>}
+                                      value={el.fixedField.displayValue}
+                                      readOnly
+                                    />
+                                    <Icon
+                                      icon="down-caret"
+                                      size="small"
+                                      iconClassName="myClass"
+                                    />
+                                  </div>
+                              }
+                              {
+                                (!isPresent008) ?
+                                  <div className={style.titleCollapsiblePanel} id="titleCollapsiblePanel">
+                                    <TextField
+                                      type="text"
+                                      label={<h3>008</h3>}
+                                      value=""
+                                      readOnly
+                                    />
+                                    <Icon
+                                      icon="down-caret"
+                                      size="small"
+                                      iconClassName="myClass"
+                                    />
+                                  </div> :
+                                  <div className={style.titleCollapsiblePanel} id="titleCollapsiblePanel">
+                                    <TextField
+                                      type="text"
+                                      label={<h3>{el.fixedField.code}</h3>}
+                                      value={el.fixedField.displayValue}
+                                      readOnly
+                                    />
+                                    <Icon
+                                      icon="down-caret"
+                                      size="small"
+                                      iconClassName="myClass"
+                                    />
+                                  </div>
+                              }
+                            </Col>
+                          }
+                        >
+                          <CustomTagComponent {...this.props} />
+                        </Collapsible>
+                      );
+                    }
                   }
                 })
                 }
@@ -167,6 +277,8 @@ export class TemplateManager extends React.Component<P, {}> {
 export default (connect(
   ({ marccat: { template, tagValues } }) => ({
     templateById: template.recordsById,
-    tagValuesResults: tagValues.records.results
+    tagValuesResults: tagValues.records,
+    tagIsLoading: tagValues.isLoading,
+    tagIsReady: tagValues.isReady
   }),
 )(injectCommonProp(TemplateManager)));

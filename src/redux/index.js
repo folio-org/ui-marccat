@@ -9,7 +9,9 @@ import { searchEngineReducer,
   detailsAssociatedReducer,
   detailsBrowseSearchReducer,
   browseDetailsAssociatedReducer,
-  templateViewReducer } from './reducers/Reducer';
+  templateViewReducer,
+  tagValuesReducer
+} from './reducers/Reducer';
 import { searchEpic,
   searchDetailEpic,
   countDocEpic,
@@ -34,7 +36,8 @@ export const reducer = combineReducers({
   browse: scanBrowsingReducer,
   browseDetails: detailsBrowseSearchReducer,
   browseDetailsAssociated: browseDetailsAssociatedReducer,
-  template: templateViewReducer
+  template: templateViewReducer,
+  tagValues: tagValuesReducer
 });
 
 export const epics = combineEpics(
@@ -49,5 +52,5 @@ export const epics = combineEpics(
   browseDetailAssociatedEpic,
   templateViewEpic,
   templateByIdEpic,
-  templateGetValuesFromTagEpic
+  templateGetValuesFromTagEpic,
 );

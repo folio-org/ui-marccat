@@ -100,7 +100,7 @@ export const templateByIdEpic = (action$, store) => action$.ofType(ActionTypes.T
   .switchMap((d) => concat$(
     of$(marccatActions.isFetchingTemplateByIdRequest(true)),
     ajax
-      .getJSON(buildUrl(ENDPOINT.VIEW_TEMPLATE_URL_BY_ID + `${d.query}`, 'type=B&lang=ita'), ENDPOINT.HEADERS)
+      .getJSON(buildUrl(ENDPOINT.EMPTY_RECORD_URL + `${d.query}`, 'view=1&lang=ita'), ENDPOINT.HEADERS)
       .map(record => marccatActions.fetchTemplateById(record))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
@@ -109,7 +109,7 @@ export const templateGetValuesFromTagEpic = (action$, store) => action$.ofType(A
   .switchMap((d) => concat$(
     of$(marccatActions.isFetchingTemplateTagRequest(true)),
     ajax
-      .getJSON(buildUrl(ENDPOINT.TEMPLATE_TAG_URL, `fixed-fields-code-groups?code=${d.code}&headerTypeCode=${d.typeCode}&lang=ita`), ENDPOINT.HEADERS)
+      .getJSON(buildUrl(ENDPOINT.TEMPLATE_TAG_URL, `leader=${d.leader}&code=${d.code}&headerTypeCode=${d.typeCode}&lang=ita`), ENDPOINT.HEADERS)
       .map(record => marccatActions.fetchTemplateFromTag(record))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));

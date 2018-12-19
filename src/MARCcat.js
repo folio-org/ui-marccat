@@ -20,7 +20,7 @@ type S = {
  * @module MARCcat
  */
 class MARCcat extends React.Component<P, S> {
-  myActionMenu = () => {
+  searchPanelActionMenu = () => {
     return (
       <div>
         <Row>
@@ -52,7 +52,7 @@ class MARCcat extends React.Component<P, S> {
           <Pane
             dismissible
             defaultWidth="18%"
-            actionMenu={this.myActionMenu}
+            actionMenu={this.searchPanelActionMenu}
             onClose={toggleFilterPane}
             paneTitle={translate({ id: 'ui-marccat.searchAndFilter' })}
             paneSub={C.EMPTY_MESSAGE}

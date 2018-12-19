@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-state */
 import React from 'react';
 import { SearchField,
   Button,
@@ -27,10 +28,12 @@ class SearchPanel extends React.Component<P, S> {
     this.state = {
       isBrowseRequested: false,
       searchForm: [{ name: '' }],
+      filterEnable: true
     };
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleAddSearchForm = this.handleAddSearchForm.bind(this);
     this.handleRemoveSearchForm = this.handleRemoveSearchForm.bind(this);
+    this.handleOnChange = this.handleOnChange.bind(this);
   }
 
   handleKeyDown(e) {
@@ -78,6 +81,9 @@ class SearchPanel extends React.Component<P, S> {
         isBrowseRequested = true;
         dispatch({ type: ActionTypes.BROWSE_FIRST_PAGE, query: bibQuery });
         history.push('/marccat/browse');
+        this.setState({
+          filterEnable: false
+        });
       } else if (!isBrowseRequested) {
         if (indexForQuery === 'BN ' || indexForQuery === 'SN ' || indexForQuery === 'PU ' || indexForQuery === 'LL ' || indexForQuery === 'BC ' || indexForQuery === 'CP ' || indexForQuery === 'PW ') {
           dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: '' });
@@ -104,8 +110,10 @@ class SearchPanel extends React.Component<P, S> {
     });
   }
 
+  handleOnChange = () => () => {};
+
   render() {
-    const { translate, ...rest } = this.props;
+    const { translate, disableFilter, ...rest } = this.props;
     const { searchForm } = this.state;
     return (
       <AccordionSet>
@@ -116,7 +124,7 @@ class SearchPanel extends React.Component<P, S> {
           header={FilterAccordionHeader}
         >
           {searchForm.map((form, idx) => (
-            <form name="searchForm" onKeyDown={this.handleKeyDown} key={idx}>
+            <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange} key={idx}>
               <Row>
                 <Col xs={11}>
                   <div className={styles.select_margin}>
@@ -172,7 +180,7 @@ class SearchPanel extends React.Component<P, S> {
           ))
           }
         </Accordion>
-        <FiltersContainer {...this.props} />
+        <FiltersContainer {...this.props} filterEnable={disableFilter} />
       </AccordionSet>
     );
   }

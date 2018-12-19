@@ -2,20 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Pane, Paneset, Icon, MultiColumnList, HotKeys } from '@folio/stripes-components';
-import { Row } from 'react-flexbox-grid';
 import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
 import { EmptyMessage, NoResultsMessage } from '../../../lib/Message';
-import { ToolbarButtonMenu } from '../../../lib';
+import { ToolbarButtonMenu, ActionMenu } from '../../../lib';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
 import { resultsFormatter, columnMapper } from '../../../utils/Formatter';
 import { isAuthorityRecord } from '../../../utils/SearchUtils';
 import RecordDetails from './RecordDetails';
 import { injectCommonProp } from '../../../core';
 import AssociatedBibDetails from './AssociatedBibDetails';
-import MyActionMenu from '../../MyActionMenus/MyActionMenu';
-import MyNewButtonMenu from '../../MyActionMenus/MyNewButtonMenu';
 
 
 type P = Props & {
@@ -81,8 +78,8 @@ export class SearchResults extends React.Component<P, {}> {
   };
 
   render() {
-    /* eslint-disable-next-line prefer-const */
-    let { bibsOnly, autOnly, detailPanelIsVisible, noResults, loading, openDropDownMenu } = this.state;
+    let { bibsOnly, autOnly, detailPanelIsVisible, noResults } = this.state;
+    const { loading } = this.state;
     const {
       activeFilter,
       activeFilterName,
@@ -225,7 +222,7 @@ export class SearchResults extends React.Component<P, {}> {
             paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
             paneSub={C.EMPTY_MESSAGE}
             appIcon={{ app: C.META.ICON_TITLE }}
-            actionMenu={MyActionMenu}
+            actionMenu={ActionMenu}
             dismissible
             onClose={() => this.setState({ detailPanelIsVisible: false })}
             lastMenu={rightMenuEdit}
@@ -245,7 +242,7 @@ export class SearchResults extends React.Component<P, {}> {
             paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
             paneSub={C.EMPTY_MESSAGE}
             appIcon={{ app: C.META.ICON_TITLE }}
-            actionMenu={MyActionMenu}
+            actionMenu={ActionMenu}
             dismissible
             onClose={() => {
               const { dispatch } = this.props;

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Row } from 'react-flexbox-grid';
+import { Row } from '@folio/stripes-components';
 import { FormattedMessage } from 'react-intl';
 
-export default function MyActionMenu() {
+export default function ActionMenu() {
   return (
     <div>
       <Row>

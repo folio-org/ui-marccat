@@ -4,9 +4,7 @@
  */
 import * as React from 'react';
 import { connect } from 'react-redux';
-import Pane from '@folio/stripes-components/lib/Pane';
-import { AccordionSet, Accordion } from '@folio/stripes-components/lib/Accordion';
-import { MultiColumnList, Icon } from '@folio/stripes-components';
+import { MultiColumnList, Icon, Pane, AccordionSet, Accordion } from '@folio/stripes-components';
 import { Props, injectCommonProp } from '../../core';
 import { ActionTypes } from '../../redux/actions/Actions';
 

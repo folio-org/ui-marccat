@@ -3,9 +3,9 @@
  * @flow
  */
 import * as React from 'react';
-import Icon from '@folio/stripes-components/lib/Icon';
-import css from './EmptyMessage.css';
+import { Icon } from '@folio/stripes-components';
 import type { Props } from '../../core';
+import css from '../Style/EmptyMessage.css';
 
 type P = Props & {};
 

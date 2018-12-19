@@ -4,9 +4,7 @@
  */
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
-import Pane from '@folio/stripes-components/lib/Pane';
-import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
-import Icon from '@folio/stripes-components/lib/Icon';
+import { Icon, MultiColumnList, Pane } from '@folio/stripes-components';
 import { ToolbarButtonMenu } from '../../lib';
 import { Props, injectCommonProp } from '../../core';
 

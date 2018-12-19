@@ -1,22 +1,27 @@
 /* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
-/* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 import { connect } from 'react-redux';
-import Pane from '@folio/stripes-components/lib/Pane';
-import Paneset from '@folio/stripes-components/lib/Paneset';
-import Checkbox from '@folio/stripes-components/lib/Checkbox';
-import { AccordionSet, Accordion } from '@folio/stripes-components/lib/Accordion';
-import { KeyValue, Icon, TextField } from '@folio/stripes-components';
-import { Row, Col } from 'react-flexbox-grid';
+import {
+  Row,
+  Col,
+  Pane,
+  Paneset,
+  Checkbox,
+  AccordionSet,
+  Accordion,
+  KeyValue,
+  Icon,
+  TextField
+} from '@folio/stripes-components';
 import Collapsible from 'react-collapsible';
 import Draggable from 'react-draggable';
 import { ActionTypes } from '../../../redux/actions';
-import * as C from '../../../utils/Constant';
-import type { Props } from '../../../core';
-import { injectCommonProp } from '../../../core';
-import MyActionMenuTemplate from '../../MyActionMenus/MyActionMenuTemplate';
+import { Props, injectCommonProp } from '../../../core';
+import { ActionMenuTemplate } from '../../../lib';
 import { CustomTagComponent } from './CustomTagComponent';
+import * as C from '../../../utils/Constant';
+
 import style from './style.css';
 
 type P = Props & {
@@ -50,7 +55,7 @@ export class TemplateManager extends React.Component<P, {}> {
             paneTitle="Template Manager"
             paneSub="ID"
             appIcon={{ app: C.META.ICON_TITLE }}
-            actionMenu={MyActionMenuTemplate}
+            actionMenu={ActionMenuTemplate}
           >
             <Icon icon="spinner-ellipsis" />
           </Pane>
@@ -62,7 +67,7 @@ export class TemplateManager extends React.Component<P, {}> {
             defaultWidth="fullWidth"
             paneTitle={templateById.name}
             appIcon={{ app: C.META.ICON_TITLE }}
-            actionMenu={MyActionMenuTemplate}
+            actionMenu={ActionMenuTemplate}
           >
             <AccordionSet>
               <KeyValue

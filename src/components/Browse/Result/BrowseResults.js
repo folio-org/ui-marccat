@@ -1,17 +1,15 @@
 import React from 'react';
-import { MultiColumnList, Pane, Paneset, Icon } from '@folio/stripes-components';
+import { Row, MultiColumnList, Pane, Paneset, Icon } from '@folio/stripes-components';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Row } from 'react-flexbox-grid';
-import * as C from '../../../utils/Constant';
-import { injectCommonProp } from '../../../core';
-import { Props } from '../../../core/type/props';
+import { Props, injectCommonProp } from '../../../core';
 import BrowseItemDetail from './BrowseItemDetail';
 import { ActionTypes } from '../../../redux/actions/Actions';
-import { findYourQueryFromBrowse } from '../../Search/Select/FilterMapper';
+import { findYourQueryFromBrowse } from '../../Search/Filter/FilterMapper';
 import { ToolbarButtonMenu, EmptyMessage, NoResultsMessage } from '../../../lib';
 import { browseFormatter, browseColMapper } from '../../../utils/Formatter';
 import BrowseAssociatedItemDetail from './BrowseAssociatedItemDetail';
+import * as C from '../../../utils/Constant';
 
 type P = Props & {};
 type S = {

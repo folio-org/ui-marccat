@@ -1,7 +1,6 @@
 import React from 'react';
-import { Row, Col } from 'react-flexbox-grid';
 import { FormattedMessage } from 'react-intl';
-import { Dropdown, DropdownMenu, Button, PaneMenu, Icon } from '@folio/stripes/components';
+import { Row, Col, Dropdown, DropdownMenu, Button, PaneMenu, Icon } from '@folio/stripes/components';
 import type { Props } from '../../core';
 
 type P = Props & {
@@ -9,7 +8,7 @@ type P = Props & {
   open: boolean
 }
 
-export default class MyNewButtonMenu extends React.Component<P, {}> {
+export default class VariableFieldActionMenu extends React.Component<P, {}> {
   constructor(props: P) {
     super(props);
     this.state = {
@@ -34,7 +33,7 @@ export default class MyNewButtonMenu extends React.Component<P, {}> {
             bottomMargin0
             aria-haspopup="true"
           >
-            <FormattedMessage id="ui-marccat.search.record.new.keyboard" />
+            <FormattedMessage id="ui-marccat.search.record.actions" />
             <Icon
               icon="down-caret"
               size="small"

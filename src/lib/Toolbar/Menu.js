@@ -66,6 +66,7 @@ export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
         pullRight
       >
         <Button
+          data-test-clickable-new-order
           style={rightButton}
           id="create-new-template"
           buttonStyle="primary"
@@ -76,7 +77,7 @@ export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
         >
           {label}
           <Icon
-            icon="down-caret"
+            icon="caret-down"
             size="small"
             iconClassName="myClass"
           />

@@ -34,7 +34,7 @@
 
   "search.record": "Records",
   "search.record.preview": "Preview Record",
-  "search.record.new.keyboard": "New",
+  "search.record.new.keyboard": "New (CTRL+N)",
   "search.record.edit" : "Edit",
   "search.goto.inventory": "View in Inventory",
   "search.details.bibliographic":"Bibliographic record",

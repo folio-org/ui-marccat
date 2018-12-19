@@ -61,10 +61,17 @@ export default class FiltersContainer extends React.Component<P, {}> {
 
   render() {
     const { filters } = this.state;
-    // const filterCount = Object.keys(filters).length;
+    const { filterEnable } = this.props;
+    const disableFilters = {};
+    disableFilters.recordType = true;
+    disableFilters.suppressedFilter = true;
+    disableFilters.languageFilter = true;
+    disableFilters.formatType = true;
+
     return (
       <div className={styles['search-filters']}>
         <FilterGroups
+          disableNames={(filterEnable) ? disableFilters : ''}
           config={this.config}
           filters={filters}
           onChangeFilter={this.onChangeFilter}

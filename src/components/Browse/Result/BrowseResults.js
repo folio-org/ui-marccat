@@ -88,7 +88,17 @@ export class BrowseResults extends React.Component<P, S> {
   };
 
   renderButtonMenu = () => {
-    return (<ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.new.keyboard" />);
+    return (
+      <ToolbarButtonMenu
+        create
+        {...this.props}
+        label={
+          <Icon icon="plus-sign">
+            <FormattedMessage id="ui-marccat.search.record.new.keyboard" />
+          </Icon>
+        }
+      />
+    );
   };
 
   render() {

@@ -3,8 +3,10 @@
  * @flow
  */
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import Pane from '@folio/stripes-components/lib/Pane';
 import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
+import Icon from '@folio/stripes-components/lib/Icon';
 import { ToolbarButtonMenu } from '../../lib';
 import { Props, injectCommonProp } from '../../core';
 
@@ -22,7 +24,17 @@ const data = [
 class FieldGroupings extends React.Component<P, {}> {
   render() {
     const { label } = this.props;
-    const rightMenu = <ToolbarButtonMenu create {...this.props} label="ui-marccat.button.add" />;
+    const rightMenu = (
+      <ToolbarButtonMenu
+        create
+        {...this.props}
+        label={
+          <Icon icon="plus-sign">
+            <FormattedMessage id="ui-marccat.button.add" />
+          </Icon>
+        }
+      />
+    );
     return (
       <Pane
         defaultWidth="fill"

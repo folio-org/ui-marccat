@@ -135,7 +135,26 @@ export class SearchResults extends React.Component<P, {}> {
 
     const message = messageAuth + ' / ' + messageBib;
     const messageNoContent = <FormattedMessage id="ui-marccat.search.initial.message" />;
-    const rightMenuEdit = <ToolbarButtonMenu create {...this.props} onClick={this.handleClickEdit} label="ui-marccat.search.record.edit" />;
+    const rightMenu = (
+      <ToolbarButtonMenu
+        create
+        {...this.props}
+        label={
+          <Icon icon="plus-sign">
+            <FormattedMessage id="ui-marccat.search.record.new.keyboard" />
+          </Icon>
+        }
+      />
+    );
+    const rightMenuEdit = (
+      <ToolbarButtonMenu
+        create
+        {...this.props}
+        onClick={this.handleClickEdit}
+        label={<FormattedMessage id="ui-marccat.search.record.edit" />}
+      />
+    );
+
     return (
       <HotKeys keyMap={this.keys} handlers={this.handlers} style={{ width: 100 + '%' }}>
         <Paneset static>

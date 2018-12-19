@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { AccordionSet, FilterAccordionHeader, Accordion, MultiColumnList } from '@folio/stripes-components';
 import { Row, Col } from 'react-flexbox-grid';
@@ -23,7 +24,13 @@ export class BrowseItemDetail extends React.Component<P, {}> {
   }
 
   renderButtonMenu = () => {
-    return (<ToolbarButtonMenu create {...this.props} label="ui-marccat.browse.record.create" />);
+    return (
+      <ToolbarButtonMenu
+        create
+        {...this.props}
+        label={<FormattedMessage id="ui-marccat.browse.record.create" />}
+      />
+    );
   };
 
   render() {

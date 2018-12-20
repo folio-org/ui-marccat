@@ -83,9 +83,33 @@ export const fetchBrowseDetail = (results, counter, isAuthority) => ({
   count: counter,
   isAuthority
 });
-export const isFetchingTemplateTagRequest = (isLoading) => ({
-  type: ActionTypes.FETCH_TEMPLATE_VALUES_FROM_TAG,
+export const isFetchingLeaderTagRequest = (isLoading) => ({
+  type: ActionTypes.FETCH_LEADER_VALUES_FROM_TAG,
   payload: isLoading
+});
+export const isFetchingHeaderTypes006 = (isLoading) => ({
+  type: ActionTypes.FETCH_HEADER_TYPES_006,
+  payload: isLoading
+});
+export const fetchHeaderTypes006 = (records) => ({
+  type: ActionTypes.HEADER_TYPES_006_SUCCESS,
+  payload: records
+});
+export const isFetchingHeaderTypes007 = (isLoading) => ({
+  type: ActionTypes.FETCH_HEADER_TYPES_007,
+  payload: isLoading
+});
+export const fetchHeaderTypes007 = (records) => ({
+  type: ActionTypes.HEADER_TYPES_007_SUCCESS,
+  payload: records
+});
+export const isFetchingHeaderTypes008 = (isLoading) => ({
+  type: ActionTypes.FETCH_HEADER_TYPES_008,
+  payload: isLoading
+});
+export const fetchHeaderTypes008 = (records) => ({
+  type: ActionTypes.HEADER_TYPES_008_SUCCESS,
+  payload: records
 });
 export const isFetchingTemplateViewRequest = (isLoading) => ({
   type: ActionTypes.FETCH_VIEW_TEMPLATE,
@@ -99,8 +123,8 @@ export const fetchTemplateById = (records) => ({
   type: ActionTypes.TEMPLATE_GET_BY_ID_SUCCESS,
   payload: records
 });
-export const fetchTemplateFromTag = (records) => ({
-  type: ActionTypes.TEMPLATE_VALUES_FROM_TAG_SUCCESS,
+export const fetchLeaderFromTag = (records) => ({
+  type: ActionTypes.LEADER_VALUES_FROM_TAG_SUCCESS,
   payload: records
 });
 export const fetchSuccess = (message) => ({

@@ -24,7 +24,8 @@ export const ENDPOINT = {
   VIEW_TEMPLATE_URL: '/record-templates',
   VIEW_TEMPLATE_URL_BY_ID: '/record-template/',
   EMPTY_RECORD_URL: '/bibliographic-record/from-template/',
-  TEMPLATE_TAG_URL: '/fixed-fields-code-groups'
+  TEMPLATE_TAG_URL: '/fixed-fields-code-groups',
+  HEADER_TYPES_URL: '/header-types',
 };
 
 // REDUX DATA STORE MANAGEMENT

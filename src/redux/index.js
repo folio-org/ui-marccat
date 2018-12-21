@@ -10,7 +10,10 @@ import { searchEngineReducer,
   detailsBrowseSearchReducer,
   browseDetailsAssociatedReducer,
   templateViewReducer,
-  tagValuesReducer
+  leaderValuesReducer,
+  headerTypes006Reducer,
+  headerTypes007Reducer,
+  headerTypes008Reducer
 } from './reducers/Reducer';
 import { searchEpic,
   searchDetailEpic,
@@ -22,8 +25,11 @@ import { searchEpic,
   browseAuthorityDetailEpic,
   browseDetailAssociatedEpic,
   templateViewEpic,
-  templateGetValuesFromTagEpic,
+  leaderValuesEpic,
   templateByIdEpic,
+  headerTypes006Epic,
+  headerTypes007Epic,
+  headerTypes008Epic
 } from './epic/epics';
 
 export const reducer = combineReducers({
@@ -37,7 +43,10 @@ export const reducer = combineReducers({
   browseDetails: detailsBrowseSearchReducer,
   browseDetailsAssociated: browseDetailsAssociatedReducer,
   template: templateViewReducer,
-  tagValues: tagValuesReducer
+  leaderValues: leaderValuesReducer,
+  headerTypes006: headerTypes006Reducer,
+  headerTypes007: headerTypes007Reducer,
+  headerTypes008: headerTypes008Reducer,
 });
 
 export const epics = combineEpics(
@@ -52,5 +61,8 @@ export const epics = combineEpics(
   browseDetailAssociatedEpic,
   templateViewEpic,
   templateByIdEpic,
-  templateGetValuesFromTagEpic,
+  leaderValuesEpic,
+  headerTypes006Epic,
+  headerTypes007Epic,
+  headerTypes008Epic
 );

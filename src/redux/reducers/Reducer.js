@@ -290,6 +290,110 @@ export function templateViewReducer(state = { isLoading, isReady }, action) {
   }
 }
 
+export function headerTypes006Reducer(state = { isLoading, isReady }, action) {
+  switch (action.type) {
+  case ActionTypes.HEADER_TYPES_006:
+    return {
+      ...state,
+      isLoading: false,
+      isReady: false
+    };
+  case ActionTypes.FETCH_HEADER_TYPES_006:
+    return {
+      ...state,
+      isLoading: action.payload,
+      isReady: false
+    };
+  case ActionTypes.HEADER_TYPES_006_SUCCESS:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: false,
+      isReady: true,
+    };
+  default:
+    return state;
+  }
+}
+
+export function headerTypes007Reducer(state = { isLoading, isReady }, action) {
+  switch (action.type) {
+  case ActionTypes.HEADER_TYPES_007:
+    return {
+      ...state,
+      isLoading: false,
+      isReady: false
+    };
+  case ActionTypes.FETCH_HEADER_TYPES_007:
+    return {
+      ...state,
+      isLoading: action.payload,
+      isReady: false
+    };
+  case ActionTypes.HEADER_TYPES_007_SUCCESS:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: false,
+      isReady: true,
+    };
+  default:
+    return state;
+  }
+}
+
+export function headerTypes008Reducer(state = { isLoading, isReady }, action) {
+  switch (action.type) {
+  case ActionTypes.HEADER_TYPES_008:
+    return {
+      ...state,
+      isLoading: false,
+      isReady: false
+    };
+  case ActionTypes.FETCH_HEADER_TYPES_008:
+    return {
+      ...state,
+      isLoading: action.payload,
+      isReady: false
+    };
+  case ActionTypes.HEADER_TYPES_008_SUCCESS:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: false,
+      isReady: true,
+    };
+  default:
+    return state;
+  }
+}
+
+export function leaderValuesReducer(state = { isLoading, isReady }, action) {
+  switch (action.type) {
+  case ActionTypes.LEADER_VALUES_FROM_TAG:
+    return {
+      ...state,
+      isLoading: false,
+      isReady: false
+    };
+  case ActionTypes.FETCH_LEADER_VALUES_FROM_TAG:
+    return {
+      ...state,
+      isLoading: action.payload,
+      isReady: false
+    };
+  case ActionTypes.LEADER_VALUES_FROM_TAG_SUCCESS:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: false,
+      isReady: true,
+    };
+  default:
+    return state;
+  }
+}
+
 export function filterReducer(state = { isLoading }, action) {
   switch (action.type) {
   case ActionTypes.FILTERS:

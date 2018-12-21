@@ -1,8 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import KeyValue from '@folio/stripes-components/lib/KeyValue';
-import { AccordionSet, FilterAccordionHeader, Accordion, MultiColumnList } from '@folio/stripes-components';
-import { Row, Col } from 'react-flexbox-grid';
+import { FormattedMessage } from 'react-intl';
+import {
+  KeyValue,
+  Row,
+  Col,
+  AccordionSet,
+  FilterAccordionHeader,
+  Accordion,
+  MultiColumnList
+} from '@folio/stripes-components';
 import { ActionTypes } from '../../../redux/actions/Actions';
 import type { Props } from '../../../core';
 import { getTag100, getTitle100, remapForAssociatedBibList } from '../../../utils/Mapper';
@@ -23,7 +30,13 @@ export class BrowseItemDetail extends React.Component<P, {}> {
   }
 
   renderButtonMenu = () => {
-    return (<ToolbarButtonMenu create {...this.props} label="ui-marccat.browse.record.create" />);
+    return (
+      <ToolbarButtonMenu
+        create
+        {...this.props}
+        label={<FormattedMessage id="ui-marccat.browse.record.create" />}
+      />
+    );
   };
 
   render() {

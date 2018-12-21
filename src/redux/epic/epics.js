@@ -100,16 +100,43 @@ export const templateByIdEpic = (action$, store) => action$.ofType(ActionTypes.T
   .switchMap((d) => concat$(
     of$(marccatActions.isFetchingTemplateByIdRequest(true)),
     ajax
-      .getJSON(buildUrl(ENDPOINT.VIEW_TEMPLATE_URL_BY_ID + `${d.query}`, 'type=B&lang=ita'), ENDPOINT.HEADERS)
+      .getJSON(buildUrl(ENDPOINT.EMPTY_RECORD_URL + `${d.query}`, 'view=1&lang=ita'), ENDPOINT.HEADERS)
       .map(record => marccatActions.fetchTemplateById(record))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
 
-export const templateGetValuesFromTagEpic = (action$, store) => action$.ofType(ActionTypes.TEMPLATE_VALUES_FROM_TAG)
+export const leaderValuesEpic = (action$, store) => action$.ofType(ActionTypes.LEADER_VALUES_FROM_TAG)
   .switchMap((d) => concat$(
-    of$(marccatActions.isFetchingTemplateTagRequest(true)),
+    of$(marccatActions.isFetchingLeaderTagRequest(true)),
     ajax
-      .getJSON(buildUrl(ENDPOINT.TEMPLATE_TAG_URL, `fixed-fields-code-groups?code=${d.code}&headerTypeCode=${d.typeCode}&lang=ita`), ENDPOINT.HEADERS)
-      .map(record => marccatActions.fetchTemplateFromTag(record))
+      .getJSON(buildUrl(ENDPOINT.TEMPLATE_TAG_URL, `leader=${d.leader}&code=${d.code}&headerTypeCode=${d.typeCode}&lang=ita`), ENDPOINT.HEADERS)
+      .map(record => marccatActions.fetchLeaderFromTag(record))
+      .catch(e => of$(marccatActions.fetchFailure(e))),
+  ));
+
+export const headerTypes006Epic = (action$, store) => action$.ofType(ActionTypes.HEADER_TYPES_006)
+  .switchMap((d) => concat$(
+    of$(marccatActions.isFetchingHeaderTypes006(true)),
+    ajax
+      .getJSON(buildUrl(ENDPOINT.HEADER_TYPES_URL, `code=${d.code}&lang=ita`), ENDPOINT.HEADERS)
+      .map(record => marccatActions.fetchHeaderTypes006(record))
+      .catch(e => of$(marccatActions.fetchFailure(e))),
+  ));
+
+export const headerTypes007Epic = (action$, store) => action$.ofType(ActionTypes.HEADER_TYPES_007)
+  .switchMap((d) => concat$(
+    of$(marccatActions.isFetchingHeaderTypes007(true)),
+    ajax
+      .getJSON(buildUrl(ENDPOINT.HEADER_TYPES_URL, `code=${d.code}&lang=ita`), ENDPOINT.HEADERS)
+      .map(record => marccatActions.fetchHeaderTypes007(record))
+      .catch(e => of$(marccatActions.fetchFailure(e))),
+  ));
+
+export const headerTypes008Epic = (action$, store) => action$.ofType(ActionTypes.HEADER_TYPES_008)
+  .switchMap((d) => concat$(
+    of$(marccatActions.isFetchingHeaderTypes008(true)),
+    ajax
+      .getJSON(buildUrl(ENDPOINT.HEADER_TYPES_URL, `code=${d.code}&lang=ita`), ENDPOINT.HEADERS)
+      .map(record => marccatActions.fetchHeaderTypes008(record))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));

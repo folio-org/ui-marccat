@@ -15,7 +15,7 @@ export const ENDPOINT = {
     'Content-Type': 'application/json',
     'x-okapi-tenant': 'tnx',
   },
-  BASE_URL: 'http://localhost:8080/marccat',
+  BASE_URL: 'http://127.0.0.1:8080/marccat',
   MERGED_SEARCH_URL: '/mergedSearch',
   SEARCH_URL: '/searchVertical',
   SEARCH_URL_JSON: '/search',
@@ -23,7 +23,9 @@ export const ENDPOINT = {
   BROWSE_FIRST_PAGE_URL: '/browse',
   VIEW_TEMPLATE_URL: '/record-templates',
   VIEW_TEMPLATE_URL_BY_ID: '/record-template/',
-  TEMPLATE_TAG_URL: '/fixed-fields-code-groups'
+  EMPTY_RECORD_URL: '/bibliographic-record/from-template/',
+  TEMPLATE_TAG_URL: '/fixed-fields-code-groups',
+  HEADER_TYPES_URL: '/header-types',
 };
 
 // REDUX DATA STORE MANAGEMENT

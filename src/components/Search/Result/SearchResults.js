@@ -1,13 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Pane, Paneset, Icon, MultiColumnList } from '@folio/stripes-components';
-import { Row } from 'react-flexbox-grid';
+import { Pane, Paneset, Icon, MultiColumnList, HotKeys } from '@folio/stripes-components';
 import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
 import { EmptyMessage, NoResultsMessage } from '../../../lib/Message';
-import { ToolbarButtonMenu } from '../../../lib';
+import { ToolbarButtonMenu, ActionMenu } from '../../../lib';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
 import { resultsFormatter, columnMapper } from '../../../utils/Formatter';
 import { isAuthorityRecord } from '../../../utils/SearchUtils';
@@ -25,7 +24,6 @@ type P = Props & {
   dataLoaded: boolean;
   loading: boolean;
   isPanelOpen: boolean;
-  openDropDown: boolean;
 }
 
 export class SearchResults extends React.Component<P, {}> {
@@ -37,57 +35,31 @@ export class SearchResults extends React.Component<P, {}> {
       bibsOnly: false,
       autOnly: false,
       loading: false,
+      openDropDownMenu: false,
     };
     this.handleDetails = this.handleDetails.bind(this);
     this.onNeedMoreData = this.onNeedMoreData.bind(this);
+    this.createRecord = this.createRecord.bind(this);
+
+    this.keys = {
+      'new' : ['backspace'],
+    };
+
+    this.handlers = {
+      'new': this.createRecord,
+    };
   }
 
-  myActionMenu = () => {
-    return (
-      <div>
-        <Row>
-          <FormattedMessage id="ui-marccat.search.actionmenu.export.mrc" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.browse.actionmenu.export.csv" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.browse.actionmenu.export.dat" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.search.actionmenu.print" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.search.actionmenu.opac" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.search.actionmenu.duplicate" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.search.actionmenu.holdings" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.search.actionmenu.instances" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.search.actionmenu.authority.records" />
-        </Row>
-      </div>
-    );
-  };
+  createRecord = () => {};
 
   handleClickEdit = () => {
     const { dispatch, history } = this.props;
     dispatch({ type: ActionTypes.VIEW_TEMPLATE, query: '000' });
     history.push('/marccat/template');
+  }
+
+  handleOnToggle = () => {
+    this.setState(prevState => ({ openDropDownMenu: !prevState.openDropDownMenu }));
   }
 
   handleDetails = (e, meta) => {
@@ -106,8 +78,8 @@ export class SearchResults extends React.Component<P, {}> {
   };
 
   render() {
-    /* eslint-disable-next-line prefer-const */
-    let { bibsOnly, autOnly, detailPanelIsVisible, noResults, loading } = this.state;
+    let { bibsOnly, autOnly, detailPanelIsVisible, noResults } = this.state;
+    const { loading } = this.state;
     const {
       activeFilter,
       activeFilterName,
@@ -160,78 +132,97 @@ export class SearchResults extends React.Component<P, {}> {
 
     const message = messageAuth + ' / ' + messageBib;
     const messageNoContent = <FormattedMessage id="ui-marccat.search.initial.message" />;
-    const rightMenu = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.new.keyboard" />;
-    const rightMenuEdit = <ToolbarButtonMenu create {...this.props} onClick={this.handleClickEdit} label="ui-marccat.search.record.edit" />;
-    return (
-      <Paneset static>
-        <Pane
-          padContent={(marcJSONRecords.length > 0) || isFetching}
-          defaultWidth="fill"
-          paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
-          paneSub={(mergedRecord && mergedRecord.length > 0) ? message : messageNoContent}
-          appIcon={{ app: C.META.ICON_TITLE }}
-          firstMenu={firstMenu}
-          lastMenu={rightMenu}
-        >
-          {
-            (isFetching) ?
-              <Icon icon="spinner-ellipsis" /> :
-              (!isFetching && noResults && !(bibliographicResults === undefined && authorityResults === undefined)) ?
-                <NoResultsMessage {...this.props} /> :
-                (isReady) ?
-                  <MultiColumnList
-                    autosize
-                    id="tabella"
-                    defaultWidth="fill"
-                    isEmptyMessage={C.EMPTY_MESSAGE}
-                    columnWidths={
-                      {
-                        'resultView': '5%',
-                        '001': '10%',
-                        '245': '30%',
-                        'name': '15%',
-                        'uniformTitle': '5%',
-                        'subject': '8%',
-                        'date1': '5%',
-                        'date2': '5%',
-                        'format': '8%',
-                        'tagHighlighted': '5%',
-                        'countDoc': '4%'
-                      }
-                    }
-                    rowMetadata={['001', 'recordView']}
-                    onRowClick={this.handleDetails}
-                    contentData={marcJSONRecords}
-                    formatter={resultsFormatter}
-                    columnMapping={columnMapper}
-                    onNeedMoreData={() => this.onNeedMoreData(marcJSONRecords)}
-                    virtualize
-                    loading={loading}
-                    visibleColumns={[
-                      'resultView',
-                      '001',
-                      '245',
-                      'name',
-                      'uniformTitle',
-                      'subject',
-                      'date1',
-                      'date2',
-                      'format',
-                      'tagHighlighted',
-                      'countDoc'
-                    ]}
-                  /> : <EmptyMessage {...this.props} />
-          }
-        </Pane>
+    const rightMenu = (
+      <ToolbarButtonMenu
+        create
+        {...this.props}
+        label={
+          <Icon icon="plus-sign">
+            <FormattedMessage id="ui-marccat.search.record.new.keyboard" />
+          </Icon>
+        }
+      />
+    );
+    const rightMenuEdit = (
+      <ToolbarButtonMenu
+        create
+        {...this.props}
+        onClick={this.handleClickEdit}
+        label={<FormattedMessage id="ui-marccat.search.record.edit" />}
+      />
+    );
 
-        {detailPanelIsVisible &&
+    return (
+      <HotKeys keyMap={this.keys} handlers={this.handlers} style={{ width: 100 + '%' }}>
+        <Paneset static>
+          <Pane
+            padContent={(marcJSONRecords.length > 0) || isFetching}
+            defaultWidth="fill"
+            paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
+            paneSub={(mergedRecord && mergedRecord.length > 0) ? message : messageNoContent}
+            appIcon={{ app: C.META.ICON_TITLE }}
+            firstMenu={firstMenu}
+            lastMenu={rightMenu}
+          >
+            {
+              (isFetching) ?
+                <Icon icon="spinner-ellipsis" /> :
+                (!isFetching && noResults && !(bibliographicResults === undefined && authorityResults === undefined)) ?
+                  <NoResultsMessage {...this.props} /> :
+                  (isReady) ?
+                    <MultiColumnList
+                      autosize
+                      id="tabella"
+                      defaultWidth="fill"
+                      isEmptyMessage={C.EMPTY_MESSAGE}
+                      columnWidths={
+                        {
+                          'resultView': '5%',
+                          '001': '10%',
+                          '245': '30%',
+                          'name': '15%',
+                          'uniformTitle': '5%',
+                          'subject': '8%',
+                          'date1': '5%',
+                          'date2': '5%',
+                          'format': '8%',
+                          'tagHighlighted': '5%',
+                          'countDoc': '4%'
+                        }
+                      }
+                      rowMetadata={['001', 'recordView']}
+                      onRowClick={this.handleDetails}
+                      contentData={marcJSONRecords}
+                      formatter={resultsFormatter}
+                      columnMapping={columnMapper}
+                      onNeedMoreData={() => this.onNeedMoreData(marcJSONRecords)}
+                      virtualize
+                      loading={loading}
+                      visibleColumns={[
+                        'resultView',
+                        '001',
+                        '245',
+                        'name',
+                        'uniformTitle',
+                        'subject',
+                        'date1',
+                        'date2',
+                        'format',
+                        'tagHighlighted',
+                        'countDoc'
+                      ]}
+                    /> : <EmptyMessage {...this.props} />
+            }
+          </Pane>
+
+          {detailPanelIsVisible &&
           <Pane
             id="pane-details"
             defaultWidth="30%"
             paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
             paneSub={C.EMPTY_MESSAGE}
             appIcon={{ app: C.META.ICON_TITLE }}
-            actionMenu={this.myActionMenu}
+            actionMenu={ActionMenu}
             dismissible
             onClose={() => this.setState({ detailPanelIsVisible: false })}
             lastMenu={rightMenuEdit}
@@ -242,16 +233,16 @@ export class SearchResults extends React.Component<P, {}> {
                 <RecordDetails {...this.props} /> : null
             }
           </Pane>
-        }
+          }
 
-        {isPanelBibAssOpen && !noResults &&
+          {isPanelBibAssOpen && !noResults &&
           <Pane
             id="pane-details"
             defaultWidth="25%"
             paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
             paneSub={C.EMPTY_MESSAGE}
             appIcon={{ app: C.META.ICON_TITLE }}
-            actionMenu={this.myActionMenu}
+            actionMenu={ActionMenu}
             dismissible
             onClose={() => {
               const { dispatch } = this.props;
@@ -265,8 +256,9 @@ export class SearchResults extends React.Component<P, {}> {
                 <AssociatedBibDetails {...this.props} /> : null
             }
           </Pane>
-        }
-      </Paneset>
+          }
+        </Paneset>
+      </HotKeys>
     );
   }
 }

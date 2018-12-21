@@ -3,11 +3,8 @@
  * @flow
  */
 import * as React from 'react';
-import Paneset from '@folio/stripes-components/lib/Paneset';
-import Pane from '@folio/stripes-components/lib/Pane';
+import { Paneset, Pane, Row, Col, Icon } from '@folio/stripes-components';
 import { FormattedMessage } from 'react-intl';
-import { Row, Col } from 'react-flexbox-grid';
-import { Icon } from '@folio/stripes-components';
 import { injectCommonProp, Props } from './core';
 import { SearchPanel } from './components/Search';
 import * as C from './utils/Constant';
@@ -20,7 +17,7 @@ type S = {
  * @module MARCcat
  */
 class MARCcat extends React.Component<P, S> {
-  myActionMenu = () => {
+  searchPanelActionMenu = () => {
     return (
       <div>
         <Row>
@@ -52,7 +49,7 @@ class MARCcat extends React.Component<P, S> {
           <Pane
             dismissible
             defaultWidth="18%"
-            actionMenu={this.myActionMenu}
+            actionMenu={this.searchPanelActionMenu}
             onClose={toggleFilterPane}
             paneTitle={translate({ id: 'ui-marccat.searchAndFilter' })}
             paneSub={C.EMPTY_MESSAGE}

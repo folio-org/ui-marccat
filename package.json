@@ -33,6 +33,7 @@
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^3.2.1",
     "@folio/stripes": "^1.0.0",
+    "@folio/stripes-smart-components": "^1.12.3000344",
     "@folio/stripes-cli": "^1.5.0",
     "@folio/stripes-core": "^2.15.5",
     "babel-cli": "^6.26.0",
@@ -64,7 +65,10 @@
     "redux-form": "^7.4.2",
     "stylelint": "^9.9.0",
     "stylelint-config-standard": "^18.2.0",
-    "webpack": "^4.0.0"
+    "webpack": "^4.0.0",
+    "namor": "1.1.1",
+    "react-beautiful-dnd": "9.0.2",
+    "react-table": "6.8.6"
   },
   "peerDependencies": {
     "@folio/stripes": "^1.0.0",

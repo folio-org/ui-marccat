@@ -1,6 +1,5 @@
 import React from 'react';
 import { Icon, Button } from '@folio/stripes-components';
-
 import type { Props } from '../../../core';
 
 type P = Props & {};

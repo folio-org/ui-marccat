@@ -5,4 +5,4 @@ export { default as SearchPanel } from './Result/SearchPanel';
 export { default as AssociatedBib } from './Result/AssociatedBib';
 export { default as RecordDetails } from './Result/RecordDetails';
 export { default as InventoryPluggableBtn } from './Button/Inventory';
-export { default as FiltersContainer } from './Filter';
+export { FiltersContainer } from './Filter';

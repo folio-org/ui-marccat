@@ -185,8 +185,8 @@ export class SearchResults extends React.Component<P, {}> {
                       rowMetadata={['001', 'recordView']}
                       onRowClick={this.handleDetails}
                       contentData={marcJSONRecords}
-                      formatter={resultsFormatter}
-                      columnMapping={columnMapper}
+                      formatter={resultsFormatter(bibsOnly)}
+                      columnMapping={columnMapper(bibsOnly)}
                       onNeedMoreData={() => this.onNeedMoreData(marcJSONRecords)}
                       virtualize
                       loading={loading}

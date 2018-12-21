@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row } from '@folio/stripes-components';
+import { Row, Button, Icon } from '@folio/stripes-components';
 import { FormattedMessage } from 'react-intl';
 
 export default function ActionMenu() {
@@ -43,3 +43,12 @@ export default function ActionMenu() {
     </div>
   );
 }
+export const getActionMenu = () => (
+  <React.Fragment>
+      <Button buttonStyle="dropdownItem">
+          <Icon icon="document">
+              New Template
+          </Icon>
+      </Button>
+  </React.Fragment>
+);

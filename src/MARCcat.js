@@ -3,7 +3,7 @@
  * @flow
  */
 import * as React from 'react';
-import { Paneset, Pane, Row, Col, Icon } from '@folio/stripes-components';
+import { Paneset, Pane, Row, Col, Icon } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 import { injectCommonProp, Props } from './core';
 import { SearchPanel } from './components/Search';

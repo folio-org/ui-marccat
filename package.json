@@ -33,7 +33,6 @@
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^3.2.1",
     "@folio/stripes": "^1.0.0",
-    "@folio/stripes-smart-components": "^1.12.3000344",
     "@folio/stripes-cli": "^1.5.0",
     "@folio/stripes-core": "^2.15.5",
     "babel-cli": "^6.26.0",
@@ -83,7 +82,7 @@
     "**/warning": "*",
     "**/fbjs": "*",
     "**/@folio/stripes-react-hotkeys": "*",
-    "**/@folio/stripes-components": "*",
+    "**/@folio/stripes/components": "*",
     "**/hoist-non-react-statics": "*"
   },
   "stripes": {

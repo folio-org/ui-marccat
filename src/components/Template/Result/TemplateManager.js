@@ -13,7 +13,7 @@ import {
   KeyValue,
   Icon,
   TextField
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 import Collapsible from 'react-collapsible';
 import Draggable from 'react-draggable';
 import { ActionTypes } from '../../../redux/actions';

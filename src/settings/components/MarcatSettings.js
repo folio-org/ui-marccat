@@ -3,7 +3,7 @@
  * @flow
  */
 import * as React from 'react';
-import { Settings } from '@folio/stripes-smart-components';
+import { Settings } from '@folio/stripes/smart-components';
 import FieldGroupings from './FieldGroupings';
 import DefaultTemplate from './DefaultTemplate';
 import RecordsOverlayRules from './RecordOverlayRules';

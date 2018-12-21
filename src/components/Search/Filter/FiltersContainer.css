@@ -4,6 +4,7 @@
     margin-top: 1em;
   }
 }
+
 .search-filters-disabled {
   & section {
     background-color: transparent;

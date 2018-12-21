@@ -9,12 +9,6 @@ type P = Props & {
 }
 
 export default class NewButtonMenu extends React.Component<P, {}> {
-  constructor(props: P) {
-    super(props);
-    this.state = {
-    };
-  }
-
   render() {
     const { onToggle, open } = this.props;
     return (
@@ -32,6 +26,7 @@ export default class NewButtonMenu extends React.Component<P, {}> {
             align="end"
             bottomMargin0
             aria-haspopup="true"
+            buttonStyle="primary"
           >
             <FormattedMessage id="ui-marccat.search.record.new.keyboard" />
             <Icon

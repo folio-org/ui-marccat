@@ -1,5 +1,5 @@
 import React from 'react';
-import { HotKeys } from '@folio/stripes-components';
+import { HotKeys } from '@folio/stripes/components';
 
 type P = {
     keys: {},

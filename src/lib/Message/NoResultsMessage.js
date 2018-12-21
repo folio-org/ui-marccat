@@ -3,7 +3,7 @@
  * @flow
  */
 import * as React from 'react';
-import { Icon } from '@folio/stripes-components';
+import { Icon } from '@folio/stripes/components';
 import type { Props } from '../../core';
 import css from '../Style/NoResultsMessage.css';
 

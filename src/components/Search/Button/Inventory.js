@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@folio/stripes-components';
+import { Button } from '@folio/stripes/components';
 import type { Props } from '../../../core';
 
 type P = Props & {};

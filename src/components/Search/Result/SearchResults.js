@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Pane, Paneset, Icon, MultiColumnList, HotKeys } from '@folio/stripes-components';
+import { Pane, Paneset, Icon, MultiColumnList, HotKeys } from '@folio/stripes/components';
 import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
 import { EmptyMessage, NoResultsMessage } from '../../../lib/Message';
-import { ToolbarButtonMenu, ActionMenu } from '../../../lib';
+import { ToolbarButtonMenu, ActionMenu, NewButtonMenu } from '../../../lib';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
 import { resultsFormatter, columnMapper } from '../../../utils/Formatter';
 import { isAuthorityRecord } from '../../../utils/SearchUtils';
@@ -133,15 +133,7 @@ export class SearchResults extends React.Component<P, {}> {
     const message = messageAuth + ' / ' + messageBib;
     const messageNoContent = <FormattedMessage id="ui-marccat.search.initial.message" />;
     const rightMenu = (
-      <ToolbarButtonMenu
-        create
-        {...this.props}
-        label={
-          <Icon icon="plus-sign">
-            <FormattedMessage id="ui-marccat.search.record.new.keyboard" />
-          </Icon>
-        }
-      />
+      <NewButtonMenu {...this.props} />
     );
     const rightMenuEdit = (
       <ToolbarButtonMenu
@@ -193,8 +185,8 @@ export class SearchResults extends React.Component<P, {}> {
                       rowMetadata={['001', 'recordView']}
                       onRowClick={this.handleDetails}
                       contentData={marcJSONRecords}
-                      formatter={resultsFormatter}
-                      columnMapping={columnMapper}
+                      formatter={resultsFormatter(bibsOnly)}
+                      columnMapping={columnMapper(bibsOnly)}
                       onNeedMoreData={() => this.onNeedMoreData(marcJSONRecords)}
                       virtualize
                       loading={loading}

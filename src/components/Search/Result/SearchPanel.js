@@ -9,10 +9,10 @@ import {
   InfoPopover,
   Row, Col,
   Icon,
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 import { reduxForm, Field } from 'redux-form';
-import ResetButton from '@folio/stripes-smart-components/lib/SearchAndSort/components/ResetButton';
 import { FormattedMessage } from 'react-intl';
+import ResetButton from '../Filter/ResetButton';
 import type { Props } from '../../../core';
 import { SearchIndexes, SearchConditions, FiltersContainer } from '..';
 import { ActionTypes } from '../../../redux/actions/Actions';

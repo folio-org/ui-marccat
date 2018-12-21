@@ -45,10 +45,10 @@ export default function ActionMenu() {
 }
 export const getActionMenu = () => (
   <React.Fragment>
-      <Button buttonStyle="dropdownItem">
-          <Icon icon="document">
+    <Button buttonStyle="dropdownItem">
+      <Icon icon="document">
               New Template
-          </Icon>
-      </Button>
+      </Icon>
+    </Button>
   </React.Fragment>
 );

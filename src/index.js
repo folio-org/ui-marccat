@@ -3,7 +3,7 @@
  * @flow
  */
 import * as React from 'react';
-import Settings from './settings';
+import { MarcatSettings as Settings } from './settings';
 import { Router } from './router';
 import { reducer, epics } from './redux';
 import { injectCommonProp } from './core';

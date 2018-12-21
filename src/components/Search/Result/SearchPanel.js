@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unused-state */
 import React from 'react';
-import { SearchField,
+import {
+  SearchField,
   Button,
   AccordionSet,
   Accordion,
@@ -117,7 +118,7 @@ class SearchPanel extends React.Component<P, S> {
     });
   }
 
-  handleOnChange = () => () => {};
+  handleOnChange = () => () => { };
 
   renderResetButton = () => {
     return (
@@ -183,32 +184,34 @@ class SearchPanel extends React.Component<P, S> {
                     </div>
                   </Col>
                 </Row>
-                <Col xs={11}>
-                  <Button
-                    buttonClass={styles.rightPosition}
-                    onClick={this.handleAddSearchForm}
-                  >
-                    <Icon icon="plus-sign">
-                      {translate({ id: 'ui-marccat.button.add' })}
-                    </Icon>
-                  </Button>
-                  {idx !== 0 &&
-                  <Button
-                    buttonClass={styles.rightPositionTop}
-                    onClick={this.handleRemoveSearchForm(idx)}
-                  >
-                    {translate({ id: 'ui-marccat.button.remove' })}
-                  </Button>}
-                </Col>
+                <Row>
+                  <Col xs={11}>
+                    <Button
+                      buttonClass={styles.rightPosition}
+                      onClick={this.handleAddSearchForm}
+                    >
+                      <Icon icon="plus-sign">
+                        {translate({ id: 'ui-marccat.button.add' })}
+                      </Icon>
+                    </Button>
+                    {idx !== 0 &&
+                      <Button
+                        buttonClass={styles.rightPositionTop}
+                        onClick={this.handleRemoveSearchForm(idx)}
+                      >
+                        {translate({ id: 'ui-marccat.button.remove' })}
+                      </Button>}
+                  </Col>
+                </Row>
               </form>
             ))
             }
           </Accordion>
           {filterEnable &&
-          <FiltersContainer {...this.props} filterEnable />
+            <FiltersContainer {...this.props} filterEnable />
           }
           {!filterEnable &&
-          <FiltersContainer {...this.props} filterEnable={false} />
+            <FiltersContainer {...this.props} filterEnable={false} />
           }
         </AccordionSet>
       </React.Fragment>

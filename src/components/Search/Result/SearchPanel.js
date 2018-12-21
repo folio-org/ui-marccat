@@ -88,7 +88,6 @@ class SearchPanel extends React.Component<P, S> {
         isBrowseRequested = true;
         dispatch({ type: ActionTypes.BROWSE_FIRST_PAGE, query: bibQuery });
         history.push('/marccat/browse');
-        alert('r');
         this.setState({
           filterEnable: false
         });
@@ -134,8 +133,8 @@ class SearchPanel extends React.Component<P, S> {
 
 
   render() {
-    const { translate, disableFilter, ...rest } = this.props;
-    const { searchForm } = this.state;
+    const { translate, ...rest } = this.props;
+    const { searchForm, filterEnable } = this.state;
     return (
       <React.Fragment>
         {this.renderResetButton()}
@@ -205,10 +204,10 @@ class SearchPanel extends React.Component<P, S> {
             ))
             }
           </Accordion>
-          {this.state.filterEnable &&
+          {filterEnable &&
           <FiltersContainer {...this.props} filterEnable />
           }
-          {!this.state.filterEnable &&
+          {!filterEnable &&
           <FiltersContainer {...this.props} filterEnable={false} />
           }
         </AccordionSet>

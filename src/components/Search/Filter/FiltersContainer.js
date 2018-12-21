@@ -69,9 +69,9 @@ export default class FiltersContainer extends React.Component<P, {}> {
     disableFilters.formatType = true;
 
     return (
-      <div className={styles['search-filters']}>
+      <div className={(filterEnable) ? styles['search-filters'] : styles['search-filters-disabled']}>
         <FilterGroups
-          disableNames={(filterEnable) ? disableFilters : ''}
+          disableNames={(!filterEnable) ? disableFilters : ''}
           config={this.config}
           filters={filters}
           onChangeFilter={this.onChangeFilter}

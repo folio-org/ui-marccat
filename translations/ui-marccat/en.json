@@ -14,12 +14,15 @@
   "error.noresults.message":"Search returned no results",
   "initial.title":"Choose a filter or enter search query to show results",
   "search.initial.message": "Enter search criteria to start search",
-  
-  "button.add": "+ Add",
-  "button.new": "+ New",
+  "button.add": "Add",
+  "button.new": "New",
+  "button.new.auth": "Authority record",
+  "button.new.bib": "Bibliographic record",
+  "button.new.short.auth": "CTRL + A",
+  "button.new.short.bib": "CTRL + B",
   "button.close": "Close",
   "button.cancel": "Cancel",
-  "button.new.tag": "+ Tag",
+  "button.new.tag": "Tag",
   "button.backto": "Close",
   "button.remove": "Remove",
 
@@ -34,13 +37,14 @@
 
   "search.record": "Records",
   "search.record.preview": "Preview Record",
-  "search.record.new.keyboard": "+ New",
+  "search.record.new.keyboard": "New (CTRL+N)",
+  "search.record.actions": "Actions",
   "search.record.edit" : "Edit",
   "search.goto.inventory": "View in Inventory",
   "search.details.bibliographic":"Bibliographic record",
   "search.details.authority":"Authority record",
   "search.associated.bibliographic":"Associated bibliographic records",
-  
+
   "browse.results.title":"Access Point",
   "browse.record.create" : "Create",
   "browse.actionmenu.export.mrc":"Export as .mrc file (single file, multiple records)",
@@ -68,5 +72,6 @@
   "template.actionmenu.mypersonal":"My personal once",
   "template.actionmenu.save":"Save template",
   "template.actionmenu.import.overlay":"Import and overlay .marc or .mrc file",
-  "template.actionmenu.import.oclc":"Import from OCLC"
+  "template.actionmenu.import.oclc":"Import from OCLC",
+  "template.bib.accordion":"Bibliographic default templates"
 }

@@ -32,7 +32,7 @@ export default class FiltersContainer extends React.Component<P, {}> {
         label: 'Format type',
         name: 'formatType',
         cql: 'format.name',
-        values: ['All text', 'Books', 'Archival Manuscript/ Mixed Formats', 'Film or Video', 'Map', 'Map(Manuscript)', 'Music Recording', 'Music Score', 'Music Score (Manuscript)', 'Nonmusic recording', 'Periodical or Serials', 'Photograph, Print, or Drawing', 'Rare Book or Manuscript', 'Software or E-Resource', '3-D Object'],
+        values: ['All text', 'Books', 'Archival Manuscript/ Mixed Formats', 'Film or Video', 'Map', 'Map(Manuscript)', 'Music Recording', 'Music Score', 'Music Score (Manuscript)', 'Nonmusic recording', 'Periodical or Serials', 'Photograph, Print, or Drawing', 'Rare Book or Manuscript', 'Software or E-Resource', '3-D Object', 'Microform'],
       },
     ];
 
@@ -61,10 +61,17 @@ export default class FiltersContainer extends React.Component<P, {}> {
 
   render() {
     const { filters } = this.state;
-    // const filterCount = Object.keys(filters).length;
+    const { filterEnable } = this.props;
+    const disableFilters = {};
+    disableFilters.recordType = true;
+    disableFilters.suppressedFilter = true;
+    disableFilters.languageFilter = true;
+    disableFilters.formatType = true;
+
     return (
       <div className={styles['search-filters']}>
         <FilterGroups
+          disableNames={(filterEnable) ? disableFilters : ''}
           config={this.config}
           filters={filters}
           onChangeFilter={this.onChangeFilter}

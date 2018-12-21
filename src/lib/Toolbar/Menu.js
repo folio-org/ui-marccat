@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unused-prop-types */
 import * as React from 'react';
-import { PaneMenu, IconButton, Icon } from '@folio/stripes-components';
-import Button from '@folio/stripes-components/lib/Button';
+import { PaneMenu, IconButton, Button } from '@folio/stripes-components';
 import classNames from 'classnames';
 
 type ToolbarMenuProps = {
@@ -50,7 +49,9 @@ export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
     marginRight: '10px',
     float: 'right',
   };
+
   const { onClick, label, type, disabled, stripes: { intl: { formatMessage } } } = props;
+
   return (
     <PaneMenu>
       <Button
@@ -63,11 +64,6 @@ export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
         marginBottom0
       >
         {formatMessage({ id: label })}
-        <Icon
-          icon="down-caret"
-          size="small"
-          iconClassName="myClass"
-        />
       </Button>
     </PaneMenu>
   );

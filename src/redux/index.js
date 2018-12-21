@@ -9,7 +9,12 @@ import { searchEngineReducer,
   detailsAssociatedReducer,
   detailsBrowseSearchReducer,
   browseDetailsAssociatedReducer,
-  templateViewReducer } from './reducers/Reducer';
+  templateViewReducer,
+  leaderValuesReducer,
+  headerTypes006Reducer,
+  headerTypes007Reducer,
+  headerTypes008Reducer
+} from './reducers/Reducer';
 import { searchEpic,
   searchDetailEpic,
   countDocEpic,
@@ -19,7 +24,13 @@ import { searchEpic,
   browseDetailEpic,
   browseAuthorityDetailEpic,
   browseDetailAssociatedEpic,
-  templateViewEpic } from './epic/epics';
+  templateViewEpic,
+  leaderValuesEpic,
+  templateByIdEpic,
+  headerTypes006Epic,
+  headerTypes007Epic,
+  headerTypes008Epic
+} from './epic/epics';
 
 export const reducer = combineReducers({
   search: searchEngineReducer,
@@ -31,7 +42,11 @@ export const reducer = combineReducers({
   browse: scanBrowsingReducer,
   browseDetails: detailsBrowseSearchReducer,
   browseDetailsAssociated: browseDetailsAssociatedReducer,
-  template: templateViewReducer
+  template: templateViewReducer,
+  leaderValues: leaderValuesReducer,
+  headerTypes006: headerTypes006Reducer,
+  headerTypes007: headerTypes007Reducer,
+  headerTypes008: headerTypes008Reducer,
 });
 
 export const epics = combineEpics(
@@ -44,5 +59,10 @@ export const epics = combineEpics(
   browseDetailEpic,
   browseAuthorityDetailEpic,
   browseDetailAssociatedEpic,
-  templateViewEpic
+  templateViewEpic,
+  templateByIdEpic,
+  leaderValuesEpic,
+  headerTypes006Epic,
+  headerTypes007Epic,
+  headerTypes008Epic
 );

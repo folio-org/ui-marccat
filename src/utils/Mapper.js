@@ -122,6 +122,19 @@ const getFormat = (leader) => {
   }
 };
 
+const getMicroformat = (tag007) => {
+  if (tag007 === '' || tag007 === undefined) {
+    return '';
+  } else {
+    const pos0 = tag007.substring(0, 1);
+    switch (pos0) {
+    case 'h': if (getFormat === C.EMPTY_MESSAGE) {
+      return 'Microform';
+    } else return ', Microform';
+    default: return C.EMPTY_MESSAGE;
+    }
+  }
+};
 
 export {
   getFieldPosition,
@@ -131,5 +144,6 @@ export {
   getTitle100,
   getTag100,
   remapFilters,
-  remapForAssociatedBibList
+  remapForAssociatedBibList,
+  getMicroformat
 };

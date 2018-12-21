@@ -1,15 +1,19 @@
+/* eslint-disable react/no-unused-state */
 import React from 'react';
 import { SearchField,
   Button,
   AccordionSet,
   Accordion,
-  FilterAccordionHeader, InfoPopover } from '@folio/stripes-components';
-import { Row, Col } from 'react-flexbox-grid';
+  FilterAccordionHeader,
+  InfoPopover,
+  Row, Col,
+  Icon,
+} from '@folio/stripes-components';
 import { reduxForm, Field } from 'redux-form';
 import type { Props } from '../../../core';
 import { SearchIndexes, SearchConditions, FiltersContainer } from '..';
 import { ActionTypes } from '../../../redux/actions/Actions';
-import { findYourQuery } from '../Select/FilterMapper';
+import { findYourQuery } from '../Filter';
 import { remapFilters } from '../../../utils/Mapper';
 import { getLanguageFilterQuery, getFormatFilterQuery } from '../../../utils/SearchUtils';
 import styles from '../../../styles/common.css';
@@ -27,10 +31,12 @@ class SearchPanel extends React.Component<P, S> {
     this.state = {
       isBrowseRequested: false,
       searchForm: [{ name: '' }],
+      filterEnable: true
     };
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleAddSearchForm = this.handleAddSearchForm.bind(this);
     this.handleRemoveSearchForm = this.handleRemoveSearchForm.bind(this);
+    this.handleOnChange = this.handleOnChange.bind(this);
   }
 
   handleKeyDown(e) {
@@ -63,12 +69,10 @@ class SearchPanel extends React.Component<P, S> {
 
       let bibQuery = baseQuery;
       const authQuery = baseQuery;
-      let recordTypeControl = {};
 
       // regular filters
       if (store.getState().marccat.filter && store.getState().marccat.filter.filters) {
-        const { languageFilter, formatType, recordType } = remapFilters(store.getState().marccat.filter.filters);
-        recordTypeControl = recordType;
+        const { languageFilter, formatType } = remapFilters(store.getState().marccat.filter.filters);
         if (languageFilter && languageFilter.length) {
           bibQuery += ' AND ( ' + getLanguageFilterQuery(languageFilter) + ' ) ';
         }
@@ -80,21 +84,15 @@ class SearchPanel extends React.Component<P, S> {
         isBrowseRequested = true;
         dispatch({ type: ActionTypes.BROWSE_FIRST_PAGE, query: bibQuery });
         history.push('/marccat/browse');
-      }
-      if (recordTypeControl && recordTypeControl.length && !isBrowseRequested) {
-        recordTypeControl.forEach(element => {
-          if (Object.keys(element)[0] === 'Bibliographic records') {
-            dispatch({ type: ActionTypes.SEARCH, query: bibQuery });
-            history.push('/marccat/search');
-          }
-          if (Object.keys(element)[0] === 'Authority records') {
-            dispatch({ type: ActionTypes.SEARCH_AUTH, query: authQuery });
-            history.push('/marccat/search');
-          }
+        this.setState({
+          filterEnable: false
         });
       } else if (!isBrowseRequested) {
-        dispatch({ type: ActionTypes.SEARCH, query: bibQuery });
-        dispatch({ type: ActionTypes.SEARCH_AUTH, query: authQuery });
+        if (indexForQuery === 'BN ' || indexForQuery === 'SN ' || indexForQuery === 'PU ' || indexForQuery === 'LL ' || indexForQuery === 'BC ' || indexForQuery === 'CP ' || indexForQuery === 'PW ') {
+          dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: '' });
+        } else {
+          dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: authQuery });
+        }
         history.push('/marccat/search');
       }
     }
@@ -115,8 +113,10 @@ class SearchPanel extends React.Component<P, S> {
     });
   }
 
+  handleOnChange = () => () => {};
+
   render() {
-    const { translate, ...rest } = this.props;
+    const { translate, disableFilter, ...rest } = this.props;
     const { searchForm } = this.state;
     return (
       <AccordionSet>
@@ -127,7 +127,7 @@ class SearchPanel extends React.Component<P, S> {
           header={FilterAccordionHeader}
         >
           {searchForm.map((form, idx) => (
-            <form name="searchForm" onKeyDown={this.handleKeyDown} key={idx}>
+            <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange} key={idx}>
               <Row>
                 <Col xs={11}>
                   <div className={styles.select_margin}>
@@ -169,7 +169,9 @@ class SearchPanel extends React.Component<P, S> {
                   buttonClass={styles.rightPosition}
                   onClick={this.handleAddSearchForm}
                 >
-                  {translate({ id: 'ui-marccat.button.add' })}
+                  <Icon icon="plus-sign">
+                    {translate({ id: 'ui-marccat.button.add' })}
+                  </Icon>
                 </Button>
                 {idx !== 0 &&
                 <Button
@@ -183,7 +185,7 @@ class SearchPanel extends React.Component<P, S> {
           ))
           }
         </Accordion>
-        <FiltersContainer {...this.props} />
+        <FiltersContainer {...this.props} filterEnable={disableFilter} />
       </AccordionSet>
     );
   }

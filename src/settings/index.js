@@ -1,1 +1,2 @@
-export { default } from './components/MarcatSettings';
+/* eslint-disable import/prefer-default-export */
+export { default as MarcatSettings } from './components/MarcatSettings';

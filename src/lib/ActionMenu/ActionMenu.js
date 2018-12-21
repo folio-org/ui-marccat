@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Button, Icon } from '@folio/stripes-components';
+import { Row, Button, Icon } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 
 export default function ActionMenu() {

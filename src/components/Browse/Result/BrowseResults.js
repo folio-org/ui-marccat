@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, MultiColumnList, Pane, Paneset, Icon } from '@folio/stripes-components';
+import { Row, MultiColumnList, Pane, Paneset, Icon } from '@folio/stripes/components';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Props, injectCommonProp } from '../../../core';

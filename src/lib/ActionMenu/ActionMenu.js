@@ -50,5 +50,10 @@ export const getActionMenu = () => (
               New Template
       </Icon>
     </Button>
+    <Button buttonStyle="dropdownItem">
+      <Icon icon="document">
+              New Template
+      </Icon>
+    </Button>
   </React.Fragment>
 );

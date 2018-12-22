@@ -2,7 +2,8 @@
 
 .dropdownContainerText {
   line-height: 1.5;
-};
+}
+
 .dropdownContainer {
   padding: 5px;
   color: var(--primary);

@@ -7,7 +7,6 @@ import { Pane, Icon } from '@folio/stripes/components';
 import { Props, injectCommonProp } from '../../core';
 import { ToolbarButtonMenu } from '../../lib';
 
-
 type P = Props & {
   label: string;
 };
@@ -27,7 +26,7 @@ class RecordsOverlayRules extends React.Component<P, {}> {
             {translate({
               id:'ui-marccat.search.record.edit' })}
           </Icon>
-           }
+        }
       />
     );
     return (

@@ -1,3 +1,7 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -51,12 +55,12 @@ export class SearchResults extends React.Component<P, {}> {
     };
   }
 
-  createRecord = () => {alert('rrr')};
+  createRecord = () => {};
 
   handleClickEdit = () => {
-    const { dispatch, history } = this.props;
+    const { dispatch, router } = this.props;
     dispatch({ type: ActionTypes.VIEW_TEMPLATE, query: '000' });
-    history.push('/marccat/template');
+    router.push('/marccat/template');
   }
 
   handleOnToggle = () => {
@@ -151,6 +155,7 @@ export class SearchResults extends React.Component<P, {}> {
           <Pane
             padContent={(marcJSONRecords.length > 0) || isFetching}
             defaultWidth="fill"
+            actionMenu={ActionMenu}
             paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
             paneSub={(mergedRecord && mergedRecord.length > 0) ? message : messageNoContent}
             appIcon={{ app: C.META.ICON_TITLE }}

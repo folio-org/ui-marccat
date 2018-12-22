@@ -8,14 +8,10 @@ import { injectCommonProp, Props } from './core';
 import { SearchPanel } from './components/Search';
 import * as C from './utils/Constant';
 
-type P = Props & {};
-type S = {
-};
-
 /**
  * @module MARCcat
  */
-class MARCcat extends React.Component<P, S> {
+class MARCcat extends React.Component<Props, {}> {
   searchPanelActionMenu = () => {
     return (
       <div /> // TODO

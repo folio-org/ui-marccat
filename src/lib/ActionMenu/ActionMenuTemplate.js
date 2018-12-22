@@ -1,10 +1,14 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import { Row, Col, SearchField } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 
 // TODO FIXME : remove all Row, Col and replace with React.Fragment,
 // and pass props to function with destructuring into -> ({ ...props })
-// see CreateButtonMenu.js
+// see DropdownButtonMenu.js
 export default function ActionMenuTemplate() {
   return (
     <div>

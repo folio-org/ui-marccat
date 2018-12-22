@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 /**
  * @author: Christian Chiama
  *
@@ -16,13 +15,9 @@ import { META } from '../../utils/Constant';
  * @param {WrappedComponent} a Component to inject props
  */
 export default function injectCommonProp<Props: {
-  root: Object,
-  history: Object,
-  stripes: Object;
-  intl: Object;
 }>(Component: React.ComponentType<Props>): React.ComponentType<Props> {
   function WrapperComponent(props: Props) {
-    const { store } = props.root;
+    const { history, root: { store }, intl: { formatMessage } } = props;
     const state = store.getState();
     const data = state.marccat;
     return (
@@ -30,9 +25,10 @@ export default function injectCommonProp<Props: {
         {...props}
         store={store}
         data={data}
-        router={props.history}
-        translate={props.intl.formatMessage}
-      />);
+        router={history}
+        translate={formatMessage}
+      />
+    );
   }
   return withRoot(injectIntl(connect(WrapperComponent, META.MODULE_NAME)));
 }

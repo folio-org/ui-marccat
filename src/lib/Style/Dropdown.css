@@ -1,15 +1,20 @@
 @import '@folio/stripes-components/lib/variables';
 
+.dropdownContainerText {
+  line-height: 1.5;
+};
 .dropdownContainer {
-    padding: 5px;
-    color: var(--primary);
-    font-weight:  var(--text-weight-headline-basis);
+  padding: 5px;
+  color: var(--primary);
+  font-weight: var(--text-weight-headline-basis);
 }
+
 .dropdownShortcut {
-    padding-bottom: 5px;
-    & span {
-        float: right;
-        color: var(--color-text);
-        font-weight:  var(--text-weight-basis);
-    }
+  padding-bottom: 5px;
+
+  & span {
+    float: right;
+    color: var(--color-text);
+    font-weight: var(--text-weight-basis);
+  }
 }

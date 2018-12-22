@@ -1,3 +1,7 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -24,11 +28,11 @@ export default function CreateButtonMenu({ ...props }:P) {
         <div className={style.dropdownContainer}>
           <div className={style.dropdownShortcut}>
             {translate({ id: 'ui-marccat.button.new.auth' })}
-            <span>CTRL + A</span>
+            <span>{translate({ id: 'ui-marccat.button.new.short.auth' })}</span>
           </div>
           <div className={style.dropdownShortcut}>
             {translate({ id: 'ui-marccat.button.new.bib' })}
-            <span>CTRL + B</span>
+            <span>{translate({ id: 'ui-marccat.button.new.short.bib' })}</span>
           </div>
         </div>
       </React.Fragment>

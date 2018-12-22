@@ -1,8 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import {
-  Row,
-  Col,
   Dropdown,
   DropdownMenu,
   Button,
@@ -10,6 +8,7 @@ import {
   Icon
 } from '@folio/stripes/components';
 import type { Props } from '../../core';
+import style from '../Style/Dropdown.css';
 
 type P = Props & {
   onToggle(): void,
@@ -17,13 +16,21 @@ type P = Props & {
 }
 
 export default function CreateButtonMenu({ ...props }:P) {
-  const { onToggle, open } = props;
+  const { onToggle, translate, open } = props;
 
   const renderDropdDownMenu = () => {
     return (
       <React.Fragment>
-        <div>pippo</div>
-        <div>pluto</div>
+        <div className={style.dropdownContainer}>
+          <div className={style.dropdownShortcut}>
+            {translate({ id: 'ui-marccat.button.new.auth' })}
+            <span>CTRL + A</span>
+          </div>
+          <div className={style.dropdownShortcut}>
+            {translate({ id: 'ui-marccat.button.new.bib' })}
+            <span>CTRL + B</span>
+          </div>
+        </div>
       </React.Fragment>
     );
   };
@@ -32,7 +39,7 @@ export default function CreateButtonMenu({ ...props }:P) {
     <PaneMenu>
       <Dropdown
         id="AddPermissionDropdown"
-        open
+        open={open}
         onToggle={onToggle}
         group
         pullRight

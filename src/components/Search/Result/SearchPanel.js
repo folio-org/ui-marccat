@@ -125,7 +125,7 @@ class SearchPanel extends React.Component<P, S> {
       <ResetButton
         className={styles['mb-5']}
         visible
-        onClick={this.onClearFilter}
+        onClick={() => {}}
         id="clickable-reset-all"
         label={<FormattedMessage id="ui-marccat.button.resetAll" />}
       />

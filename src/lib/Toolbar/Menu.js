@@ -14,7 +14,7 @@ type ToolbarMenuProps = {
   type?: string;
   create: bool;
   disabled?: bool;
-  label?: string;
+  label?: React.Component<any>;
   stripes: Object;
 };
 
@@ -50,7 +50,7 @@ export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
     float: 'right',
   };
 
-  const { onClick, label, type, disabled, stripes: { intl: { formatMessage } } } = props;
+  const { onClick, label, type, disabled } = props;
 
   return (
     <PaneMenu>
@@ -63,7 +63,7 @@ export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
         disabled={disabled}
         marginBottom0
       >
-        {formatMessage({ id: label })}
+        {label}
       </Button>
     </PaneMenu>
   );

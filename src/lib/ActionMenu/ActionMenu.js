@@ -47,12 +47,7 @@ export const getActionMenu = () => (
   <React.Fragment>
     <Button buttonStyle="dropdownItem">
       <Icon icon="document">
-              New Template
-      </Icon>
-    </Button>
-    <Button buttonStyle="dropdownItem">
-      <Icon icon="document">
-              New Template
+        <FormattedMessage id="ui-marccat.template.actionmenu.new" />
       </Icon>
     </Button>
   </React.Fragment>

@@ -14,7 +14,7 @@ const EmptyMessage = ({ ...props }:P) => {
   return (
     <div className={css.emptyMessage}>
       <div className={css.emptyMessageLabelWrap}>
-        <Icon iconRootClass={css.emptyMessageIcon} icon="left-arrow" />
+        <Icon iconRootClass={css.emptyMessageIcon} icon="arrow-left" />
         <span className={css.emptyMessageLabel}>
           {translate({
             id: 'ui-marccat.initial.title',

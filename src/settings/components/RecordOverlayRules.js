@@ -27,7 +27,7 @@ class RecordsOverlayRules extends React.Component<P, {}> {
             {translate({
               id:'ui-marccat.search.record.edit' })}
           </Icon>
-           }
+        }
       />
     );
     return (

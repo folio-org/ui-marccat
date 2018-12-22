@@ -30,7 +30,6 @@ class DefaultTemplate extends React.Component<P, {}> {
       />
     );
     return (
-
       <Pane
         defaultWidth="fill"
         fluidContentWidth

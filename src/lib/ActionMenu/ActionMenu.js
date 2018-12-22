@@ -1,58 +1,31 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
-import { Row, Button, Icon } from '@folio/stripes/components';
+import { Button, Icon } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
+import style from '../Style/Dropdown.css';
 
-export default function ActionMenu() {
+
+export const ActionMenu = () => {
   return (
-    <div>
-      <Row>
-        <FormattedMessage id="ui-marccat.search.actionmenu.export.mrc" />
-      </Row>
-      <br />
-      <Row>
-        <FormattedMessage id="ui-marccat.browse.actionmenu.export.csv" />
-      </Row>
-      <br />
-      <Row>
-        <FormattedMessage id="ui-marccat.browse.actionmenu.export.dat" />
-      </Row>
-      <br />
-      <Row>
-        <FormattedMessage id="ui-marccat.search.actionmenu.print" />
-      </Row>
-      <br />
-      <Row>
-        <FormattedMessage id="ui-marccat.search.actionmenu.opac" />
-      </Row>
-      <br />
-      <Row>
-        <FormattedMessage id="ui-marccat.search.actionmenu.duplicate" />
-      </Row>
-      <br />
-      <Row>
-        <FormattedMessage id="ui-marccat.search.actionmenu.holdings" />
-      </Row>
-      <br />
-      <Row>
-        <FormattedMessage id="ui-marccat.search.actionmenu.instances" />
-      </Row>
-      <br />
-      <Row>
-        <FormattedMessage id="ui-marccat.search.actionmenu.authority.records" />
-      </Row>
-    </div>
+    <React.Fragment>
+      <div className={style.dropdownContainerText}>
+        <div><FormattedMessage id="ui-marccat.browse.actionmenu.export.mrc" /></div>
+        <div><FormattedMessage id="ui-marccat.browse.actionmenu.export.csv" /></div>
+        <div><FormattedMessage id="ui-marccat.browse.actionmenu.export.dat" /></div>
+        <div><FormattedMessage id="ui-marccat.browse.actionmenu.printall" /></div>
+      </div>
+    </React.Fragment>
   );
-}
+};
+
 export const getActionMenu = () => (
   <React.Fragment>
     <Button buttonStyle="dropdownItem">
       <Icon icon="document">
-              New Template
-      </Icon>
-    </Button>
-    <Button buttonStyle="dropdownItem">
-      <Icon icon="document">
-              New Template
+        <FormattedMessage id="ui-marccat.template.actionmenu.new" />
       </Icon>
     </Button>
   </React.Fragment>

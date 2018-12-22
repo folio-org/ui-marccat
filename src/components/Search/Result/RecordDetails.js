@@ -1,3 +1,7 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import { connect } from 'react-redux';
 import { KeyValue, Row, Col, AccordionSet, FilterAccordionHeader, Accordion } from '@folio/stripes/components';

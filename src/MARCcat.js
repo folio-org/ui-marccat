@@ -3,41 +3,18 @@
  * @flow
  */
 import * as React from 'react';
-import { Paneset, Pane, Row, Col, Icon } from '@folio/stripes/components';
-import { FormattedMessage } from 'react-intl';
+import { Paneset, Pane } from '@folio/stripes/components';
 import { injectCommonProp, Props } from './core';
 import { SearchPanel } from './components/Search';
 import * as C from './utils/Constant';
 
-type P = Props & {};
-type S = {
-};
-
 /**
  * @module MARCcat
  */
-class MARCcat extends React.Component<P, S> {
+class MARCcat extends React.Component<Props, {}> {
   searchPanelActionMenu = () => {
     return (
-      <div>
-        <Row>
-          <Col xs={2}>
-            <Icon icon="diacritic" />
-          </Col>
-          <Col xs={10}>
-            <FormattedMessage id="ui-marccat.diacritic.title" />
-          </Col>
-        </Row>
-        <br />
-        <Row>
-          <Col xs={2}>
-            <Icon icon="indexes" />
-          </Col>
-          <Col xs={10}>
-            <FormattedMessage id="ui-marccat.indexes.title" />
-          </Col>
-        </Row>
-      </div>
+      <div /> // TODO
     );
   };
 

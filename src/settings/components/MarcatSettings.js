@@ -38,14 +38,14 @@ export default class MARCcatSettings extends React.Component<P, {}> {
       {
         route: 'overlayRules',
         label: translate({
-          id: 'ui-marccat.settings.overlay.rules',
+          id: 'ui-marccat.settings.single.record.overlay.rules',
         }),
         component: RecordsOverlayRules,
       },
       {
         route: 'authorityRecords',
         label: translate({
-          id: 'ui-marccat.settings.authority.records',
+          id: 'ui-marccat.settings.local.authority.records',
         }),
         component: LocalAuthorityRecords,
       },

@@ -37,7 +37,7 @@ class RecordsOverlayRules extends React.Component<P, {}> {
         lastMenu={rightMenu}
       >
         <div id="data-test-settings-record-overlay-rules">
-          {translate({ id: 'ui-marccat.settings.overlay.rules' }) }
+          {translate({ id: 'ui-marccat.settings.record.single.overlay.rules.text' }) }
         </div>
       </Pane>
     );

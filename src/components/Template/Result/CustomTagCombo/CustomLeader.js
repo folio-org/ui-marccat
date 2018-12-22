@@ -1,3 +1,7 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Icon, Selection } from '@folio/stripes/components';

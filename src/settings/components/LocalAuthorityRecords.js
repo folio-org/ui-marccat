@@ -12,9 +12,10 @@ type P = Props & {
 };
 class LocalAuthorityRecords extends React.Component<P, {}> {
   handleOnClick = () => {};
-  render() {
-    const { label, translate } = this.props;
-    const rightMenu = (
+
+  renderRightMenu = () => {
+    const { translate } = this.props;
+    return (
       <ToolbarButtonMenu
         create
         onClick={this.handleOnClick()}
@@ -27,15 +28,19 @@ class LocalAuthorityRecords extends React.Component<P, {}> {
         }
       />
     );
+  };
+
+  render() {
+    const { label, translate } = this.props;
     return (
       <Pane
         defaultWidth="fill"
         fluidContentWidth
         paneTitle={label}
-        lastMenu={rightMenu}
+        lastMenu={this.renderRightMenu()}
       >
         <div id="data-test-settings-authority-records">
-          {translate({ id: 'ui-marccat.settings.authority.records' }) }
+          {translate({ id: 'ui-marccat.settings.local.authority.text' }) }
         </div>
       </Pane>
     );

@@ -1,3 +1,7 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -6,7 +10,7 @@ import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
 import { EmptyMessage, NoResultsMessage } from '../../../lib/Message';
-import { ToolbarButtonMenu, ActionMenu, NewButtonMenu } from '../../../lib';
+import { ToolbarButtonMenu, ActionMenu, CreateButtonMenu } from '../../../lib';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
 import { resultsFormatter, columnMapper } from '../../../utils/Formatter';
 import { isAuthorityRecord } from '../../../utils/SearchUtils';
@@ -40,6 +44,7 @@ export class SearchResults extends React.Component<P, {}> {
     this.handleDetails = this.handleDetails.bind(this);
     this.onNeedMoreData = this.onNeedMoreData.bind(this);
     this.createRecord = this.createRecord.bind(this);
+    this.renderRightMenuEdit = this.renderRightMenuEdit.bind(this);
 
     this.keys = {
       'new' : ['backspace'],
@@ -53,9 +58,9 @@ export class SearchResults extends React.Component<P, {}> {
   createRecord = () => {};
 
   handleClickEdit = () => {
-    const { dispatch, history } = this.props;
+    const { dispatch, router } = this.props;
     dispatch({ type: ActionTypes.VIEW_TEMPLATE, query: '000' });
-    history.push('/marccat/template');
+    router.push('/marccat/template');
   }
 
   handleOnToggle = () => {
@@ -75,6 +80,17 @@ export class SearchResults extends React.Component<P, {}> {
 
   onNeedMoreData = (initialData: Array<any>) => {
     return initialData.slice(10, 20);
+  };
+
+  renderRightMenuEdit = props => {
+    return (
+      <ToolbarButtonMenu
+        create
+        {...props}
+        onClick={this.handleClickEdit}
+        label={<FormattedMessage id="ui-marccat.search.record.edit" />}
+      />
+    );
   };
 
   render() {
@@ -132,17 +148,6 @@ export class SearchResults extends React.Component<P, {}> {
 
     const message = messageAuth + ' / ' + messageBib;
     const messageNoContent = <FormattedMessage id="ui-marccat.search.initial.message" />;
-    const rightMenu = (
-      <NewButtonMenu {...this.props} />
-    );
-    const rightMenuEdit = (
-      <ToolbarButtonMenu
-        create
-        {...this.props}
-        onClick={this.handleClickEdit}
-        label={<FormattedMessage id="ui-marccat.search.record.edit" />}
-      />
-    );
 
     return (
       <HotKeys keyMap={this.keys} handlers={this.handlers} style={{ width: 100 + '%' }}>
@@ -150,11 +155,12 @@ export class SearchResults extends React.Component<P, {}> {
           <Pane
             padContent={(marcJSONRecords.length > 0) || isFetching}
             defaultWidth="fill"
+            actionMenu={ActionMenu}
             paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
             paneSub={(mergedRecord && mergedRecord.length > 0) ? message : messageNoContent}
             appIcon={{ app: C.META.ICON_TITLE }}
             firstMenu={firstMenu}
-            lastMenu={rightMenu}
+            lastMenu={<CreateButtonMenu {...this.props} />}
           >
             {
               (isFetching) ?
@@ -217,7 +223,7 @@ export class SearchResults extends React.Component<P, {}> {
             actionMenu={ActionMenu}
             dismissible
             onClose={() => this.setState({ detailPanelIsVisible: false })}
-            lastMenu={rightMenuEdit}
+            lastMenu={this.renderRightMenuEdit}
           >
             {(isFetchingDetail) ?
               <Icon icon="spinner-ellipsis" /> :
@@ -240,7 +246,7 @@ export class SearchResults extends React.Component<P, {}> {
               const { dispatch } = this.props;
               dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
             }}
-            lastMenu={rightMenuEdit}
+            lastMenu={this.renderRightMenuEdit}
           >
             {(isLoadingAssociatedRecord) ?
               <Icon icon="spinner-ellipsis" /> :

@@ -1,4 +1,9 @@
+/**
+ * @format
+ * @flow
+ */
 /* eslint-disable react/no-unused-state */
+// TODO FIXME : refactoring of import in utils folder. Put all in index.js and import from it
 import React from 'react';
 import {
   SearchField,
@@ -19,7 +24,10 @@ import { ActionTypes } from '../../../redux/actions/Actions';
 import { findYourQuery } from '../Filter';
 import { remapFilters } from '../../../utils/Mapper';
 import { getLanguageFilterQuery, getFormatFilterQuery } from '../../../utils/SearchUtils';
+import { EMPTY_MESSAGE } from '../../../utils/Constant';
+
 import styles from '../../../styles/common.css';
+import SearchPopover from '../Popover/SearchPopover';
 
 type P = Props & {
   inputErrorCheck: string,
@@ -33,20 +41,21 @@ class SearchPanel extends React.Component<P, S> {
     super(props);
     this.state = {
       isBrowseRequested: false,
-      searchForm: [{ name: '' }],
+      searchForm: [{ name: EMPTY_MESSAGE }],
       filterEnable: true
     };
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleAddSearchForm = this.handleAddSearchForm.bind(this);
     this.handleRemoveSearchForm = this.handleRemoveSearchForm.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
+    this.handleResetButton = this.handleResetButton.bind(this);
   }
 
   handleKeyDown(e) {
     if (e.key === 'Enter') {
       e.preventDefault();
       const inputValue = '"' + e.target.form[3].defaultValue + '"';
-      const { store: { getState }, dispatch, history } = this.props;
+      const { store: { getState }, dispatch, router } = this.props;
       let { isBrowseRequested } = this.state;
       isBrowseRequested = false;
       let baseQuery;
@@ -88,7 +97,7 @@ class SearchPanel extends React.Component<P, S> {
       if (conditionFilter === 'BROWSE') {
         isBrowseRequested = true;
         dispatch({ type: ActionTypes.BROWSE_FIRST_PAGE, query: bibQuery });
-        history.push('/marccat/browse');
+        router.push('/marccat/browse');
         this.setState({
           filterEnable: false
         });
@@ -98,7 +107,7 @@ class SearchPanel extends React.Component<P, S> {
         } else {
           dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: authQuery });
         }
-        history.push('/marccat/search');
+        router.push('/marccat/search');
       }
     }
   }
@@ -110,7 +119,7 @@ class SearchPanel extends React.Component<P, S> {
     });
   }
 
-  handleRemoveSearchForm = (idx) => () => {
+  handleRemoveSearchForm = idx => () => {
     const { searchForm } = this.state;
     delete searchForm[idx];
     this.setState({
@@ -120,12 +129,14 @@ class SearchPanel extends React.Component<P, S> {
 
   handleOnChange = () => () => { };
 
+  handleResetButton = () => () => { };
+
   renderResetButton = () => {
     return (
       <ResetButton
         className={styles['mb-5']}
         visible
-        onClick={this.onClearFilter}
+        onClick={this.handleResetButton}
         id="clickable-reset-all"
         label={<FormattedMessage id="ui-marccat.button.resetAll" />}
       />
@@ -159,8 +170,8 @@ class SearchPanel extends React.Component<P, S> {
                   </Col>
                   <Col xs={1} style={{ paddingLeft: 0 }} className={styles.popover}>
                     <InfoPopover
-                      content={translate({ id: 'ui-marccat.search.lorem' })}
-                      buttonLabel={translate({ id: 'ui-marccat.search.scanButton' })}
+                      content={<SearchPopover {...this.props} label="Description" />}
+                      buttonLabel={translate({ id: 'ui-marccat.search.record.edit' })}
                       buttonHref="http://www"
                       buttonTarget="_blank"
                     />

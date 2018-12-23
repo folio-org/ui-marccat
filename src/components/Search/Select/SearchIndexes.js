@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import { Field } from 'redux-form';
-import { Select } from '@folio/stripes-components';
+import { Select } from '@folio/stripes/components';
 
 export default function SearchIndexes({ ...props }) {
   const { rest } = props;
@@ -17,7 +17,7 @@ export default function SearchIndexes({ ...props }) {
     { label: 'Local id.Number (001)', value: 'NUMID' },
     { label: 'Id.Number (035)', value: 'OTHID' },
     { label: 'All MARC fields', value: 'ALL' },
-    { label: '___________________', value: 'ALL', disabled: true },
+    { label: '________________________________', value: 'ALL', disabled: true },
     { label: 'Title series', value: 'TITSER' },
     { label: 'Name: Personal', value: 'NAMEP' },
     { label: 'Name: Corporate', value: 'NAMEC' },

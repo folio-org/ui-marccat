@@ -11,7 +11,7 @@ type Props = {
 export function RadioIconButton({ ...labels }:Props) {
   return (
     <React.Fragment>
-      { labels.map((l, i) => (
+      { React.Children.map(labels, (l, i) => (
         <div key={i}>
           <input id={`radio-${i}`} className="radio-custom" name="radio-group" type="radio" checked />
           <label htmlFor={`radio-${i}`} className="radio-custom-label">{l}</label>
@@ -26,7 +26,7 @@ export function CheckboxIconButton({ ...props }:Props) {
   const { labels } = props;
   return (
     <React.Fragment>
-      { labels.map((l, i) => (
+      { React.Children.map(labels, (l, i) => (
         <div key={i}>
           <input id={`checkbox-${i}`} className={style['checkbox-custom']} name={`checkbox-${i}`} type="checkbox" />
           <label htmlFor={`checkbox-${i}`} className={style['checkbox-custom-label']}>{l}</label>

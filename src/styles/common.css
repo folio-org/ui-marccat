@@ -5,7 +5,7 @@
 }
 
 .authority {
-  width: var(--danger);
+  width: 18px;
   height: 18px;
   background-color: var(--danger);
   border-radius: 25%;

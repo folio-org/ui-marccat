@@ -53,6 +53,7 @@
   "browse.actionmenu.printall":"Print all",
   "browse.actionmenu.merge":"Merge",
 
+  "search.actionmenu.title": "Recent searches",
   "search.actionmenu.export.mrc":"Export as .mrc",
   "search.actionmenu.export.csv":"Export as .csv",
   "search.actionmenu.export.dat":"Export as .dat",

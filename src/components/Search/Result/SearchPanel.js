@@ -127,7 +127,7 @@ class SearchPanel extends React.Component<P, S> {
         visible
         onClick={this.onClearFilter}
         id="clickable-reset-all"
-        label={<FormattedMessage id="stripes-smart-components.resetAll" />}
+        label={<FormattedMessage id="ui-marccat.button.resetAll" />}
       />
     );
   }

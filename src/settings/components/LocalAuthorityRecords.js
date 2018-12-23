@@ -13,7 +13,6 @@ type P = Props & {
 class LocalAuthorityRecords extends React.Component<P, {}> {
   handleOnClick = () => {};
   render() {
-    
     const { label, translate } = this.props;
     const rightMenu = (
       <ToolbarButtonMenu
@@ -25,19 +24,16 @@ class LocalAuthorityRecords extends React.Component<P, {}> {
             {translate({
               id:'ui-marccat.search.record.edit' })}
           </Icon>
-           }
+        }
       />
     );
     return (
-     
       <Pane
         defaultWidth="fill"
         fluidContentWidth
         paneTitle={label}
         lastMenu={rightMenu}
-
       >
-       
         <div id="data-test-settings-authority-records">
           {translate({ id: 'ui-marccat.settings.authority.records' }) }
         </div>

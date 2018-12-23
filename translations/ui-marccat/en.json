@@ -10,6 +10,8 @@
   "settings.local.authority.records": "Local Authority Records",
   "settings.record.single.overlay.rules.text": "When importing single Marc record, do not override these locked fields:",
   "settings.local.authority.text": "Allow the creation of Local Authority Records:",
+  "settings.default.record.template.auth.text": "Authority Records. Organization-wide templates:",
+  "settings.default.record.template.bib.text": "Bibliografic Records. Organization-wide templates:",
   "searchAndFilter": "Search & Filter",
   "error.noresults.message": "Search returned no results",
   "initial.title": "Choose a filter or enter search query to show results",

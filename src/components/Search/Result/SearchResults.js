@@ -95,7 +95,7 @@ export class SearchResults extends React.Component<P, {}> {
 
   render() {
     let { bibsOnly, autOnly, detailPanelIsVisible, noResults } = this.state;
-    const { loading } = this.state;
+    const { loading, openDropDownMenu } = this.state;
     const {
       activeFilter,
       activeFilterName,
@@ -160,7 +160,7 @@ export class SearchResults extends React.Component<P, {}> {
             paneSub={(mergedRecord && mergedRecord.length > 0) ? message : messageNoContent}
             appIcon={{ app: C.META.ICON_TITLE }}
             firstMenu={firstMenu}
-            lastMenu={<CreateButtonMenu {...this.props} />}
+            lastMenu={<CreateButtonMenu {...this.props} onToggle={this.handleOnToggle} open={openDropDownMenu} />}
           >
             {
               (isFetching) ?

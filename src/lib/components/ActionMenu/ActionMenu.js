@@ -5,7 +5,7 @@
 import React from 'react';
 import { Button, Icon } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
-import style from '../Style/Dropdown.css';
+import style from '../../Style/Dropdown.css';
 
 
 export const ActionMenu = () => {

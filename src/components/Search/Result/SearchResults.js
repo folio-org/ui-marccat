@@ -9,7 +9,7 @@ import { Pane, Paneset, Icon, MultiColumnList, HotKeys } from '@folio/stripes/co
 import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
-import { EmptyMessage, NoResultsMessage } from '../../../lib/Message';
+import { EmptyMessage, NoResultsMessage } from '../../../lib/components/Message';
 import { ToolbarButtonMenu, ActionMenu, CreateButtonMenu } from '../../../lib';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
 import { resultsFormatter, columnMapper } from '../../../utils/Formatter';

@@ -11,8 +11,8 @@ import {
   PaneMenu,
   Icon
 } from '@folio/stripes/components';
-import type { Props } from '../../core';
-import style from '../Style/Dropdown.css';
+import type { Props } from '../../../core';
+import style from '../../Style/Dropdown.css';
 
 type P = Props & {
   onToggle(): void,

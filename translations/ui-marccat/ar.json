@@ -31,7 +31,7 @@
     "button.cancel": "إلغاء",
     "settings.field.groupings": "تجميعات الحقل",
     "settings.default.record.template": "قالب التسجيلة الافتراضي",
-    "settings.overlay.rules": "قواعد تراكب التسجيلة المفردة",
+    "settings.record.single.overlay.rules": "قواعد تراكب التسجيلة المفردة",
     "settings.authority.records": "تسجيلات الاستناد المحلية",
     "button.add": "أضف",
     "button.remove": "إزالة",

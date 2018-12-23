@@ -3,7 +3,7 @@
  * @flow
  */
 import * as React from 'react';
-import { Settings } from '@folio/stripes-smart-components';
+import { Settings } from '@folio/stripes/smart-components';
 import FieldGroupings from './FieldGroupings';
 import DefaultTemplate from './DefaultTemplate';
 import RecordsOverlayRules from './RecordOverlayRules';
@@ -38,14 +38,14 @@ export default class MARCcatSettings extends React.Component<P, {}> {
       {
         route: 'overlayRules',
         label: translate({
-          id: 'ui-marccat.settings.overlay.rules',
+          id: 'ui-marccat.settings.single.record.overlay.rules',
         }),
         component: RecordsOverlayRules,
       },
       {
         route: 'authorityRecords',
         label: translate({
-          id: 'ui-marccat.settings.authority.records',
+          id: 'ui-marccat.settings.local.authority.records',
         }),
         component: LocalAuthorityRecords,
       },

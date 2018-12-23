@@ -1,6 +1,10 @@
+/**
+ * @format
+ * @flow
+ */
 /* eslint-disable react/no-unused-prop-types */
 import * as React from 'react';
-import { PaneMenu, IconButton, Button } from '@folio/stripes-components';
+import { PaneMenu, IconButton, IfPermission, Button } from '@folio/stripes/components';
 import classNames from 'classnames';
 
 type ToolbarMenuProps = {
@@ -14,7 +18,7 @@ type ToolbarMenuProps = {
   type?: string;
   create: bool;
   disabled?: bool;
-  label?: string;
+  label?: React.Component<any>;
   stripes: Object;
 };
 
@@ -32,12 +36,14 @@ export const ToolbarMenu = (props: ToolbarMenuProps) => {
               onClick={onClick}
               className={classNames(className)}
             />
-          ) : (<IconButton
-            key={`icon-${i}`}
-            icon={i}
-            onClick={onClick}
-            className={classNames(className)}
-          />);
+          )
+            :
+            (<IconButton
+              key={`icon-${i}`}
+              icon={i}
+              onClick={onClick}
+              className={classNames(className)}
+            />);
         })
       }
     </PaneMenu>
@@ -50,21 +56,22 @@ export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
     float: 'right',
   };
 
-  const { onClick, label, type, disabled, stripes: { intl: { formatMessage } } } = props;
+  const { onClick, label, type, disabled } = props;
 
   return (
-    <PaneMenu>
-      <Button
-        style={rightButton}
-        id="create-new-template"
-        buttonStyle="primary"
-        onClick={onClick}
-        type={type || 'button'}
-        disabled={disabled}
-        marginBottom0
-      >
-        {formatMessage({ id: label })}
-      </Button>
-    </PaneMenu>
+    <IfPermission perm="marccat.create">
+      <PaneMenu>
+        <Button
+          style={rightButton}
+          buttonStyle="primary"
+          onClick={onClick}
+          type={type || 'button'}
+          disabled={disabled}
+          marginBottom0
+        >
+          {label}
+        </Button>
+      </PaneMenu>
+    </IfPermission>
   );
 };

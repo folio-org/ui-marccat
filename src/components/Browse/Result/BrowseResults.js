@@ -1,5 +1,9 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
-import { Row, MultiColumnList, Pane, Paneset, Icon } from '@folio/stripes-components';
+import { Row, MultiColumnList, Pane, Paneset, Icon } from '@folio/stripes/components';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Props, injectCommonProp } from '../../../core';
@@ -11,7 +15,6 @@ import { browseFormatter, browseColMapper } from '../../../utils/Formatter';
 import BrowseAssociatedItemDetail from './BrowseAssociatedItemDetail';
 import * as C from '../../../utils/Constant';
 
-type P = Props & {};
 type S = {
   browseDetailPanelIsVisible: bool;
   rowClicked: bool;
@@ -19,8 +22,8 @@ type S = {
   isPadRequired: bool;
 };
 
-export class BrowseResults extends React.Component<P, S> {
-  constructor(props: P) {
+export class BrowseResults extends React.Component<Props, S> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       browseDetailPanelIsVisible: false,
@@ -45,8 +48,12 @@ export class BrowseResults extends React.Component<P, S> {
     const containsAuthorities = meta.countAuthorities > 0;
     const indexFilter = store.getState().form.searchForm.values.selectIndexes;
     const conditionFilter = store.getState().form.searchForm.values.selectCondition;
-    const indexForQuery = findYourQueryFromBrowse[indexFilter.concat('-').concat(conditionFilter)];
-    const baseQuery = indexForQuery + id;
+    const indexForQuery =
+    findYourQueryFromBrowse[
+      indexFilter
+        .concat('-')
+        .concat(conditionFilter)];
+    const baseQuery = indexForQuery.concat(id);
     if (containsAuthorities) {
       dispatch({ type: ActionTypes.AUTH_DETAILS_BROWSE, query: baseQuery, isAuthority: true });
       dispatch({ type: ActionTypes.DETAILS_BROWSE, query: baseQuery, isAuthority: true });

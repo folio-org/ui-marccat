@@ -3,13 +3,11 @@
  * @flow
  */
 import * as React from 'react';
-import { Icon } from '@folio/stripes-components';
-import type { Props } from '../../core';
-import css from '../Style/NoResultsMessage.css';
+import { Icon } from '@folio/stripes/components';
+import type { Props } from '../../../core';
+import css from '../../Style/NoResultsMessage.css';
 
-type P = Props & {};
-
-const NoResultsMessage = ({ ...props }:P) => {
+const NoResultsMessage = ({ ...props }:Props) => {
   const { translate } = props;
   return (
     <div className={css.noResultsMessage}>

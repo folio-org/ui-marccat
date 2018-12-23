@@ -1,3 +1,7 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -9,7 +13,7 @@ import {
   FilterAccordionHeader,
   Accordion,
   MultiColumnList
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 import { ActionTypes } from '../../../redux/actions/Actions';
 import type { Props } from '../../../core';
 import { getTag100, getTitle100, remapForAssociatedBibList } from '../../../utils/Mapper';

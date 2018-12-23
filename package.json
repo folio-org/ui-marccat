@@ -82,7 +82,7 @@
     "**/warning": "*",
     "**/fbjs": "*",
     "**/@folio/stripes-react-hotkeys": "*",
-    "**/@folio/stripes-components": "*",
+    "**/@folio/stripes/components": "*",
     "**/hoist-non-react-statics": "*"
   },
   "stripes": {

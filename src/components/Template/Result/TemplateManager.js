@@ -1,3 +1,7 @@
+/**
+ * @format
+ * @flow
+ */
 /* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
 import React from 'react';
@@ -13,7 +17,7 @@ import {
   KeyValue,
   Icon,
   TextField
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 import Collapsible from 'react-collapsible';
 import Draggable from 'react-draggable';
 import { ActionTypes } from '../../../redux/actions';

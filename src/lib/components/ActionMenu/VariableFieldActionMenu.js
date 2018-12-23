@@ -1,30 +1,33 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Row, Col, Dropdown, DropdownMenu, Button, PaneMenu, Icon } from '@folio/stripes/components';
-import type { Props } from '../../core';
+import {
+  Dropdown,
+  DropdownMenu,
+  Button,
+  PaneMenu,
+  Icon
+} from '@folio/stripes/components';
+import type { Props } from '../../../core';
 
 type P = Props & {
   onToggle(): void,
   open: boolean
 }
 
-export default class NewButtonMenu extends React.Component<P, {}> {
-  constructor(props: P) {
-    super(props);
-    this.state = {
-    };
-  }
-
+export default class VariableFieldActionMenu extends React.Component<P, {}> {
   render() {
     const { onToggle, open } = this.props;
     return (
       <PaneMenu>
         <Dropdown
-          id="AddPermissionDropdown"
+          id="AddPermissionDropdown_"
           open={open}
           onToggle={onToggle}
           group
-          style={{ float: 'right' }}
           pullRight
         >
           <Button
@@ -33,7 +36,7 @@ export default class NewButtonMenu extends React.Component<P, {}> {
             bottomMargin0
             aria-haspopup="true"
           >
-            <FormattedMessage id="ui-marccat.search.record.new.keyboard" />
+            <FormattedMessage id="ui-marccat.search.record.actions" />
             <Icon
               icon="down-caret"
               size="small"
@@ -45,7 +48,7 @@ export default class NewButtonMenu extends React.Component<P, {}> {
             aria-label="available permissions"
             onToggle={onToggle}
           >
-            <div>
+            {/* <div>
               <Row>
                 <Col xs={9}>
                   <FormattedMessage id="ui-marccat.button.new.auth" />
@@ -63,7 +66,7 @@ export default class NewButtonMenu extends React.Component<P, {}> {
                   <FormattedMessage id="ui-marccat.button.new.short.bib" />
                 </Col>
               </Row>
-            </div>
+            </div> */}
           </DropdownMenu>
         </Dropdown>
       </PaneMenu>

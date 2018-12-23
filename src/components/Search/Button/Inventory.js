@@ -1,10 +1,12 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
-import { Button } from '@folio/stripes-components';
+import { Button } from '@folio/stripes/components';
 import type { Props } from '../../../core';
 
-type P = Props & {};
-
-const InventoryPluggableBtn = ({ buttonLabel, ...props }:P) => {
+const InventoryPluggableBtn = ({ buttonLabel, ...props }:Props) => {
   const { buttonTarget, style } = props;
   return (
     <div>

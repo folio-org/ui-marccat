@@ -4,21 +4,38 @@
  */
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { MultiColumnList, Icon, Pane, AccordionSet, Accordion } from '@folio/stripes-components';
+import { MultiColumnList, Icon, Pane, AccordionSet, Accordion } from '@folio/stripes/components';
 import { Props, injectCommonProp } from '../../core';
+import { getActionMenu, ToolbarButtonMenu } from '../../lib';
 import { ActionTypes } from '../../redux/actions/Actions';
 
 type P = Props & {
   label: string;
 };
+
+
 class DefaultTemplate extends React.Component<P, {}> {
   render() {
     const { translate, label, isLoadingData, defaultTemplateData } = this.props;
+    const rightMenu = (
+      <ToolbarButtonMenu
+        create
+        {...this.props}
+        label={
+          <Icon icon="edit">
+            {translate({
+              id:'ui-marccat.search.record.edit' })}
+          </Icon>
+        }
+      />
+    );
     return (
       <Pane
         defaultWidth="fill"
         fluidContentWidth
         paneTitle={label}
+        actionMenu={getActionMenu}
+        lastMenu={rightMenu}
       >
         {(defaultTemplateData && defaultTemplateData.length > 0) && (isLoadingData) ?
           <Icon icon="spinner-ellipsis" /> :

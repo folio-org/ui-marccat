@@ -31,7 +31,7 @@
     "button.cancel": "Cancel",
     "settings.field.groupings": "Field groupings",
     "settings.default.record.template": "Default record template",
-    "settings.overlay.rules": "Single record overlay rules",
+    "settings.settings.record.single.overlay.rules": "Single record overlay rules",
     "settings.authority.records": "Local Authority Records",
     "button.add": "Add",
     "button.remove": "Remove",

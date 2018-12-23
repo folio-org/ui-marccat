@@ -1,6 +1,10 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Icon, Selection } from '@folio/stripes-components';
+import { Row, Col, Icon, Selection } from '@folio/stripes/components';
 import { injectCommonProp, Props } from '../../../../core';
 import style from '../style.css';
 

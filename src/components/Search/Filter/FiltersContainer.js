@@ -1,12 +1,15 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import FilterGroups, { initialFilterState } from '@folio/stripes-components/lib/FilterGroups';
 import { ActionTypes } from '../../../redux/actions';
-import { Props } from '../../../core/type/props';
+import { Props } from '../../../core';
 
 import styles from './FiltersContainer.css';
 
-type P = Props & {}
-export default class FiltersContainer extends React.Component<P, {}> {
+export default class FiltersContainer extends React.Component<Props, {}> {
   constructor(props) {
     super(props);
     this.config = [
@@ -71,7 +74,7 @@ export default class FiltersContainer extends React.Component<P, {}> {
     return (
       <div className={(filterEnable) ? styles['search-filters'] : styles['search-filters-disabled']}>
         <FilterGroups
-          disableNames={(!filterEnable) ? disableFilters : ''}
+          disableNames={(!filterEnable) ? disableFilters : {}}
           config={this.config}
           filters={filters}
           onChangeFilter={this.onChangeFilter}

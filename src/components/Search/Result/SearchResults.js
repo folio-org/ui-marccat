@@ -1,12 +1,16 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Pane, Paneset, Icon, MultiColumnList, HotKeys } from '@folio/stripes-components';
+import { Pane, Paneset, Icon, MultiColumnList, HotKeys } from '@folio/stripes/components';
 import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
-import { EmptyMessage, NoResultsMessage } from '../../../lib/Message';
-import { ToolbarButtonMenu, ActionMenu } from '../../../lib';
+import { EmptyMessage, NoResultsMessage } from '../../../lib/components/Message';
+import { ToolbarButtonMenu, ActionMenu, CreateButtonMenu } from '../../../lib';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
 import { resultsFormatter, columnMapper } from '../../../utils/Formatter';
 import { isAuthorityRecord } from '../../../utils/SearchUtils';
@@ -40,6 +44,7 @@ export class SearchResults extends React.Component<P, {}> {
     this.handleDetails = this.handleDetails.bind(this);
     this.onNeedMoreData = this.onNeedMoreData.bind(this);
     this.createRecord = this.createRecord.bind(this);
+    this.renderRightMenuEdit = this.renderRightMenuEdit.bind(this);
 
     this.keys = {
       'new' : ['backspace'],
@@ -53,9 +58,9 @@ export class SearchResults extends React.Component<P, {}> {
   createRecord = () => {};
 
   handleClickEdit = () => {
-    const { dispatch, history } = this.props;
+    const { dispatch, router } = this.props;
     dispatch({ type: ActionTypes.VIEW_TEMPLATE, query: '000' });
-    history.push('/marccat/template');
+    router.push('/marccat/template');
   }
 
   handleOnToggle = () => {
@@ -77,9 +82,32 @@ export class SearchResults extends React.Component<P, {}> {
     return initialData.slice(10, 20);
   };
 
+  renderRightMenuEdit = props => {
+    return (
+      <ToolbarButtonMenu
+        create
+        {...props}
+        onClick={this.handleClickEdit}
+        label={<FormattedMessage id="ui-marccat.search.record.edit" />}
+      />
+    );
+  };
+
+  renderDropdownLabels = () => {
+    const { translate } = this.props;
+    return [{
+      label: translate({ id: 'ui-marccat.button.new.auth' }),
+      shortcut: translate({ id: 'ui-marccat.button.new.short.auth' })
+    },
+    {
+      label: translate({ id: 'ui-marccat.button.new.bib' }),
+      shortcut: translate({ id: 'ui-marccat.button.new.short.bib' })
+    }];
+  };
+
   render() {
     let { bibsOnly, autOnly, detailPanelIsVisible, noResults } = this.state;
-    const { loading } = this.state;
+    const { loading, openDropDownMenu } = this.state;
     const {
       activeFilter,
       activeFilterName,
@@ -132,37 +160,24 @@ export class SearchResults extends React.Component<P, {}> {
 
     const message = messageAuth + ' / ' + messageBib;
     const messageNoContent = <FormattedMessage id="ui-marccat.search.initial.message" />;
-    const rightMenu = (
-      <ToolbarButtonMenu
-        create
-        {...this.props}
-        label={
-          <Icon icon="plus-sign">
-            <FormattedMessage id="ui-marccat.search.record.new.keyboard" />
-          </Icon>
-        }
-      />
-    );
-    const rightMenuEdit = (
-      <ToolbarButtonMenu
-        create
-        {...this.props}
-        onClick={this.handleClickEdit}
-        label={<FormattedMessage id="ui-marccat.search.record.edit" />}
-      />
-    );
-
     return (
       <HotKeys keyMap={this.keys} handlers={this.handlers} style={{ width: 100 + '%' }}>
         <Paneset static>
           <Pane
             padContent={(marcJSONRecords.length > 0) || isFetching}
             defaultWidth="fill"
+            actionMenu={ActionMenu}
             paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
             paneSub={(mergedRecord && mergedRecord.length > 0) ? message : messageNoContent}
             appIcon={{ app: C.META.ICON_TITLE }}
             firstMenu={firstMenu}
-            lastMenu={rightMenu}
+            lastMenu={
+              <CreateButtonMenu
+                {...this.props}
+                labels={this.renderDropdownLabels()}
+                onToggle={this.handleOnToggle}
+                open={openDropDownMenu}
+              />}
           >
             {
               (isFetching) ?
@@ -193,8 +208,8 @@ export class SearchResults extends React.Component<P, {}> {
                       rowMetadata={['001', 'recordView']}
                       onRowClick={this.handleDetails}
                       contentData={marcJSONRecords}
-                      formatter={resultsFormatter}
-                      columnMapping={columnMapper}
+                      formatter={resultsFormatter(bibsOnly)}
+                      columnMapping={columnMapper(bibsOnly)}
                       onNeedMoreData={() => this.onNeedMoreData(marcJSONRecords)}
                       virtualize
                       loading={loading}
@@ -225,7 +240,7 @@ export class SearchResults extends React.Component<P, {}> {
             actionMenu={ActionMenu}
             dismissible
             onClose={() => this.setState({ detailPanelIsVisible: false })}
-            lastMenu={rightMenuEdit}
+            lastMenu={this.renderRightMenuEdit}
           >
             {(isFetchingDetail) ?
               <Icon icon="spinner-ellipsis" /> :
@@ -248,7 +263,7 @@ export class SearchResults extends React.Component<P, {}> {
               const { dispatch } = this.props;
               dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
             }}
-            lastMenu={rightMenuEdit}
+            lastMenu={this.renderRightMenuEdit}
           >
             {(isLoadingAssociatedRecord) ?
               <Icon icon="spinner-ellipsis" /> :

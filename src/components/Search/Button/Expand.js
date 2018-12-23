@@ -1,10 +1,12 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
-import { Icon, Button } from '@folio/stripes-components';
+import { Icon, Button } from '@folio/stripes/components';
 import type { Props } from '../../../core';
 
-type P = Props & {};
-
-const ExpandCollapseButton = ({ buttonLabel, toggleFn, ...props }:P) => {
+const ExpandCollapseButton = ({ buttonLabel, toggleFn, ...props }:Props) => {
   const { buttonTarget, style } = props;
   return (
     <Button

@@ -6,6 +6,8 @@ import * as React from 'react';
 import { Pane, Icon } from '@folio/stripes/components';
 import { Props, injectCommonProp } from '../../core';
 import { ToolbarButtonMenu } from '../../lib';
+import ToggleSwitch from '../../lib/components/Button/SwitchButton';
+import { CheckboxIconButton } from '../../lib/components/Button/OptionButton';
 
 type P = Props & {
   label: string;
@@ -42,6 +44,8 @@ class LocalAuthorityRecords extends React.Component<P, {}> {
         <div id="data-test-settings-authority-records">
           {translate({ id: 'ui-marccat.settings.local.authority.text' }) }
         </div>
+        <ToggleSwitch {...this.props} />
+        <CheckboxIconButton />
       </Pane>
     );
   }

@@ -9,7 +9,7 @@ import { Pane, Paneset, Icon, MultiColumnList, HotKeys } from '@folio/stripes/co
 import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
-import { EmptyMessage, NoResultsMessage } from '../../../lib/Message';
+import { EmptyMessage, NoResultsMessage } from '../../../lib/components/Message';
 import { ToolbarButtonMenu, ActionMenu, CreateButtonMenu } from '../../../lib';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
 import { resultsFormatter, columnMapper } from '../../../utils/Formatter';
@@ -93,9 +93,21 @@ export class SearchResults extends React.Component<P, {}> {
     );
   };
 
+  renderDropdownLabels = () => {
+    const { translate } = this.props;
+    return [{
+      label: translate({ id: 'ui-marccat.button.new.auth' }),
+      shortcut: translate({ id: 'ui-marccat.button.new.short.auth' })
+    },
+    {
+      label: translate({ id: 'ui-marccat.button.new.bib' }),
+      shortcut: translate({ id: 'ui-marccat.button.new.short.bib' })
+    }];
+  };
+
   render() {
     let { bibsOnly, autOnly, detailPanelIsVisible, noResults } = this.state;
-    const { loading } = this.state;
+    const { loading, openDropDownMenu } = this.state;
     const {
       activeFilter,
       activeFilterName,
@@ -148,7 +160,6 @@ export class SearchResults extends React.Component<P, {}> {
 
     const message = messageAuth + ' / ' + messageBib;
     const messageNoContent = <FormattedMessage id="ui-marccat.search.initial.message" />;
-
     return (
       <HotKeys keyMap={this.keys} handlers={this.handlers} style={{ width: 100 + '%' }}>
         <Paneset static>
@@ -160,7 +171,13 @@ export class SearchResults extends React.Component<P, {}> {
             paneSub={(mergedRecord && mergedRecord.length > 0) ? message : messageNoContent}
             appIcon={{ app: C.META.ICON_TITLE }}
             firstMenu={firstMenu}
-            lastMenu={<CreateButtonMenu {...this.props} />}
+            lastMenu={
+              <CreateButtonMenu
+                {...this.props}
+                labels={this.renderDropdownLabels()}
+                onToggle={this.handleOnToggle}
+                open={openDropDownMenu}
+              />}
           >
             {
               (isFetching) ?

@@ -11,7 +11,7 @@ import {
   PaneMenu,
   Icon
 } from '@folio/stripes/components';
-import type { Props } from '../../core';
+import type { Props } from '../../../core';
 
 type P = Props & {
   onToggle(): void,

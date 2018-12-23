@@ -11,8 +11,8 @@ import {
   PaneMenu,
   Icon
 } from '@folio/stripes/components';
-import type { Props } from '../../core';
-import style from '../Style/Dropdown.css';
+import type { Props } from '../../../core';
+import style from '../../Style/Dropdown.css';
 
 type P = Props & {
   onToggle(): void,
@@ -20,20 +20,18 @@ type P = Props & {
 }
 
 export default function CreateButtonMenu({ ...props }:P) {
-  const { onToggle, translate, open } = props;
+  const { onToggle, open, labels } = props;
 
   const renderDropdDownMenu = () => {
     return (
       <React.Fragment>
         <div className={style.dropdownContainer}>
-          <div className={style.dropdownShortcut}>
-            {translate({ id: 'ui-marccat.button.new.auth' })}
-            <span>{translate({ id: 'ui-marccat.button.new.short.auth' })}</span>
-          </div>
-          <div className={style.dropdownShortcut}>
-            {translate({ id: 'ui-marccat.button.new.bib' })}
-            <span>{translate({ id: 'ui-marccat.button.new.short.bib' })}</span>
-          </div>
+          {labels.map((l, i) => (
+            <div className={style.dropdownShortcut} key={i}>
+              {l.label}
+              <span>{l.shortcut}</span>
+            </div>
+          ))}
         </div>
       </React.Fragment>
     );

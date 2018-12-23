@@ -4,8 +4,8 @@
  */
 import * as React from 'react';
 import { Icon } from '@folio/stripes/components';
-import type { Props } from '../../core';
-import css from '../Style/EmptyMessage.css';
+import type { Props } from '../../../core';
+import css from '../../Style/EmptyMessage.css';
 
 const EmptyMessage = ({ ...props }:Props) => {
   const { translate } = props;

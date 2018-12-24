@@ -368,6 +368,83 @@ export function headerTypes008Reducer(state = { isLoading, isReady }, action) {
   }
 }
 
+export function tag006ValuesReducer(state = { isLoading, isReady }, action) {
+  switch (action.type) {
+  case ActionTypes.VALUES_FROM_TAG_006:
+    return {
+      ...state,
+      isLoading: false,
+      isReady: false
+    };
+  case ActionTypes.FETCH_VALUES_FROM_TAG_006:
+    return {
+      ...state,
+      isLoading: action.payload,
+      isReady: false
+    };
+  case ActionTypes.VALUES_FROM_TAG_006_SUCCESS:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: false,
+      isReady: true,
+    };
+  default:
+    return state;
+  }
+}
+
+export function tag007ValuesReducer(state = { isLoading, isReady }, action) {
+  switch (action.type) {
+  case ActionTypes.VALUES_FROM_TAG_007:
+    return {
+      ...state,
+      isLoading: false,
+      isReady: false
+    };
+  case ActionTypes.FETCH_VALUES_FROM_TAG_007:
+    return {
+      ...state,
+      isLoading: action.payload,
+      isReady: false
+    };
+  case ActionTypes.VALUES_FROM_TAG_007_SUCCESS:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: false,
+      isReady: true,
+    };
+  default:
+    return state;
+  }
+}
+export function tag008ValuesReducer(state = { isLoading, isReady }, action) {
+  switch (action.type) {
+  case ActionTypes.VALUES_FROM_TAG_008:
+    return {
+      ...state,
+      isLoading: false,
+      isReady: false
+    };
+  case ActionTypes.FETCH_VALUES_FROM_TAG_008:
+    return {
+      ...state,
+      isLoading: action.payload,
+      isReady: false
+    };
+  case ActionTypes.VALUES_FROM_TAG_008_SUCCESS:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: false,
+      isReady: true,
+    };
+  default:
+    return state;
+  }
+}
+
 export function leaderValuesReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
   case ActionTypes.LEADER_VALUES_FROM_TAG:

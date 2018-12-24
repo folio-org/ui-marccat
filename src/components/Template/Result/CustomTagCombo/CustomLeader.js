@@ -20,6 +20,11 @@ export class CustomLeader extends React.Component<P, {}> {
 
   render() {
     const { leaderValuesResults } = this.props;
+    const remappedValues = [];
+    if (leaderValuesResults) {
+      const result = Object.keys(leaderValuesResults.results).map((key) => leaderValuesResults.results[key]);
+      remappedValues.push(result);
+    }
     if (leaderValuesResults === undefined) {
       return <Icon icon="spinner-ellipsis" />;
     } else {
@@ -27,65 +32,30 @@ export class CustomLeader extends React.Component<P, {}> {
         <div className={style.rcornerspanel} id="rcornerspanel">
           <Row>
             <Col xs={4}>
-              <Selection
-                label={leaderValuesResults.characterCodingSchemeCode.name}
-                placeholder={leaderValuesResults.characterCodingSchemeCode.defaultValue}
-                dataOptions={leaderValuesResults.characterCodingSchemeCode.dropdownSelect}
-              />
-            </Col>
-            <Col xs={4}>
-              <Selection
-                label={leaderValuesResults.descriptiveCataloguingCode.name}
-                placeholder={leaderValuesResults.descriptiveCataloguingCode.defaultValue}
-                dataOptions={leaderValuesResults.descriptiveCataloguingCode.dropdownSelect}
-              />
-            </Col>
-            <Col xs={4}>
-              <Selection
-                label={leaderValuesResults.encodingLevel.name}
-                placeholder={leaderValuesResults.encodingLevel.defaultValue}
-                dataOptions={leaderValuesResults.encodingLevel.dropdownSelect}
-              />
+             INSERT HERE HEADER VALUEs
             </Col>
           </Row>
-          <Row>
-            <Col xs={4}>
-              <Selection
-                label={leaderValuesResults.itemBibliographicLevelCode.name}
-                placeholder={leaderValuesResults.itemBibliographicLevelCode.defaultValue}
-                dataOptions={leaderValuesResults.itemBibliographicLevelCode.dropdownSelect}
-              />
-            </Col>
-            <Col xs={4}>
-              <Selection
-                label={leaderValuesResults.itemControlTypeCode.name}
-                placeholder={leaderValuesResults.itemControlTypeCode.defaultValue}
-                dataOptions={leaderValuesResults.itemControlTypeCode.dropdownSelect}
-              />
-            </Col>
-            <Col xs={4}>
-              <Selection
-                label={leaderValuesResults.itemRecordStatusCode.name}
-                placeholder={leaderValuesResults.itemRecordStatusCode.defaultValue}
-                dataOptions={leaderValuesResults.itemRecordStatusCode.dropdownSelect}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={4}>
-              <Selection
-                label={leaderValuesResults.itemRecordTypeCode.name}
-                placeholder={leaderValuesResults.itemRecordTypeCode.defaultValue}
-                dataOptions={leaderValuesResults.itemRecordTypeCode.dropdownSelect}
-              />
-            </Col>
-            <Col xs={4}>
-              <Selection
-                label={leaderValuesResults.linkedRecordCode.name}
-                placeholder={leaderValuesResults.linkedRecordCode.defaultValue}
-                dataOptions={leaderValuesResults.linkedRecordCode.dropdownSelect}
-              />
-            </Col>
+          <hr />
+          <Row xs={12}>
+            {
+              (leaderValuesResults) &&
+              remappedValues.map(elem => {
+                const totInArray = elem.length;
+                return elem.map(item => {
+                  let exactDisplayValue = '';
+                  item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue));
+                  return (
+                    <Col xs={4}>
+                      <Selection
+                        label={item.name}
+                        dataOptions={item.dropdownSelect}
+                        placeholder={exactDisplayValue}
+                      />
+                    </Col>
+                  );
+                });
+              })
+            }
           </Row>
         </div>
       );
@@ -95,6 +65,6 @@ export class CustomLeader extends React.Component<P, {}> {
 
 export default (connect(
   ({ marccat: { leaderValues } }) => ({
-    leaderValuesResults: leaderValues.records.results
+    leaderValuesResults: leaderValues.records
   }),
 )(injectCommonProp(CustomLeader)));

@@ -3,7 +3,6 @@
  * @flow
  */
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import {
   Dropdown,
   DropdownMenu,

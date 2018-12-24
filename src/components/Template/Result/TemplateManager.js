@@ -232,6 +232,7 @@ export class TemplateManager extends React.Component<P, {}> {
                                 dispatch({ type: ActionTypes.HEADER_TYPES_008, code: '008' });
                               } else {
                                 dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: templateById.leader.value, code: el.fixedField.code, typeCode: el.fixedField.headerTypeCode });
+                                dispatch({ type: ActionTypes.HEADER_TYPES_008, code: '008' });
                               }
                             }}
                             trigger={
@@ -253,7 +254,7 @@ export class TemplateManager extends React.Component<P, {}> {
                             }
                           >
                             {
-                              headerTypes008IsLoading || headerTypes008NotReady ?
+                              (!isPresent008) && (headerTypes008IsLoading || headerTypes008NotReady) ?
                                 <Icon icon="spinner-ellipsis" /> :
                                 <Custom008 {...this.props} />
                             }

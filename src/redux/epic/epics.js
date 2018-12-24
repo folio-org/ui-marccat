@@ -140,3 +140,30 @@ export const headerTypes008Epic = (action$, store) => action$.ofType(ActionTypes
       .map(record => marccatActions.fetchHeaderTypes008(record))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
+
+export const tag006ValuesEpic = (action$, store) => action$.ofType(ActionTypes.VALUES_FROM_TAG_006)
+  .switchMap((d) => concat$(
+    of$(marccatActions.isFetchingTag006Request(true)),
+    ajax
+      .getJSON(buildUrl(ENDPOINT.TEMPLATE_TAG_URL, `leader=${d.leader}&code=${d.code}&headerTypeCode=${d.typeCode}&lang=ita`), ENDPOINT.HEADERS)
+      .map(record => marccatActions.fetchValuesFromTag006(record))
+      .catch(e => of$(marccatActions.fetchFailure(e))),
+  ));
+
+export const tag007ValuesEpic = (action$, store) => action$.ofType(ActionTypes.VALUES_FROM_TAG_007)
+  .switchMap((d) => concat$(
+    of$(marccatActions.isFetchingTag007Request(true)),
+    ajax
+      .getJSON(buildUrl(ENDPOINT.TEMPLATE_TAG_URL, `leader=${d.leader}&code=${d.code}&headerTypeCode=${d.typeCode}&lang=ita`), ENDPOINT.HEADERS)
+      .map(record => marccatActions.fetchValuesFromTag007(record))
+      .catch(e => of$(marccatActions.fetchFailure(e))),
+  ));
+
+export const tag008ValuesEpic = (action$, store) => action$.ofType(ActionTypes.VALUES_FROM_TAG_008)
+  .switchMap((d) => concat$(
+    of$(marccatActions.isFetchingTag008Request(true)),
+    ajax
+      .getJSON(buildUrl(ENDPOINT.TEMPLATE_TAG_URL, `leader=${d.leader}&code=${d.code}&headerTypeCode=${d.typeCode}&lang=ita`), ENDPOINT.HEADERS)
+      .map(record => marccatActions.fetchValuesFromTag008(record))
+      .catch(e => of$(marccatActions.fetchFailure(e))),
+  ));

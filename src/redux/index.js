@@ -13,7 +13,10 @@ import { searchEngineReducer,
   leaderValuesReducer,
   headerTypes006Reducer,
   headerTypes007Reducer,
-  headerTypes008Reducer
+  headerTypes008Reducer,
+  tag006ValuesReducer,
+  tag007ValuesReducer,
+  tag008ValuesReducer
 } from './reducers/Reducer';
 import { searchEpic,
   searchDetailEpic,
@@ -29,7 +32,10 @@ import { searchEpic,
   templateByIdEpic,
   headerTypes006Epic,
   headerTypes007Epic,
-  headerTypes008Epic
+  headerTypes008Epic,
+  tag006ValuesEpic,
+  tag007ValuesEpic,
+  tag008ValuesEpic
 } from './epic/epics';
 
 export const reducer = combineReducers({
@@ -47,6 +53,9 @@ export const reducer = combineReducers({
   headerTypes006: headerTypes006Reducer,
   headerTypes007: headerTypes007Reducer,
   headerTypes008: headerTypes008Reducer,
+  tag006Values: tag006ValuesReducer,
+  tag007Values: tag007ValuesReducer,
+  tag008Values: tag008ValuesReducer,
 });
 
 export const epics = combineEpics(
@@ -64,5 +73,8 @@ export const epics = combineEpics(
   leaderValuesEpic,
   headerTypes006Epic,
   headerTypes007Epic,
-  headerTypes008Epic
+  headerTypes008Epic,
+  tag006ValuesEpic,
+  tag007ValuesEpic,
+  tag008ValuesEpic
 );

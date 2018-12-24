@@ -12,7 +12,7 @@ const NoResultsMessage = ({ ...props }:Props) => {
   return (
     <div className={css.noResultsMessage}>
       <div className={css.noResultsMessageLabelWrap}>
-        <Icon iconRootClass={css.noResultsMessageIcon} icon="validation-error" />
+        <Icon iconRootClass={css.noResultsMessageIcon} icon="exclamation-circle" />
         <span className={css.noResultsMessageLabel}>
           {translate({
             id: 'ui-marccat.error.noresults.message',

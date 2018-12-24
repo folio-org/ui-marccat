@@ -20,7 +20,7 @@ type P = Props & {
 }
 
 export default function CreateButtonMenu({ ...props }:P) {
-  const { onToggle, open, labels } = props;
+  const { onToggle, open, labels, label, noDropdown } = props;
 
   const renderDropdDownMenu = () => {
     return (
@@ -53,12 +53,19 @@ export default function CreateButtonMenu({ ...props }:P) {
           aria-haspopup="true"
           buttonStyle="primary"
         >
-          <FormattedMessage id="ui-marccat.search.record.new.keyboard" />
+          <Icon
+            icon="plus-sign"
+            size="small"
+            iconClassName="myClass"
+          >
+            {label}
+          </Icon>
+          {!noDropdown &&
           <Icon
             icon="caret-down"
             size="small"
             iconClassName="myClass"
-          />
+          />}
         </Button>
         <DropdownMenu
           data-role="menu"

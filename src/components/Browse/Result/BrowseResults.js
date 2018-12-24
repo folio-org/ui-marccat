@@ -99,7 +99,7 @@ export class BrowseResults extends React.Component<Props, S> {
         {...this.props}
         label={
           <Icon icon="plus-sign">
-            <FormattedMessage id="ui-marccat.search.record.new.keyboard" />
+            <FormattedMessage id="ui-marccat.search.record.new" />
           </Icon>
         }
       />

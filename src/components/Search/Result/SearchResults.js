@@ -45,7 +45,7 @@ export class SearchResults extends React.Component<P, {}> {
     this.onNeedMoreData = this.onNeedMoreData.bind(this);
     this.createRecord = this.createRecord.bind(this);
     this.renderRightMenuEdit = this.renderRightMenuEdit.bind(this);
-
+    this.renderLastMenu = this.renderLastMenu.bind(this);
     this.keys = {
       'new' : ['backspace'],
     };
@@ -105,9 +105,28 @@ export class SearchResults extends React.Component<P, {}> {
     }];
   };
 
+  renderLastMenu = () => {
+    const { openDropDownMenu } = this.state;
+    const { translate, activeFilterName, activeFilterChecked } = this.props;
+    return (activeFilterName === 'recordType.Bibliographic records' && activeFilterChecked) ?
+      (<CreateButtonMenu
+        {...this.props}
+        label={translate({ id: 'ui-marccat.search.record.new.from.template' })}
+        labels={this.renderDropdownLabels()}
+        onToggle={this.handleOnToggle}
+        noDropdown
+      />) : (<CreateButtonMenu
+        {...this.props}
+        label={translate({ id: 'ui-marccat.search.record.new' })}
+        labels={this.renderDropdownLabels()}
+        onToggle={this.handleOnToggle}
+        open={openDropDownMenu}
+      />);
+  };
+
   render() {
     let { bibsOnly, autOnly, detailPanelIsVisible, noResults } = this.state;
-    const { loading, openDropDownMenu } = this.state;
+    const { loading } = this.state;
     const {
       activeFilter,
       activeFilterName,
@@ -157,8 +176,17 @@ export class SearchResults extends React.Component<P, {}> {
     const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForAssociatedBibList(mergedRecord) : [];
     const messageAuth = (totalAuthCount && totalAuthCount > 0) ? totalAuthCount + ' Authority records ' : ' No Authority records found ';
     const messageBib = (totalBibCount && totalBibCount > 0) ? totalBibCount + ' Bibliographic records ' : ' No Bibliographic records found ';
+    let message = '';
 
-    const message = messageAuth + ' / ' + messageBib;
+    if (autOnly) {
+      message = messageAuth;
+    } else if (bibsOnly) {
+      message = messageBib;
+    } else {
+      message = messageAuth + ' / ' + messageBib;
+    }
+
+
     const messageNoContent = <FormattedMessage id="ui-marccat.search.initial.message" />;
     return (
       <HotKeys keyMap={this.keys} handlers={this.handlers} style={{ width: 100 + '%' }}>
@@ -171,13 +199,7 @@ export class SearchResults extends React.Component<P, {}> {
             paneSub={(mergedRecord && mergedRecord.length > 0) ? message : messageNoContent}
             appIcon={{ app: C.META.ICON_TITLE }}
             firstMenu={firstMenu}
-            lastMenu={
-              <CreateButtonMenu
-                {...this.props}
-                labels={this.renderDropdownLabels()}
-                onToggle={this.handleOnToggle}
-                open={openDropDownMenu}
-              />}
+            lastMenu={this.renderLastMenu()}
           >
             {
               (isFetching) ?

@@ -127,6 +127,30 @@ export const fetchLeaderFromTag = (records) => ({
   type: ActionTypes.LEADER_VALUES_FROM_TAG_SUCCESS,
   payload: records
 });
+export const isFetchingTag006Request = (isLoading) => ({
+  type: ActionTypes.FETCH_VALUES_FROM_TAG_006,
+  payload: isLoading
+});
+export const fetchValuesFromTag006 = (records) => ({
+  type: ActionTypes.VALUES_FROM_TAG_006_SUCCESS,
+  payload: records
+});
+export const isFetchingTag007Request = (isLoading) => ({
+  type: ActionTypes.FETCH_VALUES_FROM_TAG_007,
+  payload: isLoading
+});
+export const fetchValuesFromTag007 = (records) => ({
+  type: ActionTypes.VALUES_FROM_TAG_007_SUCCESS,
+  payload: records
+});
+export const isFetchingTag008Request = (isLoading) => ({
+  type: ActionTypes.FETCH_VALUES_FROM_TAG_008,
+  payload: isLoading
+});
+export const fetchValuesFromTag008 = (records) => ({
+  type: ActionTypes.VALUES_FROM_TAG_008_SUCCESS,
+  payload: records
+});
 export const fetchSuccess = (message) => ({
   type: ActionTypes.SUCCESS,
   payload: message

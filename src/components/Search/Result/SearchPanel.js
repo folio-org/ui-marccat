@@ -48,7 +48,7 @@ class SearchPanel extends React.Component<P, S> {
     this.handleAddSearchForm = this.handleAddSearchForm.bind(this);
     this.handleRemoveSearchForm = this.handleRemoveSearchForm.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
-    this.handleResetButton = this.handleResetButton.bind(this);
+    this.handleResetAllButton = this.handleResetAllButton.bind(this);
   }
 
   handleKeyDown(e) {
@@ -127,16 +127,20 @@ class SearchPanel extends React.Component<P, S> {
     });
   }
 
-  handleOnChange = () => () => { };
+  handleOnChange = () => { };
 
-  handleResetButton = () => () => { };
+  handleResetAllButton = () => {
+    const { dispatch, reset } = this.props;
+    dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', filterChecked: false });
+    dispatch(reset('searchForm'));
+  };
 
   renderResetButton = () => {
     return (
       <ResetButton
         className={styles['mb-5']}
         visible
-        onClick={this.handleResetButton}
+        onClick={this.handleResetAllButton}
         id="clickable-reset-all"
         label={<FormattedMessage id="ui-marccat.button.resetAll" />}
       />

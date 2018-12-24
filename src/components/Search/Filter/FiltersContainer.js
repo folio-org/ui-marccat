@@ -56,10 +56,12 @@ export default class FiltersContainer extends React.Component<Props, {}> {
   }
 
   onClearFilter = () => {
+    const { dispatch } = this.props;
     this.setState(() => {
       const filters = {};
       return { filters };
     });
+    dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', filterChecked: false });
   }
 
   render() {

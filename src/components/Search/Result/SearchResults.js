@@ -1,3 +1,4 @@
+/* eslint-disable dot-notation */
 /**
  * @format
  * @flow
@@ -5,12 +6,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Pane, Paneset, Icon, MultiColumnList, HotKeys } from '@folio/stripes/components';
+import { Pane, Paneset, Icon, MultiColumnList, Layer, HotKeys } from '@folio/stripes/components';
 import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
 import { EmptyMessage, NoResultsMessage } from '../../../lib/components/Message';
-import { ToolbarButtonMenu, ActionMenu, CreateButtonMenu } from '../../../lib';
+import { ToolbarButtonMenu, ActionMenu, ActionMenuDetail, CreateButtonMenu } from '../../../lib';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
 import { resultsFormatter, columnMapper } from '../../../utils/Formatter';
 import { isAuthorityRecord } from '../../../utils/SearchUtils';
@@ -39,11 +40,16 @@ export class SearchResults extends React.Component<P, {}> {
       bibsOnly: false,
       autOnly: false,
       loading: false,
+      layerOpen: false,
       openDropDownMenu: false,
+      detailPaneMeta: {
+        title: '',
+        subTitle: ''
+      }
     };
     this.handleDetails = this.handleDetails.bind(this);
     this.onNeedMoreData = this.onNeedMoreData.bind(this);
-    this.createRecord = this.createRecord.bind(this);
+    this.handleCreateRecord = this.handleCreateRecord.bind(this);
     this.renderRightMenuEdit = this.renderRightMenuEdit.bind(this);
     this.renderLastMenu = this.renderLastMenu.bind(this);
     this.keys = {
@@ -51,17 +57,20 @@ export class SearchResults extends React.Component<P, {}> {
     };
 
     this.handlers = {
-      'new': this.createRecord,
+      'new': this.handleCreateRecord,
     };
   }
 
-  createRecord = () => {};
 
   handleClickEdit = () => {
     const { dispatch, router } = this.props;
     dispatch({ type: ActionTypes.VIEW_TEMPLATE, query: '000' });
     router.push('/marccat/template');
   }
+
+  handleCreateRecord = () => {
+    this.setState(prevState => ({ layerOpen: !prevState.layerOpen }));
+  };
 
   handleOnToggle = () => {
     this.setState(prevState => ({ openDropDownMenu: !prevState.openDropDownMenu }));
@@ -70,12 +79,26 @@ export class SearchResults extends React.Component<P, {}> {
   handleDetails = (e, meta) => {
     const { dispatch } = this.props;
     const id = meta['001'];
+    // const detailSelected = data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001']);
     dispatch({ type: ActionTypes.DETAILS, query: id, recordType: meta.recordView });
     if (isAuthorityRecord(meta)) {
       dispatch({ type: ActionTypes.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView });
+      this.setState({
+        detailPaneMeta: {
+          title: 'Auth. • ' + id,
+          subTitle: meta['uniformTitle'] + ' / ' + meta['name']
+        }
+      });
+    } else {
+      this.setState({
+        detailPanelIsVisible: true,
+        detailPaneMeta: {
+          title: 'Bib. • ' + id,
+          subTitle: meta['uniformTitle'] + ' / ' + meta['name']
+        }
+      });
     }
     dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
-    this.setState({ detailPanelIsVisible: true });
   };
 
   onNeedMoreData = (initialData: Array<any>) => {
@@ -113,7 +136,7 @@ export class SearchResults extends React.Component<P, {}> {
         {...this.props}
         label={translate({ id: 'ui-marccat.search.record.new.from.template' })}
         labels={this.renderDropdownLabels()}
-        onToggle={this.handleOnToggle}
+        onToggle={this.handleCreateRecord}
         noDropdown
       />) : (<CreateButtonMenu
         {...this.props}
@@ -126,7 +149,7 @@ export class SearchResults extends React.Component<P, {}> {
 
   render() {
     let { bibsOnly, autOnly, detailPanelIsVisible, noResults } = this.state;
-    const { loading } = this.state;
+    const { loading, detailPaneMeta, layerOpen } = this.state;
     const {
       activeFilter,
       activeFilterName,
@@ -251,18 +274,17 @@ export class SearchResults extends React.Component<P, {}> {
                     /> : <EmptyMessage {...this.props} />
             }
           </Pane>
-
           {detailPanelIsVisible &&
           <Pane
             id="pane-details"
             defaultWidth="30%"
-            paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
-            paneSub={C.EMPTY_MESSAGE}
+            paneTitle={detailPaneMeta.title}
+            paneSub={detailPaneMeta.subTitle}
             appIcon={{ app: C.META.ICON_TITLE }}
-            actionMenu={ActionMenu}
+            actionMenu={ActionMenuDetail}
             dismissible
             onClose={() => this.setState({ detailPanelIsVisible: false })}
-            lastMenu={this.renderRightMenuEdit}
+            lastMenu={this.renderRightMenuEdit()}
           >
             {(isFetchingDetail) ?
               <Icon icon="spinner-ellipsis" /> :
@@ -294,6 +316,25 @@ export class SearchResults extends React.Component<P, {}> {
             }
           </Pane>
           }
+          <Layer isOpen={layerOpen} contentLabel="demonstration layer">
+            <Paneset isRoot>
+              <Pane
+                padContent={(marcJSONRecords.length > 0) || isFetching}
+                defaultWidth="fill"
+                dismissible
+                onClose={this.handleCreateRecord}
+                actionMenu={ActionMenu}
+                paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
+                paneSub={(mergedRecord && mergedRecord.length > 0) ? message : messageNoContent}
+                appIcon={{ app: C.META.ICON_TITLE }}
+                firstMenu={firstMenu}
+                lastMenu={this.renderLastMenu()}
+              >
+pippo
+
+              </Pane>
+            </Paneset>
+          </Layer>
         </Paneset>
       </HotKeys>
     );

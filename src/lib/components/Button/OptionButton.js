@@ -8,13 +8,14 @@ type Props = {
   labels: Array<any>,
 };
 
-export function RadioIconButton({ ...labels }:Props) {
+export function RadioIconButton({ ...props }:Props) {
+  const { labels } = props;
   return (
     <React.Fragment>
       { React.Children.map(labels, (l, i) => (
         <div key={i}>
-          <input id={`radio-${i}`} className="radio-custom" name="radio-group" type="radio" checked />
-          <label htmlFor={`radio-${i}`} className="radio-custom-label">{l}</label>
+          <input id={`radio-${i}`} className={style['radio-custom']} name={`radio-group-${i}`} type="radio" />
+          <label htmlFor={`radio-${i}`} className={style['radio-custom-label']}>{l}</label>
         </div>
       ))
       }

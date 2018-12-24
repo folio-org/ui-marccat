@@ -40,7 +40,6 @@ export default class ResetButton extends Component {
     this.setState({
       fasterExitTransition: true,
     });
-
     onClick(e);
   }
 

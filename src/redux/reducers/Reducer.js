@@ -269,6 +269,7 @@ export function templateViewReducer(state = { isLoading, isReady }, action) {
     return {
       ...state,
       isLoading: action.payload,
+      default: action.payload.name,
       isReady: false
     };
   case ActionTypes.VIEW_TEMPLATE_SUCCESS:
@@ -277,6 +278,7 @@ export function templateViewReducer(state = { isLoading, isReady }, action) {
       isLoading: false,
       isReady: true,
       records: action.payload,
+      default: action.payload.name
     };
   case ActionTypes.TEMPLATE_GET_BY_ID_SUCCESS:
     return {

@@ -6,7 +6,7 @@ import React from 'react';
 import { Button, Icon } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 import style from '../../Style/Dropdown.css';
-import { RadioIconButton } from '../Button/OptionButton';
+import CheckboxIconButton from '../Button/OptionButton';
 
 
 export const ActionMenu = () => {
@@ -19,7 +19,7 @@ export const ActionMenu = () => {
         <div><FormattedMessage id="ui-marccat.browse.actionmenu.export.dat" /></div>
         <div><FormattedMessage id="ui-marccat.browse.actionmenu.printall" /></div>
         <hr />
-        <RadioIconButton labels={labels} />
+        <CheckboxIconButton labels={labels} />
       </div>
     </React.Fragment>
   );

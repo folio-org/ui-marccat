@@ -486,3 +486,16 @@ export function filterReducer(state = { isLoading }, action) {
     return state;
   }
 }
+
+
+export function settingsReducer(state = {}, action) {
+  switch (action.type) {
+  case ActionTypes.SETTINGS:
+    return {
+      ...state,
+      data: action.payload,
+    };
+  default:
+    return state;
+  }
+}

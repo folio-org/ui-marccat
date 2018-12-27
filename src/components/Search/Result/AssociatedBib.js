@@ -34,6 +34,7 @@ function AssociatedBib({ ...props }: P) {
         id="bib-associated"
         defaultWidth="30%"
         isEmptyMessage={EMPTY_MESSAGE}
+
         columnWidths={
           {
             'resultView': '20%',

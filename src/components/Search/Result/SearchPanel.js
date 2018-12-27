@@ -53,6 +53,17 @@ class SearchPanel extends React.Component<P, {}> {
     this.transitionToParams = this.transitionToParams.bind(this);
   }
 
+
+  componentDidMount() {
+    const { store: { getState }, change, dispatch } = this.props;
+    const textField = getState().form;
+    if (textField.searchForm && textField.searchForm.values) {
+      dispatch(change('searchTextArea', 'searchTextArea'));
+      // document.getElementById('searchTextArea').value = 'test';
+    }
+  }
+
+
   transitionToParams = (key, value) => {
     const { location } = this.props;
     const url = location.pathname;
@@ -171,7 +182,6 @@ class SearchPanel extends React.Component<P, {}> {
     const { searchForm, filterEnable } = this.state;
     return (
       <React.Fragment>
-
         {this.renderResetButton()}
         <AccordionSet>
           <Accordion
@@ -255,5 +265,5 @@ class SearchPanel extends React.Component<P, {}> {
 
 export default reduxForm({
   form: 'searchForm',
-  enableReinitialize: true
+  destroyOnUnmount: false
 })(SearchPanel);

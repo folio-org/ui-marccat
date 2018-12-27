@@ -26,7 +26,6 @@ export default function ActionMenuTemplate() {
         <Col xs={7}>
           <SearchField
             onChange={() => {}}
-            value={() => {}}
             onClear={() => {}}
             placeholder="Filter..."
           />
@@ -40,7 +39,6 @@ export default function ActionMenuTemplate() {
         <Col xs={7}>
           <SearchField
             onChange={() => {}}
-            value={() => {}}
             onClear={() => {}}
             placeholder="Filter..."
           />

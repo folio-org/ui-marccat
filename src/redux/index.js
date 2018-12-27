@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { combineEpics } from 'redux-observable';
-import { searchEngineReducer,
+import {
+  searchEngineReducer,
   filterReducer,
   getDetailsRecord,
   countDocReducer,
@@ -16,9 +17,11 @@ import { searchEngineReducer,
   headerTypes008Reducer,
   tag006ValuesReducer,
   tag007ValuesReducer,
-  tag008ValuesReducer
+  tag008ValuesReducer,
+  settingsReducer,
 } from './reducers/Reducer';
-import { searchEpic,
+import {
+  searchEpic,
   searchDetailEpic,
   countDocEpic,
   searchAssociatedBibRecords,
@@ -56,6 +59,7 @@ export const reducer = combineReducers({
   tag006Values: tag006ValuesReducer,
   tag007Values: tag007ValuesReducer,
   tag008Values: tag008ValuesReducer,
+  settings: settingsReducer
 });
 
 export const epics = combineEpics(

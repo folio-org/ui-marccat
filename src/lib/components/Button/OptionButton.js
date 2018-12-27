@@ -27,15 +27,16 @@ function CheckboxIconButton({ ...props }:Props) {
   const { labels } = props;
   return (
     <form name="checkboxForm">
-      { React.Children.map(labels, (l, i) => (
+      { labels.map((l, i) => (
         <div key={i}>
           <Field
             id={`checkbox-${l}`}
-            className={style['checkbox-custom']}
+            className="checkbox"
             name={`checkbox-${l}`}
+            type="checkbox"
             component="input"
           />
-          <label htmlFor={`checkbox-${i}`} className={style['checkbox-custom-label']}>{l}</label>
+          <label htmlFor={`checkbox-${i}`} className="checkbox">{l}</label>
         </div>
       ))
       }
@@ -44,5 +45,6 @@ function CheckboxIconButton({ ...props }:Props) {
 }
 
 export default reduxForm({
-  form: 'checkboxForm'
+  form: 'checkboxForm',
+  destroyOnUnmount: false
 })(CheckboxIconButton);

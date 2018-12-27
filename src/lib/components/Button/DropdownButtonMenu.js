@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /**
  * @format
  * @flow
@@ -26,7 +28,7 @@ export default function CreateButtonMenu({ ...props }:P) {
       <React.Fragment>
         <div className={style.dropdownContainer}>
           {labels.map((l, i) => (
-            <div className={style.dropdownShortcut} key={i}>
+            <div className={style.dropdownShortcut} key={i} onClick={l.onClick}>
               {l.label}
               <span>{l.shortcut}</span>
             </div>

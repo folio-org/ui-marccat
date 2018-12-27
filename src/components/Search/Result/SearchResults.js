@@ -7,18 +7,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import qs from 'query-string';
-import { Pane, Paneset, Icon, MultiColumnList, Layer, HotKeys } from '@folio/stripes/components';
+import { Pane, Paneset, Icon, MultiColumnList, HotKeys } from '@folio/stripes/components';
 import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
 import { EmptyMessage, NoResultsMessage } from '../../../lib/components/Message';
-import { ToolbarButtonMenu, ActionMenu, ActionMenuTemplate, ActionMenuDetail, CreateButtonMenu } from '../../../lib';
+import { ToolbarButtonMenu, ActionMenu, ActionMenuDetail, CreateButtonMenu } from '../../../lib';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
 import { resultsFormatter, columnMapper } from '../../../utils/Formatter';
 import { isAuthorityRecord } from '../../../utils/SearchUtils';
 import RecordDetails from './RecordDetails';
-import Template from '../../Cataloguing/Result/TemplateManager';
 import { injectCommonProp } from '../../../core';
 import AssociatedBibDetails from './AssociatedBibDetails';
 
@@ -57,16 +55,23 @@ export class SearchResults extends React.Component<P, {}> {
     this.renderRightMenuEdit = this.renderRightMenuEdit.bind(this);
     this.renderLastMenu = this.renderLastMenu.bind(this);
     this.transitionToParams = this.transitionToParams.bind(this);
-
+    this.renderTemplateRoute = this.renderTemplateRoute.bind(this);
     this.keys = {
       'new' : ['backspace'],
     };
 
     this.handlers = {
-      'new': this.handleCreateRecord,
+      'new': this.renderTemplateRoute,
     };
   }
 
+  renderTemplateRoute = () => {
+    const { dispatch, router, settings, toggleFilterPane } = this.props;
+    toggleFilterPane();
+    const defaultTemplate = settings.defaultTemplate.id;
+    dispatch({ type: ActionTypes.TEMPLATE_GET_BY_ID, query: defaultTemplate });
+    router.push(`/marccat/template?templateId=${defaultTemplate}`);
+  };
 
   handleClickEdit = () => {
     const { dispatch, router } = this.props;
@@ -75,11 +80,10 @@ export class SearchResults extends React.Component<P, {}> {
   }
 
   handleCreateRecord = () => {
-    const { router, toggleFilterPane, root : { store: { getState } } } = this.props;
-    const templateName = getState().marccat.template.records[0].name;
+    const { router, toggleFilterPane } = this.props;
     toggleFilterPane();
     this.setState(prevState => ({ layerOpen: !prevState.layerOpen }));
-    router.push(`/marccat/template?templateName?${templateName}`);
+    router.push('/marccat/template?templateId=123');
   };
 
   handleOnToggle = () => {
@@ -152,11 +156,13 @@ export class SearchResults extends React.Component<P, {}> {
     const { translate } = this.props;
     return [{
       label: translate({ id: 'ui-marccat.button.new.auth' }),
-      shortcut: translate({ id: 'ui-marccat.button.new.short.auth' })
+      shortcut: translate({ id: 'ui-marccat.button.new.short.auth' }),
+      onClick: this.renderTemplateRoute,
     },
     {
       label: translate({ id: 'ui-marccat.button.new.bib' }),
-      shortcut: translate({ id: 'ui-marccat.button.new.short.bib' })
+      shortcut: translate({ id: 'ui-marccat.button.new.short.bib' }),
+      onClick: this.renderTemplateRoute,
     }];
   };
 
@@ -168,7 +174,7 @@ export class SearchResults extends React.Component<P, {}> {
         {...this.props}
         label={translate({ id: 'ui-marccat.search.record.new.from.template' })}
         labels={this.renderDropdownLabels()}
-        onToggle={this.handleCreateRecord}
+        onToggle={this.renderTemplateRoute}
         noDropdown
       />) : (<CreateButtonMenu
         {...this.props}
@@ -186,14 +192,14 @@ export class SearchResults extends React.Component<P, {}> {
         {...this.props}
         label={translate({ id: 'ui-marccat.template.record.create' })}
         labels={this.renderDropdownLabels()}
-        onToggle={this.handleCreateRecord}
+        onToggle={this.renderTemplateRoute}
         noDropdown
       />);
   };
 
   render() {
     let { bibsOnly, autOnly, detailPanelIsVisible, noResults } = this.state;
-    const { loading, detailPaneMeta, layerOpen, detail } = this.state;
+    const { loading, detailPaneMeta, detail } = this.state;
     const {
       activeFilter,
       activeFilterName,
@@ -207,10 +213,9 @@ export class SearchResults extends React.Component<P, {}> {
       isReady,
       isPanelBibAssOpen,
       isReadyDetail,
-      template,
       isFetchingDetail,
       isLoadingAssociatedRecord,
-      isReadyAssociatedRecord
+      isReadyAssociatedRecord,
     } = this.props;
     if (activeFilter) {
       if (activeFilterName === 'recordType.Bibliographic records' && activeFilterChecked) {
@@ -253,7 +258,6 @@ export class SearchResults extends React.Component<P, {}> {
     } else {
       message = messageAuth + ' / ' + messageBib;
     }
-
 
     const messageNoContent = <FormattedMessage id="ui-marccat.search.initial.message" />;
     return (
@@ -316,7 +320,8 @@ export class SearchResults extends React.Component<P, {}> {
                         'tagHighlighted',
                         'countDoc'
                       ]}
-                    /> : <EmptyMessage {...this.props} />
+                    /> :
+                    <EmptyMessage {...this.props} />
             }
           </Pane>
           {detailPanelIsVisible &&
@@ -361,24 +366,6 @@ export class SearchResults extends React.Component<P, {}> {
             }
           </Pane>
           }
-          {layerOpen &&
-          <Layer isOpen={layerOpen} contentLabel="demonstration layer">
-            <Paneset isRoot>
-              <Pane
-                padContent={(marcJSONRecords.length > 0) || isFetching}
-                defaultWidth="fill"
-                dismissible
-                onClose={this.handleCreateRecord}
-                actionMenu={ActionMenuTemplate}
-                paneTitle={template.records[0].name || 'New Template'}
-                paneSub={(mergedRecord && mergedRecord.length > 0) ? message : messageNoContent}
-                appIcon={{ app: C.META.ICON_TITLE }}
-                lastMenu={this.renderCreateTemplateButton()}
-              >
-                <Template {...this.props} />
-              </Pane>
-            </Paneset>
-          </Layer>}
         </Paneset>
       </HotKeys>
     );
@@ -387,7 +374,7 @@ export class SearchResults extends React.Component<P, {}> {
 
 
 export default (connect(
-  ({ marccat: { search, details, countDoc, filter, associatedBibDetails, template } }) => ({
+  ({ marccat: { search, details, countDoc, filter, associatedBibDetails, template, settings } }) => ({
     bibliographicResults: search.bibliographicResults,
     totalBibCount: search.bibCounter,
     totalAuthCount: search.authCounter,
@@ -401,7 +388,7 @@ export default (connect(
     activeFilterName: filter.name,
     activeFilterChecked: filter.checked,
     countRecord: countDoc.records,
-
+    settings: settings.data,
     isLoadingAssociatedRecord: associatedBibDetails.isLoading,
     isReadyAssociatedRecord: associatedBibDetails.isReady,
     associatedRecordDetails: associatedBibDetails.records,

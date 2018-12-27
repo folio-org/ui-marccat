@@ -8,6 +8,7 @@
   padding: 5px;
   color: var(--primary);
   font-weight: var(--text-weight-headline-basis);
+  cursor: pointer;
 }
 
 .dropdownShortcut {

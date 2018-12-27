@@ -24,6 +24,7 @@ export function Router({ ...props }:P) {
     return (<ToolbarMenu icon={['search']} {...props} onClick={toggleFilterPane} />);
   };
 
+
   const searchMenu = renderSearchIconMenu();
   return (
     <Switch>

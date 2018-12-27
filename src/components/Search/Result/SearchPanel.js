@@ -17,26 +17,27 @@ import {
 } from '@folio/stripes/components';
 import { reduxForm, Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
+import { includes } from 'lodash';
 import ResetButton from '../Filter/ResetButton';
 import type { Props } from '../../../core';
 import { SearchIndexes, SearchConditions, FiltersContainer } from '..';
 import { ActionTypes } from '../../../redux/actions/Actions';
 import { findYourQuery } from '../Filter';
 import { remapFilters } from '../../../utils/Mapper';
-import { getLanguageFilterQuery, getFormatFilterQuery } from '../../../utils/SearchUtils';
+import {
+  getLanguageFilterQuery,
+  getFormatFilterQuery,
+} from '../../../utils/SearchUtils';
 import { EMPTY_MESSAGE } from '../../../utils/Constant';
-
-import styles from '../../../styles/common.css';
 import SearchPopover from '../Popover/SearchPopover';
+import styles from '../../../styles/common.css';
 
 type P = Props & {
   inputErrorCheck: string,
   translate: Function,
 }
-type S = {
-};
 
-class SearchPanel extends React.Component<P, S> {
+class SearchPanel extends React.Component<P, {}> {
   constructor(props: P) {
     super(props);
     this.state = {
@@ -49,7 +50,25 @@ class SearchPanel extends React.Component<P, S> {
     this.handleRemoveSearchForm = this.handleRemoveSearchForm.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleResetAllButton = this.handleResetAllButton.bind(this);
+    this.transitionToParams = this.transitionToParams.bind(this);
   }
+
+
+  componentDidMount() {
+    const { store: { getState }, change, dispatch } = this.props;
+    const textField = getState().form;
+    if (textField.searchForm && textField.searchForm.values) {
+      dispatch(change('searchTextArea', 'searchTextArea'));
+      // document.getElementById('searchTextArea').value = 'test';
+    }
+  }
+
+
+  transitionToParams = (key, value) => {
+    const { location } = this.props;
+    const url = location.pathname;
+    return includes(url, `${key}=${value}`);
+  };
 
   handleKeyDown(e) {
     if (e.key === 'Enter') {
@@ -71,7 +90,6 @@ class SearchPanel extends React.Component<P, S> {
         if (form.values.selectCondition) {
           conditionFilter = form.values.selectCondition;
           indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
-          // when MATCH index add "!" to term
           baseQuery = indexForQuery + inputValue;
           baseQuery = (conditionFilter === 'MATCH') ? baseQuery + '!' : baseQuery;
         } else {
@@ -83,8 +101,8 @@ class SearchPanel extends React.Component<P, S> {
 
       let bibQuery = baseQuery;
       const authQuery = baseQuery;
+      this.transitionToParams('q', bibQuery);
 
-      // regular filters
       if (state.marccat.filter && state.marccat.filter.filters) {
         const { languageFilter, formatType } = remapFilters(state.marccat.filter.filters);
         if (languageFilter && languageFilter.length) {
@@ -98,14 +116,23 @@ class SearchPanel extends React.Component<P, S> {
         isBrowseRequested = true;
         dispatch({ type: ActionTypes.BROWSE_FIRST_PAGE, query: bibQuery });
         router.push('/marccat/browse');
+        this.transitionToParams('q', bibQuery);
         this.setState({
           filterEnable: false
         });
       } else if (!isBrowseRequested) {
-        if (indexForQuery === 'BN ' || indexForQuery === 'SN ' || indexForQuery === 'PU ' || indexForQuery === 'LL ' || indexForQuery === 'BC ' || indexForQuery === 'CP ' || indexForQuery === 'PW ') {
+        if (indexForQuery === 'BN '
+        || indexForQuery === 'SN '
+        || indexForQuery === 'PU '
+        || indexForQuery === 'LL '
+        || indexForQuery === 'BC '
+        || indexForQuery === 'CP '
+        || indexForQuery === 'PW ') {
           dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: '' });
+          this.transitionToParams('q', bibQuery);
         } else {
           dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: authQuery });
+          this.transitionToParams('q', authQuery);
         }
         router.push('/marccat/search');
       }
@@ -127,12 +154,14 @@ class SearchPanel extends React.Component<P, S> {
     });
   }
 
-  handleOnChange = () => { };
+  handleOnChange = () => {
+  };
 
   handleResetAllButton = () => {
     const { dispatch, reset } = this.props;
     dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', filterChecked: false });
     dispatch(reset('searchForm'));
+    this.transitionToParams('filter', 'false');
   };
 
   renderResetButton = () => {
@@ -236,5 +265,5 @@ class SearchPanel extends React.Component<P, S> {
 
 export default reduxForm({
   form: 'searchForm',
-  enableReinitialize: true
+  destroyOnUnmount: false
 })(SearchPanel);

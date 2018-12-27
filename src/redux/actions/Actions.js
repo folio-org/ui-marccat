@@ -7,6 +7,7 @@ export const ActionTypes = {
   DETAILS: '@@ui-marccat/DETAILS',
   DETAILS_BY_TITLE: '@@ui-marccat/DETAILS_BY_TITLE',
   QUERY: '@@ui-marccat/QUERY',
+  SETTINGS: '@@ui-marccat/SETTINGS',
   ASSOCIATED_BIB_REC: '@@ui-marccat/ASSOCIATED_BIBS_REC',
   FETCH_ASSOCIATED_BIB_REQUESTED: '@@ui-marccat/FETCH_ASSOCIATED_BIB_REQUESTED',
   ASSOCIATED_BIB_REC_SUCCESS: '@@ui-marccat/ASSOCIATED_BIB_REC_SUCCESS',

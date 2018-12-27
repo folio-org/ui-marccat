@@ -3,7 +3,7 @@
  * @flow
  */
 import * as React from 'react';
-import { Paneset, Pane } from '@folio/stripes/components';
+import { Paneset, Pane, Headline } from '@folio/stripes/components';
 import { injectCommonProp, Props } from './core';
 import { SearchPanel } from './components/Search';
 import * as C from './utils/Constant';
@@ -13,8 +13,11 @@ import * as C from './utils/Constant';
  */
 class MARCcat extends React.Component<Props, {}> {
   searchPanelActionMenu = () => {
+    const { translate } = this.props;
     return (
-      <div /> // TODO
+      <Headline size="small" margin="medium" tag="h3">
+        {translate({ id:'ui-marccat.search.actionmenu.title' })}
+      </Headline>
     );
   };
 

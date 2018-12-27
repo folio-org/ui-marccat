@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 /**
  * @format
  * @flow
@@ -13,22 +11,35 @@ import {
   Icon
 } from '@folio/stripes/components';
 import type { Props } from '../../../core';
-import style from '../../Style/Dropdown.css';
+import style from '../../../lib/Style/Dropdown.css';
 
 type P = Props & {
   onToggle(): void,
   open: boolean
 }
 
-export default function CreateButtonMenu({ ...props }:P) {
-  const { onToggle, open, labels, label, noDropdown } = props;
+export default function ActionsMenuButton({ ...props }:P) {
+  const { onToggle, open } = props;
+
+  const renderDropdownLabels = () => {
+    const { translate } = props;
+    return [{
+      label: translate({ id: 'ui-marccat.button.new.auth' }),
+      shortcut: translate({ id: 'ui-marccat.button.new.short.auth' })
+    },
+    {
+      label: translate({ id: 'ui-marccat.button.new.bib' }),
+      shortcut: translate({ id: 'ui-marccat.button.new.short.bib' })
+    }];
+  };
 
   const renderDropdDownMenu = () => {
+    const labels = renderDropdownLabels();
     return (
       <React.Fragment>
         <div className={style.dropdownContainer}>
           {labels.map((l, i) => (
-            <div className={style.dropdownShortcut} key={i} onClick={l.onClick}>
+            <div className={style.dropdownShortcut} key={i}>
               {l.label}
               <span>{l.shortcut}</span>
             </div>
@@ -41,7 +52,7 @@ export default function CreateButtonMenu({ ...props }:P) {
   return (
     <PaneMenu>
       <Dropdown
-        id="AddPermissionDropdown"
+        id="actions_cataloging"
         open={open}
         onToggle={onToggle}
         group
@@ -55,18 +66,12 @@ export default function CreateButtonMenu({ ...props }:P) {
           buttonStyle="primary"
         >
           <Icon
-            icon="plus-sign"
-            size="small"
-            iconClassName="myClass"
-          >
-            {label}
-          </Icon>
-          {!noDropdown &&
-          <Icon
             icon="caret-down"
             size="small"
             iconClassName="myClass"
-          />}
+          >
+          Actions
+          </Icon>
         </Button>
         <DropdownMenu
           data-role="menu"

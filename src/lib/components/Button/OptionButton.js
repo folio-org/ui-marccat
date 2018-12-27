@@ -1,7 +1,7 @@
 /* eslint-disable no-lone-blocks */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-
+import { reduxForm, Field } from 'redux-form';
 import style from '../../Style/InputField.css';
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 export function RadioIconButton({ ...props }:Props) {
   const { labels } = props;
   return (
-    <React.Fragment>
+    <form>
       { React.Children.map(labels, (l, i) => (
         <div key={i}>
           <input id={`radio-${i}`} className={style['radio-custom']} name={`radio-group-${i}`} type="radio" />
@@ -19,20 +19,32 @@ export function RadioIconButton({ ...props }:Props) {
         </div>
       ))
       }
-    </React.Fragment>);
+    </form>);
 }
 
 
-export function CheckboxIconButton({ ...props }:Props) {
+function CheckboxIconButton({ ...props }:Props) {
   const { labels } = props;
   return (
-    <React.Fragment>
-      { React.Children.map(labels, (l, i) => (
+    <form name="checkboxForm">
+      { labels.map((l, i) => (
         <div key={i}>
-          <input id={`checkbox-${i}`} className={style['checkbox-custom']} name={`checkbox-${i}`} type="checkbox" />
-          <label htmlFor={`checkbox-${i}`} className={style['checkbox-custom-label']}>{l}</label>
+          <Field
+            id={`checkbox-${l}`}
+            className="checkbox"
+            name={`checkbox-${l}`}
+            type="checkbox"
+            component="input"
+          />
+          <label htmlFor={`checkbox-${i}`} className="checkbox">{l}</label>
         </div>
       ))
       }
-    </React.Fragment>);
+    </form>
+  );
 }
+
+export default reduxForm({
+  form: 'checkboxForm',
+  destroyOnUnmount: false
+})(CheckboxIconButton);

@@ -23,19 +23,16 @@ import Draggable from 'react-draggable';
 import { ActionTypes } from '../../../redux/actions';
 import { Props, injectCommonProp } from '../../../core';
 import { ActionMenuTemplate } from '../../../lib';
-import CustomLeader from './CustomTagCombo/CustomLeader';
-import Custom006 from './CustomTagCombo/Custom006';
-import Custom007 from './CustomTagCombo/Custom007';
-import Custom008 from './CustomTagCombo/Custom008';
+import CustomLeader from './Tags/CustomLeader';
+import Custom006 from './Tags/Custom006';
+import Custom007 from './Tags/Custom007';
+import Custom008 from './Tags/Custom008';
 import * as C from '../../../utils/Constant';
 
 import style from './style.css';
 
-type P = Props & {
-}
-
-export class TemplateManager extends React.Component<P, {}> {
-  constructor(props: P) {
+export class TemplateManager extends React.Component<Props, {}> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       resultNotReady: false,
@@ -47,8 +44,28 @@ export class TemplateManager extends React.Component<P, {}> {
   }
 
   render() {
-    const { templateById, leaderValuesResults, tagIsLoading, headerTypes006Result, headerTypes006IsLoading, headerTypes007Result, headerTypes007IsLoading, headerTypes008Result, headerTypes008IsLoading } = this.props;
-    let { resultNotReady, headerTypes006NotReady, headerTypes007NotReady, headerTypes008NotReady, isPresent006, isPresent007, isPresent008 } = this.state;
+    const {
+      templateById,
+      leaderValuesResults,
+      tagIsLoading,
+      headerTypes006Result,
+      headerTypes006IsLoading,
+      headerTypes007Result,
+      headerTypes007IsLoading,
+      headerTypes008Result,
+      headerTypes008IsLoading,
+      settings
+    } = this.props;
+    let {
+      resultNotReady,
+      headerTypes006NotReady,
+      headerTypes007NotReady,
+      headerTypes008NotReady,
+      isPresent006,
+      isPresent007,
+      isPresent008
+    } = this.state;
+    const defaultTemplate = settings.defaultTemplate;
 
     if (leaderValuesResults === undefined) {
       resultNotReady = true;
@@ -75,10 +92,12 @@ export class TemplateManager extends React.Component<P, {}> {
         <Paneset static>
           <Pane
             defaultWidth="fullWidth"
-            paneTitle="Template Manager"
-            paneSub="ID"
+            paneTitle={(templateById) ? templateById.name : defaultTemplate.name}
+            paneSub={(templateById) ? 'id. ' + templateById.id : 'id. ' + defaultTemplate.id}
             appIcon={{ app: C.META.ICON_TITLE }}
             actionMenu={ActionMenuTemplate}
+            dismissible
+            onClose={() => {}}
           >
             <Icon icon="spinner-ellipsis" />
           </Pane>
@@ -88,7 +107,10 @@ export class TemplateManager extends React.Component<P, {}> {
         <Paneset static>
           <Pane
             defaultWidth="fullWidth"
-            paneTitle={templateById.name}
+            dismissible
+            onClose={() => {}}
+            paneTitle={(templateById) ? templateById.name : defaultTemplate.name}
+            paneSub={(templateById) ? 'id. ' + templateById.id : 'id. ' + defaultTemplate.id}
             appIcon={{ app: C.META.ICON_TITLE }}
             actionMenu={ActionMenuTemplate}
           >
@@ -115,7 +137,7 @@ export class TemplateManager extends React.Component<P, {}> {
                           readOnly
                         />
                         <Icon
-                          icon="down-caret"
+                          icon="caret-down"
                           size="small"
                           iconClassName="myClass"
                         />
@@ -313,7 +335,7 @@ export class TemplateManager extends React.Component<P, {}> {
 
 
 export default (connect(
-  ({ marccat: { template, leaderValues, headerTypes006, headerTypes007, headerTypes008 } }) => ({
+  ({ marccat: { template, leaderValues, headerTypes006, headerTypes007, headerTypes008, settings } }) => ({
     templateById: template.recordsById,
     leaderValuesResults: leaderValues.records,
     tagIsLoading: leaderValues.isLoading,
@@ -321,6 +343,7 @@ export default (connect(
     headerTypes006Result: headerTypes006.records,
     headerTypes006IsLoading: headerTypes006.isLoading,
     headerTypes007Result: headerTypes007.records,
+    settings: settings.data,
     headerTypes007IsLoading: headerTypes007.isLoading,
     headerTypes008Result: headerTypes008.records,
     headerTypes008IsLoading: headerTypes008.isLoading

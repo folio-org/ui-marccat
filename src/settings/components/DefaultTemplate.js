@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { MultiColumnList, Icon, Pane, AccordionSet, Accordion } from '@folio/stripes/components';
 import { Props, injectCommonProp } from '../../core';
 import { getActionMenu, ToolbarButtonMenu } from '../../lib';
-import { ActionTypes } from '../../redux/actions/Actions';
 
 type P = Props & {
   label: string;
@@ -17,6 +16,8 @@ type P = Props & {
 class DefaultTemplate extends React.Component<P, {}> {
   render() {
     const { translate, label, isLoadingData, defaultTemplateData } = this.props;
+    const names = [];
+    if (defaultTemplateData && defaultTemplateData.length > 0) { defaultTemplateData.forEach(t => names.push(t.name)); }
     const rightMenu = (
       <ToolbarButtonMenu
         create
@@ -39,28 +40,24 @@ class DefaultTemplate extends React.Component<P, {}> {
       >
         {(defaultTemplateData && defaultTemplateData.length > 0) && (isLoadingData) ?
           <Icon icon="spinner-ellipsis" /> :
-          <AccordionSet>
-            <Accordion separator={false} label={translate({ id: 'ui-marccat.template.bib.accordion' })} id="bibTemplates">
-              <MultiColumnList
-                contentData={defaultTemplateData}
-                rowMetadata={['id', 'name', 'fields']}
-                onRowClick={(e, meta) => {
-                  const { store, history } = this.props;
-                  const id = meta.id;
-                  store.dispatch({ type: ActionTypes.TEMPLATE_GET_BY_ID, query: id });
-                  history.push('/marccat/template');
-                }}
-                columnWidths={
-                  {
-                    'name': '50%',
+          <div>
+            <AccordionSet>
+              <Accordion separator={false} label={translate({ id: 'ui-marccat.template.bib.accordion' })} id="bibTemplates">
+                <MultiColumnList
+                  contentData={defaultTemplateData}
+                  rowMetadata={['id', 'name', 'fields']}
+                  columnWidths={
+                    {
+                      'name': '50%',
+                    }
                   }
-                }
-                visibleColumns={[
-                  'name',
-                ]}
-              />
-            </Accordion>
-          </AccordionSet>
+                  visibleColumns={[
+                    'name',
+                  ]}
+                />
+              </Accordion>
+            </AccordionSet>
+          </div>
         }
       </Pane>
     );

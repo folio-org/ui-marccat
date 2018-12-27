@@ -40,7 +40,6 @@ export class CustomLeader extends React.Component<P, {}> {
             {
               (leaderValuesResults) &&
               remappedValues.map(elem => {
-                const totInArray = elem.length;
                 return elem.map(item => {
                   let exactDisplayValue = '';
                   item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue));

@@ -151,6 +151,10 @@ export const fetchValuesFromTag008 = (records) => ({
   type: ActionTypes.VALUES_FROM_TAG_008_SUCCESS,
   payload: records
 });
+export const isSettingsRequest = () => ({
+  type: ActionTypes.SETTINGS,
+  payload: {} // generic payload
+});
 export const fetchSuccess = (message) => ({
   type: ActionTypes.SUCCESS,
   payload: message

@@ -73,18 +73,19 @@ export const resultsFormatterForAssociated = {
   )
 };
 
-export const resultsFormatter = (isBibsOnly) => {
+export const resultsFormatter = (isBibsOnly, nameV) => {
   return {
     resultView: x => (
       <span className={x.recordView === 1 ? style.bibliographic : style.authority} />
     ),
     name: x => (
-      <div>
-        { x['100'] && x['100'] }
-        { x['110'] && x['110'] }
-        { x['111'] && x['111'] }
-        { (x['130'] && !isBibsOnly) && x['130'] }
-      </div>
+      (nameV) ? (
+        <div>
+          { x['100'] && x['100'] }
+          { x['110'] && x['110'] }
+          { x['111'] && x['111'] }
+          { (x['130'] && !isBibsOnly) && x['130'] }
+        </div>) : <div />
     ),
     uniformTitle: x => (
       <div>

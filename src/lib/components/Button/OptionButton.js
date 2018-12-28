@@ -3,12 +3,13 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
 import style from '../../Style/InputField.css';
+import { Props } from '../../../core';
 
-type Props = {
+type P = Props & {
   labels: Array<any>,
 };
 
-export function RadioIconButton({ ...props }:Props) {
+export function RadioIconButton({ ...props }:P) {
   const { labels } = props;
   return (
     <form>
@@ -23,27 +24,36 @@ export function RadioIconButton({ ...props }:Props) {
 }
 
 
-function CheckboxIconButton({ ...props }:Props) {
-  const { labels } = props;
-  return (
-    <form name="checkboxForm">
-      { labels.map((l, i) => (
-        <div key={i}>
-          <Field
-            id={`checkbox-${l}`}
-            className="checkbox"
-            name={`checkbox-${l}`}
-            type="checkbox"
-            component="input"
-          />
-          <label htmlFor={`checkbox-${i}`} className="checkbox">{l}</label>
-        </div>
-      ))
-      }
-    </form>
-  );
+class CheckboxIconButton extends React.Component<Props, {}> {
+  render() {
+    const { labels, dispatch, change } = this.props;
+    return (
+      <form name="checkboxForm">
+        { labels.map((l, i) => (
+          <div key={i}>
+            <Field
+              id={`checkbox-${l}`}
+              className="checkbox"
+              name={`checkbox-${l}`}
+              type="checkbox"
+              component="input"
+            />
+            <label
+              htmlFor={`checkbox-${l}`}
+              className="checkbox"
+              onClick={() => {
+                dispatch(change('checkboxForm', 'checked', true));
+              }}
+            >
+              {l}
+            </label>
+          </div>
+        ))
+        }
+      </form>
+    );
+  }
 }
-
 export default reduxForm({
   form: 'checkboxForm',
   destroyOnUnmount: false

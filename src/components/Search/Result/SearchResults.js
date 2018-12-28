@@ -197,6 +197,22 @@ export class SearchResults extends React.Component<P, {}> {
       />);
   };
 
+  renderVisibleColumns = () => {
+    return [
+      'resultView',
+      '001',
+      '245',
+      'name',
+      'uniformTitle',
+      'subject',
+      'date1',
+      'date2',
+      'format',
+      'tagHighlighted',
+      'countDoc'
+    ];
+  };
+
   render() {
     let { bibsOnly, autOnly, detailPanelIsVisible, noResults } = this.state;
     const { loading, detailPaneMeta, detail } = this.state;
@@ -302,24 +318,12 @@ export class SearchResults extends React.Component<P, {}> {
                       rowMetadata={['001', 'recordView']}
                       onRowClick={this.handleDetails}
                       contentData={marcJSONRecords}
-                      formatter={resultsFormatter(bibsOnly)}
+                      formatter={resultsFormatter(bibsOnly, false)}
                       columnMapping={columnMapper(bibsOnly)}
                       onNeedMoreData={() => this.onNeedMoreData(marcJSONRecords)}
                       virtualize
                       loading={loading}
-                      visibleColumns={[
-                        'resultView',
-                        '001',
-                        '245',
-                        'name',
-                        'uniformTitle',
-                        'subject',
-                        'date1',
-                        'date2',
-                        'format',
-                        'tagHighlighted',
-                        'countDoc'
-                      ]}
+                      visibleColumns={this.renderVisibleColumns()}
                     /> :
                     <EmptyMessage {...this.props} />
             }

@@ -45,13 +45,7 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
   componentDidMount() {
     const { store } = this.props;
     store.dispatch({ type: ActionTypes.VIEW_TEMPLATE });
-    store.dispatch({ type: ActionTypes.SETTINGS,
-      payload:
-      {
-        defaultTemplate : {
-          id: 408,
-          name: 'New Monograph'
-        } } });
+    store.dispatch({ type: ActionTypes.SETTINGS, payload: C.DEFAULT_TEMPLATE });
   }
 
   toggleFilterPane = () => {

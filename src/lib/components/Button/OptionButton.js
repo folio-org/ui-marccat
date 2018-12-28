@@ -3,12 +3,13 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
 import style from '../../Style/InputField.css';
+import { Props } from '../../../core';
 
-type Props = {
+type P = Props & {
   labels: Array<any>,
 };
 
-export function RadioIconButton({ ...props }:Props) {
+export function RadioIconButton({ ...props }:P) {
   const { labels } = props;
   return (
     <form>
@@ -24,28 +25,8 @@ export function RadioIconButton({ ...props }:Props) {
 
 
 class CheckboxIconButton extends React.Component<Props, {}> {
-  constructor(props:Props) {
-    super(props);
-
-    this.state = {
-      isSelected: false
-    };
-
-    this.handleCheckboxValue = this.handleCheckboxValue.bind(this);
-  }
-
-
-  handleCheckboxValue = e => {
-    const { dispatch, change } = this.props;
-    const { isSelected } = this.state;
-    dispatch(change(`${e.target.htmlFor}`, !isSelected));
-    this.setState({
-      isSelected: !isSelected
-    });
-  };
-
   render() {
-    const { labels } = this.props;
+    const { labels, dispatch, change } = this.props;
     return (
       <form name="checkboxForm">
         { labels.map((l, i) => (
@@ -56,12 +37,13 @@ class CheckboxIconButton extends React.Component<Props, {}> {
               name={`checkbox-${l}`}
               type="checkbox"
               component="input"
-              checked={`checkbox-${l}`}
             />
             <label
               htmlFor={`checkbox-${l}`}
               className="checkbox"
-              onClick={this.handleCheckboxValue}
+              onClick={() => {
+                dispatch(change('checkboxForm', 'checked', true));
+              }}
             >
               {l}
             </label>

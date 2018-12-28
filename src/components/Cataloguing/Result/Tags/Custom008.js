@@ -7,13 +7,11 @@ import { connect } from 'react-redux';
 import { Row, Col, Icon, Selection } from '@folio/stripes/components';
 import { injectCommonProp, Props } from '../../../../core';
 import { ActionTypes } from '../../../../redux/actions';
-import style from '../style.css';
+import style from '../../Style/style.css';
 
-type P = Props & {
-}
 
-export class Custom008 extends React.Component<P, {}> {
-  constructor(props) {
+export class Custom008 extends React.Component<Props, {}> {
+  constructor(props:Props) {
     super(props);
     this.state = {
       isChangedHeaderType: false,

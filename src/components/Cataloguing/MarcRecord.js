@@ -7,7 +7,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  Row,
   Col,
   Pane,
   Paneset,
@@ -19,19 +18,19 @@ import {
   TextField
 } from '@folio/stripes/components';
 import Collapsible from 'react-collapsible';
-import Draggable from 'react-draggable';
-import { ActionTypes } from '../../../redux/actions';
-import { Props, injectCommonProp } from '../../../core';
-import { ActionMenuTemplate } from '../../../lib';
-import CustomLeader from './Tags/CustomLeader';
-import Custom006 from './Tags/Custom006';
-import Custom007 from './Tags/Custom007';
-import Custom008 from './Tags/Custom008';
-import * as C from '../../../utils/Constant';
+import { ActionTypes } from '../../redux/actions';
+import { Props, injectCommonProp } from '../../core';
+import { ActionMenuTemplate } from '../../lib';
+import CustomLeader from './Result/Tags/CustomLeader';
+import Custom006 from './Result/Tags/Custom006';
+import Custom007 from './Result/Tags/Custom007';
+import Custom008 from './Result/Tags/Custom008';
+import * as C from '../../utils/Constant';
 
-import style from './style.css';
+import style from './Style/style.css';
+import { VariableFields } from '.';
 
-export class TemplateManager extends React.Component<Props, {}> {
+export class MarcRecordManager extends React.Component<Props, {}> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -161,6 +160,7 @@ export class TemplateManager extends React.Component<Props, {}> {
                           <div id="titleCollapsiblePanel">
                             <TextField
                               type="text"
+                              name="test"
                               label={<h3>{el.fixedField.code}</h3>}
                               value={el.fixedField.displayValue}
                               readOnly
@@ -292,34 +292,7 @@ export class TemplateManager extends React.Component<Props, {}> {
                 {templateById.fields.map(el => {
                   if (el.fixedField === undefined) {
                     return (
-                      <Draggable>
-                        <Row>
-                          <Col xs={1}>
-                            <TextField
-                              type="text"
-                              value={el.variableField.code}
-                            />
-                          </Col>
-                          <Col xs={1}>
-                            <TextField
-                              type="text"
-                              value=""
-                            />
-                          </Col>
-                          <Col xs={1}>
-                            <TextField
-                              type="text"
-                              value=""
-                            />
-                          </Col>
-                          <Col xs={4}>
-                            <TextField
-                              type="text"
-                              value={el.variableField.displayValue}
-                            />
-                          </Col>
-                        </Row>
-                      </Draggable>
+                      <VariableFields {...this.props} />
                     );
                   }
                 })
@@ -348,4 +321,4 @@ export default (connect(
     headerTypes008Result: headerTypes008.records,
     headerTypes008IsLoading: headerTypes008.isLoading
   }),
-)(injectCommonProp(TemplateManager)));
+)(injectCommonProp(MarcRecordManager)));

@@ -1,6 +1,5 @@
 import React from 'react';
-import { getFieldPosition, getFormat, getMicroformat } from './Mapper';
-import style from '../styles/common.css';
+import style from '../../index.css';
 
 export const columnMapper = (isBibsOnly:?boolean, isAuthOnly:?boolean = true) => {
   const isBib = {
@@ -42,30 +41,6 @@ export const columnMapper = (isBibsOnly:?boolean, isAuthOnly:?boolean = true) =>
   return all;
 };
 
-export const columnWidthMapper = (isBibsOnly:?boolean, isAuthOnly:?boolean) => {
-  return (isBibsOnly) ? {
-    'resultView': '5%',
-    '001': '10%',
-    '245': '30%',
-    'preferredTitle': '5%',
-    'name': '15%',
-    'subject': '8%',
-    'date1': '5%',
-    'date2': '5%',
-    'format': '8%',
-    'tagHighlighted': '5%',
-    'countDoc': '4%'
-  } : {
-    'resultView': '6%',
-    '001': '10%',
-    '245': '30%',
-    'preferredTitle': '25%',
-    'name': '15%',
-    'tagHighlighted': '5%',
-    'countDoc': '9%'
-  };
-};
-
 export const columnMapperForAssociated = {
   'resultView': '',
   '245': '',
@@ -85,24 +60,19 @@ export const resultsFormatterForAssociated = {
     <span className={x.recordView === 1 ? style.bibliographic : style.authority} />
   ),
   name: x => (
-    <span>
+    <div>
       { x['100'] && x['100'] }
       { x['110'] && x['110'] }
       { x['111'] && x['111'] }
-    </span>
+    </div>
   ),
   format: x => (
-    <span>
+    <div>
       { x.recordView === 1 && getFormat(x.leader) }
-    </span>
-  ),
-  tagHighlighted: x => (
-    <span className={style.tagHighLighted}>
-      {x.tagHighlighted}
-    </span>
+    </div>
   ),
   subject: x => (
-    <span>
+    <div>
       { x['600'] && x['600'] }
       { x['610'] && x['610'] }
       { x['611'] && x['611'] }
@@ -122,7 +92,7 @@ export const resultsFormatterForAssociated = {
       { x['657'] && x['657'] }
       { x['658'] && x['658'] }
       { x['662'] && x['662'] }
-    </span>
+    </div>
   )
 };
 
@@ -132,29 +102,24 @@ export const resultsFormatter = (isBibsOnly:?boolean = true, isAuthOnly:?boolean
       <span className={x.recordView === 1 ? style.bibliographic : style.authority} />
     ),
     name: x => (
-      <span>
+      <div>
         { x['100'] && x['100'] }
         { x['110'] && x['110'] }
         { x['111'] && x['111'] }
         { (x['130'] && !isBibsOnly) && x['130'] }
-      </span>
+      </div>
     ),
     preferredTitle: x => (
-      <span>
+      <div>
         { (x['130'] && isBibsOnly) && x['130'] }
         { x['240'] && x['240'] }
-      </span>
+      </div>
     ),
     countDoc: x => (
-      <span>
+      <div>
         { x.recordView === -1 && x.countDoc}
-      </span>
-    ),
-    tagHighlighted: x => (
-      <span className={style.tagHighLighted}>
-        {x.tagHighlighted}
-      </span>
-    ),
+      </div>
+    )
   };
 
   const isBib = {
@@ -162,47 +127,42 @@ export const resultsFormatter = (isBibsOnly:?boolean = true, isAuthOnly:?boolean
       <span className={x.recordView === 1 ? style.bibliographic : style.authority} />
     ),
     name: x => (
-      <span>
+      <div>
         { x['100'] && x['100'] }
         { x['110'] && x['110'] }
         { x['111'] && x['111'] }
         { (x['130'] && !isBibsOnly) && x['130'] }
-      </span>
+      </div>
     ),
     preferredTitle: x => (
-      <span>
+      <div>
         { (x['130'] && isBibsOnly) && x['130'] }
         { x['240'] && x['240'] }
-      </span>
+      </div>
     ),
     date1: x => (
-      <span>
+      <div>
         {x.recordView === 1 && getFieldPosition(x['008'], 7, 11) }
-      </span>
+      </div>
     ),
     date2: x => (
-      <span>
+      <div>
         { x.recordView === 1 && getFieldPosition(x['008'], 11, 14) }
-      </span>
+      </div>
     ),
     format: x => (
-      <span>
+      <div>
         { x.recordView === 1 && getFormat(x.leader) }
         { x.recordView === 1 && getMicroformat(x['007']) }
-      </span>
+      </div>
     ),
     countDoc: x => (
-      <span>
+      <div>
         { x.recordView === -1 && x.countDoc}
-      </span>
-    ),
-    tagHighlighted: x => (
-      <span className={style.tagHighLighted}>
-        {x.tagHighlighted}
-      </span>
+      </div>
     ),
     subject: x => (
-      <span>
+      <div>
         { x['600'] && x['600'] }
         { x['610'] && x['610'] }
         { x['611'] && x['611'] }
@@ -222,14 +182,15 @@ export const resultsFormatter = (isBibsOnly:?boolean = true, isAuthOnly:?boolean
         { x['657'] && x['657'] }
         { x['658'] && x['658'] }
         { x['662'] && x['662'] }
-      </span>
+      </div>
     )
   };
-  return (isAuthOnly && isBibsOnly) ? all : isBib;
+  return all;
 };
 
-export const browseFormatter = {
-  type: x => (
-    <span className={x.countAuthorities === 0 ? style.bibliographic : style.authority} />
-  )
-};
+
+export default class SearchResultMapper {
+  map(isBibsOnly, isAuthOnly) {
+    return columnMapper(isBibsOnly, isAuthOnly);
+  }
+}

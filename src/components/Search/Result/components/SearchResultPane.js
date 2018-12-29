@@ -11,7 +11,7 @@ import { resultsFormatter, columnMapper } from '../../../../utils/Formatter';
 import { EmptyMessage, NoResultsMessage } from '../../../../lib/components/Message';
 import * as C from '../../../../utils/Constant';
 
-class MainPane extends React.Component<Props, {}> {
+class SearchResultPane extends React.Component<Props, {}> {
     renderVisibleColumns = () => {
       return [
         'resultView',
@@ -98,4 +98,4 @@ class MainPane extends React.Component<Props, {}> {
       );
     }
 }
-export default (injectCommonProp(MainPane));
+export default (injectCommonProp(SearchResultPane));

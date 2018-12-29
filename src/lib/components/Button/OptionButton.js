@@ -54,6 +54,34 @@ class CheckboxIconButton extends React.Component<Props, {}> {
     );
   }
 }
+
+export function SingleCheckboxIconButton({ ...props }:P) {
+  const { labels } = props;
+  return (
+    <React.Fragment>
+      { labels.map((l, i) => (
+        <div key={i}>
+          <Field
+            id={`checkbox-${l}`}
+            className="checkbox"
+            name={`checkbox-${l}`}
+            type="checkbox"
+            component="input"
+          />
+          <label
+            htmlFor={`checkbox-${l}`}
+            className="checkbox"
+          >
+            {l}
+          </label>
+        </div>
+      ))
+      }
+    </React.Fragment>
+  );
+}
+
+
 export default reduxForm({
   form: 'checkboxForm',
   destroyOnUnmount: false

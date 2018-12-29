@@ -7,17 +7,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Pane, Paneset, Icon, HotKeys } from '@folio/stripes/components';
+import { Paneset, HotKeys } from '@folio/stripes/components';
 import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
-import { ToolbarButtonMenu, ActionMenu, CreateButtonMenu } from '../../../lib';
+import { ToolbarButtonMenu, CreateButtonMenu } from '../../../lib';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
 import { isAuthorityRecord } from '../../../utils/SearchUtils';
 import { injectCommonProp } from '../../../core';
-import AssociatedBibDetails from './AssociatedBibDetails';
-import MainPane from './components/MainPane';
-import DetailPane from './components/DetailPane';
+import {
+  SearchResultPane,
+  RecordDetailPane,
+  AssociatedRecordPane
+} from './components';
 
 
 type P = Props & {
@@ -115,7 +117,7 @@ export class SearchResults extends React.Component<P, {}> {
     this.transitionToParams('idNumber', id);
     dispatch({ type: ActionTypes.DETAILS, query: id, recordType: meta.recordView });
     if (isAuthorityRecord(meta)) {
-      dispatch({ type: ActionTypes.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView });
+      dispatch({ type: ActionTypes.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView, openPanel: true });
       this.setState({
         detail: detailSelected,
         detailPaneMeta: {
@@ -262,7 +264,7 @@ export class SearchResults extends React.Component<P, {}> {
     return (
       <HotKeys keyMap={this.keys} handlers={this.handlers} style={{ width: 100 + '%' }}>
         <Paneset static>
-          <MainPane
+          <SearchResultPane
             marcJSONRecords={marcJSONRecords}
             isFetching={isFetching}
             firstMenu={firstMenu}
@@ -279,7 +281,7 @@ export class SearchResults extends React.Component<P, {}> {
             messageNoContent={messageNoContent}
           />
           {detailPanelIsVisible &&
-          <DetailPane
+          <RecordDetailPane
             detailPaneMeta={detailPaneMeta}
             detail={detail}
             isFetchingDetail={isFetchingDetail}
@@ -288,35 +290,22 @@ export class SearchResults extends React.Component<P, {}> {
             rightMenuEdit={this.renderRightMenuEdit()}
           />
           }
-
           {isPanelBibAssOpen && !noResults &&
-          <Pane
-            id="pane-details"
-            defaultWidth="25%"
-            paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
-            paneSub={C.EMPTY_MESSAGE}
-            appIcon={{ app: C.META.ICON_TITLE }}
-            actionMenu={ActionMenu}
-            dismissible
+          <AssociatedRecordPane
             onClose={() => {
               const { dispatch } = this.props;
               dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
             }}
-            lastMenu={this.renderRightMenuEdit}
-          >
-            {(isLoadingAssociatedRecord) ?
-              <Icon icon="spinner-ellipsis" /> :
-              (isReadyAssociatedRecord) ?
-                <AssociatedBibDetails {...this.props} /> : null
-            }
-          </Pane>
+            isLoadingAssociatedRecord={isLoadingAssociatedRecord}
+            isReadyAssociatedRecord={isReadyAssociatedRecord}
+            renderRightMenuEdit={this.renderRightMenuEdit}
+          />
           }
         </Paneset>
       </HotKeys>
     );
   }
 }
-
 
 export default (connect(
   ({ marccat: { search, details, countDoc, filter, associatedBibDetails, template, settings } }) => ({

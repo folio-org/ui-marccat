@@ -5,21 +5,78 @@
 import React from 'react';
 import {
   Row,
-  Col
+  Col,
+  HotKeys,
+  RepeatableField,
+  LayoutBox
 } from '@folio/stripes/components';
+import { Field } from 'redux-form';
 import type { Props } from '../../../core';
-import { CheckboxIconButton } from '../../../lib';
+import { SingleCheckboxIconButton } from '../../../lib';
+
+import style from '../Style/style.css';
 
 export default class VariableFields extends React.Component<Props, {}> {
-  render() {
-    const labels = ['1'];
+  constructor(props) {
+    super(props);
+    this.state = {
+      fields: [''],
+    };
+    this.keys = {
+      'new' : ['enter'],
+    };
+    this.handlers = {
+      'new': this.handleAdd,
+    };
+  }
+
+  handleAdd = () => {
+    this.setState(({ fields }) => ({
+      fields: fields.concat({}),
+    }));
+  }
+
+  handleRemove = (index) => {
+    this.setState(({ fields }) => ({
+      fields: [...fields.slice(0, index), ...fields.slice(index + 1)]
+    }));
+  }
+
+  renderField = () => {
+    const labels = [''];
     return (
-      <Row>
-        <Col xs={12} sm={3} md={2} lg={1} styles={{ backgroundColor: '#0000ff',height: '40px' }} />
-        <Col xs={6} sm={6} md={8} lg={10} styles={{ backgroundColor: '#0000ff' , height: '40px' }} />
-        <Col xs={6} sm={3} md={2} lg={1} styles={{ backgroundColor: '#0000ff' ,height: '40px' }} />
-      </Row>
+      <HotKeys keyMap={this.keys} handlers={this.handlers} data-full-width>
+        <LayoutBox className={style.fieldContainer}>
+          <Row>
+            <SingleCheckboxIconButton labels={labels} className={style['pl-10']} />
+            <Col xs={1}>
+              <div>
+                <Field
+                  id="tagField"
+                  name="tagField"
+                  type="text"
+                  component="input"
+                />
+              </div>
+            </Col>
+            <Col xs={1}>column 2</Col>
+            <Col xs={1}>column 2</Col>
+            <Col xs={8}>column 5</Col>
+          </Row>
+        </LayoutBox>
+      </HotKeys>
+    );
+  };
+
+  render() {
+    const { fields } = this.state;
+    return (
+      <RepeatableField
+        fields={fields}
+        onAdd={this.handleAdd}
+        onRemove={this.handleRemove}
+        renderField={() => this.renderField()}
+      />
     );
   }
 }
-//        <CheckboxIconButton labels={labels} />

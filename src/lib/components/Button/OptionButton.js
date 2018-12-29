@@ -57,8 +57,12 @@ class CheckboxIconButton extends React.Component<Props, {}> {
 
 export function SingleCheckboxIconButton({ ...props }:P) {
   const { labels } = props;
+  const styles = {
+    float: 'left',
+    paddingBottom: '15px',
+  };
   return (
-    <React.Fragment>
+    <div style={styles}>
       { labels.map((l, i) => (
         <div key={i}>
           <Field
@@ -77,7 +81,7 @@ export function SingleCheckboxIconButton({ ...props }:P) {
         </div>
       ))
       }
-    </React.Fragment>
+    </div>
   );
 }
 

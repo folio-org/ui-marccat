@@ -28,7 +28,7 @@ export default function SearchIndexes({ ...props }) {
     { label: 'Subject: Personal', value: 'SUBP' },
     { label: 'Subject: Corporate', value: 'SUBC' },
     { label: 'Subject: Meeting', value: 'SUBM' },
-    { label: 'Subject: Uniform Title', value: 'SUBUT' },
+    { label: 'Subject: Preferred title', value: 'SUBUT' },
     { label: 'Subject: Named Event', value: 'SUBNE' },
     { label: 'Subject: Chronological Term', value: 'SUBCT' },
     { label: 'Subject: Topical Term', value: 'SUBTT' },

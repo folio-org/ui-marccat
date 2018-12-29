@@ -1,0 +1,15 @@
+@import '@folio/stripes-components/lib/variables';
+
+.authority {
+  width: 18px;
+  height: 18px;
+  background-color: var(--danger);
+  border-radius: 25%;
+}
+
+.bibliographic {
+  width: 18px;
+  height: 18px;
+  background-color: var(--primary);
+  border-radius: 25%;
+}

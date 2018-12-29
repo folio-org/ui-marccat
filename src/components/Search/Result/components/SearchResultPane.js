@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import { Pane, Icon, MultiColumnList } from '@folio/stripes/components';
 import { ActionMenu } from '../../../../lib';
 import { Props, injectCommonProp } from '../../../../core';
-import { resultsFormatter, columnMapper } from '../../../../utils/Formatter';
+import { resultsFormatter, columnMapper, columnWidthMapper } from '../../../../utils/Formatter';
 import { EmptyMessage, NoResultsMessage } from '../../../../lib/components/Message';
 import * as C from '../../../../utils/Constant';
 
@@ -18,11 +18,7 @@ class SearchResultPane extends React.Component<Props, {}> {
         '001',
         '245',
         'name',
-        'uniformTitle',
-        'subject',
-        'date1',
-        'date2',
-        'format',
+        'preferredTitle',
         'tagHighlighted',
         'countDoc'
       ];
@@ -43,6 +39,7 @@ class SearchResultPane extends React.Component<Props, {}> {
         handleDetails,
         bibsOnly,
         loading,
+        autOnly,
         messageNoContent
       } = this.props;
       return (
@@ -59,36 +56,21 @@ class SearchResultPane extends React.Component<Props, {}> {
           {
             (isFetching) ?
               <Icon icon="spinner-ellipsis" /> :
-              (!isFetching && noResults && !(bibliographicResults === undefined && authorityResults === undefined)) ?
+              ((!isFetching && noResults && !(bibliographicResults === undefined && authorityResults === undefined)) || (autOnly && !authorityResults.length === 0)) ?
                 <NoResultsMessage {...this.props} /> :
                 (isReady) ?
                   <MultiColumnList
                     autosize
-                    id="tabella"
+                    id="data-test-search-results-table"
                     defaultWidth="fill"
                     isEmptyMessage={C.EMPTY_MESSAGE}
-                    columnWidths={
-                      {
-                        'resultView': '5%',
-                        '001': '10%',
-                        '245': '30%',
-                        'name': '15%',
-                        'uniformTitle': '5%',
-                        'subject': '8%',
-                        'date1': '5%',
-                        'date2': '5%',
-                        'format': '8%',
-                        'tagHighlighted': '5%',
-                        'countDoc': '4%'
-                      }
-                    }
+                    columnWidths={columnWidthMapper(false, false)}
                     rowMetadata={['001', 'recordView']}
                     onRowClick={handleDetails}
                     contentData={marcJSONRecords}
-                    formatter={resultsFormatter(bibsOnly, false)}
-                    columnMapping={columnMapper(bibsOnly)}
+                    formatter={resultsFormatter(bibsOnly, true)}
+                    columnMapping={columnMapper(bibsOnly, false)}
                     onNeedMoreData={() => {}}
-                    virtualize
                     loading={loading}
                     visibleColumns={this.renderVisibleColumns()}
                   /> :

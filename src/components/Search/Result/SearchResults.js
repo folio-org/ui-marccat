@@ -18,7 +18,7 @@ import { injectCommonProp } from '../../../core';
 import {
   SearchResultPane,
   RecordDetailPane,
-  AssociatedRecordPane
+  AssociatedRecordPane,
 } from './components';
 
 
@@ -50,6 +50,7 @@ export class SearchResults extends React.Component<P, {}> {
         subTitle: ''
       }
     };
+
     this.handleDetails = this.handleDetails.bind(this);
     this.onNeedMoreData = this.onNeedMoreData.bind(this);
     this.handleCreateRecord = this.handleCreateRecord.bind(this);
@@ -122,7 +123,7 @@ export class SearchResults extends React.Component<P, {}> {
         detail: detailSelected,
         detailPaneMeta: {
           title: 'Auth. • ' + id,
-          subTitle: meta['uniformTitle'] + ' / ' + meta['name']
+          subTitle: meta['preferredTitle'] + ' / ' + meta['name']
         }
       });
     } else {
@@ -131,7 +132,7 @@ export class SearchResults extends React.Component<P, {}> {
         detailPanelIsVisible: true,
         detailPaneMeta: {
           title: 'Bib. • ' + id,
-          subTitle: meta['uniformTitle'] + ' / ' + meta['name']
+          subTitle: meta['preferredTitle'] + ' / ' + meta['name']
         }
       });
     }
@@ -276,6 +277,7 @@ export class SearchResults extends React.Component<P, {}> {
             authorityResults={authorityResults}
             handleDetails={this.handleDetails}
             isReady={isReady}
+            autOnly={autOnly}
             bibsOnly={bibsOnly}
             loading={loading}
             messageNoContent={messageNoContent}

@@ -4,6 +4,10 @@
   height: 100%;
 }
 
+[data-full-width] {
+  width: 100%;
+}
+
 .authority {
   width: 18px;
   height: 18px;

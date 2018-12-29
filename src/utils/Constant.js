@@ -37,3 +37,10 @@ export const STATE_MANAGEMENT = {
 export const SEPARATOR = ';;;';
 export const EMPTY_PARAMETER = -1;
 export const EMPTY_MESSAGE = '';
+
+
+// SETTINGS
+export const DEFAULT_TEMPLATE = {
+  id: 408,
+  name: 'New Monograph'
+};

@@ -71,7 +71,7 @@ class SearchPanel extends React.Component<P, {}> {
   };
 
   handleKeyDown(e) {
-    if (e.key === 'Enter') {
+    if (e.charCode === 13 || e.key === 'Enter') {
       e.preventDefault();
       const inputValue = '"' + e.target.form[3].defaultValue + '"';
       const { store: { getState }, dispatch, router } = this.props;

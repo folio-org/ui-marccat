@@ -9,7 +9,6 @@ import { ActionMenu } from '../../../../lib';
 import { Props, injectCommonProp } from '../../../../core';
 import { resultsFormatter, columnMapper, columnWidthMapper } from '../../../../utils/Formatter';
 import { EmptyMessage, NoResultsMessage } from '../../../../lib/components/Message';
-import { SearchResultMapper } from '.';
 import * as C from '../../../../utils/Constant';
 
 class SearchResultPane extends React.Component<Props, {}> {
@@ -43,7 +42,6 @@ class SearchResultPane extends React.Component<Props, {}> {
         autOnly,
         messageNoContent
       } = this.props;
-      const Mapper = new SearchResultMapper();
       return (
         <Pane
           padContent={(marcJSONRecords.length > 0) || isFetching}

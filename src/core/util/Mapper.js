@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 function Mapper() {}
 Mapper.prototype.foo = () => { return 'foo in Mapper'; };
 Mapper.bar = () => { return 'bar in Mapper'; };

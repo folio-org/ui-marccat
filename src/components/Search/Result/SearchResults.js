@@ -137,7 +137,6 @@ export class SearchResults extends React.Component<P, {}> {
       });
     }
     dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
-
   };
 
   onNeedMoreData = (initialData: Array<any>) => {

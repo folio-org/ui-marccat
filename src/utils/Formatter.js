@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { getFieldPosition, getFormat, getMicroformat } from './Mapper';
 import style from '../styles/common.css';

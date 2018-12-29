@@ -1,4 +1,10 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
+import {
+  getFieldPosition,
+  getFormat,
+  getMicroformat
+} from '../../../../utils/Mapper';
 import style from '../../index.css';
 
 export const columnMapper = (isBibsOnly:?boolean, isAuthOnly:?boolean = true) => {

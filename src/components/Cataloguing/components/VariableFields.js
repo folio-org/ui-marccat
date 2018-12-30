@@ -8,7 +8,8 @@ import {
   Col,
   HotKeys,
   RepeatableField,
-  LayoutBox
+  LayoutBox,
+  Icon
 } from '@folio/stripes/components';
 import { Field } from 'redux-form';
 import type { Props } from '../../../core';
@@ -48,6 +49,10 @@ export default class VariableFields extends React.Component<Props, {}> {
       <HotKeys keyMap={this.keys} handlers={this.handlers} data-full-width>
         <LayoutBox className={style.fieldContainer}>
           <Row>
+            <Icon
+              icon="caret-down"
+              size="large"
+            />
             <SingleCheckboxIconButton labels={labels} className={style['pl-10']} />
             <Col xs={1}>
               <div>

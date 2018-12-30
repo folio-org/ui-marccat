@@ -11,6 +11,7 @@ import {
   Pane,
   Paneset,
   AccordionSet,
+  Row,
   Accordion,
   KeyValue,
   Icon
@@ -22,6 +23,8 @@ import { VariableFields } from '.';
 import MarcField from './components/MarcField';
 import * as C from '../../utils/Constant';
 import { SingleCheckboxIconButton } from '../../lib/components/Button/OptionButton';
+
+import style from './Style/style.css';
 
 export class MarcRecordManager extends React.Component<Props, {}> {
   constructor(props: Props) {
@@ -77,74 +80,78 @@ export class MarcRecordManager extends React.Component<Props, {}> {
             appIcon={{ app: C.META.ICON_TITLE }}
             actionMenu={ActionMenuTemplate}
           >
-            <AccordionSet>
-              <KeyValue
-                value={<h2>{bibliographicRecord.name}</h2>}
-              />
-              <form name="bibliographicRecordForm" onSubmit={this.handleOnSubmit}>
-                <Accordion label="Suppress" id="suppress" separator={false}>
-                  <SingleCheckboxIconButton labels={['suppress']} />
-                </Accordion>
-                <Accordion label="Leader" id="leader">
-                  <MarcField
-                    {...this.props}
-                    label="Leader"
-                    name="leader"
-                    value={bibliographicRecord.leader.value}
+            <Row center="xs">
+              <div className={style.recordContainer}>
+                <AccordionSet>
+                  <KeyValue
+                    value={<h2>{bibliographicRecord.name}</h2>}
                   />
-                </Accordion>
-                <Accordion label="Control fields (001, 003, 005)" id="control-field">
-                  {bibliographicRecord.fields.map(el => {
-                    if (el.variableField === undefined) {
-                      if (el.fixedField.code === '001' || el.fixedField.code === '003' || el.fixedField.code === '005') {
-                        return (
-                          <div>
-                            <MarcField
-                              {...this.props}
-                              label={el.fixedField.code}
-                              name={el.fixedField.code}
-                              value={el.fixedField.displayValue}
-                            />
-                          </div>
-                        );
-                      } else if (
-                        el.fixedField.code === '006' ||
+                  <form name="bibliographicRecordForm" onSubmit={this.handleOnSubmit}>
+                    <Accordion label="Suppress" id="suppress" separator={false}>
+                      <SingleCheckboxIconButton labels={['suppress']} />
+                    </Accordion>
+                    <Accordion label="Leader" id="leader">
+                      <MarcField
+                        {...this.props}
+                        label="Leader"
+                        name="leader"
+                        value={bibliographicRecord.leader.value}
+                      />
+                    </Accordion>
+                    <Accordion label="Control fields (001, 003, 005)" id="control-field">
+                      {bibliographicRecord.fields.map(el => {
+                        if (el.variableField === undefined) {
+                          if (el.fixedField.code === '001' || el.fixedField.code === '003' || el.fixedField.code === '005') {
+                            return (
+                              <div>
+                                <MarcField
+                                  {...this.props}
+                                  label={el.fixedField.code}
+                                  name={el.fixedField.code}
+                                  value={el.fixedField.displayValue}
+                                />
+                              </div>
+                            );
+                          } else if (
+                            el.fixedField.code === '006' ||
                       el.fixedField.code === '007' ||
                       el.fixedField.code === '008') {
-                        if (el.fixedField.code === '006') {
-                          isPresent006 = true;
-                        } else if (el.fixedField.code === '007') {
-                          isPresent007 = true;
-                        } else if (el.fixedField.code === '008') {
-                          isPresent008 = true;
+                            if (el.fixedField.code === '006') {
+                              isPresent006 = true;
+                            } else if (el.fixedField.code === '007') {
+                              isPresent007 = true;
+                            } else if (el.fixedField.code === '008') {
+                              isPresent008 = true;
+                            }
+                            return (
+                              <div>
+                                <MarcField
+                                  {...this.props}
+                                  label={el.fixedField.code}
+                                  name={el.fixedField.code}
+                                  value={el.fixedField.displayValue}
+                                />
+                              </div>
+                            );
+                          }
                         }
-                        return (
-                          <div>
-                            <MarcField
-                              {...this.props}
-                              label={el.fixedField.code}
-                              name={el.fixedField.code}
-                              value={el.fixedField.displayValue}
-                            />
-                          </div>
-                        );
+                      })
                       }
-                    }
-                  })
-                  }
-                </Accordion>
-                <Accordion label="Variable fields" id="variable-field">
-                  {bibliographicRecord.fields.map(el => {
-                    if (el.variableField) {
-                      return (
-                        <VariableFields {...this.props} />
-                      );
-                    }
-                  })
-                  }
-                </Accordion>
-              </form>
-            </AccordionSet>
+                    </Accordion>
+                    <Accordion label="Variable fields" id="variable-field">
+                      {bibliographicRecord.fields.map(el => {
+                        if (el.variableField) {
+                          return (
+                            <VariableFields {...this.props} />
+                          );
+                        }
+                      })
+                      }
+                    </Accordion>
+                  </form>
+                </AccordionSet>
+              </div>
+            </Row>
           </Pane>
         </Paneset>
       );

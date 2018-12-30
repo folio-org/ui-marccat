@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unresolved
 import { camelize } from '@bigtest/mirage';
 
 // auto-import all mirage submodules

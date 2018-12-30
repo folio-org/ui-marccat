@@ -1,19 +1,25 @@
+/* eslint-disable no-useless-escape */
+/* eslint-disable dot-notation */
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Pane, Paneset, Icon, MultiColumnList } from '@folio/stripes-components';
-import { Row } from 'react-flexbox-grid';
+import { Paneset, HotKeys } from '@folio/stripes/components';
 import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
-import { EmptyMessage, NoResultsMessage } from '../../../lib/Message';
-import { ToolbarButtonMenu } from '../../../lib';
+import { ToolbarButtonMenu, CreateButtonMenu } from '../../../lib';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
-import { resultsFormatter, columnMapper } from '../../../utils/Formatter';
 import { isAuthorityRecord } from '../../../utils/SearchUtils';
-import RecordDetails from './RecordDetails';
 import { injectCommonProp } from '../../../core';
-import AssociatedBibDetails from './AssociatedBibDetails';
+import {
+  SearchResultPane,
+  RecordDetailPane,
+  AssociatedRecordPane,
+} from './components';
 
 
 type P = Props & {
@@ -36,71 +42,166 @@ export class SearchResults extends React.Component<P, {}> {
       bibsOnly: false,
       autOnly: false,
       loading: false,
+      layerOpen: false,
+      openDropDownMenu: false,
+      detail: {},
+      detailPaneMeta: {
+        title: '',
+        subTitle: ''
+      }
     };
+
     this.handleDetails = this.handleDetails.bind(this);
     this.onNeedMoreData = this.onNeedMoreData.bind(this);
+    this.handleCreateRecord = this.handleCreateRecord.bind(this);
+    this.renderRightMenuEdit = this.renderRightMenuEdit.bind(this);
+    this.renderLastMenu = this.renderLastMenu.bind(this);
+    this.transitionToParams = this.transitionToParams.bind(this);
+    this.renderTemplateRoute = this.renderTemplateRoute.bind(this);
+    this.keys = {
+      'new' : ['backspace'],
+    };
+
+    this.handlers = {
+      'new': this.renderTemplateRoute,
+    };
   }
 
-  myActionMenu = () => {
-    return (
-      <div>
-        <Row>
-          <FormattedMessage id="ui-marccat.search.actionmenu.export.mrc" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.browse.actionmenu.export.csv" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.browse.actionmenu.export.dat" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.search.actionmenu.print" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.search.actionmenu.opac" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.search.actionmenu.duplicate" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.search.actionmenu.holdings" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.search.actionmenu.instances" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.search.actionmenu.authority.records" />
-        </Row>
-      </div>
-    );
+  renderTemplateRoute = () => {
+    const { dispatch, router, settings, toggleFilterPane } = this.props;
+    toggleFilterPane();
+    const defaultTemplate = settings.defaultTemplate.id;
+    dispatch({ type: ActionTypes.TEMPLATE_GET_BY_ID, query: defaultTemplate });
+    router.push(`/marccat/record?templateId=${defaultTemplate}`);
+  };
+
+  handleClickEdit = () => {
+    const { dispatch, router } = this.props;
+    dispatch({ type: ActionTypes.VIEW_TEMPLATE, query: '000' });
+    router.push('/marccat/record');
+  }
+
+  handleCreateRecord = () => {
+    const { router, toggleFilterPane } = this.props;
+    toggleFilterPane();
+    this.setState(prevState => ({ layerOpen: !prevState.layerOpen }));
+    router.push('/marccat/record?templateId=123');
+  };
+
+  handleOnToggle = () => {
+    this.setState(prevState => ({ openDropDownMenu: !prevState.openDropDownMenu }));
+  }
+
+  addUrlParam(key, value) {
+    const { location, router } = this.props;
+    const url = location.pathname;
+    const newParam = key + '=' + value;
+    let result = url.replace(new RegExp('(&|\\?)' + key + '=[^\&|#]*'), '$1' + newParam);
+    if (result === url) {
+      result = (url.indexOf('?') !== -1 ? url.split('?')[0] + '?' + newParam + '&' + url.split('?')[1]
+        : (url.indexOf('#') !== -1 ? url.split('#')[0] + '?' + newParam + '#' + url.split('#')[1]
+          : url + '?' + newParam));
+    }
+    router.push(result);
+  }
+
+  transitionToParams = (key, value) => {
+    const { location, router } = this.props;
+    const url = location.pathname;
+    router.push((url.match(/[\?]/g) ? '&' : '?') + `${key}=${value}`);
   };
 
   handleDetails = (e, meta) => {
-    const { dispatch } = this.props;
+    const { dispatch, data } = this.props;
     const id = meta['001'];
+    const detailSelected = data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001']) || {};
+    this.transitionToParams('idNumber', id);
     dispatch({ type: ActionTypes.DETAILS, query: id, recordType: meta.recordView });
     if (isAuthorityRecord(meta)) {
-      dispatch({ type: ActionTypes.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView });
+      dispatch({ type: ActionTypes.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView, openPanel: true });
+      this.setState({
+        detail: detailSelected,
+        detailPaneMeta: {
+          title: 'Auth. • ' + id,
+          subTitle: meta['preferredTitle'] + ' / ' + meta['name']
+        }
+      });
+    } else {
+      this.setState({
+        detail: detailSelected,
+        detailPanelIsVisible: true,
+        detailPaneMeta: {
+          title: 'Bib. • ' + id,
+          subTitle: meta['preferredTitle'] + ' / ' + meta['name']
+        }
+      });
     }
     dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
-    this.setState({ detailPanelIsVisible: true });
   };
 
   onNeedMoreData = (initialData: Array<any>) => {
     return initialData.slice(10, 20);
   };
 
+  renderRightMenuEdit = props => {
+    return (
+      <ToolbarButtonMenu
+        create
+        {...props}
+        onClick={this.handleClickEdit}
+        label={<FormattedMessage id="ui-marccat.search.record.edit" />}
+      />
+    );
+  };
+
+  renderDropdownLabels = () => {
+    const { translate } = this.props;
+    return [{
+      label: translate({ id: 'ui-marccat.button.new.auth' }),
+      shortcut: translate({ id: 'ui-marccat.button.new.short.auth' }),
+      onClick: this.renderTemplateRoute,
+    },
+    {
+      label: translate({ id: 'ui-marccat.button.new.bib' }),
+      shortcut: translate({ id: 'ui-marccat.button.new.short.bib' }),
+      onClick: this.renderTemplateRoute,
+    }];
+  };
+
+  renderLastMenu = () => {
+    const { openDropDownMenu } = this.state;
+    const { translate, activeFilterName, activeFilterChecked } = this.props;
+    return (activeFilterName === 'recordType.Bibliographic records' && activeFilterChecked) ?
+      (<CreateButtonMenu
+        {...this.props}
+        label={translate({ id: 'ui-marccat.search.record.new.from.template' })}
+        labels={this.renderDropdownLabels()}
+        onToggle={this.renderTemplateRoute}
+        noDropdown
+      />) : (<CreateButtonMenu
+        {...this.props}
+        label={translate({ id: 'ui-marccat.search.record.new' })}
+        labels={this.renderDropdownLabels()}
+        onToggle={this.renderTemplateRoute}
+        open={openDropDownMenu}
+      />);
+  };
+
+  renderCreateTemplateButton = () => {
+    const { translate } = this.props;
+    return (
+      <CreateButtonMenu
+        {...this.props}
+        label={translate({ id: 'ui-marccat.template.record.create' })}
+        labels={this.renderDropdownLabels()}
+        onToggle={this.renderTemplateRoute}
+        noDropdown
+      />);
+  };
+
   render() {
-    /* eslint-disable-next-line prefer-const */
-    let { bibsOnly, autOnly, detailPanelIsVisible, noResults, loading } = this.state;
+    let { bibsOnly, autOnly, detailPanelIsVisible, noResults } = this.state;
+    const { loading, detailPaneMeta, detail } = this.state;
     const {
       activeFilter,
       activeFilterName,
@@ -116,7 +217,7 @@ export class SearchResults extends React.Component<P, {}> {
       isReadyDetail,
       isFetchingDetail,
       isLoadingAssociatedRecord,
-      isReadyAssociatedRecord
+      isReadyAssociatedRecord,
     } = this.props;
     if (activeFilter) {
       if (activeFilterName === 'recordType.Bibliographic records' && activeFilterChecked) {
@@ -150,122 +251,66 @@ export class SearchResults extends React.Component<P, {}> {
     const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForAssociatedBibList(mergedRecord) : [];
     const messageAuth = (totalAuthCount && totalAuthCount > 0) ? totalAuthCount + ' Authority records ' : ' No Authority records found ';
     const messageBib = (totalBibCount && totalBibCount > 0) ? totalBibCount + ' Bibliographic records ' : ' No Bibliographic records found ';
+    let message = C.EMPTY_MESSAGE;
 
-    const message = messageAuth + ' / ' + messageBib;
+    if (autOnly) {
+      message = messageAuth;
+    } else if (bibsOnly) {
+      message = messageBib;
+    } else {
+      message = messageAuth.concat('/').concat(messageBib);
+    }
+
     const messageNoContent = <FormattedMessage id="ui-marccat.search.initial.message" />;
-    const rightMenu = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.new.keyboard" />;
-    const rightMenuEdit = <ToolbarButtonMenu create {...this.props} label="ui-marccat.search.record.edit" />;
     return (
-      <Paneset static>
-        <Pane
-          padContent={(marcJSONRecords.length > 0) || isFetching}
-          defaultWidth="fill"
-          paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
-          paneSub={(mergedRecord && mergedRecord.length > 0) ? message : messageNoContent}
-          appIcon={{ app: C.META.ICON_TITLE }}
-          firstMenu={firstMenu}
-          lastMenu={rightMenu}
-        >
-          {
-            (isFetching) ?
-              <Icon icon="spinner-ellipsis" /> :
-              (!isFetching && noResults && !(bibliographicResults === undefined && authorityResults === undefined)) ?
-                <NoResultsMessage {...this.props} /> :
-                (isReady) ?
-                  <MultiColumnList
-                    autosize
-                    id="tabella"
-                    defaultWidth="fill"
-                    isEmptyMessage={C.EMPTY_MESSAGE}
-                    columnWidths={
-                      {
-                        'resultView': '5%',
-                        '001': '10%',
-                        '245': '30%',
-                        'name': '15%',
-                        'uniformTitle': '5%',
-                        'subject': '8%',
-                        'date1': '5%',
-                        'date2': '5%',
-                        'format': '8%',
-                        'tagHighlighted': '5%',
-                        'countDoc': '4%'
-                      }
-                    }
-                    rowMetadata={['001', 'recordView']}
-                    onRowClick={this.handleDetails}
-                    contentData={marcJSONRecords}
-                    formatter={resultsFormatter}
-                    columnMapping={columnMapper}
-                    onNeedMoreData={() => this.onNeedMoreData(marcJSONRecords)}
-                    virtualize
-                    loading={loading}
-                    visibleColumns={[
-                      'resultView',
-                      '001',
-                      '245',
-                      'name',
-                      'uniformTitle',
-                      'subject',
-                      'date1',
-                      'date2',
-                      'format',
-                      'tagHighlighted',
-                      'countDoc'
-                    ]}
-                  /> : <EmptyMessage {...this.props} />
-          }
-        </Pane>
-
-        {detailPanelIsVisible &&
-          <Pane
-            id="pane-details"
-            defaultWidth="30%"
-            paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
-            paneSub={C.EMPTY_MESSAGE}
-            appIcon={{ app: C.META.ICON_TITLE }}
-            actionMenu={this.myActionMenu}
-            dismissible
+      <HotKeys keyMap={this.keys} handlers={this.handlers} style={{ width: 100 + '%' }}>
+        <Paneset static>
+          <SearchResultPane
+            marcJSONRecords={marcJSONRecords}
+            isFetching={isFetching}
+            firstMenu={firstMenu}
+            lastMenu={this.renderLastMenu()}
+            mergedRecord={mergedRecord}
+            message={message}
+            noResults={noResults}
+            bibliographicResults={bibliographicResults}
+            authorityResults={authorityResults}
+            handleDetails={this.handleDetails}
+            isReady={isReady}
+            autOnly={autOnly}
+            bibsOnly={bibsOnly}
+            loading={loading}
+            messageNoContent={messageNoContent}
+          />
+          {detailPanelIsVisible &&
+          <RecordDetailPane
+            detailPaneMeta={detailPaneMeta}
+            detail={detail}
+            isFetchingDetail={isFetchingDetail}
+            isReadyDetail={isReadyDetail}
             onClose={() => this.setState({ detailPanelIsVisible: false })}
-            lastMenu={rightMenuEdit}
-          >
-            {(isFetchingDetail) ?
-              <Icon icon="spinner-ellipsis" /> :
-              (isReadyDetail) ?
-                <RecordDetails {...this.props} /> : null
-            }
-          </Pane>
-        }
-
-        {isPanelBibAssOpen && !noResults &&
-          <Pane
-            id="pane-details"
-            defaultWidth="25%"
-            paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
-            paneSub={C.EMPTY_MESSAGE}
-            appIcon={{ app: C.META.ICON_TITLE }}
-            actionMenu={this.myActionMenu}
-            dismissible
+            rightMenuEdit={this.renderRightMenuEdit()}
+          />
+          }
+          {isPanelBibAssOpen && !noResults &&
+          <AssociatedRecordPane
             onClose={() => {
               const { dispatch } = this.props;
               dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
             }}
-            lastMenu={rightMenuEdit}
-          >
-            {(isLoadingAssociatedRecord) ?
-              <Icon icon="spinner-ellipsis" /> :
-              (isReadyAssociatedRecord) ?
-                <AssociatedBibDetails {...this.props} /> : null
-            }
-          </Pane>
-        }
-      </Paneset>
+            isLoadingAssociatedRecord={isLoadingAssociatedRecord}
+            isReadyAssociatedRecord={isReadyAssociatedRecord}
+            renderRightMenuEdit={this.renderRightMenuEdit}
+          />
+          }
+        </Paneset>
+      </HotKeys>
     );
   }
 }
 
 export default (connect(
-  ({ marccat: { search, details, countDoc, filter, associatedBibDetails } }) => ({
+  ({ marccat: { search, details, countDoc, filter, associatedBibDetails, template, settings } }) => ({
     bibliographicResults: search.bibliographicResults,
     totalBibCount: search.bibCounter,
     totalAuthCount: search.authCounter,
@@ -274,12 +319,12 @@ export default (connect(
     isReady: search.isReady,
     isFetchingDetail: details.isLoading,
     isReadyDetail: details.isReady,
-
+    defaultTemplate: template.default,
     activeFilter: filter.filters,
     activeFilterName: filter.name,
     activeFilterChecked: filter.checked,
     countRecord: countDoc.records,
-
+    settings: settings.data,
     isLoadingAssociatedRecord: associatedBibDetails.isLoading,
     isReadyAssociatedRecord: associatedBibDetails.isReady,
     associatedRecordDetails: associatedBibDetails.records,

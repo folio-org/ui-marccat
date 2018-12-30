@@ -1,12 +1,15 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import FilterGroups, { initialFilterState } from '@folio/stripes-components/lib/FilterGroups';
 import { ActionTypes } from '../../../redux/actions';
-import { Props } from '../../../core/type/props';
+import { Props } from '../../../core';
 
 import styles from './FiltersContainer.css';
 
-type P = Props & {}
-export default class FiltersContainer extends React.Component<P, {}> {
+export default class FiltersContainer extends React.Component<Props, {}> {
   constructor(props) {
     super(props);
     this.config = [
@@ -32,7 +35,7 @@ export default class FiltersContainer extends React.Component<P, {}> {
         label: 'Format type',
         name: 'formatType',
         cql: 'format.name',
-        values: ['All text', 'Books', 'Archival Manuscript/ Mixed Formats', 'Film or Video', 'Map', 'Map(Manuscript)', 'Music Recording', 'Music Score', 'Music Score (Manuscript)', 'Nonmusic recording', 'Periodical or Serials', 'Photograph, Print, or Drawing', 'Rare Book or Manuscript', 'Software or E-Resource', '3-D Object'],
+        values: ['All text', 'Books', 'Archival Manuscript/ Mixed Formats', 'Film or Video', 'Map', 'Map(Manuscript)', 'Music Recording', 'Music Score', 'Music Score (Manuscript)', 'Nonmusic recording', 'Periodical or Serials', 'Photograph, Print, or Drawing', 'Rare Book or Manuscript', 'Software or E-Resource', '3-D Object', 'Microform'],
       },
     ];
 
@@ -53,18 +56,27 @@ export default class FiltersContainer extends React.Component<P, {}> {
   }
 
   onClearFilter = () => {
+    const { dispatch } = this.props;
     this.setState(() => {
       const filters = {};
       return { filters };
     });
+    dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', filterChecked: false });
   }
 
   render() {
     const { filters } = this.state;
-    // const filterCount = Object.keys(filters).length;
+    const { filterEnable } = this.props;
+    const disableFilters = {};
+    disableFilters.recordType = true;
+    disableFilters.suppressedFilter = true;
+    disableFilters.languageFilter = true;
+    disableFilters.formatType = true;
+
     return (
-      <div className={styles['search-filters']}>
+      <div className={(filterEnable) ? styles['search-filters'] : styles['search-filters-disabled']}>
         <FilterGroups
+          disableNames={(!filterEnable) ? disableFilters : {}}
           config={this.config}
           filters={filters}
           onChangeFilter={this.onChangeFilter}

@@ -1,37 +1,42 @@
+@import '@folio/stripes-components/lib/variables';
+
 [data-module] {
   height: 100%;
+}
+
+[data-full-width] {
+  width: 100%;
 }
 
 .authority {
   width: 18px;
   height: 18px;
-  background-color: #f6544c;
+  background-color: var(--danger);
   border-radius: 25%;
 }
 
 .bibliographic {
   width: 18px;
   height: 18px;
-  background-color: #2b75bb;
+  background-color: var(--primary);
   border-radius: 25%;
 }
 
 .rightPosition {
   float: right;
-  margin-right: -7px;
   margin-top: 10px;
   height: 24px;
   max-height: 24px;
-  line-height: 0;
+  line-height: 12px;
 }
 
 .rightPositionTop {
   float: right;
-  margin-right: 7px;
   margin-top: 10px;
   height: 24px;
+  margin-right: 5px;
   max-height: 24px;
-  line-height: 0;
+  line-height: 12px;
 }
 
 .select_margin {
@@ -59,4 +64,16 @@
 
 .max-width {
   width: 100%;
+}
+
+.mb-5 {
+  margin-bottom: 5px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.tagHighLighted {
+  background-color: #ff0;
 }

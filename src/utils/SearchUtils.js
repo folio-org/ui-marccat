@@ -1,4 +1,5 @@
-import { languageFilterMap, formatFilterMap } from '../components/Search/Select/FilterMapper';
+import { includes } from 'lodash';
+import { languageFilterMap, formatFilterMap } from '../components/Search/Filter/FilterMapper';
 
 const getLanguageFilterQuery = (languageFilter) => {
   return languageFilter
@@ -18,8 +19,19 @@ const isAuthorityRecord = (meta) => {
   return meta.recordView === -1;
 };
 
+const transitionToParams = (key, value, props) => {
+  const url = props.location.pathname;
+  return includes(url, `${key}=${value}`);
+};
+
+// const transitionToParamsWithQuery = (mode) => {
+//   const url = this.props.location.pathname + this.props.location.search;
+//   return includes(url, '?') ? `${url}&layer=${mode}` : `${url}?layer=${mode}`;
+// };
+
 export {
   getLanguageFilterQuery,
   getFormatFilterQuery,
+  transitionToParams,
   isAuthorityRecord
 };

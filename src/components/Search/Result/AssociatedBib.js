@@ -1,6 +1,10 @@
+/**
+ * @format
+ * @flow
+ */
 import React from 'react';
 import { connect } from 'react-redux';
-import { Accordion, FilterAccordionHeader, MultiColumnList } from '@folio/stripes-components';
+import { Accordion, FilterAccordionHeader, MultiColumnList } from '@folio/stripes/components';
 import type { Props } from '../../../core';
 import { ActionTypes } from '../../../redux/actions';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
@@ -30,6 +34,7 @@ function AssociatedBib({ ...props }: P) {
         id="bib-associated"
         defaultWidth="30%"
         isEmptyMessage={EMPTY_MESSAGE}
+
         columnWidths={
           {
             'resultView': '20%',

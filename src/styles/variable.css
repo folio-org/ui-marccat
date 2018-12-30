@@ -1,0 +1,7 @@
+@import 'https://unpkg.com/ionicons@4.5.0/dist/css/ionicons.min.css';
+@import '@folio/stripes-components/lib/variables';
+
+:root {
+  --font-size-xx-large: 18px;
+  --font-size-xxx-large: 24px;
+}

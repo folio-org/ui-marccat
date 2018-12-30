@@ -3,12 +3,13 @@
  * @flow
  */
 import * as React from 'react';
-import Settings from './settings';
+import { MarcatSettings as Settings } from './settings';
 import { Router } from './router';
 import { reducer, epics } from './redux';
 import { injectCommonProp } from './core';
 import * as C from './utils';
 import MARCcat from './MARCcat';
+import { ActionTypes } from './redux/actions';
 
 import './styles/common.css';
 
@@ -39,6 +40,18 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
     props.root.addEpic(C.STATE_MANAGEMENT.EPIC, epics);
 
     this.toggleFilterPane = this.toggleFilterPane.bind(this);
+  }
+
+  componentDidMount() {
+    const { store } = this.props;
+    store.dispatch({ type: ActionTypes.VIEW_TEMPLATE });
+    store.dispatch({ type: ActionTypes.SETTINGS,
+      payload:
+      {
+        defaultTemplate : {
+          id: 408,
+          name: 'New Monograph'
+        } } });
   }
 
   toggleFilterPane = () => {

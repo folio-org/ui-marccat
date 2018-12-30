@@ -1,0 +1,39 @@
+.recordContainer {
+  flex-basis: 50%;
+}
+
+.titleCollapsiblePanel {
+  margin-top: 15px;
+  border-radius: 10px;
+  background-color: #dcdcdc;
+  background-position: left top;
+  background-repeat: repeat;
+  padding: 15px;
+  padding-left: 30px;
+  padding-right: 30px;
+  text-align: left;
+  height: 100%;
+  display: grid;
+
+  & label {
+    padding-right: 10px;
+  }
+
+  & input {
+    width: 60%;
+  }
+}
+
+.fieldContainer {
+  background-color: #dcdcdc;
+}
+
+.marcFieldIconCaret {
+  float: right;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.pl-10 {
+  padding-left: 10px;
+}

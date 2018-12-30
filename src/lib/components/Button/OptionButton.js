@@ -56,15 +56,19 @@ class CheckboxIconButton extends React.Component<Props, {}> {
 }
 
 export function SingleCheckboxIconButton({ ...props }:P) {
-  const { labels } = props;
-  const styles = {
-    float: 'left',
-    paddingBottom: '15px',
-  };
+  const { labels, pullLeft, widthPadding } = props;
   return (
-    <div style={styles}>
+    <div>
       { labels.map((l, i) => (
-        <div key={i}>
+        <div
+          key={i}
+          style={
+            {
+              float: (pullLeft) ? 'left' : 'none',
+              paddingBottom: (widthPadding) ? '10px' : 'none'
+            }
+          }
+        >
           <Field
             id={`checkbox-${l}`}
             className="checkbox"

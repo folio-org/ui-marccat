@@ -88,7 +88,7 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                   />
                   <form name="bibliographicRecordForm" onSubmit={this.handleOnSubmit}>
                     <Accordion label="Suppress" id="suppress" separator={false}>
-                      <SingleCheckboxIconButton labels={['suppress']} />
+                      <SingleCheckboxIconButton labels={['suppress']} pullLeft widthPadding />
                     </Accordion>
                     <Accordion label="Leader" id="leader">
                       <MarcField

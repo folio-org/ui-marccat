@@ -46,7 +46,7 @@ export class MarcRecordManager extends React.Component<Props, {}> {
       isPresent007,
       isPresent008
     } = this.state;
-    const defaultTemplate = settings.defaultTemplate;
+    const defaultTemplate = (settings) ? settings.defaultTemplate : C.DEFAULT_TEMPLATE;
 
     // const resultNotReady = (leaderValuesResults === undefined);
     // headerTypes006NotReady = (headerTypes006Result === undefined);

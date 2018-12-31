@@ -204,8 +204,6 @@ export class SearchResults extends React.Component<P, {}> {
     const { loading, detailPaneMeta, detail } = this.state;
     const {
       activeFilter,
-      activeFilterName,
-      activeFilterChecked,
       totalAuthCount,
       totalBibCount,
       bibliographicResults,
@@ -220,16 +218,9 @@ export class SearchResults extends React.Component<P, {}> {
       isReadyAssociatedRecord,
     } = this.props;
     if (activeFilter) {
-      if (activeFilterName === 'recordType.Bibliographic records' && activeFilterChecked) {
-        bibsOnly = true;
-      } else if (activeFilterName === 'recordType.Bibliographic records' && !activeFilterChecked) {
-        bibsOnly = false;
-      }
-      if (activeFilterName === 'recordType.Authority records' && activeFilterChecked) {
-        autOnly = true;
-      } else if (activeFilterName === 'recordType.Authority records' && !activeFilterChecked) {
-        autOnly = false;
-      }
+      const filterArray = [];
+      Object.keys(activeFilter).forEach((key) => filterArray.push(key + ':' + activeFilter[key]));
+      filterArray.map(filterEl => (filterEl === 'recordType.Bibliographic records:true' ? bibsOnly = true : filterEl === 'recordType.Bibliographic records:false' ? bibsOnly = false : filterEl === 'recordType.Authority records:true' ? autOnly = true : filterEl === 'recordType.Authority records:false' ? autOnly = false : null));
     }
     if ((bibliographicResults === undefined && authorityResults === undefined) || (bibliographicResults && (bibliographicResults.length === undefined || bibliographicResults.length === 0) && (authorityResults && (authorityResults.length === undefined || authorityResults.length === 0)))) {
       noResults = true;
@@ -243,9 +234,19 @@ export class SearchResults extends React.Component<P, {}> {
         mergedRecord = [...mergedRecord, ...authorityResults];
       }
     }
+    if (bibsOnly) {
+      if (bibliographicResults && bibliographicResults.length > 0) {
+        mergedRecord = [...mergedRecord, ...bibliographicResults];
+      }
+    }
     if (!autOnly) {
       if (bibliographicResults && bibliographicResults.length > 0) {
         mergedRecord = [...mergedRecord, ...bibliographicResults];
+      }
+    }
+    if (autOnly) {
+      if (authorityResults && authorityResults.length > 0) {
+        mergedRecord = [...mergedRecord, ...authorityResults];
       }
     }
     const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForAssociatedBibList(mergedRecord) : [];

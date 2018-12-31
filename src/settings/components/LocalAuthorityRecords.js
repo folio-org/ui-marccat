@@ -18,7 +18,6 @@ class LocalAuthorityRecords extends React.Component<P, {}> {
     const { translate } = this.props;
     return (
       <ToolbarButtonMenu
-        create
         onClick={this.handleOnClick()}
         {...this.props}
         label={

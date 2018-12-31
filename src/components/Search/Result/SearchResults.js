@@ -146,7 +146,6 @@ export class SearchResults extends React.Component<P, {}> {
   renderRightMenuEdit = props => {
     return (
       <ToolbarButtonMenu
-        create
         {...props}
         onClick={this.handleClickEdit}
         label={<FormattedMessage id="ui-marccat.search.record.edit" />}

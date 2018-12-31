@@ -39,6 +39,7 @@
   "search.record": "Records",
   "search.record.preview": "Preview Record",
   "search.record.new": "New",
+  "search.record.new.auth": "New (CTRL+A)",
   "search.record.new.from.template": "New from template (CTRL+N)",
   "search.record.actions": "Actions",
   "search.record.edit": "Edit",

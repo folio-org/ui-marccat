@@ -4,7 +4,6 @@
  */
 import React from 'react';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import {
   KeyValue,
   Row,
@@ -18,7 +17,6 @@ import { ActionTypes } from '../../../redux/actions/Actions';
 import type { Props } from '../../../core';
 import { getTag100, getTitle100, remapForAssociatedBibList } from '../../../utils/Mapper';
 import { EMPTY_MESSAGE } from '../../../utils/Constant';
-import { ToolbarButtonMenu } from '../../../lib';
 import { resultsFormatterForAssociated, columnMapperForAssociated } from '../../../utils/Formatter';
 import style from '../../../styles/common.css';
 
@@ -32,16 +30,6 @@ export class BrowseItemDetail extends React.Component<P, {}> {
       recordDetailsArray: Array
     };
   }
-
-  renderButtonMenu = () => {
-    return (
-      <ToolbarButtonMenu
-        create
-        {...this.props}
-        label={<FormattedMessage id="ui-marccat.browse.record.create" />}
-      />
-    );
-  };
 
   render() {
     const { browseDetailRecords, authorityDetails } = this.props;

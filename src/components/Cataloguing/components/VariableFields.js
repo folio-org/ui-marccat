@@ -4,12 +4,8 @@
  */
 import React from 'react';
 import {
-  Row,
-  Col,
   HotKeys,
   RepeatableField,
-  LayoutBox,
-  Icon
 } from '@folio/stripes/components';
 import { Field } from 'redux-form';
 import type { Props } from '../../../core';
@@ -43,32 +39,48 @@ export default class VariableFields extends React.Component<Props, {}> {
     }));
   }
 
-  renderField = (field, index) => {
-    const labels = [''];
+  renderField = () => {
     return (
       <HotKeys keyMap={this.keys} handlers={this.handlers} data-full-width>
-        <LayoutBox className={style.fieldContainer}>
-          <Row>
-            <Icon
-              icon="caret-down"
-              size="large"
-            />
-            <SingleCheckboxIconButton labels={labels} className={style['pl-10']} />
-            <Col xs={1}>
-              <div>
+        <div className={style.divTable}>
+          <div className={style.divTableBody}>
+            <div className={style.divTableRow}>
+              <SingleCheckboxIconButton labels={['']} pullLeft />
+              <div className={style.divTableCell}>
                 <Field
-                  id={`tagField-${index}`}
-                  name={`tagField-${index}`}
+                  id="{name}"
+                  name="{name}"
                   type="text"
                   component="input"
                 />
               </div>
-            </Col>
-            <Col xs={1}>column 2</Col>
-            <Col xs={1}>column 2</Col>
-            <Col xs={8}>column 5</Col>
-          </Row>
-        </LayoutBox>
+              <div className={style.divTableCell}>
+                <Field
+                  id="{name}"
+                  name="{name}"
+                  type="text"
+                  component="input"
+                />
+              </div>
+              <div className={style.divTableCell}>
+                <Field
+                  id="{name}"
+                  name="{name}"
+                  type="text"
+                  component="input"
+                />
+              </div>
+              <div className={style.divTableCell}>
+                <Field
+                  id="{name}"
+                  name="{name}"
+                  type="text"
+                  component="input"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </HotKeys>
     );
   };
@@ -80,7 +92,7 @@ export default class VariableFields extends React.Component<Props, {}> {
         fields={fields}
         onAdd={this.handleAdd}
         onRemove={this.handleRemove}
-        renderField={(field, index) => this.renderField(field, index)}
+        renderField={() => this.renderField()}
       />
     );
   }

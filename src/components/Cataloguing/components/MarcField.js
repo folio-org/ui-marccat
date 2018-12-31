@@ -9,7 +9,7 @@ export default class MarcField extends React.Component<Props, {}> {
     const { dispatch, change, label, name, value } = this.props;
     dispatch(change(name, value));
     return (
-      <div className={style.titleCollapsiblePanel}>
+      <div className={style.controlFieldContainer}>
         <div>
           <label htmlFor={name}>{label}</label>
           <Field

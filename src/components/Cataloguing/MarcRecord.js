@@ -88,7 +88,7 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                   />
                   <form name="bibliographicRecordForm" onSubmit={this.handleOnSubmit}>
                     <Accordion label="Suppress" id="suppress" separator={false}>
-                      <SingleCheckboxIconButton labels={['suppress']} pullLeft widthPadding />
+                      <SingleCheckboxIconButton labels={['Suppress from Discovery']} pullLeft widthPadding />
                     </Accordion>
                     <Accordion label="Leader" id="leader">
                       <MarcField
@@ -114,8 +114,8 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                             );
                           } else if (
                             el.fixedField.code === '006' ||
-                      el.fixedField.code === '007' ||
-                      el.fixedField.code === '008') {
+                            el.fixedField.code === '007' ||
+                            el.fixedField.code === '008') {
                             if (el.fixedField.code === '006') {
                               isPresent006 = true;
                             } else if (el.fixedField.code === '007') {

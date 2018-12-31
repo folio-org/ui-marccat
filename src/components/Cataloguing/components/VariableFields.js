@@ -43,7 +43,7 @@ export default class VariableFields extends React.Component<Props, {}> {
     }));
   }
 
-  renderField = () => {
+  renderField = (field, index) => {
     const labels = [''];
     return (
       <HotKeys keyMap={this.keys} handlers={this.handlers} data-full-width>
@@ -57,8 +57,8 @@ export default class VariableFields extends React.Component<Props, {}> {
             <Col xs={1}>
               <div>
                 <Field
-                  id="tagField"
-                  name="tagField"
+                  id={`tagField-${index}`}
+                  name={`tagField-${index}`}
                   type="text"
                   component="input"
                 />
@@ -80,7 +80,7 @@ export default class VariableFields extends React.Component<Props, {}> {
         fields={fields}
         onAdd={this.handleAdd}
         onRemove={this.handleRemove}
-        renderField={() => this.renderField()}
+        renderField={(field, index) => this.renderField(field, index)}
       />
     );
   }

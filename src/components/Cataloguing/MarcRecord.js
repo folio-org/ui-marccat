@@ -20,7 +20,7 @@ import { reduxForm } from 'redux-form';
 import { Props, injectCommonProp } from '../../core';
 import { ActionMenuTemplate } from '../../lib';
 import { VariableFields } from '.';
-import MarcField from './components/MarcField';
+import MarcField from './Marc/MarcField';
 import * as C from '../../utils/Constant';
 import { SingleCheckboxIconButton } from '../../lib/components/Button/OptionButton';
 
@@ -161,6 +161,7 @@ export class MarcRecordManager extends React.Component<Props, {}> {
 
 export default reduxForm({
   form: 'bibliographicRecordForm',
+  navigationCheck: true,
   enableReinitialize: true,
   destroyOnUnmount: false
 })(connect(

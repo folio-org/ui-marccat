@@ -11,7 +11,7 @@ import { Paneset, HotKeys } from '@folio/stripes/components';
 import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
-import { ToolbarButtonMenu, CreateButtonMenu } from '../../../lib';
+import { ToolbarButtonMenu, DropdownButtonMenu as CreateButtonMenu } from '../../../lib';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
 import { isAuthorityRecord } from '../../../utils/SearchUtils';
 import { injectCommonProp } from '../../../core';
@@ -146,7 +146,6 @@ export class SearchResults extends React.Component<P, {}> {
   renderRightMenuEdit = props => {
     return (
       <ToolbarButtonMenu
-        create
         {...props}
         onClick={this.handleClickEdit}
         label={<FormattedMessage id="ui-marccat.search.record.edit" />}
@@ -182,7 +181,9 @@ export class SearchResults extends React.Component<P, {}> {
         {...this.props}
         label={translate({ id: 'ui-marccat.search.record.new' })}
         labels={this.renderDropdownLabels()}
-        onToggle={this.renderTemplateRoute}
+        onToggle={() => this.setState({
+          openDropDownMenu: !openDropDownMenu
+        })}
         open={openDropDownMenu}
       />);
   };
@@ -204,8 +205,6 @@ export class SearchResults extends React.Component<P, {}> {
     const { loading, detailPaneMeta, detail } = this.state;
     const {
       activeFilter,
-      activeFilterName,
-      activeFilterChecked,
       totalAuthCount,
       totalBibCount,
       bibliographicResults,
@@ -220,18 +219,18 @@ export class SearchResults extends React.Component<P, {}> {
       isReadyAssociatedRecord,
     } = this.props;
     if (activeFilter) {
-      if (activeFilterName === 'recordType.Bibliographic records' && activeFilterChecked) {
-        bibsOnly = true;
-      } else if (activeFilterName === 'recordType.Bibliographic records' && !activeFilterChecked) {
-        bibsOnly = false;
-      }
-      if (activeFilterName === 'recordType.Authority records' && activeFilterChecked) {
-        autOnly = true;
-      } else if (activeFilterName === 'recordType.Authority records' && !activeFilterChecked) {
-        autOnly = false;
-      }
+      const filterArray = [];
+      Object.keys(activeFilter).forEach((key) => filterArray.push(key + ':' + activeFilter[key]));
+      filterArray.map(filterEl => (filterEl === 'recordType.Bibliographic records:true' ?
+        bibsOnly = true : filterEl === 'recordType.Bibliographic records:false' ?
+          bibsOnly = false : filterEl === 'recordType.Authority records:true' ?
+            autOnly = true : filterEl === 'recordType.Authority records:false' ?
+              autOnly = false : null)); // TODO FIXME
     }
-    if ((bibliographicResults === undefined && authorityResults === undefined) || (bibliographicResults && (bibliographicResults.length === undefined || bibliographicResults.length === 0) && (authorityResults && (authorityResults.length === undefined || authorityResults.length === 0)))) {
+    if ((bibliographicResults === undefined && authorityResults === undefined)
+      || (bibliographicResults && (bibliographicResults.length === undefined
+      || bibliographicResults.length === 0)
+      && (authorityResults && (authorityResults.length === undefined || authorityResults.length === 0)))) {
       noResults = true;
       detailPanelIsVisible = false;
     } else {
@@ -243,9 +242,19 @@ export class SearchResults extends React.Component<P, {}> {
         mergedRecord = [...mergedRecord, ...authorityResults];
       }
     }
+    if (bibsOnly) {
+      if (bibliographicResults && bibliographicResults.length > 0) {
+        mergedRecord = [...mergedRecord, ...bibliographicResults];
+      }
+    }
     if (!autOnly) {
       if (bibliographicResults && bibliographicResults.length > 0) {
         mergedRecord = [...mergedRecord, ...bibliographicResults];
+      }
+    }
+    if (autOnly) {
+      if (authorityResults && authorityResults.length > 0) {
+        mergedRecord = [...mergedRecord, ...authorityResults];
       }
     }
     const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForAssociatedBibList(mergedRecord) : [];

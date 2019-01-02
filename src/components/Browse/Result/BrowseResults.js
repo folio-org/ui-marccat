@@ -3,17 +3,18 @@
  * @flow
  */
 import React from 'react';
-import { Pane, Paneset, Icon } from '@folio/stripes/components';
+import { MultiColumnList, Pane, Paneset, Icon } from '@folio/stripes/components';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Props, injectCommonProp } from '../../../core';
 import BrowseItemDetail from './BrowseItemDetail';
 import { ActionTypes } from '../../../redux/actions/Actions';
 import { findYourQueryFromBrowse } from '../../Search/Filter/FilterMapper';
+import { ToolbarButtonMenu, EmptyMessage, NoResultsMessage } from '../../../lib';
+import { browseFormatter, browseColMapper } from '../../../utils/Formatter';
 import BrowseAssociatedItemDetail from './BrowseAssociatedItemDetail';
 import * as C from '../../../utils/Constant';
 import { genericActionMenuDetail } from '../../../lib/components/ActionMenu/ActionMenu';
-import ResultMainPane from './components/ResultMainPane';
 
 type S = {
   browseDetailPanelIsVisible: bool;
@@ -26,6 +27,7 @@ export class BrowseResults extends React.Component<Props, S> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      detailSubtitle: {},
       browseDetailPanelIsVisible: false,
       rowClicked: false,
       noResults: false,
@@ -62,7 +64,8 @@ export class BrowseResults extends React.Component<Props, S> {
     }
     this.setState({
       browseDetailPanelIsVisible: true,
-      rowClicked: false
+      rowClicked: false,
+      detailSubtitle: meta.stringText,
     });
   };
 
@@ -77,8 +80,22 @@ export class BrowseResults extends React.Component<Props, S> {
     return genericActionMenuDetail(labels);
   };
 
+  renderButtonMenu = () => {
+    return (
+      <ToolbarButtonMenu
+        create
+        {...this.props}
+        label={
+          <Icon icon="plus-sign">
+            <FormattedMessage id="ui-marccat.browse.record.create" />
+          </Icon>
+        }
+      />
+    );
+  };
+
   render() {
-    const { browseDetailPanelIsVisible, rowClicked } = this.state;
+    const { browseDetailPanelIsVisible, rowClicked, detailSubtitle } = this.state;
     const { translate, firstMenu, isFetchingBrowse, isReadyBrowse, browseRecords, isPanelOpen, isFetchingBrowseDetails, isReadyBrowseDetails, isLoadingAssociated, isReadyAssociated } = this.props;
     let { noResults, isPadRequired } = this.state;
     const messageNoContent = <FormattedMessage id="ui-marccat.search.initial.message" />;
@@ -90,25 +107,56 @@ export class BrowseResults extends React.Component<Props, S> {
     }
     return (
       <Paneset static>
-        <ResultMainPane
-          translate={translate}
-          isFetchingBrowse={isFetchingBrowse}
-          isPadRequired={isPadRequired}
-          messageNoContent={messageNoContent}
+        <Pane
+          padContent={isFetchingBrowse || isPadRequired}
+          defaultWidth="fill"
+          actionMenu={this.getActionMenu}
+          paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
+          paneSub={messageNoContent}
           firstMenu={firstMenu}
-          noResults={noResults}
-          handleBrowseDetails={this.handleBrowseDetails}
-          isReadyBrowse={isReadyBrowse}
-          browseRecords={browseRecords}
-        />
+          lastMenu={this.renderButtonMenu()}
+        >
+          {
+            (isFetchingBrowse) ?
+              <Icon icon="spinner-ellipsis" /> :
+              (!isFetchingBrowse && noResults) ?
+                <NoResultsMessage {...this.props} /> :
+                (isReadyBrowse) ?
+                  <MultiColumnList
+                    contentData={browseRecords}
+                    autosize
+                    isEmptyMessage={C.EMPTY_MESSAGE}
+                    formatter={browseFormatter}
+                    onRowClick={this.handleBrowseDetails}
+                    rowMetadata={['Access point', 'Authority Records', 'Bibliographic Records']}
+                    columnMapping={browseColMapper}
+                    columnWidths={
+                      {
+                        'type': '10%',
+                        'headingNumber': '15%',
+                        'stringText': '25%',
+                        'countAuthorities': '25%',
+                        'countDocuments': '25%',
+                      }
+                    }
+                    visibleColumns={[
+                      'type',
+                      'headingNumber',
+                      'stringText',
+                      'countAuthorities',
+                      'countDocuments'
+                    ]}
+                  /> : <EmptyMessage {...this.props} />}
+        </Pane>
         {browseDetailPanelIsVisible && !rowClicked &&
           <Pane
             dismissible
             defaultWidth="35%"
             paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
-            paneSub={C.EMPTY_MESSAGE}
+            paneSub={detailSubtitle}
             lastMenu={this.renderButtonMenu()}
             onClose={this.handleClosePanelDetails}
+            actionMenu={this.getActionMenu}
           >
             {
               (isFetchingBrowseDetails) ?

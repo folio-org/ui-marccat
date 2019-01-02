@@ -20,7 +20,6 @@ class DefaultTemplate extends React.Component<P, {}> {
     if (defaultTemplateData && defaultTemplateData.length > 0) { defaultTemplateData.forEach(t => names.push(t.name)); }
     const rightMenu = (
       <ToolbarButtonMenu
-        create
         {...this.props}
         label={
           <Icon icon="edit">

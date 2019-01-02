@@ -14,11 +14,10 @@ class ResultMainPane extends React.Component {
     renderButtonMenu = () => {
       return (
         <ToolbarButtonMenu
-          create
           {...this.props}
           label={
             <Icon icon="plus-sign">
-              <FormattedMessage id="ui-marccat.browse.record.create" />
+              <FormattedMessage id="ui-marccat.search.record.new" />
             </Icon>
           }
         />
@@ -35,13 +34,14 @@ class ResultMainPane extends React.Component {
         noResults,
         isReadyBrowse,
         handleBrowseDetails,
-        browseRecords
+        browseRecords,
+        getActionMenu
       } = this.props;
       return (
         <Pane
           padContent={isFetchingBrowse || isPadRequired}
           defaultWidth="fill"
-          actionMenu={this.getActionMenu}
+          actionMenu={getActionMenu()}
           paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
           paneSub={messageNoContent}
           firstMenu={firstMenu}
@@ -58,7 +58,7 @@ class ResultMainPane extends React.Component {
                     autosize
                     isEmptyMessage={C.EMPTY_MESSAGE}
                     formatter={browseFormatter}
-                    onRowClick={handleBrowseDetails}
+                    onRowClick={handleBrowseDetails()}
                     rowMetadata={['Access point', 'Authority Records', 'Bibliographic Records']}
                     columnMapping={browseColMapper}
                     columnWidths={

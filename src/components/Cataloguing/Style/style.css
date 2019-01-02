@@ -37,35 +37,3 @@
 .pl-10 {
   padding-left: 10px;
 }
-
-.divTable {
-  display: table;
-  width: 100%;
-}
-
-.divTableRow {
-  display: table-row;
-}
-
-.divTableCell,
- .divTableHead {
-  border: 1px solid #dcdcdc;
-  display: table-cell;
-  padding: 0;
-}
-
-.divTableHeading {
-  background-color: #dcdcdc;
-  display: table-header-group;
-  font-weight: bold;
-}
-
-.divTableFoot {
-  background-color: #dcdcdc;
-  display: table-footer-group;
-  font-weight: bold;
-}
-
-.divTableBody {
-  display: table-row-group;
-}

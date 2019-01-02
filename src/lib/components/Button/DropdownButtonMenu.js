@@ -20,7 +20,7 @@ type P = Props & {
   open: boolean
 }
 
-export default function CreateButtonMenu({ ...props }:P) {
+export default function DropdownButtonMenu({ ...props }:P) {
   const { onToggle, open, labels, label, noDropdown } = props;
 
   const renderDropdDownMenu = () => {

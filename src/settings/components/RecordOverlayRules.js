@@ -35,7 +35,6 @@ class RecordsOverlayRules extends React.Component<P, {}> {
     const { locked } = this.state;
     const rightMenu = (
       <ToolbarButtonMenu
-        create
         onClick={this.handleOnClick}
         {...this.props}
         label={

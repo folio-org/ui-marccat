@@ -1,0 +1,29 @@
+/**
+ * EditableList
+ */
+.marcEditableListFormHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.marcEditableListRow {
+  display: flex;
+  max-width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 8px;
+  background-color: #efefef;
+  margin-bottom: 4px;
+}
+
+.marcEditableListHeaders {
+  display: flex;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+.marcEditableListError {
+  width: 100%;
+  padding: 6px;
+}

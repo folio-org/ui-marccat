@@ -92,5 +92,7 @@ export function SingleCheckboxIconButton({ ...props }:P) {
 
 export default reduxForm({
   form: 'checkboxForm',
+  navigationCheck: true,
+  enableReinitialize: true,
   destroyOnUnmount: false
 })(CheckboxIconButton);

@@ -3,11 +3,11 @@
  * @flow
  */
 import React from 'react';
-import {
-  HotKeys,
-} from '@folio/stripes/components';
+import { HotKeys } from '@folio/stripes/components';
+import { isEmpty } from 'lodash';
 import MarcTableList from './MarcTableList';
 import type { Props } from '../../../core';
+
 
 export default class VariableFields extends React.Component<Props, {}> {
   constructor(props) {
@@ -20,20 +20,29 @@ export default class VariableFields extends React.Component<Props, {}> {
     };
   }
 
+  mapVariableFields = ({ record }) => {
+
+  }
 
   render() {
-    const contentData = [{
-      tag: 1,
-      name: 'Item 1',
-    }];
+    const { record } = this.props;
+    const contentData = [
+      {
+        tag: (!isEmpty(record)) ? record.code : '000',
+        count: '1',
+        ref:  '1',
+        displayValue: (!isEmpty(record)) ? record.displayValue : ''
+      }
+    ];
     return (
-      <HotKeys keyMap={this.keys} handlers={this.handlers} data-full-width>
+      <HotKeys keyMap={this.keys} handlers={this.handlers}>
+        {!isEmpty(record) &&
         <MarcTableList
           contentData={contentData}
-          visibleFields={['tag']}
-          columnMapping={{ tag: 'tag' }}
-          createButtonLabel="Actions"
-        />
+          visibleFields={['tag', 'count', 'ref', 'displayValue']}
+          columnMapping={{ tag: 'tag', count: 'count', ref: 'ref', displayValue: 'displayValue' }}
+          actionButtonLabel="Actions"
+        />}
       </HotKeys>
     );
   }

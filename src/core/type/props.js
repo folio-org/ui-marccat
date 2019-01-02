@@ -4,3 +4,18 @@ export type Props = {
   store: Object;
   stripes: Object;
 };
+
+export type VariableField = {
+  categoryCode: number;
+  code: string;
+  description: string;
+  displayValue: string;
+  functionCode: string;
+  headingTypeCode: string;
+  ind1: string;
+  ind2: string;
+  itemTypeCode: string;
+  sequenceNumber: number;
+  skipInFiling: number;
+  subfields: Array;
+};

@@ -1,10 +1,13 @@
-.editableListFormHeader {
+/**
+ * EditableList
+ */
+.marcEditableListFormHeader {
   display: flex;
   align-items: center;
   margin-bottom: 15px;
 }
 
-.editListRow {
+.marcEditableListRow {
   display: flex;
   max-width: 100%;
   justify-content: flex-start;
@@ -12,16 +15,15 @@
   border-radius: 8px;
   background-color: #efefef;
   margin-bottom: 4px;
-  min-height: 40px;
 }
 
-.editListHeaders {
+.marcEditableListHeaders {
   display: flex;
   justify-content: flex-start;
   overflow: hidden;
 }
 
-.editableListError {
+.marcEditableListError {
   width: 100%;
   padding: 6px;
 }

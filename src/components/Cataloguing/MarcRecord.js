@@ -23,7 +23,7 @@ import { VariableFields } from '.';
 import MarcField from './Marc/MarcField';
 import * as C from '../../utils/Constant';
 import { SingleCheckboxIconButton } from '../../lib/components/Button/OptionButton';
-
+import type { VariableField } from '../../core';
 import style from './Style/style.css';
 
 export class MarcRecordManager extends React.Component<Props, {}> {
@@ -39,7 +39,8 @@ export class MarcRecordManager extends React.Component<Props, {}> {
   render() {
     const {
       bibliographicRecord,
-      settings
+      settings,
+      translate
     } = this.props;
     let {
       isPresent006,
@@ -138,17 +139,13 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                       })
                       }
                     </Accordion>
-                    <Accordion label="Variable fields" id="variable-field">
-                      {bibliographicRecord.fields.map(el => {
-                        if (el.variableField) {
-                          return (
-                            <VariableFields {...this.props} />
-                          );
-                        }
-                      })
-                      }
-                    </Accordion>
                   </form>
+                  <Accordion label={translate({ id: 'ui-marccat.cataloging.variablefield.section.label' })} id="variable-field">
+                    {bibliographicRecord.fields.map(f => (
+                      <VariableFields {...this.props} record={(f.variableField) || {}} />
+                    ))
+                    }
+                  </Accordion>
                 </AccordionSet>
               </div>
             </Row>

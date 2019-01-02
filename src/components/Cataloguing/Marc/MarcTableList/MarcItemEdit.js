@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { TextField } from '@folio/stripes-components';
-import css from './EditableList.css';
+import css from './MarcEditableList.css';
 
-const ItemEdit = ({
+const MarcItemEdit = ({
   rowIndex,
   error,
   field,
@@ -56,10 +56,10 @@ const ItemEdit = ({
   });
 
   return (
-    <div className={css.editListRow} role="row">
+    <div className={css.marcEditableListRow} role="row">
       {fields}
       { error &&
-        <div className={css.editableListError}>
+        <div className={css.marcEditableListError}>
 Error:
           {error}
         </div>
@@ -68,7 +68,7 @@ Error:
   );
 };
 
-ItemEdit.propTypes = {
+MarcItemEdit.propTypes = {
   autoFocus: PropTypes.bool,
   cells: PropTypes.arrayOf(PropTypes.object),
   columnMapping: PropTypes.object,
@@ -81,4 +81,4 @@ ItemEdit.propTypes = {
   widths: PropTypes.object,
 };
 
-export default ItemEdit;
+export default MarcItemEdit;

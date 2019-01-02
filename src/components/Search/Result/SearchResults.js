@@ -11,7 +11,7 @@ import { Paneset, HotKeys } from '@folio/stripes/components';
 import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
-import { ToolbarButtonMenu, CreateButtonMenu } from '../../../lib';
+import { ToolbarButtonMenu, DropdownButtonMenu as CreateButtonMenu } from '../../../lib';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
 import { isAuthorityRecord } from '../../../utils/SearchUtils';
 import { injectCommonProp } from '../../../core';
@@ -181,7 +181,9 @@ export class SearchResults extends React.Component<P, {}> {
         {...this.props}
         label={translate({ id: 'ui-marccat.search.record.new' })}
         labels={this.renderDropdownLabels()}
-        onToggle={this.renderTemplateRoute}
+        onToggle={() => this.setState({
+          openDropDownMenu: !openDropDownMenu
+        })}
         open={openDropDownMenu}
       />);
   };

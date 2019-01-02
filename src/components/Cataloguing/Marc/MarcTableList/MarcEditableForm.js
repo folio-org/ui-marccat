@@ -3,12 +3,14 @@ import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 import uniqueId from 'lodash/uniqueId';
 import React from 'react';
+import stripesForm from '@folio/stripes-form';
 import { FieldArray } from 'redux-form';
 import PropTypes from 'prop-types';
 
-import { Button, Col, MultiColumnList, Row } from '@folio/stripes-components';
-import EditableItem from './EditableItem';
-import css from './EditableList.css';
+import { Col, MultiColumnList, Row } from '@folio/stripes/components';
+import MarcEditableItem from './MarcEditableItem';
+import css from './MarcEditableList.css';
+import { DropdownButtonMenu } from '../../../../lib';
 
 const propTypes = {
   actionProps: PropTypes.object,
@@ -16,7 +18,7 @@ const propTypes = {
   additionalFields: PropTypes.object,
   columnMapping: PropTypes.object,
   columnWidths: PropTypes.object,
-  createButtonLabel: PropTypes.node,
+  actionButtonLabel: PropTypes.node,
   fieldComponents: PropTypes.object,
   formatter: PropTypes.object,
   id: PropTypes.string,
@@ -40,7 +42,7 @@ const propTypes = {
 const defaultProps = {
   actionProps: {},
   actionSuppression: { delete: () => false, edit: () => false },
-  createButtonLabel: '+ Add new',
+  actionButtonLabel: 'Actions',
   fieldComponents: {},
   itemTemplate: {},
   uniqueField: 'id',
@@ -58,14 +60,16 @@ class MarcEditableForm extends React.Component {
     this.state = {
       status,
       lastAction: {},
+      openDropDownMenu: false,
     };
 
-    this.RenderItems = this.RenderItems.bind(this);
+    this.renderFields = this.renderFields.bind(this);
     this.setError = this.setError.bind(this);
     this.buildStatusArray = this.buildStatusArray.bind(this);
     this.getColumnWidths = this.getColumnWidths.bind(this);
     this.getVisibleColumns = this.getVisibleColumns.bind(this);
     this.getReadOnlyColumns = this.getReadOnlyColumns.bind(this);
+    this.onRow = this.onRow.bind(this);
 
     if (this.props.id) {
       this.testingId = this.props.id;
@@ -92,7 +96,6 @@ class MarcEditableForm extends React.Component {
     const { itemTemplate } = this.props;
     const item = { ...itemTemplate };
     fields.unshift(item);
-    // add field to edit-tracking in edit mode.
     this.setState((curState) => {
       const newState = cloneDeep(curState);
       if (newState.status.length === 0 && fields.length > 0) {
@@ -106,8 +109,6 @@ class MarcEditableForm extends React.Component {
   onCancel(fields, index) {
     const { uniqueField } = this.props;
     const item = fields.get(index);
-
-    // if the item has a unique identifier, toggle its edit mode... if not, remove it.
     if (item[uniqueField]) {
       this.toggleEdit(index);
     } else {
@@ -118,21 +119,17 @@ class MarcEditableForm extends React.Component {
         return newState;
       });
     }
-
-    // Reset the field values.
     this.props.reset();
   }
 
   onSave(fields, index) {
     const item = fields.get(index);
-    // if item has no id, it's new...
     const callback = (item.id) ?
       this.props.onUpdate :
       this.props.onCreate;
     const res = callback(item);
     Promise.resolve(res).then(
       () => {
-        // Set props.initialValues to the currently-saved field values.
         this.props.initialize(fields.getAll());
 
         this.toggleEdit(index);
@@ -145,6 +142,10 @@ class MarcEditableForm extends React.Component {
     this.toggleEdit(index);
   }
 
+  onRow = (e, meta) => {
+   console.log(e)
+  };
+
   onDelete(fields, index) {
     const { uniqueField } = this.props;
     const item = fields.get(index);
@@ -152,7 +153,6 @@ class MarcEditableForm extends React.Component {
     Promise.resolve(res).then(
       () => {
         fields.remove(index);
-        // remove item from editable tracking...
         this.setState((curState) => {
           const newState = cloneDeep(curState);
           newState.status.splice(index, 1);
@@ -179,14 +179,18 @@ class MarcEditableForm extends React.Component {
       const staticWidth = 80 / totalColumns;
       const widthsObject = {};
       visibleColumns.forEach((f) => {
-        widthsObject[f] = `${staticWidth}%`;
+        if (f !== 'actions') {
+          widthsObject[f] = `${staticWidth}%`;
+        }
       });
+      widthsObject.actions = '20%';
       return widthsObject;
     }
     return this.props.columnWidths;
   }
 
   getVisibleColumns() {
+    alert('rret')
     return this.props.visibleFields;
   }
 
@@ -213,6 +217,37 @@ class MarcEditableForm extends React.Component {
     });
   }
 
+  renderDropdownLabels = () => {
+    const { translate } = this.props;
+    return [
+      {
+        label: translate({ id: 'ui-marccat.button.new.auth' }),
+        shortcut: translate({ id: 'ui-marccat.button.new.short.auth' }),
+        onClick: () => {},
+      },
+      {
+        label: translate({ id: 'ui-marccat.button.new.auth' }),
+        shortcut: translate({ id: 'ui-marccat.button.new.short.auth' }),
+        onClick: () => {},
+      },
+      {
+        label: translate({ id: 'ui-marccat.button.new.auth' }),
+        shortcut: translate({ id: 'ui-marccat.button.new.short.auth' }),
+        onClick: () => {},
+      },
+      {
+        label: translate({ id: 'ui-marccat.button.new.auth' }),
+        shortcut: translate({ id: 'ui-marccat.button.new.short.auth' }),
+        onClick: () => {},
+      },
+      {
+        label: translate({ id: 'ui-marccat.button.new.bib' }),
+        shortcut: translate({ id: 'ui-marccat.button.new.short.bib' }),
+        onClick: () => {},
+      }];
+  };
+
+
   ItemFormatter = ({
     rowIndex,
     rowData,
@@ -232,7 +267,7 @@ class MarcEditableForm extends React.Component {
     }
 
     return (
-      <EditableItem
+      <MarcEditableItem
         editing={isEditing}
         error={hasError}
         key={rowIndex}
@@ -257,22 +292,26 @@ class MarcEditableForm extends React.Component {
     );
   }
 
-  RenderItems({ fields }) {
+
+  renderFields({ fields }) {
+    const { openDropDownMenu, isEditing } = this.state;
     const cellFormatters = Object.assign({}, this.props.formatter);
     return (
       <div>
-        <Row between="xs" className={css.editableListFormHeader}>
+        <Row between="xs" className={css.marcEditableListFormHeader}>
           <Col xs>
-            <Row end="xs">
+            <Row end="xs" style={{ float: 'right' }}>
               <Col xs>
-                <Button
-                  buttonStyle="primary"
-                  onClick={() => {}}
+                <DropdownButtonMenu
+                  {...this.props}
                   marginBottom0
-                  id={`clickable-add-${this.testingId}`}
-                >
-                  {this.props.createButtonLabel}
-                </Button>
+                  label={this.props.actionButtonLabel}
+                  labels={this.renderDropdownLabels()}
+                  onToggle={() => this.setState({
+                    openDropDownMenu: !openDropDownMenu
+                  })}
+                  open={openDropDownMenu}
+                />
               </Col>
             </Row>
           </Col>
@@ -281,17 +320,18 @@ class MarcEditableForm extends React.Component {
           <Col xs={12}>
             <MultiColumnList
               {...this.props}
+              interactive
               visibleColumns={this.getVisibleColumns()}
               contentData={fields.getAll()}
               rowFormatter={this.ItemFormatter}
               rowProps={{ fields }}
               formatter={cellFormatters}
+              onRowClick={() => this.onRow}
               columnWidths={this.getColumnWidths()}
               isEmptyMessage={this.props.isEmptyMessage}
-              headerRowClass={css.editListHeaders}
-              id={`editList-${this.testingId}`}
+              headerRowClass={css.marcEditableListHeaders}
+              id={`marcEditableList-${this.testingId}`}
             />
-
           </Col>
         </Row>
       </div>
@@ -300,7 +340,9 @@ class MarcEditableForm extends React.Component {
 
   render() {
     return (
-      <FieldArray name="items" component={this.RenderItems} toUpdate={this.state.lastAction} />
+      <form>
+        <FieldArray name="items" component={this.renderFields} toUpdate={this.state.lastAction} />
+      </form>
     );
   }
 }
@@ -308,4 +350,9 @@ class MarcEditableForm extends React.Component {
 MarcEditableForm.propTypes = propTypes;
 MarcEditableForm.defaultProps = defaultProps;
 
-export default MarcEditableForm;
+export default stripesForm({
+  form: 'marcEditableForm',
+  navigationCheck: true,
+  enableReinitialize: true,
+  destroyOnUnmount: false,
+})(MarcEditableForm);

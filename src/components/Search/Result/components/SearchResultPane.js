@@ -39,7 +39,6 @@ class SearchResultPane extends React.Component<Props, {}> {
         handleDetails,
         bibsOnly,
         loading,
-        autOnly,
         messageNoContent
       } = this.props;
       return (
@@ -56,7 +55,7 @@ class SearchResultPane extends React.Component<Props, {}> {
           {
             (isFetching) ?
               <Icon icon="spinner-ellipsis" /> :
-              ((!isFetching && noResults && !(bibliographicResults === undefined && authorityResults === undefined)) || (autOnly && !authorityResults.length === 0)) ?
+              ((!isFetching && noResults && !(bibliographicResults === undefined && authorityResults === undefined))) ?
                 <NoResultsMessage {...this.props} /> :
                 (isReady) ?
                   <MultiColumnList

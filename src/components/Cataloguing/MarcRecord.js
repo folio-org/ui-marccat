@@ -25,6 +25,8 @@ import * as C from '../../utils/Constant';
 import { SingleCheckboxIconButton } from '../../lib/components/Button/OptionButton';
 import type { VariableField } from '../../core';
 import style from './Style/style.css';
+import { MarcLeader } from './Marc/MarcLeader';
+import { ActionTypes } from '../../redux/actions/Actions';
 
 export class MarcRecordManager extends React.Component<Props, {}> {
   constructor(props: Props) {
@@ -40,7 +42,8 @@ export class MarcRecordManager extends React.Component<Props, {}> {
     const {
       bibliographicRecord,
       settings,
-      translate
+      translate,
+      dispatch
     } = this.props;
     let {
       isPresent006,
@@ -70,6 +73,7 @@ export class MarcRecordManager extends React.Component<Props, {}> {
           </Pane>
         </Paneset>);
     } else {
+      dispatch({ type: ActionTypes.LEADER_VALUES_FROM_TAG, leader: bibliographicRecord.leader.value, code: bibliographicRecord.leader.code, typeCode: '15' });
       return (
         <Paneset static>
           <Pane
@@ -98,6 +102,7 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                         name="leader"
                         value={bibliographicRecord.leader.value}
                       />
+                      {/* <MarcLeader {...this.props} /> */}
                     </Accordion>
                     <Accordion label="Control fields (001, 003, 005)" id="control-field">
                       {bibliographicRecord.fields.map(el => {

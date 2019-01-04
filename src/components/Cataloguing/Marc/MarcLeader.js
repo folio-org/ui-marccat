@@ -9,7 +9,6 @@ import { injectCommonProp, Props } from '../../../core';
 import style from '../Style/style.css';
 
 export class MarcLeader extends React.Component<Props, {}> {
-
   render() {
     const { leaderValuesResults } = this.props;
     const remappedValues = [];

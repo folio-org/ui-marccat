@@ -13,6 +13,7 @@
   background-color: var(--primary);
   border-radius: 25%;
 }
+
 .mt16 {
   margin-top: var(--margin-top-xxl);
 }

@@ -24,7 +24,6 @@ class FieldGroupings extends React.Component<P, {}> {
     const { label } = this.props;
     const rightMenu = (
       <ToolbarButtonMenu
-        create
         {...this.props}
         label={
           <Icon icon="plus-sign">

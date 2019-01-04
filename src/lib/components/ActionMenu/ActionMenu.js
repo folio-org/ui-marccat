@@ -43,6 +43,18 @@ export const ActionMenuDetail = () => {
   );
 };
 
+export const genericActionMenuDetail = (labels:[]) => {
+  return (
+    <React.Fragment>
+      <div className={style.dropdownContainerText}>
+        {labels.map((l, i) => (
+          <div key={i}><FormattedMessage id={l} /></div>
+        ))}
+      </div>
+    </React.Fragment>
+  );
+};
+
 export const getActionMenu = () => (
   <React.Fragment>
     <Button buttonStyle="dropdownItem">

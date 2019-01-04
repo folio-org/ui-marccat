@@ -20,10 +20,10 @@ import { reduxForm } from 'redux-form';
 import { Props, injectCommonProp } from '../../core';
 import { ActionMenuTemplate } from '../../lib';
 import { VariableFields } from '.';
-import MarcField from './components/MarcField';
+import MarcField from './Marc/MarcField';
 import * as C from '../../utils/Constant';
 import { SingleCheckboxIconButton } from '../../lib/components/Button/OptionButton';
-
+import type { VariableField } from '../../core';
 import style from './Style/style.css';
 
 export class MarcRecordManager extends React.Component<Props, {}> {
@@ -39,14 +39,15 @@ export class MarcRecordManager extends React.Component<Props, {}> {
   render() {
     const {
       bibliographicRecord,
-      settings
+      settings,
+      translate
     } = this.props;
     let {
       isPresent006,
       isPresent007,
       isPresent008
     } = this.state;
-    const defaultTemplate = settings.defaultTemplate;
+    const defaultTemplate = (settings) ? settings.defaultTemplate : C.DEFAULT_TEMPLATE;
 
     // const resultNotReady = (leaderValuesResults === undefined);
     // headerTypes006NotReady = (headerTypes006Result === undefined);
@@ -88,7 +89,7 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                   />
                   <form name="bibliographicRecordForm" onSubmit={this.handleOnSubmit}>
                     <Accordion label="Suppress" id="suppress" separator={false}>
-                      <SingleCheckboxIconButton labels={['suppress']} pullLeft widthPadding />
+                      <SingleCheckboxIconButton labels={['Suppress from Discovery']} pullLeft widthPadding />
                     </Accordion>
                     <Accordion label="Leader" id="leader">
                       <MarcField
@@ -114,8 +115,8 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                             );
                           } else if (
                             el.fixedField.code === '006' ||
-                      el.fixedField.code === '007' ||
-                      el.fixedField.code === '008') {
+                            el.fixedField.code === '007' ||
+                            el.fixedField.code === '008') {
                             if (el.fixedField.code === '006') {
                               isPresent006 = true;
                             } else if (el.fixedField.code === '007') {
@@ -138,17 +139,13 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                       })
                       }
                     </Accordion>
-                    <Accordion label="Variable fields" id="variable-field">
-                      {bibliographicRecord.fields.map(el => {
-                        if (el.variableField) {
-                          return (
-                            <VariableFields {...this.props} />
-                          );
-                        }
-                      })
-                      }
-                    </Accordion>
                   </form>
+                  <Accordion label={translate({ id: 'ui-marccat.cataloging.variablefield.section.label' })} id="variable-field">
+                    {bibliographicRecord.fields.map(f => (
+                      <VariableFields {...this.props} record={(f.variableField) || {}} />
+                    ))
+                    }
+                  </Accordion>
                 </AccordionSet>
               </div>
             </Row>
@@ -161,6 +158,7 @@ export class MarcRecordManager extends React.Component<Props, {}> {
 
 export default reduxForm({
   form: 'bibliographicRecordForm',
+  navigationCheck: true,
   enableReinitialize: true,
   destroyOnUnmount: false
 })(connect(

@@ -3,7 +3,7 @@
  * @flow
  */
 import React from 'react';
-import { Row, MultiColumnList, Pane, Paneset, Icon } from '@folio/stripes/components';
+import { MultiColumnList, Pane, Paneset, Icon } from '@folio/stripes/components';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Props, injectCommonProp } from '../../../core';
@@ -14,6 +14,7 @@ import { ToolbarButtonMenu, EmptyMessage, NoResultsMessage } from '../../../lib'
 import { browseFormatter, browseColMapper } from '../../../utils/Formatter';
 import BrowseAssociatedItemDetail from './BrowseAssociatedItemDetail';
 import * as C from '../../../utils/Constant';
+import { genericActionMenuDetail } from '../../../lib/components/ActionMenu/ActionMenu';
 
 type S = {
   browseDetailPanelIsVisible: bool;
@@ -26,6 +27,7 @@ export class BrowseResults extends React.Component<Props, S> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      detailSubtitle: {},
       browseDetailPanelIsVisible: false,
       rowClicked: false,
       noResults: false,
@@ -62,34 +64,20 @@ export class BrowseResults extends React.Component<Props, S> {
     }
     this.setState({
       browseDetailPanelIsVisible: true,
-      rowClicked: false
+      rowClicked: false,
+      detailSubtitle: meta.stringText,
     });
   };
 
-  myActionMenu = () => {
-    return (
-      <div>
-        <Row>
-          <FormattedMessage id="ui-marccat.browse.actionmenu.export.mrc" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.browse.actionmenu.export.csv" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.browse.actionmenu.export.dat" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.browse.actionmenu.printall" />
-        </Row>
-        <br />
-        <Row>
-          <FormattedMessage id="ui-marccat.browse.actionmenu.merge" />
-        </Row>
-      </div>
-    );
+  getActionMenu = () => {
+    const labels = [
+      'ui-marccat.browse.actionmenu.export.mrc',
+      'ui-marccat.browse.actionmenu.export.csv',
+      'ui-marccat.browse.actionmenu.export.dat',
+      'ui-marccat.browse.actionmenu.printall',
+      'ui-marccat.browse.actionmenu.merge'
+    ];
+    return genericActionMenuDetail(labels);
   };
 
   renderButtonMenu = () => {
@@ -99,7 +87,7 @@ export class BrowseResults extends React.Component<Props, S> {
         {...this.props}
         label={
           <Icon icon="plus-sign">
-            <FormattedMessage id="ui-marccat.search.record.new" />
+            <FormattedMessage id="ui-marccat.browse.record.create" />
           </Icon>
         }
       />
@@ -107,7 +95,7 @@ export class BrowseResults extends React.Component<Props, S> {
   };
 
   render() {
-    const { browseDetailPanelIsVisible, rowClicked } = this.state;
+    const { browseDetailPanelIsVisible, rowClicked, detailSubtitle } = this.state;
     const { translate, firstMenu, isFetchingBrowse, isReadyBrowse, browseRecords, isPanelOpen, isFetchingBrowseDetails, isReadyBrowseDetails, isLoadingAssociated, isReadyAssociated } = this.props;
     let { noResults, isPadRequired } = this.state;
     const messageNoContent = <FormattedMessage id="ui-marccat.search.initial.message" />;
@@ -122,7 +110,7 @@ export class BrowseResults extends React.Component<Props, S> {
         <Pane
           padContent={isFetchingBrowse || isPadRequired}
           defaultWidth="fill"
-          actionMenu={this.myActionMenu}
+          actionMenu={this.getActionMenu}
           paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
           paneSub={messageNoContent}
           firstMenu={firstMenu}
@@ -163,11 +151,12 @@ export class BrowseResults extends React.Component<Props, S> {
         {browseDetailPanelIsVisible && !rowClicked &&
           <Pane
             dismissible
-            defaultWidth="25%"
+            defaultWidth="35%"
             paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
-            paneSub={C.EMPTY_MESSAGE}
+            paneSub={detailSubtitle}
             lastMenu={this.renderButtonMenu()}
             onClose={this.handleClosePanelDetails}
+            actionMenu={this.getActionMenu}
           >
             {
               (isFetchingBrowseDetails) ?
@@ -184,7 +173,7 @@ export class BrowseResults extends React.Component<Props, S> {
           paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
           paneSub={C.EMPTY_MESSAGE}
           appIcon={{ app: C.META.ICON_TITLE }}
-          actionMenu={this.myActionMenu}
+          actionMenu={this.getActionMenu}
           dismissible
           onClose={() => {
             const { dispatch } = this.props;

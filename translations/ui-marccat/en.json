@@ -39,6 +39,7 @@
   "search.record": "Records",
   "search.record.preview": "Preview Record",
   "search.record.new": "New",
+  "search.record.new.auth": "New (CTRL+A)",
   "search.record.new.from.template": "New from template (CTRL+N)",
   "search.record.actions": "Actions",
   "search.record.edit": "Edit",
@@ -74,5 +75,8 @@
   "template.actionmenu.save": "Save template",
   "template.actionmenu.import.overlay": "Import and overlay .marc or .mrc file",
   "template.actionmenu.import.oclc": "Import from OCLC",
-  "template.bib.accordion": "Bibliographic default templates"
+  "template.bib.accordion": "Bibliographic default templates",
+
+  "cataloging.variablefield.empty": "No variable fields presents",
+  "cataloging.variablefield.section.label": "Varaiable data field"
 }

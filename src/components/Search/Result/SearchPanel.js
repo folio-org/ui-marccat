@@ -74,6 +74,7 @@ class SearchPanel extends React.Component<P, {}> {
     if (e.charCode === 13 || e.key === 'Enter') {
       const { store } = this.props;
       store.dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: true });
+      store.dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
       e.preventDefault();
       const inputValue = '"' + e.target.form[3].defaultValue + '"';
       const { store: { getState }, dispatch, router } = this.props;

@@ -51,6 +51,7 @@ class SearchPanel extends React.Component<P, {}> {
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleResetAllButton = this.handleResetAllButton.bind(this);
     this.transitionToParams = this.transitionToParams.bind(this);
+    this.createCustomColumnFormatter = this.createCustomColumnFormatter.bind(this);
   }
 
 
@@ -70,12 +71,33 @@ class SearchPanel extends React.Component<P, {}> {
     return includes(url, `${key}=${value}`);
   };
 
+  createCustomColumnFormatter = (obj) => {
+    const customColumnArrayMapper = [];
+    const customFormatter = [];
+    Object.keys(obj).forEach((key) => customColumnArrayMapper.push(key + ':' + obj[key]));
+    customColumnArrayMapper.filter(x => {
+      const choosedColumn = x.split(':');
+      const colName = choosedColumn[0];
+      const colIsActive = choosedColumn[1];
+      if (colIsActive === true) {
+        if (colName === 'checkbox-Name') {
+          customFormatter.push('name');
+        }
+      }
+      return customFormatter;
+    });
+  }
+
   handleKeyDown(e) {
     if (e.charCode === 13 || e.key === 'Enter') {
       const { store } = this.props;
       store.dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: true });
       store.dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
       e.preventDefault();
+      const { checkboxForm } = store.getState().form;
+      if (checkboxForm.anyTouched) {
+        this.createCustomColumnFormatter(checkboxForm.values);
+      }
       const inputValue = '"' + e.target.form[3].defaultValue + '"';
       const { store: { getState }, dispatch, router } = this.props;
       let { isBrowseRequested } = this.state;

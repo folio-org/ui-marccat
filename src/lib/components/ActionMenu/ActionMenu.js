@@ -10,7 +10,7 @@ import CheckboxIconButton from '../Button/OptionButton';
 
 
 export const ActionMenu = () => {
-  const labels = ['id. Number', 'Title', 'Name', 'Preferred title', 'Tag', 'Date 1', 'Date 2', 'Format'];
+  const labels = ['id Number', 'Title', 'Name', 'Preferred title', 'Tag', 'Date 1', 'Date 2', 'Format'];
   return (
     <React.Fragment>
       <div className={style.dropdownContainerText}>

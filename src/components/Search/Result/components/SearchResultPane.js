@@ -3,7 +3,6 @@
  * @flow
  */
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { Pane, Icon, MultiColumnList } from '@folio/stripes/components';
 import { ActionMenu } from '../../../../lib';
 import { Props, injectCommonProp } from '../../../../core';
@@ -40,7 +39,7 @@ class SearchResultPane extends React.Component<Props, {}> {
         translate,
         bibsOnly,
         loading,
-        messageNoContent
+        messageNoContent,
       } = this.props;
       return (
         <Pane

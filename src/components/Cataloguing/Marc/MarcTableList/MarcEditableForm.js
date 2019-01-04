@@ -69,7 +69,6 @@ class MarcEditableForm extends React.Component {
     this.getColumnWidths = this.getColumnWidths.bind(this);
     this.getVisibleColumns = this.getVisibleColumns.bind(this);
     this.getReadOnlyColumns = this.getReadOnlyColumns.bind(this);
-    this.onRow = this.onRow.bind(this);
 
     if (this.props.id) {
       this.testingId = this.props.id;
@@ -141,10 +140,6 @@ class MarcEditableForm extends React.Component {
   onEdit(index) {
     this.toggleEdit(index);
   }
-
-  onRow = (e, meta) => {
-   console.log(e)
-  };
 
   onDelete(fields, index) {
     const { uniqueField } = this.props;
@@ -293,7 +288,7 @@ class MarcEditableForm extends React.Component {
 
 
   renderFields({ fields }) {
-    const { openDropDownMenu, isEditing } = this.state;
+    const { openDropDownMenu } = this.state;
     const cellFormatters = Object.assign({}, this.props.formatter);
     return (
       <div>

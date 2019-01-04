@@ -1,4 +1,4 @@
-@import '@folio/stripes-components/lib/variables';
+@import '../../styles/variable.css';
 
 .authority {
   width: 18px;
@@ -12,4 +12,8 @@
   height: 18px;
   background-color: var(--primary);
   border-radius: 25%;
+}
+
+.mt16 {
+  margin-top: var(--margin-top-xxl);
 }

@@ -487,6 +487,18 @@ export function filterReducer(state = { isLoading }, action) {
   }
 }
 
+export function panelsReducer(state = {}, action) {
+  switch (action.type) {
+  case ActionTypes.CLOSE_PANELS:
+    return {
+      ...state,
+      closePanels: action.closePanels
+    };
+  default:
+    return state;
+  }
+}
+
 
 export function settingsReducer(state = {}, action) {
   switch (action.type) {

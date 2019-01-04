@@ -113,6 +113,7 @@ export class SearchResults extends React.Component<P, {}> {
 
   handleDetails = (e, meta) => {
     const { dispatch, data } = this.props;
+    dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: false });
     const id = meta['001'];
     const detailSelected = data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001']) || {};
     this.transitionToParams('idNumber', id);
@@ -123,7 +124,7 @@ export class SearchResults extends React.Component<P, {}> {
         detail: detailSelected,
         detailPaneMeta: {
           title: 'Auth. • ' + id,
-          subTitle: meta['preferredTitle'] + ' / ' + meta['name']
+          subTitle: meta['100'] + ' / ' + meta['630']
         }
       });
     } else {
@@ -132,7 +133,7 @@ export class SearchResults extends React.Component<P, {}> {
         detailPanelIsVisible: true,
         detailPaneMeta: {
           title: 'Bib. • ' + id,
-          subTitle: meta['preferredTitle'] + ' / ' + meta['name']
+          subTitle: meta['100'] + ' / ' + meta['650']
         }
       });
     }
@@ -217,15 +218,12 @@ export class SearchResults extends React.Component<P, {}> {
       isFetchingDetail,
       isLoadingAssociatedRecord,
       isReadyAssociatedRecord,
+      closePanels
     } = this.props;
     if (activeFilter) {
       const filterArray = [];
       Object.keys(activeFilter).forEach((key) => filterArray.push(key + ':' + activeFilter[key]));
-      filterArray.map(filterEl => (filterEl === 'recordType.Bibliographic records:true' ?
-        bibsOnly = true : filterEl === 'recordType.Bibliographic records:false' ?
-          bibsOnly = false : filterEl === 'recordType.Authority records:true' ?
-            autOnly = true : filterEl === 'recordType.Authority records:false' ?
-              autOnly = false : null)); // TODO FIXME
+      filterArray.map(filterEl => (filterEl === 'recordType.Bibliographic records:true' ? bibsOnly = true : filterEl === 'recordType.Bibliographic records:false' ? bibsOnly = false : filterEl === 'recordType.Authority records:true' ? autOnly = true : filterEl === 'recordType.Authority records:false' ? autOnly = false : null));
     }
     if ((bibliographicResults === undefined && authorityResults === undefined)
       || (bibliographicResults && (bibliographicResults.length === undefined
@@ -237,17 +235,17 @@ export class SearchResults extends React.Component<P, {}> {
       noResults = false;
     }
     let mergedRecord = [];
-    if (!bibsOnly) {
+    if (bibsOnly === false && autOnly === true) {
       if (authorityResults && authorityResults.length > 0) {
         mergedRecord = [...mergedRecord, ...authorityResults];
       }
     }
-    if (bibsOnly) {
+    if ((bibsOnly === true && autOnly === true) || (bibsOnly === false && autOnly === false)) {
       if (bibliographicResults && bibliographicResults.length > 0) {
-        mergedRecord = [...mergedRecord, ...bibliographicResults];
+        mergedRecord = [...authorityResults, ...bibliographicResults];
       }
     }
-    if (!autOnly) {
+    if (autOnly === false && bibsOnly === true) {
       if (bibliographicResults && bibliographicResults.length > 0) {
         mergedRecord = [...mergedRecord, ...bibliographicResults];
       }
@@ -291,7 +289,7 @@ export class SearchResults extends React.Component<P, {}> {
             loading={loading}
             messageNoContent={messageNoContent}
           />
-          {detailPanelIsVisible &&
+          {detailPanelIsVisible && (closePanels === false) &&
           <RecordDetailPane
             detailPaneMeta={detailPaneMeta}
             detail={detail}
@@ -319,7 +317,7 @@ export class SearchResults extends React.Component<P, {}> {
 }
 
 export default (connect(
-  ({ marccat: { search, details, countDoc, filter, associatedBibDetails, template, settings } }) => ({
+  ({ marccat: { search, details, countDoc, filter, associatedBibDetails, template, settings, panels } }) => ({
     bibliographicResults: search.bibliographicResults,
     totalBibCount: search.bibCounter,
     totalAuthCount: search.authCounter,
@@ -337,6 +335,7 @@ export default (connect(
     isLoadingAssociatedRecord: associatedBibDetails.isLoading,
     isReadyAssociatedRecord: associatedBibDetails.isReady,
     associatedRecordDetails: associatedBibDetails.records,
-    isPanelBibAssOpen: associatedBibDetails.mustOpenPanel
+    isPanelBibAssOpen: associatedBibDetails.mustOpenPanel,
+    closePanels: panels.closePanels
   }),
 )(injectCommonProp(SearchResults)));

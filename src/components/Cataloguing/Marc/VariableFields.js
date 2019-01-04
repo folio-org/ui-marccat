@@ -20,10 +20,6 @@ export default class VariableFields extends React.Component<Props, {}> {
     };
   }
 
-  mapVariableFields = ({ record }) => {
-
-  }
-
   render() {
     const { record } = this.props;
     const contentData = [

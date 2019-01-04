@@ -190,7 +190,6 @@ class MarcEditableForm extends React.Component {
   }
 
   getVisibleColumns() {
-    alert('rret')
     return this.props.visibleFields;
   }
 

@@ -1,10 +1,7 @@
 // MARCCAT UI APP METADADA
 export const META = {
   MODULE_NAME: 'ui-marccat',
-  NAME: 'marccat',
   ICON_TITLE: 'marccat',
-  SRC_PATH: `${__dirname}/src`,
-  PACKAGE: `${__dirname}/package`,
 };
 
 // API

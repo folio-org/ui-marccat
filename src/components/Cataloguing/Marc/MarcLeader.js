@@ -5,15 +5,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Icon, Selection } from '@folio/stripes/components';
-import { injectCommonProp, Props } from '../../../../core';
-import style from '../../Style/style.css';
+import { injectCommonProp, Props } from '../../../core';
+import style from '../Style/style.css';
 
-export class CustomLeader extends React.Component<Props, {}> {
-  constructor(props:Props) {
-    super(props);
-    this.state = {
-    };
-  }
+export class MarcLeader extends React.Component<Props, {}> {
 
   render() {
     const { leaderValuesResults } = this.props;
@@ -27,12 +22,6 @@ export class CustomLeader extends React.Component<Props, {}> {
     } else {
       return (
         <div className={style.rcornerspanel} id="rcornerspanel">
-          <Row>
-            <Col xs={4}>
-             INSERT HERE HEADER VALUEs
-            </Col>
-          </Row>
-          <hr />
           <Row xs={12}>
             {
               (leaderValuesResults) &&
@@ -63,4 +52,4 @@ export default (connect(
   ({ marccat: { leaderValues } }) => ({
     leaderValuesResults: leaderValues.records
   }),
-)(injectCommonProp(CustomLeader)));
+)(injectCommonProp(MarcLeader)));

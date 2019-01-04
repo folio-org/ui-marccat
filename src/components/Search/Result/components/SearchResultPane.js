@@ -37,6 +37,7 @@ class SearchResultPane extends React.Component<Props, {}> {
         authorityResults,
         isReady,
         handleDetails,
+        translate,
         bibsOnly,
         loading,
         messageNoContent
@@ -46,7 +47,7 @@ class SearchResultPane extends React.Component<Props, {}> {
           padContent={(marcJSONRecords.length > 0) || isFetching}
           defaultWidth="fill"
           actionMenu={ActionMenu}
-          paneTitle={<FormattedMessage id="ui-marccat.search.record" />}
+          paneTitle={translate({ id:'ui-marccat.search.record' })}
           paneSub={(mergedRecord && mergedRecord.length > 0) ? message : messageNoContent}
           appIcon={{ app: C.META.ICON_TITLE }}
           firstMenu={firstMenu}

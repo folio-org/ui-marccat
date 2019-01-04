@@ -19,6 +19,7 @@ import {
   tag007ValuesReducer,
   tag008ValuesReducer,
   settingsReducer,
+  panelsReducer
 } from './reducers/Reducer';
 import {
   searchEpic,
@@ -59,7 +60,8 @@ export const reducer = combineReducers({
   tag006Values: tag006ValuesReducer,
   tag007Values: tag007ValuesReducer,
   tag008Values: tag008ValuesReducer,
-  settings: settingsReducer
+  settings: settingsReducer,
+  panels: panelsReducer
 });
 
 export const epics = combineEpics(

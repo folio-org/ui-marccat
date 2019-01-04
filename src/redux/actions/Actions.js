@@ -65,4 +65,5 @@ export const ActionTypes = {
   VALUES_FROM_TAG_008: '@@ui-marccat/VALUES_FROM_TAG_008',
   FETCH_VALUES_FROM_TAG_008: '@@ui-marccat/FETCH_VALUES_FROM_TAG_008',
   VALUES_FROM_TAG_008_SUCCESS: '@@ui-marccat/VALUES_FROM_TAG_008_SUCCESS',
+  CLOSE_PANELS: '@@ui-marccat/CLOSE_PANELS',
 };

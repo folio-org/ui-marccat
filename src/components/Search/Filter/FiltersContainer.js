@@ -41,6 +41,7 @@ export default class FiltersContainer extends React.Component<Props, {}> {
 
     this.state = {
       filters: initialFilterState(this.config, null),
+      containsAuthFilter: false,
     };
   }
 
@@ -66,17 +67,28 @@ export default class FiltersContainer extends React.Component<Props, {}> {
 
   render() {
     const { filters } = this.state;
+    const filterArray = [];
+    Object.keys(filters).forEach((key) => filterArray.push(key + ':' + filters[key]));
     const { filterEnable } = this.props;
     const disableFilters = {};
-    disableFilters.recordType = true;
-    disableFilters.suppressedFilter = true;
-    disableFilters.languageFilter = true;
-    disableFilters.formatType = true;
-
+    let { containsAuthFilter } = this.state;
+    if (filterArray.includes('recordType.Authority records:true')) {
+      containsAuthFilter = true;
+      disableFilters.recordType = false;
+      disableFilters.suppressedFilter = false;
+      disableFilters.languageFilter = true;
+      disableFilters.formatType = false;
+    } else {
+      containsAuthFilter = false;
+      disableFilters.recordType = true;
+      disableFilters.suppressedFilter = true;
+      disableFilters.languageFilter = true;
+      disableFilters.formatType = true;
+    }
     return (
-      <div className={(filterEnable) ? styles['search-filters'] : styles['search-filters-disabled']}>
+      <div className={(filterEnable || !containsAuthFilter) ? styles['search-filters'] : styles['search-filters-disabled']}>
         <FilterGroups
-          disableNames={(!filterEnable) ? disableFilters : {}}
+          disableNames={(!filterEnable || containsAuthFilter) ? disableFilters : {}}
           config={this.config}
           filters={filters}
           onChangeFilter={this.onChangeFilter}

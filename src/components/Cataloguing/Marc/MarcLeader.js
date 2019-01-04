@@ -4,44 +4,52 @@
  */
 import React from 'react';
 import { connect } from 'react-redux';
-import { Field } from 'redux-form';
-import { Row, Col, Selection } from '@folio/stripes/components';
+import { Row, Col, Icon, Selection } from '@folio/stripes/components';
 import { injectCommonProp, Props } from '../../../core';
-import { EMPTY_MESSAGE } from '../../../utils/Constant';
+import style from '../Style/style.css';
 
-export function MarcLeader({ ...props }:Props) {
-  const { leaderValue } = props;
-  const remappedValues = [];
-  remappedValues.push(Object.keys(leaderValue.results).map((key) => leaderValue.results[key]));
-  return (
-    <React.Fragment>
-      <Row xs={12}>
-        {
-          (leaderValue) &&
+export class MarcLeader extends React.Component<Props, {}> {
+
+  render() {
+    const { leaderValuesResults } = this.props;
+    const remappedValues = [];
+    if (leaderValuesResults) {
+      const result = Object.keys(leaderValuesResults.results).map((key) => leaderValuesResults.results[key]);
+      remappedValues.push(result);
+    }
+    if (leaderValuesResults === undefined) {
+      return <Icon icon="spinner-ellipsis" />;
+    } else {
+      return (
+        <div className={style.rcornerspanel} id="rcornerspanel">
+          <Row xs={12}>
+            {
+              (leaderValuesResults) &&
               remappedValues.map(elem => {
                 return elem.map(item => {
-                  let exactDisplayValue = EMPTY_MESSAGE;
+                  let exactDisplayValue = '';
                   item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue));
                   return (
                     <Col xs={4}>
-                      <Field
+                      <Selection
                         label={item.name}
                         dataOptions={item.dropdownSelect}
                         placeholder={exactDisplayValue}
-                        component={Selection}
                       />
                     </Col>
                   );
                 });
               })
-        }
-      </Row>
-    </React.Fragment>
-  );
+            }
+          </Row>
+        </div>
+      );
+    }
+  }
 }
 
 export default (connect(
   ({ marccat: { leaderValues } }) => ({
-    leaderValue: leaderValues.records.results
+    leaderValuesResults: leaderValues.records
   }),
 )(injectCommonProp(MarcLeader)));

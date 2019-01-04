@@ -86,7 +86,7 @@
   },
   "stripes": {
     "type": "app",
-    "displayName": "MARCcat",
+    "displayName": "ui-marccat.app.title",
     "route": "/marccat",
     "defaultPopoverSize": "400px",
     "defaultPreviewWidth": "40%",

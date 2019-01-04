@@ -7,7 +7,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Paneset, HotKeys } from '@folio/stripes/components';
+import { Paneset, HotKeys, PaneMenu, Icon } from '@folio/stripes/components';
 import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
@@ -59,7 +59,7 @@ export class SearchResults extends React.Component<P, {}> {
     this.transitionToParams = this.transitionToParams.bind(this);
     this.renderTemplateRoute = this.renderTemplateRoute.bind(this);
     this.keys = {
-      'new' : ['backspace'],
+      'new': ['backspace'],
     };
 
     this.handlers = {
@@ -122,9 +122,10 @@ export class SearchResults extends React.Component<P, {}> {
       dispatch({ type: ActionTypes.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView, openPanel: true });
       this.setState({
         detail: detailSelected,
+        detailPanelIsVisible: true,
         detailPaneMeta: {
           title: 'Auth. • ' + id,
-          subTitle: meta['100'] + ' / ' + meta['630']
+          subTitle: meta['100']
         }
       });
     } else {
@@ -133,7 +134,7 @@ export class SearchResults extends React.Component<P, {}> {
         detailPanelIsVisible: true,
         detailPaneMeta: {
           title: 'Bib. • ' + id,
-          subTitle: meta['100'] + ' / ' + meta['650']
+          subTitle: meta['245']
         }
       });
     }
@@ -146,11 +147,16 @@ export class SearchResults extends React.Component<P, {}> {
 
   renderRightMenuEdit = props => {
     return (
-      <ToolbarButtonMenu
-        {...props}
-        onClick={this.handleClickEdit}
-        label={<FormattedMessage id="ui-marccat.search.record.edit" />}
-      />
+      <PaneMenu>
+        <ToolbarButtonMenu
+          create
+          {...props}
+          onClick={this.handleClickEdit}
+          label={<FormattedMessage id="ui-marccat.search.record.edit" />}
+        />
+        <Icon icon="comment" />
+        <Icon icon="tag" />
+      </PaneMenu>
     );
   };
 
@@ -227,8 +233,8 @@ export class SearchResults extends React.Component<P, {}> {
     }
     if ((bibliographicResults === undefined && authorityResults === undefined)
       || (bibliographicResults && (bibliographicResults.length === undefined
-      || bibliographicResults.length === 0)
-      && (authorityResults && (authorityResults.length === undefined || authorityResults.length === 0)))) {
+        || bibliographicResults.length === 0)
+        && (authorityResults && (authorityResults.length === undefined || authorityResults.length === 0)))) {
       noResults = true;
       detailPanelIsVisible = false;
     } else {
@@ -248,11 +254,6 @@ export class SearchResults extends React.Component<P, {}> {
     if (autOnly === false && bibsOnly === true) {
       if (bibliographicResults && bibliographicResults.length > 0) {
         mergedRecord = [...mergedRecord, ...bibliographicResults];
-      }
-    }
-    if (autOnly) {
-      if (authorityResults && authorityResults.length > 0) {
-        mergedRecord = [...mergedRecord, ...authorityResults];
       }
     }
     const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForAssociatedBibList(mergedRecord) : [];
@@ -290,25 +291,25 @@ export class SearchResults extends React.Component<P, {}> {
             messageNoContent={messageNoContent}
           />
           {detailPanelIsVisible && (closePanels === false) &&
-          <RecordDetailPane
-            detailPaneMeta={detailPaneMeta}
-            detail={detail}
-            isFetchingDetail={isFetchingDetail}
-            isReadyDetail={isReadyDetail}
-            onClose={() => this.setState({ detailPanelIsVisible: false })}
-            rightMenuEdit={this.renderRightMenuEdit()}
-          />
+            <RecordDetailPane
+              detailPaneMeta={detailPaneMeta}
+              detail={detail}
+              isFetchingDetail={isFetchingDetail}
+              isReadyDetail={isReadyDetail}
+              onClose={() => this.setState({ detailPanelIsVisible: false })}
+              rightMenuEdit={this.renderRightMenuEdit()}
+            />
           }
           {isPanelBibAssOpen && !noResults &&
-          <AssociatedRecordPane
-            onClose={() => {
-              const { dispatch } = this.props;
-              dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
-            }}
-            isLoadingAssociatedRecord={isLoadingAssociatedRecord}
-            isReadyAssociatedRecord={isReadyAssociatedRecord}
-            renderRightMenuEdit={this.renderRightMenuEdit}
-          />
+            <AssociatedRecordPane
+              onClose={() => {
+                const { dispatch } = this.props;
+                dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
+              }}
+              isLoadingAssociatedRecord={isLoadingAssociatedRecord}
+              isReadyAssociatedRecord={isReadyAssociatedRecord}
+              renderRightMenuEdit={this.renderRightMenuEdit}
+            />
           }
         </Paneset>
       </HotKeys>

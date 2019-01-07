@@ -199,6 +199,7 @@ export class SearchResults extends React.Component<P, {}> {
     const { translate } = this.props;
     return (
       <CreateButtonMenu
+        data-test-clickable-new-record
         {...this.props}
         label={translate({ id: 'ui-marccat.template.record.create' })}
         labels={this.renderDropdownLabels()}

@@ -3,7 +3,6 @@
  * @flow
  */
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { Pane, Icon, MultiColumnList } from '@folio/stripes/components';
 import { ActionMenu } from '../../../../lib';
 import { Props, injectCommonProp } from '../../../../core';

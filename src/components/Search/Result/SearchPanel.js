@@ -2,8 +2,6 @@
  * @format
  * @flow
  */
-/* eslint-disable react/no-unused-state */
-// TODO FIXME : refactoring of import in utils folder. Put all in index.js and import from it
 import React from 'react';
 import {
   SearchField,
@@ -31,6 +29,7 @@ import {
 import { EMPTY_MESSAGE } from '../../../utils/Constant';
 import SearchPopover from '../Popover/SearchPopover';
 import styles from '../../../styles/common.css';
+import OperatorSelect from '../Select/OperatorSelect';
 
 type P = Props & {
   inputErrorCheck: string,
@@ -53,17 +52,6 @@ class SearchPanel extends React.Component<P, {}> {
     this.transitionToParams = this.transitionToParams.bind(this);
     this.createCustomColumnFormatter = this.createCustomColumnFormatter.bind(this);
   }
-
-
-  componentDidMount() {
-    const { store: { getState }, change, dispatch } = this.props;
-    const textField = getState().form;
-    if (textField.searchForm && textField.searchForm.values) {
-      dispatch(change('searchTextArea', 'searchTextArea'));
-      // document.getElementById('searchTextArea').value = 'test';
-    }
-  }
-
 
   transitionToParams = (key, value) => {
     const { location } = this.props;
@@ -284,6 +272,11 @@ class SearchPanel extends React.Component<P, {}> {
                         id="searchTextArea"
                       />
                     </div>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={11}>
+                    <OperatorSelect {...this.props} />
                   </Col>
                 </Row>
                 <Row>

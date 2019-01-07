@@ -143,7 +143,7 @@ class MarcEditableForm extends React.Component {
   }
 
   onRow = (e, meta) => {
-   console.log(e)
+    console.log(e);
   };
 
   onDelete(fields, index) {

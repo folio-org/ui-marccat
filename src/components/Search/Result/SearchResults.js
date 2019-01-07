@@ -11,7 +11,7 @@ import { Paneset, HotKeys, PaneMenu, Icon } from '@folio/stripes/components';
 import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
-import { ToolbarButtonMenu, DropdownButtonMenu as CreateButtonMenu } from '../../../lib';
+import { ToolbarButtonMenu, DropdownButtonMenu as CreateButtonMenu, NoResultsMessage } from '../../../lib';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
 import { isAuthorityRecord } from '../../../utils/SearchUtils';
 import { injectCommonProp } from '../../../core';
@@ -244,6 +244,8 @@ export class SearchResults extends React.Component<P, {}> {
     if (bibsOnly === false && autOnly === true) {
       if (authorityResults && authorityResults.length > 0) {
         mergedRecord = [...mergedRecord, ...authorityResults];
+      } else if (authorityResults && authorityResults.length === 0) {
+        return <NoResultsMessage {...this.props} />;
       }
     }
     if ((bibsOnly === true && autOnly === true) || (bibsOnly === false && autOnly === false)) {
@@ -254,6 +256,8 @@ export class SearchResults extends React.Component<P, {}> {
     if (autOnly === false && bibsOnly === true) {
       if (bibliographicResults && bibliographicResults.length > 0) {
         mergedRecord = [...mergedRecord, ...bibliographicResults];
+      } else if (bibliographicResults && bibliographicResults.length === 0) {
+        return <NoResultsMessage {...this.props} />;
       }
     }
     const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForAssociatedBibList(mergedRecord) : [];

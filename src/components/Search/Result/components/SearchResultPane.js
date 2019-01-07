@@ -3,6 +3,7 @@
  * @flow
  */
 import React from 'react';
+import { connect } from 'react-redux';
 import { Pane, Icon, MultiColumnList } from '@folio/stripes/components';
 import { ActionMenu } from '../../../../lib';
 import { Props, injectCommonProp } from '../../../../core';
@@ -39,7 +40,8 @@ class SearchResultPane extends React.Component<Props, {}> {
         translate,
         bibsOnly,
         loading,
-        messageNoContent
+        messageNoContent,
+        customVisibleCol
       } = this.props;
       return (
         <Pane
@@ -71,12 +73,15 @@ class SearchResultPane extends React.Component<Props, {}> {
                     columnMapping={columnMapper(bibsOnly, false)}
                     onNeedMoreData={() => {}}
                     loading={loading}
-                    visibleColumns={this.renderVisibleColumns()}
-                  /> :
-                  <EmptyMessage {...this.props} />
+                    visibleColumns={customVisibleCol === undefined ? this.renderVisibleColumns() : customVisibleCol}
+                  /> : <EmptyMessage {...this.props} />
           }
         </Pane>
       );
     }
 }
-export default (injectCommonProp(SearchResultPane));
+export default (connect(
+  ({ marccat: { customColumn } }) => ({
+    customVisibleCol: customColumn.visibleCol
+  }),
+)(injectCommonProp(SearchResultPane)));

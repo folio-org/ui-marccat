@@ -19,7 +19,8 @@ import {
   tag007ValuesReducer,
   tag008ValuesReducer,
   settingsReducer,
-  panelsReducer
+  panelsReducer,
+  custumColumnFormatterReducer
 } from './reducers/Reducer';
 import {
   searchEpic,
@@ -61,7 +62,8 @@ export const reducer = combineReducers({
   tag007Values: tag007ValuesReducer,
   tag008Values: tag008ValuesReducer,
   settings: settingsReducer,
-  panels: panelsReducer
+  panels: panelsReducer,
+  customColumn: custumColumnFormatterReducer
 });
 
 export const epics = combineEpics(

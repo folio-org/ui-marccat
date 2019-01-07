@@ -46,7 +46,11 @@ function AssociatedBibDetails({ translate, ...props }: P) {
                 </Col>
               </Row>
             ))}
-            <InventoryPluggableBtn {...props} buttonLabel={translate({ id: 'ui-marccat.search.goto.inventory' })} />
+            <InventoryPluggableBtn
+              {...props}
+              buttonLabel={translate({ id: 'ui-marccat.search.goto.inventory' })}
+              withLine
+            />
           </div>
         </Accordion>
       </AccordionSet>

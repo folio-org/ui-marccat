@@ -28,8 +28,9 @@ import {
 } from '../../../utils/SearchUtils';
 import { EMPTY_MESSAGE } from '../../../utils/Constant';
 import SearchPopover from '../Popover/SearchPopover';
-import styles from '../../../styles/common.css';
 import OperatorSelect from '../Select/OperatorSelect';
+
+import styles from '../index.css';
 
 type P = Props & {
   inputErrorCheck: string,
@@ -42,7 +43,8 @@ class SearchPanel extends React.Component<P, {}> {
     this.state = {
       isBrowseRequested: false,
       searchForm: [{ name: EMPTY_MESSAGE }],
-      filterEnable: true
+      filterEnable: true,
+      startQuery: {},
     };
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleAddSearchForm = this.handleAddSearchForm.bind(this);
@@ -60,12 +62,13 @@ class SearchPanel extends React.Component<P, {}> {
 
   handleKeyDown(e) {
     if (e.charCode === 13 || e.key === 'Enter') {
-      const { store } = this.props;
+      e.preventDefault();
+      const { store, store: { getState }, dispatch, router } = this.props;
       store.dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: true });
       store.dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
-      e.preventDefault();
+      // we are using redux dont forget!!!!!!!
       const inputValue = '"' + e.target.form[3].defaultValue + '"';
-      const { store: { getState }, dispatch, router } = this.props;
+      // const inputValue = getState().form.searchForm.values.searchTextArea0 || EMPTY_MESSAGE;
       let { isBrowseRequested } = this.state;
       isBrowseRequested = false;
       let baseQuery;
@@ -75,11 +78,11 @@ class SearchPanel extends React.Component<P, {}> {
       const form = getState().form.searchForm;
       const state = getState();
       if (form.values) {
-        if (form.values.selectIndexes) {
-          indexFilter = form.values.selectIndexes;
+        if (form.values.selectIndexes0) {
+          indexFilter = form.values.selectIndexes0;
         }
-        if (form.values.selectCondition) {
-          conditionFilter = form.values.selectCondition;
+        if (form.values.selectCondition0) {
+          conditionFilter = form.values.selectCondition0;
           indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
           baseQuery = indexForQuery + inputValue;
           baseQuery = (conditionFilter === 'MATCH') ? baseQuery + '!' : baseQuery;
@@ -128,10 +131,29 @@ class SearchPanel extends React.Component<P, {}> {
           dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: authQuery });
           this.transitionToParams('q', authQuery);
         }
+
         router.push('/marccat/search');
       }
+      this.setState({
+        startQuery: {
+          bibQuery,
+          authQuery
+        }
+      });
     }
   }
+
+  buildComplexQuery = () => {
+    const { store, store: { getState }, dispatch, router } = this.props;
+    const { startQuery } = this.state;
+    const form = getState().form.searchForm;
+    const state = getState();
+    const indexFilter = form.values.selectIndexes0;
+    const conditionFilter = form.values.selectCondition0;
+    const numberLoop = form.values.selectCondition0;
+
+    const indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
+  };
 
   handleAddSearchForm = () => {
     const { searchForm } = this.state;
@@ -148,8 +170,7 @@ class SearchPanel extends React.Component<P, {}> {
     });
   }
 
-  handleOnChange = () => {
-  };
+  handleOnChange = () => {};
 
   handleResetAllButton = () => {
     const { dispatch, reset } = this.props;
@@ -185,77 +206,85 @@ class SearchPanel extends React.Component<P, {}> {
             header={FilterAccordionHeader}
           >
             {searchForm.map((form, idx) => (
-              <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange} key={idx}>
-                <Row>
-                  <Col xs={11}>
-                    <div className={styles.select_margin}>
-                      <SearchIndexes
-                        marginBottom0
+              <React.Fragment>
+                <span className={styles.parentesys} />
+                <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange} key={idx}>
+                  <Row>
+                    <Col xs={11}>
+                      <div className={styles.select_margin}>
+                        <SearchIndexes
+                          {...this.props}
+                          idx={idx}
+                          marginBottom0
+                        />
+                      </div>
+                    </Col>
+                    <Col xs={1} style={{ paddingLeft: 0 }} className={styles.popover}>
+                      <InfoPopover
+                        content={<SearchPopover {...this.props} label="Description" />}
+                        buttonLabel={translate({ id: 'ui-marccat.search.record.edit' })}
+                        buttonHref="http://www"
+                        buttonTarget="_blank"
+                      />
+                    </Col>
+                  </Row>
+                  <Row style={{ height: '30px' }}>
+                    <Col xs={11}>
+                      <SearchConditions
                         {...this.props}
+                        idx={idx}
                       />
-                    </div>
-                  </Col>
-                  <Col xs={1} style={{ paddingLeft: 0 }} className={styles.popover}>
-                    <InfoPopover
-                      content={<SearchPopover {...this.props} label="Description" />}
-                      buttonLabel={translate({ id: 'ui-marccat.search.record.edit' })}
-                      buttonHref="http://www"
-                      buttonTarget="_blank"
-                    />
-                  </Col>
-                </Row>
-                <Row style={{ height: '30px' }}>
-                  <Col xs={11}>
-                    <SearchConditions {...this.props} />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xs={11}>
-                    <div className={styles.select_margin}>
-                      <Field
-                        fullWidth
-                        component={SearchField}
-                        placeholder="Search..."
-                        name="searchTextArea"
-                        id="searchTextArea"
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col xs={11}>
+                      <div className={styles.select_margin}>
+                        <Field
+                          fullWidth
+                          component={SearchField}
+                          placeholder="Search..."
+                          name={`searchTextArea${idx}`}
+                          id={`searchTextArea${idx}`}
+                        />
+                      </div>
+                    </Col>
+                  </Row>
+                  {idx !== (searchForm.length - 1) &&
+                  <Row>
+                    <Col xs={11}>
+                      <OperatorSelect
+                        {...this.props}
+                        id={`operator${idx}`}
+                        name={`operator${idx}`}
                       />
-                    </div>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xs={11}>
-                    <OperatorSelect {...this.props} />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xs={11}>
-                    <Button
-                      buttonClass={styles.rightPosition}
-                      onClick={this.handleAddSearchForm}
-                    >
-                      <Icon icon="plus-sign">
-                        {translate({ id: 'ui-marccat.button.add' })}
-                      </Icon>
-                    </Button>
-                    {idx !== 0 &&
+                    </Col>
+                  </Row>}
+                  <Row>
+                    <Col xs={11}>
+                      <Button
+                        buttonClass={styles.rightPosition}
+                        onClick={this.handleAddSearchForm}
+                      >
+                        <Icon icon="plus-sign">
+                          {translate({ id: 'ui-marccat.button.add' })}
+                        </Icon>
+                      </Button>
+                      {idx !== 0 &&
                       <Button
                         buttonClass={styles.rightPositionTop}
                         onClick={this.handleRemoveSearchForm(idx)}
                       >
                         {translate({ id: 'ui-marccat.button.remove' })}
                       </Button>}
-                  </Col>
-                </Row>
-              </form>
+                    </Col>
+                  </Row>
+                </form>
+                <span className={styles.parentesys} />
+              </React.Fragment>
             ))
             }
           </Accordion>
-          {filterEnable &&
-            <FiltersContainer {...this.props} filterEnable />
-          }
-          {!filterEnable &&
-            <FiltersContainer {...this.props} filterEnable={false} />
-          }
+          <FiltersContainer {...this.props} filterEnable={!!(filterEnable)} />
         </AccordionSet>
       </React.Fragment>
     );

@@ -500,6 +500,18 @@ export function panelsReducer(state = {}, action) {
 }
 
 
+export function custumColumnFormatterReducer(state = {}, action) {
+  switch (action.type) {
+  case ActionTypes.CUSTOM_COLUMN_VIEW:
+    return {
+      ...state,
+      visibleCol: action.visibleColumn,
+    };
+  default:
+    return state;
+  }
+}
+
 export function settingsReducer(state = {}, action) {
   switch (action.type) {
   case ActionTypes.SETTINGS:

@@ -52,6 +52,7 @@ class SearchPanel extends React.Component<P, {}> {
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleResetAllButton = this.handleResetAllButton.bind(this);
     this.transitionToParams = this.transitionToParams.bind(this);
+    this.createCustomColumnFormatter = this.createCustomColumnFormatter.bind(this);
   }
 
   transitionToParams = (key, value) => {
@@ -60,13 +61,64 @@ class SearchPanel extends React.Component<P, {}> {
     return includes(url, `${key}=${value}`);
   };
 
+  createCustomColumnFormatter = (obj) => {
+    const { store } = this.props;
+    const customColumnArrayMapper = [];
+    const customFormatter = [];
+    Object.keys(obj).forEach((key) => customColumnArrayMapper.push(key + ':' + obj[key]));
+    customColumnArrayMapper.filter(x => {
+      const choosedColumn = x.split(':');
+      const colName = choosedColumn[0];
+      const colIsActive = choosedColumn[1];
+      if (colIsActive === 'true') {
+        switch (colName) {
+        case 'checkbox-View':
+          customFormatter.push('resultView');
+          break;
+        case 'checkbox-id Number':
+          customFormatter.push('001');
+          break;
+        case 'checkbox-Title':
+          customFormatter.push('245');
+          break;
+        case 'checkbox-Preferred title':
+          customFormatter.push('preferredTitle');
+          break;
+        case 'checkbox-Name':
+          customFormatter.push('name');
+          break;
+        case 'checkbox-Tag':
+          customFormatter.push('tagHighlighted');
+          break;
+        case 'checkbox-Date 1':
+          customFormatter.push('date1');
+          break;
+        case 'checkbox-Date 2':
+          customFormatter.push('date2');
+          break;
+        case 'checkbox-Format':
+          customFormatter.push('format');
+          break;
+        default:
+          return customFormatter;
+        }
+      }
+      return customFormatter;
+    });
+    store.dispatch({ type: ActionTypes.CUSTOM_COLUMN_VIEW, visibleColumn: customFormatter });
+  }
+
   handleKeyDown(e) {
     if (e.charCode === 13 || e.key === 'Enter') {
       e.preventDefault();
       const { store, store: { getState }, dispatch, router } = this.props;
       store.dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: true });
       store.dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
-      // we are using redux dont forget!!!!!!!
+      e.preventDefault();
+      const { checkboxForm } = store.getState().form;
+      if (checkboxForm.anyTouched) {
+        this.createCustomColumnFormatter(checkboxForm.values);
+      }
       const inputValue = '"' + e.target.form[3].defaultValue + '"';
       // const inputValue = getState().form.searchForm.values.searchTextArea0 || EMPTY_MESSAGE;
       let { isBrowseRequested } = this.state;
@@ -119,12 +171,12 @@ class SearchPanel extends React.Component<P, {}> {
           filterEnable: true
         });
         if (indexForQuery === 'BN '
-        || indexForQuery === 'SN '
-        || indexForQuery === 'PU '
-        || indexForQuery === 'LL '
-        || indexForQuery === 'BC '
-        || indexForQuery === 'CP '
-        || indexForQuery === 'PW ') {
+          || indexForQuery === 'SN '
+          || indexForQuery === 'PU '
+          || indexForQuery === 'LL '
+          || indexForQuery === 'BC '
+          || indexForQuery === 'CP '
+          || indexForQuery === 'PW ') {
           dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: '' });
           this.transitionToParams('q', bibQuery);
         } else {
@@ -206,81 +258,79 @@ class SearchPanel extends React.Component<P, {}> {
             header={FilterAccordionHeader}
           >
             {searchForm.map((form, idx) => (
-              <React.Fragment>
-                <span className={styles.parentesys} />
-                <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange} key={idx}>
-                  <Row>
-                    <Col xs={11}>
-                      <div className={styles.select_margin}>
-                        <SearchIndexes
-                          {...this.props}
-                          idx={idx}
-                          marginBottom0
+              <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange} key={idx}>
+                <Row>
+                  <Col xs={1}>
+                    <div className={searchForm.length === 1 ? styles.leftArchDisabled : styles.leftArch} />
+                  </Col>
+                  <Col xs={1} />
+                  <Col xs={9}>
+                    <Row>
+                      <Col xs={11}>
+                        <div className={styles.select_margin}>
+                          <SearchIndexes
+                            marginBottom0
+                            {...this.props}
+                          />
+                        </div>
+                      </Col>
+                      <Col xs={1} style={{ paddingLeft: 0 }} className={styles.popover}>
+                        <InfoPopover
+                          content={<SearchPopover {...this.props} label="Description" />}
+                          buttonLabel={translate({ id: 'ui-marccat.search.record.edit' })}
+                          buttonHref="http://www"
+                          buttonTarget="_blank"
                         />
-                      </div>
-                    </Col>
-                    <Col xs={1} style={{ paddingLeft: 0 }} className={styles.popover}>
-                      <InfoPopover
-                        content={<SearchPopover {...this.props} label="Description" />}
-                        buttonLabel={translate({ id: 'ui-marccat.search.record.edit' })}
-                        buttonHref="http://www"
-                        buttonTarget="_blank"
-                      />
-                    </Col>
-                  </Row>
-                  <Row style={{ height: '30px' }}>
-                    <Col xs={11}>
-                      <SearchConditions
-                        {...this.props}
-                        idx={idx}
-                      />
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col xs={11}>
-                      <div className={styles.select_margin}>
-                        <Field
-                          fullWidth
-                          component={SearchField}
-                          placeholder="Search..."
-                          name={`searchTextArea${idx}`}
-                          id={`searchTextArea${idx}`}
-                        />
-                      </div>
-                    </Col>
-                  </Row>
-                  {idx !== (searchForm.length - 1) &&
-                  <Row>
-                    <Col xs={11}>
-                      <OperatorSelect
-                        {...this.props}
-                        id={`operator${idx}`}
-                        name={`operator${idx}`}
-                      />
-                    </Col>
-                  </Row>}
-                  <Row>
-                    <Col xs={11}>
-                      <Button
-                        buttonClass={styles.rightPosition}
-                        onClick={this.handleAddSearchForm}
-                      >
-                        <Icon icon="plus-sign">
-                          {translate({ id: 'ui-marccat.button.add' })}
-                        </Icon>
-                      </Button>
-                      {idx !== 0 &&
-                      <Button
-                        buttonClass={styles.rightPositionTop}
-                        onClick={this.handleRemoveSearchForm(idx)}
-                      >
-                        {translate({ id: 'ui-marccat.button.remove' })}
-                      </Button>}
-                    </Col>
-                  </Row>
-                </form>
-                <span className={styles.parentesys} />
-              </React.Fragment>
+                      </Col>
+                    </Row>
+                    <Row style={{ height: '30px' }}>
+                      <Col xs={11}>
+                        <SearchConditions {...this.props} />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col xs={11}>
+                        <div className={styles.select_margin}>
+                          <Field
+                            fullWidth
+                            component={SearchField}
+                            placeholder="Search..."
+                            name="searchTextArea"
+                            id="searchTextArea"
+                          />
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col xs={11}>
+                        <OperatorSelect {...this.props} />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col xs={11}>
+                        <Button
+                          buttonClass={styles.rightPosition}
+                          onClick={this.handleAddSearchForm}
+                        >
+                          <Icon icon="plus-sign">
+                            {translate({ id: 'ui-marccat.button.add' })}
+                          </Icon>
+                        </Button>
+                        {idx !== 0 &&
+                          <Button
+                            buttonClass={styles.rightPositionTop}
+                            onClick={this.handleRemoveSearchForm(idx)}
+                          >
+                            {translate({ id: 'ui-marccat.button.remove' })}
+                          </Button>}
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col xs={1}>
+                    <div className={searchForm.length === 1 ? styles.rightArchDisabled : styles.rightArch} />
+                  </Col>
+                </Row>
+              </form>
             ))
             }
           </Accordion>

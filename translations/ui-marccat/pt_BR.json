@@ -77,5 +77,9 @@
     "search.record.new": "Novo",
     "search.record.new.from.template": "Novo a partir do modelo (CTRL+N)",
     "search.actionmenu.title": "Pesquisas recentes",
-    "template.record.create": "Criar registro"
+    "template.record.create": "Criar registro",
+    "search.record.new.auth": "Novo (CTRL+A)",
+    "cataloging.variablefield.empty": "Nenhum campo de dados variável presente",
+    "cataloging.variablefield.section.label": "Campo de dados variável",
+    "app.title": "MARCcat"
 }

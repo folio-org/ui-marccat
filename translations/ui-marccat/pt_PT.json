@@ -76,6 +76,10 @@
     "settings.default.record.template.bib.text": "Bibliografic Records. Organization-wide templates:",
     "search.record.new": "New",
     "search.record.new.from.template": "New from template (CTRL+N)",
-    "search.actionmenu.title": "Recent searches",
-    "template.record.create": "Create Record"
+    "search.actionmenu.title": "Pequisas recentes",
+    "template.record.create": "Criar registo",
+    "search.record.new.auth": "Novo (CTRL+A)",
+    "cataloging.variablefield.empty": "Nenhum campo de dados variável presente",
+    "cataloging.variablefield.section.label": "Campo de dados variável",
+    "app.title": "MARCcat"
 }

@@ -168,12 +168,12 @@ class SearchPanel extends React.Component<P, {}> {
           filterEnable: true
         });
         if (indexForQuery === 'BN '
-        || indexForQuery === 'SN '
-        || indexForQuery === 'PU '
-        || indexForQuery === 'LL '
-        || indexForQuery === 'BC '
-        || indexForQuery === 'CP '
-        || indexForQuery === 'PW ') {
+          || indexForQuery === 'SN '
+          || indexForQuery === 'PU '
+          || indexForQuery === 'LL '
+          || indexForQuery === 'BC '
+          || indexForQuery === 'CP '
+          || indexForQuery === 'PW ') {
           dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: '' });
           this.transitionToParams('q', bibQuery);
         } else {
@@ -239,63 +239,74 @@ class SearchPanel extends React.Component<P, {}> {
             {searchForm.map((form, idx) => (
               <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange} key={idx}>
                 <Row>
-                  <Col xs={11}>
-                    <div className={styles.select_margin}>
-                      <SearchIndexes
-                        marginBottom0
-                        {...this.props}
-                      />
-                    </div>
+                  <Col xs={1}>
+                    <div className={searchForm.length === 1 ? styles.leftArchDisabled : styles.leftArch} />
                   </Col>
-                  <Col xs={1} style={{ paddingLeft: 0 }} className={styles.popover}>
-                    <InfoPopover
-                      content={<SearchPopover {...this.props} label="Description" />}
-                      buttonLabel={translate({ id: 'ui-marccat.search.record.edit' })}
-                      buttonHref="http://www"
-                      buttonTarget="_blank"
-                    />
+                  <Col xs={1} />
+                  <Col xs={9}>
+                    <Row>
+                      <Col xs={11}>
+                        <div className={styles.select_margin}>
+                          <SearchIndexes
+                            marginBottom0
+                            {...this.props}
+                          />
+                        </div>
+                      </Col>
+                      <Col xs={1} style={{ paddingLeft: 0 }} className={styles.popover}>
+                        <InfoPopover
+                          content={<SearchPopover {...this.props} label="Description" />}
+                          buttonLabel={translate({ id: 'ui-marccat.search.record.edit' })}
+                          buttonHref="http://www"
+                          buttonTarget="_blank"
+                        />
+                      </Col>
+                    </Row>
+                    <Row style={{ height: '30px' }}>
+                      <Col xs={11}>
+                        <SearchConditions {...this.props} />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col xs={11}>
+                        <div className={styles.select_margin}>
+                          <Field
+                            fullWidth
+                            component={SearchField}
+                            placeholder="Search..."
+                            name="searchTextArea"
+                            id="searchTextArea"
+                          />
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col xs={11}>
+                        <OperatorSelect {...this.props} />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col xs={11}>
+                        <Button
+                          buttonClass={styles.rightPosition}
+                          onClick={this.handleAddSearchForm}
+                        >
+                          <Icon icon="plus-sign">
+                            {translate({ id: 'ui-marccat.button.add' })}
+                          </Icon>
+                        </Button>
+                        {idx !== 0 &&
+                          <Button
+                            buttonClass={styles.rightPositionTop}
+                            onClick={this.handleRemoveSearchForm(idx)}
+                          >
+                            {translate({ id: 'ui-marccat.button.remove' })}
+                          </Button>}
+                      </Col>
+                    </Row>
                   </Col>
-                </Row>
-                <Row style={{ height: '30px' }}>
-                  <Col xs={11}>
-                    <SearchConditions {...this.props} />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xs={11}>
-                    <div className={styles.select_margin}>
-                      <Field
-                        fullWidth
-                        component={SearchField}
-                        placeholder="Search..."
-                        name="searchTextArea"
-                        id="searchTextArea"
-                      />
-                    </div>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xs={11}>
-                    <OperatorSelect {...this.props} />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xs={11}>
-                    <Button
-                      buttonClass={styles.rightPosition}
-                      onClick={this.handleAddSearchForm}
-                    >
-                      <Icon icon="plus-sign">
-                        {translate({ id: 'ui-marccat.button.add' })}
-                      </Icon>
-                    </Button>
-                    {idx !== 0 &&
-                      <Button
-                        buttonClass={styles.rightPositionTop}
-                        onClick={this.handleRemoveSearchForm(idx)}
-                      >
-                        {translate({ id: 'ui-marccat.button.remove' })}
-                      </Button>}
+                  <Col xs={1}>
+                    <div className={searchForm.length === 1 ? styles.rightArchDisabled : styles.rightArch} />
                   </Col>
                 </Row>
               </form>

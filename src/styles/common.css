@@ -8,6 +8,38 @@
   width: 100%;
 }
 
+.leftArch {
+  border-left: solid 4px #2b75bb;
+  border-radius: 50%;
+  height: 125px;
+  width: 40px;
+  padding-top: 10px;
+}
+
+.rightArch {
+  border-right: solid 4px #2b75bb;
+  border-radius: 50%;
+  height: 125px;
+  width: 40px;
+  padding-top: 10px;
+}
+
+.leftArchDisabled {
+  border-left: solid 4px rgba(0, 0, 0, 0.62);
+  border-radius: 50%;
+  height: 125px;
+  width: 40px;
+  padding-top: 10px;
+}
+
+.rightArchDisabled {
+  border-right: solid 4px rgba(0, 0, 0, 0.62);
+  border-radius: 50%;
+  height: 125px;
+  width: 40px;
+  padding-top: 10px;
+}
+
 .authority {
   width: 18px;
   height: 18px;

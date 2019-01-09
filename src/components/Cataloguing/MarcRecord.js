@@ -19,6 +19,7 @@ import {
   Icon
 } from '@folio/stripes/components';
 import { reduxForm } from 'redux-form';
+import { isEmpty } from 'lodash';
 import { Props, injectCommonProp } from '../../core';
 import { ActionMenuTemplate, DropdownButtonMenu, ToolbarButtonMenu } from '../../lib';
 import { VariableFields } from '.';
@@ -42,7 +43,10 @@ export class MarcRecordManager extends React.Component<Props, {}> {
       isPresent008: false,
       openDropDownMenu: false,
       editable: false,
-      leaderCss: false
+      leaderCss: false,
+      leaderCss006: false,
+      leaderCss007: false,
+      leaderCss008: false,
     };
     this.renderDropdownLabels = this.renderDropdownLabels.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -101,40 +105,58 @@ handleOnSubmit = () => {
 };
 
 handleTags006 = (el) => {
-  const { dispatch, bibliographicRecord } = this.props;
+  const { leaderCss006 } = this.state;
+  const { dispatch, bibliographicRecord, headerTypes006Result } = this.props;
   const {
     isPresent006,
   } = this.state;
-  if (!isPresent006) {
-    dispatch({ type: ActionTypes.HEADER_TYPES_006, code: '006' });
-  } else {
-    dispatch({ type: ActionTypes.VALUES_FROM_TAG_006, leader: bibliographicRecord.leader.value, code: el.fixedField.code, typeCode: el.fixedField.headerTypeCode });
+  if (isEmpty(headerTypes006Result)) {
+    if (!isPresent006) {
+      dispatch({ type: ActionTypes.HEADER_TYPES_006, code: '006' });
+    } else {
+      dispatch({ type: ActionTypes.VALUES_FROM_TAG_006, leader: bibliographicRecord.leader.value, code: el.fixedField.code, typeCode: el.fixedField.headerTypeCode });
+    }
   }
+  this.setState({
+    leaderCss006: !leaderCss006
+  });
 };
 
 handleTags007 = (el) => {
-  const { dispatch, bibliographicRecord } = this.props;
+  const { leaderCss007 } = this.state;
+  const { dispatch, bibliographicRecord, headerTypes007Result } = this.props;
   const {
     isPresent007,
   } = this.state;
-  if (!isPresent007) {
-    dispatch({ type: ActionTypes.HEADER_TYPES_007, code: '007' });
-  } else {
-    dispatch({ type: ActionTypes.VALUES_FROM_TAG_007, leader: bibliographicRecord.leader.value, code: el.fixedField.code, typeCode: el.fixedField.headerTypeCode });
+  if (isEmpty(headerTypes007Result)) {
+    if (!isPresent007) {
+      dispatch({ type: ActionTypes.HEADER_TYPES_007, code: '007' });
+    } else {
+      dispatch({ type: ActionTypes.VALUES_FROM_TAG_007, leader: bibliographicRecord.leader.value, code: el.fixedField.code, typeCode: el.fixedField.headerTypeCode });
+    }
   }
+  this.setState({
+    leaderCss007: !leaderCss007
+  });
 };
 
 handleTags008 = (el) => {
-  const { dispatch, bibliographicRecord } = this.props;
+  const { leaderCss008 } = this.state;
+  const { dispatch, bibliographicRecord, headerTypes008Result } = this.props;
   const {
     isPresent008,
   } = this.state;
-  if (!isPresent008) {
-    dispatch({ type: ActionTypes.HEADER_TYPES_008, code: '008' });
-  } else {
-    dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: bibliographicRecord.leader.value, code: el.fixedField.code, typeCode: el.fixedField.headerTypeCode });
-    dispatch({ type: ActionTypes.HEADER_TYPES_008, code: '008', valueHeaderTypeCode: el.fixedField.headerTypeCode });
+  if (isEmpty(headerTypes008Result)) {
+    if (!isPresent008) {
+      dispatch({ type: ActionTypes.HEADER_TYPES_008, code: '008' });
+    } else {
+      dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: bibliographicRecord.leader.value, code: el.fixedField.code, typeCode: el.fixedField.headerTypeCode });
+      dispatch({ type: ActionTypes.HEADER_TYPES_008, code: '008', valueHeaderTypeCode: el.fixedField.headerTypeCode });
+    }
   }
+  this.setState({
+    leaderCss008: !leaderCss008
+  });
 };
 
 
@@ -150,7 +172,7 @@ handleLeader = () => {
   const { dispatch, bibliographicRecord } = this.props;
   dispatch({ type: ActionTypes.LEADER_VALUES_FROM_TAG, leader: bibliographicRecord.leader.value, code: bibliographicRecord.leader.code, typeCode: '15' });
   this.setState({
-    leaderCss: true
+    leaderCss: !leaderCss
   });
 };
 
@@ -169,15 +191,15 @@ render() {
   const {
     isPresent006,
     isPresent007,
-    isPresent008
+    isPresent008,
+    openDropDownMenu,
+    editable,
+    leaderCss,
+    leaderCss006,
+    leaderCss007,
+    leaderCss008,
   } = this.state;
-  const { openDropDownMenu, editable, leaderCss } = this.state;
   const defaultTemplate = (settings) ? settings.defaultTemplate : C.DEFAULT_TEMPLATE;
-
-  // const resultNotReady = (leaderValuesResults === undefined);
-  // headerTypes006NotReady = (headerTypes006Result === undefined);
-  // headerTypes007NotReady = (headerTypes007Result === undefined);
-  // headerTypes008NotReady = (headerTypes008Result === undefined);
 
   if (bibliographicRecord === undefined) {
     return (
@@ -267,8 +289,9 @@ render() {
                                 {
                                   (headerTypes006IsLoading) ?
                                     <div /> :
-                                    <Tag006 {...this.props} />
-                                }
+                                    <div className={(leaderCss006) ? style.leaderResultsActive : style.leaderResults}>
+                                      <Tag006 {...this.props} />
+                                    </div> }
                               </div>
                             );
                           } else if (el.fixedField.code === '007') {
@@ -284,7 +307,9 @@ render() {
                                 {
                                   (headerTypes007IsLoading) ?
                                     <div /> :
-                                    <Tag007 {...this.props} />
+                                    <div className={(leaderCss007) ? style.leaderResultsActive : style.leaderResults}>
+                                      <Tag007 {...this.props} />
+                                    </div>
                                 }
                               </div>
                             );
@@ -301,7 +326,9 @@ render() {
                                 {
                                   (headerTypes008IsLoading) ?
                                     <div /> :
-                                    <Tag008 {...this.props} />
+                                    <div className={(leaderCss008) ? style.leaderResultsActive : style.leaderResults}>
+                                      <Tag008 {...this.props} />
+                                    </div>
                                 }
                               </div>
                             );

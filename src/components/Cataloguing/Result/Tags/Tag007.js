@@ -4,6 +4,7 @@
  */
 import React from 'react';
 import { connect } from 'react-redux';
+import { Field } from 'redux-form';
 import { Row, Col, Select } from '@folio/stripes/components';
 import { injectCommonProp, Props } from '../../../../core';
 import { ActionTypes } from '../../../../redux/actions';
@@ -40,7 +41,8 @@ export class Custom007 extends React.Component<Props, {}> {
         <div className={style.rcornerspanel} id="rcornerspanel">
           <Row>
             <Col xs={4}>
-              <Select
+              <Field
+                component={Select}
                 onChange={this.handleOnChange}
                 label="Header types"
                 placeholder="Select header..."
@@ -53,12 +55,15 @@ export class Custom007 extends React.Component<Props, {}> {
             {
               (isChangedHeaderType === true && tag007ValuesResults) &&
               remappedValues.map(elem => {
-                return elem.map(item => {
+                return elem.map((item, i) => {
                   let exactDisplayValue = '';
                   item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue));
                   return (
                     <Col xs={4}>
-                      <Select
+                      <Field
+                        component={Select}
+                        name={`tag006-${i}`}
+                        id={`tag006-${i}`}
                         label={item.name}
                         dataOptions={item.dropdownSelect}
                         placeholder={exactDisplayValue}

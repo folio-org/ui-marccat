@@ -12,7 +12,7 @@ export const ENDPOINT = {
     'Content-Type': 'application/json',
     'x-okapi-tenant': 'tnx',
   },
-  BASE_URL: 'http://151.1.165.20:8080/marccat',
+  BASE_URL: 'http://127.0.0.1:8080/marccat',
   MERGED_SEARCH_URL: '/mergedSearch',
   SEARCH_URL: '/searchVertical',
   SEARCH_URL_JSON: '/search',

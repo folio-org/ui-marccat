@@ -261,10 +261,10 @@ class SearchPanel extends React.Component<P, {}> {
               <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange} key={idx}>
                 <Row>
                   <Col xs={1}>
-                    <div className={searchForm.length === 1 ? styles.leftArchDisabled : styles.leftArch} />
+                    <div className={searchForm.length === 1 ? styles.bracketDisabled : styles.bracket} />
                   </Col>
-                  <Col xs={1} />
-                  <Col xs={9}>
+                  <Col xs={1} className={styles.bracketSpacer} />
+                  <Col xs={9} className={styles.bracketSpacer}>
                     <Row>
                       <Col xs={11}>
                         <div className={styles.select_margin}>
@@ -303,7 +303,11 @@ class SearchPanel extends React.Component<P, {}> {
                     </Row>
                     <Row>
                       <Col xs={11}>
-                        <OperatorSelect {...this.props} />
+                        <OperatorSelect
+                          {...this.props}
+                          name="operatorSelect"
+                          id="operatorSelect"
+                        />
                       </Col>
                     </Row>
                     <Row>
@@ -325,9 +329,6 @@ class SearchPanel extends React.Component<P, {}> {
                           </Button>}
                       </Col>
                     </Row>
-                  </Col>
-                  <Col xs={1}>
-                    <div className={searchForm.length === 1 ? styles.rightArchDisabled : styles.rightArch} />
                   </Col>
                 </Row>
               </form>

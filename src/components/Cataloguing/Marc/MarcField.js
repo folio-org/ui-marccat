@@ -3,11 +3,13 @@ import { Field } from 'redux-form';
 import { Icon } from '@folio/stripes/components';
 import type { Props } from '../../../core';
 import style from '../Style/style.css';
+import { ActionTypes } from '../../../redux/actions';
 
 export default class MarcField extends React.Component<Props, {}> {
   render() {
-    const { dispatch, change, label, name, value } = this.props;
+    const { dispatch, change, label, name, value, bibliographicRecord } = this.props;
     dispatch(change(name, value));
+    dispatch({ type: ActionTypes.LEADER_VALUES_FROM_TAG, leader: bibliographicRecord.leader.value, code: bibliographicRecord.leader.code, typeCode: '15' });
     return (
       <div className={style.controlFieldContainer}>
         <div>

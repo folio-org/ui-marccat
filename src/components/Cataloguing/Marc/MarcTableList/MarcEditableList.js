@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import sortBy from 'lodash/sortBy';
 import MarcEditableForm from './MarcEditableForm';
 import { Props, injectCommonProp } from '../../../../core';

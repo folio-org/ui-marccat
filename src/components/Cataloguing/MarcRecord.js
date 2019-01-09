@@ -20,7 +20,7 @@ import {
 } from '@folio/stripes/components';
 import { reduxForm } from 'redux-form';
 import { Props, injectCommonProp } from '../../core';
-import { ActionMenuTemplate, DropdownButtonMenu } from '../../lib';
+import { ActionMenuTemplate, DropdownButtonMenu, ToolbarButtonMenu } from '../../lib';
 import { VariableFields } from '.';
 import MarcField from './Marc/MarcField';
 import * as C from '../../utils/Constant';
@@ -40,9 +40,11 @@ export class MarcRecordManager extends React.Component<Props, {}> {
       isPresent008: false,
       openDropDownMenu: false,
       editable: false,
+      leaderCss: false
     };
     this.renderDropdownLabels = this.renderDropdownLabels.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
 
 renderDropdownLabels = () => {
@@ -75,6 +77,26 @@ renderDropdownLabels = () => {
     }];
 };
 
+renderButtonMenu = () => {
+  const { translate } = this.props;
+  return (
+    <ToolbarButtonMenu
+      onClick={this.handleOnSubmit}
+      create
+      {...this.props}
+      label={
+        <Icon icon="plus-sign">
+          {translate({ id:'ui-marccat.template.record.create' })}
+        </Icon>
+      }
+    />
+  );
+};
+
+
+handleOnSubmit = () => {
+  // alert('ygy');
+};
 
 handleClose = () => {
   const { dispatch, router, toggleFilterPane } = this.props;
@@ -97,7 +119,7 @@ render() {
     isPresent007,
     isPresent008
   } = this.state;
-  const { openDropDownMenu, editable } = this.state;
+  const { openDropDownMenu, editable, leaderCss } = this.state;
   const defaultTemplate = (settings) ? settings.defaultTemplate : C.DEFAULT_TEMPLATE;
 
   // const resultNotReady = (leaderValuesResults === undefined);
@@ -116,6 +138,7 @@ render() {
           actionMenu={ActionMenuTemplate}
           dismissible
           onClose={this.handleClose}
+          lastMenu={this.renderButtonMenu()}
         >
           <Icon icon="spinner-ellipsis" />
         </Pane>
@@ -131,6 +154,7 @@ render() {
           paneSub={(bibliographicRecord) ? 'id. ' + bibliographicRecord.id : 'id. ' + defaultTemplate.id}
           appIcon={{ app: C.META.ICON_TITLE }}
           actionMenu={ActionMenuTemplate}
+          lastMenu={this.renderButtonMenu()}
         >
           <Row center="xs">
             <div className={style.recordContainer}>
@@ -143,21 +167,34 @@ render() {
                     <SingleCheckboxIconButton labels={['Suppress from Discovery']} pullLeft widthPadding />
                   </Accordion>
                   <Accordion label="Leader" id="leader">
-                    <MarcField
-                      {...this.props}
-                      leaderValuesResults={leaderValuesResults}
-                      bibliographicRecord={bibliographicRecord}
-                      label="Leader"
-                      name="leader"
-                      value={bibliographicRecord.leader.value}
-                    />
+                    <div className={style.controlFieldContainer}>
+                      <MarcField
+                        {...this.props}
+                        leaderValuesResults={leaderValuesResults}
+                        bibliographicRecord={bibliographicRecord}
+                        label="Leader"
+                        name="leader"
+                        onClick={() => this.setState({
+                          leaderCss: !leaderCss
+                        })}
+                        value={bibliographicRecord.leader.value}
+                      />
+                      {leaderValuesResults &&
+                      <div className={(leaderCss) ? style.leaderResultsActive : style.leaderResults}>
+                        <MarcLeader
+                          {...this.props}
+                          leaderValuesResults={leaderValuesResults}
+                        />
+                      </div>
+                      }
+                    </div>
                   </Accordion>
                   <Accordion label="Control fields (001, 003, 005)" id="control-field">
                     {bibliographicRecord.fields.map(el => {
                       if (el.variableField === undefined) {
                         if (el.fixedField.code === '001' || el.fixedField.code === '003' || el.fixedField.code === '005') {
                           return (
-                            <div>
+                            <div className={style.controlFieldContainer}>
                               <MarcField
                                 {...this.props}
                                 label={el.fixedField.code}
@@ -178,7 +215,7 @@ render() {
                             isPresent008 = true;
                           }
                           return (
-                            <div>
+                            <div className={style.controlFieldContainer}>
                               <MarcField
                                 {...this.props}
                                 label={el.fixedField.code}

@@ -20,7 +20,7 @@ export class MarcLeader extends React.Component<Props, {}> {
       return <Icon icon="spinner-ellipsis" />;
     } else {
       return (
-        <div className={style.rcornerspanel} id="rcornerspanel">
+        <div className={style.leaderData} id="leaderData">
           <Row xs={12}>
             {
               (leaderValuesResults) &&

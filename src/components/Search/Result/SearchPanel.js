@@ -44,7 +44,6 @@ class SearchPanel extends React.Component<P, {}> {
       isBrowseRequested: false,
       searchForm: [{ name: EMPTY_MESSAGE }],
       filterEnable: true,
-      startQuery: {},
     };
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleAddSearchForm = this.handleAddSearchForm.bind(this);
@@ -186,26 +185,10 @@ class SearchPanel extends React.Component<P, {}> {
 
         router.push('/marccat/search');
       }
-      this.setState({
-        startQuery: {
-          bibQuery,
-          authQuery
-        }
-      });
     }
   }
 
-  buildComplexQuery = () => {
-    const { store, store: { getState }, dispatch, router } = this.props;
-    const { startQuery } = this.state;
-    const form = getState().form.searchForm;
-    const state = getState();
-    const indexFilter = form.values.selectIndexes0;
-    const conditionFilter = form.values.selectCondition0;
-    const numberLoop = form.values.selectCondition0;
-
-    const indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
-  };
+  buildComplexQuery = () => {};
 
   handleAddSearchForm = () => {
     const { searchForm } = this.state;
@@ -301,6 +284,7 @@ class SearchPanel extends React.Component<P, {}> {
                         </div>
                       </Col>
                     </Row>
+                    {searchForm.length > 0 &&
                     <Row>
                       <Col xs={11}>
                         <OperatorSelect
@@ -310,6 +294,7 @@ class SearchPanel extends React.Component<P, {}> {
                         />
                       </Col>
                     </Row>
+                    }
                     <Row>
                       <Col xs={11}>
                         <Button

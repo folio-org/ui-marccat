@@ -145,14 +145,12 @@ render() {
                   <Accordion label="Leader" id="leader">
                     <MarcField
                       {...this.props}
+                      leaderValuesResults={leaderValuesResults}
                       bibliographicRecord={bibliographicRecord}
                       label="Leader"
                       name="leader"
                       value={bibliographicRecord.leader.value}
                     />
-                    {leaderValuesResults &&
-                    <MarcLeader {...this.props} leaderValuesResults={leaderValuesResults} />
-                    }
                   </Accordion>
                   <Accordion label="Control fields (001, 003, 005)" id="control-field">
                     {bibliographicRecord.fields.map(el => {

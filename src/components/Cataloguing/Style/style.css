@@ -7,6 +7,7 @@
   border-radius: 10px;
   background-color: #dcdcdc;
   background-position: left top;
+  padding-bottom: 20px;
   background-repeat: repeat;
   padding: 15px;
   padding-left: 30px;
@@ -64,4 +65,10 @@
 .marcEditableListError {
   width: 100%;
   padding: 6px;
+}
+.leaderResults {
+  display: none;
+}
+.leaderResultsActive {
+  display: block;
 }

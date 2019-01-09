@@ -28,7 +28,9 @@ import { SingleCheckboxIconButton } from '../../lib/components/Button/OptionButt
 import type { VariableField } from '../../core';
 import { MarcLeader } from './Marc/MarcLeader';
 import { ActionTypes } from '../../redux/actions/Actions';
-
+import Tag006 from './Result/Tags/Tag006';
+import Tag007 from './Result/Tags/Tag007';
+import Tag008 from './Result/Tags/Tag008';
 import style from './Style/style.css';
 
 export class MarcRecordManager extends React.Component<Props, {}> {
@@ -98,11 +100,58 @@ handleOnSubmit = () => {
   // alert('ygy');
 };
 
+handleTags006 = (el) => {
+  const { dispatch, bibliographicRecord } = this.props;
+  const {
+    isPresent006,
+  } = this.state;
+  if (!isPresent006) {
+    dispatch({ type: ActionTypes.HEADER_TYPES_006, code: '006' });
+  } else {
+    dispatch({ type: ActionTypes.VALUES_FROM_TAG_006, leader: bibliographicRecord.leader.value, code: el.fixedField.code, typeCode: el.fixedField.headerTypeCode });
+  }
+};
+
+handleTags007 = (el) => {
+  const { dispatch, bibliographicRecord } = this.props;
+  const {
+    isPresent007,
+  } = this.state;
+  if (!isPresent007) {
+    dispatch({ type: ActionTypes.HEADER_TYPES_007, code: '007' });
+  } else {
+    dispatch({ type: ActionTypes.VALUES_FROM_TAG_007, leader: bibliographicRecord.leader.value, code: el.fixedField.code, typeCode: el.fixedField.headerTypeCode });
+  }
+};
+
+handleTags008 = (el) => {
+  const { dispatch, bibliographicRecord } = this.props;
+  const {
+    isPresent008,
+  } = this.state;
+  if (!isPresent008) {
+    dispatch({ type: ActionTypes.HEADER_TYPES_008, code: '008' });
+  } else {
+    dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: bibliographicRecord.leader.value, code: el.fixedField.code, typeCode: el.fixedField.headerTypeCode });
+    dispatch({ type: ActionTypes.HEADER_TYPES_008, code: '008', valueHeaderTypeCode: el.fixedField.headerTypeCode });
+  }
+};
+
+
 handleClose = () => {
   const { dispatch, router, toggleFilterPane } = this.props;
   dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', filterChecked: false });
   toggleFilterPane();
   router.push('/marccat/search');
+};
+
+handleLeader = () => {
+  const { leaderCss } = this.state;
+  const { dispatch, bibliographicRecord } = this.props;
+  dispatch({ type: ActionTypes.LEADER_VALUES_FROM_TAG, leader: bibliographicRecord.leader.value, code: bibliographicRecord.leader.code, typeCode: '15' });
+  this.setState({
+    leaderCss: true
+  });
 };
 
 render() {
@@ -112,9 +161,12 @@ render() {
     translate,
     dispatch,
     router,
+    headerTypes006IsLoading,
+    headerTypes007IsLoading,
+    headerTypes008IsLoading,
     leaderValuesResults
   } = this.props;
-  let {
+  const {
     isPresent006,
     isPresent007,
     isPresent008
@@ -174,9 +226,7 @@ render() {
                         bibliographicRecord={bibliographicRecord}
                         label="Leader"
                         name="leader"
-                        onClick={() => this.setState({
-                          leaderCss: !leaderCss
-                        })}
+                        onClick={() => this.handleLeader()}
                         value={bibliographicRecord.leader.value}
                       />
                       {leaderValuesResults &&
@@ -203,27 +253,59 @@ render() {
                               />
                             </div>
                           );
-                        } else if (
-                          el.fixedField.code === '006' ||
-                            el.fixedField.code === '007' ||
-                            el.fixedField.code === '008') {
+                        } else if (el.fixedField.code === '006' || el.fixedField.code === '007' || el.fixedField.code === '008') {
                           if (el.fixedField.code === '006') {
-                            isPresent006 = true;
+                            return (
+                              <div className={style.controlFieldContainer}>
+                                <MarcField
+                                  {...this.props}
+                                  label={el.fixedField.code}
+                                  name={el.fixedField.code}
+                                  value={el.fixedField.displayValue}
+                                  onClick={() => this.handleTags006(el)}
+                                />
+                                {
+                                  (headerTypes006IsLoading) ?
+                                    <div /> :
+                                    <Tag006 {...this.props} />
+                                }
+                              </div>
+                            );
                           } else if (el.fixedField.code === '007') {
-                            isPresent007 = true;
+                            return (
+                              <div className={style.controlFieldContainer}>
+                                <MarcField
+                                  {...this.props}
+                                  label={el.fixedField.code}
+                                  name={el.fixedField.code}
+                                  value={el.fixedField.displayValue}
+                                  onClick={() => this.handleTags007(el)}
+                                />
+                                {
+                                  (headerTypes007IsLoading) ?
+                                    <div /> :
+                                    <Tag007 {...this.props} />
+                                }
+                              </div>
+                            );
                           } else if (el.fixedField.code === '008') {
-                            isPresent008 = true;
+                            return (
+                              <div className={style.controlFieldContainer}>
+                                <MarcField
+                                  {...this.props}
+                                  label={el.fixedField.code}
+                                  name={el.fixedField.code}
+                                  value={el.fixedField.displayValue}
+                                  onClick={() => this.handleTags008(el)}
+                                />
+                                {
+                                  (headerTypes008IsLoading) ?
+                                    <div /> :
+                                    <Tag008 {...this.props} />
+                                }
+                              </div>
+                            );
                           }
-                          return (
-                            <div className={style.controlFieldContainer}>
-                              <MarcField
-                                {...this.props}
-                                label={el.fixedField.code}
-                                name={el.fixedField.code}
-                                value={el.fixedField.displayValue}
-                              />
-                            </div>
-                          );
                         }
                       }
                     })
@@ -280,11 +362,16 @@ export default reduxForm({
   enableReinitialize: true,
   destroyOnUnmount: false
 })(connect(
-  ({ marccat: { template, leaderValues, settings } }) => ({
+  ({ marccat: { template, leaderValues, headerTypes006, headerTypes007, headerTypes008 } }) => ({
     bibliographicRecord: template.recordsById,
     leaderValuesResults: leaderValues.records,
     tagIsLoading: leaderValues.isLoading,
     tagIsReady: leaderValues.isReady,
-    settings: settings.data,
+    headerTypes006Result: headerTypes006.records,
+    headerTypes006IsLoading: headerTypes006.isLoading,
+    headerTypes007Result: headerTypes007.records,
+    headerTypes007IsLoading: headerTypes007.isLoading,
+    headerTypes008Result: headerTypes008.records,
+    headerTypes008IsLoading: headerTypes008.isLoading
   }),
 )(injectCommonProp(MarcRecordManager)));

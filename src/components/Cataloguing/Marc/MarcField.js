@@ -3,14 +3,18 @@ import { Field } from 'redux-form';
 import { IconButton } from '@folio/stripes/components';
 import type { Props } from '../../../core';
 import style from '../Style/style.css';
-import { ActionTypes } from '../../../redux/actions';
 
 
 export default class MarcField extends React.Component<Props, {}> {
+  constructor(props) {
+    super(props);
+    this.state = {
+    };
+  }
+
   render() {
-    const { dispatch, change, label, name, value, onClick, bibliographicRecord } = this.props;
+    const { dispatch, change, label, name, value, onClick } = this.props;
     dispatch(change(name, value));
-    dispatch({ type: ActionTypes.LEADER_VALUES_FROM_TAG, leader: bibliographicRecord.leader.value, code: bibliographicRecord.leader.code, typeCode: '15' });
     return (
       <div>
         <label htmlFor={name}>{label}</label>

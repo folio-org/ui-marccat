@@ -98,7 +98,7 @@ class MarcEditableForm extends React.Component {
       if (newState.status.length === 0 && fields.length > 0) {
         newState.status = this.buildStatusArray();
       }
-      newState.status.unshift({ editing: true, error: false });
+      newState.status.unshift({ editing: false, error: false });
       return newState;
     });
   }

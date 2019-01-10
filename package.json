@@ -93,7 +93,7 @@
     "helpPage": "https://wiki.folio.org/pages/",
     "hasSettings": true,
     "okapiInterfaces": {
-      "marccat": "1.2"
+      "marccat": "1.0"
     },
     "icons": [
       {

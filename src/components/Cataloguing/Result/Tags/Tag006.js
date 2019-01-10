@@ -8,9 +8,9 @@ import { Field } from 'redux-form';
 import { Row, Col, Select, TextField } from '@folio/stripes/components';
 import { injectCommonProp, Props } from '../../../../core';
 import { ActionTypes } from '../../../../redux/actions';
-import style from '../../../';
+import style from '../../Style/style.css';
 
-export class Custom006 extends React.Component<Props, {}> {
+export class Tag006 extends React.Component<Props, {}> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -25,16 +25,18 @@ export class Custom006 extends React.Component<Props, {}> {
   }
 
   render() {
-    const { headerTypesResult, headerTypes006IsLoading, tag, tag006ValuesResults } = this.props;
+    const { headerTypesResult, tag006ValuesResults } = this.props;
     const { isChangedHeaderType, cssStyle } = this.state;
     const remappedValues = [];
     if (isChangedHeaderType && tag006ValuesResults) {
       const result = Object.keys(tag006ValuesResults.results).map((key) => tag006ValuesResults.results[key]);
       remappedValues.push(result);
-    }
-    return (
-      <React.Fragment>
-        {headerTypesResult &&
+    } if (headerTypesResult === undefined) {
+      return <div />;
+    } else {
+      return (
+        <React.Fragment>
+          {headerTypesResult &&
           <div className={(cssStyle) ? style.leaderResultsActive : style.leaderResults}>
             <Row>
               <Col xs={4}>
@@ -85,16 +87,16 @@ export class Custom006 extends React.Component<Props, {}> {
               }
             </Row>
           </div>
-        }
-      </React.Fragment>
-    );
+          }
+        </React.Fragment>
+      );
+    }
   }
 }
-
 export default (connect(
   ({ marccat: { template, headerTypes006, tag006Values } }) => ({
     leaderValue: template.recordsById.leader.value,
     headerTypesResult: headerTypes006.records,
     tag006ValuesResults: tag006Values.records
   }),
-)(injectCommonProp(Custom006)));
+)(injectCommonProp(Tag006)));

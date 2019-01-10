@@ -1,3 +1,4 @@
+/* eslint-disable no-lone-blocks */
 /**
  * @format
  * @flow
@@ -51,6 +52,7 @@ export class MarcRecordManager extends React.Component<Props, {}> {
     this.renderDropdownLabels = this.renderDropdownLabels.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
+    this.renderTag006 = this.renderTag006.bind(this);
   }
 
   renderDropdownLabels = () => {
@@ -83,6 +85,41 @@ export class MarcRecordManager extends React.Component<Props, {}> {
           }
         />
       </React.Fragment>
+    );
+  };
+
+
+  renderTag001 = (el) => (
+    <React.Fragment>
+      <div className={style.controlFieldContainer}>
+        <MarcField
+          {...this.props}
+          label={el.fixedField.code}
+          name={el.fixedField.code}
+          value={el.fixedField.displayValue}
+        />
+      </div>
+    </React.Fragment>
+  );
+
+
+  renderTag006 = (leaderCss006, headerTypes006IsLoading, el) => {
+    return (
+      <div className={style.controlFieldContainer}>
+        <MarcField
+          {...this.props}
+          label={el.fixedField.code}
+          name={el.fixedField.code}
+          value={el.fixedField.displayValue}
+          onClick={() => this.handleTags006(el)}
+        />
+        {
+          (headerTypes006IsLoading) ?
+            <div /> :
+            <div className={(leaderCss006) ? style.leaderResultsActive : style.leaderResults}>
+              <Tag006 {...this.props} />
+            </div>}
+      </div>
     );
   };
 
@@ -165,13 +202,11 @@ export class MarcRecordManager extends React.Component<Props, {}> {
   };
 
   render() {
-    let {
+    const {
       bibliographicRecord,
       settings,
       translate,
       isPresent006,
-      isPresent007,
-      isPresent008,
       headerTypes006IsLoading,
       headerTypes007IsLoading,
       headerTypes008IsLoading,
@@ -238,12 +273,12 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                           value={bibliographicRecord.leader.value}
                         />
                         {leaderValuesResults &&
-                          <div className={(leaderCss) ? style.leaderResultsActive : style.leaderResults}>
-                            <MarcLeader
-                              {...this.props}
-                              leaderValuesResults={leaderValuesResults}
-                            />
-                          </div>
+                        <div className={(leaderCss) ? style.leaderResultsActive : style.leaderResults}>
+                          <MarcLeader
+                            {...this.props}
+                            leaderValuesResults={leaderValuesResults}
+                          />
+                        </div>
                         }
                       </div>
                     </Accordion>
@@ -251,57 +286,13 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                       {bibliographicRecord.fields.map(el => {
                         if (el.variableField === undefined) {
                           if (el.fixedField.code === '001' || el.fixedField.code === '003' || el.fixedField.code === '005') {
-                            return (
-                              <React.Fragment>
-                                <div className={style.controlFieldContainer}>
-                                  <MarcField
-                                    {...this.props}
-                                    label={el.fixedField.code}
-                                    name={el.fixedField.code}
-                                    value={el.fixedField.displayValue}
-                                    onClick={() => this.handleTags006(el)}
-                                  />
-                                  {
-                                    (headerTypes006IsLoading) ?
-                                      <div /> :
-                                      <div className={(leaderCss006) ? style.leaderResultsActive : style.leaderResults}>
-                                        <Tag006 {...this.props} />
-                                      </div>}
-                                </div>
-                                         ;
-                              </React.Fragment>
-                            );
+                            return this.renderTag001(el);
                           } else if (el.fixedField.code === '006') {
-                            isPresent006 = true;
-                          } else if (el.fixedField.code === '007') {
-                            isPresent007 = true;
-                          } else if (el.fixedField.code === '008') {
-                            isPresent008 = true;
-                          }
-                          if (isPresent006) {
                             return (
                               <div className={style.controlFieldContainer}>
                                 <MarcField
                                   {...this.props}
                                   label={el.fixedField.code}
-                                  name={el.fixedField.code}
-                                  value={el.fixedField.displayValue}
-                                  onClick={() => this.handleTags006(el)}
-                                />
-                                {
-                                  (headerTypes006IsLoading) ?
-                                    <div /> :
-                                    <div className={(leaderCss006) ? style.leaderResultsActive : style.leaderResults}>
-                                      <Tag006 {...this.props} />
-                                    </div>}
-                              </div>
-                            );
-                          } else if (!isPresent006) {
-                            return (
-                              <div className={style.controlFieldContainer}>
-                                <MarcField
-                                  {...this.props}
-                                  label=""
                                   name={el.fixedField.code}
                                   value={el.fixedField.displayValue}
                                   onClick={() => this.handleTags006(el)}
@@ -388,10 +379,7 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                       </Col>
                     </Row>
                     {bibliographicRecord.fields.map(f => (
-                      <VariableFields
-                        {...this.props}
-                        record={(f.variableField) || {}}
-                      />
+                      <VariableFields {...this.props} record={(f.variableField) || {}} editable={editable} />
                     ))
                     }
                   </Accordion>

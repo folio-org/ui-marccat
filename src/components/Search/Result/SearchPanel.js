@@ -199,7 +199,7 @@ class SearchPanel extends React.Component<P, {}> {
     });
   }
 
-  handleOnChange = () => {};
+  handleOnChange = () => { };
 
   handleResetAllButton = () => {
     const { dispatch, reset } = this.props;
@@ -238,12 +238,11 @@ class SearchPanel extends React.Component<P, {}> {
               <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange} key={idx}>
                 <Row>
                   <Col xs={1}>
-                    <div className={searchForm.length === 1 ? styles.bracketDisabled : styles.bracket} />
+                    <div className={styles.leftBracket} />
                   </Col>
-                  <Col xs={1} className={styles.bracketSpacer} />
-                  <Col xs={9} className={styles.bracketSpacer}>
+                  <Col xs={10}>
                     <Row>
-                      <Col xs={11}>
+                      <Col xs={12}>
                         <div className={styles.select_margin}>
                           <SearchIndexes
                             marginBottom0
@@ -253,14 +252,14 @@ class SearchPanel extends React.Component<P, {}> {
                       </Col>
                     </Row>
                     <Row style={{ height: '30px' }}>
-                      <Col xs={11}>
+                      <Col xs={12}>
                         <SearchConditions
                           {...this.props}
                         />
                       </Col>
                     </Row>
                     <Row>
-                      <Col xs={11}>
+                      <Col xs={12}>
                         <div className={styles.select_margin}>
                           <Field
                             fullWidth
@@ -284,7 +283,7 @@ class SearchPanel extends React.Component<P, {}> {
                     </Row>
                     }
                     <Row>
-                      <Col xs={11}>
+                      <Col xs={12}>
                         <Button
                           buttonClass={styles.rightPosition}
                           onClick={this.handleAddSearchForm}
@@ -293,15 +292,11 @@ class SearchPanel extends React.Component<P, {}> {
                             {translate({ id: 'ui-marccat.button.add' })}
                           </Icon>
                         </Button>
-                        {idx !== 0 &&
-                          <Button
-                            buttonClass={styles.rightPositionTop}
-                            onClick={this.handleRemoveSearchForm(idx)}
-                          >
-                            {translate({ id: 'ui-marccat.button.remove' })}
-                          </Button>}
                       </Col>
                     </Row>
+                  </Col>
+                  <Col xs={1}>
+                    <div className={styles.rightBracket} />
                   </Col>
                 </Row>
               </form>

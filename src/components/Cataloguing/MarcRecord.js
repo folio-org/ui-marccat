@@ -86,8 +86,6 @@ export class MarcRecordManager extends React.Component<Props, {}> {
 
 
   handleOnSubmit = () => {
-    const { bibliographicRecord } = this.props;
-    
   };
 
   handleTags006 = (el) => {

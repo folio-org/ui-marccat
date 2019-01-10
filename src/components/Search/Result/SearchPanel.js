@@ -193,8 +193,80 @@ class SearchPanel extends React.Component<P, {}> {
   }
 
   buildComplexQuery = () => {
-    
-  };
+    let { isBrowseRequested } = this.state;
+    const { store, store: { getState }, dispatch, router } = this.props;
+    store.dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: true });
+    store.dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
+    e.preventDefault();
+    const { checkboxForm } = store.getState().form;
+    if (checkboxForm.anyTouched) {
+      this.createCustomColumnFormatter(checkboxForm.values);
+    }
+    const inputValue = '"' + e.target.form[3].defaultValue + '"';
+    isBrowseRequested = false;
+    let baseQuery;
+    let indexForQuery;
+    let conditionFilter;
+    let indexFilter;
+    const form = getState().form.searchForm;
+    const state = getState();
+    if (form.values) {
+      if (form.values['selectIndexes-0']) {
+        indexFilter = form.values['selectIndexes-0'];
+      }
+      if (form.values.selectCondition0) {
+        conditionFilter = form.values['selectCondition-0'];
+        indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
+        baseQuery = indexForQuery + inputValue;
+        baseQuery = (conditionFilter === 'MATCH') ? baseQuery + '!' : baseQuery;
+      } else {
+        baseQuery = inputValue;
+      }
+    } else {
+      baseQuery = inputValue;
+    }
+
+    let bibQuery = baseQuery;
+    const authQuery = baseQuery;
+    this.transitionToParams('q', bibQuery);
+
+    if (state.marccat.filter && state.marccat.filter.filters) {
+      const { languageFilter, formatType } = remapFilters(state.marccat.filter.filters);
+      if (languageFilter && languageFilter.length) {
+        bibQuery += ' AND ( ' + getLanguageFilterQuery(languageFilter) + ' ) ';
+      }
+      if (formatType && formatType.length) {
+        bibQuery += ' AND ( ' + getFormatFilterQuery(formatType) + ' ) ';
+      }
+    }
+    if (conditionFilter === 'BROWSE') {
+      isBrowseRequested = true;
+      dispatch({ type: ActionTypes.BROWSE_FIRST_PAGE, query: bibQuery });
+      router.push('/marccat/browse');
+      this.transitionToParams('q', bibQuery);
+      this.setState({
+        filterEnable: false
+      });
+    } else if (!isBrowseRequested) {
+      this.setState({
+        filterEnable: true
+      });
+      if (indexForQuery === 'BN '
+          || indexForQuery === 'SN '
+          || indexForQuery === 'PU '
+          || indexForQuery === 'LL '
+          || indexForQuery === 'BC '
+          || indexForQuery === 'CP '
+          || indexForQuery === 'PW ') {
+        dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: '' });
+        this.transitionToParams('q', bibQuery);
+      } else {
+        dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: authQuery });
+        this.transitionToParams('q', authQuery);
+      }
+    }
+    router.push('/marccat/search');
+  }
 
   handleAddSearchForm = () => {
     const { searchForm, counter } = this.state;

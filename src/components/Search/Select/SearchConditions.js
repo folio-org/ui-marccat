@@ -17,8 +17,8 @@ export default function SearchConditions({ ...props }) {
   ];
   return (
     <Field
-      name={`selectCondition${idx}`}
-      id={`selectCondition${idx}`}
+      name={`selectCondition-${idx}`}
+      id={`selectCondition-${idx}`}
       placeholder="Select condition..."
       component={Select}
       dataOptions={options}

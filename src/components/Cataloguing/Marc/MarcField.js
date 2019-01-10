@@ -23,6 +23,7 @@ export default class MarcField extends React.Component<Props, {}> {
           name={name}
           type="text"
           component="input"
+          label={label}
           value={value}
         />
         <div className={style.marcFieldIconCaret}>

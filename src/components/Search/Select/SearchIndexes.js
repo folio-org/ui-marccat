@@ -62,8 +62,8 @@ export default function SearchIndexes({ ...props }) {
 
   return (
     <Field
-      id={`selectIndexes${idx}`}
-      name={`selectIndexes${idx}`}
+      id={`selectIndexes-${idx}`}
+      name={`selectIndexes-${idx}`}
       placeholder="Select a field..."
       component={Select}
       dataOptions={options}

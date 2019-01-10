@@ -42,6 +42,9 @@
 .pl-10 {
   padding-left: 10px;
 }
+.pt-20 {
+  padding-top: 20px;
+}
 
 .marcEditableListFormHeader {
   display: flex;

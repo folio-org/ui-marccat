@@ -114,7 +114,7 @@ class SearchPanel extends React.Component<P, {}> {
     if (e.charCode === 13 || e.key === 'Enter') {
       e.preventDefault();
       if (counter > 0) {
-        this.buildComplexQuery();
+        this.buildComplexQuery(e);
       } else {
         const { store, store: { getState }, dispatch, router } = this.props;
         store.dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: true });
@@ -192,7 +192,7 @@ class SearchPanel extends React.Component<P, {}> {
     }
   }
 
-  buildComplexQuery = () => {
+  buildComplexQuery = (e) => {
     let { isBrowseRequested } = this.state;
     const { store, store: { getState }, dispatch, router } = this.props;
     store.dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: true });

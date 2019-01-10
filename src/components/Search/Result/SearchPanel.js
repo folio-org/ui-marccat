@@ -9,7 +9,6 @@ import {
   AccordionSet,
   Accordion,
   FilterAccordionHeader,
-  InfoPopover,
   Row, Col,
   Icon,
 } from '@folio/stripes/components';
@@ -27,7 +26,6 @@ import {
   getFormatFilterQuery,
 } from '../../../utils/SearchUtils';
 import { EMPTY_MESSAGE } from '../../../utils/Constant';
-import SearchPopover from '../Popover/SearchPopover';
 import OperatorSelect from '../Select/OperatorSelect';
 
 import styles from '../index.css';
@@ -72,35 +70,35 @@ class SearchPanel extends React.Component<P, {}> {
       const colIsActive = choosedColumn[1];
       if (colIsActive === 'true') {
         switch (colName) {
-          case 'checkbox-View':
-            customFormatter.push('resultView');
-            break;
-          case 'checkbox-id Number':
-            customFormatter.push('001');
-            break;
-          case 'checkbox-Title':
-            customFormatter.push('245');
-            break;
-          case 'checkbox-Preferred title':
-            customFormatter.push('preferredTitle');
-            break;
-          case 'checkbox-Name':
-            customFormatter.push('name');
-            break;
-          case 'checkbox-Tag':
-            customFormatter.push('tagHighlighted');
-            break;
-          case 'checkbox-Date 1':
-            customFormatter.push('date1');
-            break;
-          case 'checkbox-Date 2':
-            customFormatter.push('date2');
-            break;
-          case 'checkbox-Format':
-            customFormatter.push('format');
-            break;
-          default:
-            return customFormatter;
+        case 'checkbox-View':
+          customFormatter.push('resultView');
+          break;
+        case 'checkbox-id Number':
+          customFormatter.push('001');
+          break;
+        case 'checkbox-Title':
+          customFormatter.push('245');
+          break;
+        case 'checkbox-Preferred title':
+          customFormatter.push('preferredTitle');
+          break;
+        case 'checkbox-Name':
+          customFormatter.push('name');
+          break;
+        case 'checkbox-Tag':
+          customFormatter.push('tagHighlighted');
+          break;
+        case 'checkbox-Date 1':
+          customFormatter.push('date1');
+          break;
+        case 'checkbox-Date 2':
+          customFormatter.push('date2');
+          break;
+        case 'checkbox-Format':
+          customFormatter.push('format');
+          break;
+        default:
+          return customFormatter;
         }
       }
       return customFormatter;
@@ -367,10 +365,12 @@ class SearchPanel extends React.Component<P, {}> {
                             id={`operatorSelect-${idx}`}
                           />
                         </Col>
-                        <Col xs={1} className={styles.colTrash}
-                        onClick={this.handleRemoveSearchForm(idx)}>
-                          <Icon icon="trash"
-                          />
+                        <Col
+                          xs={1}
+                          className={styles.colTrash}
+                          onClick={this.handleRemoveSearchForm(idx)}
+                        >
+                          <Icon icon="trash" />
                         </Col>
                       </Row>
                     }

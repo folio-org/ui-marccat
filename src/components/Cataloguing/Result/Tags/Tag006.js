@@ -7,11 +7,10 @@ import { connect } from 'react-redux';
 import { Field } from 'redux-form';
 import { Row, Col, Select, TextField } from '@folio/stripes/components';
 import { injectCommonProp, Props } from '../../../../core';
-import MarcField from '../../Marc/MarcField';
 import { ActionTypes } from '../../../../redux/actions';
 import style from '../../Style/style.css';
 
-export class Custom006 extends React.Component<Props, {}> {
+export class Tag006 extends React.Component<Props, {}> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -26,7 +25,7 @@ export class Custom006 extends React.Component<Props, {}> {
   }
 
   render() {
-    const { headerTypesResult, headerTypes006IsLoading, tag, tag006ValuesResults } = this.props;
+    const { headerTypesResult, tag006ValuesResults } = this.props;
     const { isChangedHeaderType, cssStyle } = this.state;
     const remappedValues = [];
     if (isChangedHeaderType && tag006ValuesResults) {
@@ -98,4 +97,4 @@ export default (connect(
     headerTypesResult: headerTypes006.records,
     tag006ValuesResults: tag006Values.records
   }),
-)(injectCommonProp(Custom006)));
+)(injectCommonProp(Tag006)));

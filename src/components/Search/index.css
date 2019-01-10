@@ -62,38 +62,45 @@
   background-color: #ff0;
 }
 
-.bracket {
+.leftBracket {
   border-left: solid 4px var(--primary);
   border-radius: 50%;
-  height: 125px;
-  width: 40px;
+  height: 83px;
+  width: 50px;
   padding-top: 10px;
 }
 
-.rightArch {
+.rightBracket {
   border-right: solid 4px var(--primary);
   border-radius: 50%;
-  height: 125px;
-  width: 40px;
+  height: 83px;
+  width: 50px;
   padding-top: 10px;
+  float: right;
 }
 
-.bracketDisabled {
+.leftBracketDisabled {
   border-left: solid 4px rgba(0, 0, 0, 0.62);
   border-radius: 50%;
-  height: 125px;
-  width: 40px;
+  height: 83px;
+  width: 50px;
   padding-top: 10px;
 }
 
-.rightArchDisabled {
+.rightBracketDisabled {
   border-right: solid 4px rgba(0, 0, 0, 0.62);
   border-radius: 50%;
-  height: 125px;
-  width: 40px;
+  height: 83px;
+  width: 50px;
   padding-top: 10px;
+  float: right;
 }
 
 .bracketSpacer {
   background-color: #fff;
+}
+
+.colTrash {
+  margin-top: 15px;
+  display: flex;
 }

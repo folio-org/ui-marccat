@@ -7,9 +7,8 @@ import { connect } from 'react-redux';
 import { Field } from 'redux-form';
 import { Row, Col, Select, TextField } from '@folio/stripes/components';
 import { injectCommonProp, Props } from '../../../../core';
-import MarcField from '../../Marc/MarcField';
 import { ActionTypes } from '../../../../redux/actions';
-import style from '../../Style/style.css';
+import style from '../../../';
 
 export class Custom006 extends React.Component<Props, {}> {
   constructor(props: Props) {

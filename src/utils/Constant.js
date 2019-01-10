@@ -23,6 +23,7 @@ export const ENDPOINT = {
   EMPTY_RECORD_URL: '/bibliographic-record/from-template/',
   TEMPLATE_TAG_URL: '/fixed-fields-code-groups',
   HEADER_TYPES_URL: '/header-types',
+  BIBLIOGRAPHIC_RECORD: '/bibliographic-record',
 };
 
 // REDUX DATA STORE MANAGEMENT

@@ -31,6 +31,8 @@ import Tag006 from './Result/Tags/Tag006';
 import Tag007 from './Result/Tags/Tag007';
 import Tag008 from './Result/Tags/Tag008';
 import style from './Style/style.css';
+import { post, put, del } from '../../core/api/StoreService';
+import { buildUrl } from '../../redux/helpers';
 
 export class MarcRecordManager extends React.Component<Props, {}> {
   constructor(props: Props) {
@@ -86,8 +88,18 @@ export class MarcRecordManager extends React.Component<Props, {}> {
 
 
   handleOnSubmit = () => {
-    const { bibliographicRecord } = this.props;
-    
+    const { store, bibliographicRecord } = this.props;
+    put(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'view=1'), bibliographicRecord, store);
+  };
+
+  handleEdit = () => {
+    const { store, bibliographicRecord } = this.props;
+    put(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'view=1'), bibliographicRecord, store);
+  };
+
+  handleDelete = () => {
+    const { store, bibliographicRecord } = this.props;
+    del(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'view=1'), bibliographicRecord, store);
   };
 
   handleTags006 = (el) => {
@@ -153,10 +165,13 @@ export class MarcRecordManager extends React.Component<Props, {}> {
   };
 
   render() {
-    const {
+    let {
       bibliographicRecord,
       settings,
       translate,
+      isPresent006,
+      isPresent007,
+      isPresent008,
       headerTypes006IsLoading,
       headerTypes007IsLoading,
       headerTypes008IsLoading,
@@ -257,11 +272,36 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                               </React.Fragment>
                             );
                           } else if (el.fixedField.code === '006') {
+                            isPresent006 = true;
+                          } else if (el.fixedField.code === '007') {
+                            isPresent007 = true;
+                          } else if (el.fixedField.code === '008') {
+                            isPresent008 = true;
+                          }
+                          if (isPresent006) {
                             return (
                               <div className={style.controlFieldContainer}>
                                 <MarcField
                                   {...this.props}
                                   label={el.fixedField.code}
+                                  name={el.fixedField.code}
+                                  value={el.fixedField.displayValue}
+                                  onClick={() => this.handleTags006(el)}
+                                />
+                                {
+                                  (headerTypes006IsLoading) ?
+                                    <div /> :
+                                    <div className={(leaderCss006) ? style.leaderResultsActive : style.leaderResults}>
+                                      <Tag006 {...this.props} />
+                                    </div>}
+                              </div>
+                            );
+                          } else if (!isPresent006) {
+                            return (
+                              <div className={style.controlFieldContainer}>
+                                <MarcField
+                                  {...this.props}
+                                  label=""
                                   name={el.fixedField.code}
                                   value={el.fixedField.displayValue}
                                   onClick={() => this.handleTags006(el)}
@@ -348,7 +388,10 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                       </Col>
                     </Row>
                     {bibliographicRecord.fields.map(f => (
-                      <VariableFields {...this.props} record={(f.variableField) || {}} editable={editable} />
+                      <VariableFields
+                        {...this.props}
+                        record={(f.variableField) || {}}
+                      />
                     ))
                     }
                   </Accordion>

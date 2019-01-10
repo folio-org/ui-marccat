@@ -398,6 +398,9 @@ class SearchPanel extends React.Component<P, {}> {
                       </Col>
                     </Row>
                   </Col>
+                  <Col xs={1}>
+                    <div className={searchForm.length === 1 ? styles.rightArchDisabled : styles.rightArch} />
+                  </Col>
                 </Row>
               </form>
             ))

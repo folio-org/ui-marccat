@@ -124,9 +124,17 @@ export class MarcRecordManager extends React.Component<Props, {}> {
   };
 
 
+  composeJson = () => {
+    const { store: { getState }, bibliographicRecord } = this.props;
+    // eslint-disable-next-line no-unused-vars
+    const form = getState().form.bibliographicRecordForm.values;
+    // eslint-disable-next-line no-unused-vars
+    const original = bibliographicRecord;
+  };
+
   handleOnSubmit = () => {
     const { store, bibliographicRecord } = this.props;
-    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'view=1'), bibliographicRecord, store);
+    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'view=1&lang=ita'), { container: bibliographicRecord }, store);
   };
 
   handleEdit = () => {

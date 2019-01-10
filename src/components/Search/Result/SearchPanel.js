@@ -9,7 +9,6 @@ import {
   AccordionSet,
   Accordion,
   FilterAccordionHeader,
-  InfoPopover,
   Row, Col,
   Icon,
 } from '@folio/stripes/components';
@@ -27,7 +26,6 @@ import {
   getFormatFilterQuery,
 } from '../../../utils/SearchUtils';
 import { EMPTY_MESSAGE } from '../../../utils/Constant';
-import SearchPopover from '../Popover/SearchPopover';
 import OperatorSelect from '../Select/OperatorSelect';
 
 import styles from '../index.css';
@@ -174,12 +172,12 @@ class SearchPanel extends React.Component<P, {}> {
             filterEnable: true
           });
           if (indexForQuery === 'BN '
-          || indexForQuery === 'SN '
-          || indexForQuery === 'PU '
-          || indexForQuery === 'LL '
-          || indexForQuery === 'BC '
-          || indexForQuery === 'CP '
-          || indexForQuery === 'PW ') {
+            || indexForQuery === 'SN '
+            || indexForQuery === 'PU '
+            || indexForQuery === 'LL '
+            || indexForQuery === 'BC '
+            || indexForQuery === 'CP '
+            || indexForQuery === 'PW ') {
             dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: '' });
             this.transitionToParams('q', bibQuery);
           } else {
@@ -252,12 +250,12 @@ class SearchPanel extends React.Component<P, {}> {
         filterEnable: true
       });
       if (indexForQuery === 'BN '
-          || indexForQuery === 'SN '
-          || indexForQuery === 'PU '
-          || indexForQuery === 'LL '
-          || indexForQuery === 'BC '
-          || indexForQuery === 'CP '
-          || indexForQuery === 'PW ') {
+        || indexForQuery === 'SN '
+        || indexForQuery === 'PU '
+        || indexForQuery === 'LL '
+        || indexForQuery === 'BC '
+        || indexForQuery === 'CP '
+        || indexForQuery === 'PW ') {
         dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: '' });
         this.transitionToParams('q', bibQuery);
       } else {
@@ -284,7 +282,7 @@ class SearchPanel extends React.Component<P, {}> {
     });
   }
 
-  handleOnChange = () => {};
+  handleOnChange = () => { };
 
   handleResetAllButton = () => {
     const { dispatch, reset } = this.props;
@@ -323,12 +321,11 @@ class SearchPanel extends React.Component<P, {}> {
               <form name={`searchForm-${idx}`} onKeyDown={this.handleKeyDown} onChange={this.handleOnChange} key={idx}>
                 <Row>
                   <Col xs={1}>
-                    <div className={searchForm.length === 1 ? styles.bracketDisabled : styles.bracket} />
+                    <div className={styles.leftBracket} />
                   </Col>
-                  <Col xs={1} className={styles.bracketSpacer} />
-                  <Col xs={9} className={styles.bracketSpacer}>
+                  <Col xs={10}>
                     <Row>
-                      <Col xs={11}>
+                      <Col xs={12}>
                         <div className={styles.select_margin}>
                           <SearchIndexes
                             marginBottom0
@@ -337,17 +334,9 @@ class SearchPanel extends React.Component<P, {}> {
                           />
                         </div>
                       </Col>
-                      <Col xs={1} style={{ paddingLeft: 0 }} className={styles.popover}>
-                        <InfoPopover
-                          content={<SearchPopover {...this.props} label="Description" />}
-                          buttonLabel={translate({ id: 'ui-marccat.search.record.edit' })}
-                          buttonHref="http://www"
-                          buttonTarget="_blank"
-                        />
-                      </Col>
                     </Row>
                     <Row style={{ height: '30px' }}>
-                      <Col xs={11}>
+                      <Col xs={12}>
                         <SearchConditions
                           {...this.props}
                           idx={idx}
@@ -355,7 +344,7 @@ class SearchPanel extends React.Component<P, {}> {
                       </Col>
                     </Row>
                     <Row>
-                      <Col xs={11}>
+                      <Col xs={12}>
                         <div className={styles.select_margin}>
                           <Field
                             fullWidth
@@ -368,18 +357,25 @@ class SearchPanel extends React.Component<P, {}> {
                       </Col>
                     </Row>
                     {idx !== (counter.length - 1) &&
-                    <Row>
-                      <Col xs={11}>
-                        <OperatorSelect
-                          {...this.props}
-                          name={`operatorSelect-${idx}`}
-                          id={`operatorSelect-${idx}`}
-                        />
-                      </Col>
-                    </Row>
+                      <Row>
+                        <Col xs={11}>
+                          <OperatorSelect
+                            {...this.props}
+                            name={`operatorSelect-${idx}`}
+                            id={`operatorSelect-${idx}`}
+                          />
+                        </Col>
+                        <Col
+                          xs={1}
+                          className={styles.colTrash}
+                          onClick={this.handleRemoveSearchForm(idx)}
+                        >
+                          <Icon icon="trash" />
+                        </Col>
+                      </Row>
                     }
                     <Row>
-                      <Col xs={11}>
+                      <Col xs={12}>
                         <Button
                           buttonClass={styles.rightPosition}
                           onClick={this.handleAddSearchForm}
@@ -388,15 +384,11 @@ class SearchPanel extends React.Component<P, {}> {
                             {translate({ id: 'ui-marccat.button.add' })}
                           </Icon>
                         </Button>
-                        {idx !== 0 &&
-                          <Button
-                            buttonClass={styles.rightPositionTop}
-                            onClick={this.handleRemoveSearchForm(idx)}
-                          >
-                            {translate({ id: 'ui-marccat.button.remove' })}
-                          </Button>}
                       </Col>
                     </Row>
+                  </Col>
+                  <Col xs={1}>
+                    <div className={styles.rightBracket} />
                   </Col>
                 </Row>
               </form>

@@ -126,7 +126,7 @@ export class MarcRecordManager extends React.Component<Props, {}> {
 
   handleOnSubmit = () => {
     const { store, bibliographicRecord } = this.props;
-    put(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'view=1'), bibliographicRecord, store);
+    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'view=1'), bibliographicRecord, store);
   };
 
   handleEdit = () => {
@@ -206,7 +206,6 @@ export class MarcRecordManager extends React.Component<Props, {}> {
       bibliographicRecord,
       settings,
       translate,
-      isPresent006,
       headerTypes006IsLoading,
       headerTypes007IsLoading,
       headerTypes008IsLoading,

@@ -7,10 +7,9 @@ import stripesForm from '@folio/stripes-form';
 import { FieldArray } from 'redux-form';
 import PropTypes from 'prop-types';
 
-import { Col, MultiColumnList, Row } from '@folio/stripes/components';
+import { Col, MultiColumnList, Row, IconButton } from '@folio/stripes/components';
 import MarcEditableItem from './MarcEditableItem';
-import css from './MarcEditableList.css';
-import { DropdownButtonMenu } from '../../../../lib';
+import css from '../../Style/style.css';
 
 const propTypes = {
   actionProps: PropTypes.object,
@@ -60,7 +59,6 @@ class MarcEditableForm extends React.Component {
     this.state = {
       status,
       lastAction: {},
-      openDropDownMenu: false,
     };
 
     this.renderFields = this.renderFields.bind(this);
@@ -100,7 +98,7 @@ class MarcEditableForm extends React.Component {
       if (newState.status.length === 0 && fields.length > 0) {
         newState.status = this.buildStatusArray();
       }
-      newState.status.unshift({ editing: true, error: false });
+      newState.status.unshift({ editing: false, error: false });
       return newState;
     });
   }
@@ -288,47 +286,33 @@ class MarcEditableForm extends React.Component {
 
 
   renderFields({ fields }) {
-    const { openDropDownMenu } = this.state;
     const cellFormatters = Object.assign({}, this.props.formatter);
     return (
-      <div>
-        <Row between="xs" className={css.marcEditableListFormHeader}>
-          <Col xs>
-            <Row end="xs" style={{ float: 'right' }}>
-              <Col xs>
-                <DropdownButtonMenu
-                  {...this.props}
-                  marginBottom0
-                  label={this.props.actionButtonLabel}
-                  labels={this.renderDropdownLabels()}
-                  onToggle={() => this.setState({
-                    openDropDownMenu: !openDropDownMenu
-                  })}
-                  open={openDropDownMenu}
-                />
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <MultiColumnList
-              {...this.props}
-              interactive
-              visibleColumns={this.getVisibleColumns()}
-              contentData={fields.getAll()}
-              rowFormatter={this.ItemFormatter}
-              rowProps={{ fields }}
-              formatter={cellFormatters}
-              onRowClick={() => this.onRow}
-              columnWidths={this.getColumnWidths()}
-              isEmptyMessage={this.props.isEmptyMessage}
-              headerRowClass={css.marcEditableListHeaders}
-              id={`marcEditableList-${this.testingId}`}
-            />
-          </Col>
-        </Row>
-      </div>
+      <Row>
+        <Col xs={11}>
+          <MultiColumnList
+            {...this.props}
+            interactive
+            visibleColumns={this.getVisibleColumns()}
+            contentData={fields.getAll()}
+            rowFormatter={this.ItemFormatter}
+            rowProps={{ fields }}
+            formatter={cellFormatters}
+            onRowClick={() => this.onRow}
+            columnWidths={this.getColumnWidths()}
+            isEmptyMessage={this.props.isEmptyMessage}
+            headerRowClass={css.marcEditableListHeaders}
+            id={`marcEditableList-${this.testingId}`}
+          />
+        </Col>
+        <Col xs={1} style={{ display: 'flex' }}>
+          <IconButton
+            icon="edit"
+            size="small"
+            onClick={() => {}}
+          />
+        </Col>
+      </Row>
     );
   }
 

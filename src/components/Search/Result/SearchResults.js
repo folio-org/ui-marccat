@@ -71,7 +71,7 @@ export class SearchResults extends React.Component<P, {}> {
     const { dispatch, router, settings, toggleFilterPane } = this.props;
     toggleFilterPane();
     const defaultTemplate = settings.defaultTemplate.id;
-    dispatch({ type: ActionTypes.TEMPLATE_GET_BY_ID, query: defaultTemplate });
+    dispatch({ type: ActionTypes.TEMPLATE_GET_BY_ID, query: 408 });
     router.push(`/marccat/record?templateId=${defaultTemplate}`);
   };
 
@@ -199,6 +199,7 @@ export class SearchResults extends React.Component<P, {}> {
     const { translate } = this.props;
     return (
       <CreateButtonMenu
+        data-test-clickable-new-record
         {...this.props}
         label={translate({ id: 'ui-marccat.template.record.create' })}
         labels={this.renderDropdownLabels()}

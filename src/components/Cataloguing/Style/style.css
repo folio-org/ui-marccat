@@ -1,5 +1,9 @@
 .recordContainer {
-  flex-basis: 50%;
+  width: 70%;
+}
+
+.leaderData {
+  padding-top: 20px;
 }
 
 .controlFieldContainer {
@@ -11,6 +15,7 @@
   padding: 15px;
   padding-left: 30px;
   padding-right: 30px;
+  padding-bottom: 20px;
   text-align: left;
   height: 100%;
   display: grid;
@@ -36,4 +41,43 @@
 
 .pl-10 {
   padding-left: 10px;
+}
+.pt-20 {
+  padding-top: 20px;
+}
+
+.marcEditableListFormHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.marcEditableListRow {
+  display: flex;
+  max-width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 8px;
+  background-color: #efefef;
+  margin-bottom: 4px;
+}
+
+.marcEditableListHeaders {
+  display: flex;
+  justify-content: flex-start;
+  overflow: hidden;
+  height: 2px;
+}
+
+.marcEditableListError {
+  width: 100%;
+  padding: 6px;
+}
+
+.leaderResults {
+  display: none;
+}
+
+.leaderResultsActive {
+  display: block;
 }

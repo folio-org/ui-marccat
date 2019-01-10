@@ -14,6 +14,86 @@
   border-radius: 25%;
 }
 
+.rightPosition {
+  float: right;
+  margin-top: 10px;
+  height: 24px;
+  max-height: 24px;
+  line-height: 12px;
+}
+
+.rightPositionTop {
+  float: right;
+  margin-top: 10px;
+  height: 24px;
+  margin-right: 5px;
+  max-height: 24px;
+  line-height: 12px;
+}
+
+.select_margin {
+  & * {
+    margin-bottom: 0;
+  }
+
+  & .isfocused {
+    border-bottom: 0;
+  }
+}
+
+.popover {
+  padding-left: 0;
+
+  & svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
 .mt16 {
   margin-top: var(--margin-top-xxl);
+}
+
+.mb-5 {
+  margin-bottom: 5px;
+}
+
+.tagHighLighted {
+  background-color: #ff0;
+}
+
+.bracket {
+  border-left: solid 4px var(--primary);
+  border-radius: 50%;
+  height: 125px;
+  width: 40px;
+  padding-top: 10px;
+}
+
+.rightArch {
+  border-right: solid 4px var(--primary);
+  border-radius: 50%;
+  height: 125px;
+  width: 40px;
+  padding-top: 10px;
+}
+
+.bracketDisabled {
+  border-left: solid 4px rgba(0, 0, 0, 0.62);
+  border-radius: 50%;
+  height: 125px;
+  width: 40px;
+  padding-top: 10px;
+}
+
+.rightArchDisabled {
+  border-right: solid 4px rgba(0, 0, 0, 0.62);
+  border-radius: 50%;
+  height: 125px;
+  width: 40px;
+  padding-top: 10px;
+}
+
+.bracketSpacer {
+  background-color: #fff;
 }

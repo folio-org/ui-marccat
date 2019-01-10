@@ -8,7 +8,7 @@ import { Field } from 'redux-form';
 import { Select } from '@folio/stripes/components';
 
 export default function SearchIndexes({ ...props }) {
-  const { rest } = props;
+  const { rest, idx } = props;
   const options = [
     { label: 'Title', value: 'TITLE' },
     { label: 'Name: All', value: 'NAME' },
@@ -62,8 +62,8 @@ export default function SearchIndexes({ ...props }) {
 
   return (
     <Field
-      name="selectIndexes"
-      id="selectIndexes"
+      id={`selectIndexes-${idx}`}
+      name={`selectIndexes-${idx}`}
       placeholder="Select a field..."
       component={Select}
       dataOptions={options}

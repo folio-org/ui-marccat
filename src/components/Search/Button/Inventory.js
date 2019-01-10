@@ -7,10 +7,12 @@ import { Button } from '@folio/stripes/components';
 import type { Props } from '../../../core';
 
 const InventoryPluggableBtn = ({ buttonLabel, ...props }:Props) => {
-  const { buttonTarget, style } = props;
+  const { buttonTarget, style, withLine } = props;
   return (
     <div>
+      {withLine &&
       <hr />
+      }
       <Button
         target={buttonTarget}
         buttonStyle="primary"

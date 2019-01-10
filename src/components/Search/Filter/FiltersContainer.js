@@ -86,7 +86,7 @@ export default class FiltersContainer extends React.Component<Props, {}> {
       disableFilters.formatType = true;
     }
     return (
-      <div className={(filterEnable || !containsAuthFilter) ? styles['search-filters'] : styles['search-filters-disabled']}>
+      <div className={(filterEnable) ? styles['search-filters'] : styles['search-filters-disabled']}>
         <FilterGroups
           disableNames={(!filterEnable || containsAuthFilter) ? disableFilters : {}}
           config={this.config}

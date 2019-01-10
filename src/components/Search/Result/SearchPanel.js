@@ -28,8 +28,9 @@ import {
 } from '../../../utils/SearchUtils';
 import { EMPTY_MESSAGE } from '../../../utils/Constant';
 import SearchPopover from '../Popover/SearchPopover';
-import styles from '../../../styles/common.css';
 import OperatorSelect from '../Select/OperatorSelect';
+
+import styles from '../index.css';
 
 type P = Props & {
   inputErrorCheck: string,
@@ -42,7 +43,8 @@ class SearchPanel extends React.Component<P, {}> {
     this.state = {
       isBrowseRequested: false,
       searchForm: [{ name: EMPTY_MESSAGE }],
-      filterEnable: true
+      filterEnable: true,
+      counter: [{}],
     };
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleAddSearchForm = this.handleAddSearchForm.bind(this);
@@ -107,88 +109,170 @@ class SearchPanel extends React.Component<P, {}> {
   }
 
   handleKeyDown(e) {
+    let { isBrowseRequested } = this.state;
+    const { counter } = this.state;
     if (e.charCode === 13 || e.key === 'Enter') {
-      const { store } = this.props;
-      store.dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: true });
-      store.dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
       e.preventDefault();
-      const { checkboxForm } = store.getState().form;
-      if (checkboxForm.anyTouched) {
-        this.createCustomColumnFormatter(checkboxForm.values);
-      }
-      const inputValue = '"' + e.target.form[3].defaultValue + '"';
-      const { store: { getState }, dispatch, router } = this.props;
-      let { isBrowseRequested } = this.state;
-      isBrowseRequested = false;
-      let baseQuery;
-      let indexForQuery;
-      let conditionFilter;
-      let indexFilter;
-      const form = getState().form.searchForm;
-      const state = getState();
-      if (form.values) {
-        if (form.values.selectIndexes) {
-          indexFilter = form.values.selectIndexes;
+      if (counter > 0) {
+        this.buildComplexQuery(e);
+      } else {
+        const { store, store: { getState }, dispatch, router } = this.props;
+        store.dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: true });
+        store.dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
+        e.preventDefault();
+        const { checkboxForm } = store.getState().form;
+        if (checkboxForm.anyTouched) {
+          this.createCustomColumnFormatter(checkboxForm.values);
         }
-        if (form.values.selectCondition) {
-          conditionFilter = form.values.selectCondition;
-          indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
-          baseQuery = indexForQuery + inputValue;
-          baseQuery = (conditionFilter === 'MATCH') ? baseQuery + '!' : baseQuery;
+        const inputValue = '"' + e.target.form[3].defaultValue + '"';
+        isBrowseRequested = false;
+        let baseQuery;
+        let indexForQuery;
+        let conditionFilter;
+        let indexFilter;
+        const form = getState().form.searchForm;
+        const state = getState();
+        if (form.values) {
+          if (form.values['selectIndexes-0']) {
+            indexFilter = form.values['selectIndexes-0'];
+          }
+          if (form.values.selectCondition0) {
+            conditionFilter = form.values['selectCondition-0'];
+            indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
+            baseQuery = indexForQuery + inputValue;
+            baseQuery = (conditionFilter === 'MATCH') ? baseQuery + '!' : baseQuery;
+          } else {
+            baseQuery = inputValue;
+          }
         } else {
           baseQuery = inputValue;
         }
-      } else {
-        baseQuery = inputValue;
-      }
 
-      let bibQuery = baseQuery;
-      const authQuery = baseQuery;
-      this.transitionToParams('q', bibQuery);
-
-      if (state.marccat.filter && state.marccat.filter.filters) {
-        const { languageFilter, formatType } = remapFilters(state.marccat.filter.filters);
-        if (languageFilter && languageFilter.length) {
-          bibQuery += ' AND ( ' + getLanguageFilterQuery(languageFilter) + ' ) ';
-        }
-        if (formatType && formatType.length) {
-          bibQuery += ' AND ( ' + getFormatFilterQuery(formatType) + ' ) ';
-        }
-      }
-      if (conditionFilter === 'BROWSE') {
-        isBrowseRequested = true;
-        dispatch({ type: ActionTypes.BROWSE_FIRST_PAGE, query: bibQuery });
-        router.push('/marccat/browse');
+        let bibQuery = baseQuery;
+        const authQuery = baseQuery;
         this.transitionToParams('q', bibQuery);
-        this.setState({
-          filterEnable: false
-        });
-      } else if (!isBrowseRequested) {
-        this.setState({
-          filterEnable: true
-        });
-        if (indexForQuery === 'BN '
+
+        if (state.marccat.filter && state.marccat.filter.filters) {
+          const { languageFilter, formatType } = remapFilters(state.marccat.filter.filters);
+          if (languageFilter && languageFilter.length) {
+            bibQuery += ' AND ( ' + getLanguageFilterQuery(languageFilter) + ' ) ';
+          }
+          if (formatType && formatType.length) {
+            bibQuery += ' AND ( ' + getFormatFilterQuery(formatType) + ' ) ';
+          }
+        }
+        if (conditionFilter === 'BROWSE') {
+          isBrowseRequested = true;
+          dispatch({ type: ActionTypes.BROWSE_FIRST_PAGE, query: bibQuery });
+          router.push('/marccat/browse');
+          this.transitionToParams('q', bibQuery);
+          this.setState({
+            filterEnable: false
+          });
+        } else if (!isBrowseRequested) {
+          this.setState({
+            filterEnable: true
+          });
+          if (indexForQuery === 'BN '
           || indexForQuery === 'SN '
           || indexForQuery === 'PU '
           || indexForQuery === 'LL '
           || indexForQuery === 'BC '
           || indexForQuery === 'CP '
           || indexForQuery === 'PW ') {
-          dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: '' });
-          this.transitionToParams('q', bibQuery);
-        } else {
-          dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: authQuery });
-          this.transitionToParams('q', authQuery);
+            dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: '' });
+            this.transitionToParams('q', bibQuery);
+          } else {
+            dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: authQuery });
+            this.transitionToParams('q', authQuery);
+          }
         }
         router.push('/marccat/search');
       }
     }
   }
 
+  buildComplexQuery = (e) => {
+    let { isBrowseRequested } = this.state;
+    const { store, store: { getState }, dispatch, router } = this.props;
+    store.dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: true });
+    store.dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
+    e.preventDefault();
+    const { checkboxForm } = store.getState().form;
+    if (checkboxForm.anyTouched) {
+      this.createCustomColumnFormatter(checkboxForm.values);
+    }
+    const inputValue = '"' + e.target.form[3].defaultValue + '"';
+    isBrowseRequested = false;
+    let baseQuery;
+    let indexForQuery;
+    let conditionFilter;
+    let indexFilter;
+    const form = getState().form.searchForm;
+    const state = getState();
+    if (form.values) {
+      if (form.values['selectIndexes-0']) {
+        indexFilter = form.values['selectIndexes-0'];
+      }
+      if (form.values.selectCondition0) {
+        conditionFilter = form.values['selectCondition-0'];
+        indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
+        baseQuery = indexForQuery + inputValue;
+        baseQuery = (conditionFilter === 'MATCH') ? baseQuery + '!' : baseQuery;
+      } else {
+        baseQuery = inputValue;
+      }
+    } else {
+      baseQuery = inputValue;
+    }
+
+    let bibQuery = baseQuery;
+    const authQuery = baseQuery;
+    this.transitionToParams('q', bibQuery);
+
+    if (state.marccat.filter && state.marccat.filter.filters) {
+      const { languageFilter, formatType } = remapFilters(state.marccat.filter.filters);
+      if (languageFilter && languageFilter.length) {
+        bibQuery += ' AND ( ' + getLanguageFilterQuery(languageFilter) + ' ) ';
+      }
+      if (formatType && formatType.length) {
+        bibQuery += ' AND ( ' + getFormatFilterQuery(formatType) + ' ) ';
+      }
+    }
+    if (conditionFilter === 'BROWSE') {
+      isBrowseRequested = true;
+      dispatch({ type: ActionTypes.BROWSE_FIRST_PAGE, query: bibQuery });
+      router.push('/marccat/browse');
+      this.transitionToParams('q', bibQuery);
+      this.setState({
+        filterEnable: false
+      });
+    } else if (!isBrowseRequested) {
+      this.setState({
+        filterEnable: true
+      });
+      if (indexForQuery === 'BN '
+          || indexForQuery === 'SN '
+          || indexForQuery === 'PU '
+          || indexForQuery === 'LL '
+          || indexForQuery === 'BC '
+          || indexForQuery === 'CP '
+          || indexForQuery === 'PW ') {
+        dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: '' });
+        this.transitionToParams('q', bibQuery);
+      } else {
+        dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: authQuery });
+        this.transitionToParams('q', authQuery);
+      }
+    }
+    router.push('/marccat/search');
+  }
+
   handleAddSearchForm = () => {
-    const { searchForm } = this.state;
+    const { searchForm, counter } = this.state;
     this.setState({
-      searchForm: searchForm.concat([{ name: '' }])
+      searchForm: searchForm.concat([{ name: '' }]),
+      counter: counter.concat([{}]),
     });
   }
 
@@ -196,12 +280,11 @@ class SearchPanel extends React.Component<P, {}> {
     const { searchForm } = this.state;
     delete searchForm[idx];
     this.setState({
-      searchForm
+      searchForm,
     });
   }
 
-  handleOnChange = () => {
-  };
+  handleOnChange = () => {};
 
   handleResetAllButton = () => {
     const { dispatch, reset } = this.props;
@@ -225,7 +308,7 @@ class SearchPanel extends React.Component<P, {}> {
 
   render() {
     const { translate, ...rest } = this.props;
-    const { searchForm, filterEnable } = this.state;
+    const { searchForm, filterEnable, counter } = this.state;
     return (
       <React.Fragment>
         {this.renderResetButton()}
@@ -237,18 +320,19 @@ class SearchPanel extends React.Component<P, {}> {
             header={FilterAccordionHeader}
           >
             {searchForm.map((form, idx) => (
-              <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange} key={idx}>
+              <form name={`searchForm-${idx}`} onKeyDown={this.handleKeyDown} onChange={this.handleOnChange} key={idx}>
                 <Row>
                   <Col xs={1}>
-                    <div className={searchForm.length === 1 ? styles.leftArchDisabled : styles.leftArch} />
+                    <div className={searchForm.length === 1 ? styles.bracketDisabled : styles.bracket} />
                   </Col>
-                  <Col xs={1} />
-                  <Col xs={9}>
+                  <Col xs={1} className={styles.bracketSpacer} />
+                  <Col xs={9} className={styles.bracketSpacer}>
                     <Row>
                       <Col xs={11}>
                         <div className={styles.select_margin}>
                           <SearchIndexes
                             marginBottom0
+                            idx={idx}
                             {...this.props}
                           />
                         </div>
@@ -264,7 +348,10 @@ class SearchPanel extends React.Component<P, {}> {
                     </Row>
                     <Row style={{ height: '30px' }}>
                       <Col xs={11}>
-                        <SearchConditions {...this.props} />
+                        <SearchConditions
+                          {...this.props}
+                          idx={idx}
+                        />
                       </Col>
                     </Row>
                     <Row>
@@ -274,17 +361,23 @@ class SearchPanel extends React.Component<P, {}> {
                             fullWidth
                             component={SearchField}
                             placeholder="Search..."
-                            name="searchTextArea"
-                            id="searchTextArea"
+                            name={`searchTextArea:${idx}`}
+                            id={`searchTextArea:${idx}`}
                           />
                         </div>
                       </Col>
                     </Row>
+                    {idx !== (counter.length - 1) &&
                     <Row>
                       <Col xs={11}>
-                        <OperatorSelect {...this.props} />
+                        <OperatorSelect
+                          {...this.props}
+                          name={`operatorSelect-${idx}`}
+                          id={`operatorSelect-${idx}`}
+                        />
                       </Col>
                     </Row>
+                    }
                     <Row>
                       <Col xs={11}>
                         <Button
@@ -305,20 +398,12 @@ class SearchPanel extends React.Component<P, {}> {
                       </Col>
                     </Row>
                   </Col>
-                  <Col xs={1}>
-                    <div className={searchForm.length === 1 ? styles.rightArchDisabled : styles.rightArch} />
-                  </Col>
                 </Row>
               </form>
             ))
             }
           </Accordion>
-          {filterEnable &&
-            <FiltersContainer {...this.props} filterEnable />
-          }
-          {!filterEnable &&
-            <FiltersContainer {...this.props} filterEnable={false} />
-          }
+          <FiltersContainer {...this.props} filterEnable={!!(filterEnable)} />
         </AccordionSet>
       </React.Fragment>
     );

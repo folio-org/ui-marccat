@@ -86,7 +86,7 @@ class MarcEditableForm extends React.Component {
   }
 
   buildStatusArray(items) {
-    return items.map(() => ({ editing: false, error: false }));
+    return items.map(() => ({ editing: true, error: false }));
   }
 
   onAdd(fields) {

@@ -1,3 +1,4 @@
+/* eslint-disable no-lone-blocks */
 /**
  * @format
  * @flow
@@ -31,6 +32,8 @@ import Tag006 from './Result/Tags/Tag006';
 import Tag007 from './Result/Tags/Tag007';
 import Tag008 from './Result/Tags/Tag008';
 import style from './Style/style.css';
+import { post, put, del } from '../../core/api/StoreService';
+import { buildUrl } from '../../redux/helpers';
 
 export class MarcRecordManager extends React.Component<Props, {}> {
   constructor(props: Props) {
@@ -49,6 +52,7 @@ export class MarcRecordManager extends React.Component<Props, {}> {
     this.renderDropdownLabels = this.renderDropdownLabels.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
+    this.renderTag006 = this.renderTag006.bind(this);
   }
 
   renderDropdownLabels = () => {
@@ -85,7 +89,62 @@ export class MarcRecordManager extends React.Component<Props, {}> {
   };
 
 
+  renderTag001 = (el) => (
+    <React.Fragment>
+      <div className={style.controlFieldContainer}>
+        <MarcField
+          {...this.props}
+          label={el.fixedField.code}
+          name={el.fixedField.code}
+          value={el.fixedField.displayValue}
+        />
+      </div>
+    </React.Fragment>
+  );
+
+
+  renderTag006 = (leaderCss006, headerTypes006IsLoading, el) => {
+    return (
+      <div className={style.controlFieldContainer}>
+        <MarcField
+          {...this.props}
+          label={el.fixedField.code}
+          name={el.fixedField.code}
+          value={el.fixedField.displayValue}
+          onClick={() => this.handleTags006(el)}
+        />
+        {
+          (headerTypes006IsLoading) ?
+            <div /> :
+            <div className={(leaderCss006) ? style.leaderResultsActive : style.leaderResults}>
+              <Tag006 {...this.props} />
+            </div>}
+      </div>
+    );
+  };
+
+
+  composeJson = () => {
+    const { store: { getState }, bibliographicRecord } = this.props;
+    // eslint-disable-next-line no-unused-vars
+    const form = getState().form.bibliographicRecordForm.values;
+    // eslint-disable-next-line no-unused-vars
+    const original = bibliographicRecord;
+  };
+
   handleOnSubmit = () => {
+    const { store, bibliographicRecord } = this.props;
+    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'view=1&lang=ita'), { container: bibliographicRecord }, store);
+  };
+
+  handleEdit = () => {
+    const { store, bibliographicRecord } = this.props;
+    put(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'view=1'), bibliographicRecord, store);
+  };
+
+  handleDelete = () => {
+    const { store, bibliographicRecord } = this.props;
+    del(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'view=1'), bibliographicRecord, store);
   };
 
   handleTags006 = (el) => {
@@ -221,12 +280,12 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                           value={bibliographicRecord.leader.value}
                         />
                         {leaderValuesResults &&
-                          <div className={(leaderCss) ? style.leaderResultsActive : style.leaderResults}>
-                            <MarcLeader
-                              {...this.props}
-                              leaderValuesResults={leaderValuesResults}
-                            />
-                          </div>
+                        <div className={(leaderCss) ? style.leaderResultsActive : style.leaderResults}>
+                          <MarcLeader
+                            {...this.props}
+                            leaderValuesResults={leaderValuesResults}
+                          />
+                        </div>
                         }
                       </div>
                     </Accordion>
@@ -234,26 +293,7 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                       {bibliographicRecord.fields.map(el => {
                         if (el.variableField === undefined) {
                           if (el.fixedField.code === '001' || el.fixedField.code === '003' || el.fixedField.code === '005') {
-                            return (
-                              <React.Fragment>
-                                <div className={style.controlFieldContainer}>
-                                  <MarcField
-                                    {...this.props}
-                                    label={el.fixedField.code}
-                                    name={el.fixedField.code}
-                                    value={el.fixedField.displayValue}
-                                    onClick={() => this.handleTags006(el)}
-                                  />
-                                  {
-                                    (headerTypes006IsLoading) ?
-                                      <div /> :
-                                      <div className={(leaderCss006) ? style.leaderResultsActive : style.leaderResults}>
-                                        <Tag006 {...this.props} />
-                                      </div>}
-                                </div>
-                                         ;
-                              </React.Fragment>
-                            );
+                            return this.renderTag001(el);
                           } else if (el.fixedField.code === '006') {
                             return (
                               <div className={style.controlFieldContainer}>

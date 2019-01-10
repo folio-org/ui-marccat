@@ -77,5 +77,9 @@
     "search.record.new": "New",
     "search.record.new.from.template": "New from template (CTRL+N)",
     "search.actionmenu.title": "Recent searches",
-    "template.record.create": "Create Record"
+    "template.record.create": "Create Record",
+    "search.record.new.auth": "New (CTRL+A)",
+    "cataloging.variablefield.empty": "No variable fields presents",
+    "cataloging.variablefield.section.label": "Varaiable data field",
+    "app.title": "MARCcat"
 }

@@ -367,7 +367,7 @@ class SearchPanel extends React.Component<P, {}> {
                             id={`operatorSelect-${idx}`}
                           />
                         </Col>
-                        <Col xs={1} className={style.colTrash}
+                        <Col xs={1} className={styles.colTrash}
                         onClick={this.handleRemoveSearchForm(idx)}>
                           <Icon icon="trash"
                           />

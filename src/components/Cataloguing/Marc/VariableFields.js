@@ -24,7 +24,6 @@ export default class VariableFields extends React.Component<Props, {}> {
     };
   }
 
-
 handleAddSearchForm = () => {
   const { variableFields } = this.state;
   this.setState({

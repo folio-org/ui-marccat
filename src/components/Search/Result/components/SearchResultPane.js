@@ -13,7 +13,9 @@ import * as C from '../../../../utils/Constant';
 
 class SearchResultPane extends React.Component<Props, {}> {
     renderVisibleColumns = () => {
-      return [
+      const { store: { getState } } = this.props;
+      const form = getState().form.checkboxForm.values;
+      const visibleColumns = [
         'resultView',
         '001',
         '245',
@@ -22,6 +24,13 @@ class SearchResultPane extends React.Component<Props, {}> {
         'tagHighlighted',
         'countDoc'
       ];
+
+      Object.keys(form).filter(k => k !== 'checkboxForm')
+        .forEach((z, i) => {
+          if (!form[z]) delete visibleColumns[i];
+        });
+
+      return visibleColumns;
     };
 
     render() {
@@ -39,9 +48,7 @@ class SearchResultPane extends React.Component<Props, {}> {
         handleDetails,
         translate,
         bibsOnly,
-        loading,
         messageNoContent,
-        customVisibleCol
       } = this.props;
       return (
         <Pane
@@ -72,8 +79,7 @@ class SearchResultPane extends React.Component<Props, {}> {
                     formatter={resultsFormatter(bibsOnly, true)}
                     columnMapping={columnMapper(bibsOnly, false)}
                     onNeedMoreData={() => {}}
-                    loading={loading}
-                    visibleColumns={customVisibleCol === undefined ? this.renderVisibleColumns() : customVisibleCol}
+                    visibleColumns={this.renderVisibleColumns()}
                   /> : <EmptyMessage {...this.props} />
           }
         </Pane>

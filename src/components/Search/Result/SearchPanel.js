@@ -50,7 +50,6 @@ class SearchPanel extends React.Component<P, {}> {
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleResetAllButton = this.handleResetAllButton.bind(this);
     this.transitionToParams = this.transitionToParams.bind(this);
-    this.createCustomColumnFormatter = this.createCustomColumnFormatter.bind(this);
   }
 
   transitionToParams = (key, value) => {
@@ -58,53 +57,6 @@ class SearchPanel extends React.Component<P, {}> {
     const url = location.pathname;
     return includes(url, `${key}=${value}`);
   };
-
-  createCustomColumnFormatter = (obj) => {
-    const { store } = this.props;
-    const customColumnArrayMapper = [];
-    const customFormatter = [];
-    Object.keys(obj).forEach((key) => customColumnArrayMapper.push(key + ':' + obj[key]));
-    customColumnArrayMapper.filter(x => {
-      const choosedColumn = x.split(':');
-      const colName = choosedColumn[0];
-      const colIsActive = choosedColumn[1];
-      if (colIsActive === 'true') {
-        switch (colName) {
-        case 'checkbox-View':
-          customFormatter.push('resultView');
-          break;
-        case 'checkbox-id Number':
-          customFormatter.push('001');
-          break;
-        case 'checkbox-Title':
-          customFormatter.push('245');
-          break;
-        case 'checkbox-Preferred title':
-          customFormatter.push('preferredTitle');
-          break;
-        case 'checkbox-Name':
-          customFormatter.push('name');
-          break;
-        case 'checkbox-Tag':
-          customFormatter.push('tagHighlighted');
-          break;
-        case 'checkbox-Date 1':
-          customFormatter.push('date1');
-          break;
-        case 'checkbox-Date 2':
-          customFormatter.push('date2');
-          break;
-        case 'checkbox-Format':
-          customFormatter.push('format');
-          break;
-        default:
-          return customFormatter;
-        }
-      }
-      return customFormatter;
-    });
-    store.dispatch({ type: ActionTypes.CUSTOM_COLUMN_VIEW, visibleColumn: customFormatter });
-  }
 
   handleKeyDown(e) {
     let { isBrowseRequested } = this.state;
@@ -240,7 +192,7 @@ class SearchPanel extends React.Component<P, {}> {
                   <Col xs={1}>
                     <div className={styles.leftBracket} />
                   </Col>
-                  <Col xs={10}>
+                  <Col xs={10} className={styles.forwardBracket}>
                     <Row>
                       <Col xs={12}>
                         <div className={styles.select_margin}>

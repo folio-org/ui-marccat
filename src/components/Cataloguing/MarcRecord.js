@@ -89,7 +89,7 @@ export class MarcRecordManager extends React.Component<Props, {}> {
   };
 
 
-  renderTag001 = (el) => (
+  renderTag001 = (leaderCss006, headerTypes006IsLoading, el) => (
     <React.Fragment>
       <div className={style.controlFieldContainer}>
         <MarcField
@@ -124,17 +124,9 @@ export class MarcRecordManager extends React.Component<Props, {}> {
   };
 
 
-  composeJson = () => {
-    const { store: { getState }, bibliographicRecord } = this.props;
-    // eslint-disable-next-line no-unused-vars
-    const form = getState().form.bibliographicRecordForm.values;
-    // eslint-disable-next-line no-unused-vars
-    const original = bibliographicRecord;
-  };
-
   handleOnSubmit = () => {
     const { store, bibliographicRecord } = this.props;
-    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'view=1&lang=ita'), { container: bibliographicRecord }, store);
+    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'view=1'), bibliographicRecord, store);
   };
 
   handleEdit = () => {
@@ -209,11 +201,18 @@ export class MarcRecordManager extends React.Component<Props, {}> {
     });
   };
 
+
+  normalizeFixedFields = () => {
+
+  };
+
   render() {
     const {
       bibliographicRecord,
       settings,
       translate,
+      isPresent006,
+      isPresent007,
       headerTypes006IsLoading,
       headerTypes007IsLoading,
       headerTypes008IsLoading,
@@ -228,7 +227,37 @@ export class MarcRecordManager extends React.Component<Props, {}> {
       leaderCss008,
     } = this.state;
     const defaultTemplate = (settings) ? settings.defaultTemplate : C.DEFAULT_TEMPLATE;
+    const EMPTY_FIXED_FIELD = {
+      'code': '006',
+      'mandatory': true,
+      'fieldStatus': 'unchanged',
+      'fixedField': {
+        'categoryCode': '',
+        'headerTypeCode': '',
+        'code': '006',
+        'displayValue': '',
+        'sequenceNumber': 0
+      },
+      'added': true
+    };
+    const EMPTY_FIXED_FIELD_007 = {
+      'code': '007',
+      'mandatory': true,
+      'fieldStatus': 'unchanged',
+      'fixedField': {
+        'categoryCode': '',
+        'headerTypeCode': '',
+        'code': '007',
+        'displayValue': '',
+        'sequenceNumber': 0
+      },
+      'added': true
+    };
 
+    if (bibliographicRecord !== undefined) {
+      bibliographicRecord.fields.splice(2, 0, EMPTY_FIXED_FIELD);
+      bibliographicRecord.fields.splice(3, 0, EMPTY_FIXED_FIELD_007);
+    }
     if (bibliographicRecord === undefined) {
       return (
         <Paneset static>
@@ -290,18 +319,30 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                       </div>
                     </Accordion>
                     <Accordion label="Control fields (001, 003, 005)" id="control-field">
-                      {bibliographicRecord.fields.map(el => {
+                      { bibliographicRecord.fields.map(el => {
                         if (el.variableField === undefined) {
                           if (el.fixedField.code === '001' || el.fixedField.code === '003' || el.fixedField.code === '005') {
-                            return this.renderTag001(el);
+                            return (
+                              <React.Fragment>
+                                <div className={style.controlFieldContainer}>
+                                  <MarcField
+                                    readOnly
+                                    {...this.props}
+                                    label={el.fixedField.code}
+                                    name={el.fixedField.code}
+                                    value={el.fixedField.displayValue}
+                                  />
+                                </div>
+                              </React.Fragment>
+                            );
                           } else if (el.fixedField.code === '006') {
                             return (
                               <div className={style.controlFieldContainer}>
                                 <MarcField
                                   {...this.props}
-                                  label={el.fixedField.code}
-                                  name={el.fixedField.code}
-                                  value={el.fixedField.displayValue}
+                                  label={(!isPresent006) ? '006' : el.fixedField.code}
+                                  value={(!isPresent006) ? '' : el.fixedField.displayValue}
+                                  readOnly
                                   onClick={() => this.handleTags006(el)}
                                 />
                                 {
@@ -317,9 +358,9 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                               <div className={style.controlFieldContainer}>
                                 <MarcField
                                   {...this.props}
-                                  label={el.fixedField.code}
-                                  name={el.fixedField.code}
-                                  value={el.fixedField.displayValue}
+                                  label={(!isPresent007) ? '007' : el.fixedField.code}
+                                  value={(!isPresent007) ? '' : el.fixedField.displayValue}
+                                  readOnly
                                   onClick={() => this.handleTags007(el)}
                                 />
                                 {
@@ -336,6 +377,7 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                               <div className={style.controlFieldContainer}>
                                 <MarcField
                                   {...this.props}
+                                  readOnly
                                   label={el.fixedField.code}
                                   name={el.fixedField.code}
                                   value={el.fixedField.displayValue}
@@ -403,7 +445,7 @@ export class MarcRecordManager extends React.Component<Props, {}> {
 export default reduxForm({
   form: 'bibliographicRecordForm',
   navigationCheck: true,
-  enableReinitialize: true,
+  enableReinitialize: false,
   destroyOnUnmount: false
 })(connect(
   ({ marccat: { template, leaderValues, headerTypes006, headerTypes007, headerTypes008 } }) => ({

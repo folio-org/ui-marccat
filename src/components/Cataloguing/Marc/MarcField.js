@@ -13,7 +13,7 @@ export default class MarcField extends React.Component<Props, {}> {
   }
 
   render() {
-    const { dispatch, change, label, name, value, onClick } = this.props;
+    const { dispatch, change, label, name, value, onClick, readOnly } = this.props;
     dispatch(change(name, value));
     return (
       <div>
@@ -22,6 +22,7 @@ export default class MarcField extends React.Component<Props, {}> {
           id={name}
           name={name}
           type="text"
+          readOnly={readOnly}
           component="input"
           label={label}
           value={value}

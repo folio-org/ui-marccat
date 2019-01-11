@@ -32,14 +32,14 @@ class CheckboxIconButton extends React.Component<Props, {}> {
         { labels.map((l, i) => (
           <div key={i}>
             <Field
-              id={`checkbox-${l}`}
+              id={`${l}`}
               className="checkbox"
-              name={`checkbox-${l}`}
+              name={`${l}`}
               type="checkbox"
               component="input"
             />
             <label
-              htmlFor={`checkbox-${l}`}
+              htmlFor={`${l}`}
               className="checkbox"
               onClick={() => {
                 dispatch(change('checkboxForm', 'checked', true));
@@ -47,9 +47,7 @@ class CheckboxIconButton extends React.Component<Props, {}> {
             >
               {l}
             </label>
-          </div>
-        ))
-        }
+          </div>))}
       </form>
     );
   }

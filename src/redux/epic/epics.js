@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+// TO BE IMPROVE ALL FILES
 import { Observable } from 'rxjs';
 import { of as of$ } from 'rxjs/observable/of';
 import { concat as concat$ } from 'rxjs/observable/concat';
@@ -170,5 +171,14 @@ export const tag008ValuesEpic = (action$, store) => action$.ofType(ActionTypes.V
     ajax
       .getJSON(buildUrl(ENDPOINT.TEMPLATE_TAG_URL, `leader=${d.leader}&code=${d.code}&headerTypeCode=${d.typeCode}&lang=ita`), ENDPOINT.HEADERS)
       .map(record => marccatActions.fetchValuesFromTag008(record))
+      .catch(e => of$(marccatActions.fetchFailure(e))),
+  ));
+
+export const headingSuggestionEpic = (action$, store) => action$.ofType(ActionTypes.FETCH_HEADING_TAG)
+  .switchMap((d) => concat$(
+    of$(marccatActions.isFetchingHeadingByTag(true)),
+    ajax
+      .getJSON(buildUrl(ENDPOINT.HEADING_BY_TAG, `tag=${d.tag}&indicator1=${d.indicator1}&indicator2=${d.indicator2}&stringText=${d.stringText}&view=1&mainLibrary=170&pageSize=20&lang=ita`), ENDPOINT.HEADERS)
+      .map(record => marccatActions.fetchHeadingByTag(record))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));

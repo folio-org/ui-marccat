@@ -39,7 +39,7 @@ const servePlugin = {
 module.exports = {
   okapi: { url, tenant: 'diku' },
   config: {
-    logCategories: 'redux',
+    logCategories: '',
     hasAllPerms: true,
     // Custom command extension
     plugins: {

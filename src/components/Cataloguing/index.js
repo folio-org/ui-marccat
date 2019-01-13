@@ -1,7 +1,9 @@
-export { default as ActionsMenuButton } from './Marc/ActionsMenu';
-export { default as Custom006 } from './Result/Tags/Tag006';
-export { default as Custom007 } from './Result/Tags/Tag007';
-export { default as Custom008 } from './Result/Tags/Tag008';
+export { default as Tag00X } from './Marc/Tags/Tag00X';
+export { default as Tag006 } from './Marc/Tags/Tag006';
+export { default as Tag007 } from './Marc/Tags/Tag007';
+export { default as Tag008 } from './Marc/Tags/Tag008';
+export { default as ActionsMenu } from './Marc/ActionsMenu';
+export { default as MarcField } from './Marc/MarcField';
 export { default as MarcLeader } from './Marc/MarcLeader';
 export { default as VariableFields } from './Marc/VariableFields';
 export { default as MarcRecord } from './MarcRecord';

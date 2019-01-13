@@ -50,6 +50,21 @@ export const TAGS = {
   _008: '008',
   _040: '040'
 };
+
+export const INSERTED_TAGS = (code, typeCode) => {
+  return {
+    'code': code,
+    'mandatory': true,
+    'fixedField': {
+      'categoryCode': 1,
+      'headerTypeCode': typeCode,
+      'code': code,
+      'displayValue': '',
+      'sequenceNumber': 0
+    },
+    'added': true
+  };
+};
 // SETTINGS
 export const DEFAULT_TEMPLATE = {
   id: 408,

@@ -75,8 +75,10 @@ export class MarcRecordManager extends React.Component<Props, {}> {
   };
 
   saveRecord = () => {
-    const { store, bibliographicRecord } = this.props;
-    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'view=1'), bibliographicRecord, store);
+    this.composeBodyJson();
+    const { store, store: { getState } } = this.props;
+    const data = getState().marccat.template.recordsById;
+    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'view=1&lang=ita'), data, store);
   };
 
   editRecord = () => {
@@ -88,6 +90,72 @@ export class MarcRecordManager extends React.Component<Props, {}> {
     const { store, bibliographicRecord } = this.props;
     del(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'view=1'), bibliographicRecord, store);
   };
+
+
+  composeBodyJson = () => {
+    const { bibliographicRecord, store: { getState } } = this.props;
+    const formData = getState().form.bibliographicRecordForm.values;
+
+    const tag006Values = [];
+    const tag007Values = [];
+    const tag008Values = [];
+
+    Object.keys(formData)
+      .forEach((z) => {
+        if (z.split('-')[0] === 'Tag006' || z === 'Tag006') {
+          tag006Values.push({
+            name: z.split('-')[1] || 'headerTypeCode',
+            value: formData[z]
+          });
+        }
+        if (z.split('-')[0] === 'Tag007' || z === 'Tag007') {
+          tag007Values.push({
+            name: z.split('-')[1] || 'headerTypeCode',
+            value: formData[z]
+          });
+        }
+        if (z.split('-')[0] === 'Tag008' || z === 'Tag008') {
+          tag008Values.push({
+            name: z.split('-')[1] || 'headerTypeCode',
+            value: formData[z]
+          });
+        }
+      });
+
+    bibliographicRecord.fields
+      .filter(f => f.code !== '001' || f.code !== '003' || f.code !== '005')
+      .forEach(f => {
+        if (f.code === '006') {
+          tag006Values.forEach(v => {
+            f.fixedField[v.name] = v.value;
+          });
+        }
+        if (f.code === '007') {
+          tag007Values.forEach(v => {
+            f.fixedField[v.name] = v.value;
+          });
+        }
+        if (f.code === '008') {
+          tag008Values.forEach(v => {
+            f.fixedField[v.name] = v.value;
+            // f.fixedField.attributes[v.name] = v.value;
+          });
+        }
+      });
+
+    return {
+      bibliographicRecord: {
+        id: bibliographicRecord.id,
+        canadianContentIndicator: '0',
+        verificationLevel: 'r',
+        recordView: '0',
+        leader: {
+          code: bibliographicRecord.leader.code,
+          value: bibliographicRecord.leader.value
+        },
+      }
+    };
+  }
 
   handleClose = () => {
     const { dispatch, router, toggleFilterPane } = this.props;
@@ -168,39 +236,43 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                         record={bibliographicRecord}
                       />
                     </Accordion>
+                    <Accordion label={translate({ id: 'ui-marccat.cataloging.variablefield.section.label' })} id="variable-field">
+                      <Row between="xs" className={style.marcEditableListFormHeader}>
+                        <Col xs>
+                          <Row end="xs" style={{ float: 'right' }}>
+                            <Col xs>
+                              <Button
+                                buttonStyle="primary"
+                                onClick={() => {}}
+                              >
+                                <Icon icon="edit">Edit</Icon>
+                              </Button>
+                            </Col>
+                            <Col xs>
+                              <DropdownButtonMenu
+                                {...this.props}
+                                marginBottom0
+                                label="Actions"
+                                labels={this.renderDropdownLabels()}
+                                onToggle={() => this.setState({
+                                  openDropDownMenu: !openDropDownMenu
+                                })}
+                                open={openDropDownMenu}
+                              />
+                            </Col>
+                          </Row>
+                        </Col>
+                      </Row>
+                      {bibliographicRecord.fields.map(f => (
+                        <VariableFields
+                          {...this.props}
+                          record={(f.variableField) || {}}
+                          editable={editable}
+                        />
+                      ))
+                      }
+                    </Accordion>
                   </form>
-                  <Accordion label={translate({ id: 'ui-marccat.cataloging.variablefield.section.label' })} id="variable-field">
-                    <Row between="xs" className={style.marcEditableListFormHeader}>
-                      <Col xs>
-                        <Row end="xs" style={{ float: 'right' }}>
-                          <Col xs>
-                            <Button
-                              buttonStyle="primary"
-                              onClick={() => {}}
-                            >
-                              <Icon icon="edit">Edit</Icon>
-                            </Button>
-                          </Col>
-                          <Col xs>
-                            <DropdownButtonMenu
-                              {...this.props}
-                              marginBottom0
-                              label="Actions"
-                              labels={this.renderDropdownLabels()}
-                              onToggle={() => this.setState({
-                                openDropDownMenu: !openDropDownMenu
-                              })}
-                              open={openDropDownMenu}
-                            />
-                          </Col>
-                        </Row>
-                      </Col>
-                    </Row>
-                    {bibliographicRecord.fields.map(f => (
-                      <VariableFields {...this.props} record={(f.variableField) || {}} editable={editable} />
-                    ))
-                    }
-                  </Accordion>
                 </AccordionSet>
               </div>
             </Row>

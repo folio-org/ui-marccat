@@ -178,7 +178,7 @@ export const headingSuggestionEpic = (action$, store) => action$.ofType(ActionTy
   .switchMap((d) => concat$(
     of$(marccatActions.isFetchingHeadingByTag(true)),
     ajax
-      .getJSON(buildUrl(ENDPOINT.HEADING_BY_TAG, `tag=${d.tag}&indicator1=${d.indicator1}&indicator2=${d.indicator2}&stringText=${d.stringText}&view=1&mainLibrary=170&pageSize=20&lang=ita`), ENDPOINT.HEADERS)
+      .getJSON(buildUrl(ENDPOINT.HEADING_BY_TAG, `tag=${d.tag || 245}&indicator1=${1}&indicator2=${0}&stringText=${d.query || 'Manzoni'}&view=1&mainLibrary=170&pageSize=20&lang=ita`), ENDPOINT.HEADERS)
       .map(record => marccatActions.fetchHeadingByTag(record))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));

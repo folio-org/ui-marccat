@@ -22,7 +22,8 @@ export class Tag008 extends React.Component<Props, {}> {
 
   handleOnChange = (e) => {
     const { dispatch, leaderValue } = this.props;
-    dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: e.target.value });
+    const headerTypeCode = e.target.value;
+    dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: headerTypeCode });
     this.state.isChangedHeaderType = true;
   }
 
@@ -34,27 +35,25 @@ export class Tag008 extends React.Component<Props, {}> {
       const result = Object.keys(tag008ValuesResults.results).map((key) => tag008ValuesResults.results[key]);
       remappedValues.push(result);
     }
-    if (headerTypesResult === undefined) {
-      return <div />;
-    } else {
-      return (
-        <div>
-          <Row>
-            <Col xs={4}>
-              <Field
-                name="Tag008"
-                component={Select}
-                onChange={this.handleOnChange}
-                label="Header types"
-                placeholder="Select header..."
-                dataOptions={headerTypesResult.headingTypes}
-              />
-            </Col>
-          </Row>
-          <hr />
-          <Row xs={12}>
-            {
-              (isChangedHeaderType === true && tag008ValuesResults) &&
+    return (headerTypesResult) ? (
+      <div>
+        <Row>
+          <Col xs={4}>
+            <Field
+              id="Tag008"
+              name="Tag008"
+              component={Select}
+              onChange={this.handleOnChange}
+              label="Header types"
+              placeholder="Select header..."
+              dataOptions={headerTypesResult.headingTypes}
+            />
+          </Col>
+        </Row>
+        <hr />
+        <Row xs={12}>
+          {
+            (isChangedHeaderType === true && tag008ValuesResults) &&
               remappedValues.map((elem) => {
                 return elem.map(item => {
                   let exactDisplayValue = EMPTY_MESSAGE;
@@ -62,8 +61,8 @@ export class Tag008 extends React.Component<Props, {}> {
                   return (
                     <Col xs={4}>
                       <Field
-                        name={`tag008-${item.name}`}
-                        id={`tag008-${item.name}`}
+                        name={`Tag008-${item.name}`}
+                        id={`Tag008-${item.name}`}
                         component={Select}
                         label={decamelizify(`${item.name}`, SPACED_STRING)}
                         dataOptions={item.dropdownSelect}
@@ -73,14 +72,12 @@ export class Tag008 extends React.Component<Props, {}> {
                   );
                 });
               })
-            }
-          </Row>
-        </div>
-      );
-    }
+          }
+        </Row>
+      </div>
+    ) : <div />;
   }
 }
-
 export default (connect(
   ({ marccat: { headerTypes008, tag008Values } }) => ({
     headerTypesResult: headerTypes008.records,

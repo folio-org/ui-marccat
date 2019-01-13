@@ -447,7 +447,7 @@ export function tag008ValuesReducer(state = { isLoading, isReady }, action) {
   }
 }
 
-export function leaderValuesReducer(state = { isLoading, isReady }, action) {
+export function leaderReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
   case ActionTypes.LEADER_VALUES_FROM_TAG:
     return {
@@ -487,25 +487,12 @@ export function filterReducer(state = { isLoading }, action) {
   }
 }
 
-export function panelsReducer(state = {}, action) {
+export function panelsReducer(state = {}, action) { // TO BE REMOVED
   switch (action.type) {
   case ActionTypes.CLOSE_PANELS:
     return {
       ...state,
       closePanels: action.closePanels
-    };
-  default:
-    return state;
-  }
-}
-
-
-export function custumColumnFormatterReducer(state = {}, action) {
-  switch (action.type) {
-  case ActionTypes.CUSTOM_COLUMN_VIEW:
-    return {
-      ...state,
-      visibleCol: action.visibleColumn,
     };
   default:
     return state;

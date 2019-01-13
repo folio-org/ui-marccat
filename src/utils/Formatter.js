@@ -39,7 +39,6 @@ export const columnMapper = (isBibsOnly:?boolean, isAuthOnly:?boolean = true) =>
     'tagHighlighted': 'Tag',
     'countDoc': 'Bibs'
   };
-  // const isBibMapping = (isBibsOnly && !isAuthOnly) ? isBib : all;
   return all;
 };
 

@@ -28,9 +28,7 @@ import * as C from '../../utils/Constant';
 import { SingleCheckboxIconButton } from '../../lib/components/Button/OptionButton';
 import { MarcLeader } from './Marc/MarcLeader';
 import { ActionTypes } from '../../redux/actions/Actions';
-import Tag006 from './Result/Tags/Tag006';
-import Tag007 from './Result/Tags/Tag007';
-import Tag008 from './Result/Tags/Tag008';
+import { Tag00X, Tag006, Tag007, Tag008 } from './Result/Tags';
 import style from './Style/style.css';
 import { post, put, del } from '../../core/api/StoreService';
 import { buildUrl } from '../../redux/helpers';
@@ -44,15 +42,13 @@ export class MarcRecordManager extends React.Component<Props, {}> {
       isPresent008: false,
       openDropDownMenu: false,
       editable: false,
-      leaderCss: false,
       leaderCss006: false,
       leaderCss007: false,
-      leaderCss008: false,
+      expand008: false,
     };
     this.renderDropdownLabels = this.renderDropdownLabels.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
-    this.renderTag006 = this.renderTag006.bind(this);
   }
 
   renderDropdownLabels = () => {
@@ -88,41 +84,21 @@ export class MarcRecordManager extends React.Component<Props, {}> {
     );
   };
 
-
-  renderTag001 = (leaderCss006, headerTypes006IsLoading, el) => (
-    <React.Fragment>
-      <div className={style.controlFieldContainer}>
-        <MarcField
-          {...this.props}
-          label={el.fixedField.code}
-          name={el.fixedField.code}
-          value={el.fixedField.displayValue}
-        />
-      </div>
-    </React.Fragment>
-  );
-
-
-  renderTag006 = (leaderCss006, headerTypes006IsLoading, el) => {
-    return (
-      <div className={style.controlFieldContainer}>
-        <MarcField
-          {...this.props}
-          label={el.fixedField.code}
-          name={el.fixedField.code}
-          value={el.fixedField.displayValue}
-          onClick={() => this.handleTags006(el)}
-        />
-        {
-          (headerTypes006IsLoading) ?
-            <div /> :
-            <div className={(leaderCss006) ? style.leaderResultsActive : style.leaderResults}>
-              <Tag006 {...this.props} />
-            </div>}
-      </div>
-    );
+  handleTags008 = (el) => {
+    const { expand008, isPresent008 } = this.state;
+    const { dispatch, bibliographicRecord, headerTypes008Result } = this.props;
+    if (isEmpty(headerTypes008Result)) {
+      if (!isPresent008) {
+        dispatch({ type: ActionTypes.HEADER_TYPES_008, code: '008' });
+      } else {
+        dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: bibliographicRecord.leader.value, code: el.fixedField.code, typeCode: el.fixedField.headerTypeCode });
+        dispatch({ type: ActionTypes.HEADER_TYPES_008, code: '008', valueHeaderTypeCode: el.fixedField.headerTypeCode });
+      }
+    }
+    this.setState({
+      expand008: !expand008
+    });
   };
-
 
   handleOnSubmit = () => {
     const { store, bibliographicRecord } = this.props;
@@ -139,14 +115,14 @@ export class MarcRecordManager extends React.Component<Props, {}> {
     del(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'view=1'), bibliographicRecord, store);
   };
 
-  handleTags006 = (el) => {
+  handleTags006 = (tag) => {
     const { leaderCss006, isPresent006 } = this.state;
     const { dispatch, bibliographicRecord, headerTypes006Result } = this.props;
     if (isEmpty(headerTypes006Result)) {
       if (!isPresent006) {
         dispatch({ type: ActionTypes.HEADER_TYPES_006, code: '006' });
       } else {
-        dispatch({ type: ActionTypes.VALUES_FROM_TAG_006, leader: bibliographicRecord.leader.value, code: el.fixedField.code, typeCode: el.fixedField.headerTypeCode });
+        dispatch({ type: ActionTypes.VALUES_FROM_TAG_006, leader: bibliographicRecord.leader.value, code: tag.fixedField.code, typeCode: tag.fixedField.headerTypeCode });
       }
     }
     this.setState({
@@ -154,34 +130,18 @@ export class MarcRecordManager extends React.Component<Props, {}> {
     });
   };
 
-  handleTags007 = (el) => {
+  handleTags007 = (tag) => {
     const { leaderCss007, isPresent007 } = this.state;
     const { dispatch, bibliographicRecord, headerTypes007Result } = this.props;
     if (isEmpty(headerTypes007Result)) {
       if (!isPresent007) {
         dispatch({ type: ActionTypes.HEADER_TYPES_007, code: '007' });
       } else {
-        dispatch({ type: ActionTypes.VALUES_FROM_TAG_007, leader: bibliographicRecord.leader.value, code: el.fixedField.code, typeCode: el.fixedField.headerTypeCode });
+        dispatch({ type: ActionTypes.VALUES_FROM_TAG_007, leader: bibliographicRecord.leader.value, code: tag.fixedField.code, typeCode: tag.fixedField.headerTypeCode });
       }
     }
     this.setState({
       leaderCss007: !leaderCss007
-    });
-  };
-
-  handleTags008 = (el) => {
-    const { leaderCss008, isPresent008 } = this.state;
-    const { dispatch, bibliographicRecord, headerTypes008Result } = this.props;
-    if (isEmpty(headerTypes008Result)) {
-      if (!isPresent008) {
-        dispatch({ type: ActionTypes.HEADER_TYPES_008, code: '008' });
-      } else {
-        dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: bibliographicRecord.leader.value, code: el.fixedField.code, typeCode: el.fixedField.headerTypeCode });
-        dispatch({ type: ActionTypes.HEADER_TYPES_008, code: '008', valueHeaderTypeCode: el.fixedField.headerTypeCode });
-      }
-    }
-    this.setState({
-      leaderCss008: !leaderCss008
     });
   };
 
@@ -192,39 +152,24 @@ export class MarcRecordManager extends React.Component<Props, {}> {
     router.push('/marccat/search');
   };
 
-  handleLeader = () => {
-    const { leaderCss } = this.state;
-    const { dispatch, bibliographicRecord } = this.props;
-    dispatch({ type: ActionTypes.LEADER_VALUES_FROM_TAG, leader: bibliographicRecord.leader.value, code: bibliographicRecord.leader.code, typeCode: '15' });
-    this.setState({
-      leaderCss: !leaderCss
-    });
-  };
-
-
-  normalizeFixedFields = () => {
-
-  };
-
   render() {
     const {
       bibliographicRecord,
       settings,
-      translate,
       isPresent006,
       isPresent007,
+      translate,
       headerTypes006IsLoading,
       headerTypes007IsLoading,
       headerTypes008IsLoading,
-      leaderValuesResults
+      leaderData
     } = this.props;
     const {
       openDropDownMenu,
       editable,
-      leaderCss,
       leaderCss006,
       leaderCss007,
-      leaderCss008,
+      expand008
     } = this.state;
     const defaultTemplate = (settings) ? settings.defaultTemplate : C.DEFAULT_TEMPLATE;
     const EMPTY_FIXED_FIELD = {
@@ -298,52 +243,37 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                       <SingleCheckboxIconButton labels={['Suppress from Discovery']} pullLeft widthPadding />
                     </Accordion>
                     <Accordion label="Leader" id="leader">
-                      <div className={style.controlFieldContainer}>
-                        <MarcField
-                          {...this.props}
-                          leaderValuesResults={leaderValuesResults}
-                          bibliographicRecord={bibliographicRecord}
-                          label="Leader"
-                          name="leader"
-                          onClick={() => this.handleLeader()}
-                          value={bibliographicRecord.leader.value}
-                        />
-                        {leaderValuesResults &&
-                        <div className={(leaderCss) ? style.leaderResultsActive : style.leaderResults}>
-                          <MarcLeader
-                            {...this.props}
-                            leaderValuesResults={leaderValuesResults}
-                          />
-                        </div>
-                        }
-                      </div>
+                      <MarcLeader
+                        {...this.props}
+                        readOnly
+                        leaderData={leaderData}
+                        leaderCode={bibliographicRecord.leader.code}
+                        leaderValue={bibliographicRecord.leader.value}
+                      />
                     </Accordion>
                     <Accordion label="Control fields (001, 003, 005)" id="control-field">
-                      { bibliographicRecord.fields.map(el => {
-                        if (el.variableField === undefined) {
-                          if (el.fixedField.code === '001' || el.fixedField.code === '003' || el.fixedField.code === '005') {
+                      { bibliographicRecord.fields.map(tag => {
+                        if (tag.variableField === undefined) {
+                          if (tag.fixedField.code === '001' || tag.fixedField.code === '003' || tag.fixedField.code === '005') {
                             return (
-                              <React.Fragment>
-                                <div className={style.controlFieldContainer}>
-                                  <MarcField
-                                    readOnly
-                                    {...this.props}
-                                    label={el.fixedField.code}
-                                    name={el.fixedField.code}
-                                    value={el.fixedField.displayValue}
-                                  />
-                                </div>
-                              </React.Fragment>
+                              <Tag00X
+                                {...this.props}
+                                readOnly
+                                tag={tag}
+                                label={tag.fixedField.code}
+                                name={tag.fixedField.code}
+                                value={tag.fixedField.displayValue}
+                              />
                             );
-                          } else if (el.fixedField.code === '006') {
+                          } else if (tag.fixedField.code === '006') {
                             return (
                               <div className={style.controlFieldContainer}>
                                 <MarcField
                                   {...this.props}
-                                  label={(!isPresent006) ? '006' : el.fixedField.code}
-                                  value={(!isPresent006) ? '' : el.fixedField.displayValue}
+                                  label={(!isPresent006) ? '006' : tag.fixedField.code}
+                                  value={(!isPresent006) ? '' : tag.fixedField.displayValue}
                                   readOnly
-                                  onClick={() => this.handleTags006(el)}
+                                  onClick={() => this.handleTags006(tag)}
                                 />
                                 {
                                   (headerTypes006IsLoading) ?
@@ -353,15 +283,15 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                                     </div>}
                               </div>
                             );
-                          } else if (el.fixedField.code === '007') {
+                          } else if (tag.fixedField.code === '007') {
                             return (
                               <div className={style.controlFieldContainer}>
                                 <MarcField
                                   {...this.props}
-                                  label={(!isPresent007) ? '007' : el.fixedField.code}
-                                  value={(!isPresent007) ? '' : el.fixedField.displayValue}
+                                  label={(!isPresent007) ? '007' : tag.fixedField.code}
+                                  value={(!isPresent007) ? '' : tag.fixedField.displayValue}
                                   readOnly
-                                  onClick={() => this.handleTags007(el)}
+                                  onClick={() => this.handleTags007(tag)}
                                 />
                                 {
                                   (headerTypes007IsLoading) ?
@@ -372,22 +302,26 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                                 }
                               </div>
                             );
-                          } else if (el.fixedField.code === '008') {
+                          } else if (tag.fixedField.code === '008') {
                             return (
                               <div className={style.controlFieldContainer}>
                                 <MarcField
                                   {...this.props}
                                   readOnly
-                                  label={el.fixedField.code}
-                                  name={el.fixedField.code}
-                                  value={el.fixedField.displayValue}
-                                  onClick={() => this.handleTags008(el)}
+                                  label={tag.fixedField.code}
+                                  name={tag.fixedField.code}
+                                  value={tag.fixedField.displayValue}
+                                  onClick={() => this.handleTags008(tag)}
                                 />
                                 {
                                   (headerTypes008IsLoading) ?
                                     <div /> :
-                                    <div className={(leaderCss008) ? style.leaderResultsActive : style.leaderResults}>
-                                      <Tag008 {...this.props} />
+                                    <div className={(expand008) ? style.leaderResultsActive : style.leaderResults}>
+                                      <Tag008
+                                        {...this.props}
+                                        leaderCode={bibliographicRecord.leader.code}
+                                        leaderValue={bibliographicRecord.leader.value}
+                                      />
                                     </div>
                                 }
                               </div>
@@ -448,11 +382,11 @@ export default reduxForm({
   enableReinitialize: false,
   destroyOnUnmount: false
 })(connect(
-  ({ marccat: { template, leaderValues, headerTypes006, headerTypes007, headerTypes008 } }) => ({
+  ({ marccat: { template, leaderData, headerTypes006, headerTypes007, headerTypes008 } }) => ({
     bibliographicRecord: template.recordsById,
-    leaderValuesResults: leaderValues.records,
-    tagIsLoading: leaderValues.isLoading,
-    tagIsReady: leaderValues.isReady,
+    leaderData: leaderData.records,
+    tagIsLoading: leaderData.isLoading,
+    tagIsReady: leaderData.isReady,
     headerTypes006Result: headerTypes006.records,
     headerTypes006IsLoading: headerTypes006.isLoading,
     headerTypes007Result: headerTypes007.records,

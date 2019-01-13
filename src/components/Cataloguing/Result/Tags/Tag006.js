@@ -8,6 +8,8 @@ import { Field } from 'redux-form';
 import { Row, Col, Select, TextField } from '@folio/stripes/components';
 import { injectCommonProp, Props } from '../../../../core';
 import { ActionTypes } from '../../../../redux/actions';
+import { decamelizify } from '../../Utils/MarcUtils';
+import { SPACED_STRING } from '../../../../utils/Constant';
 import style from '../../Style/style.css';
 
 export class Tag006 extends React.Component<Props, {}> {
@@ -53,15 +55,15 @@ export class Tag006 extends React.Component<Props, {}> {
               {
                 (isChangedHeaderType === true && tag006ValuesResults) &&
                 remappedValues.map(elem => {
-                  return elem.map((item, i) => {
+                  return elem.map(item => {
                     let exactDisplayValue = '';
                     item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue));
                     return (
                       <Col xs={4}>
                         <Field
-                          name={`tag006-${i}`}
-                          id={`tag006-${i}`}
-                          label={item.name}
+                          name={`Tag006-${item.name}`}
+                          id={`Tag006-${item.name}`}
+                          label={decamelizify(`${item.name}`, SPACED_STRING)}
                           dataOptions={item.dropdownSelect}
                           placeholder={exactDisplayValue}
                         />

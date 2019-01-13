@@ -24,6 +24,10 @@ export const ENDPOINT = {
   TEMPLATE_TAG_URL: '/fixed-fields-code-groups',
   HEADER_TYPES_URL: '/header-types',
   BIBLIOGRAPHIC_RECORD: '/bibliographic-record',
+  HEADING_BY_TAG: '/headings-by-tag',
+  LOCK_MARC_RECORD: '/bibliographic-record/lock',
+  UNLOCK_MARC_RECORD: '/bibliographic-record/lock',
+
 };
 
 // REDUX DATA STORE MANAGEMENT

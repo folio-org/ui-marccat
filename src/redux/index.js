@@ -18,6 +18,7 @@ import {
   tag006ValuesReducer,
   tag007ValuesReducer,
   tag008ValuesReducer,
+  headingByTagReducer,
   settingsReducer,
   panelsReducer,
 } from './reducers/Reducer';
@@ -39,7 +40,8 @@ import {
   headerTypes008Epic,
   tag006ValuesEpic,
   tag007ValuesEpic,
-  tag008ValuesEpic
+  tag008ValuesEpic,
+  headingSuggestionEpic,
 } from './epic/epics';
 
 export const reducer = combineReducers({
@@ -60,6 +62,7 @@ export const reducer = combineReducers({
   tag006Values: tag006ValuesReducer,
   tag007Values: tag007ValuesReducer,
   tag008Values: tag008ValuesReducer,
+  headingByTag: headingByTagReducer,
   settings: settingsReducer,
   panels: panelsReducer,
 });
@@ -82,5 +85,6 @@ export const epics = combineEpics(
   headerTypes008Epic,
   tag006ValuesEpic,
   tag007ValuesEpic,
-  tag008ValuesEpic
+  tag008ValuesEpic,
+  headingSuggestionEpic
 );

@@ -447,6 +447,32 @@ export function tag008ValuesReducer(state = { isLoading, isReady }, action) {
   }
 }
 
+export function headingByTagReducer(state = { isLoading, isReady }, action) {
+  switch (action.type) {
+  case ActionTypes.FETCH_HEADING_BY_TAG:
+    return {
+      ...state,
+      isLoading: false,
+      isReady: false
+    };
+  case ActionTypes.FETCH_HEADING_TAG:
+    return {
+      ...state,
+      isLoading: action.payload,
+      isReady: false
+    };
+  case ActionTypes.FETCH_HEADING_BY_TAG_SUCCESS:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: false,
+      isReady: true,
+    };
+  default:
+    return state;
+  }
+}
+
 export function leaderReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
   case ActionTypes.LEADER_VALUES_FROM_TAG:

@@ -147,6 +147,14 @@ export const isFetchingTag008Request = (isLoading) => ({
   type: ActionTypes.FETCH_VALUES_FROM_TAG_008,
   payload: isLoading
 });
+export const isFetchingHeadingByTag = (isLoading) => ({
+  type: ActionTypes.FETCH_HEADING_BY_TAG,
+  payload: isLoading
+});
+export const fetchHeadingByTag = (records) => ({
+  type: ActionTypes.FETCH_HEADING_BY_TAG_SUCCESS,
+  payload: records
+});
 export const fetchValuesFromTag008 = (records) => ({
   type: ActionTypes.VALUES_FROM_TAG_008_SUCCESS,
   payload: records

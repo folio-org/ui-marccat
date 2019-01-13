@@ -8,8 +8,6 @@ import { Field } from 'redux-form';
 import { Row, Col, Select } from '@folio/stripes/components';
 import { injectCommonProp, Props } from '../../../../core';
 import { ActionTypes } from '../../../../redux/actions';
-
-import style from '../../Style/style.css';
 import { decamelizify } from '../../Utils/MarcUtils';
 import { SPACED_STRING, EMPTY_MESSAGE } from '../../../../utils/Constant';
 
@@ -40,7 +38,7 @@ export class Tag007 extends React.Component<Props, {}> {
       return <div />;
     } else {
       return (
-        <div className={style.rcornerspanel} id="rcornerspanel">
+        <div>
           <Row>
             <Col xs={4}>
               <Field

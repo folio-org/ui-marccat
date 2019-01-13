@@ -1,5 +1,5 @@
 import React from 'react';
-import MarcField from '../../Marc/MarcField';
+import MarcField from '../MarcField';
 import style from '../../Style/style.css';
 
 export default class Tag00X extends React.Component {

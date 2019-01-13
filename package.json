@@ -2,7 +2,7 @@
   "name": "@folio/marccat",
   "version": "1.2.0",
   "description": "FOLIO UI module for Cataloging",
-  "repository": "folio-org/udadssadasi-marccat",
+  "repository": "folio-org/ui-marccat",
   "publishConfig": {
     "registry": "https://repository.folio.org/repository/npm-folio/"
   },

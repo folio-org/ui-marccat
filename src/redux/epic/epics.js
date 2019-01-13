@@ -110,7 +110,7 @@ export const templateByIdEpic = (action$, store) => action$.ofType(ActionTypes.T
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
 
-export const leaderValuesEpic = (action$, store) => action$.ofType(ActionTypes.LEADER_VALUES_FROM_TAG)
+export const leaderEpic = (action$, store) => action$.ofType(ActionTypes.LEADER_VALUES_FROM_TAG)
   .switchMap((d) => concat$(
     of$(marccatActions.isFetchingLeaderTagRequest(true)),
     ajax

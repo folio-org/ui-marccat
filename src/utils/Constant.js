@@ -35,8 +35,17 @@ export const STATE_MANAGEMENT = {
 export const SEPARATOR = ';;;';
 export const EMPTY_PARAMETER = -1;
 export const EMPTY_MESSAGE = '';
+export const SPACED_STRING = ' ';
 
-
+export const TAGS = {
+  _001: '001',
+  _003: '003',
+  _005: '005',
+  _006: '006',
+  _007: '007',
+  _008: '008',
+  _040: '040'
+};
 // SETTINGS
 export const DEFAULT_TEMPLATE = {
   id: 408,

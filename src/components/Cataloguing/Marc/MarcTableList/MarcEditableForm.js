@@ -8,7 +8,7 @@ import { FieldArray } from 'redux-form';
 import PropTypes from 'prop-types';
 
 import { Col, MultiColumnList, Row, IconButton } from '@folio/stripes/components';
-import MarcEditableItem from './MarcEditableItem';
+import MarcEditableItem from './MarcItemEdit';
 import css from '../../Style/style.css';
 
 const propTypes = {

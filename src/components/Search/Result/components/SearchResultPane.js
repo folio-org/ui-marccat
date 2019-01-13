@@ -3,7 +3,6 @@
  * @flow
  */
 import React from 'react';
-import { connect } from 'react-redux';
 import { Pane, Icon, MultiColumnList } from '@folio/stripes/components';
 import { ActionMenu } from '../../../../lib';
 import { Props, injectCommonProp } from '../../../../core';
@@ -71,14 +70,12 @@ class SearchResultPane extends React.Component<Props, {}> {
                     autosize
                     id="data-test-search-results-table"
                     defaultWidth="fill"
-                    isEmptyMessage={C.EMPTY_MESSAGE}
                     columnWidths={columnWidthMapper(false, false)}
                     rowMetadata={['001', 'recordView']}
                     onRowClick={handleDetails}
                     contentData={marcJSONRecords}
                     formatter={resultsFormatter(bibsOnly, true)}
                     columnMapping={columnMapper(bibsOnly, false)}
-                    onNeedMoreData={() => {}}
                     visibleColumns={this.renderVisibleColumns()}
                   /> : <EmptyMessage {...this.props} />
           }
@@ -86,8 +83,4 @@ class SearchResultPane extends React.Component<Props, {}> {
       );
     }
 }
-export default (connect(
-  ({ marccat: { customColumn } }) => ({
-    customVisibleCol: customColumn.visibleCol
-  }),
-)(injectCommonProp(SearchResultPane)));
+export default (injectCommonProp(SearchResultPane));

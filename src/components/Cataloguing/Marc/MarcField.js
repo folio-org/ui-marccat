@@ -6,12 +6,6 @@ import style from '../Style/style.css';
 
 
 export default class MarcField extends React.Component<Props, {}> {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
-
   render() {
     const { dispatch, change, label, name, value, onClick, readOnly } = this.props;
     dispatch(change(name, value));

@@ -10,9 +10,11 @@ import { injectCommonProp, Props } from '../../../../core';
 import { ActionTypes } from '../../../../redux/actions';
 
 import style from '../../Style/style.css';
+import { decamelizify } from '../../Utils/MarcUtils';
+import { SPACED_STRING, EMPTY_MESSAGE } from '../../../../utils/Constant';
 
 
-export class Custom007 extends React.Component<Props, {}> {
+export class Tag007 extends React.Component<Props, {}> {
   constructor(props:Props) {
     super(props);
     this.state = {
@@ -55,16 +57,16 @@ export class Custom007 extends React.Component<Props, {}> {
             {
               (isChangedHeaderType === true && tag007ValuesResults) &&
               remappedValues.map(elem => {
-                return elem.map((item, i) => {
-                  let exactDisplayValue = '';
+                return elem.map(item => {
+                  let exactDisplayValue = EMPTY_MESSAGE;
                   item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue));
                   return (
                     <Col xs={4}>
                       <Field
                         component={Select}
-                        name={`tag006-${i}`}
-                        id={`tag006-${i}`}
-                        label={item.name}
+                        name={`Tag007-${item.name}`}
+                        id={`Tag007-${item.name}`}
+                        label={decamelizify(`${item.name}`, SPACED_STRING)}
                         dataOptions={item.dropdownSelect}
                         placeholder={exactDisplayValue}
                       />
@@ -86,4 +88,4 @@ export default (connect(
     headerTypesResult: headerTypes007.records,
     tag007ValuesResults: tag007Values.records
   }),
-)(injectCommonProp(Custom007)));
+)(injectCommonProp(Tag007)));

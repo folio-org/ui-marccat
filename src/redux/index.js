@@ -11,7 +11,7 @@ import {
   detailsBrowseSearchReducer,
   browseDetailsAssociatedReducer,
   templateViewReducer,
-  leaderValuesReducer,
+  leaderReducer,
   headerTypes006Reducer,
   headerTypes007Reducer,
   headerTypes008Reducer,
@@ -20,7 +20,6 @@ import {
   tag008ValuesReducer,
   settingsReducer,
   panelsReducer,
-  custumColumnFormatterReducer
 } from './reducers/Reducer';
 import {
   searchEpic,
@@ -33,7 +32,7 @@ import {
   browseAuthorityDetailEpic,
   browseDetailAssociatedEpic,
   templateViewEpic,
-  leaderValuesEpic,
+  leaderEpic,
   templateByIdEpic,
   headerTypes006Epic,
   headerTypes007Epic,
@@ -54,7 +53,7 @@ export const reducer = combineReducers({
   browseDetails: detailsBrowseSearchReducer,
   browseDetailsAssociated: browseDetailsAssociatedReducer,
   template: templateViewReducer,
-  leaderValues: leaderValuesReducer,
+  leaderData: leaderReducer,
   headerTypes006: headerTypes006Reducer,
   headerTypes007: headerTypes007Reducer,
   headerTypes008: headerTypes008Reducer,
@@ -63,7 +62,6 @@ export const reducer = combineReducers({
   tag008Values: tag008ValuesReducer,
   settings: settingsReducer,
   panels: panelsReducer,
-  customColumn: custumColumnFormatterReducer
 });
 
 export const epics = combineEpics(
@@ -78,7 +76,7 @@ export const epics = combineEpics(
   browseDetailAssociatedEpic,
   templateViewEpic,
   templateByIdEpic,
-  leaderValuesEpic,
+  leaderEpic,
   headerTypes006Epic,
   headerTypes007Epic,
   headerTypes008Epic,

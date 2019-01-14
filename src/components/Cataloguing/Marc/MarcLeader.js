@@ -25,7 +25,7 @@ export default class MarcLeader extends React.Component<P, {}> {
     this.state = {
       leaderDataDispatched: false,
       leaderCss: false,
-      leadderChanged: '',
+      leaderChanged: props.leaderValue,
     };
     this.handleLeader = this.handleLeader.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -45,25 +45,36 @@ export default class MarcLeader extends React.Component<P, {}> {
     });
   };
 
+  replaceAt(string, index, replace) {
+    this.setState({
+      leaderChanged: string.substring(0, index) + replace + string.substring(index + 1)
+    });
+  }
 
   handleChange = () => {
     const { store: { getState } } = this.props;
+    const { leaderChanged } = this.state;
     const formData = getState().form.bibliographicRecordForm.values;
-    const leaderValues = [];
     Object.keys(formData)
       .forEach((z) => {
         if (z.split('-')[0] === 'Leader') {
-          leaderValues.push({
-            name: z.split('-')[1],
-            value: formData[z]
-          });
+          switch (z.split('-')[1]) {
+          case 'itemRecordStatusCode': this.replaceAt(leaderChanged, 5, formData[z]); break;
+          case 'itemRecordTypeCode': this.replaceAt(leaderChanged, 6, formData[z]); break;
+          case 'itemBibliographicLevelCode': this.replaceAt(leaderChanged, 7, formData[z]); break;
+          case 'itemControlTypeCode': this.replaceAt(leaderChanged, 8, formData[z]); break;
+          case 'characterCodingSchemeCode': this.replaceAt(leaderChanged, 9, formData[z]); break;
+          case 'encodingLevel': this.replaceAt(leaderChanged, 17, formData[z]); break;
+          case 'descriptiveCataloguingCode': this.replaceAt(leaderChanged, 18, formData[z]); break;
+          case 'linkedRecordCode': this.replaceAt(leaderChanged, 19, formData[z]); break;
+          default: break;
+          }
         }
       });
-    leaderValues.splice(0, 1);
   };
 
   render() {
-    const { leaderCss, leadderChanged } = this.state;
+    const { leaderCss, leaderChanged } = this.state;
     const { leaderData, leaderValue } = this.props;
     const remappedValues = [];
     if (leaderData) {
@@ -78,7 +89,7 @@ export default class MarcLeader extends React.Component<P, {}> {
           label="Leader"
           name="Leader"
           onClick={this.handleLeader}
-          value={(leadderChanged) || leaderValue}
+          value={(leaderChanged) || leaderValue}
         />
         {leaderData &&
           <div className={(leaderCss) ? style.leaderResultsActive : style.leaderResults}>
@@ -92,7 +103,7 @@ export default class MarcLeader extends React.Component<P, {}> {
                         return (
                           <Col xs={4}>
                             <Field
-                              id={`Leader-${item.name}`}
+                              id={`${item.name}`}
                               name={`Leader-${item.name}`}
                               label={decamelizify(`${item.name}`, SPACED_STRING)}
                               component={Select}

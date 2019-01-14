@@ -17,18 +17,14 @@ import {
 } from '@folio/stripes/components';
 import { reduxForm } from 'redux-form';
 import { Props, injectCommonProp } from '../../core';
-import { ActionMenuTemplate, DropdownButtonMenu, ToolbarButtonMenu } from '../../lib';
-import { VariableFields } from '.';
-import { SingleCheckboxIconButton } from '../../lib/components/Button/OptionButton';
-import { MarcLeader } from './Marc/MarcLeader';
+import { ActionMenuTemplate, SingleCheckboxIconButton, DropdownButtonMenu, ToolbarButtonMenu } from '../../lib';
+import { VariableFields, MarcLeader, FixedFields } from '.';
 import { ActionTypes } from '../../redux/actions/Actions';
-import { post, put, del } from '../../core/api/StoreService';
+import { put, del } from '../../core/api/StoreService';
 import { buildUrl } from '../../redux/helpers';
-import FixedFields from './Marc/FixedFields';
 import * as C from '../../utils/Constant';
 
 import style from './Style/style.css';
-
 
 export class MarcRecordManager extends React.Component<Props, {}> {
   constructor(props: Props) {
@@ -56,6 +52,16 @@ export class MarcRecordManager extends React.Component<Props, {}> {
       }];
   };
 
+  // eslint-disable-next-line react/no-deprecated
+  componentWillMount() {
+    // const { dispatch } = this.props;
+    // dispatch({
+    //   type: ActionTypes.LOCK_RECORD,
+    //   // id: bibliographicRecord.id,
+    //   uuid: uuid(),
+    // });
+  }
+
   renderButtonMenu = () => {
     const { translate } = this.props;
     return (
@@ -75,8 +81,7 @@ export class MarcRecordManager extends React.Component<Props, {}> {
   };
 
   saveRecord = () => {
-    const { store, bibliographicRecord } = this.props;
-    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'view=1'), bibliographicRecord, store);
+    this.composeBodyJson();
   };
 
   editRecord = () => {
@@ -88,6 +93,60 @@ export class MarcRecordManager extends React.Component<Props, {}> {
     const { store, bibliographicRecord } = this.props;
     del(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'view=1'), bibliographicRecord, store);
   };
+
+
+  composeBodyJson = () => {
+    const { bibliographicRecord, store: { getState } } = this.props;
+    const formData = getState().form.bibliographicRecordForm.values;
+
+    const tag006Values = [];
+    const tag007Values = [];
+    const tag008Values = [];
+
+    Object.keys(formData)
+      .forEach((z) => {
+        if (z.split('-')[0] === 'Tag006' || z === 'Tag006') {
+          tag006Values.push({
+            name: z.split('-')[1] || 'headerTypeCode',
+            value: formData[z]
+          });
+        }
+        if (z.split('-')[0] === 'Tag007' || z === 'Tag007') {
+          tag007Values.push({
+            name: z.split('-')[1] || 'headerTypeCode',
+            value: formData[z]
+          });
+        }
+        if (z.split('-')[0] === 'Tag008' || z === 'Tag008') {
+          tag008Values.push({
+            name: z.split('-')[1] || 'headerTypeCode',
+            value: formData[z]
+          });
+        }
+      });
+
+    bibliographicRecord.fields
+      .filter(f => f.code !== '001' || f.code !== '003' || f.code !== '005')
+      .forEach(f => {
+        if (f.code === '006') {
+          tag006Values.forEach(v => {
+            f.fixedField[v.name] = v.value;
+          });
+        }
+        if (f.code === '007') {
+          tag007Values.forEach(v => {
+            f.fixedField[v.name] = v.value;
+          });
+        }
+        if (f.code === '008') {
+          tag008Values.forEach(v => {
+            f.fixedField[v.name] = v.value;
+          });
+        }
+      });
+
+    return bibliographicRecord;
+  }
 
   handleClose = () => {
     const { dispatch, router, toggleFilterPane } = this.props;
@@ -197,7 +256,11 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                       </Col>
                     </Row>
                     {bibliographicRecord.fields.map(f => (
-                      <VariableFields {...this.props} record={(f.variableField) || {}} editable={editable} />
+                      <VariableFields
+                        {...this.props}
+                        record={(f.variableField) || {}}
+                        editable={editable}
+                      />
                     ))
                     }
                   </Accordion>
@@ -214,8 +277,8 @@ export class MarcRecordManager extends React.Component<Props, {}> {
 export default reduxForm({
   form: 'bibliographicRecordForm',
   navigationCheck: true,
-  enableReinitialize: false,
-  destroyOnUnmount: false
+  enableReinitialize: true,
+  destroyOnUnmount: false,
 })(connect(
   ({ marccat: { template, leaderData, headerTypes006, headerTypes007, headerTypes008 } }) => ({
     bibliographicRecord: template.recordsById,

@@ -12,6 +12,11 @@ export const isfetchingBrowseRequest = (isLoading) => ({
   type: ActionTypes.FETCH_DETAILS_BROWSE_REQUESTED,
   payload: isLoading
 });
+export const isLockedRecordRequest = (isLoading) => ({
+  type: ActionTypes.LOCK_RECORD_REQUESTED,
+  payload: isLoading
+});
+
 export const isFetchingTemplateByIdRequest = (isLoading) => ({
   type: ActionTypes.FETCH_TEMPLATE_GET_BY_ID,
   payload: isLoading
@@ -122,6 +127,10 @@ export const fetchTemplateView = (records) => ({
 export const fetchTemplateById = (records) => ({
   type: ActionTypes.TEMPLATE_GET_BY_ID_SUCCESS,
   payload: records
+});
+export const lockedRecord = (record) => ({
+  type: ActionTypes.LOCK_RECORD_SUCCESS,
+  payload: record
 });
 export const fetchLeaderFromTag = (records) => ({
   type: ActionTypes.LEADER_VALUES_FROM_TAG_SUCCESS,

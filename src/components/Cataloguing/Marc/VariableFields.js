@@ -49,7 +49,7 @@ render() {
           key={idx}
           id={idx}
           editable={editable}
-          contentData={contentData}
+          contentData={(idx === 0) ? contentData : {}}
           visibleFields={['tag', 'count', 'ref', 'displayValue']}
           columnWidths={{
             'tag':'15%',

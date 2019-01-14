@@ -19,3 +19,8 @@ export type VariableField = {
   skipInFiling: number;
   subfields: Array;
 };
+
+export type LockType = 'R' | 'H' | 'C';
+export type LockEntityType<K = LockType> = {
+  type: K;
+};

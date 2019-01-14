@@ -7,7 +7,7 @@ import { ajax } from 'rxjs/observable/dom/ajax';
 import { ActionTypes } from '../actions/Actions';
 import * as marccatActions from '../actions';
 import { buildUrl } from '../helpers';
-import { ENDPOINT } from '../../utils/Constant';
+import { ENDPOINT, LockEntityType } from '../../utils/Constant';
 import { fetchFailure } from '../actions/ActionCreator';
 
 export const searchEpic = (action$, store) => action$.ofType(ActionTypes.SEARCH)
@@ -110,6 +110,23 @@ export const templateByIdEpic = (action$, store) => action$.ofType(ActionTypes.T
       .map(record => marccatActions.fetchTemplateById(record))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
+export const lockRecordEpic = (action$, store) => action$.ofType(ActionTypes.LOCK_RECORD)
+  .switchMap((d) => concat$(
+    of$(marccatActions.isLockedRecordRequest(true)),
+    ajax
+      .getJSON(buildUrl(ENDPOINT.LOCK_MARC_RECORD + d.id, `id=${d.id}&uuid=${d.uuid}&username=${store.getState().okapi.currentUser.username}&type=${LockEntityType.R}`), ENDPOINT.HEADERS)
+      .map(record => marccatActions.lockedRecord(record))
+      .catch(e => of$(marccatActions.fetchFailure(e))),
+  ));
+
+export const unlockRecordEpic = (action$, store) => action$.ofType(ActionTypes.LOCK_RECORD)
+  .switchMap((d) => concat$(
+    of$(marccatActions.isLockedRecordRequest(true)),
+    ajax
+      .getJSON(buildUrl(ENDPOINT.UNLOCK_MARC_RECORD + d.id, `id=${d.id}&uuid=${d.uuid}&username=${store.getState().okapi.currentUser.username}`), ENDPOINT.HEADERS)
+      .map(record => marccatActions.lockedRecord(record))
+      .catch(e => of$(marccatActions.fetchFailure(e))),
+  ));
 
 export const leaderEpic = (action$, store) => action$.ofType(ActionTypes.LEADER_VALUES_FROM_TAG)
   .switchMap((d) => concat$(
@@ -178,7 +195,7 @@ export const headingSuggestionEpic = (action$, store) => action$.ofType(ActionTy
   .switchMap((d) => concat$(
     of$(marccatActions.isFetchingHeadingByTag(true)),
     ajax
-      .getJSON(buildUrl(ENDPOINT.HEADING_BY_TAG, `tag=${d.tag}&indicator1=${d.indicator1}&indicator2=${d.indicator2}&stringText=${d.stringText}&view=1&mainLibrary=170&pageSize=20&lang=ita`), ENDPOINT.HEADERS)
+      .getJSON(buildUrl(ENDPOINT.HEADING_BY_TAG, `tag=${d.tag || 245}&indicator1=${1}&indicator2=${0}&stringText=${d.query || 'Manzoni'}&view=1&mainLibrary=170&pageSize=20&lang=ita`), ENDPOINT.HEADERS)
       .map(record => marccatActions.fetchHeadingByTag(record))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));

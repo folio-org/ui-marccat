@@ -1,5 +1,7 @@
+/* eslint-disable no-mixed-operators */
+/* eslint-disable no-bitwise */
+/* eslint-disable one-var */
 import { SPACED_STRING } from '../../../utils/Constant';
-
 /**
  * @author: cchiama
  *
@@ -18,7 +20,7 @@ export const camelizify = (str) => {
  * @param {text} s Text to make first char uppercase
  * @param {*} string with first char uppercase
  */
-const firstCharUppercase = s => s.charAt(0).toUpperCase() + s.slice(1);
+export const firstCharUppercase = s => s.charAt(0).toUpperCase() + s.slice(1);
 
 /**
  * @author: cchiama
@@ -33,4 +35,12 @@ export const decamelizify = (str, separator) => {
   return firstCharUppercase(str)
     .replace(/([a-z\d])([A-Z])/g, '$1' + separator + '$2')
     .replace(/([A-Z]+)([A-Z][a-z\d]+)/g, '$1' + separator + '$2');
+};
+
+export const uuid = () => {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = Math.random() * 16 | 0,
+      v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
 };

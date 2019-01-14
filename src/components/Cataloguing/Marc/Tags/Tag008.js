@@ -8,8 +8,8 @@ import { Field } from 'redux-form';
 import { Row, Col, Select } from '@folio/stripes/components';
 import { injectCommonProp, Props } from '../../../../core';
 import { ActionTypes } from '../../../../redux/actions';
-import { decamelizify } from '../../Utils/MarcUtils';
-import { SPACED_STRING, TAGS, EMPTY_MESSAGE } from '../../../../utils/Constant';
+import { decamelizify } from '../..';
+import * as C from '../../../../utils/Constant';
 
 
 export class Tag008 extends React.Component<Props, {}> {
@@ -21,9 +21,11 @@ export class Tag008 extends React.Component<Props, {}> {
   }
 
   handleOnChange = (e) => {
-    const { dispatch, leaderValue } = this.props;
-    dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: e.target.value });
+    const { dispatch, leaderValue, record } = this.props;
+    const headerTypeCode = e.target.value;
+    dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: C.TAGS._008, typeCode: headerTypeCode });
     this.state.isChangedHeaderType = true;
+    record.fields.filter(f => f.code === C.TAGS._008)[0].fieldStatus = C.RECORD_FIELD_STATUS.CHANGED;
   }
 
   render() {
@@ -34,38 +36,36 @@ export class Tag008 extends React.Component<Props, {}> {
       const result = Object.keys(tag008ValuesResults.results).map((key) => tag008ValuesResults.results[key]);
       remappedValues.push(result);
     }
-    if (headerTypesResult === undefined) {
-      return <div />;
-    } else {
-      return (
-        <div>
-          <Row>
-            <Col xs={4}>
-              <Field
-                name="Tag008"
-                component={Select}
-                onChange={this.handleOnChange}
-                label="Header types"
-                placeholder="Select header..."
-                dataOptions={headerTypesResult.headingTypes}
-              />
-            </Col>
-          </Row>
-          <hr />
-          <Row xs={12}>
-            {
-              (isChangedHeaderType === true && tag008ValuesResults) &&
+    return (headerTypesResult) ? (
+      <div>
+        <Row>
+          <Col xs={4}>
+            <Field
+              id="Tag008"
+              name="Tag008"
+              component={Select}
+              onChange={this.handleOnChange}
+              label="Header types"
+              placeholder="Select header..."
+              dataOptions={headerTypesResult.headingTypes}
+            />
+          </Col>
+        </Row>
+        <hr />
+        <Row xs={12}>
+          {
+            (isChangedHeaderType === true && tag008ValuesResults) &&
               remappedValues.map((elem) => {
                 return elem.map(item => {
-                  let exactDisplayValue = EMPTY_MESSAGE;
+                  let exactDisplayValue = C.EMPTY_MESSAGE;
                   item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue));
                   return (
                     <Col xs={4}>
                       <Field
-                        name={`tag008-${item.name}`}
-                        id={`tag008-${item.name}`}
+                        name={`Tag008-${item.name}`}
+                        id={`Tag008-${item.name}`}
                         component={Select}
-                        label={decamelizify(`${item.name}`, SPACED_STRING)}
+                        label={decamelizify(`${item.name}`, C.SPACED_STRING)}
                         dataOptions={item.dropdownSelect}
                         placeholder={exactDisplayValue}
                       />
@@ -73,14 +73,12 @@ export class Tag008 extends React.Component<Props, {}> {
                   );
                 });
               })
-            }
-          </Row>
-        </div>
-      );
-    }
+          }
+        </Row>
+      </div>
+    ) : <div />;
   }
 }
-
 export default (connect(
   ({ marccat: { headerTypes008, tag008Values } }) => ({
     headerTypesResult: headerTypes008.records,

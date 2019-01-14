@@ -37,6 +37,7 @@
   float: right;
   margin-top: 5px;
   cursor: pointer;
+  display: flex;
 }
 
 .pl-10 {
@@ -75,10 +76,14 @@
   padding: 6px;
 }
 
-.leaderResults {
+.leaderResults,
+.hidden,
+[hidden] {
   display: none;
 }
 
-.leaderResultsActive {
+.leaderResultsActive,
+.visible,
+[visible] {
   display: block;
 }

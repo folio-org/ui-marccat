@@ -7,7 +7,7 @@ import stripesForm from '@folio/stripes-form';
 import { FieldArray } from 'redux-form';
 import PropTypes from 'prop-types';
 
-import { Col, MultiColumnList, Row, IconButton } from '@folio/stripes/components';
+import { Col, MultiColumnList, Row } from '@folio/stripes/components';
 import MarcEditableItem from './MarcItemEdit';
 import css from '../../Style/style.css';
 
@@ -303,13 +303,6 @@ class MarcEditableForm extends React.Component {
             isEmptyMessage={this.props.isEmptyMessage}
             headerRowClass={css.marcEditableListHeaders}
             id={`marcEditableList-${this.testingId}`}
-          />
-        </Col>
-        <Col xs={1} style={{ display: 'flex' }}>
-          <IconButton
-            icon="edit"
-            size="small"
-            onClick={() => {}}
           />
         </Col>
       </Row>

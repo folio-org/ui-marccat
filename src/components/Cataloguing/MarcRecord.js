@@ -20,7 +20,7 @@ import { Props, injectCommonProp } from '../../core';
 import { ActionMenuTemplate, SingleCheckboxIconButton, DropdownButtonMenu, ToolbarButtonMenu } from '../../lib';
 import { VariableFields, MarcLeader, FixedFields } from '.';
 import { ActionTypes } from '../../redux/actions/Actions';
-import { put, del } from '../../core/api/StoreService';
+import { put, del, post } from '../../core/api/StoreService';
 import { buildUrl } from '../../redux/helpers';
 import * as C from '../../utils/Constant';
 
@@ -81,7 +81,9 @@ export class MarcRecordManager extends React.Component<Props, {}> {
   };
 
   saveRecord = () => {
-    this.composeBodyJson();
+    const { store } = this.props;
+    const body = { bibliographicRecord:this.composeBodyJson() };
+    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'view=1&lang=ita'), body, store);
   };
 
   editRecord = () => {

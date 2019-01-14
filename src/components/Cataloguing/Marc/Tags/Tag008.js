@@ -8,8 +8,8 @@ import { Field } from 'redux-form';
 import { Row, Col, Select } from '@folio/stripes/components';
 import { injectCommonProp, Props } from '../../../../core';
 import { ActionTypes } from '../../../../redux/actions';
-import { decamelizify } from '../../Utils/MarcUtils';
-import { SPACED_STRING, TAGS, EMPTY_MESSAGE } from '../../../../utils/Constant';
+import { decamelizify } from '../..';
+import * as C from '../../../../utils/Constant';
 
 
 export class Tag008 extends React.Component<Props, {}> {
@@ -21,10 +21,11 @@ export class Tag008 extends React.Component<Props, {}> {
   }
 
   handleOnChange = (e) => {
-    const { dispatch, leaderValue } = this.props;
+    const { dispatch, leaderValue, record } = this.props;
     const headerTypeCode = e.target.value;
-    dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: headerTypeCode });
+    dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: C.TAGS._008, typeCode: headerTypeCode });
     this.state.isChangedHeaderType = true;
+    record.fields.filter(f => f.code === C.TAGS._008)[0].fieldStatus = C.RECORD_FIELD_STATUS.CHANGED;
   }
 
   render() {
@@ -56,7 +57,7 @@ export class Tag008 extends React.Component<Props, {}> {
             (isChangedHeaderType === true && tag008ValuesResults) &&
               remappedValues.map((elem) => {
                 return elem.map(item => {
-                  let exactDisplayValue = EMPTY_MESSAGE;
+                  let exactDisplayValue = C.EMPTY_MESSAGE;
                   item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue));
                   return (
                     <Col xs={4}>
@@ -64,7 +65,7 @@ export class Tag008 extends React.Component<Props, {}> {
                         name={`Tag008-${item.name}`}
                         id={`Tag008-${item.name}`}
                         component={Select}
-                        label={decamelizify(`${item.name}`, SPACED_STRING)}
+                        label={decamelizify(`${item.name}`, C.SPACED_STRING)}
                         dataOptions={item.dropdownSelect}
                         placeholder={exactDisplayValue}
                       />

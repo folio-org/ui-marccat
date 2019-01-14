@@ -17,18 +17,14 @@ import {
 } from '@folio/stripes/components';
 import { reduxForm } from 'redux-form';
 import { Props, injectCommonProp } from '../../core';
-import { ActionMenuTemplate, DropdownButtonMenu, ToolbarButtonMenu } from '../../lib';
-import { VariableFields } from '.';
-import { SingleCheckboxIconButton } from '../../lib/components/Button/OptionButton';
-import { MarcLeader } from './Marc/MarcLeader';
+import { ActionMenuTemplate, SingleCheckboxIconButton, DropdownButtonMenu, ToolbarButtonMenu } from '../../lib';
+import { VariableFields, MarcLeader, FixedFields } from '.';
 import { ActionTypes } from '../../redux/actions/Actions';
-import { post, put, del } from '../../core/api/StoreService';
+import { put, del } from '../../core/api/StoreService';
 import { buildUrl } from '../../redux/helpers';
-import FixedFields from './Marc/FixedFields';
 import * as C from '../../utils/Constant';
 
 import style from './Style/style.css';
-
 
 export class MarcRecordManager extends React.Component<Props, {}> {
   constructor(props: Props) {
@@ -56,6 +52,16 @@ export class MarcRecordManager extends React.Component<Props, {}> {
       }];
   };
 
+  // eslint-disable-next-line react/no-deprecated
+  componentWillMount() {
+    // const { dispatch } = this.props;
+    // dispatch({
+    //   type: ActionTypes.LOCK_RECORD,
+    //   // id: bibliographicRecord.id,
+    //   uuid: uuid(),
+    // });
+  }
+
   renderButtonMenu = () => {
     const { translate } = this.props;
     return (
@@ -76,9 +82,6 @@ export class MarcRecordManager extends React.Component<Props, {}> {
 
   saveRecord = () => {
     this.composeBodyJson();
-    const { store, store: { getState } } = this.props;
-    const data = getState().marccat.template.recordsById;
-    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'view=1&lang=ita'), data, store);
   };
 
   editRecord = () => {
@@ -138,23 +141,11 @@ export class MarcRecordManager extends React.Component<Props, {}> {
         if (f.code === '008') {
           tag008Values.forEach(v => {
             f.fixedField[v.name] = v.value;
-            // f.fixedField.attributes[v.name] = v.value;
           });
         }
       });
 
-    return {
-      bibliographicRecord: {
-        id: bibliographicRecord.id,
-        canadianContentIndicator: '0',
-        verificationLevel: 'r',
-        recordView: '0',
-        leader: {
-          code: bibliographicRecord.leader.code,
-          value: bibliographicRecord.leader.value
-        },
-      }
-    };
+    return bibliographicRecord;
   }
 
   handleClose = () => {
@@ -236,43 +227,43 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                         record={bibliographicRecord}
                       />
                     </Accordion>
-                    <Accordion label={translate({ id: 'ui-marccat.cataloging.variablefield.section.label' })} id="variable-field">
-                      <Row between="xs" className={style.marcEditableListFormHeader}>
-                        <Col xs>
-                          <Row end="xs" style={{ float: 'right' }}>
-                            <Col xs>
-                              <Button
-                                buttonStyle="primary"
-                                onClick={() => {}}
-                              >
-                                <Icon icon="edit">Edit</Icon>
-                              </Button>
-                            </Col>
-                            <Col xs>
-                              <DropdownButtonMenu
-                                {...this.props}
-                                marginBottom0
-                                label="Actions"
-                                labels={this.renderDropdownLabels()}
-                                onToggle={() => this.setState({
-                                  openDropDownMenu: !openDropDownMenu
-                                })}
-                                open={openDropDownMenu}
-                              />
-                            </Col>
-                          </Row>
-                        </Col>
-                      </Row>
-                      {bibliographicRecord.fields.map(f => (
-                        <VariableFields
-                          {...this.props}
-                          record={(f.variableField) || {}}
-                          editable={editable}
-                        />
-                      ))
-                      }
-                    </Accordion>
                   </form>
+                  <Accordion label={translate({ id: 'ui-marccat.cataloging.variablefield.section.label' })} id="variable-field">
+                    <Row between="xs" className={style.marcEditableListFormHeader}>
+                      <Col xs>
+                        <Row end="xs" style={{ float: 'right' }}>
+                          <Col xs>
+                            <Button
+                              buttonStyle="primary"
+                              onClick={() => {}}
+                            >
+                              <Icon icon="edit">Edit</Icon>
+                            </Button>
+                          </Col>
+                          <Col xs>
+                            <DropdownButtonMenu
+                              {...this.props}
+                              marginBottom0
+                              label="Actions"
+                              labels={this.renderDropdownLabels()}
+                              onToggle={() => this.setState({
+                                openDropDownMenu: !openDropDownMenu
+                              })}
+                              open={openDropDownMenu}
+                            />
+                          </Col>
+                        </Row>
+                      </Col>
+                    </Row>
+                    {bibliographicRecord.fields.map(f => (
+                      <VariableFields
+                        {...this.props}
+                        record={(f.variableField) || {}}
+                        editable={editable}
+                      />
+                    ))
+                    }
+                  </Accordion>
                 </AccordionSet>
               </div>
             </Row>
@@ -286,8 +277,8 @@ export class MarcRecordManager extends React.Component<Props, {}> {
 export default reduxForm({
   form: 'bibliographicRecordForm',
   navigationCheck: true,
-  enableReinitialize: false,
-  destroyOnUnmount: false
+  enableReinitialize: true,
+  destroyOnUnmount: false,
 })(connect(
   ({ marccat: { template, leaderData, headerTypes006, headerTypes007, headerTypes008 } }) => ({
     bibliographicRecord: template.recordsById,

@@ -25,9 +25,28 @@ export const ENDPOINT = {
   HEADER_TYPES_URL: '/header-types',
   BIBLIOGRAPHIC_RECORD: '/bibliographic-record',
   HEADING_BY_TAG: '/headings-by-tag',
-  LOCK_MARC_RECORD: '/bibliographic-record/lock',
-  UNLOCK_MARC_RECORD: '/bibliographic-record/lock',
+  LOCK_MARC_RECORD: '/bibliographic-record/lock/',
+  UNLOCK_MARC_RECORD: '/bibliographic-record/lock/',
+};
 
+export const buildUrl = (url:string, params?:string) => {
+  return ENDPOINT.BASE_URL
+    .concat(url)
+    .concat('?')
+    .concat(params);
+};
+
+export const LockEntityType = {
+  R: 'R',
+  H: 'H',
+  C: 'C'
+};
+
+export const RECORD_FIELD_STATUS = {
+  NEW: 'new',
+  UNCHANGED: 'unchanged',
+  CHANGED: 'changed',
+  DELETED: 'deleted'
 };
 
 // REDUX DATA STORE MANAGEMENT

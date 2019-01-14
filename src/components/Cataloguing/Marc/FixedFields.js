@@ -22,12 +22,32 @@ class FixedFields extends React.Component<P, {}> {
       expand007: false,
       expand008: false,
       fixedFields: [],
+      tag006Fields:[{}],
+      tag007Fields:[{}],
     };
   }
 
   checkTag006 = c => { if (c === '006') this.setState({ tag006: true }); };
   checkTag007 = c => { if (c === '007') this.setState({ tag007: true }); };
   checkTag008 = c => { if (c === '008') this.setState({ tag008: true }); };
+
+  onAdd = (tag) => {
+    const { tag006Fields, tag007Fields } = this.state;
+    switch (tag) {
+    case TAGS._006: this.setState({ tag006Fields: tag006Fields.concat({}) }); break;
+    case TAGS._007: this.setState({ tag007Fields: tag007Fields.concat({}) }); break;
+    default: break;
+    }
+  }
+
+  onDelete = (tag, index) => {
+    const { tag006Fields, tag007Fields } = this.state;
+    switch (tag) {
+    case TAGS._006: this.setState({ tag006Fields: tag006Fields.splice(index, 1) }); break;
+    case TAGS._007: this.setState({ tag007Fields: tag007Fields.splice(index, 1) }); break;
+    default: break;
+    }
+  }
 
   // eslint-disable-next-line react/no-deprecated
   componentWillMount() {
@@ -123,7 +143,7 @@ class FixedFields extends React.Component<P, {}> {
     );
   }
 
-  renderTag006 = (tag) => {
+  renderTag006 = (tag, field, index) => {
     const { expand006 } = this.state;
     const { record, headerTypes006IsLoading } = this.props;
     return (
@@ -131,6 +151,9 @@ class FixedFields extends React.Component<P, {}> {
         <MarcField
           {...this.props}
           readOnly={tag}
+          display="block"
+          onAdd={() => this.onAdd(TAGS._006)}
+          onDelete={() => this.onDelete(TAGS._006, index)}
           label={(tag) ? tag.fixedField.code : TAGS._006}
           name={(tag) ? tag.fixedField.code : TAGS._006}
           value={(tag) ? tag.fixedField.displayValue : EMPTY_MESSAGE}
@@ -150,7 +173,7 @@ class FixedFields extends React.Component<P, {}> {
       </div>);
   };
 
-  renderTag007 = (tag) => {
+  renderTag007 = (tag, field, index) => {
     const { expand007 } = this.state;
     const { record, headerTypes007IsLoading } = this.props;
     return (
@@ -158,6 +181,9 @@ class FixedFields extends React.Component<P, {}> {
         <MarcField
           {...this.props}
           readOnly={tag}
+          display="block"
+          onAdd={() => this.onAdd(TAGS._007)}
+          onDelete={() => this.onDelete(TAGS._007, index)}
           label={(tag) ? tag.fixedField.code : TAGS._007}
           name={(tag) ? tag.fixedField.code : TAGS._007}
           value={(tag) ? tag.fixedField.displayValue : EMPTY_MESSAGE}
@@ -206,7 +232,7 @@ class FixedFields extends React.Component<P, {}> {
   };
 
   render() {
-    const { fixedFields } = this.state;
+    const { fixedFields, tag006Fields, tag007Fields } = this.state;
     const fixedFieldsxxx = fixedFields.filter(f => f.fixedField.code === '001' || f.fixedField.code === '003' || f.fixedField.code === '005');
     const fixedFields006 = fixedFields.filter(f => f.fixedField.code === '006')[0];
     const fixedFields007 = fixedFields.filter(f => f.fixedField.code === '007')[0];
@@ -214,8 +240,12 @@ class FixedFields extends React.Component<P, {}> {
     return (
       <React.Fragment>
         {this.renderTagxxx(fixedFieldsxxx)}
-        {this.renderTag006(fixedFields006)}
-        {this.renderTag007(fixedFields007)}
+        {tag006Fields.map((f, i) => (
+          this.renderTag006(fixedFields006, f, i)
+        ))}
+        {tag007Fields.map((f, i) => (
+          this.renderTag007(fixedFields007, f, i)
+        ))}
         {this.renderTag008(fixedFields008)}
       </React.Fragment>
     );

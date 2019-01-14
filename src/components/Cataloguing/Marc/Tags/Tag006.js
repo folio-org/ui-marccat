@@ -8,8 +8,14 @@ import { Field } from 'redux-form';
 import { Row, Col, Select } from '@folio/stripes/components';
 import { injectCommonProp, Props } from '../../../../core';
 import { ActionTypes } from '../../../../redux/actions';
-import { decamelizify } from '../../Utils/MarcUtils';
-import { SPACED_STRING, EMPTY_MESSAGE, TAGS, INSERTED_TAGS } from '../../../../utils/Constant';
+import { decamelizify } from '../..';
+import {
+  SPACED_STRING,
+  EMPTY_MESSAGE,
+  TAGS,
+  INSERTED_TAGS,
+  RECORD_FIELD_STATUS
+} from '../../../../utils/Constant';
 
 
 export class Tag006 extends React.Component<Props, {}> {
@@ -21,11 +27,12 @@ export class Tag006 extends React.Component<Props, {}> {
   }
 
   handleOnChange = (e) => {
-    const { dispatch, bibliographicRecord, leaderValue } = this.props;
+    const { dispatch, record, leaderValue } = this.props;
     const headerTypeCode = e.target.value;
     dispatch({ type: ActionTypes.VALUES_FROM_TAG_006, leader: leaderValue, code: TAGS._006, typeCode: headerTypeCode });
     this.state.isChangedHeaderType = true;
-    bibliographicRecord.fields.push(INSERTED_TAGS(TAGS._006, headerTypeCode));
+    record.fields.push(INSERTED_TAGS(TAGS._006, headerTypeCode));
+    record.fields.filter(f => f.code === TAGS._006)[0].fieldStatus = RECORD_FIELD_STATUS.NEW;
   }
 
   render() {

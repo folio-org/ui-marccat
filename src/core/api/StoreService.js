@@ -28,13 +28,11 @@ export function get(url:string, store) {
  * @param {*} data - the body of request
  * @param {*} store - the data store
  */
-export function post(url:string, data: any, store) {
-  const okapi = store.getState().okapi;
+export function post(url:string, data: any) {
   fetch(url, {
     method: HTTP_METHOD.POST,
     headers: Object.assign({}, {
-      'X-Okapi-Tenant': okapi.tenant,
-      'X-Okapi-Token': okapi.token,
+      'x-okapi-tenant': 'tnx',
       'Content-Type': 'application/json'
     }),
     body: JSON.stringify(data),

@@ -54,7 +54,7 @@ export class Tag008 extends React.Component<Props, {}> {
         <hr />
         <Row xs={12}>
           {
-            (isChangedHeaderType === true && tag008ValuesResults) &&
+            (tag008ValuesResults) &&
               remappedValues.map((elem) => {
                 return elem.map(item => {
                   let exactDisplayValue = C.EMPTY_MESSAGE;

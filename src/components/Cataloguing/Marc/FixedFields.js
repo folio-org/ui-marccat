@@ -240,12 +240,12 @@ class FixedFields extends React.Component<P, {}> {
     return (
       <React.Fragment>
         {this.renderTagxxx(fixedFieldsxxx)}
-        {tag006Fields.map((f, i) => (
+        {/* {tag006Fields.map((f, i) => (
           this.renderTag006(fixedFields006, f, i)
         ))}
         {tag007Fields.map((f, i) => (
           this.renderTag007(fixedFields007, f, i)
-        ))}
+        ))} */}
         {this.renderTag008(fixedFields008)}
       </React.Fragment>
     );

@@ -38,9 +38,6 @@
   margin-top: 5px;
   cursor: pointer;
   display: flex;
-  & .hidden {
-    display: none;
-  }
 }
 
 .pl-10 {
@@ -79,10 +76,14 @@
   padding: 6px;
 }
 
-.leaderResults, .hidden, [hidden] {
+.leaderResults,
+.hidden,
+[hidden] {
   display: none;
 }
 
-.leaderResultsActive, .visible, [visible] {
+.leaderResultsActive,
+.visible,
+[visible] {
   display: block;
 }

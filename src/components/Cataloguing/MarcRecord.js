@@ -81,9 +81,10 @@ export class MarcRecordManager extends React.Component<Props, {}> {
   };
 
   saveRecord = () => {
-    const { store } = this.props;
-    const body = { bibliographicRecord:this.composeBodyJson() };
-    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'view=1&lang=ita'), body, store);
+    const body = {
+      bibliographicRecord: this.composeBodyJson(),
+    };
+    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'lang=ita&view=1'), body);
   };
 
   editRecord = () => {
@@ -284,6 +285,7 @@ export default reduxForm({
 })(connect(
   ({ marccat: { template, leaderData, headerTypes006, headerTypes007, headerTypes008 } }) => ({
     bibliographicRecord: template.recordsById,
+    defaultTemplate: template.records,
     leaderData: leaderData.records,
     tagIsLoading: leaderData.isLoading,
     tagIsReady: leaderData.isReady,

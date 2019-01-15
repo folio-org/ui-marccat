@@ -10,13 +10,11 @@ export const HTTP_METHOD = {
  * @param {*} url - the API endpoint
  * @param {*} store - the data store
  */
-export function get(url:string, store) {
-  const okapi = store.getState().okapi;
+export function get(url:string) {
   fetch(url, {
     method: HTTP_METHOD.GET,
     headers: Object.assign({}, {
-      'X-Okapi-Tenant': okapi.tenant,
-      'X-Okapi-Token': okapi.token,
+      'x-okapi-tenant': 'tnx',
       'Content-Type': 'application/json'
     })
   });
@@ -45,13 +43,11 @@ export function post(url:string, data: any) {
  * @param {*} data - the body of request
  * @param {*} store - the data store
  */
-export function put(url:string, data: any, store) {
-  const okapi = store.getState().okapi;
+export function put(url:string, data: any) {
   fetch(url, {
     method: HTTP_METHOD.PUT,
     headers: Object.assign({}, {
-      'X-Okapi-Tenant': okapi.tenant,
-      'X-Okapi-Token': okapi.token,
+      'x-okapi-tenant': 'tnx',
       'Content-Type': 'application/json'
     }),
     body: JSON.stringify(data),
@@ -63,14 +59,12 @@ export function put(url:string, data: any, store) {
  * @param {*} url - the API endpoint
  * @param {*} store - the data store
  */
-export function del(url:string, store) {
-  const okapi = store.getState().okapi;
+export function remove(url:string, cb: () => void) {
   fetch(url, {
     method: HTTP_METHOD.DELETE,
     headers: Object.assign({}, {
-      'X-Okapi-Tenant': okapi.tenant,
-      'X-Okapi-Token': okapi.token,
+      'x-okapi-tenant': 'tnx',
       'Content-Type': 'application/json'
     })
-  });
+  }).then(cb);
 }

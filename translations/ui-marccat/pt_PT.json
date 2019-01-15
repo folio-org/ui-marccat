@@ -78,6 +78,7 @@
     "search.record.new.from.template": "New from template (CTRL+N)",
     "search.actionmenu.title": "Pequisas recentes",
     "template.record.create": "Criar registo",
+    "template.record.delete": "Remover registro",
     "search.record.new.auth": "Novo (CTRL+A)",
     "cataloging.variablefield.empty": "Nenhum campo de dados variável presente",
     "cataloging.variablefield.section.label": "Campo de dados variável",

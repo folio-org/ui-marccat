@@ -231,6 +231,7 @@ class FixedFields extends React.Component<P, {}> {
     );
   };
 
+  /* eslint-disable no-unused-vars */
   render() {
     const { fixedFields, tag006Fields, tag007Fields } = this.state;
     const fixedFieldsxxx = fixedFields.filter(f => f.fixedField.code === '001' || f.fixedField.code === '003' || f.fixedField.code === '005');

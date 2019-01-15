@@ -22,7 +22,7 @@ import { Props, injectCommonProp } from '../../core';
 import { ActionMenuTemplate, SingleCheckboxIconButton, DropdownButtonMenu } from '../../lib';
 import { VariableFields, MarcLeader, FixedFields } from '.';
 import { ActionTypes } from '../../redux/actions/Actions';
-import { put, remove, post } from '../../core/api/StoreService';
+import { put, remove, post } from '../../core/api/HttpService';
 import { buildUrl } from '../../redux/helpers';
 import * as C from '../../utils/Constant';
 
@@ -34,6 +34,7 @@ export class MarcRecordManager extends React.Component<Props, {}> {
     super(props);
     this.state = {
       openDropDownMenu: false,
+      isEditingMode: false,
     };
     this.renderDropdownLabels = this.renderDropdownLabels.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -61,12 +62,7 @@ export class MarcRecordManager extends React.Component<Props, {}> {
 
   // eslint-disable-next-line react/no-deprecated
   componentWillMount() {
-    // const { dispatch } = this.props;
-    // dispatch({
-    //   type: ActionTypes.LOCK_RECORD,
-    //   // id: bibliographicRecord.id,
-    //   uuid: uuid(),
-    // });
+    this.lockRecord(true);
   }
 
   renderButtonMenu = () => {
@@ -106,11 +102,22 @@ export class MarcRecordManager extends React.Component<Props, {}> {
     );
   };
 
+
+  lockRecord = (lock) => {
+    const { store, bibliographicRecord } = this.props;
+    const okapi = store.getState().okapi;
+    const userName = okapi.currentUser.username;
+    const id = bibliographicRecord.id;
+    const uid = uuid();
+    if (lock) remove(buildUrl(C.ENDPOINT.LOCK_MARC_RECORD + id, `uuid=${uid}&userName=${userName}&lang=ita&view=1&type=R`), bibliographicRecord, null);
+    else remove(buildUrl(C.ENDPOINT.UNLOCK_MARC_RECORD + id, `uuid=${uid}&userName=${userName}&lang=ita&view=1&type=R`), bibliographicRecord, null);
+  };
+
   saveRecord = () => {
-    const body = {
-      bibliographicRecord: this.composeBodyJson(),
-    };
+    const { isEditingMode } = this.state;
+    const body = { bibliographicRecord: this.composeBodyJson() };
     post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'lang=ita&view=1'), body);
+    if (isEditingMode) this.lockRecord(false);
   };
 
   editRecord = () => {
@@ -125,6 +132,9 @@ export class MarcRecordManager extends React.Component<Props, {}> {
     const id = bibliographicRecord.id;
     const uid = uuid();
     remove(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id, `uuid=${uid}&userName=${userName}&lang=ita&view=1`), bibliographicRecord, this.showMessage('Record delete successfully'));
+    setTimeout(() => {
+      this.handleClose();
+    });
   };
 
 

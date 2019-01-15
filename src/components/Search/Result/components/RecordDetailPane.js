@@ -16,7 +16,7 @@ class RecordDetailPane extends React.Component<Props, {}> {
       <React.Fragment>
         <Pane
           id="pane-details"
-          defaultWidth="30%"
+          defaultWidth="35%"
           paneTitle={detailPaneMeta.title}
           paneSub={detailPaneMeta.subTitle}
           appIcon={{ app: META.ICON_TITLE }}

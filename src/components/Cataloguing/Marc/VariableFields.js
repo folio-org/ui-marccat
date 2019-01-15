@@ -37,8 +37,8 @@ render() {
   const contentData = [
     {
       tag: (!isEmpty(record)) ? record.code : '000',
-      count: '1',
-      ref:  '1',
+      count: (!isEmpty(record)) ? record.ind1 : '',
+      ref:  (!isEmpty(record)) ? record.ind1 : '',
       displayValue: (!isEmpty(record)) ? record.displayValue : ''
     }
   ];

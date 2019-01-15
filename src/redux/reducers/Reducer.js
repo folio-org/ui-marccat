@@ -473,32 +473,6 @@ export function headingByTagReducer(state = { isLoading, isReady }, action) {
   }
 }
 
-export function lockRecordReducer(state = { isLoading, isReady }, action) {
-  switch (action.type) {
-  case ActionTypes.LOCK_RECORD:
-    return {
-      ...state,
-      isLoading: false,
-      isReady: false
-    };
-  case ActionTypes.LOCK_RECORD_REQUESTED:
-    return {
-      ...state,
-      isLoading: action.payload,
-      isReady: false
-    };
-  case ActionTypes.LOCK_RECORD_SUCCESS:
-    return {
-      ...state,
-      record: action.payload,
-      isLoading: false,
-      isReady: true,
-    };
-  default:
-    return state;
-  }
-}
-
 export function leaderReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
   case ActionTypes.LEADER_VALUES_FROM_TAG:

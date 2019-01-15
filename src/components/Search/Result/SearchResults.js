@@ -76,9 +76,12 @@ export class SearchResults extends React.Component<P, {}> {
   };
 
   handleClickEdit = () => {
-    const { dispatch, router } = this.props;
+    const { dispatch, router, toggleFilterPane } = this.props;
+    const { detail } = this.state;
     dispatch({ type: ActionTypes.VIEW_TEMPLATE, query: '000' });
-    router.push('/marccat/record');
+    const id = detail[0].data.fields[0]['001'];
+    toggleFilterPane();
+    router.push(`/marccat/records/view?id=${id}`);
   }
 
   handleCreateRecord = () => {
@@ -154,7 +157,7 @@ export class SearchResults extends React.Component<P, {}> {
           onClick={this.handleClickEdit}
           label={<FormattedMessage id="ui-marccat.search.record.edit" />}
         />
-        <Icon icon="comment" />
+        <Icon icon="edit" />
         <Icon icon="tag" />
       </PaneMenu>
     );

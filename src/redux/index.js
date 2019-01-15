@@ -11,7 +11,6 @@ import {
   detailsBrowseSearchReducer,
   browseDetailsAssociatedReducer,
   templateViewReducer,
-  lockRecordReducer,
   leaderReducer,
   headerTypes006Reducer,
   headerTypes007Reducer,
@@ -35,7 +34,6 @@ import {
   browseDetailAssociatedEpic,
   templateViewEpic,
   leaderEpic,
-  lockRecordEpic,
   templateByIdEpic,
   headerTypes006Epic,
   headerTypes007Epic,
@@ -57,7 +55,6 @@ export const reducer = combineReducers({
   browseDetails: detailsBrowseSearchReducer,
   browseDetailsAssociated: browseDetailsAssociatedReducer,
   template: templateViewReducer,
-  lockRecord: lockRecordReducer,
   leaderData: leaderReducer,
   headerTypes006: headerTypes006Reducer,
   headerTypes007: headerTypes007Reducer,
@@ -89,6 +86,5 @@ export const epics = combineEpics(
   tag006ValuesEpic,
   tag007ValuesEpic,
   tag008ValuesEpic,
-  headingSuggestionEpic,
-  lockRecordEpic
+  headingSuggestionEpic
 );

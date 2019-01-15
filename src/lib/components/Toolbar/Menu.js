@@ -18,6 +18,7 @@ type ToolbarMenuProps = {
   type?: string;
   create: bool;
   disabled?: bool;
+  secondButton?: bool;
   label?: React.Component<any>;
   stripes: Object;
 };
@@ -56,7 +57,7 @@ export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
     float: 'right',
   };
 
-  const { onClick, label, type, disabled } = props;
+  const { onClick, label, type, disabled, secondButton } = props;
 
   return (
     <IfPermission perm="marccat.create">
@@ -71,6 +72,17 @@ export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
         >
           {label}
         </Button>
+        {secondButton &&
+        <Button
+          style={rightButton}
+          buttonStyle="primary"
+          onClick={onClick}
+          type={type || 'button'}
+          disabled={disabled}
+          marginBottom0
+        >
+          {label}
+        </Button>}
       </PaneMenu>
     </IfPermission>
   );

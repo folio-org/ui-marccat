@@ -59,9 +59,11 @@
   max-width: 100%;
   justify-content: flex-start;
   align-items: center;
+  vertical-align: middle;
+  padding-top: 16px;
   border-radius: 8px;
   background-color: #efefef;
-  margin-bottom: 4px;
+  height: 48px;
 }
 
 .marcEditableListHeaders {

@@ -24,13 +24,12 @@ export default class MarcField extends React.Component<P, {}> {
       onClick,
       readOnly,
       onAdd,
-      initialize,
       onDelete,
       component,
       display,
       withIcon,
     } = this.props;
-    change(name, value);
+    dispatch(change(name, value));
     return (withIcon) ? (
       <div>
         <label htmlFor={name}>{label}</label>

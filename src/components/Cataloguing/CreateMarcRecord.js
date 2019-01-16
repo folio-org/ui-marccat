@@ -310,14 +310,16 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
                           </Row>
                         </Col>
                       </Row>
-                      {bibliographicRecord.fields.map((f, idx) => (
-                        <VariableFields
-                          idx={idx}
-                          {...this.props}
-                          record={(f.variableField) || {}}
-                          editable={editable}
-                        />
-                      ))
+                      {bibliographicRecord.fields
+                        .filter(f => f.fixedField === undefined || !f.fixedField)
+                        .map((f, idx) => (
+                          <VariableFields
+                            idx={idx}
+                            {...this.props}
+                            record={(f) || {}}
+                            editable={editable}
+                          />
+                        ))
                       }
                     </Accordion>
                   </AccordionSet>

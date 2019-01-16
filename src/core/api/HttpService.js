@@ -59,7 +59,7 @@ export function put(url:string, data: any) {
  * @param {*} url - the API endpoint
  * @param {*} store - the data store
  */
-export function remove(url:string, cb: () => void) {
+export function remove(url:string, cb?: () => void) {
   fetch(url, {
     method: HTTP_METHOD.DELETE,
     headers: Object.assign({}, {

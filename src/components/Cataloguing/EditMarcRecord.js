@@ -7,21 +7,23 @@ import {
   AccordionSet,
   Row,
   TextField,
+  PaneMenu,
   Col,
   Button,
   Accordion,
   KeyValue,
   Icon
 } from '@folio/stripes/components';
-import { Field } from 'redux-form';
 import MarcField from './Marc/MarcField';
 import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../lib';
 import { MarcLeader, FixedFields } from '.';
-import * as C from '../../utils/Constant';
 import { injectCommonProp } from '../../core';
 import { ActionTypes } from '../../redux/actions';
-import { findParam } from '../../redux/helpers';
+import { findParam, buildUrl } from '../../redux/helpers';
+import * as C from '../../utils/Constant';
 import style from './Style/style.css';
+import { remove, put } from '../../core/api/HttpService';
+import { uuid } from './Utils/MarcUtils';
 
 class EditMarcRecord extends Component {
   // eslint-disable-next-line react/no-deprecated
@@ -38,14 +40,61 @@ class EditMarcRecord extends Component {
     router.push('/marccat/search');
   };
 
-  renderField = ({ input, label, type, meta: { touched, error } }) => (
-    <div>
-      <div>
-        <input {...input} type={type} placeholder={label} />
-        {touched && error && <span>{error}</span>}
-      </div>
-    </div>
-  )
+  saveRecord = () => {
+    const { isEditingMode } = this.state;
+    const body = { bibliographicRecord: this.composeBodyJson() };
+    put(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'lang=ita&view=1'), body);
+    if (isEditingMode) this.lockRecord(false);
+  };
+
+  deleteRecord = () => {
+    const { store, recordDetail } = this.props;
+    const okapi = store.getState().okapi;
+    const userName = okapi.currentUser.username;
+    const id = recordDetail.bibliographicRecord.id;
+    const uid = uuid();
+    remove(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id, `id=${id}&uuid=${uid}&userName=${userName}&lang=ita&view=1`), null);
+    setTimeout(() => {
+      this.handleClose();
+    });
+  };
+
+  renderButtonMenu = () => {
+    const { translate } = this.props;
+    const rightButton = {
+      marginRight: '10px',
+      float: 'right',
+    };
+    return (
+      <React.Fragment>
+        <PaneMenu>
+          <Button
+            style={rightButton}
+            buttonStyle="primary"
+            onClick={this.saveRecord}
+            type="button"
+            marginBottom0
+          >
+            <Icon icon="plus-sign">
+              {translate({ id: 'ui-marccat.template.record.edit' })}
+            </Icon>
+          </Button>
+          <Button
+            style={rightButton}
+            buttonStyle="primary"
+            onClick={this.deleteRecord}
+            type="button"
+            disabled={false}
+            marginBottom0
+          >
+            <Icon icon="trash">
+              Delete Record
+            </Icon>
+          </Button>
+        </PaneMenu>
+      </React.Fragment>
+    );
+  };
 
 
   render() {
@@ -62,6 +111,7 @@ class EditMarcRecord extends Component {
     if (recordDetail) {
       bibliographicRecord = recordDetail.bibliographicRecord;
       variableFields = bibliographicRecord.fields.filter(f => f.fixedField === undefined || !f.fixedField);
+      // displayVal = variableFields.map(v => v.variableField.displayValue);
     }
     const fieldStyle = { flex: '0 0 20%', width: ' 20%', padding: '6px' };
     const lastFieldStyle = { flex: '0 0 40%', width: ' 40%', padding: '6px' };
@@ -71,10 +121,11 @@ class EditMarcRecord extends Component {
           <Pane
             defaultWidth="fullWidth"
             dismissible
-            onClose={this.handleClose}
             paneTitle="Edit Record"
             appIcon={{ app: C.META.ICON_TITLE }}
             actionMenu={ActionMenuTemplate}
+            onClose={this.handleClose}
+            lastMenu={this.renderButtonMenu()}
           >
             <Row center="xs">
               <div className={style.recordContainer}>
@@ -125,8 +176,8 @@ class EditMarcRecord extends Component {
                               <div style={fieldStyle}>
                                 <MarcField
                                   {...this.props}
-                                  id={`${i}-variablefield-${f.variableField.code}`}
-                                  name={`${i}-variablefield-${f.variableField.code}`}
+                                  id={`${f.variableField.code}-code`}
+                                  name={`${f.variableField.code}-code`}
                                   component={TextField}
                                   value={f.variableField.code}
                                 />
@@ -134,8 +185,8 @@ class EditMarcRecord extends Component {
                               <div style={fieldStyle}>
                                 <MarcField
                                   {...this.props}
-                                  id={`${i}-variablefield-${f.variableField.ind1}`}
-                                  name={`${i}-variablefield-${f.variableField.ind1}`}
+                                  id={`${f.variableField.code}-ind1`}
+                                  name={`${f.variableField.code}-ind1`}
                                   component={TextField}
                                   value={f.variableField.ind1}
                                 />
@@ -143,14 +194,21 @@ class EditMarcRecord extends Component {
                               <div style={fieldStyle}>
                                 <MarcField
                                   {...this.props}
-                                  id={`${i}-variablefield-${f.variableField.ind2}`}
-                                  name={`${i}-variablefield-${f.variableField.ind2}`}
+                                  id={`${f.variableField.code}-ind2`}
+                                  name={`${f.variableField.code}-ind2`}
                                   component={TextField}
                                   value={f.variableField.ind2}
                                 />
                               </div>
                               <div style={lastFieldStyle}>
-                                {this.renderField(f)}
+                                <MarcField
+                                  {...this.props}
+                                  readOnly
+                                  id={`${f.variableField.code}-displayValue`}
+                                  name={`${f.variableField.code}-displayValue`}
+                                  component={TextField}
+                                  value={"eeeeeee"}
+                                />
                               </div>
                             </div>
                           </Col>

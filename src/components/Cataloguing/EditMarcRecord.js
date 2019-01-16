@@ -207,7 +207,7 @@ class EditMarcRecord extends Component {
                                   id={`${f.variableField.code}-displayValue`}
                                   name={`${f.variableField.code}-displayValue`}
                                   component={TextField}
-                                  value={"eeeeeee"}
+                                  value={f.variableField.code}
                                 />
                               </div>
                             </div>

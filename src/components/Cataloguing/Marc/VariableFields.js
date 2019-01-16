@@ -3,10 +3,8 @@
  * @flow
  */
 import React from 'react';
-import { isEmpty } from 'lodash';
-import { HotKeys, Row, Col, TextField } from '@folio/stripes/components';
+import { Row, Col, TextField } from '@folio/stripes/components';
 import { Field } from 'redux-form';
-import stripesForm from '@folio/stripes/form';
 import type { Props } from '../../../core';
 import { EMPTY_MESSAGE } from '../../../utils/Constant';
 import css from '../Style/style.css';
@@ -33,16 +31,7 @@ class VariableFields extends React.Component<Props, {}> {
   }
 
   render() {
-    const { variableFields } = this.state;
-    const { record, id, name, value, dispatch, change, idx } = this.props;
-    const contentData = [
-      {
-        tag: (!isEmpty(record)) ? record.code : '000',
-        count: (!isEmpty(record)) ? record.ind1 : '',
-        ref: (!isEmpty(record)) ? record.ind1 : '',
-        displayValue: (!isEmpty(record)) ? record.displayValue : ''
-      }
-    ];
+    const { record, name, dispatch, change } = this.props;
     const fieldStyle = { flex: '0 0 20%', width: ' 20%', padding: '6px' };
     const lastFieldStyle = { flex: '0 0 40%', width: ' 40%', padding: '6px' };
     dispatch(change(record.code, record.code));

@@ -1,9 +1,6 @@
 import React from 'react';
 import { PaneMenu, Button, Icon } from '@folio/stripes/components';
-import { remove } from '../../../../core/api/HttpService';
-import { buildUrl, ENDPOINT } from '../../../../utils/Constant';
 import { Props } from '../../../../core';
-import { uuid } from '../../Utils/MarcUtils';
 
 export default class MarcPaneMenu extends React.Component<Props, {}> {
   render() {

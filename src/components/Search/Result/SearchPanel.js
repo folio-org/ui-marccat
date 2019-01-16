@@ -11,6 +11,7 @@ import {
   FilterAccordionHeader,
   Row, Col,
   Icon,
+  IconButton,
 } from '@folio/stripes/components';
 import { reduxForm, Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
@@ -233,7 +234,11 @@ class SearchPanel extends React.Component<P, {}> {
                         />
                       </Col>
                       <Col xs={2} style={{ display: 'flex', marginTop: '14px' }}>
-                        <Icon icon="trash" />
+                        <IconButton
+                          icon="trash"
+                          size="small"
+                          onClick={this.handleRemoveSearchForm(idx)}
+                        />
                       </Col>
                     </Row>
                     }

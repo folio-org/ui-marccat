@@ -38,7 +38,6 @@ export class SearchResults extends React.Component<P, {}> {
     super(props);
     this.state = {
       detailPanelIsVisible: false,
-      detailPanelBibAssOpen: false,
       noResults: false,
       bibsOnly: false,
       autOnly: false,
@@ -282,7 +281,7 @@ export class SearchResults extends React.Component<P, {}> {
             loading={loading}
             messageNoContent={messageNoContent}
           />
-          {detailPanelIsVisible &&
+          {detailPanelIsVisible && (closePanels === false) &&
             <RecordDetailPane
               detailPaneMeta={detailPaneMeta}
               detail={detail}

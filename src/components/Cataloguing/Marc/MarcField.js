@@ -6,9 +6,9 @@ import style from '../Style/style.css';
 
 type P = Props & {
   display: string,
-  label: string,
+  label?: string,
   value: string,
-  onClick: () => void,
+  onClick?: () => void,
   readOnly: boolean,
   onClickPlusSign: () => void,
 };
@@ -25,10 +25,12 @@ export default class MarcField extends React.Component<P, {}> {
       readOnly,
       onAdd,
       onDelete,
+      component,
       display,
+      withIcon,
     } = this.props;
     dispatch(change(name, value));
-    return (
+    return (withIcon) ? (
       <div>
         <label htmlFor={name}>{label}</label>
         <Field
@@ -36,7 +38,7 @@ export default class MarcField extends React.Component<P, {}> {
           name={name}
           type="text"
           readOnly={readOnly}
-          component="input"
+          component={component || 'input'}
           label={label}
           value={value}
         />
@@ -60,6 +62,17 @@ export default class MarcField extends React.Component<P, {}> {
           />
         </div>
       </div>
-    );
+    ) :
+      <React.Fragment>
+        <Field
+          id={name}
+          name={name}
+          type="text"
+          readOnly={readOnly}
+          component={component || 'input'}
+          label={label}
+          value={value}
+        />
+      </React.Fragment>;
   }
 }

@@ -4,10 +4,10 @@
  */
 import React from 'react';
 import { Row, Col, TextField } from '@folio/stripes/components';
-import { Field } from 'redux-form';
+import MarcField from './MarcField';
 import type { Props } from '../../../core';
 import { EMPTY_MESSAGE } from '../../../utils/Constant';
-import css from '../Style/style.css';
+import style from '../Style/style.css';
 
 class VariableFields extends React.Component<Props, {}> {
   constructor(props: Props) {
@@ -30,56 +30,53 @@ class VariableFields extends React.Component<Props, {}> {
     });
   }
 
+
+  renderField = (field) => (
+    <input {...field.input} type="text" />
+  )
+
   render() {
-    const { record, name, dispatch, change } = this.props;
-    const fieldStyle = { flex: '0 0 20%', width: ' 20%', padding: '6px' };
-    const lastFieldStyle = { flex: '0 0 40%', width: ' 40%', padding: '6px' };
-    dispatch(change(record.code, record.code));
-    dispatch(change(record.displayValue, record.displayValue));
+    const { record, idx } = this.props;
+    const fieldStyle = { flex: '0 0 10%', width: ' 10%', padding: '6px' };
+    const lastFieldStyle = { flex: '0 0 70%', width: ' 70%', padding: '6px' };
     return (
-      <Row className={css.marcEditableListFormHeader}>
+      <Row className={style.marcEditableListFormHeader} key={idx}>
         <Col xs={12}>
-          <div className={css.marcEditableListRow} role="row">
+          <div className={style.marcEditableListRow} role="row">
             <div style={fieldStyle}>
-              <Field
-                id={`variablefield-${name}`}
-                name={record.code}
-                type="text"
+              <MarcField
+                {...this.props}
+                id={`${record.variableField.code}-code`}
+                name={`${record.variableField.code}-code`}
                 component={TextField}
-                marginBottom0
-                fullWidth
-                value={record.code}
+                value={record.variableField.code}
               />
             </div>
             <div style={fieldStyle}>
-              <Field
-                id={`variablefield-${name}`}
-                name={record.code}
+              <MarcField
+                {...this.props}
+                id={`${record.variableField.code}-ind1`}
+                name={`${record.variableField.code}-ind1`}
                 component={TextField}
-                marginBottom0
-                fullWidth
-                value={record.ind1}
+                value={record.variableField.ind1}
               />
             </div>
             <div style={fieldStyle}>
-              <Field
-                id={`variablefield-${name}`}
-                name={name}
+              <MarcField
+                {...this.props}
+                id={`${record.variableField.code}-ind2`}
+                name={`${record.variableField.code}-ind2`}
                 component={TextField}
-                marginBottom0
-                fullWidth
-                value={record.ind2}
+                value={record.variableField.ind2}
               />
             </div>
             <div style={lastFieldStyle}>
-              <Field
-                id={`variablefield-${name}`}
-                name={record.displayValue}
-                type="text"
+              <MarcField
+                {...this.props}
+                id={`${record.variableField.code}-displayValue`}
+                name={`${record.variableField.code}-displayValue`}
                 component={TextField}
-                marginBottom0
-                fullWidth
-                value={record.displayValue}
+                value={record.variableField.displayValue}
               />
             </div>
           </div>

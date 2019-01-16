@@ -72,7 +72,7 @@ export class SearchResults extends React.Component<P, {}> {
     toggleFilterPane();
     const defaultTemplate = settings.defaultTemplate.id;
     dispatch({ type: ActionTypes.TEMPLATE_GET_BY_ID, query: 408 });
-    router.push(`/marccat/record?templateId=${defaultTemplate}`);
+    router.push(`/marccat/record/template?templateId=${defaultTemplate}`);
   };
 
   handleClickEdit = () => {

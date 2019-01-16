@@ -310,14 +310,16 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
                           </Row>
                         </Col>
                       </Row>
-                      {bibliographicRecord.fields.map((f, idx) => (
-                        <VariableFields
-                          idx={idx}
-                          {...this.props}
-                          record={(f.variableField) || {}}
-                          editable={editable}
-                        />
-                      ))
+                      {bibliographicRecord.fields
+                        .filter(f => f.fixedField === undefined || !f.fixedField)
+                        .map((f, idx) => (
+                          <VariableFields
+                            idx={idx}
+                            {...this.props}
+                            record={(f) || {}}
+                            editable={editable}
+                          />
+                        ))
                       }
                     </Accordion>
                   </AccordionSet>
@@ -339,7 +341,8 @@ export default stripesForm({
   destroyOnUnmount: false,
 })(connect(
   ({ marccat: { template, recordDetail, leaderData, headerTypes006, headerTypes007, headerTypes008 } }) => ({
-    bibliographicRecord: template.recordsById || recordDetail.record.bibliographicRecord,
+    bibliographicRecord: template.recordsById,
+    recordDetail: recordDetail.isReady,
     defaultTemplate: template.records,
     leaderData: leaderData.records,
     tagIsLoading: leaderData.isLoading,

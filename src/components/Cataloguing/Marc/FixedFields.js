@@ -152,6 +152,7 @@ class FixedFields extends React.Component<P, {}> {
           {...this.props}
           readOnly={tag}
           display="block"
+          withIcon
           onAdd={() => this.onAdd(TAGS._006)}
           onDelete={() => this.onDelete(TAGS._006, index)}
           label={(tag) ? tag.fixedField.code : TAGS._006}
@@ -182,6 +183,7 @@ class FixedFields extends React.Component<P, {}> {
           {...this.props}
           readOnly={tag}
           display="block"
+          withIcon
           onAdd={() => this.onAdd(TAGS._007)}
           onDelete={() => this.onDelete(TAGS._007, index)}
           label={(tag) ? tag.fixedField.code : TAGS._007}
@@ -211,6 +213,7 @@ class FixedFields extends React.Component<P, {}> {
         <MarcField
           {...this.props}
           readOnly
+          withIcon
           label={tag.fixedField.code}
           name={tag.fixedField.code}
           value={tag.fixedField.displayValue}
@@ -231,15 +234,17 @@ class FixedFields extends React.Component<P, {}> {
     );
   };
 
+  /* eslint-disable no-unused-vars */
   render() {
     const { fixedFields, tag006Fields, tag007Fields } = this.state;
+    const { recordDetail } = this.props;
     const fixedFieldsxxx = fixedFields.filter(f => f.fixedField.code === '001' || f.fixedField.code === '003' || f.fixedField.code === '005');
     const fixedFields006 = fixedFields.filter(f => f.fixedField.code === '006')[0];
     const fixedFields007 = fixedFields.filter(f => f.fixedField.code === '007')[0];
     const fixedFields008 = fixedFields.filter(f => f.fixedField.code === '008')[0];
     return (
       <React.Fragment>
-        {this.renderTagxxx(fixedFieldsxxx)}
+        {(recordDetail) ? this.renderTagxxx(fixedFieldsxxx) : this.renderTagxxx(fixedFields) }
         {/* {tag006Fields.map((f, i) => (
           this.renderTag006(fixedFields006, f, i)
         ))}

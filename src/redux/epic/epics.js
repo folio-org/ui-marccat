@@ -110,20 +110,11 @@ export const templateByIdEpic = (action$, store) => action$.ofType(ActionTypes.T
       .map(record => marccatActions.fetchTemplateById(record))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
-export const lockRecordEpic = (action$, store) => action$.ofType(ActionTypes.LOCK_RECORD)
+export const recordDetailEpic = (action$, store) => action$.ofType(ActionTypes.LOCK_RECORD)
   .switchMap((d) => concat$(
     of$(marccatActions.isLockedRecordRequest(true)),
     ajax
-      .getJSON(buildUrl(ENDPOINT.LOCK_MARC_RECORD + d.id, `id=${d.id}&uuid=${d.uuid}&username=${store.getState().okapi.currentUser.username}&type=${LockEntityType.R}`), ENDPOINT.HEADERS)
-      .map(record => marccatActions.lockedRecord(record))
-      .catch(e => of$(marccatActions.fetchFailure(e))),
-  ));
-
-export const unlockRecordEpic = (action$, store) => action$.ofType(ActionTypes.LOCK_RECORD)
-  .switchMap((d) => concat$(
-    of$(marccatActions.isLockedRecordRequest(true)),
-    ajax
-      .getJSON(buildUrl(ENDPOINT.UNLOCK_MARC_RECORD + d.id, `id=${d.id}&uuid=${d.uuid}&username=${store.getState().okapi.currentUser.username}`), ENDPOINT.HEADERS)
+      .getJSON(buildUrl(ENDPOINT.BIBLIOGRAPHIC_RECORD + `/${d.id}`, 'view=1&lang=ita'), ENDPOINT.HEADERS)
       .map(record => marccatActions.lockedRecord(record))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));

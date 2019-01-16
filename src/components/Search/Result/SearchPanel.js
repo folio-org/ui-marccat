@@ -225,12 +225,15 @@ class SearchPanel extends React.Component<P, {}> {
                     </Row>
                     {idx !== (counter.length - 1) &&
                     <Row>
-                      <Col xs={11}>
+                      <Col xs={10}>
                         <OperatorSelect
                           {...this.props}
                           name="operatorSelect"
                           id="operatorSelect"
                         />
+                      </Col>
+                      <Col xs={2} style={{ display: 'flex', marginTop: '14px' }}>
+                        <Icon icon="trash" />
                       </Col>
                     </Row>
                     }

@@ -23,14 +23,14 @@ import {
 
 
 type P = Props & {
-  headings: Array<any>;
-  inputValue: string;
-  getPreviousPage: Function;
-  getNextPage: Function;
-  detail: Object;
-  dataLoaded: boolean;
-  loading: boolean;
-  isPanelOpen: boolean;
+  headings: Array<any>,
+  inputValue: string,
+  getPreviousPage: () => void,
+  getNextPage:() => void,
+  detail: Object,
+  dataLoaded: boolean,
+  loading: boolean,
+  isPanelOpen: boolean,
 }
 
 export class SearchResults extends React.Component<P, {}> {
@@ -52,7 +52,7 @@ export class SearchResults extends React.Component<P, {}> {
     };
 
     this.handleDetails = this.handleDetails.bind(this);
-    this.onNeedMoreData = this.onNeedMoreData.bind(this);
+    // this.onNeedMoreData = this.onNeedMoreData.bind(this);
     this.handleCreateRecord = this.handleCreateRecord.bind(this);
     this.renderRightMenuEdit = this.renderRightMenuEdit.bind(this);
     this.renderLastMenu = this.renderLastMenu.bind(this);
@@ -76,9 +76,12 @@ export class SearchResults extends React.Component<P, {}> {
   };
 
   handleClickEdit = () => {
-    const { dispatch, router } = this.props;
+    const { dispatch, router, toggleFilterPane } = this.props;
+    const { detail } = this.state;
     dispatch({ type: ActionTypes.VIEW_TEMPLATE, query: '000' });
-    router.push('/marccat/record');
+    const id = detail[0].data.fields[0]['001'];
+    toggleFilterPane();
+    router.push(`/marccat/records/view?id=${id}`);
   }
 
   handleCreateRecord = () => {
@@ -141,10 +144,6 @@ export class SearchResults extends React.Component<P, {}> {
     dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
   };
 
-  onNeedMoreData = (initialData: Array<any>) => {
-    return initialData.slice(10, 20);
-  };
-
   renderRightMenuEdit = props => {
     return (
       <PaneMenu>
@@ -154,7 +153,7 @@ export class SearchResults extends React.Component<P, {}> {
           onClick={this.handleClickEdit}
           label={<FormattedMessage id="ui-marccat.search.record.edit" />}
         />
-        <Icon icon="comment" />
+        <Icon icon="bookmark" />
         <Icon icon="tag" />
       </PaneMenu>
     );

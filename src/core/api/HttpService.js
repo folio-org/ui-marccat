@@ -11,7 +11,7 @@ export const HTTP_METHOD = {
  * @param {*} store - the data store
  */
 export function get(url:string) {
-  fetch(url, {
+  return fetch(url, {
     method: HTTP_METHOD.GET,
     headers: Object.assign({}, {
       'x-okapi-tenant': 'tnx',

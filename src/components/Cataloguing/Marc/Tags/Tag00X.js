@@ -9,6 +9,7 @@ export default class Tag00X extends React.Component {
       <div className={style.controlFieldContainer}>
         <MarcField
           {...this.props}
+          withIcon
           readOnly={readOnly}
           label={tag.fixedField.code}
           name={tag.fixedField.code}

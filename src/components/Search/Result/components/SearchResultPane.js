@@ -13,7 +13,7 @@ import * as C from '../../../../utils/Constant';
 class SearchResultPane extends React.Component<Props, {}> {
     renderVisibleColumns = () => {
       const { store: { getState } } = this.props;
-      const form = getState().form.checkboxForm.values;
+      const form = getState().form.checkboxForm;
       const visibleColumns = [
         'resultView',
         '001',
@@ -24,11 +24,12 @@ class SearchResultPane extends React.Component<Props, {}> {
         'countDoc'
       ];
 
-      Object.keys(form).filter(k => k !== 'checkboxForm')
-        .forEach((z, i) => {
-          if (!form[z]) delete visibleColumns[i];
-        });
-
+      if (form && form.values) {
+        Object.keys(form.values).filter(k => k !== 'checkboxForm')
+          .forEach((z, i) => {
+            if (!form[z]) delete visibleColumns[i];
+          });
+      }
       return visibleColumns;
     };
 

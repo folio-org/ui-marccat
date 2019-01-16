@@ -26,7 +26,7 @@ export const ENDPOINT = {
   BIBLIOGRAPHIC_RECORD: '/bibliographic-record',
   HEADING_BY_TAG: '/headings-by-tag',
   LOCK_MARC_RECORD: '/bibliographic-record/lock/',
-  UNLOCK_MARC_RECORD: '/bibliographic-record/lock/',
+  UNLOCK_MARC_RECORD: '/bibliographic-record/unlock/',
 };
 
 export const buildUrl = (url:string, params?:string) => {

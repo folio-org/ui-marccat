@@ -30,12 +30,15 @@ class VariableFields extends React.Component<Props, {}> {
     });
   }
 
+
+  renderField = (field) => (
+    <input {...field.input} type="text" />
+  )
+
   render() {
     const { record, name, dispatch, change } = this.props;
     const fieldStyle = { flex: '0 0 20%', width: ' 20%', padding: '6px' };
     const lastFieldStyle = { flex: '0 0 40%', width: ' 40%', padding: '6px' };
-    dispatch(change(record.code, record.code));
-    dispatch(change(record.displayValue, record.displayValue));
     return (
       <Row className={css.marcEditableListFormHeader}>
         <Col xs={12}>

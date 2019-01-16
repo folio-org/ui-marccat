@@ -6,19 +6,22 @@ import {
   Paneset,
   AccordionSet,
   Row,
+  TextField,
   Col,
   Button,
   Accordion,
   KeyValue,
   Icon
 } from '@folio/stripes/components';
+import { Field } from 'redux-form';
+import MarcField from './Marc/MarcField';
 import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../lib';
-import { VariableFields, MarcLeader, FixedFields } from '.';
+import { MarcLeader, FixedFields } from '.';
 import * as C from '../../utils/Constant';
-import style from './Style/style.css';
 import { injectCommonProp } from '../../core';
 import { ActionTypes } from '../../redux/actions';
 import { findParam } from '../../redux/helpers';
+import style from './Style/style.css';
 
 class EditMarcRecord extends Component {
   // eslint-disable-next-line react/no-deprecated
@@ -34,6 +37,15 @@ class EditMarcRecord extends Component {
     toggleFilterPane();
     router.push('/marccat/search');
   };
+
+  renderField = ({ input, label, type, meta: { touched, error } }) => (
+    <div>
+      <div>
+        <input {...input} type={type} placeholder={label} />
+        {touched && error && <span>{error}</span>}
+      </div>
+    </div>
+  )
 
 
   render() {
@@ -51,6 +63,8 @@ class EditMarcRecord extends Component {
       bibliographicRecord = recordDetail.bibliographicRecord;
       variableFields = bibliographicRecord.fields.filter(f => f.fixedField === undefined || !f.fixedField);
     }
+    const fieldStyle = { flex: '0 0 20%', width: ' 20%', padding: '6px' };
+    const lastFieldStyle = { flex: '0 0 40%', width: ' 40%', padding: '6px' };
     return (!bibliographicRecord) ? <Icon icon="spinner-ellipsis" /> : (
       <React.Fragment>
         <Paneset static>
@@ -104,16 +118,44 @@ class EditMarcRecord extends Component {
                           </Row>
                         </Col>
                       </Row>
-                      {variableFields.map(f => (
-                        <VariableFields
-                          {...this.props}
-                          id={f.variableField.keyNumber}
-                          name={f.variableField.code}
-                          value={f.variableField.displayValue}
-                          record={(f.variableField) || {}}
-                        />
-                      ))
-                      }
+                      {variableFields.map((f, i) => (
+                        <Row className={style.marcEditableListFormHeader} key={i}>
+                          <Col xs={12}>
+                            <div className={style.marcEditableListRow} role="row">
+                              <div style={fieldStyle}>
+                                <MarcField
+                                  {...this.props}
+                                  id={`${i}-variablefield-${f.variableField.code}`}
+                                  name={`${i}-variablefield-${f.variableField.code}`}
+                                  component={TextField}
+                                  value={f.variableField.code}
+                                />
+                              </div>
+                              <div style={fieldStyle}>
+                                <MarcField
+                                  {...this.props}
+                                  id={`${i}-variablefield-${f.variableField.ind1}`}
+                                  name={`${i}-variablefield-${f.variableField.ind1}`}
+                                  component={TextField}
+                                  value={f.variableField.ind1}
+                                />
+                              </div>
+                              <div style={fieldStyle}>
+                                <MarcField
+                                  {...this.props}
+                                  id={`${i}-variablefield-${f.variableField.ind2}`}
+                                  name={`${i}-variablefield-${f.variableField.ind2}`}
+                                  component={TextField}
+                                  value={f.variableField.ind2}
+                                />
+                              </div>
+                              <div style={lastFieldStyle}>
+                                {this.renderField(f)}
+                              </div>
+                            </div>
+                          </Col>
+                        </Row>
+                      ))}
                     </Accordion>
                   </form>
                 </AccordionSet>

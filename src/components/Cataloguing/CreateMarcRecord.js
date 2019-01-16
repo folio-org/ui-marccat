@@ -339,7 +339,8 @@ export default stripesForm({
   destroyOnUnmount: false,
 })(connect(
   ({ marccat: { template, recordDetail, leaderData, headerTypes006, headerTypes007, headerTypes008 } }) => ({
-    bibliographicRecord: template.recordsById || recordDetail.record.bibliographicRecord,
+    bibliographicRecord: template.recordsById,
+    recordDetail: recordDetail.isReady,
     defaultTemplate: template.records,
     leaderData: leaderData.records,
     tagIsLoading: leaderData.isLoading,

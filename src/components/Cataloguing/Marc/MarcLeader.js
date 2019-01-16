@@ -88,6 +88,7 @@ export default class MarcLeader extends React.Component<P, {}> {
           readOnly
           label="Leader"
           name="Leader"
+          withIcon
           onClick={this.handleLeader}
           value={(leaderChanged) || leaderValue}
         />

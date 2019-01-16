@@ -29,7 +29,7 @@ import * as C from '../../utils/Constant';
 import style from './Style/style.css';
 import { uuid } from './Utils/MarcUtils';
 
-export class MarcRecordManager extends React.Component<Props, {}> {
+export class CreateMarcRecord extends React.Component<Props, {}> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -310,8 +310,9 @@ export class MarcRecordManager extends React.Component<Props, {}> {
                           </Row>
                         </Col>
                       </Row>
-                      {bibliographicRecord.fields.map(f => (
+                      {bibliographicRecord.fields.map((f, idx) => (
                         <VariableFields
+                          idx={idx}
                           {...this.props}
                           record={(f.variableField) || {}}
                           editable={editable}
@@ -337,8 +338,8 @@ export default stripesForm({
   enableReinitialize: true,
   destroyOnUnmount: false,
 })(connect(
-  ({ marccat: { template, leaderData, headerTypes006, headerTypes007, headerTypes008 } }) => ({
-    bibliographicRecord: template.recordsById,
+  ({ marccat: { template, recordDetail, leaderData, headerTypes006, headerTypes007, headerTypes008 } }) => ({
+    bibliographicRecord: template.recordsById || recordDetail.record.bibliographicRecord,
     defaultTemplate: template.records,
     leaderData: leaderData.records,
     tagIsLoading: leaderData.isLoading,
@@ -350,4 +351,4 @@ export default stripesForm({
     headerTypes008Result: headerTypes008.records,
     headerTypes008IsLoading: headerTypes008.isLoading
   }),
-)(injectCommonProp(MarcRecordManager)));
+)(injectCommonProp(CreateMarcRecord)));

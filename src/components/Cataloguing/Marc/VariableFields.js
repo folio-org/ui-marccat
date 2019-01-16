@@ -4,63 +4,100 @@
  */
 import React from 'react';
 import { isEmpty } from 'lodash';
-import { HotKeys } from '@folio/stripes/components';
-import MarcTableList from './MarcTableList';
+import { HotKeys, Row, Col, TextField } from '@folio/stripes/components';
+import { Field } from 'redux-form';
+import stripesForm from '@folio/stripes/form';
 import type { Props } from '../../../core';
 import { EMPTY_MESSAGE } from '../../../utils/Constant';
+import css from '../Style/style.css';
 
-
-export default class VariableFields extends React.Component<Props, {}> {
+class VariableFields extends React.Component<Props, {}> {
   constructor(props: Props) {
     super(props);
     this.state = {
       variableFields: [{ name: EMPTY_MESSAGE }],
     };
     this.keys = {
-      'new' : ['enter'],
+      'new': ['enter'],
     };
     this.handlers = {
       'new': () => this.handleAddSearchForm(),
     };
   }
 
-handleAddSearchForm = () => {
-  const { variableFields } = this.state;
-  this.setState({
-    variableFields: variableFields.concat([{ name: '' }])
-  });
+  handleAddSearchForm = () => {
+    const { variableFields } = this.state;
+    this.setState({
+      variableFields: variableFields.concat([{ name: '' }])
+    });
+  }
+
+  render() {
+    const { variableFields } = this.state;
+    const { record, id, name, value, dispatch, change, idx } = this.props;
+    const contentData = [
+      {
+        tag: (!isEmpty(record)) ? record.code : '000',
+        count: (!isEmpty(record)) ? record.ind1 : '',
+        ref: (!isEmpty(record)) ? record.ind1 : '',
+        displayValue: (!isEmpty(record)) ? record.displayValue : ''
+      }
+    ];
+    const fieldStyle = { flex: '0 0 20%', width: ' 20%', padding: '6px' };
+    const lastFieldStyle = { flex: '0 0 40%', width: ' 40%', padding: '6px' };
+    dispatch(change(record.code, record.code));
+    dispatch(change(record.displayValue, record.displayValue));
+    return (
+      <Row className={css.marcEditableListFormHeader}>
+        <Col xs={12}>
+          <div className={css.marcEditableListRow} role="row">
+            <div style={fieldStyle}>
+              <Field
+                id={`variablefield-${name}`}
+                name={record.code}
+                type="text"
+                component={TextField}
+                marginBottom0
+                fullWidth
+                value={record.code}
+              />
+            </div>
+            <div style={fieldStyle}>
+              <Field
+                id={`variablefield-${name}`}
+                name={record.code}
+                component={TextField}
+                marginBottom0
+                fullWidth
+                value={record.ind1}
+              />
+            </div>
+            <div style={fieldStyle}>
+              <Field
+                id={`variablefield-${name}`}
+                name={name}
+                component={TextField}
+                marginBottom0
+                fullWidth
+                value={record.ind2}
+              />
+            </div>
+            <div style={lastFieldStyle}>
+              <Field
+                id={`variablefield-${name}`}
+                name={record.displayValue}
+                type="text"
+                component={TextField}
+                marginBottom0
+                fullWidth
+                value={record.displayValue}
+              />
+            </div>
+          </div>
+        </Col>
+      </Row>
+    );
+  }
 }
 
-render() {
-  const { variableFields } = this.state;
-  const { record, editable } = this.props;
-  const contentData = [
-    {
-      tag: (!isEmpty(record)) ? record.code : '000',
-      count: (!isEmpty(record)) ? record.ind1 : '',
-      ref:  (!isEmpty(record)) ? record.ind1 : '',
-      displayValue: (!isEmpty(record)) ? record.displayValue : ''
-    }
-  ];
-  return (
-    <HotKeys keyMap={this.keys} handlers={this.handlers}>
-      {!isEmpty(record) && variableFields.map((v, idx) => (
-        <MarcTableList
-          key={idx}
-          id={idx}
-          editable={editable}
-          contentData={(idx === 0) ? contentData : {}}
-          visibleFields={['tag', 'count', 'ref', 'displayValue']}
-          columnWidths={{
-            'tag':'15%',
-            'count': '15%',
-            'ref': '15%',
-            'displayValue': '50%'
-          }}
-          columnMapping={{ tag: '', count: '', ref: '', displayValue: '' }}
-          actionButtonLabel="Actions"
-        />))}
-    </HotKeys>
-  );
-}
-}
+export default (VariableFields);

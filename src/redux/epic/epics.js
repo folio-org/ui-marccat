@@ -110,6 +110,14 @@ export const templateByIdEpic = (action$, store) => action$.ofType(ActionTypes.T
       .map(record => marccatActions.fetchTemplateById(record))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
+export const recordDetailEpic = (action$, store) => action$.ofType(ActionTypes.LOCK_RECORD)
+  .switchMap((d) => concat$(
+    of$(marccatActions.isLockedRecordRequest(true)),
+    ajax
+      .getJSON(buildUrl(ENDPOINT.BIBLIOGRAPHIC_RECORD + `/${d.id}`, 'view=1&lang=ita'), ENDPOINT.HEADERS)
+      .map(record => marccatActions.lockedRecord(record))
+      .catch(e => of$(marccatActions.fetchFailure(e))),
+  ));
 
 export const leaderEpic = (action$, store) => action$.ofType(ActionTypes.LEADER_VALUES_FROM_TAG)
   .switchMap((d) => concat$(

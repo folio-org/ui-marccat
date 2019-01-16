@@ -7,5 +7,5 @@ export { default as MarcField } from './Marc/MarcField';
 export { default as MarcLeader } from './Marc/MarcLeader';
 export { default as VariableFields } from './Marc/VariableFields';
 export { default as FixedFields } from './Marc/FixedFields';
-export { default as MarcRecord } from './MarcRecord';
+export { default as MarcRecord } from './CreateMarcRecord';
 export { camelizify, decamelizify, firstCharUppercase, uuid } from './Utils/MarcUtils';

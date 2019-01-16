@@ -38,6 +38,7 @@ export class SearchResults extends React.Component<P, {}> {
     super(props);
     this.state = {
       detailPanelIsVisible: false,
+      detailPanelBibAssOpen: false,
       noResults: false,
       bibsOnly: false,
       autOnly: false,
@@ -95,19 +96,6 @@ export class SearchResults extends React.Component<P, {}> {
     this.setState(prevState => ({ openDropDownMenu: !prevState.openDropDownMenu }));
   }
 
-  addUrlParam(key, value) {
-    const { location, router } = this.props;
-    const url = location.pathname;
-    const newParam = key + '=' + value;
-    let result = url.replace(new RegExp('(&|\\?)' + key + '=[^\&|#]*'), '$1' + newParam);
-    if (result === url) {
-      result = (url.indexOf('?') !== -1 ? url.split('?')[0] + '?' + newParam + '&' + url.split('?')[1]
-        : (url.indexOf('#') !== -1 ? url.split('#')[0] + '?' + newParam + '#' + url.split('#')[1]
-          : url + '?' + newParam));
-    }
-    router.push(result);
-  }
-
   transitionToParams = (key, value) => {
     const { location, router } = this.props;
     const url = location.pathname;
@@ -119,7 +107,7 @@ export class SearchResults extends React.Component<P, {}> {
     dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: false });
     const id = meta['001'];
     const detailSelected = data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001']) || {};
-    this.transitionToParams('idNumber', id);
+    this.transitionToParams('id', id);
     dispatch({ type: ActionTypes.DETAILS, query: id, recordType: meta.recordView });
     if (isAuthorityRecord(meta)) {
       dispatch({ type: ActionTypes.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView, openPanel: true });
@@ -294,7 +282,7 @@ export class SearchResults extends React.Component<P, {}> {
             loading={loading}
             messageNoContent={messageNoContent}
           />
-          {detailPanelIsVisible && (closePanels === false) &&
+          {detailPanelIsVisible &&
             <RecordDetailPane
               detailPaneMeta={detailPaneMeta}
               detail={detail}

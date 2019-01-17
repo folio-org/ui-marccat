@@ -5,11 +5,8 @@ import type { Props } from '../../../core';
 import style from '../Style/style.css';
 
 type P = Props & {
-  display: string,
   label?: string,
-  value: string,
   onClick?: () => void,
-  readOnly: boolean,
   onClickPlusSign: () => void,
 };
 
@@ -25,6 +22,7 @@ export default class MarcField extends React.Component<P, {}> {
       readOnly,
       onAdd,
       onDelete,
+      placeholder,
       component,
       display,
       withIcon,
@@ -37,10 +35,9 @@ export default class MarcField extends React.Component<P, {}> {
           id={name}
           name={name}
           type="text"
+          placeholder={placeholder}
           readOnly={readOnly}
           component={component || 'input'}
-          label={label}
-          value={value}
         />
         <div className={style.marcFieldIconCaret}>
           <IconButton

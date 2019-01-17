@@ -10,6 +10,7 @@ import {
   AccordionSet,
   Callout,
   Row,
+  HotKeys,
   Col,
   PaneMenu,
   Button,
@@ -41,8 +42,14 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
     this.saveRecord = this.saveRecord.bind(this);
     this.editRecord = this.editRecord.bind(this);
     this.deleteRecord = this.deleteRecord.bind(this);
-
     this.callout = React.createRef();
+
+    this.keys = {
+      'new': ['enter'],
+    };
+    this.handlers = {
+      'new': this.renderTemplateRoute,
+    };
   }
 
   renderDropdownLabels = () => {
@@ -183,8 +190,6 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
           });
         }
       });
-
-
     return bibliographicRecord;
   }
 
@@ -269,14 +274,6 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
                       <Col xs>
                         <Row end="xs" style={{ float: 'right' }}>
                           <Col xs>
-                            <Button
-                              buttonStyle="primary"
-                              onClick={() => {}}
-                            >
-                              <Icon icon="edit">Edit</Icon>
-                            </Button>
-                          </Col>
-                          <Col xs>
                             <DropdownButtonMenu
                               {...this.props}
                               marginBottom0
@@ -291,17 +288,19 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
                         </Row>
                       </Col>
                     </Row>
-                    {bibliographicRecord.fields
-                      .filter(f => f.fixedField === undefined || !f.fixedField)
-                      .map((f, idx) => (
-                        <VariableFields
-                          idx={idx}
-                          {...this.props}
-                          record={(f) || {}}
-                          editable={editable}
-                        />
-                      ))
-                    }
+                    <HotKeys keyMap={this.keys} handlers={this.handlers} style={{ width: 100 + '%' }}>
+                      {bibliographicRecord.fields
+                        .filter(f => f.fixedField === undefined || !f.fixedField)
+                        .map((f, idx) => (
+                          <VariableFields
+                            idx={idx}
+                            {...this.props}
+                            record={(f) || {}}
+                            editable={editable}
+                          />
+                        ))
+                      }
+                    </HotKeys>
                   </Accordion>
                 </AccordionSet>
               </div>
@@ -316,8 +315,6 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
 
 export default reduxForm({
   form: 'bibliographicRecordForm',
-  navigationCheck: true,
-  enableReinitialize: true,
   destroyOnUnmount: false,
 })(connect(
   ({ marccat: { template, recordDetail, leaderData, headerTypes006, headerTypes007, headerTypes008 } }) => ({

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import stripesForm from '@folio/stripes/form';
+import { reduxForm, Field, change } from 'redux-form';
 import {
   Pane,
   Paneset,
@@ -24,6 +24,7 @@ import * as C from '../../utils/Constant';
 import style from './Style/style.css';
 import { remove, put } from '../../core/api/HttpService';
 import { uuid } from './Utils/MarcUtils';
+import VariableFields from './Marc/VariableFields';
 
 class EditMarcRecord extends Component {
   // eslint-disable-next-line react/no-deprecated
@@ -104,14 +105,18 @@ class EditMarcRecord extends Component {
       headerTypes006IsLoading,
       headerTypes007IsLoading,
       headerTypes008IsLoading,
-      leaderData
+      leaderData,
+      dispatch,
     } = this.props;
     let bibliographicRecord;
     let variableFields;
+    let displayVal;
+    let pippo;
     if (recordDetail) {
       bibliographicRecord = recordDetail.bibliographicRecord;
       variableFields = bibliographicRecord.fields.filter(f => f.fixedField === undefined || !f.fixedField);
-      // displayVal = variableFields.map(v => v.variableField.displayValue);
+      displayVal = variableFields.map(v => v.variableField.displayValue);
+      pippo = displayVal[0];
     }
     const fieldStyle = { flex: '0 0 20%', width: ' 20%', padding: '6px' };
     const lastFieldStyle = { flex: '0 0 40%', width: ' 40%', padding: '6px' };
@@ -170,49 +175,11 @@ class EditMarcRecord extends Component {
                         </Col>
                       </Row>
                       {variableFields.map((f, i) => (
-                        <Row className={style.marcEditableListFormHeader} key={i}>
-                          <Col xs={12}>
-                            <div className={style.marcEditableListRow} role="row">
-                              <div style={fieldStyle}>
-                                <MarcField
-                                  {...this.props}
-                                  id={`${f.variableField.code}-code`}
-                                  name={`${f.variableField.code}-code`}
-                                  component={TextField}
-                                  value={f.variableField.code}
-                                />
-                              </div>
-                              <div style={fieldStyle}>
-                                <MarcField
-                                  {...this.props}
-                                  id={`${f.variableField.code}-ind1`}
-                                  name={`${f.variableField.code}-ind1`}
-                                  component={TextField}
-                                  value={f.variableField.ind1}
-                                />
-                              </div>
-                              <div style={fieldStyle}>
-                                <MarcField
-                                  {...this.props}
-                                  id={`${f.variableField.code}-ind2`}
-                                  name={`${f.variableField.code}-ind2`}
-                                  component={TextField}
-                                  value={f.variableField.ind2}
-                                />
-                              </div>
-                              <div style={lastFieldStyle}>
-                                <MarcField
-                                  {...this.props}
-                                  readOnly
-                                  id={`${f.variableField.code}-displayValue`}
-                                  name={`${f.variableField.code}-displayValue`}
-                                  component={TextField}
-                                  value={f.variableField.code}
-                                />
-                              </div>
-                            </div>
-                          </Col>
-                        </Row>
+                        <VariableFields
+                          {...this.props}
+                          record={f || {}}
+                          idx={i}
+                        />
                       ))}
                     </Accordion>
                   </form>
@@ -226,7 +193,7 @@ class EditMarcRecord extends Component {
   }
 }
 
-export default stripesForm({
+export default reduxForm({
   form: 'bibliographicRecordForm',
   navigationCheck: true,
   enableReinitialize: true,

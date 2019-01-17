@@ -68,6 +68,7 @@
   height: 90px;
   width: 60px;
   padding-top: 10px;
+  cursor: pointer;
 }
 
 .rightBracket {
@@ -77,6 +78,7 @@
   width: 60px;
   padding-top: 10px;
   float: right;
+  cursor: pointer;
 }
 
 .leftBracketDisabled {
@@ -85,6 +87,7 @@
   height: 90px;
   width: 60px;
   padding-top: 10px;
+  cursor: pointer;
 }
 
 .rightBracketDisabled {
@@ -94,6 +97,7 @@
   width: 60px;
   padding-top: 10px;
   float: right;
+  cursor: pointer;
 }
 
 .bracketSpacer {

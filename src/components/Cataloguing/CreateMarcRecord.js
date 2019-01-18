@@ -18,7 +18,7 @@ import {
 } from '@folio/stripes/components';
 import { reduxForm } from 'redux-form';
 import { Props, injectCommonProp } from '../../core';
-import { ActionMenuTemplate, SingleCheckboxIconButton, DropdownButtonMenu } from '../../lib';
+import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../lib';
 import { VariableFields, MarcLeader, FixedFields } from '.';
 import { ActionTypes } from '../../redux/actions/Actions';
 import { put, remove, post } from '../../core/api/HttpService';
@@ -32,7 +32,6 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      openDropDownMenu: false,
       isEditingMode: false,
     };
     this.renderDropdownLabels = this.renderDropdownLabels.bind(this);
@@ -191,7 +190,6 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
       }
       t.mandatory = false;
     });
-    bibliographicRecord.fields = _.merge(bibliographicRecord.fields, tagVariableData);
     return bibliographicRecord;
   }
 

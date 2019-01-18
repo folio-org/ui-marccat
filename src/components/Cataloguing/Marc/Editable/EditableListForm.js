@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 import uniqueId from 'lodash/uniqueId';
@@ -213,7 +214,7 @@ class EditableListForm extends React.Component {
     Promise.resolve(res).then(
       () => {
         // Set props.initialValues to the currently-saved field values.
-        //this.props.initialize(fields.getAll());
+        // this.props.initialize(fields.getAll());
 
         this.toggleEdit(index);
       },

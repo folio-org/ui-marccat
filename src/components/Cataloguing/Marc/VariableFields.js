@@ -76,7 +76,7 @@ class VariableFields extends React.Component<Props, {}> {
           }}
           onUpdate={this.onUpdate}
           onSave={this.onSave}
-          onDelete={this.props.onDelete}
+          onDelete={this.onDelete}
           onCreate={this.onCreate}
           nameKey="code"
           itemTemplate={itemTemplate}

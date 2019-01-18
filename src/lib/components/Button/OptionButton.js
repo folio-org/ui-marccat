@@ -20,7 +20,8 @@ export function RadioIconButton({ ...props }:P) {
         </div>
       ))
       }
-    </form>);
+    </form>
+  );
 }
 
 
@@ -86,6 +87,22 @@ export function SingleCheckboxIconButton({ ...props }:P) {
     </div>
   );
 }
+
+export const SingleCheckboxIcon = ({ name, idx }:P) => (
+  <div key={idx}>
+    <Field
+      id={`checkbox-${name}-${idx}`}
+      className="checkbox"
+      name={`checkbox-${name}-${idx}`}
+      type="checkbox"
+      component="input"
+    />
+    <label
+      htmlFor={`checkbox-${name}-${idx}`}
+      className="checkbox"
+    />
+  </div>
+);
 
 
 export default reduxForm({

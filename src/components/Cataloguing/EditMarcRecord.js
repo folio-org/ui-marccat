@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import { connect } from 'react-redux';
-import { reduxForm, Field, change } from 'redux-form';
+import { reduxForm } from 'redux-form';
 import {
   Pane,
   Paneset,
   AccordionSet,
   Row,
-  TextField,
   PaneMenu,
-  Col,
   Button,
   Accordion,
   KeyValue,
   Icon
 } from '@folio/stripes/components';
-import MarcField from './Marc/MarcField';
 import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../lib';
 import { MarcLeader, FixedFields } from '.';
 import { injectCommonProp } from '../../core';
@@ -22,7 +20,7 @@ import { ActionTypes } from '../../redux/actions';
 import { findParam, buildUrl } from '../../redux/helpers';
 import * as C from '../../utils/Constant';
 import style from './Style/style.css';
-import { remove, put } from '../../core/api/HttpService';
+import { remove, post } from '../../core/api/HttpService';
 import { uuid } from './Utils/MarcUtils';
 import VariableFields from './Marc/VariableFields';
 
@@ -42,11 +40,73 @@ class EditMarcRecord extends Component {
   };
 
   saveRecord = () => {
-    const { isEditingMode } = this.state;
     const body = { bibliographicRecord: this.composeBodyJson() };
-    put(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'lang=ita&view=1'), body);
-    if (isEditingMode) this.lockRecord(false);
+    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'lang=ita&view=1'), body);
   };
+
+  composeBodyJson = () => {
+    const { recordDetail: { bibliographicRecord }, store: { getState } } = this.props;
+    const formData = getState().form.bibliographicRecordForm.values;
+    const tagVariableData = getState().form.editableListForm.values.items;
+
+    const tag006Values = [];
+    const tag007Values = [];
+    const tag008Values = [];
+
+    // Set leader
+    bibliographicRecord.leader.value = formData.Leader;
+
+    Object.keys(formData)
+      .forEach((z) => {
+        if (z.split('-')[0] === 'Tag006' || z === 'Tag006') {
+          tag006Values.push({
+            name: z.split('-')[1] || 'headerTypeCode',
+            value: formData[z]
+          });
+        }
+        if (z.split('-')[0] === 'Tag007' || z === 'Tag007') {
+          tag007Values.push({
+            name: z.split('-')[1] || 'headerTypeCode',
+            value: formData[z]
+          });
+        }
+        if (z.split('-')[0] === 'Tag008' || z === 'Tag008') {
+          tag008Values.push({
+            name: z.split('-')[1] || 'headerTypeCode',
+            value: formData[z]
+          });
+        }
+      });
+
+    bibliographicRecord.fields
+      .filter(f => f.code !== '001' || f.code !== '003' || f.code !== '005')
+      .forEach(f => {
+        if (f.code === '006') {
+          tag006Values.forEach(v => {
+            f.fixedField[v.name] = v.value;
+          });
+        }
+        if (f.code === '007') {
+          tag007Values.forEach(v => {
+            f.fixedField[v.name] = v.value;
+          });
+        }
+        if (f.code === '008') {
+          tag008Values.forEach(v => {
+            f.fixedField[v.name] = v.value;
+          });
+        }
+      });
+
+    tagVariableData.forEach(t => {
+      if (t.code === '100' || t.code === '110' || t.code === '700') {
+        t.categoryCode = '2';
+        t.mandatory = false;
+      }
+    });
+    return bibliographicRecord;
+  }
+
 
   deleteRecord = () => {
     const { store, recordDetail } = this.props;
@@ -106,20 +166,13 @@ class EditMarcRecord extends Component {
       headerTypes007IsLoading,
       headerTypes008IsLoading,
       leaderData,
-      dispatch,
     } = this.props;
     let bibliographicRecord;
     let variableFields;
-    let displayVal;
-    let pippo;
     if (recordDetail) {
       bibliographicRecord = recordDetail.bibliographicRecord;
       variableFields = bibliographicRecord.fields.filter(f => f.fixedField === undefined || !f.fixedField);
-      displayVal = variableFields.map(v => v.variableField.displayValue);
-      pippo = displayVal[0];
     }
-    const fieldStyle = { flex: '0 0 20%', width: ' 20%', padding: '6px' };
-    const lastFieldStyle = { flex: '0 0 40%', width: ' 40%', padding: '6px' };
     return (!bibliographicRecord) ? <Icon icon="spinner-ellipsis" /> : (
       <React.Fragment>
         <Paneset static>
@@ -129,6 +182,7 @@ class EditMarcRecord extends Component {
             paneTitle="Edit Record"
             appIcon={{ app: C.META.ICON_TITLE }}
             actionMenu={ActionMenuTemplate}
+            paneSub={(bibliographicRecord) ? 'id. ' + bibliographicRecord.id : ''}
             onClose={this.handleClose}
             lastMenu={this.renderButtonMenu()}
           >
@@ -136,7 +190,7 @@ class EditMarcRecord extends Component {
               <div className={style.recordContainer}>
                 <AccordionSet>
                   <KeyValue />
-                  <form name="bibliographicRecordForm" onSubmit={this.saveRecord}>
+                  <form name="bibliographicRecordForm" onSubmit={this.saveRecord} formKey="bibliograficKey">
                     <Accordion label="Suppress" id="suppress" separator={false}>
                       <SingleCheckboxIconButton labels={['Suppress from Discovery']} pullLeft widthPadding />
                     </Accordion>
@@ -159,30 +213,13 @@ class EditMarcRecord extends Component {
                         record={bibliographicRecord}
                       />
                     </Accordion>
-                    <Accordion label={translate({ id: 'ui-marccat.cataloging.variablefield.section.label' })} id="variable-field">
-                      <Row between="xs" className={style.marcEditableListFormHeader}>
-                        <Col xs>
-                          <Row end="xs" style={{ float: 'right' }}>
-                            <Col xs>
-                              <Button
-                                buttonStyle="primary"
-                                onClick={() => {}}
-                              >
-                                <Icon icon="edit">Edit</Icon>
-                              </Button>
-                            </Col>
-                          </Row>
-                        </Col>
-                      </Row>
-                      {variableFields.map((f, i) => (
-                        <VariableFields
-                          {...this.props}
-                          record={f || {}}
-                          idx={i}
-                        />
-                      ))}
-                    </Accordion>
                   </form>
+                  <Accordion label={translate({ id: 'ui-marccat.cataloging.variablefield.section.label' })} id="variable-field">
+                    <VariableFields
+                      {...this.props}
+                      fields={variableFields}
+                    />
+                  </Accordion>
                 </AccordionSet>
               </div>
             </Row>

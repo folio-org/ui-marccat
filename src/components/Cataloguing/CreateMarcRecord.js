@@ -10,8 +10,6 @@ import {
   AccordionSet,
   Callout,
   Row,
-  HotKeys,
-  Col,
   PaneMenu,
   Button,
   Accordion,
@@ -43,13 +41,6 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
     this.editRecord = this.editRecord.bind(this);
     this.deleteRecord = this.deleteRecord.bind(this);
     this.callout = React.createRef();
-
-    this.keys = {
-      'new': ['enter'],
-    };
-    this.handlers = {
-      'new': this.renderTemplateRoute,
-    };
   }
 
   renderDropdownLabels = () => {
@@ -143,10 +134,13 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
   composeBodyJson = () => {
     const { bibliographicRecord, store: { getState } } = this.props;
     const formData = getState().form.bibliographicRecordForm.values;
+    const tagVariableData = getState().form.editableListForm.values.items;
 
     const tag006Values = [];
     const tag007Values = [];
     const tag008Values = [];
+
+    // Set leader
     bibliographicRecord.leader.value = formData.Leader;
 
     Object.keys(formData)
@@ -190,6 +184,14 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
           });
         }
       });
+
+    tagVariableData.forEach(t => {
+      if (t.code === 100 || t.code === 110 || t.code === 700) {
+        t.categoryCode = 2;
+      }
+      t.mandatory = false;
+    });
+    bibliographicRecord.fields = _.merge(bibliographicRecord.fields, tagVariableData);
     return bibliographicRecord;
   }
 
@@ -222,7 +224,6 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
       leaderData
     } = this.props;
     const {
-      openDropDownMenu,
       editable,
     } = this.state;
     const defaultTemplate = (settings) ? settings.defaultTemplate : C.DEFAULT_TEMPLATE;
@@ -246,7 +247,7 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
                   <KeyValue
                     value={<h2>{bibliographicRecord.name}</h2>}
                   />
-                  <form name="bibliographicRecordForm" onSubmit={this.saveRecord}>
+                  <form name="bibliographicRecordForm" onSubmit={this.saveRecord} formKey="bibliograficKey">
                     <Accordion label="Suppress" id="suppress" separator={false}>
                       <SingleCheckboxIconButton labels={['Suppress from Discovery']} pullLeft widthPadding />
                     </Accordion>
@@ -270,37 +271,11 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
                     </Accordion>
                   </form>
                   <Accordion label={translate({ id: 'ui-marccat.cataloging.variablefield.section.label' })} id="variable-field">
-                    <Row between="xs" className={style.marcEditableListFormHeader}>
-                      <Col xs>
-                        <Row end="xs" style={{ float: 'right' }}>
-                          <Col xs>
-                            <DropdownButtonMenu
-                              {...this.props}
-                              marginBottom0
-                              label="Actions"
-                              labels={this.renderDropdownLabels()}
-                              onToggle={() => this.setState({
-                                openDropDownMenu: !openDropDownMenu
-                              })}
-                              open={openDropDownMenu}
-                            />
-                          </Col>
-                        </Row>
-                      </Col>
-                    </Row>
-                    <HotKeys keyMap={this.keys} handlers={this.handlers} style={{ width: 100 + '%' }}>
-                      {bibliographicRecord.fields
-                        .filter(f => f.fixedField === undefined || !f.fixedField)
-                        .map((f, idx) => (
-                          <VariableFields
-                            idx={idx}
-                            {...this.props}
-                            record={(f) || {}}
-                            editable={editable}
-                          />
-                        ))
-                      }
-                    </HotKeys>
+                    <VariableFields
+                      fields={bibliographicRecord.fields.filter(f => f.fixedField === undefined || !f.fixedField)}
+                      {...this.props}
+                      editable={editable}
+                    />
                   </Accordion>
                 </AccordionSet>
               </div>

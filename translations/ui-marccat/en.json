@@ -67,6 +67,7 @@
   "diacritic.title": "Diacritic",
   "template.record.create": "Create Record",
   "template.record.delete": "Delete Record",
+  "template.record.edit": "Edit Record",
   "template.actionmenu.new": "New Template",
   "template.actionmenu.load": "Load template...",
   "template.actionmenu.load.shortcut": "CTRL + L",

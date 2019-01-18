@@ -473,21 +473,21 @@ export function headingByTagReducer(state = { isLoading, isReady }, action) {
   }
 }
 
-export function lockRecordReducer(state = { isLoading, isReady }, action) {
+export function recordDeatilReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
-  case ActionTypes.LOCK_RECORD:
+  case ActionTypes.RECORD_DETAIL:
     return {
       ...state,
       isLoading: false,
       isReady: false
     };
-  case ActionTypes.LOCK_RECORD_REQUESTED:
+  case ActionTypes.RECORD_DETAIL_REQUESTED:
     return {
       ...state,
       isLoading: action.payload,
       isReady: false
     };
-  case ActionTypes.LOCK_RECORD_SUCCESS:
+  case ActionTypes.RECORD_DETAIL_SUCCESS:
     return {
       ...state,
       record: action.payload,

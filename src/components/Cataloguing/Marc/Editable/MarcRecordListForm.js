@@ -9,112 +9,33 @@ import { FieldArray } from 'redux-form';
 import PropTypes from 'prop-types';
 
 import { Button, Col, Headline, IconButton, MultiColumnList, Row } from '@folio/stripes-components';
-import EditableItem from './EditableItem';
+import MarcEditableItem from './MarcEditableItem';
 import css from './EditableList.css';
 
 const propTypes = {
-  /**
-   * Object containing properties of list action names: 'delete', 'edit' and
-   * values of sentinel functions that return objects to destructure onto the
-   * action button props:
-   * { delete: (item) => {return { disabled: item.item.inUse } } }
-   */
   actionProps: PropTypes.object,
-  /**
-   * Object containing properties of list action names: 'delete', 'edit' and
-   * values of sentinel functions that return booleans based on object
-   * properties" { delete: (item) => {return (!item.item.inUse)} }
-   */
   actionSuppression: PropTypes.object,
-  /**
-   * Additional fields that require building.
-   */
   additionalFields: PropTypes.object,
-  /**
-   *  set custom rendered column names
-   */
   columnMapping: PropTypes.object,
-  /**
-   * manually set column widths, if necessary.
-   */
   columnWidths: PropTypes.object,
-  /**
-   * Label for the 'Add' button
-   */
   createButtonLabel: PropTypes.node,
-  /**
-   *  set custom component for editing
-   */
   fieldComponents: PropTypes.object,
-  /**
-   * passed to MultiColumnList, formatter allows control over how the data is rendered in the cells of the grid.
-   */
   formatter: PropTypes.object,
-  /**
-   * id for Add action.
-   */
   id: PropTypes.string,
-  /**
-   * Callback provided by redux-form to set the initialValues to something else.
-   */
   initialize: PropTypes.func,
-  /**
-  * Initial form values
-  */
   initialValues: PropTypes.object,
-  /**
-   * boolean that indicates if there are validation errors.
-   */
   invalid: PropTypes.bool,
-  /**
-   * Message to display for an empty list.
-   */
   isEmptyMessage: PropTypes.node,
-  /**
-   * Object where each key's value is the default value for that field.
-   * { resourceType: 'book' }
-   */
   itemTemplate: PropTypes.object,
-  /**
-   * The text for the H3 tag in the header of the component
-   */
   label: PropTypes.node,
-  /**
-   * Callback for creating new list items.
-   */
   onCreate: PropTypes.func,
-  /**
-   * Callback for list item deletion.
-   */
   onDelete: PropTypes.func,
-  /**
-   * Callback for saving editted list items.
-   */
   onUpdate: PropTypes.func,
-  /**
-   * boolean that shows if the form has been modified.
-   */
   pristine: PropTypes.bool,
-  /**
-   * List of read-only fields
-   */
   readOnlyFields: PropTypes.arrayOf(PropTypes.string),
-  /**
-   * Callback provided by redux-form to set the field values to their initialValues
-   */
   reset: PropTypes.func,
-  /**
-   * boolean that indicates that the form is being submitted.
-   */
   submitting: PropTypes.bool,
-
-  /**
-   * Fieldname that includes the unique identifier for the list.
-   */
   uniqueField: PropTypes.string,
-  /**
-   * Array of fields to render. These will also be editable.
-   */
   visibleFields: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
@@ -316,7 +237,7 @@ class EditableListForm extends React.Component {
     }
 
     return (
-      <EditableItem
+      <MarcEditableItem
         editing={isEditing}
         error={hasError}
         key={rowIndex}

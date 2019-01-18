@@ -9,3 +9,4 @@ export { default as VariableFields } from './Marc/VariableFields';
 export { default as FixedFields } from './Marc/FixedFields';
 export { default as MarcRecord } from './CreateMarcRecord';
 export { camelizify, decamelizify, firstCharUppercase, uuid } from './Utils/MarcUtils';
+export { lockRecord, saveRecord, deleteRecord, composeBodyResponse } from './Utils/MarcApiUtils';

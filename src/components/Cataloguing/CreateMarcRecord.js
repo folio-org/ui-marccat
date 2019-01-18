@@ -86,7 +86,7 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
             marginBottom0
           >
             <Icon icon="trash">
-              Delete Record
+              {translate({ id: 'ui-marccat.template.record.delete' })}
             </Icon>
           </Button>
         </PaneMenu>
@@ -142,6 +142,7 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
     // Set leader
     bibliographicRecord.leader.value = formData.Leader;
 
+    // populate tag 006 tag 007 tag 008
     Object.keys(formData)
       .forEach((z) => {
         if (z.split('-')[0] === 'Tag006' || z === 'Tag006') {

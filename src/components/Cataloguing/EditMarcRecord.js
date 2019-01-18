@@ -28,7 +28,7 @@ class EditMarcRecord extends Component {
   componentWillMount() {
     const { store } = this.props;
     const id = findParam('id');
-    store.dispatch({ type: ActionTypes.LOCK_RECORD, id });
+    store.dispatch({ type: ActionTypes.RECORD_DETAIL, id });
   }
 
   handleClose = () => {

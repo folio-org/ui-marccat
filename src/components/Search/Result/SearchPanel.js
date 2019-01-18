@@ -50,7 +50,6 @@ class SearchPanel extends React.Component<P, {}> {
     this.handleRemoveSearchForm = this.handleRemoveSearchForm.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleResetAllButton = this.handleResetAllButton.bind(this);
-    this.transitionToParams = this.transitionToParams.bind(this);
   }
 
   transitionToParams = (key, value) => {
@@ -74,6 +73,10 @@ class SearchPanel extends React.Component<P, {}> {
       let indexFilter;
       const form = getState().form.searchForm;
       const state = getState();
+      if (form.values.operatorSelect) {
+        this.buildComplexQuery(e);
+        return;
+      }
       if (form.values) {
         if (form.values.selectIndexes) {
           indexFilter = form.values.selectIndexes;
@@ -134,6 +137,7 @@ class SearchPanel extends React.Component<P, {}> {
   }
 
   buildComplexQuery = () => {
+    // const idx = searchForm.length - 1;
   }
 
   handleAddSearchForm = () => {
@@ -173,7 +177,6 @@ class SearchPanel extends React.Component<P, {}> {
     );
   }
 
-
   render() {
     const { translate, ...rest } = this.props;
     const { searchForm, filterEnable, counter } = this.state;
@@ -188,77 +191,83 @@ class SearchPanel extends React.Component<P, {}> {
             header={FilterAccordionHeader}
           >
             {searchForm.map((form, idx) => (
-              <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange} key={idx}>
-                <Row>
-                  <Col xs={1}>
-                    <div className={styles.leftBracket} />
-                  </Col>
-                  <Col xs={10} className={styles.forwardBracket}>
-                    <Row>
-                      <Col xs={12}>
-                        <div className={styles.select_margin}>
-                          <SearchIndexes
-                            marginBottom0
+              <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}>
+                <div key={idx}>
+                  <Row>
+                    <Col xs={1}>
+                      <div className={styles.leftBracket} idx={idx} />
+                    </Col>
+                    <Col xs={10} className={styles.forwardBracket}>
+                      <Row>
+                        <Col xs={12}>
+                          <div className={styles.select_margin}>
+                            <SearchIndexes
+                              id={(idx === 0) ? 'selectIndexes' : `selectIndexes-${idx}`}
+                              name={(idx === 0) ? 'selectIndexes' : `selectIndexes-${idx}`}
+                              marginBottom0
+                              {...this.props}
+                            />
+                          </div>
+                        </Col>
+                      </Row>
+                      <Row style={{ height: '30px' }}>
+                        <Col xs={12}>
+                          <SearchConditions
+                            id={(idx === 0) ? 'selectCondition' : `selectCondition-${idx}`}
+                            name={(idx === 0) ? 'selectCondition' : `selectCondition-${idx}`}
                             {...this.props}
                           />
-                        </div>
-                      </Col>
-                    </Row>
-                    <Row style={{ height: '30px' }}>
-                      <Col xs={12}>
-                        <SearchConditions
-                          {...this.props}
-                        />
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col xs={12}>
-                        <div className={styles.select_margin}>
-                          <Field
-                            fullWidth
-                            component={SearchField}
-                            placeholder="Search..."
-                            name="searchTextArea"
-                            id="searchTextArea"
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col xs={12}>
+                          <div className={styles.select_margin}>
+                            <Field
+                              id={(idx === 0) ? 'searchTextArea' : `searchTextArea-${idx}`}
+                              name={(idx === 0) ? 'searchTextArea' : `searchTextArea-${idx}`}
+                              fullWidth
+                              component={SearchField}
+                              placeholder="Search..."
+                            />
+                          </div>
+                        </Col>
+                      </Row>
+                      {idx !== (counter.length - 1) &&
+                      <Row>
+                        <Col xs={10}>
+                          <OperatorSelect
+                            {...this.props}
+                            id={(idx === 0) ? 'operatorSelect' : `operatorSelect-${idx}`}
+                            name={(idx === 0) ? 'operatorSelect' : `operatorSelect-${idx}`}
                           />
-                        </div>
-                      </Col>
-                    </Row>
-                    {idx !== (counter.length - 1) &&
-                    <Row>
-                      <Col xs={10}>
-                        <OperatorSelect
-                          {...this.props}
-                          name="operatorSelect"
-                          id="operatorSelect"
-                        />
-                      </Col>
-                      <Col xs={2} style={{ display: 'flex', marginTop: '14px' }}>
-                        <IconButton
-                          icon="trash"
-                          size="small"
-                          onClick={this.handleRemoveSearchForm(idx)}
-                        />
-                      </Col>
-                    </Row>
-                    }
-                    <Row>
-                      <Col xs={12}>
-                        <Button
-                          buttonClass={styles.rightPosition}
-                          onClick={this.handleAddSearchForm}
-                        >
-                          <Icon icon="plus-sign">
-                            {translate({ id: 'ui-marccat.button.add' })}
-                          </Icon>
-                        </Button>
-                      </Col>
-                    </Row>
-                  </Col>
-                  <Col xs={1}>
-                    <div className={styles.rightBracket} />
-                  </Col>
-                </Row>
+                        </Col>
+                        <Col xs={2} style={{ display: 'flex', marginTop: '14px' }}>
+                          <IconButton
+                            icon="trash"
+                            size="small"
+                            onClick={this.handleRemoveSearchForm(idx)}
+                          />
+                        </Col>
+                      </Row>
+                      }
+                      <Row>
+                        <Col xs={12}>
+                          <Button
+                            buttonClass={styles.rightPosition}
+                            onClick={this.handleAddSearchForm}
+                          >
+                            <Icon icon="plus-sign">
+                              {translate({ id: 'ui-marccat.button.add' })}
+                            </Icon>
+                          </Button>
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col xs={1}>
+                      <div className={styles.rightBracket} idx={idx} />
+                    </Col>
+                  </Row>
+                </div>
               </form>
             ))
             }

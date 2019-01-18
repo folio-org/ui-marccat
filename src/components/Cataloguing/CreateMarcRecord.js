@@ -10,7 +10,6 @@ import {
   AccordionSet,
   Callout,
   Row,
-  Col,
   PaneMenu,
   Button,
   Accordion,
@@ -19,7 +18,7 @@ import {
 } from '@folio/stripes/components';
 import { reduxForm } from 'redux-form';
 import { Props, injectCommonProp } from '../../core';
-import { ActionMenuTemplate, SingleCheckboxIconButton, DropdownButtonMenu } from '../../lib';
+import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../lib';
 import { VariableFields, MarcLeader, FixedFields } from '.';
 import { ActionTypes } from '../../redux/actions/Actions';
 import { put, remove, post } from '../../core/api/HttpService';
@@ -33,7 +32,6 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      openDropDownMenu: false,
       isEditingMode: false,
     };
     this.renderDropdownLabels = this.renderDropdownLabels.bind(this);
@@ -41,7 +39,6 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
     this.saveRecord = this.saveRecord.bind(this);
     this.editRecord = this.editRecord.bind(this);
     this.deleteRecord = this.deleteRecord.bind(this);
-
     this.callout = React.createRef();
   }
 
@@ -136,10 +133,13 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
   composeBodyJson = () => {
     const { bibliographicRecord, store: { getState } } = this.props;
     const formData = getState().form.bibliographicRecordForm.values;
+    const tagVariableData = getState().form.editableListForm.values.items;
 
     const tag006Values = [];
     const tag007Values = [];
     const tag008Values = [];
+
+    // Set leader
     bibliographicRecord.leader.value = formData.Leader;
 
     Object.keys(formData)
@@ -184,7 +184,12 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
         }
       });
 
-
+    tagVariableData.forEach(t => {
+      if (t.code === 100 || t.code === 110 || t.code === 700) {
+        t.categoryCode = 2;
+      }
+      t.mandatory = false;
+    });
     return bibliographicRecord;
   }
 
@@ -217,7 +222,6 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
       leaderData
     } = this.props;
     const {
-      openDropDownMenu,
       editable,
     } = this.state;
     const defaultTemplate = (settings) ? settings.defaultTemplate : C.DEFAULT_TEMPLATE;
@@ -241,7 +245,7 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
                   <KeyValue
                     value={<h2>{bibliographicRecord.name}</h2>}
                   />
-                  <form name="bibliographicRecordForm" onSubmit={this.saveRecord}>
+                  <form name="bibliographicRecordForm" onSubmit={this.saveRecord} formKey="bibliograficKey">
                     <Accordion label="Suppress" id="suppress" separator={false}>
                       <SingleCheckboxIconButton labels={['Suppress from Discovery']} pullLeft widthPadding />
                     </Accordion>
@@ -265,43 +269,11 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
                     </Accordion>
                   </form>
                   <Accordion label={translate({ id: 'ui-marccat.cataloging.variablefield.section.label' })} id="variable-field">
-                    <Row between="xs" className={style.marcEditableListFormHeader}>
-                      <Col xs>
-                        <Row end="xs" style={{ float: 'right' }}>
-                          <Col xs>
-                            <Button
-                              buttonStyle="primary"
-                              onClick={() => {}}
-                            >
-                              <Icon icon="edit">Edit</Icon>
-                            </Button>
-                          </Col>
-                          <Col xs>
-                            <DropdownButtonMenu
-                              {...this.props}
-                              marginBottom0
-                              label="Actions"
-                              labels={this.renderDropdownLabels()}
-                              onToggle={() => this.setState({
-                                openDropDownMenu: !openDropDownMenu
-                              })}
-                              open={openDropDownMenu}
-                            />
-                          </Col>
-                        </Row>
-                      </Col>
-                    </Row>
-                    {bibliographicRecord.fields
-                      .filter(f => f.fixedField === undefined || !f.fixedField)
-                      .map((f, idx) => (
-                        <VariableFields
-                          idx={idx}
-                          {...this.props}
-                          record={(f) || {}}
-                          editable={editable}
-                        />
-                      ))
-                    }
+                    <VariableFields
+                      fields={bibliographicRecord.fields.filter(f => f.fixedField === undefined || !f.fixedField)}
+                      {...this.props}
+                      editable={editable}
+                    />
                   </Accordion>
                 </AccordionSet>
               </div>
@@ -316,8 +288,6 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
 
 export default reduxForm({
   form: 'bibliographicRecordForm',
-  navigationCheck: true,
-  enableReinitialize: true,
   destroyOnUnmount: false,
 })(connect(
   ({ marccat: { template, recordDetail, leaderData, headerTypes006, headerTypes007, headerTypes008 } }) => ({

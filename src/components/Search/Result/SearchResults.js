@@ -61,7 +61,6 @@ export class SearchResults extends React.Component<P, {}> {
     this.keys = {
       'new': ['backspace'],
     };
-
     this.handlers = {
       'new': this.renderTemplateRoute,
     };

@@ -5,7 +5,7 @@
 import React from 'react';
 import { HotKeys, Callout } from '@folio/stripes/components';
 import MarcEditableList from './Editable';
-import type { Props } from '../../../core';
+import { Props, injectCommonProp } from '../../../core';
 
 class VariableFields extends React.Component<Props, {}> {
   constructor(props: Props) {
@@ -35,7 +35,7 @@ class VariableFields extends React.Component<Props, {}> {
   onSave = () => { this.showCallout('Tag saved sucesfully'); }
   onUpdate = () => { this.showCallout('Tag update sucesfully'); }
   onDelete = () => { this.showCallout('Tag delete sucesfully'); }
-  onCreate = () => { this.showCallout('Tag Saved sucesfully'); }
+  onCreate = () => { this.showCallout('Tag create sucesfully'); }
 
   showCallout = msg => this.callout.current.sendCallout({
     type: 'success',
@@ -46,16 +46,24 @@ class VariableFields extends React.Component<Props, {}> {
     )
   });
 
+  remapFields = (fields) => {
+    const original = Object.assign({}, fields);
+    original.forEach((f, i) => {
+      f.displayValue = fields[i].variableField.displayValue;
+    });
+    return original;
+  };
+
   renderList() {
-    const { fields, itemTemplate } = this.props;
+    const { fields, itemTemplate, translate } = this.props;
     fields.forEach((f, i) => {
       f.displayValue = fields[i].variableField.displayValue;
     });
     return (
       <React.Fragment>
         <MarcEditableList
-          createButtonLabel="+ Add new Tag"
-          contentData={fields}
+          createButtonLabel={translate({ id: 'cataloging.variablefield.section.add.newtag' })}
+          contentData={this.remapFields(fields)}
           visibleFields={[
             'code',
             'ind1',
@@ -95,4 +103,4 @@ class VariableFields extends React.Component<Props, {}> {
   }
 }
 
-export default VariableFields;
+export default injectCommonProp(VariableFields);

@@ -12,6 +12,7 @@ export const ENDPOINT = {
     'Content-Type': 'application/json',
     'x-okapi-tenant': 'tnx',
   },
+  DEFAULT_LANG_VIEW: 'lang=ita&view=1',
   BASE_URL: 'http://151.1.165.20:8080/marccat',
   MERGED_SEARCH_URL: '/mergedSearch',
   SEARCH_URL: '/searchVertical',
@@ -29,9 +30,9 @@ export const ENDPOINT = {
   UNLOCK_MARC_RECORD: '/bibliographic-record/unlock/',
 };
 
-export const buildUrl = (url:string, params?:string) => {
+export const buildUrl = (url:string, params?:string, withslash?: boolean = false) => {
   return ENDPOINT.BASE_URL
-    .concat(url)
+    .concat((withslash) ? url.concat('/') : url)
     .concat('?')
     .concat(params);
 };

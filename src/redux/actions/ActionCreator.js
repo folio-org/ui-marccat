@@ -16,7 +16,10 @@ export const isLockedRecordRequest = (isLoading) => ({
   type: ActionTypes.LOCK_RECORD_REQUESTED,
   payload: isLoading
 });
-
+export const isRecordDetailRequest = (isLoading) => ({
+  type: ActionTypes.RECORD_DETAIL_REQUESTED,
+  payload: isLoading
+});
 export const isFetchingTemplateByIdRequest = (isLoading) => ({
   type: ActionTypes.FETCH_TEMPLATE_GET_BY_ID,
   payload: isLoading
@@ -130,6 +133,10 @@ export const fetchTemplateById = (records) => ({
 });
 export const lockedRecord = (record) => ({
   type: ActionTypes.LOCK_RECORD_SUCCESS,
+  payload: record
+});
+export const recordDetailSuccess = (record) => ({
+  type: ActionTypes.RECORD_DETAIL_SUCCESS,
   payload: record
 });
 export const fetchLeaderFromTag = (records) => ({

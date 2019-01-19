@@ -22,7 +22,7 @@ import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../lib';
 import { VariableFields, MarcLeader, FixedFields } from '.';
 import { ActionTypes } from '../../redux/actions/Actions';
 import { put, remove, post } from '../../core/api/HttpService';
-import { buildUrl } from '../../redux/helpers';
+import { buildUrl } from '../../redux/helpers/Utilities';
 import * as C from '../../utils/Constant';
 
 import style from './Style/style.css';
@@ -133,7 +133,7 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
   composeBodyJson = () => {
     const { bibliographicRecord, store: { getState } } = this.props;
     const formData = getState().form.bibliographicRecordForm.values;
-    const tagVariableData = getState().form.editableListForm.values.items;
+    const tagVariableData = getState().form.marcEditableListForm.values.items;
 
     const tag006Values = [];
     const tag007Values = [];

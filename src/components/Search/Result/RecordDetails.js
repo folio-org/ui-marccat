@@ -13,15 +13,15 @@ import { EMPTY_MESSAGE } from '../../../utils/Constant';
 
 import style from '../../../styles/common.css';
 
-
 type P = Props & {
   items: Array<any>,
 }
 
 function RecordDetails({ translate, ...props }: P) {
-  const { items, checkDetailsInRow, checkDetailsBibRec } = props;
+  const { items, data, checkDetailsInRow, detail, checkDetailsBibRec } = props;
   const recordDetails = items.replace('LEADER', '000');
   const recordDetailsArray = recordDetails.split('\n');
+  data.recordDetail = detail[0];
   const tag245 = getTag245(recordDetailsArray);
   const title245 = getTitle245(recordDetailsArray);
   return (
@@ -63,5 +63,5 @@ export default (connect(
     items: details.records,
     checkDetailsInRow: details.recordType,
     checkDetailsBibRec: associatedRecords.recordType
-  })
+  }), () => ({})
 )(RecordDetails));

@@ -57,7 +57,7 @@ export const editRecord = props => {
 export const composeBodyResponse = props => {
   const { bibliographicRecord, store: { getState } } = props;
   const formData = getState().form.bibliographicRecordForm.values;
-  const tagVariableData = getState().form.editableListForm.values.items;
+  const tagVariableData = getState().form.marcEditableListForm.values.items;
 
   const tag006Values = [];
   const tag007Values = [];

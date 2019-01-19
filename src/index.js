@@ -3,6 +3,7 @@
  * @flow
  */
 import * as React from 'react';
+import { hot } from 'react-hot-loader';
 import { MarcatSettings as Settings } from './settings';
 import { Router } from './router';
 import { reducer, epics } from './redux';
@@ -87,4 +88,4 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
   * @example: this.props.root
   * @example: const { state } = this.props.root;
   */
-export default injectCommonProp(MARCCatRouting);
+export default hot(module)(injectCommonProp(MARCCatRouting));

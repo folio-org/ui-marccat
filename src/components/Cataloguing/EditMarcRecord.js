@@ -16,7 +16,7 @@ import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../lib';
 import { MarcLeader, FixedFields } from '.';
 import { injectCommonProp } from '../../core';
 import { ActionTypes } from '../../redux/actions';
-import { findParam, buildUrl } from '../../redux/helpers';
+import { findParam, buildUrl } from '../../redux/helpers/Utilities';
 import * as C from '../../utils/Constant';
 import style from './Style/style.css';
 import { remove, post } from '../../core/api/HttpService';
@@ -46,7 +46,7 @@ class EditMarcRecord extends Component {
   composeBodyJson = () => {
     const { recordDetail: { bibliographicRecord }, store: { getState } } = this.props;
     const formData = getState().form.bibliographicRecordForm.values;
-    const tagVariableData = getState().form.editableListForm.values.items;
+    const tagVariableData = getState().form.marcEditableListForm.values.items;
 
     const tag006Values = [];
     const tag007Values = [];
@@ -160,7 +160,7 @@ class EditMarcRecord extends Component {
   render() {
     const {
       translate,
-      recordDetail,
+      data,
       headerTypes006IsLoading,
       headerTypes007IsLoading,
       headerTypes008IsLoading,
@@ -168,8 +168,8 @@ class EditMarcRecord extends Component {
     } = this.props;
     let bibliographicRecord;
     let variableFields;
-    if (recordDetail) {
-      bibliographicRecord = recordDetail.bibliographicRecord;
+    if (data.recordDetail) {
+      bibliographicRecord = data.recordDetail.data;
       variableFields = bibliographicRecord.fields.filter(f => f.fixedField === undefined || !f.fixedField);
     }
     return (!bibliographicRecord) ? <Icon icon="spinner-ellipsis" /> : (
@@ -205,7 +205,7 @@ class EditMarcRecord extends Component {
                     <Accordion label="Control fields (001, 003, 005)" id="control-field">
                       <FixedFields
                         {...this.props}
-                        recordDetail={recordDetail}
+                        recordDetail={data.recordDetail}
                         headerTypes006IsLoading={headerTypes006IsLoading}
                         headerTypes007IsLoading={headerTypes007IsLoading}
                         headerTypes008IsLoading={headerTypes008IsLoading}

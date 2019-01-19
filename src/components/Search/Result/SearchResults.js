@@ -106,6 +106,13 @@ export class SearchResults extends React.Component<P, {}> {
     const id = meta['001'];
     const detailSelected = data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001']) || {};
     this.transitionToParams('id', id);
+    dispatch({ type: '@@ui-marccat/QUERY',
+      data: {
+        path: C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id,
+        id,
+        type: 'marcRecordDetail',
+        params: 'type=B&lang=ita&view=1',
+      } });
     dispatch({ type: ActionTypes.DETAILS, query: id, recordType: meta.recordView });
     if (isAuthorityRecord(meta)) {
       dispatch({ type: ActionTypes.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView, openPanel: true });

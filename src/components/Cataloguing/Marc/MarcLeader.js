@@ -4,6 +4,7 @@
  */
 import React from 'react';
 import { Field } from 'redux-form';
+import { cloneDeep } from 'lodash';
 import { Row, Col, Select } from '@folio/stripes/components';
 import type { Props } from '../../../core';
 import MarcField from './MarcField';
@@ -25,7 +26,7 @@ export default class MarcLeader extends React.Component<P, {}> {
     this.state = {
       leaderDataDispatched: false,
       leaderCss: false,
-      leaderChanged: props.leaderValue,
+      leader: props.leaderValue,
     };
     this.handleLeader = this.handleLeader.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -45,28 +46,37 @@ export default class MarcLeader extends React.Component<P, {}> {
     });
   };
 
+  /**
+   *
+   * @param {*} string - a currnt leader
+   * @param {*} index - index to replace
+   * @param {*} replace - a mutate leader
+   */
   replaceAt(string, index, replace) {
-    this.setState({
-      leaderChanged: string.substring(0, index) + replace + string.substring(index + 1)
+    this.setState((prevState) => {
+      const newState = cloneDeep(prevState);
+      const newLeader = Object.assign({}, prevState.leader);
+      newState.leader = newLeader.substring(0, index) + replace + newLeader.substring(index + 1);
+      return newState;
     });
   }
 
   handleChange = () => {
     const { store: { getState } } = this.props;
-    const { leaderChanged } = this.state;
+    const { leader } = this.state;
     const formData = getState().form.bibliographicRecordForm.values;
     Object.keys(formData)
-      .forEach((z) => {
-        if (z.split('-')[0] === 'Leader') {
-          switch (z.split('-')[1]) {
-          case 'itemRecordStatusCode': this.replaceAt(leaderChanged, 5, formData[z]); break;
-          case 'itemRecordTypeCode': this.replaceAt(leaderChanged, 6, formData[z]); break;
-          case 'itemBibliographicLevelCode': this.replaceAt(leaderChanged, 7, formData[z]); break;
-          case 'itemControlTypeCode': this.replaceAt(leaderChanged, 8, formData[z]); break;
-          case 'characterCodingSchemeCode': this.replaceAt(leaderChanged, 9, formData[z]); break;
-          case 'encodingLevel': this.replaceAt(leaderChanged, 17, formData[z]); break;
-          case 'descriptiveCataloguingCode': this.replaceAt(leaderChanged, 18, formData[z]); break;
-          case 'linkedRecordCode': this.replaceAt(leaderChanged, 19, formData[z]); break;
+      .forEach((k) => {
+        if (k.split('-')[0] === 'Leader') {
+          switch (k.split('-')[1]) {
+          case 'itemRecordStatusCode': this.replaceAt(leader, 5, formData[k]); break;
+          case 'itemRecordTypeCode': this.replaceAt(leader, 6, formData[k]); break;
+          case 'itemBibliographicLevelCode': this.replaceAt(leader, 7, formData[k]); break;
+          case 'itemControlTypeCode': this.replaceAt(leader, 8, formData[k]); break;
+          case 'characterCodingSchemeCode': this.replaceAt(leader, 9, formData[k]); break;
+          case 'encodingLevel': this.replaceAt(leader, 17, formData[k]); break;
+          case 'descriptiveCataloguingCode': this.replaceAt(leader, 18, formData[k]); break;
+          case 'linkedRecordCode': this.replaceAt(leader, 19, formData[k]); break;
           default: break;
           }
         }
@@ -74,7 +84,7 @@ export default class MarcLeader extends React.Component<P, {}> {
   };
 
   render() {
-    const { leaderCss, leaderChanged } = this.state;
+    const { leaderCss, leader } = this.state;
     const { leaderData, leaderValue } = this.props;
     const remappedValues = [];
     if (leaderData) {
@@ -90,7 +100,7 @@ export default class MarcLeader extends React.Component<P, {}> {
           name="Leader"
           withIcon
           onClick={this.handleLeader}
-          value={(leaderChanged) || leaderValue}
+          value={(leader) || leaderValue}
         />
         {leaderData &&
           <div className={(leaderCss) ? style.leaderResultsActive : style.leaderResults}>

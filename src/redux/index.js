@@ -46,6 +46,11 @@ import {
   headingSuggestionEpic,
 } from './epic/epics';
 
+import {
+  reducer as dataReducer,
+  epic as dataEpic,
+} from './epic/epic';
+
 export const reducer = combineReducers({
   search: searchEngineReducer,
   details: getDetailsRecord,
@@ -68,6 +73,7 @@ export const reducer = combineReducers({
   headingByTag: headingByTagReducer,
   settings: settingsReducer,
   panels: panelsReducer,
+  dataReducer
 });
 
 export const epics = combineEpics(
@@ -90,5 +96,8 @@ export const epics = combineEpics(
   tag007ValuesEpic,
   tag008ValuesEpic,
   recordDetailEpic,
-  headingSuggestionEpic
+  headingSuggestionEpic,
+  dataEpic
 );
+export { StoreReducer } from './helpers/StoreReducer';
+export { findParam, buildUrl, qs } from './helpers/Utilities';

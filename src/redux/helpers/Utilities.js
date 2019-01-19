@@ -1,3 +1,4 @@
+import queryString from 'qs';
 import { ENDPOINT } from '../../utils/Constant';
 
 export function findParam(param) {
@@ -9,4 +10,8 @@ export const buildUrl = (url:string, params?:string) => {
     .concat(url)
     .concat('?')
     .concat(params);
+};
+export const qs = {
+  parse: path => queryString.parse(path, { ignoreQueryPrefix: true }),
+  stringify: params => queryString.stringify(params, { encodeValuesOnly: true })
 };

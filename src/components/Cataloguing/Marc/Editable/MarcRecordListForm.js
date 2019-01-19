@@ -1,14 +1,19 @@
 /* eslint-disable react/destructuring-assignment */
 import isEqual from 'lodash/isEqual';
-import cloneDeep from 'lodash/cloneDeep';
-import uniqueId from 'lodash/uniqueId';
+import { cloneDeep, uniqueId } from 'lodash';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import stripesForm from '@folio/stripes-form';
 import { FieldArray } from 'redux-form';
 import PropTypes from 'prop-types';
-
-import { Button, Col, Headline, IconButton, MultiColumnList, Row } from '@folio/stripes-components';
+import {
+  Button,
+  Col,
+  Headline,
+  IconButton,
+  MultiColumnList,
+  Row
+} from '@folio/stripes-components';
 import MarcEditableItem from './MarcEditableItem';
 import css from './EditableList.css';
 
@@ -94,7 +99,6 @@ class EditableListForm extends React.Component {
     const { itemTemplate } = this.props;
     const item = { ...itemTemplate };
     fields.unshift(item);
-    // add field to edit-tracking in edit mode.
     this.setState((curState) => {
       const newState = cloneDeep(curState);
       if (newState.status.length === 0 && fields.length > 0) {
@@ -108,8 +112,6 @@ class EditableListForm extends React.Component {
   onCancel(fields, index) {
     const { uniqueField } = this.props;
     const item = fields.get(index);
-
-    // if the item has a unique identifier, toggle its edit mode... if not, remove it.
     if (item[uniqueField]) {
       this.toggleEdit(index);
     } else {
@@ -121,13 +123,11 @@ class EditableListForm extends React.Component {
       });
     }
 
-    // Reset the field values.
     this.props.reset();
   }
 
   onSave(fields, index) {
     const item = fields.get(index);
-    // if item has no id, it's new...
     const callback = (item.code) ?
       this.props.onUpdate :
       this.props.onCreate;
@@ -374,7 +374,7 @@ EditableListForm.propTypes = propTypes;
 EditableListForm.defaultProps = defaultProps;
 
 export default stripesForm({
-  form: 'editableListForm',
+  form: 'marcEditableListForm',
   navigationCheck: true,
   enableReinitialize: true,
   destroyOnUnmount: false,

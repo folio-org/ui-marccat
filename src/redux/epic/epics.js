@@ -6,7 +6,7 @@ import { concat as concat$ } from 'rxjs/observable/concat';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import { ActionTypes } from '../actions/Actions';
 import * as marccatActions from '../actions';
-import { buildUrl } from '../helpers';
+import { buildUrl } from '../helpers/Utilities';
 import { ENDPOINT, LockEntityType } from '../../utils/Constant';
 import { fetchFailure } from '../actions/ActionCreator';
 
@@ -112,10 +112,10 @@ export const templateByIdEpic = (action$, store) => action$.ofType(ActionTypes.T
   ));
 export const recordDetailEpic = (action$, store) => action$.ofType(ActionTypes.LOCK_RECORD)
   .switchMap((d) => concat$(
-    of$(marccatActions.isLockedRecordRequest(true)),
+    of$(marccatActions.isRecordDetailRequest(true)),
     ajax
       .getJSON(buildUrl(ENDPOINT.BIBLIOGRAPHIC_RECORD + `/${d.id}`, 'view=1&lang=ita'), ENDPOINT.HEADERS)
-      .map(record => marccatActions.lockedRecord(record))
+      .map(record => marccatActions.recordDetailSuccess(record))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
 

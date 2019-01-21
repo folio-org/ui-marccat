@@ -1,9 +1,8 @@
 const environment = process.env.NODE_ENV;
 const webpack = require('webpack');
 
-const url = (environment === 'sandbox') ?
-  'http://folio.atcult.it' :
-  'http://folio-alpha.aws.indexdata.com:9130';
+const url = (environment === 'sandbox')
+  ? 'http://folio.atcult.it:9130' : 'http://folio.atcult.it:9130';
 
 function mirage(config, enabled = false) {
   if (enabled) {
@@ -39,7 +38,7 @@ const servePlugin = {
 module.exports = {
   okapi: { url, tenant: 'diku' },
   config: {
-    logCategories: 'redux',
+    logCategories: '',
     hasAllPerms: true,
     // Custom command extension
     plugins: {

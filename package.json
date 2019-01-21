@@ -15,6 +15,7 @@
     "start": "node script/js/start",
     "status": "stripes status config/stripes.config.js",
     "build": "node ./script/js/build",
+    "build:local": "stripes build config/stripes.config.js --languages en",
     "build:analizer": "stripes build config/stripes.config.js ./dist/analyze/ui-marccat-analyze --analyze --sourcemap",
     "lint": "yarn eslint && yarn stylelint",
     "test": "stripes test karma",
@@ -61,11 +62,11 @@
     "react-hot-loader": "^4.3.12",
     "react-intl": "^2.4.0",
     "react-router-dom": "^4.0.0",
+    "redux-actions": "^2.6.4",
     "redux-form": "^7.4.2",
     "semafor": "^0.0.1",
     "stylelint": "^9.9.0",
     "stylelint-config-standard": "^18.2.0",
-    "redux-actions": "^2.6.4",
     "webpack": "^4.0.0"
   },
   "peerDependencies": {

@@ -92,10 +92,6 @@ export function epic(action$, { getState }) {
       const state = getState();
       const method = actionMethods[type];
 
-      // the request object created from this action
-      // const request = state.marccat[data.type].requests[data.timestamp];
-
-      // used for the actual request
       // let url = `${state.okapi.url}${data.path}`;
       let url = `${ENDPOINT.BASE_URL}${data.path}`;
       const headers = StoreReducer.getHeaders(method, state);
@@ -111,7 +107,6 @@ export function epic(action$, { getState }) {
         url = `${url}?${qs.stringify({ include })}`;
       }
 
-      // When PUTing, the payload needs to be stringified
       if (method === 'PUT' || method === 'POST') {
         body = JSON.stringify(payload);
       }

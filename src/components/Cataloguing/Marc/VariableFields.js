@@ -46,10 +46,10 @@ class VariableFields extends React.Component<Props, {}> {
     )
   });
 
-  remapFields = (fields) => {
+  fields = (fields) => {
     const original = Object.assign({}, fields);
     original.forEach((f, i) => {
-      f.displayValue = fields[i].variableField.displayValue;
+      f.displayValue = original[i].variableField.displayValue;
     });
     return original;
   };
@@ -57,13 +57,13 @@ class VariableFields extends React.Component<Props, {}> {
   renderList() {
     const { fields, itemTemplate, translate } = this.props;
     fields.forEach((f, i) => {
-      f.displayValue = fields[i].variableField.displayValue;
+      fields.displayValue = fields[i].variableField.displayValue;
     });
     return (
       <React.Fragment>
         <MarcEditableList
           createButtonLabel={translate({ id: 'cataloging.variablefield.section.add.newtag' })}
-          contentData={this.remapFields(fields)}
+          contentData={fields}
           visibleFields={[
             'code',
             'ind1',

@@ -244,7 +244,7 @@ class FixedFields extends React.Component<P, {}> {
     const fixedFields008 = fixedFields.filter(f => f.fixedField.code === '008')[0];
     return (
       <React.Fragment>
-        {(!recordDetail.isReady) ? this.renderTagxxx(fixedFieldsxxx) : this.renderTagxxx(fixedFields) }
+        {this.renderTagxxx(fixedFieldsxxx)}
         {/* {tag006Fields.map((f, i) => (
           this.renderTag006(fixedFields006, f, i)
         ))}

@@ -30,6 +30,7 @@ import { EMPTY_MESSAGE } from '../../../utils/Constant';
 import OperatorSelect from '../Select/OperatorSelect';
 
 import styles from '../index.css';
+import { FormReducer } from '../../../redux/helpers/StoreReducer';
 
 type P = Props & {
   inputErrorCheck: string,
@@ -71,6 +72,7 @@ class SearchPanel extends React.Component<P, {}> {
       let indexForQuery;
       let conditionFilter;
       let indexFilter;
+      // const values = FormReducer.resolve(store, 'searchForm');
       const form = getState().form.searchForm;
       const state = getState();
       if (form.values.operatorSelect) {
@@ -257,7 +259,7 @@ class SearchPanel extends React.Component<P, {}> {
                             onClick={this.handleAddSearchForm}
                           >
                             <Icon icon="plus-sign">
-                              {translate({ id: 'ui-marccat.button.add' })}
+                              {translate({ id: 'ui-marccat.button.add.search.form' })}
                             </Icon>
                           </Button>
                         </Col>

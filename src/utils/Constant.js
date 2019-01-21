@@ -86,7 +86,11 @@ export const INSERTED_TAGS = (code, typeCode) => {
   };
 };
 // SETTINGS
-export const DEFAULT_TEMPLATE = {
-  id: 408,
-  name: 'New Monograph'
+export const SETTINGS = {
+  DEFAULT_TEMPLATE: {
+    id: 408,
+    name: 'New Monograph'
+  },
 };
+
+export const separator = (s:string, sep) => s.replace(sep, '$');

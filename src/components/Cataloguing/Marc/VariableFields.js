@@ -6,6 +6,7 @@ import React from 'react';
 import { HotKeys, Callout } from '@folio/stripes/components';
 import MarcEditableList from './Editable';
 import { Props, injectCommonProp } from '../../../core';
+import { separator } from '../../../utils';
 
 class VariableFields extends React.Component<Props, {}> {
   constructor(props: Props) {
@@ -46,23 +47,16 @@ class VariableFields extends React.Component<Props, {}> {
     )
   });
 
-  fields = (fields) => {
-    const original = Object.assign({}, fields);
-    original.forEach((f, i) => {
-      f.displayValue = original[i].variableField.displayValue;
-    });
-    return original;
-  };
-
   renderList() {
     const { fields, itemTemplate, translate } = this.props;
     fields.forEach((f, i) => {
-      fields.displayValue = fields[i].variableField.displayValue;
+      f.displayValue = fields[i].variableField.displayValue;
+      separator(f.displayValue, '\u001f');
     });
     return (
       <React.Fragment>
         <MarcEditableList
-          createButtonLabel={translate({ id: 'cataloging.variablefield.section.add.newtag' })}
+          createButtonLabel={translate({ id: 'ui-marccat.cataloging.variablefield.section.add.newtag' })}
           contentData={fields}
           visibleFields={[
             'code',

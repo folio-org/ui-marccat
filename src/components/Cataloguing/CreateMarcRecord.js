@@ -225,7 +225,7 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
     const {
       editable,
     } = this.state;
-    const defaultTemplate = (settings) ? settings.defaultTemplate : C.DEFAULT_TEMPLATE;
+    const defaultTemplate = (settings) ? settings.defaultTemplate : C.SETTINGS.DEFAULT_TEMPLATE;
 
     return (!bibliographicRecord) ? <Icon icon="spinner-ellipsis" /> : (
       <React.Fragment>

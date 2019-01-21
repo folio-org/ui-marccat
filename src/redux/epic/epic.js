@@ -2,9 +2,11 @@ import { Observable } from 'rxjs/Observable';
 import { qs } from '..';
 import { ENDPOINT } from '../../utils/Constant';
 import { StoreReducer } from '../helpers/StoreReducer';
+import { HTTP_METHOD } from '../../core/api/HttpService';
 
 // action types
 export const REQUEST_MAKE = '@@ui-marccat/REQUEST_MAKE';
+export const REQUEST_REDUCE = '@@ui-marccat/REQUEST_REDUCE';
 export const REQUEST_RESOLVE = '@@ui-marccat/REQUEST_RESOLVE';
 export const REQUEST_REJECT = '@@ui-marccat/REQUEST_REJECT';
 export const REQUEST_CLEAR = '@@ui-marccat/REQUEST_CLEAR';
@@ -62,9 +64,11 @@ export const rejectRequest = (name, data, error) => ({
 export function reducer(state = {}, action) {
   switch (action.type) {
   case REQUEST_RESOLVE:
-    return Object.assign({}, state, StoreReducer.createDataStore(action.name, action.data, action.payload));
+    return Object.assign({
+    }, state, StoreReducer.createDataStore(action.name, action.data, action.payload));
   case REQUEST_REJECT:
-    return Object.assign({}, state, StoreReducer.createDataStore(action.name, action.data, action.error));
+    return Object.assign({
+    }, state, StoreReducer.createDataStore(action.name, action.data, action.error));
   default:
     return state;
   }
@@ -107,7 +111,7 @@ export function epic(action$, { getState }) {
         url = `${url}?${qs.stringify({ include })}`;
       }
 
-      if (method === 'PUT' || method === 'POST') {
+      if (method === HTTP_METHOD.PUT || method === HTTP_METHOD.POST) {
         body = JSON.stringify(payload);
       }
 

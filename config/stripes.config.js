@@ -1,3 +1,4 @@
+const environment = process.env.NODE_ENV;
 const webpack = require('webpack');
 
 const url = 'http://folio.atcult.it:9130';
@@ -36,7 +37,7 @@ const servePlugin = {
 module.exports = {
   okapi: { url, tenant: 'diku' },
   config: {
-    logCategories: 'redux',
+    logCategories: (environment !== 'production') ? 'redux' : '',
     hasAllPerms: true,
     // Custom command extension
     plugins: {

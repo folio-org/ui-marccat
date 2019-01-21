@@ -16,7 +16,7 @@ import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../lib';
 import { MarcLeader, FixedFields } from '.';
 import { injectCommonProp } from '../../core';
 import { ActionTypes } from '../../redux/actions';
-import { findParam, buildUrl } from '../../redux/helpers/Utilities';
+import { buildUrl } from '../../redux/helpers/Utilities';
 import * as C from '../../utils/Constant';
 import style from './Style/style.css';
 import { remove, post } from '../../core/api/HttpService';
@@ -25,7 +25,6 @@ import VariableFields from './Marc/VariableFields';
 import { StoreReducer } from '../../redux';
 
 class EditMarcRecord extends Component {
-
   handleClose = () => {
     const { dispatch, router, toggleFilterPane } = this.props;
     dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', filterChecked: false });
@@ -160,13 +159,11 @@ class EditMarcRecord extends Component {
       headerTypes007IsLoading,
       headerTypes008IsLoading,
       recordDetail,
-      pippo,
       leaderData,
     } = this.props;
     let bibliographicRecord;
     if (recordDetail) {
       bibliographicRecord = recordDetail;
-      console.log(pippo);
     }
     return (!bibliographicRecord) ? <Icon icon="spinner-ellipsis" /> : (
       <React.Fragment>
@@ -242,4 +239,3 @@ export default reduxForm({
     headerTypes008IsLoading: headerTypes008.isLoading
   }),
 )(injectCommonProp(EditMarcRecord)));
-

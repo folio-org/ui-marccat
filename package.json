@@ -23,7 +23,7 @@
     "stylelint": "stylelint --fix \"src/**/*.css\"",
     "flow": "flow status ./src/",
     "gen:authors": ". ./script/sh/authors.sh",
-    "clean": "rm -rf lib/",
+    "clean": "rm -rf lib/ dist/",
     "show:descriptor": "stripes mod descriptor --full",
     "release": "node script/ci/release.js"
   },

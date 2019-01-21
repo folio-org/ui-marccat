@@ -16,21 +16,15 @@ import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../lib';
 import { MarcLeader, FixedFields } from '.';
 import { injectCommonProp } from '../../core';
 import { ActionTypes } from '../../redux/actions';
-import { findParam, buildUrl } from '../../redux/helpers/Utilities';
+import { buildUrl } from '../../redux/helpers/Utilities';
 import * as C from '../../utils/Constant';
 import style from './Style/style.css';
 import { remove, post } from '../../core/api/HttpService';
 import { uuid } from './Utils/MarcUtils';
 import VariableFields from './Marc/VariableFields';
+import { StoreReducer } from '../../redux';
 
 class EditMarcRecord extends Component {
-  // eslint-disable-next-line react/no-deprecated
-  componentWillMount() {
-    const { store } = this.props;
-    const id = findParam('id');
-    store.dispatch({ type: ActionTypes.RECORD_DETAIL, id });
-  }
-
   handleClose = () => {
     const { dispatch, router, toggleFilterPane } = this.props;
     dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', filterChecked: false });
@@ -111,7 +105,7 @@ class EditMarcRecord extends Component {
     const { store, recordDetail } = this.props;
     const okapi = store.getState().okapi;
     const userName = okapi.currentUser.username;
-    const id = recordDetail.bibliographicRecord.id;
+    const id = recordDetail.id;
     const uid = uuid();
     remove(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id, `id=${id}&uuid=${uid}&userName=${userName}&lang=ita&view=1`), null);
     setTimeout(() => {
@@ -164,13 +158,12 @@ class EditMarcRecord extends Component {
       headerTypes006IsLoading,
       headerTypes007IsLoading,
       headerTypes008IsLoading,
+      recordDetail,
       leaderData,
     } = this.props;
     let bibliographicRecord;
-    let variableFields;
-    if (data.recordDetail) {
-      bibliographicRecord = data.recordDetail.data;
-      variableFields = bibliographicRecord.fields.filter(f => f.fixedField === undefined || !f.fixedField);
+    if (recordDetail) {
+      bibliographicRecord = recordDetail;
     }
     return (!bibliographicRecord) ? <Icon icon="spinner-ellipsis" /> : (
       <React.Fragment>
@@ -216,7 +209,7 @@ class EditMarcRecord extends Component {
                   <Accordion label={translate({ id: 'ui-marccat.cataloging.variablefield.section.label' })} id="variable-field">
                     <VariableFields
                       {...this.props}
-                      fields={variableFields}
+                      fields={bibliographicRecord.fields.filter(f => f.fixedField === undefined || !f.fixedField)}
                     />
                   </Accordion>
                 </AccordionSet>
@@ -235,8 +228,8 @@ export default reduxForm({
   enableReinitialize: true,
   destroyOnUnmount: false,
 })(connect(
-  ({ marccat: { recordDetail, leaderData, headerTypes006, headerTypes007, headerTypes008 } }) => ({
-    recordDetail: recordDetail.record,
+  ({ marccat: { dataReducer, leaderData, headerTypes006, headerTypes007, headerTypes008 } }) => ({
+    recordDetail: StoreReducer.resolve(dataReducer, 'marcRecordDetail').bibliographicRecord,
     headerTypes006Result: headerTypes006.records,
     leaderData: leaderData.records,
     headerTypes006IsLoading: headerTypes006.isLoading,

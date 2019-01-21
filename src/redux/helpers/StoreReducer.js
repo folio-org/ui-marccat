@@ -1,22 +1,27 @@
+import { isEmpty, uniqueId } from 'lodash';
+
 export function BaseStoreReducer() {}
 export function StoreReducer() {}
 export function Dispatcher() {}
 
 Object.setPrototypeOf(StoreReducer, BaseStoreReducer);
 
+StoreReducer.resolve = (dataReducer, model, jsonApiKey) => {
+  return (!jsonApiKey) ? dataReducer[model].records : dataReducer[model].records[jsonApiKey];
+};
+
 StoreReducer.createDataStore = (model, data, payload) => { // metodo statico
   return {
     [model]: {
       timestamp: new Date(),
-      // size: payload.length,
       path: data.path,
       resource: data.type,
       host: window.location.hostname,
       params: data.params,
-      id: data.id || undefined,
-      isPending: !!(payload.length),
-      isResolved: !!(payload.length),
-      isRejected: (!payload),
+      id: data.id || uniqueId('@@marccat-'),
+      isPending: isEmpty(payload),
+      isResolved: !isEmpty(payload),
+      isRejected: isEmpty(payload),
       records: payload || [],
       meta: {},
       errors: []

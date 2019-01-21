@@ -106,7 +106,8 @@ export class SearchResults extends React.Component<P, {}> {
     const id = meta['001'];
     const detailSelected = data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001']) || {};
     this.transitionToParams('id', id);
-    dispatch({ type: '@@ui-marccat/QUERY',
+    dispatch({
+      type: '@@ui-marccat/QUERY',
       data: {
         path: C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id,
         id,

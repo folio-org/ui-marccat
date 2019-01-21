@@ -78,9 +78,11 @@
     "search.record.new.from.template": "Novo a partir do modelo (CTRL+N)",
     "search.actionmenu.title": "Pesquisas recentes",
     "template.record.create": "Criar registro",
-    "template.record.delete": "Remover registro",
     "search.record.new.auth": "Novo (CTRL+A)",
     "cataloging.variablefield.empty": "Nenhum campo de dados variável presente",
     "cataloging.variablefield.section.label": "Campo de dados variável",
-    "app.title": "MARCcat"
+    "app.title": "MARCcat",
+    "template.record.delete": "Excluir registro",
+    "template.record.edit": "Editar registro",
+    "cataloging.variablefield.section.add.newtag": " + Adicionar nova tag"
 }

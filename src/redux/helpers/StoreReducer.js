@@ -11,6 +11,9 @@ FormReducer.resolve = (store, formName) => {
   return (store.getState().form[formName]) ? store.getState().form[formName].values : undefined;
 };
 
+StoreReducer.get = (store, reducer, prop) => {
+  return store.getState().marccat[reducer][prop];
+};
 StoreReducer.resolve = (data, model, jsonApiKey) => {
   return (!jsonApiKey) ? data[model].records : data[model].records[jsonApiKey];
 };

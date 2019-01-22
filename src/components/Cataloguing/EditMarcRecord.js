@@ -228,8 +228,10 @@ export default reduxForm({
   enableReinitialize: true,
   destroyOnUnmount: false,
 })(connect(
-  ({ marccat: { data, leaderData, headerTypes006, headerTypes007, headerTypes008 } }) => ({
+  ({ marccat: { data, leaderData, settings, headerTypes006, headerTypes007, headerTypes008 } }) => ({
     recordDetail: StoreReducer.resolve(data, 'marcRecordDetail').bibliographicRecord,
+    queryBib: settings.queryBib,
+    queryAuth: settings.queryAuth,
     headerTypes006Result: headerTypes006.records,
     leaderData: leaderData.records,
     headerTypes006IsLoading: headerTypes006.isLoading,

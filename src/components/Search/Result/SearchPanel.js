@@ -30,7 +30,6 @@ import { EMPTY_MESSAGE } from '../../../utils/Constant';
 import OperatorSelect from '../Select/OperatorSelect';
 
 import styles from '../index.css';
-import { FormReducer } from '../../../redux/helpers/StoreReducer';
 
 type P = Props & {
   inputErrorCheck: string,
@@ -193,54 +192,53 @@ class SearchPanel extends React.Component<P, {}> {
             header={FilterAccordionHeader}
           >
             {searchForm.map((form, idx) => (
-              <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}>
-                <div key={idx}>
-                  <Row>
-                    <Col xs={1}>
-                      <div className={styles.leftBracket} idx={idx} />
-                    </Col>
-                    <Col xs={10} className={styles.forwardBracket}>
-                      <Row>
-                        <Col xs={12}>
-                          <div className={styles.select_margin}>
-                            <SearchIndexes
-                              id={(idx === 0) ? 'selectIndexes' : `selectIndexes-${idx}`}
-                              name={(idx === 0) ? 'selectIndexes' : `selectIndexes-${idx}`}
-                              marginBottom0
-                              {...this.props}
-                            />
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row style={{ height: '30px' }}>
-                        <Col xs={12}>
-                          <SearchConditions
-                            id={(idx === 0) ? 'selectCondition' : `selectCondition-${idx}`}
-                            name={(idx === 0) ? 'selectCondition' : `selectCondition-${idx}`}
+              <form name={`searchForm[${idx}]`} key={idx} onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}>
+                <Row>
+                  <Col xs={1}>
+                    <div className={styles.leftBracket} />
+                  </Col>
+                  <Col xs={10} className={styles.forwardBracket}>
+                    <Row>
+                      <Col xs={12}>
+                        <div className={styles.select_margin}>
+                          <SearchIndexes
+                            id="selectIndexes"
+                            name="selectIndexes"
+                            marginBottom0
                             {...this.props}
                           />
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col xs={12}>
-                          <div className={styles.select_margin}>
-                            <Field
-                              id={(idx === 0) ? 'searchTextArea' : `searchTextArea-${idx}`}
-                              name={(idx === 0) ? 'searchTextArea' : `searchTextArea-${idx}`}
-                              fullWidth
-                              component={SearchField}
-                              placeholder="Search..."
-                            />
-                          </div>
-                        </Col>
-                      </Row>
-                      {idx !== (counter.length - 1) &&
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row style={{ height: '30px' }}>
+                      <Col xs={12}>
+                        <SearchConditions
+                          id="selectCondition"
+                          name="selectCondition"
+                          {...this.props}
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col xs={12}>
+                        <div className={styles.select_margin}>
+                          <Field
+                            id="searchTextArea"
+                            name="searchTextArea"
+                            fullWidth
+                            component={SearchField}
+                            placeholder="Search..."
+                          />
+                        </div>
+                      </Col>
+                    </Row>
+                    {idx !== (counter.length - 1) &&
                       <Row>
                         <Col xs={10}>
                           <OperatorSelect
                             {...this.props}
-                            id={(idx === 0) ? 'operatorSelect' : `operatorSelect-${idx}`}
-                            name={(idx === 0) ? 'operatorSelect' : `operatorSelect-${idx}`}
+                            id="operatorSelect"
+                            name="operatorSelect"
                           />
                         </Col>
                         <Col xs={2} style={{ display: 'flex', marginTop: '14px' }}>
@@ -251,25 +249,24 @@ class SearchPanel extends React.Component<P, {}> {
                           />
                         </Col>
                       </Row>
-                      }
-                      <Row>
-                        <Col xs={12}>
-                          <Button
-                            buttonClass={styles.rightPosition}
-                            onClick={this.handleAddSearchForm}
-                          >
-                            <Icon icon="plus-sign">
-                              {translate({ id: 'ui-marccat.button.add.search.form' })}
-                            </Icon>
-                          </Button>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col xs={1}>
-                      <div className={styles.rightBracket} idx={idx} />
-                    </Col>
-                  </Row>
-                </div>
+                    }
+                    <Row>
+                      <Col xs={12}>
+                        <Button
+                          buttonClass={styles.rightPosition}
+                          onClick={this.handleAddSearchForm}
+                        >
+                          <Icon icon="plus-sign">
+                            {translate({ id: 'ui-marccat.button.add.search.form' })}
+                          </Icon>
+                        </Button>
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col xs={1}>
+                    <div className={styles.rightBracket} idx={idx} />
+                  </Col>
+                </Row>
               </form>
             ))
             }

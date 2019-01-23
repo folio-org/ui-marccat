@@ -60,9 +60,9 @@ class SearchPanel extends React.Component<P, {}> {
 
   handleKeyDown(e) {
     let { isBrowseRequested } = this.state;
+    const { store, store: { getState }, dispatch, router } = this.props;
     if (e.charCode === 13 || e.key === 'Enter') {
       e.preventDefault();
-      const { store, store: { getState }, dispatch, router } = this.props;
       store.dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: true });
       store.dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
       const inputValue = '"' + e.target.form[2].defaultValue + '"';
@@ -71,73 +71,90 @@ class SearchPanel extends React.Component<P, {}> {
       let indexForQuery;
       let conditionFilter;
       let indexFilter;
+      // const values = FormReducer.resolve(store, 'searchForm');
       const form = getState().form.searchForm;
       const state = getState();
-      if (form.values.operatorSelect) {
-        this.buildComplexQuery(e);
-        return;
-      }
-      if (form.values) {
-        if (form.values.selectIndexes) {
-          indexFilter = form.values.selectIndexes;
-        }
-        if (form.values.selectCondition) {
-          conditionFilter = form.values.selectCondition;
-          indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
-          baseQuery = indexForQuery + inputValue;
-          baseQuery = (conditionFilter === 'MATCH') ? baseQuery + '!' : baseQuery;
+      if (form.values['operatorSelect-0']) {
+        this.buildComplexQuery();
+      } else {
+        if (form.values) {
+          if (form.values['selectIndexes-0']) {
+            indexFilter = form.values['selectIndexes-0'];
+          }
+          if (form.values['selectCondition-0']) {
+            conditionFilter = form.values['selectCondition-0'];
+            indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
+            baseQuery = indexForQuery + inputValue;
+            baseQuery = (conditionFilter === 'MATCH') ? baseQuery + '!' : baseQuery;
+          } else {
+            baseQuery = inputValue;
+          }
         } else {
           baseQuery = inputValue;
         }
-      } else {
-        baseQuery = inputValue;
-      }
 
-      let bibQuery = baseQuery;
-      const authQuery = baseQuery;
-      this.transitionToParams('q', bibQuery);
-
-      if (state.marccat.filter && state.marccat.filter.filters) {
-        const { languageFilter, formatType } = remapFilters(state.marccat.filter.filters);
-        if (languageFilter && languageFilter.length) {
-          bibQuery += ' AND ( ' + getLanguageFilterQuery(languageFilter) + ' ) ';
-        }
-        if (formatType && formatType.length) {
-          bibQuery += ' AND ( ' + getFormatFilterQuery(formatType) + ' ) ';
-        }
-      }
-      if (conditionFilter === 'BROWSE') {
-        isBrowseRequested = true;
-        dispatch({ type: ActionTypes.BROWSE_FIRST_PAGE, query: bibQuery });
-        router.push('/marccat/browse');
+        let bibQuery = baseQuery;
+        const authQuery = baseQuery;
         this.transitionToParams('q', bibQuery);
-        this.setState({
-          filterEnable: false
-        });
-      } else if (!isBrowseRequested) {
-        router.push('/marccat/search');
-        this.setState({
-          filterEnable: true
-        });
-        if (indexForQuery === 'BN '
+
+        if (state.marccat.filter && state.marccat.filter.filters) {
+          const { languageFilter, formatType } = remapFilters(state.marccat.filter.filters);
+          if (languageFilter && languageFilter.length) {
+            bibQuery += ' AND ( ' + getLanguageFilterQuery(languageFilter) + ' ) ';
+          }
+          if (formatType && formatType.length) {
+            bibQuery += ' AND ( ' + getFormatFilterQuery(formatType) + ' ) ';
+          }
+        }
+        if (conditionFilter === 'BROWSE') {
+          isBrowseRequested = true;
+          dispatch({ type: ActionTypes.BROWSE_FIRST_PAGE, query: bibQuery });
+          router.push('/marccat/browse');
+          this.transitionToParams('q', bibQuery);
+          this.setState({
+            filterEnable: false
+          });
+        } else if (!isBrowseRequested) {
+          router.push('/marccat/search');
+          this.setState({
+            filterEnable: true
+          });
+          if (indexForQuery === 'BN '
           || indexForQuery === 'SN '
           || indexForQuery === 'PU '
           || indexForQuery === 'LL '
           || indexForQuery === 'BC '
           || indexForQuery === 'CP '
           || indexForQuery === 'PW ') {
-          dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: '' });
-          this.transitionToParams('q', bibQuery);
-        } else {
-          dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: authQuery });
-          this.transitionToParams('q', authQuery);
+            dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: '' });
+            this.transitionToParams('q', bibQuery);
+          } else {
+            dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: authQuery });
+            this.transitionToParams('q', authQuery);
+          }
         }
       }
     }
   }
 
+
   buildComplexQuery = () => {
-    // const idx = searchForm.length - 1;
+    const { dispatch, store: { getState } } = this.props;
+    const { counter } = this.state;
+    let complex = EMPTY_MESSAGE;
+    for (let count = 0; count < counter.length; count++) {
+      const form = getState().form.searchForm;
+      const selectIndexes = form.values[`selectIndexes-${count}`];
+      const selectCondition = form.values[`selectCondition-${count}`];
+      const operatorSelect = form.values[`operatorSelect-${count}`];
+      const searchTextArea = '"' + form.values[`searchTextArea-${count}`] + '"';
+      const indexForQuery = findYourQuery[selectIndexes.concat('-').concat(selectCondition)];
+      let baseQuery = indexForQuery + searchTextArea;
+      baseQuery = (selectCondition === 'MATCH') ? baseQuery + '!' : baseQuery;
+      complex += ' ( ' + baseQuery + ' ) ' + operatorSelect;
+    }
+    const query = complex.split('undefined')[0].trim();
+    dispatch({ type: ActionTypes.SEARCH, queryBib: query, queryAuth: '' });
   }
 
   handleAddSearchForm = () => {
@@ -191,54 +208,53 @@ class SearchPanel extends React.Component<P, {}> {
             header={FilterAccordionHeader}
           >
             {searchForm.map((form, idx) => (
-              <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}>
-                <div key={idx}>
-                  <Row>
-                    <Col xs={1}>
-                      <div className={styles.leftBracket} idx={idx} />
-                    </Col>
-                    <Col xs={10} className={styles.forwardBracket}>
-                      <Row>
-                        <Col xs={12}>
-                          <div className={styles.select_margin}>
-                            <SearchIndexes
-                              id={(idx === 0) ? 'selectIndexes' : `selectIndexes-${idx}`}
-                              name={(idx === 0) ? 'selectIndexes' : `selectIndexes-${idx}`}
-                              marginBottom0
-                              {...this.props}
-                            />
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row style={{ height: '30px' }}>
-                        <Col xs={12}>
-                          <SearchConditions
-                            id={(idx === 0) ? 'selectCondition' : `selectCondition-${idx}`}
-                            name={(idx === 0) ? 'selectCondition' : `selectCondition-${idx}`}
+              <form name="searchForm" key={idx} onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}>
+                <Row>
+                  <Col xs={1}>
+                    <div className={styles.leftBracket} />
+                  </Col>
+                  <Col xs={10} className={styles.forwardBracket}>
+                    <Row>
+                      <Col xs={12}>
+                        <div className={styles.select_margin}>
+                          <SearchIndexes
+                            id={`selectIndexes-${idx}`}
+                            name={`selectIndexes-${idx}`}
+                            marginBottom0
                             {...this.props}
                           />
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col xs={12}>
-                          <div className={styles.select_margin}>
-                            <Field
-                              id={(idx === 0) ? 'searchTextArea' : `searchTextArea-${idx}`}
-                              name={(idx === 0) ? 'searchTextArea' : `searchTextArea-${idx}`}
-                              fullWidth
-                              component={SearchField}
-                              placeholder="Search..."
-                            />
-                          </div>
-                        </Col>
-                      </Row>
-                      {idx !== (counter.length - 1) &&
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row style={{ height: '30px' }}>
+                      <Col xs={12}>
+                        <SearchConditions
+                          id={`selectCondition-${idx}`}
+                          name={`selectCondition-${idx}`}
+                          {...this.props}
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col xs={12}>
+                        <div className={styles.select_margin}>
+                          <Field
+                            id={`searchTextArea-${idx}`}
+                            name={`searchTextArea-${idx}`}
+                            fullWidth
+                            component={SearchField}
+                            placeholder="Search..."
+                          />
+                        </div>
+                      </Col>
+                    </Row>
+                    {idx !== (counter.length - 1) &&
                       <Row>
                         <Col xs={10}>
                           <OperatorSelect
                             {...this.props}
-                            id={(idx === 0) ? 'operatorSelect' : `operatorSelect-${idx}`}
-                            name={(idx === 0) ? 'operatorSelect' : `operatorSelect-${idx}`}
+                            id={`operatorSelect-${idx}`}
+                            name={`operatorSelect-${idx}`}
                           />
                         </Col>
                         <Col xs={2} style={{ display: 'flex', marginTop: '14px' }}>
@@ -249,25 +265,24 @@ class SearchPanel extends React.Component<P, {}> {
                           />
                         </Col>
                       </Row>
-                      }
-                      <Row>
-                        <Col xs={12}>
-                          <Button
-                            buttonClass={styles.rightPosition}
-                            onClick={this.handleAddSearchForm}
-                          >
-                            <Icon icon="plus-sign">
-                              {translate({ id: 'ui-marccat.button.add' })}
-                            </Icon>
-                          </Button>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col xs={1}>
-                      <div className={styles.rightBracket} idx={idx} />
-                    </Col>
-                  </Row>
-                </div>
+                    }
+                    <Row>
+                      <Col xs={12}>
+                        <Button
+                          buttonClass={styles.rightPosition}
+                          onClick={this.handleAddSearchForm}
+                        >
+                          <Icon icon="plus-sign">
+                            {translate({ id: 'ui-marccat.button.add.search.form' })}
+                          </Icon>
+                        </Button>
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col xs={1}>
+                    <div className={styles.rightBracket} idx={idx} />
+                  </Col>
+                </Row>
               </form>
             ))
             }

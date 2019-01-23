@@ -13,7 +13,6 @@ export const columnMapper = (isBibsOnly:?boolean, isAuthOnly:?boolean = true) =>
     'subject': 'Subject (6xx)',
     'date1': 'Date 1',
     'date2': 'Date 2',
-    'format': 'Format',
     'tagHighlighted': 'Tag',
     'countDoc': 'Bibs'
   };

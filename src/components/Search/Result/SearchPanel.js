@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /**
  * @format
  * @flow
@@ -44,6 +46,8 @@ class SearchPanel extends React.Component<P, {}> {
       searchForm: [{ name: EMPTY_MESSAGE }],
       filterEnable: true,
       counter: [{}],
+      leftBracketEnable: true,
+      rightBracketEnable: true,
     };
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleAddSearchForm = this.handleAddSearchForm.bind(this);
@@ -196,7 +200,7 @@ class SearchPanel extends React.Component<P, {}> {
 
   render() {
     const { translate, ...rest } = this.props;
-    const { searchForm, filterEnable, counter } = this.state;
+    const { searchForm, filterEnable, counter, leftBracketEnable, rightBracketEnable } = this.state;
     return (
       <React.Fragment>
         {this.renderResetButton()}
@@ -211,7 +215,13 @@ class SearchPanel extends React.Component<P, {}> {
               <form name="searchForm" key={idx} onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}>
                 <Row>
                   <Col xs={1}>
-                    <div className={styles.leftBracket} />
+                    <div
+                      className={(leftBracketEnable) ? styles.leftBracket : styles.leftBracketDisabled}
+                      key={idx}
+                      onClick={() => this.setState({
+                        leftBracketEnable: !leftBracketEnable
+                      })}
+                    />
                   </Col>
                   <Col xs={10} className={styles.forwardBracket}>
                     <Row>
@@ -280,7 +290,13 @@ class SearchPanel extends React.Component<P, {}> {
                     </Row>
                   </Col>
                   <Col xs={1}>
-                    <div className={styles.rightBracket} idx={idx} />
+                    <div
+                      className={(rightBracketEnable) ? styles.rightBracket : styles.rightBracketDisabled}
+                      key={idx}
+                      onClick={() => this.setState({
+                        rightBracketEnable: !rightBracketEnable
+                      })}
+                    />
                   </Col>
                 </Row>
               </form>

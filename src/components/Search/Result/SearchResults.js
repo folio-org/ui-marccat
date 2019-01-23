@@ -318,7 +318,7 @@ export default (connect(
     bibliographicResults: search.bibliographicResults,
     totalBibCount: search.bibCounter,
     totalAuthCount: search.authCounter,
-    authorityResults: search.authorityResults,
+    authorityResults: search.authorityResults || [],
     isFetching: search.isLoading,
     isReady: search.isReady,
     isFetchingDetail: details.isLoading,

@@ -6,7 +6,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { MultiColumnList, Icon, Pane } from '@folio/stripes/components';
 import { Props, injectCommonProp } from '../../core';
-import { getActionMenu, ToolbarButtonMenu } from '../../lib';
+import { getActionMenu, ToolbarButtonMenu, CheckboxIconButton } from '../../lib';
 
 type P = Props & {
   label: string;
@@ -47,7 +47,6 @@ class DefaultTemplate extends React.Component<P, {}> {
         }
       />
     );
-
     return (
       <Pane
         defaultWidth="fill"
@@ -58,26 +57,7 @@ class DefaultTemplate extends React.Component<P, {}> {
       >
         {(defaultTemplateData && defaultTemplateData.length > 0) && (isLoadingData) ?
           <Icon icon="spinner-ellipsis" /> :
-          <div>
-            <MultiColumnList
-              contentData={defaultTemplateData}
-              rowMetadata={['id', 'name', 'fields']}
-              onRowClick={this.handleSelectTemplate}
-              columnWidths={
-                {
-                  'id': '5%',
-                  'name': '50%',
-                }
-              }
-              visibleColumns={[
-                'id', 'name',
-              ]}
-              columnMapping={{
-                'id':'id',
-              }}
-              formatter={resultsFormatter}
-            />
-          </div>
+          <CheckboxIconButton labels={names} />
         }
       </Pane>
     );

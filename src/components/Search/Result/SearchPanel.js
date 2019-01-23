@@ -212,7 +212,7 @@ class SearchPanel extends React.Component<P, {}> {
             header={FilterAccordionHeader}
           >
             {searchForm.map((form, idx) => (
-              <form name="searchForm" key={idx} onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}>
+              <form name={`searchForm${idx}`} key={idx} onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}>
                 <Row>
                   <Col xs={1}>
                     <div

@@ -3,7 +3,7 @@
     "marccat": "MARC编目",
     "noResult": "找不到结果",
     "initial.title": "选择过滤器或输入搜索查询以显示结果",
-    "button.new.tag": "+标签",
+    "button.new.tag": "标签",
     "button.backto": "关闭",
     "navigator.search": "搜索",
     "search.result": "搜索结果",
@@ -15,7 +15,7 @@
     "search.lorem": "Lorem ipsum dolor sit amet，consectetur adipiscing elit.Lorem ipsum dolor sit amet，consectetur adipiscing elit。",
     "search.record": "记录",
     "search.record.preview": "预览记录",
-    "search.record.new.keyboard": "+ 新增 (CTRL+N)",
+    "search.record.new.keyboard": "新增 (CTRL+N)",
     "search.record.edit": "编辑",
     "search.goto.inventory": "查看库存",
     "search.details.bibliographic": "书目记录",
@@ -26,7 +26,7 @@
     "settings.general": "常规",
     "settings.general.message": "这些是您的常规应用设置。",
     "searchAndFilter": "搜索和过滤",
-    "button.new": "+新建",
+    "button.new": "新建",
     "button.close": "关闭",
     "button.cancel": "取消",
     "settings.field.groupings": "字段分组",
@@ -81,5 +81,8 @@
     "search.record.new.auth": "新建 (ctrl + A)",
     "cataloging.variablefield.empty": "没有可变字段显示",
     "cataloging.variablefield.section.label": "可变数据字段",
-    "app.title": "MARC编目"
+    "app.title": "MARC编目",
+    "template.record.delete": "删除记录",
+    "template.record.edit": "Edit Record",
+    "cataloging.variablefield.section.add.newtag": "Add new Tag"
 }

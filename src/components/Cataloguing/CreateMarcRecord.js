@@ -42,6 +42,11 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
     this.callout = React.createRef();
   }
 
+  componentDidMount() {
+    const { toggleFilterPane } = this.props;
+    toggleFilterPane();
+  }
+
   renderDropdownLabels = () => {
     const { translate } = this.props;
     return [

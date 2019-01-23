@@ -7,42 +7,43 @@ import React from 'react';
 import { Field } from 'redux-form';
 import { Select } from '@folio/stripes/components';
 import { ActionTypes } from '../../../redux/actions';
+import { SORT_TYPE, FILTER_NAME } from '../Utils/Constant';
 
 export default function SearchIndexes({ ...props }) {
   const { rest, name, id } = props;
   const options = [
-    { label: 'Title', value: 'TITLE', sortBy: 4 },
-    { label: 'Name: All', value: 'NAME', sortBy: 2096 },
+    { label: 'Title', value: 'TITLE', sortBy: SORT_TYPE.TITLE },
+    { label: 'Name: All', value: 'NAME', sortBy: SORT_TYPE.NAME },
     { label: 'ISBN', value: 'ISBN' },
     { label: 'ISSN', value: 'ISSN' },
-    { label: 'Local id.Number (001)', value: 'NUMID', sortBy: 54 },
-    { label: 'Id.Number (035)', value: 'OTHID', sortBy: 54 },
+    { label: 'Local id.Number (001)', value: 'NUMID', sortBy: SORT_TYPE.AN },
+    { label: 'Id.Number (035)', value: 'OTHID', sortBy: SORT_TYPE.AN },
     { label: 'All MARC fields', value: 'ALL' },
     { label: '________________________________', value: 'ALL', disabled: true },
-    { label: 'Title series', value: 'TITSER', sortBy: 4 },
-    { label: 'Name: Personal', value: 'NAMEP', sortBy: 2096 },
-    { label: 'Name: Corporate', value: 'NAMEC', sortBy: 2096 },
-    { label: 'Name: Meeting', value: 'NAMEM', sortBy: 2096 },
-    { label: 'Name/Title for Name', value: 'NAMETN', sortBy: 2096 },
-    { label: 'Name/Title for Title', value: 'NAMETT', sortBy: 2096 },
-    { label: 'Subject: All', value: 'SUB', sortBy: 21 },
-    { label: 'Subject: Personal', value: 'SUBP', sortBy: 21 },
-    { label: 'Subject: Corporate', value: 'SUBC', sortBy: 21 },
-    { label: 'Subject: Meeting', value: 'SUBM', sortBy: 21 },
-    { label: 'Subject: Preferred title', value: 'SUBUT', sortBy: 21 },
-    { label: 'Subject: Named Event', value: 'SUBNE', sortBy: 21 },
-    { label: 'Subject: Chronological Term', value: 'SUBCT', sortBy: 21 },
-    { label: 'Subject: Topical Term', value: 'SUBTT', sortBy: 21 },
-    { label: 'Subject: Geographic Name', value: 'SUBGN', sortBy: 21 },
-    { label: 'Subject: Uncontrolled', value: 'SUBU', sortBy: 21 },
-    { label: 'Subject: Faceted Topical Terms', value: 'SUBFTT', sortBy: 21 },
-    { label: 'Subject: Genre/Form', value: 'SUBGF', sortBy: 21 },
-    { label: 'Subject: Occupation', value: 'SUBO', sortBy: 21 },
-    { label: 'Subject: Function', value: 'SUBF', sortBy: 21 },
-    { label: 'Subject: Curriculum Objective', value: 'SUBCO', sortBy: 21 },
-    { label: 'Subject: Hierarchical Place Name', value: 'SUBHPN', sortBy: 21 },
-    { label: 'Subject: Local', value: 'SUBL', sortBy: 21 },
-    { label: 'Publisher Name', value: 'PN', sortBy: 2096 },
+    { label: 'Title series', value: 'TITSER', sortBy: SORT_TYPE.TITLE },
+    { label: 'Name: Personal', value: 'NAMEP', sortBy: SORT_TYPE.NAME },
+    { label: 'Name: Corporate', value: 'NAMEC', sortBy: SORT_TYPE.NAME },
+    { label: 'Name: Meeting', value: 'NAMEM', sortBy: SORT_TYPE.NAME },
+    { label: 'Name/Title for Name', value: 'NAMETN', sortBy: SORT_TYPE.NAME },
+    { label: 'Name/Title for Title', value: 'NAMETT', sortBy: SORT_TYPE.NAME },
+    { label: 'Subject: All', value: 'SUB', sortBy: SORT_TYPE.SUBJECT },
+    { label: 'Subject: Personal', value: 'SUBP', sortBy: SORT_TYPE.SUBJECT },
+    { label: 'Subject: Corporate', value: 'SUBC', sortBy: SORT_TYPE.SUBJECT },
+    { label: 'Subject: Meeting', value: 'SUBM', sortBy: SORT_TYPE.SUBJECT },
+    { label: 'Subject: Preferred title', value: 'SUBUT', sortBy: SORT_TYPE.SUBJECT },
+    { label: 'Subject: Named Event', value: 'SUBNE', sortBy: SORT_TYPE.SUBJECT },
+    { label: 'Subject: Chronological Term', value: 'SUBCT', sortBy: SORT_TYPE.SUBJECT },
+    { label: 'Subject: Topical Term', value: 'SUBTT', sortBy: SORT_TYPE.SUBJECT },
+    { label: 'Subject: Geographic Name', value: 'SUBGN', sortBy: SORT_TYPE.SUBJECT },
+    { label: 'Subject: Uncontrolled', value: 'SUBU', sortBy: SORT_TYPE.SUBJECT },
+    { label: 'Subject: Faceted Topical Terms', value: 'SUBFTT', sortBy: SORT_TYPE.SUBJECT },
+    { label: 'Subject: Genre/Form', value: 'SUBGF', sortBy: SORT_TYPE.SUBJECT },
+    { label: 'Subject: Occupation', value: 'SUBO', sortBy: SORT_TYPE.SUBJECT },
+    { label: 'Subject: Function', value: 'SUBF', sortBy: SORT_TYPE.SUBJECT },
+    { label: 'Subject: Curriculum Objective', value: 'SUBCO', sortBy: SORT_TYPE.SUBJECT },
+    { label: 'Subject: Hierarchical Place Name', value: 'SUBHPN', sortBy: SORT_TYPE.SUBJECT },
+    { label: 'Subject: Local', value: 'SUBL', sortBy: SORT_TYPE.SUBJECT },
+    { label: 'Publisher Name', value: 'PN', sortBy: SORT_TYPE.NAME },
     { label: 'Publisher Place', value: 'PP' },
     { label: 'Other Class. (Canada)', value: 'CC' },
     { label: 'Other Classification', value: 'OC' },
@@ -61,10 +62,18 @@ export default function SearchIndexes({ ...props }) {
     { label: 'Other Control No.', value: 'NN' },
   ];
 
-  const onChange = event => {
+  const disableSortOnAuthority = (sortType) => {
+    const { store: { getState } } = props;
+    const filter = getState().marccat.filter.filters;
+    const sortAuth = (sortType === SORT_TYPE.UNIFORM_TITLE || sortType === SORT_TYPE.DATA1 || sortType === SORT_TYPE.DATE2);
+    if (sortAuth) filter[FILTER_NAME.AUTHORITY] = false;
+  };
+
+  const setSortStrategy = event => {
     const { dispatch } = props;
     const index = event.target.options.selectedIndex - 1;
     const sortType = options[index].sortBy;
+    disableSortOnAuthority(sortType);
     dispatch({ type: ActionTypes.SETTINGS, data: { sortType } });
   };
 
@@ -75,7 +84,7 @@ export default function SearchIndexes({ ...props }) {
       placeholder="Select a index..."
       component={Select}
       dataOptions={options}
-      onChange={(event) => onChange(event)}
+      onChange={(event) => setSortStrategy(event)}
       {...rest}
     />
   );

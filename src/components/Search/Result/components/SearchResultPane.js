@@ -39,8 +39,8 @@ class SearchResultPane extends React.Component<Props, {}> {
             case 'Name': if (form[z]) visibleColumns[3] = 'name'; break;
             case 'Preferred Title': if (form[z]) visibleColumns[4] = 'preferredTitle'; break;
             case 'Tag': if (form[z]) visibleColumns[5] = 'tagHighlighted'; break;
-            case 'Date 1': if (form[z]) visibleColumns[6] = 'date1'; break;
-            case 'Date 2': if (form[z]) visibleColumns[7] = 'date2'; break;
+            case 'Date 1': if (form[z]) visibleColumns[6] = 'Date 1'; break;
+            case 'Date 2': if (form[z]) visibleColumns[7] = 'Date 2'; break;
             case 'Format': if (form[z]) visibleColumns[8] = 'format'; break;
             default:
               break;
@@ -85,7 +85,6 @@ class SearchResultPane extends React.Component<Props, {}> {
                 <NoResultsMessage {...this.props} /> :
                 (isReady) ?
                   <MultiColumnList
-                    autosize
                     id="data-test-search-results-table"
                     defaultWidth="fill"
                     columnWidths={columnWidthMapper(false, false)}

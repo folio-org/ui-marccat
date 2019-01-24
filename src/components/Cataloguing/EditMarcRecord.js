@@ -53,7 +53,7 @@ class EditMarcRecord extends React.Component {
     const { recordDetail, store: { getState } } = this.props;
     const formData = getState().form.bibliographicRecordForm.values;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
-
+    const initialTag = getState().form.marcEditableListForm.values.items.length;
     const tag006Values = [];
     const tag007Values = [];
     const tag008Values = [];
@@ -104,37 +104,38 @@ class EditMarcRecord extends React.Component {
           });
         }
       });
-
-    tagVariableData.forEach(t => {
-      if (t.code !== '040') {
-        let keyNumber = '';
-        let category = '';
-        if (t.code === '245') {
-          keyNumber = 2215279;
-          category = 3;
-        } else if (t.code === '100') {
-          keyNumber = 1000;
-          category = 2;
+    if (initialTag < tagVariableData.length) {
+      tagVariableData.forEach(t => {
+        if (t.code !== '040') {
+          let keyNumber = '';
+          let category = '';
+          if (t.code === '245') {
+            keyNumber = 2215279;
+            category = 3;
+          } else if (t.code === '100') {
+            keyNumber = 1000;
+            category = 2;
+          }
+          t.mandatory = false;
+          t.added = true;
+          t.fieldStatus = 'changed';
+          t.variableField = {
+            keyNumber,
+            ind1: (t.code === '100') ? 1 : 0,
+            ind2: (t.code === '100') ? 1 : 4,
+            code: t.code,
+            categoryCode: category,
+            displayValue: t.displayValue,
+            functionCode: '-1',
+            headingTypeCode: '1',
+            itemTypeCode: '-1',
+            sequenceNumber: 0,
+            skipInFiling: 0,
+          };
         }
-        t.mandatory = false;
-        t.added = true;
-        t.fieldStatus = 'changed';
-        t.variableField = {
-          keyNumber,
-          ind1: (t.code === '100') ? 1 : 0,
-          ind2: (t.code === '100') ? 1 : 4,
-          code: t.code,
-          categoryCode: category,
-          displayValue: t.displayValue,
-          functionCode: '-1',
-          headingTypeCode: '1',
-          itemTypeCode: '-1',
-          sequenceNumber: 0,
-          skipInFiling: 0,
-        };
-      }
-    });
-    bibliographicRecord.fields = _.union(bibliographicRecord.fields, tagVariableData);
+      });
+    }
+    if (initialTag < tagVariableData.length) { bibliographicRecord.fields = _.union(bibliographicRecord.fields, tagVariableData); }
     return bibliographicRecord;
   }
 

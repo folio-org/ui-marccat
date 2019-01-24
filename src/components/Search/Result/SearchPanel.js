@@ -55,6 +55,7 @@ class SearchPanel extends React.Component<P, {}> {
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleResetAllButton = this.handleResetAllButton.bind(this);
   }
+
   transitionToParams = (key, value) => {
     const { location } = this.props;
     const url = location.pathname;

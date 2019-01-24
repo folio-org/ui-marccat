@@ -65,9 +65,9 @@ export const genericActionMenuDetail = (labels:[]) => {
   );
 };
 
-export const getActionMenu = () => (
+export const getActionMenu = (onClick) => (
   <React.Fragment>
-    <Button buttonStyle="dropdownItem">
+    <Button buttonStyle="dropdownItem" onClick={onClick()}>
       <Icon icon="document">
         <FormattedMessage id="ui-marccat.template.actionmenu.new" />
       </Icon>

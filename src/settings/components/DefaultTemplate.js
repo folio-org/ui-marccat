@@ -4,9 +4,11 @@
  */
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { MultiColumnList, Icon, Pane } from '@folio/stripes/components';
+import { Icon, Pane, Button } from '@folio/stripes/components';
+import { FormattedMessage } from 'react-intl';
 import { Props, injectCommonProp } from '../../core';
-import { getActionMenu, ToolbarButtonMenu } from '../../lib';
+import { ToolbarButtonMenu } from '../../lib';
+import CheckMarkIcon from '../../lib/components/Button/CheckMarkIcon';
 
 type P = Props & {
   label: string;
@@ -19,22 +21,23 @@ class DefaultTemplate extends React.Component<P, {}> {
     this.handleSelectTemplate = this.handleSelectTemplate.bind(this);
   }
 
-  handleSelectTemplate = (e, record) => {
+  handleSelectTemplate = () => {
     const { history } = this.props;
-    history.push(`/marccat/record/template?templateId=${record.id}`);
+    history.push(`/marccat/record/template?templateId=${408}`);
   }
 
   render() {
-    const resultsFormatter = {
-      id: () => (
-        <Icon
-          icon="document"
-          size="small"
-        />
-      ),
-    };
     const { translate, label, isLoadingData, defaultTemplateData } = this.props;
     const names = [];
+    const getActionMenu = () => (
+      <React.Fragment>
+        <Button buttonStyle="dropdownItem" onClick={this.handleSelectTemplate}>
+          <Icon icon="document">
+            <FormattedMessage id="ui-marccat.template.actionmenu.new" />
+          </Icon>
+        </Button>
+      </React.Fragment>
+    );
     if (defaultTemplateData && defaultTemplateData.length > 0) { defaultTemplateData.forEach(t => names.push(t.name)); }
     const rightMenu = (
       <ToolbarButtonMenu
@@ -47,7 +50,6 @@ class DefaultTemplate extends React.Component<P, {}> {
         }
       />
     );
-
     return (
       <Pane
         defaultWidth="fill"
@@ -58,26 +60,18 @@ class DefaultTemplate extends React.Component<P, {}> {
       >
         {(defaultTemplateData && defaultTemplateData.length > 0) && (isLoadingData) ?
           <Icon icon="spinner-ellipsis" /> :
-          <div>
-            <MultiColumnList
-              contentData={defaultTemplateData}
-              rowMetadata={['id', 'name', 'fields']}
-              onRowClick={this.handleSelectTemplate}
-              columnWidths={
-                {
-                  'id': '5%',
-                  'name': '50%',
-                }
-              }
-              visibleColumns={[
-                'id', 'name',
-              ]}
-              columnMapping={{
-                'id':'id',
-              }}
-              formatter={resultsFormatter}
-            />
-          </div>
+          <React.Fragment>
+            <div id="data-test-settings-authority-records" style={{ paddingBottom: '15px' }}>
+              {translate({ id: 'ui-marccat.settings.default.record.template.auth.text' }) }
+            </div>
+            <CheckMarkIcon labels={names.slice(0, 4)} />
+            <div id="data-test-settings-authority-records" style={{ paddingBottom: '15px', paddingTop: '15px' }}>
+              {translate({ id: 'ui-marccat.settings.default.record.template.bib.text' }) }
+            </div>
+            <div id="data-test-settings-authority-records" style={{ paddingBottom: '15px', paddingTop: '15px' }}>
+              No authority template found.
+            </div>
+          </React.Fragment>
         }
       </Pane>
     );

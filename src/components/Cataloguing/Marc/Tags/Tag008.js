@@ -47,7 +47,7 @@ export class Tag008 extends React.Component<Props, {}> {
               onChange={this.handleOnChange}
               label="Header types"
               placeholder="Select header..."
-              dataOptions={headerTypesResult.headingTypes}
+              dataOptions={headerTypesResult.headingTypes || 31}
             />
           </Col>
         </Row>

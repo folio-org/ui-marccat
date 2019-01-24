@@ -158,7 +158,18 @@ class SearchPanel extends React.Component<P, {}> {
       baseQuery = (selectCondition === 'MATCH') ? baseQuery + '!' : baseQuery;
       complex += ' ( ' + baseQuery + ' ) ' + operatorSelect;
     }
-    const query = complex.split('undefined')[0].trim();
+  
+    let query = complex.split('undefined')[0].trim();
+    const state = getState();
+    if (state.marccat.filter && state.marccat.filter.filters) {
+      const { languageFilter, formatType } = remapFilters(state.marccat.filter.filters);
+      if (languageFilter && languageFilter.length) {
+        query += ' AND ( ' + getLanguageFilterQuery(languageFilter) + ' ) ';
+      }
+      if (formatType && formatType.length) {
+        query += ' AND ( ' + getFormatFilterQuery(formatType) + ' ) ';
+      }
+    }
     dispatch({ type: ActionTypes.SEARCH, queryBib: query, queryAuth: '' });
   }
 

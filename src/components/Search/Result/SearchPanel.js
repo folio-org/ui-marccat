@@ -158,7 +158,7 @@ class SearchPanel extends React.Component<P, {}> {
       baseQuery = (selectCondition === 'MATCH') ? baseQuery + '!' : baseQuery;
       complex += ' ( ' + baseQuery + ' ) ' + operatorSelect;
     }
-  
+
     let query = complex.split('undefined')[0].trim();
     const state = getState();
     if (state.marccat.filter && state.marccat.filter.filters) {

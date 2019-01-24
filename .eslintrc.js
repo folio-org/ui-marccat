@@ -22,7 +22,7 @@ module.exports = {
 		"indent": ["error", 2],
     "react/jsx-indent": ["error", 2],
 		"react/forbid-prop-types":"off",
-		"spaced-comment": ["error", "always", { "markers": ["/"] }],
+    "spaced-comment": ["error", "always", { "markers": ["/"] }],
     "arrow-parens": "off",
     "no-return-assign":"off",
     "jsx-a11y/no-noninteractive-element-interactions":"off",
@@ -30,7 +30,8 @@ module.exports = {
     "object-curly-newline": "off",
     "import/no-named-as-default": "off",
     "import/no-extraneous-dependencies": "off",
-		"react/sort-comp": "off",
+    "react/sort-comp": "off",
+    "react/prop-types" : "off",
     "react/destructuring-assignment": ["error"],
 	}
 }

@@ -84,5 +84,6 @@
     "app.title": "MARCcat",
     "template.record.delete": "Excluir registro",
     "template.record.edit": "Editar registro",
-    "cataloging.variablefield.section.add.newtag": "Adicionar nova tag"
+    "cataloging.variablefield.section.add.newtag": "+ Adicionar nova tag",
+    "button.add.search.form": "Adicionar"
 }

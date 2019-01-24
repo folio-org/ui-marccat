@@ -17,6 +17,7 @@ import {
   Icon
 } from '@folio/stripes/components';
 import { reduxForm } from 'redux-form';
+import _ from 'lodash';
 import { Props, injectCommonProp } from '../../core';
 import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../lib';
 import { VariableFields, MarcLeader, FixedFields } from '.';
@@ -40,6 +41,11 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
     this.editRecord = this.editRecord.bind(this);
     this.deleteRecord = this.deleteRecord.bind(this);
     this.callout = React.createRef();
+  }
+
+  componentDidMount() {
+    const { toggleFilterPane } = this.props;
+    toggleFilterPane();
   }
 
   renderDropdownLabels = () => {
@@ -108,7 +114,12 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
   saveRecord = () => {
     const { isEditingMode } = this.state;
     const body = { bibliographicRecord: this.composeBodyJson() };
-    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'lang=ita&view=1'), body);
+    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'lang=ita&view=1'), body, () => {
+      this.showMessage('Record saved with success');
+      setTimeout(() => {
+        this.handleClose();
+      }, 2000);
+    });
     if (isEditingMode) this.lockRecord(false);
   };
 
@@ -126,7 +137,7 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
     remove(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id, `uuid=${uid}&userName=${userName}&lang=ita&view=1`), bibliographicRecord, this.showMessage('Record delete successfully'));
     setTimeout(() => {
       this.handleClose();
-    });
+    }, 2000);
   };
 
 
@@ -186,11 +197,36 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
       });
 
     tagVariableData.forEach(t => {
-      if (t.code === 100 || t.code === 110 || t.code === 700) {
-        t.categoryCode = 2;
+      if (t.code !== '040') {
+        let keyNumber = '';
+        let category = '';
+        if (t.code === '245') {
+          keyNumber = 2215279;
+          category = 3;
+        } else if (t.code === '100') {
+          keyNumber = 1000;
+          category = 2;
+        }
+        t.mandatory = false;
+        t.added = true;
+        t.fieldStatus = 'changed';
+        t.variableField = {
+          keyNumber,
+          ind1: (t.code === '100') ? 1 : 0,
+          ind2: (t.code === '100') ? 1 : 4,
+          code: t.code,
+          categoryCode: category,
+          displayValue: '\u001fa' + t.displayValue,
+          functionCode: '-1',
+          headingTypeCode: '1',
+          itemTypeCode: '-1',
+          sequenceNumber: 0,
+          skipInFiling: 0,
+        };
       }
-      t.mandatory = false;
     });
+    bibliographicRecord.fields = _.union(bibliographicRecord.fields, tagVariableData);
+    bibliographicRecord.fields.splice(bibliographicRecord.fields.length - 1, 1);
     return bibliographicRecord;
   }
 
@@ -225,14 +261,14 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
     const {
       editable,
     } = this.state;
-    const defaultTemplate = (settings) ? settings.defaultTemplate : C.DEFAULT_TEMPLATE;
+    const defaultTemplate = (settings) ? settings.defaultTemplate : C.SETTINGS.DEFAULT_TEMPLATE;
 
     return (!bibliographicRecord) ? <Icon icon="spinner-ellipsis" /> : (
       <React.Fragment>
         <Paneset static>
           <Pane
             defaultWidth="fullWidth"
-            paneTitle={(bibliographicRecord) ? bibliographicRecord.name : defaultTemplate.name}
+            paneTitle={(bibliographicRecord) ? 'New Monograph' : 'New Monograph'}
             paneSub={(bibliographicRecord) ? 'id. ' + bibliographicRecord.id : 'id. ' + defaultTemplate.id}
             appIcon={{ app: C.META.ICON_TITLE }}
             actionMenu={ActionMenuTemplate}

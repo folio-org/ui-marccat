@@ -3,8 +3,7 @@ import isEqual from 'lodash/isEqual';
 import { cloneDeep, uniqueId } from 'lodash';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import stripesForm from '@folio/stripes-form';
-import { FieldArray } from 'redux-form';
+import { reduxForm, FieldArray } from 'redux-form';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -373,7 +372,7 @@ class EditableListForm extends React.Component {
 EditableListForm.propTypes = propTypes;
 EditableListForm.defaultProps = defaultProps;
 
-export default stripesForm({
+export default reduxForm({
   form: 'marcEditableListForm',
   navigationCheck: true,
   enableReinitialize: true,

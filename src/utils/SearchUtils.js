@@ -10,8 +10,8 @@ const getLanguageFilterQuery = (languageFilter) => {
 
 const getFormatFilterQuery = (formatFilter) => {
   return formatFilter
-    .map(e => {
-      return formatFilterMap[Object.keys(e)[0]];
+    .map(f => {
+      return formatFilterMap[Object.keys(f)[0]];
     }).join(' OR ');
 };
 

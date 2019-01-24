@@ -4,9 +4,11 @@
  */
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { MultiColumnList, Icon, Pane, AccordionSet, Accordion } from '@folio/stripes/components';
+import { Icon, Pane, Button } from '@folio/stripes/components';
+import { FormattedMessage } from 'react-intl';
 import { Props, injectCommonProp } from '../../core';
-import { getActionMenu, ToolbarButtonMenu } from '../../lib';
+import { ToolbarButtonMenu } from '../../lib';
+import CheckMarkIcon from '../../lib/components/Button/CheckMarkIcon';
 
 type P = Props & {
   label: string;
@@ -14,9 +16,28 @@ type P = Props & {
 
 
 class DefaultTemplate extends React.Component<P, {}> {
+  constructor(props) {
+    super(props);
+    this.handleSelectTemplate = this.handleSelectTemplate.bind(this);
+  }
+
+  handleSelectTemplate = () => {
+    const { history } = this.props;
+    history.push(`/marccat/record/template?templateId=${408}`);
+  }
+
   render() {
     const { translate, label, isLoadingData, defaultTemplateData } = this.props;
     const names = [];
+    const getActionMenu = () => (
+      <React.Fragment>
+        <Button buttonStyle="dropdownItem" onClick={this.handleSelectTemplate}>
+          <Icon icon="document">
+            <FormattedMessage id="ui-marccat.template.actionmenu.new" />
+          </Icon>
+        </Button>
+      </React.Fragment>
+    );
     if (defaultTemplateData && defaultTemplateData.length > 0) { defaultTemplateData.forEach(t => names.push(t.name)); }
     const rightMenu = (
       <ToolbarButtonMenu
@@ -39,24 +60,18 @@ class DefaultTemplate extends React.Component<P, {}> {
       >
         {(defaultTemplateData && defaultTemplateData.length > 0) && (isLoadingData) ?
           <Icon icon="spinner-ellipsis" /> :
-          <div>
-            <AccordionSet>
-              <Accordion separator={false} label={translate({ id: 'ui-marccat.template.bib.accordion' })} id="bibTemplates">
-                <MultiColumnList
-                  contentData={defaultTemplateData}
-                  rowMetadata={['id', 'name', 'fields']}
-                  columnWidths={
-                    {
-                      'name': '50%',
-                    }
-                  }
-                  visibleColumns={[
-                    'name',
-                  ]}
-                />
-              </Accordion>
-            </AccordionSet>
-          </div>
+          <React.Fragment>
+            <div id="data-test-settings-authority-records" style={{ paddingBottom: '15px' }}>
+              {translate({ id: 'ui-marccat.settings.default.record.template.auth.text' }) }
+            </div>
+            <CheckMarkIcon labels={names.slice(0, 4)} />
+            <div id="data-test-settings-authority-records" style={{ paddingBottom: '15px', paddingTop: '15px' }}>
+              {translate({ id: 'ui-marccat.settings.default.record.template.bib.text' }) }
+            </div>
+            <div id="data-test-settings-authority-records" style={{ paddingBottom: '15px', paddingTop: '15px' }}>
+              No authority template found.
+            </div>
+          </React.Fragment>
         }
       </Pane>
     );

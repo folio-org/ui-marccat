@@ -2,12 +2,20 @@ import { isEmpty, uniqueId } from 'lodash';
 
 export function BaseStoreReducer() {}
 export function StoreReducer() {}
+export function FormReducer() {}
 export function Dispatcher() {}
 
 Object.setPrototypeOf(StoreReducer, BaseStoreReducer);
 
-StoreReducer.resolve = (dataReducer, model, jsonApiKey) => {
-  return (!jsonApiKey) ? dataReducer[model].records : dataReducer[model].records[jsonApiKey];
+FormReducer.resolve = (store, formName) => {
+  return (store.getState().form[formName]) ? store.getState().form[formName].values : undefined;
+};
+
+StoreReducer.get = (store, reducer, prop) => {
+  return store.getState().marccat[reducer][prop];
+};
+StoreReducer.resolve = (data, model, jsonApiKey) => {
+  return (!jsonApiKey) ? data[model].records : data[model].records[jsonApiKey];
 };
 
 StoreReducer.createDataStore = (model, data, payload) => { // metodo statico
@@ -37,15 +45,26 @@ StoreReducer.parseResponseBody = (response) => { // metodo statico
 
 StoreReducer.getHeaders = (method) => { // metodo statico
   const headers = {
-    'x-okapi-tenant': 'tnx',
-    'Content-Type': 'application/json'
+    'x-okapi-tenant': 'tnx', // TODO FIXME
+    'Content-Type': (method === 'PUT' || method === 'POST') ? 'application/vnd.api+json' : 'application/json'
   };
-
-  if (method === 'PUT' || method === 'POST') {
-    headers['Content-Type'] = 'application/vnd.api+json';
-  }
   return headers;
 };
+
+/**
+ * Helper for retrieving or creating a record from the resource
+ * type's state
+ * @param {Object} store - the resource type's
+ * @param {String} id - the record's id
+ */
+StoreReducer.getRecord = (store, id) => (
+  store.records[id] || {
+    id,
+    isLoading: true,
+    isLoaded: false,
+    isSaving: false,
+  }
+);
 
 
 Dispatcher.query = (type, params, { path }) => ({

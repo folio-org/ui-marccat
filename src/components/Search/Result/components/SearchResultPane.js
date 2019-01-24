@@ -1,3 +1,4 @@
+/* eslint-disable no-sparse-arrays */
 /**
  * @format
  * @flow
@@ -9,28 +10,44 @@ import { Props, injectCommonProp } from '../../../../core';
 import { resultsFormatter, columnMapper, columnWidthMapper } from '../../../../utils/Formatter';
 import { EmptyMessage, NoResultsMessage } from '../../../../lib/components/Message';
 import * as C from '../../../../utils/Constant';
+import { FormReducer } from '../../../../redux/helpers/StoreReducer';
 
 class SearchResultPane extends React.Component<Props, {}> {
     renderVisibleColumns = () => {
-      const { store: { getState } } = this.props;
-      const form = getState().form.checkboxForm;
-      const visibleColumns = [
+      const { store } = this.props;
+      const form = FormReducer.resolve(store, 'checkboxForm');
+      const visibleColumns = [];
+      const visibleColumns2 = [
         'resultView',
         '001',
         '245',
         'name',
         'preferredTitle',
-        'tagHighlighted',
-        'countDoc'
+        'tagHighlighted',,
+        'date1',
+        'date2',
+        'format'
       ];
 
-      if (form && form.values) {
-        Object.keys(form.values).filter(k => k !== 'checkboxForm')
+      if (form) {
+        Object.keys(form)
+          // eslint-disable-next-line no-unused-vars
           .forEach((z, i) => {
-            if (!form[z]) delete visibleColumns[i];
+            switch (z) {
+            case 'id Number': if (form[z]) visibleColumns[1] = '001'; break;
+            case 'Title': if (form[z]) visibleColumns[2] = '245'; break;
+            case 'Name': if (form[z]) visibleColumns[3] = 'name'; break;
+            case 'Preferred Title': if (form[z]) visibleColumns[4] = 'preferredTitle'; break;
+            case 'Tag': if (form[z]) visibleColumns[5] = 'tagHighlighted'; break;
+            case 'Date 1': if (form[z]) visibleColumns[6] = 'date1'; break;
+            case 'Date 2': if (form[z]) visibleColumns[7] = 'date2'; break;
+            case 'Format': if (form[z]) visibleColumns[8] = 'format'; break;
+            default:
+              break;
+            }
           });
       }
-      return visibleColumns;
+      return (visibleColumns.length > 1) ? visibleColumns : visibleColumns2;
     };
 
     render() {
@@ -68,7 +85,6 @@ class SearchResultPane extends React.Component<Props, {}> {
                 <NoResultsMessage {...this.props} /> :
                 (isReady) ?
                   <MultiColumnList
-                    autosize
                     id="data-test-search-results-table"
                     defaultWidth="fill"
                     columnWidths={columnWidthMapper(false, false)}

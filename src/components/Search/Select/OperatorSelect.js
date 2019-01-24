@@ -9,6 +9,7 @@ export default function OperatorSelect({ ...props }) {
   const options = [
     { label: 'AND', value: 'AND' },
     { label: 'OR', value: 'OR' },
+    { label: 'NOT', value: 'NOT' },
   ];
   return (
     <div className={style.mt16}>
@@ -16,7 +17,7 @@ export default function OperatorSelect({ ...props }) {
         {...rest}
         name={name}
         id={id}
-        placeholder="AND/OR"
+        placeholder="AND/OR/NOT"
         component={Select}
         dataOptions={options}
         marginBottom0

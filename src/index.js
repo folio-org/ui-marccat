@@ -48,7 +48,7 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
     store.dispatch({ type: ActionTypes.VIEW_TEMPLATE });
     store.dispatch({ type: ActionTypes.TEMPLATE_GET_BY_ID, query: 408 });
     store.dispatch({ type: ActionTypes.SETTINGS,
-      payload:
+      data:
       {
         defaultTemplate : {
           id: 408,

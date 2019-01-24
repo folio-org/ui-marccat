@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import { reduxForm } from 'redux-form';
 import {
   Pane,
   Paneset,
   AccordionSet,
   Row,
+  Callout,
   PaneMenu,
   Button,
   Accordion,
@@ -24,7 +26,12 @@ import { uuid } from './Utils/MarcUtils';
 import VariableFields from './Marc/VariableFields';
 import { StoreReducer } from '../../redux';
 
-class EditMarcRecord extends Component {
+class EditMarcRecord extends React.Component {
+  constructor(props) {
+    super(props);
+    this.callout = React.createRef();
+  }
+
   handleClose = () => {
     const { dispatch, router, toggleFilterPane } = this.props;
     dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', filterChecked: false });
@@ -34,21 +41,28 @@ class EditMarcRecord extends Component {
 
   saveRecord = () => {
     const body = { bibliographicRecord: this.composeBodyJson() };
-    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'lang=ita&view=1'), body);
+    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'lang=ita&view=1'), body, () => {
+      this.showMessage('Record update with success');
+      setTimeout(() => {
+        this.handleClose();
+      }, 2000);
+    });
   };
 
   composeBodyJson = () => {
-    const { recordDetail: { bibliographicRecord }, store: { getState } } = this.props;
+    const { recordDetail, store: { getState } } = this.props;
     const formData = getState().form.bibliographicRecordForm.values;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
-
+    const initialTag = getState().form.marcEditableListForm.values.items.length;
     const tag006Values = [];
     const tag007Values = [];
     const tag008Values = [];
 
     // Set leader
+    const bibliographicRecord = recordDetail;
     bibliographicRecord.leader.value = formData.Leader;
 
+    // populate tag 006 tag 007 tag 008
     Object.keys(formData)
       .forEach((z) => {
         if (z.split('-')[0] === 'Tag006' || z === 'Tag006') {
@@ -90,13 +104,38 @@ class EditMarcRecord extends Component {
           });
         }
       });
-
-    tagVariableData.forEach(t => {
-      if (t.code === '100' || t.code === '110' || t.code === '700') {
-        t.categoryCode = '2';
-        t.mandatory = false;
-      }
-    });
+    if (initialTag < tagVariableData.length) {
+      tagVariableData.forEach(t => {
+        if (t.code !== '040') {
+          let keyNumber = '';
+          let category = '';
+          if (t.code === '245') {
+            keyNumber = 2215279;
+            category = 3;
+          } else if (t.code === '100') {
+            keyNumber = 1000;
+            category = 2;
+          }
+          t.mandatory = false;
+          t.added = true;
+          t.fieldStatus = 'changed';
+          t.variableField = {
+            keyNumber,
+            ind1: (t.code === '100') ? 1 : 0,
+            ind2: (t.code === '100') ? 1 : 4,
+            code: t.code,
+            categoryCode: category,
+            displayValue: t.displayValue,
+            functionCode: '-1',
+            headingTypeCode: '1',
+            itemTypeCode: '-1',
+            sequenceNumber: 0,
+            skipInFiling: 0,
+          };
+        }
+      });
+    }
+    if (initialTag < tagVariableData.length) { bibliographicRecord.fields = _.union(bibliographicRecord.fields, tagVariableData); }
     return bibliographicRecord;
   }
 
@@ -112,6 +151,17 @@ class EditMarcRecord extends Component {
       this.handleClose();
     });
   };
+
+  showMessage(message) {
+    this.callout.current.sendCallout({
+      type: 'success',
+      message: (
+        <span>
+          {message}
+        </span>
+      )
+    });
+  }
 
   renderButtonMenu = () => {
     const { translate } = this.props;
@@ -217,6 +267,7 @@ class EditMarcRecord extends Component {
             </Row>
           </Pane>
         </Paneset>
+        <Callout ref={this.callout} />
       </React.Fragment>
     );
   }
@@ -228,8 +279,10 @@ export default reduxForm({
   enableReinitialize: true,
   destroyOnUnmount: false,
 })(connect(
-  ({ marccat: { dataReducer, leaderData, headerTypes006, headerTypes007, headerTypes008 } }) => ({
-    recordDetail: StoreReducer.resolve(dataReducer, 'marcRecordDetail').bibliographicRecord,
+  ({ marccat: { data, leaderData, settings, headerTypes006, headerTypes007, headerTypes008 } }) => ({
+    recordDetail: StoreReducer.resolve(data, 'marcRecordDetail').bibliographicRecord,
+    queryBib: settings.queryBib,
+    queryAuth: settings.queryAuth,
     headerTypes006Result: headerTypes006.records,
     leaderData: leaderData.records,
     headerTypes006IsLoading: headerTypes006.isLoading,

@@ -2,8 +2,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
-import style from '../../Style/InputField.css';
 import { Props } from '../../../core';
+import style from '../../Style/InputField.css';
 
 type P = Props & {
   labels: Array<any>,

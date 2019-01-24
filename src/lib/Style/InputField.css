@@ -57,6 +57,7 @@
   vertical-align: middle;
 }
 
+
 [type="checkbox"] + label::after,
 [type="radio"] + label::after {
   box-sizing: content-box;
@@ -190,4 +191,3 @@ label {
   cursor: pointer;
   display: inline-block;
 }
-

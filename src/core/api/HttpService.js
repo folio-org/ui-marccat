@@ -26,7 +26,7 @@ export function get(url:string) {
  * @param {*} data - the body of request
  * @param {*} store - the data store
  */
-export function post(url:string, data: any) {
+export function post(url:string, data: any, cb?: () => void) {
   fetch(url, {
     method: HTTP_METHOD.POST,
     headers: Object.assign({}, {
@@ -34,7 +34,7 @@ export function post(url:string, data: any) {
       'Content-Type': 'application/json'
     }),
     body: JSON.stringify(data),
-  });
+  }).then(cb);
 }
 
 /**

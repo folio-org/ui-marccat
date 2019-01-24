@@ -4,7 +4,6 @@
  */
 import React from 'react';
 import { Field } from 'redux-form';
-import { cloneDeep } from 'lodash';
 import { Row, Col, Select } from '@folio/stripes/components';
 import type { Props } from '../../../core';
 import MarcField from './MarcField';
@@ -53,11 +52,8 @@ export default class MarcLeader extends React.Component<P, {}> {
    * @param {*} replace - a mutate leader
    */
   replaceAt(string, index, replace) {
-    this.setState((prevState) => {
-      const newState = cloneDeep(prevState);
-      const newLeader = Object.assign({}, prevState.leader);
-      newState.leader = newLeader.substring(0, index) + replace + newLeader.substring(index + 1);
-      return newState;
+    this.setState({
+      leader: string.substring(0, index) + replace + string.substring(index + 1)
     });
   }
 

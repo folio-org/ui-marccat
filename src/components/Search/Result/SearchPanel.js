@@ -43,7 +43,7 @@ class SearchPanel extends React.Component<P, {}> {
     super(props);
     this.state = {
       isBrowseRequested: false,
-      searchForm: [{ name: EMPTY_MESSAGE }],
+      searchForm: [''],
       filterEnable: true,
       counter: [{}],
       leftBracketEnable: true,
@@ -56,6 +56,10 @@ class SearchPanel extends React.Component<P, {}> {
     this.handleResetAllButton = this.handleResetAllButton.bind(this);
   }
 
+  componentDidMount() {
+    // const { dispatch } = this.props;
+  }
+
   transitionToParams = (key, value) => {
     const { location } = this.props;
     const url = location.pathname;
@@ -64,6 +68,7 @@ class SearchPanel extends React.Component<P, {}> {
 
   handleKeyDown(e) {
     let { isBrowseRequested } = this.state;
+    const { searchForm } = this.state;
     const { store, store: { getState }, dispatch, router } = this.props;
     if (e.charCode === 13 || e.key === 'Enter') {
       e.preventDefault();
@@ -78,7 +83,7 @@ class SearchPanel extends React.Component<P, {}> {
       // const values = FormReducer.resolve(store, 'searchForm');
       const form = getState().form.searchForm;
       const state = getState();
-      if (form.values['operatorSelect-0']) {
+      if (searchForm.length > 1) {
         this.buildComplexQuery();
       } else {
         if (form.values) {
@@ -164,12 +169,12 @@ class SearchPanel extends React.Component<P, {}> {
   handleAddSearchForm = () => {
     const { searchForm, counter } = this.state;
     this.setState({
-      searchForm: searchForm.concat([{ name: '' }]),
+      searchForm: searchForm.concat([{ name: counter.length }]),
       counter: counter.concat([{}]),
     });
   }
 
-  handleRemoveSearchForm = idx => () => {
+  handleRemoveSearchForm = (e, idx) => {
     const { searchForm } = this.state;
     delete searchForm[idx];
     this.setState({
@@ -271,7 +276,7 @@ class SearchPanel extends React.Component<P, {}> {
                           <IconButton
                             icon="trash"
                             size="small"
-                            onClick={this.handleRemoveSearchForm(idx)}
+                            onClick={(e) => this.handleRemoveSearchForm(e, idx)}
                           />
                         </Col>
                       </Row>
@@ -280,7 +285,7 @@ class SearchPanel extends React.Component<P, {}> {
                       <Col xs={12}>
                         <Button
                           buttonClass={styles.rightPosition}
-                          onClick={this.handleAddSearchForm}
+                          onClick={() => this.handleAddSearchForm()}
                         >
                           <Icon icon="plus-sign">
                             {translate({ id: 'ui-marccat.button.add.search.form' })}

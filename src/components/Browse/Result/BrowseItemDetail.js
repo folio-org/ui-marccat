@@ -23,11 +23,13 @@ import style from '../../../styles/common.css';
 type P = Props & {
 }
 
-export class BrowseItemDetail extends React.Component<P, {}> {
+export class BrowseItemDetail extends React.Component<P, {
+  recordDetailsArray: [],
+}> {
   constructor(props: P) {
     super(props);
     this.state = {
-      recordDetailsArray: Array
+      recordDetailsArray: []
     };
   }
 

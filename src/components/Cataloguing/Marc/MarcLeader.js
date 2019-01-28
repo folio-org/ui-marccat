@@ -13,13 +13,18 @@ import { decamelizify } from '../Utils/MarcUtils';
 import style from '../Style/style.css';
 
 
-type P = Props & {
+type P = {
   readOnly: boolean,
   leaderData: Object,
   leaderCode: number,
   leaderValue: string,
-}
-export default class MarcLeader extends React.Component<P, {}> {
+} & Props;
+
+export default class MarcLeader extends React.Component<P, {
+  leaderDataDispatched: boolean,
+  leaderCss: boolean,
+  leader: string,
+}> {
   constructor(props: Props) {
     super(props);
     this.state = {

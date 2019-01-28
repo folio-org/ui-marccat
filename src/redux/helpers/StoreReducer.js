@@ -1,9 +1,8 @@
-import { isEmpty, uniqueId } from 'lodash';
+import { uniqueId } from 'lodash';
 
 export function BaseStoreReducer() {}
 export function StoreReducer() {}
 export function FormReducer() {}
-export function Dispatcher() {}
 
 Object.setPrototypeOf(StoreReducer, BaseStoreReducer);
 
@@ -11,13 +10,61 @@ FormReducer.resolve = (store, formName) => {
   return (store.getState().form[formName]) ? store.getState().form[formName].values : undefined;
 };
 
+/**
+ *
+ * @param {*} store
+ * @param {*} reducer
+ * @param {*} prop
+ * @returns
+ */
 StoreReducer.get = (store, reducer, prop) => {
   return store.getState().marccat[reducer][prop];
 };
+
+/**
+ *
+ * @param {*} data
+ * @param {*} model
+ * @param {*} jsonApiKey
+ * @returns
+ */
 StoreReducer.resolve = (data, model, jsonApiKey) => {
   return (!jsonApiKey) ? data[model].records : data[model].records[jsonApiKey];
 };
 
+/**
+ *
+ * @param {*} data
+ * @param {*} model
+ * @param {*} payload
+ * @returns
+ */
+StoreReducer.createRequestData = (model, data) => { // metodo statico
+  return {
+    [model]: {
+      timestamp: new Date(),
+      path: data.path,
+      resource: data.type,
+      host: window.location.hostname,
+      params: data.params,
+      id: data.id || uniqueId('@@marccat-'),
+      isPending: true,
+      isResolved: false,
+      isRejected: false,
+      records: [],
+      meta: {},
+      errors: []
+    }
+  };
+};
+
+/**
+ *
+ * @param {*} data
+ * @param {*} model
+ * @param {*} payload
+ * @returns
+ */
 StoreReducer.createDataStore = (model, data, payload) => { // metodo statico
   return {
     [model]: {
@@ -27,9 +74,9 @@ StoreReducer.createDataStore = (model, data, payload) => { // metodo statico
       host: window.location.hostname,
       params: data.params,
       id: data.id || uniqueId('@@marccat-'),
-      isPending: isEmpty(payload),
-      isResolved: !isEmpty(payload),
-      isRejected: isEmpty(payload),
+      isPending: true,
+      isResolved: false,
+      isRejected: false,
       records: payload || [],
       meta: {},
       errors: []
@@ -37,12 +84,48 @@ StoreReducer.createDataStore = (model, data, payload) => { // metodo statico
   };
 };
 
+/**
+ *
+ * @param {*} data
+ * @param {*} model
+ * @param {*} payload
+ * @returns
+ */
+StoreReducer.createRequestError = (model, data, errors) => { // metodo statico
+  return {
+    [model]: {
+      timestamp: new Date(),
+      path: data.path,
+      resource: data.type,
+      host: window.location.hostname,
+      params: data.params,
+      id: data.id || uniqueId('@@marccat-'),
+      isPending: false,
+      isResolved: false,
+      isRejected: true,
+      records: [],
+      meta: {},
+      errors
+    }
+  };
+};
+
+/**
+ *
+ * @param {*} response
+ * @returns
+ */
 StoreReducer.parseResponseBody = (response) => { // metodo statico
   return response.text().then((text) => {
     try { return JSON.parse(text); } catch (e) { return text; }
   });
 };
 
+/**
+ *
+ * @param {*} method - Http method for fetch
+ * @returns
+ */
 StoreReducer.getHeaders = (method) => { // metodo statico
   const headers = {
     'x-okapi-tenant': 'tnx', // TODO FIXME
@@ -65,14 +148,3 @@ StoreReducer.getRecord = (store, id) => (
     isSaving: false,
   }
 );
-
-
-Dispatcher.query = (type, params, { path }) => ({
-  type: '@@ui-marccat/QUERY',
-  data: {
-    type,
-    path,
-    params,
-    timestamp: Date.now()
-  }
-});

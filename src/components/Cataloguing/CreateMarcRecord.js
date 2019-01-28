@@ -29,8 +29,15 @@ import * as C from '../../utils/Constant';
 import style from './Style/style.css';
 import { uuid } from './Utils/MarcUtils';
 
-export class CreateMarcRecord extends React.Component<Props, {}> {
-  constructor(props: Props) {
+type P = {
+  callout: Object,
+  isEditingMode: boolean
+} & Props;
+
+export class CreateMarcRecord extends React.Component<P, {
+  editable: boolean
+}> {
+  constructor(props: P) {
     super(props);
     this.state = {
       isEditingMode: false,
@@ -101,7 +108,7 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
   };
 
 
-  lockRecord = (lock) => {
+  lockRecord = (lock:boolean) => {
     const { store, bibliographicRecord } = this.props;
     const okapi = store.getState().okapi;
     const userName = okapi.currentUser.username;
@@ -237,7 +244,7 @@ export class CreateMarcRecord extends React.Component<Props, {}> {
     router.push('/marccat/search');
   };
 
-  showMessage(message) {
+  showMessage(message: string) {
     this.callout.current.sendCallout({
       type: 'success',
       message: (

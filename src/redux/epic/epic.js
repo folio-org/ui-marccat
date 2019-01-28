@@ -3,28 +3,11 @@ import { qs } from '..';
 import { ENDPOINT } from '../../utils/Constant';
 import { StoreReducer } from '../helpers/StoreReducer';
 import { HTTP_METHOD } from '../../core/api/HttpService';
-
-// action types
-export const REQUEST_MAKE = '@@ui-marccat/REQUEST_MAKE';
-export const REQUEST_REDUCE = '@@ui-marccat/REQUEST_REDUCE';
-export const REQUEST_RESOLVE = '@@ui-marccat/REQUEST_RESOLVE';
-export const REQUEST_REJECT = '@@ui-marccat/REQUEST_REJECT';
-export const REQUEST_CLEAR = '@@ui-marccat/REQUEST_CLEAR';
-
-// actions
-export const actionTypes = {
-  SEARCH: '@@ui-marccat/SEARCH',
-  BROWSE: '@@ui-marccat/BROWSE',
-  QUERY: '@@ui-marccat/QUERY',
-  FIND: '@@ui-marccat/FIND',
-  SAVE: '@@ui-marccat/SAVE',
-  CREATE: '@@ui-marccat/CREATE',
-  DELETE: '@@ui-marccat/DELETE',
-  RESOLVE: '@@ui-marccat/RESOLVE',
-  REJECT: '@@ui-marccat/REJECT',
-  LOCK: '@@ui-marccat/LOCK',
-  UNLOCK: '@@ui-marccat/UNLOCK',
-};
+import {
+  ACTION,
+  REQUEST_MAKE,
+  REQUEST_RESOLVE,
+  REQUEST_REJECT } from '../helpers/Action';
 
 /**
  * Action creator for querying a set of records
@@ -33,7 +16,7 @@ export const actionTypes = {
  * @param {String} options.path - path to use for the query
  */
 export const query = (type, params, { path }) => ({
-  type: actionTypes.QUERY,
+  type: ACTION.QUERY,
   data: {
     type,
     path,
@@ -63,12 +46,15 @@ export const rejectRequest = (name, data, error) => ({
  */
 export function reducer(state = {}, action) {
   switch (action.type) {
+  case REQUEST_MAKE:
+    return Object.assign({
+    }, state, StoreReducer.createRequestData(action.name, action.data));
   case REQUEST_RESOLVE:
     return Object.assign({
     }, state, StoreReducer.createDataStore(action.name, action.data, action.payload));
   case REQUEST_REJECT:
     return Object.assign({
-    }, state, StoreReducer.createDataStore(action.name, action.data, action.error));
+    }, state, StoreReducer.createRequestError(action.name, action.data, action.error));
   default:
     return state;
   }
@@ -81,13 +67,13 @@ export function reducer(state = {}, action) {
  */
 export function epic(action$, { getState }) {
   const actionMethods = {
-    [actionTypes.QUERY]: 'GET',
-    [actionTypes.FIND]: 'GET',
-    [actionTypes.SAVE]: 'PUT',
-    [actionTypes.CREATE]: 'POST',
-    [actionTypes.LOCK]: 'LOCK',
-    [actionTypes.UNLOCK]: 'UNLOCK',
-    [actionTypes.DELETE]: 'DELETE'
+    [ACTION.QUERY]: 'GET',
+    [ACTION.FIND]: 'GET',
+    [ACTION.SAVE]: 'PUT',
+    [ACTION.CREATE]: 'POST',
+    [ACTION.LOCK]: 'LOCK',
+    [ACTION.UNLOCK]: 'UNLOCK',
+    [ACTION.DELETE]: 'DELETE'
   };
 
   return action$
@@ -101,7 +87,7 @@ export function epic(action$, { getState }) {
       const headers = StoreReducer.getHeaders(method, state);
       let body;
 
-      if (type === actionTypes.QUERY && Object.keys(data.params).length !== 0) {
+      if (type === ACTION.QUERY && Object.keys(data.params).length !== 0) {
         url = `${url}?${(data.params)}`;
       }
 

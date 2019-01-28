@@ -53,7 +53,7 @@ export const ActionMenuDetail = () => {
   );
 };
 
-export const genericActionMenuDetail = (labels:[]) => {
+export const genericActionMenuDetail = (labels:Array<any>) => {
   return (
     <React.Fragment>
       <div className={style.dropdownContainerText}>

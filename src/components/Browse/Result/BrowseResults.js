@@ -21,6 +21,7 @@ type S = {
   rowClicked: bool;
   noResults: bool;
   isPadRequired: bool;
+  detailSubtitle: Object;
 };
 
 export class BrowseResults extends React.Component<Props, S> {
@@ -44,7 +45,7 @@ export class BrowseResults extends React.Component<Props, S> {
     });
   };
 
-  handleBrowseDetails = (e, meta) => {
+  handleBrowseDetails = (e:any, meta: Object) => {
     const { dispatch, store } = this.props;
     const id = meta.headingNumber;
     const containsAuthorities = meta.countAuthorities > 0;

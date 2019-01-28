@@ -10,7 +10,7 @@ import { browseFormatter, browseColMapper } from '../../../../utils/Formatter';
 import * as C from '../../../../utils/Constant';
 import { injectCommonProp } from '../../../../core';
 
-class ResultMainPane extends React.Component {
+class ResultMainPane extends React.Component<{}, {}> {
     renderButtonMenu = () => {
       return (
         <ToolbarButtonMenu

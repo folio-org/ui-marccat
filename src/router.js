@@ -17,12 +17,12 @@ export function ConnectedRoute({ id, component: Component, ...props }:P) {
     <Route render={() => <Component {...props} id={id} />} />
   );
 }
-
 export function Router({ ...props }:P) {
   const { toggleFilterPane, match: { path } } = props;
   const renderSearchIconMenu = () => {
     return (<ToolbarMenu icon={['search']} {...props} onClick={toggleFilterPane} />);
   };
+
 
   const searchMenu = renderSearchIconMenu();
   return (

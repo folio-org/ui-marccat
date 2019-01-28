@@ -10,7 +10,7 @@ import * as C from '../../../../utils/Constant';
 import { injectCommonProp } from '../../../../core';
 import { BrowseItemDetail } from '../BrowseItemDetail';
 
-class ResultDetailPane extends React.Component {
+class ResultDetailPane extends React.Component<{}, {}> {
   renderButtonMenu = () => {
     return (
       <ToolbarButtonMenu

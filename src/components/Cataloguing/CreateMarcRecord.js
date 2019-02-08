@@ -17,8 +17,9 @@ import {
   Icon
 } from '@folio/stripes/components';
 import { reduxForm } from 'redux-form';
+import { FormattedMessage } from 'react-intl';
 import _ from 'lodash';
-import { Props, injectCommonProp } from '../../core';
+import type { Props } from '../../core';
 import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../lib';
 import { VariableFields, MarcLeader, FixedFields } from '.';
 import { ActionTypes } from '../../redux/actions/Actions';
@@ -28,6 +29,7 @@ import * as C from '../../utils/Constant';
 
 import style from './Style/style.css';
 import { uuid } from './Utils/MarcUtils';
+import { StoreReducer } from '../../redux';
 
 type P = {
   callout: Object,
@@ -50,28 +52,21 @@ export class CreateMarcRecord extends React.Component<P, {
     this.callout = React.createRef();
   }
 
-  componentDidMount() {
-    const { toggleFilterPane } = this.props;
-    toggleFilterPane();
-  }
-
   renderDropdownLabels = () => {
-    const { translate } = this.props;
     return [
       {
-        label: translate({ id: 'ui-marccat.button.new.auth' }),
-        shortcut: translate({ id: 'ui-marccat.button.new.short.auth' }),
+        label: <FormattedMessage id="ui-marccat.button.new.auth" />,
+        shortcut: <FormattedMessage id="ui-marccat.button.new.short.auth" />,
         onClick: () => { },
       },
       {
-        label: translate({ id: 'ui-marccat.button.new.bib' }),
-        shortcut: translate({ id: 'ui-marccat.button.new.short.bib' }),
+        label: <FormattedMessage id="ui-marccat.button.new.bib" />,
+        shortcut: <FormattedMessage id="ui-marccat.button.new.short.bib" />,
         onClick: () => { },
       }];
   };
 
   renderButtonMenu = () => {
-    const { translate } = this.props;
     const rightButton = {
       marginRight: '10px',
       float: 'right',
@@ -87,7 +82,7 @@ export class CreateMarcRecord extends React.Component<P, {
             marginBottom0
           >
             <Icon icon="plus-sign">
-              {translate({ id: 'ui-marccat.template.record.create' })}
+              {<FormattedMessage id="ui-marccat.template.record.create" />}
             </Icon>
           </Button>
           <Button
@@ -99,7 +94,7 @@ export class CreateMarcRecord extends React.Component<P, {
             marginBottom0
           >
             <Icon icon="trash">
-              {translate({ id: 'ui-marccat.template.record.delete' })}
+              {<FormattedMessage id="ui-marccat.template.record.delete" />}
             </Icon>
           </Button>
         </PaneMenu>
@@ -109,10 +104,10 @@ export class CreateMarcRecord extends React.Component<P, {
 
 
   lockRecord = (lock:boolean) => {
-    const { store, bibliographicRecord } = this.props;
+    const { store, bibliographicRecord, emptyRecord } = this.props;
     const okapi = store.getState().okapi;
     const userName = okapi.currentUser.username;
-    const id = bibliographicRecord.id;
+    const id = bibliographicRecord.id || emptyRecord.id;
     const uid = uuid();
     if (lock) remove(buildUrl(C.ENDPOINT.LOCK_MARC_RECORD + id, `uuid=${uid}&userName=${userName}&lang=ita&view=1&type=R`), bibliographicRecord, null);
     else remove(buildUrl(C.ENDPOINT.UNLOCK_MARC_RECORD + id, `uuid=${uid}&userName=${userName}&lang=ita&view=1&type=R`), bibliographicRecord, null);
@@ -149,7 +144,8 @@ export class CreateMarcRecord extends React.Component<P, {
 
 
   composeBodyJson = () => {
-    const { bibliographicRecord, store: { getState } } = this.props;
+    const { template, emptyRecord, store: { getState } } = this.props;
+    let { bibliographicRecord } = this.props;
     const formData = getState().form.bibliographicRecordForm.values;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
 
@@ -158,6 +154,7 @@ export class CreateMarcRecord extends React.Component<P, {
     const tag008Values = [];
 
     // Set leader
+    if (emptyRecord) bibliographicRecord = emptyRecord;
     bibliographicRecord.leader.value = formData.Leader;
 
     // populate tag 006 tag 007 tag 008
@@ -232,8 +229,9 @@ export class CreateMarcRecord extends React.Component<P, {
         };
       }
     });
+    bibliographicRecord.recordTemplate = template.records[1];
     bibliographicRecord.fields = _.union(bibliographicRecord.fields, tagVariableData);
-    bibliographicRecord.fields.splice(bibliographicRecord.fields.length - 1, 1);
+    bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     return bibliographicRecord;
   }
 
@@ -257,19 +255,19 @@ export class CreateMarcRecord extends React.Component<P, {
 
   render() {
     const {
-      bibliographicRecord,
       settings,
-      translate,
       headerTypes006IsLoading,
       headerTypes007IsLoading,
       headerTypes008IsLoading,
-      leaderData
+      leaderData,
+      emptyRecord
     } = this.props;
     const {
       editable,
     } = this.state;
+    let { bibliographicRecord } = this.props;
     const defaultTemplate = (settings) ? settings.defaultTemplate : C.SETTINGS.DEFAULT_TEMPLATE;
-
+    if (emptyRecord) bibliographicRecord = emptyRecord;
     return (!bibliographicRecord) ? <Icon icon="spinner-ellipsis" /> : (
       <React.Fragment>
         <Paneset static>
@@ -280,7 +278,7 @@ export class CreateMarcRecord extends React.Component<P, {
             appIcon={{ app: C.META.ICON_TITLE }}
             actionMenu={ActionMenuTemplate}
             dismissible
-            onClose={this.handleClose}
+            onClose={() => this.handleClose()}
             lastMenu={this.renderButtonMenu()}
           >
             <Row center="xs">
@@ -312,7 +310,7 @@ export class CreateMarcRecord extends React.Component<P, {
                       />
                     </Accordion>
                   </form>
-                  <Accordion label={translate({ id: 'ui-marccat.cataloging.variablefield.section.label' })} id="variable-field">
+                  <Accordion label="variable fields" id="variable-field">
                     <VariableFields
                       fields={bibliographicRecord.fields.filter(f => f.fixedField === undefined || !f.fixedField)}
                       {...this.props}
@@ -334,7 +332,8 @@ export default reduxForm({
   form: 'bibliographicRecordForm',
   destroyOnUnmount: false,
 })(connect(
-  ({ marccat: { template, recordDetail, leaderData, headerTypes006, headerTypes007, headerTypes008 } }) => ({
+  ({ marccat: { data, template, recordDetail, leaderData, headerTypes006, headerTypes007, headerTypes008 } }) => ({
+    emptyRecord: StoreReducer.resolve(data, 'emptyRecord'),
     bibliographicRecord: template.recordsById,
     recordDetail: recordDetail.isReady,
     defaultTemplate: template.records,
@@ -348,4 +347,4 @@ export default reduxForm({
     headerTypes008Result: headerTypes008.records,
     headerTypes008IsLoading: headerTypes008.isLoading
   }),
-)(injectCommonProp(CreateMarcRecord)));
+)(CreateMarcRecord));

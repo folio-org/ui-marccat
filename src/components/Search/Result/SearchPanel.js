@@ -70,7 +70,7 @@ class SearchPanel extends React.Component<P, {}> {
       e.preventDefault();
       store.dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: true });
       store.dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
-      const inputValue = '"' + e.target.form[2].defaultValue + '"';
+      const inputValue = '' + e.target.form[2].defaultValue;
       isBrowseRequested = false;
       let baseQuery;
       let indexForQuery;
@@ -248,7 +248,7 @@ class SearchPanel extends React.Component<P, {}> {
                         </div>
                       </Col>
                     </Row>
-                    <Row style={{ height: '30px' }}>
+                    <Row style={{ marginBottom: '-15px' }}>
                       <Col xs={12}>
                         <SearchConditions
                           id={`selectCondition-${idx}`}

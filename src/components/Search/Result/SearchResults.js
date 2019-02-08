@@ -82,10 +82,17 @@ export class SearchResults extends React.Component<P, {}> {
   }
 
   handleCreateRecord = () => {
-    const { router, toggleFilterPane } = this.props;
+    const { router, dispatch, toggleFilterPane } = this.props;
+    dispatch({
+      type: '@@ui-marccat/QUERY',
+      data: {
+        path: C.ENDPOINT.EMPTY_RECORD_URL + '/' + 22,
+        type: 'emptyRecord',
+        params: 'type=B&lang=ita&view=1',
+      } });
     toggleFilterPane();
     this.setState(prevState => ({ layerOpen: !prevState.layerOpen }));
-    router.push('/marccat/record?templateId=123');
+    router.push('/marccat/record/template');
   };
 
   handleOnToggle = () => {
@@ -156,12 +163,12 @@ export class SearchResults extends React.Component<P, {}> {
     return [{
       label: translate({ id: 'ui-marccat.button.new.auth' }),
       shortcut: translate({ id: 'ui-marccat.button.new.short.auth' }),
-      onClick: this.renderTemplateRoute,
+      onClick: this.handleCreateRecord,
     },
     {
       label: translate({ id: 'ui-marccat.button.new.bib' }),
       shortcut: translate({ id: 'ui-marccat.button.new.short.bib' }),
-      onClick: this.renderTemplateRoute,
+      onClick: this.handleCreateRecord,
     }];
   };
 

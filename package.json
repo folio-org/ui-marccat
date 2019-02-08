@@ -58,7 +58,6 @@
     "flow-remove-types": "^1.2.3",
     "namor": "1.1.1",
     "query-string": "^6.2.0",
-    "react-beautiful-dnd": "9.0.2",
     "react-hot-loader": "^4.3.12",
     "react-intl": "^2.4.0",
     "react-router-dom": "^4.0.0",

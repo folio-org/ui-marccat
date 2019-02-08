@@ -1,13 +1,13 @@
-// eslint-disable-next-line import/no-unresolved
 import { describe, beforeEach, it } from '@bigtest/mocha';
-// eslint-disable-next-line import/no-unresolved
 import { expect } from 'chai';
 
 import setupApplication from '../helpers/setup-application';
 import ApplicationInteractor from '../interactors/application';
+import MarccatInteractor from '../interactors/marccat';
 
 describe('Application', () => {
   const app = new ApplicationInteractor();
+  const marccat = new MarccatInteractor();
 
   setupApplication();
 
@@ -16,6 +16,6 @@ describe('Application', () => {
   });
 
   it('renders', () => {
-    expect(app.isPresent).to.be.true;
+    expect(marccat.$root).to.exist;
   });
 });

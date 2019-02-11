@@ -210,7 +210,6 @@ class SearchPanel extends React.Component<P, {}> {
     const { searchForm, filterEnable, leftBracketEnable, rightBracketEnable } = this.state;
     return (
       <React.Fragment>
-        {this.renderResetButton()}
         <AccordionSet>
           <Accordion
             {...rest}

@@ -6,9 +6,7 @@ const execSync = (cmd) => {
 };
 
 const lunchBuild = () => {
-  execSync('yarn config set @folio:registry https://repository.folio.org/repository/npm-folioci/');
-  execSync('yarn global add @folio/stripes-cli');
-  execSync('stripes build --output dist/ --sourcemap --languages en');
+  execSync('stripes build --output dist/');
 };
 
 const run = () => {

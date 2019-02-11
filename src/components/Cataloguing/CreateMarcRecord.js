@@ -23,7 +23,7 @@ import type { Props } from '../../core';
 import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../lib';
 import { VariableFields, MarcLeader, FixedFields } from '.';
 import { ActionTypes } from '../../redux/actions/Actions';
-import { put, remove, post } from '../../core/api/HttpService';
+import { post } from '../../core/api/HttpService';
 import { buildUrl } from '../../redux/helpers/Utilities';
 import * as C from '../../utils/Constant';
 
@@ -47,8 +47,6 @@ export class CreateMarcRecord extends React.Component<P, {
     this.renderDropdownLabels = this.renderDropdownLabels.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.saveRecord = this.saveRecord.bind(this);
-    this.editRecord = this.editRecord.bind(this);
-    this.deleteRecord = this.deleteRecord.bind(this);
     this.callout = React.createRef();
   }
 
@@ -85,32 +83,9 @@ export class CreateMarcRecord extends React.Component<P, {
               {<FormattedMessage id="ui-marccat.template.record.create" />}
             </Icon>
           </Button>
-          <Button
-            style={rightButton}
-            buttonStyle="primary"
-            onClick={this.deleteRecord}
-            type="button"
-            disabled={false}
-            marginBottom0
-          >
-            <Icon icon="trash">
-              {<FormattedMessage id="ui-marccat.template.record.delete" />}
-            </Icon>
-          </Button>
         </PaneMenu>
       </React.Fragment>
     );
-  };
-
-
-  lockRecord = (lock:boolean) => {
-    const { store, bibliographicRecord, emptyRecord } = this.props;
-    const okapi = store.getState().okapi;
-    const userName = okapi.currentUser.username;
-    const id = bibliographicRecord.id || emptyRecord.id;
-    const uid = uuid();
-    if (lock) remove(buildUrl(C.ENDPOINT.LOCK_MARC_RECORD + id, `uuid=${uid}&userName=${userName}&lang=ita&view=1&type=R`), bibliographicRecord, null);
-    else remove(buildUrl(C.ENDPOINT.UNLOCK_MARC_RECORD + id, `uuid=${uid}&userName=${userName}&lang=ita&view=1&type=R`), bibliographicRecord, null);
   };
 
   saveRecord = () => {
@@ -124,25 +99,6 @@ export class CreateMarcRecord extends React.Component<P, {
     });
     if (isEditingMode) this.lockRecord(false);
   };
-
-  editRecord = () => {
-    const { store, bibliographicRecord } = this.props;
-    put(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'lang=ita&view=1'), bibliographicRecord, store);
-  };
-
-  deleteRecord = () => {
-    const { store, emptyRecord, bibliographicRecord } = this.props;
-    const okapi = store.getState().okapi;
-    const userName = okapi.currentUser.username;
-    const id = emptyRecord.id || bibliographicRecord.id;
-    const serahcResutls = store.getState().marccat;
-    const uid = uuid();
-    remove(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id, `uuid=${uid}&userName=${userName}&lang=ita&view=1`), bibliographicRecord, this.showMessage('Record delete successfully'));
-    setTimeout(() => {
-      this.handleClose();
-    }, 2000);
-  };
-
 
   composeBodyJson = () => {
     const { data, emptyRecord, store: { getState } } = this.props;

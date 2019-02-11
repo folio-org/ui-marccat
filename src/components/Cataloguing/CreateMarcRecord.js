@@ -115,7 +115,7 @@ export class CreateMarcRecord extends React.Component<P, {
 
   saveRecord = () => {
     const { isEditingMode } = this.state;
-    const body = { bibliographicRecord: this.composeBodyJson() };
+    const body = this.composeBodyJson();
     post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'lang=ita&view=1'), body, () => {
       this.showMessage('Record saved with success');
       setTimeout(() => {
@@ -144,7 +144,7 @@ export class CreateMarcRecord extends React.Component<P, {
 
 
   composeBodyJson = () => {
-    const { template, emptyRecord, store: { getState } } = this.props;
+    const { data, emptyRecord, store: { getState } } = this.props;
     let { bibliographicRecord } = this.props;
     const formData = getState().form.bibliographicRecordForm.values;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
@@ -213,7 +213,7 @@ export class CreateMarcRecord extends React.Component<P, {
         }
         t.mandatory = false;
         t.added = true;
-        t.fieldStatus = 'changed';
+        t.fieldStatus = 'new';
         t.variableField = {
           keyNumber,
           ind1: (t.code === '100') ? 1 : 0,
@@ -229,10 +229,17 @@ export class CreateMarcRecord extends React.Component<P, {
         };
       }
     });
-    bibliographicRecord.recordTemplate = template.records[1];
+    const recordTemplate = data.template.records[1];
     bibliographicRecord.fields = _.union(bibliographicRecord.fields, tagVariableData);
     bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
-    return bibliographicRecord;
+    bibliographicRecord.verificationLevel = 1;
+    recordTemplate.fields = bibliographicRecord.fields;
+    recordTemplate.leader = bibliographicRecord.leader;
+    recordTemplate.type = 'B';
+    return {
+      bibliographicRecord,
+      recordTemplate
+    };
   }
 
   handleClose = () => {
@@ -267,9 +274,12 @@ export class CreateMarcRecord extends React.Component<P, {
     } = this.state;
     let { bibliographicRecord } = this.props;
     const defaultTemplate = (settings) ? settings.defaultTemplate : C.SETTINGS.DEFAULT_TEMPLATE;
-    if (emptyRecord) bibliographicRecord = emptyRecord;
-    return (!bibliographicRecord) ? <Icon icon="spinner-ellipsis" /> : (
-      <React.Fragment>
+    if (emptyRecord) {
+      bibliographicRecord = emptyRecord;
+      bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
+    }
+    return (!bibliographicRecord) ?
+      (
         <Paneset static>
           <Pane
             defaultWidth="fullWidth"
@@ -281,50 +291,67 @@ export class CreateMarcRecord extends React.Component<P, {
             onClose={() => this.handleClose()}
             lastMenu={this.renderButtonMenu()}
           >
-            <Row center="xs">
-              <div className={style.recordContainer}>
-                <AccordionSet>
-                  <KeyValue
-                    value={<h2>{bibliographicRecord.name}</h2>}
-                  />
-                  <form name="bibliographicRecordForm" onSubmit={this.saveRecord} formKey="bibliograficKey">
-                    <Accordion label="Suppress" id="suppress" separator={false}>
-                      <SingleCheckboxIconButton labels={['Suppress from Discovery']} pullLeft widthPadding />
-                    </Accordion>
-                    <Accordion label="Leader" id="leader">
-                      <MarcLeader
-                        {...this.props}
-                        readOnly
-                        leaderData={leaderData}
-                        leaderCode={bibliographicRecord.leader.code}
-                        leaderValue={bibliographicRecord.leader.value}
-                      />
-                    </Accordion>
-                    <Accordion label="Control fields (001, 003, 005)" id="control-field">
-                      <FixedFields
-                        {...this.props}
-                        headerTypes006IsLoading={headerTypes006IsLoading}
-                        headerTypes007IsLoading={headerTypes007IsLoading}
-                        headerTypes008IsLoading={headerTypes008IsLoading}
-                        record={bibliographicRecord}
-                      />
-                    </Accordion>
-                  </form>
-                  <Accordion label="variable fields" id="variable-field">
-                    <VariableFields
-                      fields={bibliographicRecord.fields.filter(f => f.fixedField === undefined || !f.fixedField)}
-                      {...this.props}
-                      editable={editable}
-                    />
-                  </Accordion>
-                </AccordionSet>
-              </div>
-            </Row>
+            <Icon icon="spinner-ellipsis" />
           </Pane>
         </Paneset>
-        <Callout ref={this.callout} />
-      </React.Fragment>
-    );
+      ) :
+      (
+        <React.Fragment>
+          <Paneset static>
+            <Pane
+              defaultWidth="fullWidth"
+              paneTitle={(bibliographicRecord) ? 'New Monograph' : 'New Monograph'}
+              paneSub={(bibliographicRecord) ? 'id. ' + bibliographicRecord.id : 'id. ' + defaultTemplate.id}
+              appIcon={{ app: C.META.ICON_TITLE }}
+              actionMenu={ActionMenuTemplate}
+              dismissible
+              onClose={() => this.handleClose()}
+              lastMenu={this.renderButtonMenu()}
+            >
+              <Row center="xs">
+                <div className={style.recordContainer}>
+                  <AccordionSet>
+                    <KeyValue
+                      value={<h2>{bibliographicRecord.name}</h2>}
+                    />
+                    <form name="bibliographicRecordForm" onSubmit={this.saveRecord} formKey="bibliograficKey">
+                      <Accordion label="Suppress" id="suppress" separator={false}>
+                        <SingleCheckboxIconButton labels={['Suppress from Discovery']} pullLeft widthPadding />
+                      </Accordion>
+                      <Accordion label="Leader" id="leader">
+                        <MarcLeader
+                          {...this.props}
+                          readOnly
+                          leaderData={leaderData}
+                          leaderCode={bibliographicRecord.leader.code}
+                          leaderValue={bibliographicRecord.leader.value}
+                        />
+                      </Accordion>
+                      <Accordion label="Control fields (001, 003, 005)" id="control-field">
+                        <FixedFields
+                          {...this.props}
+                          headerTypes006IsLoading={headerTypes006IsLoading}
+                          headerTypes007IsLoading={headerTypes007IsLoading}
+                          headerTypes008IsLoading={headerTypes008IsLoading}
+                          record={bibliographicRecord}
+                        />
+                      </Accordion>
+                    </form>
+                    <Accordion label="variable fields" id="variable-field">
+                      <VariableFields
+                        fields={bibliographicRecord.fields.filter(f => f.fixedField === undefined || !f.fixedField)}
+                        {...this.props}
+                        editable={editable}
+                      />
+                    </Accordion>
+                  </AccordionSet>
+                </div>
+              </Row>
+            </Pane>
+          </Paneset>
+          <Callout ref={this.callout} />
+        </React.Fragment>
+      );
   }
 }
 

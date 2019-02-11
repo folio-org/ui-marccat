@@ -1,5 +1,6 @@
 {
-  "app.title" : "MARCcat",
+  "MARCcat": "MARCcat",
+  "marccat": "MARCcat",
   "noResult": "No Result found",
   "settings.general": "General",
   "settings.general.message": "These are your general app settings.",
@@ -16,7 +17,6 @@
   "initial.title": "Choose a filter or enter search query to show results",
   "search.initial.message": "Enter search criteria to start search",
   "button.add": "Add",
-  "button.add.search.form": "Add",
   "button.new": "New",
   "button.new.auth": "Authority record",
   "button.new.bib": "Bibliographic record",
@@ -39,7 +39,6 @@
   "search.record": "Records",
   "search.record.preview": "Preview Record",
   "search.record.new": "New",
-  "search.record.new.auth": "New (CTRL+A)",
   "search.record.new.from.template": "New from template (CTRL+N)",
   "search.record.actions": "Actions",
   "search.record.edit": "Edit",
@@ -54,7 +53,6 @@
   "browse.actionmenu.export.dat": "Export as .dat",
   "browse.actionmenu.printall": "Print all",
   "browse.actionmenu.merge": "Merge",
-  "search.actionmenu.title": "Recent searches",
   "search.actionmenu.export.mrc": "Export as .mrc",
   "search.actionmenu.export.csv": "Export as .csv",
   "search.actionmenu.export.dat": "Export as .dat",
@@ -66,9 +64,6 @@
   "search.actionmenu.authority.records": "Authority Records",
   "indexes.title": "Indexes",
   "diacritic.title": "Diacritic",
-  "template.record.create": "Create Record",
-  "template.record.delete": "Delete Record",
-  "template.record.edit": "Edit Record",
   "template.actionmenu.new": "New Template",
   "template.actionmenu.load": "Load template...",
   "template.actionmenu.load.shortcut": "CTRL + L",
@@ -77,11 +72,5 @@
   "template.actionmenu.save": "Save template",
   "template.actionmenu.import.overlay": "Import and overlay .marc or .mrc file",
   "template.actionmenu.import.oclc": "Import from OCLC",
-  "template.bib.accordion": "Bibliographic default templates",
-
-  "cataloging.variablefield.empty": "No variable fields presents",
-  "cataloging.variablefield.section.label": "Variable data field",
-  "cataloging.variablefield.section.add.newtag": "+ Add new Tag"
-
- 
+  "template.bib.accordion": "Bibliographic default templates"
 }

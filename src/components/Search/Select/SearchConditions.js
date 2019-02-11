@@ -21,6 +21,7 @@ export default function SearchConditions({ ...props }) {
       id={id}
       placeholder="Select condition..."
       component={Select}
+      marginBottom0
       dataOptions={options}
       {...rest}
     />

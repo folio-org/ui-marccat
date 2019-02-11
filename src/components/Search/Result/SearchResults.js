@@ -86,7 +86,7 @@ export class SearchResults extends React.Component<P, {}> {
     dispatch({
       type: '@@ui-marccat/QUERY',
       data: {
-        path: C.ENDPOINT.EMPTY_RECORD_URL + '/' + 22,
+        path: C.ENDPOINT.EMPTY_RECORD_URL + '/' + 63,
         type: 'emptyRecord',
         params: 'type=B&lang=ita&view=1',
       } });

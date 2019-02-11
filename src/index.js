@@ -50,7 +50,7 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
       data:
       {
         defaultTemplate : {
-          id: 22,
+          id: 63,
           name: 'Monograph'
         } } });
   }

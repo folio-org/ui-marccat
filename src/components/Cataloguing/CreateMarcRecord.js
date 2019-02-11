@@ -189,6 +189,7 @@ export class CreateMarcRecord extends React.Component<P, {
     bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     bibliographicRecord.fields = _.sortBy(bibliographicRecord.fields, 'code');
     bibliographicRecord.verificationLevel = 1;
+    data.search.bibliographicResults.push(bibliographicRecord);
     return {
       bibliographicRecord,
       recordTemplate

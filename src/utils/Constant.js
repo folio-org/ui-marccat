@@ -24,6 +24,7 @@ export const ENDPOINT = {
   EMPTY_RECORD_URL: '/bibliographic-record/from-template/',
   TEMPLATE_TAG_URL: '/fixed-fields-code-groups',
   HEADER_TYPES_URL: '/header-types',
+  CREATE_HEADING_URL: '/create-heading',
   BIBLIOGRAPHIC_RECORD: '/bibliographic-record',
   HEADING_BY_TAG: '/headings-by-tag',
   LOCK_MARC_RECORD: '/bibliographic-record/lock/',

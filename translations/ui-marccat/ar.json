@@ -31,7 +31,7 @@
     "button.cancel": "إلغاء",
     "settings.field.groupings": "تجميعات الحقل",
     "settings.default.record.template": "قالب التسجيلة الافتراضي",
-    "settings.record.single.overlay.rules": "قواعد تراكب التسجيلة المفردة",
+    "settings.overlay.rules": "قواعد تراكب التسجيلة المفردة",
     "settings.authority.records": "تسجيلات الاستناد المحلية",
     "button.add": "أضف",
     "button.remove": "إزالة",
@@ -85,5 +85,6 @@
     "template.record.delete": "حذف التسجيلة",
     "template.record.edit": "تحرير التسجيلة",
     "cataloging.variablefield.section.add.newtag": "+ إضافة وسم جديد",
-    "button.add.search.form": "إضافة"
+    "button.add.search.form": "إضافة",
+    "search.record.delete": "Delete Record"
 }

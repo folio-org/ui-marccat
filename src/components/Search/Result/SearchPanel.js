@@ -7,19 +7,16 @@
 import React from 'react';
 import {
   SearchField,
-  Button,
   AccordionSet,
   Accordion,
   FilterAccordionHeader,
   Row, Col,
-  Icon,
-  IconButton,
 } from '@folio/stripes/components';
 import { reduxForm, Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { includes } from 'lodash';
 import ResetButton from '../Filter/ResetButton';
-import type { Props } from '../../../core';
+import { Props } from '../../../core';
 import { SearchIndexes, SearchConditions, FiltersContainer } from '..';
 import { ActionTypes } from '../../../redux/actions/Actions';
 import { findYourQuery } from '../Filter';
@@ -29,7 +26,6 @@ import {
   getFormatFilterQuery,
 } from '../../../utils/SearchUtils';
 import { EMPTY_MESSAGE } from '../../../utils/Constant';
-import OperatorSelect from '../Select/OperatorSelect';
 
 import styles from '../index.css';
 
@@ -46,8 +42,8 @@ class SearchPanel extends React.Component<P, {}> {
       searchForm: [''],
       filterEnable: true,
       counter: [{}],
-      leftBracketEnable: true,
-      rightBracketEnable: true,
+      leftBracketEnable: false,
+      rightBracketEnable: false,
     };
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleAddSearchForm = this.handleAddSearchForm.bind(this);
@@ -142,7 +138,6 @@ class SearchPanel extends React.Component<P, {}> {
     }
   }
 
-
   buildComplexQuery = () => {
     const { dispatch, store: { getState } } = this.props;
     const { counter } = this.state;
@@ -212,10 +207,9 @@ class SearchPanel extends React.Component<P, {}> {
 
   render() {
     const { translate, ...rest } = this.props;
-    const { searchForm, filterEnable, counter, leftBracketEnable, rightBracketEnable } = this.state;
+    const { searchForm, filterEnable, leftBracketEnable, rightBracketEnable } = this.state;
     return (
       <React.Fragment>
-        {this.renderResetButton()}
         <AccordionSet>
           <Accordion
             {...rest}
@@ -224,7 +218,7 @@ class SearchPanel extends React.Component<P, {}> {
             header={FilterAccordionHeader}
           >
             {searchForm.map((form, idx) => (
-              <form name={`searchForm${idx}`} key={idx} onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}>
+              <form name="searchForm" key={idx} onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}>
                 <Row>
                   <Col xs={1}>
                     <div
@@ -238,17 +232,16 @@ class SearchPanel extends React.Component<P, {}> {
                   <Col xs={10} className={styles.forwardBracket}>
                     <Row>
                       <Col xs={12}>
-                        <div className={styles.select_margin}>
+                        <div>
                           <SearchIndexes
                             id={`selectIndexes-${idx}`}
                             name={`selectIndexes-${idx}`}
-                            marginBottom0
                             {...this.props}
                           />
                         </div>
                       </Col>
                     </Row>
-                    <Row style={{ marginBottom: '-15px' }}>
+                    <Row>
                       <Col xs={12}>
                         <SearchConditions
                           id={`selectCondition-${idx}`}
@@ -259,7 +252,7 @@ class SearchPanel extends React.Component<P, {}> {
                     </Row>
                     <Row>
                       <Col xs={12}>
-                        <div className={styles.select_margin}>
+                        <div>
                           <Field
                             id={`searchTextArea-${idx}`}
                             name={`searchTextArea-${idx}`}
@@ -268,36 +261,6 @@ class SearchPanel extends React.Component<P, {}> {
                             placeholder="Search..."
                           />
                         </div>
-                      </Col>
-                    </Row>
-                    {idx !== (counter.length - 1) &&
-                      <Row>
-                        <Col xs={10}>
-                          <OperatorSelect
-                            {...this.props}
-                            id={`operatorSelect-${idx}`}
-                            name={`operatorSelect-${idx}`}
-                          />
-                        </Col>
-                        <Col xs={2} style={{ display: 'flex', marginTop: '14px' }}>
-                          <IconButton
-                            icon="trash"
-                            size="small"
-                            onClick={(e) => this.handleRemoveSearchForm(e, idx)}
-                          />
-                        </Col>
-                      </Row>
-                    }
-                    <Row>
-                      <Col xs={12}>
-                        <Button
-                          buttonClass={styles.rightPosition}
-                          onClick={() => this.handleAddSearchForm()}
-                        >
-                          <Icon icon="plus-sign">
-                            {translate({ id: 'ui-marccat.button.add.search.form' })}
-                          </Icon>
-                        </Button>
                       </Col>
                     </Row>
                   </Col>

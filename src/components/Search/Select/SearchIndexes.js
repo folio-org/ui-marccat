@@ -84,6 +84,7 @@ export default function SearchIndexes({ ...props }) {
       placeholder="Select a index..."
       component={Select}
       dataOptions={options}
+      marginBottom0
       onChange={(event) => setSortStrategy(event)}
       {...rest}
     />

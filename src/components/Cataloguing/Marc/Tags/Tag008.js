@@ -23,7 +23,7 @@ export class Tag008 extends React.Component<Props, {}> {
   handleOnChange = (e) => {
     const { dispatch, leaderValue, record } = this.props;
     const headerTypeCode = e.target.value;
-    dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: C.TAGS._008, typeCode: headerTypeCode });
+    dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: C.TAGS._008, typeCode: headerTypeCode || 31 });
     this.state.isChangedHeaderType = true;
     record.fields.filter(f => f.code === C.TAGS._008)[0].fieldStatus = C.RECORD_FIELD_STATUS.CHANGED;
   }

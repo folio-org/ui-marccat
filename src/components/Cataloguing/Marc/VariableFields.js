@@ -52,7 +52,7 @@ class VariableFields extends React.Component<Props, {}> {
     const { fields, itemTemplate, translate } = this.props;
     fields.forEach((f, i) => {
       f.displayValue = fields[i].variableField.displayValue;
-      separator(f.displayValue, '\u001f');
+      separator(f.displayValue, '\u001fa');
     });
     return (
       <React.Fragment>

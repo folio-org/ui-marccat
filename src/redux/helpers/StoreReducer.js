@@ -28,8 +28,8 @@ StoreReducer.get = (store, reducer, prop) => {
  * @param {*} jsonApiKey
  * @returns
  */
-StoreReducer.resolve = (data, model, jsonApiKey) => {
-  return (!jsonApiKey) ? data[model].records : data[model].records[jsonApiKey];
+StoreReducer.resolve = (data, model) => {
+  return (data[model] && data[model].records) ? data[model].records : {};
 };
 
 /**
@@ -147,4 +147,8 @@ StoreReducer.getRecord = (store, id) => (
     isLoaded: false,
     isSaving: false,
   }
+);
+
+StoreReducer.deduplicate = (obj, key) => (
+  Object.values(obj.reduce((acc, cur) => Object.assign(acc, { [cur[`${key}`]]: cur }), {}))
 );

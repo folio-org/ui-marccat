@@ -86,7 +86,7 @@ export class SearchResults extends React.Component<P, {}> {
     dispatch({
       type: '@@ui-marccat/QUERY',
       data: {
-        path: C.ENDPOINT.EMPTY_RECORD_URL + '/' + 22,
+        path: C.ENDPOINT.EMPTY_RECORD_URL + '/' + 63,
         type: 'emptyRecord',
         params: 'type=B&lang=ita&view=1',
       } });
@@ -180,7 +180,7 @@ export class SearchResults extends React.Component<P, {}> {
         {...this.props}
         label={translate({ id: 'ui-marccat.search.record.new.from.template' })}
         labels={this.renderDropdownLabels()}
-        onToggle={this.renderTemplateRoute}
+        onToggle={this.handleCreateRecord}
         noDropdown
       />) : (<CreateButtonMenu
         {...this.props}
@@ -201,7 +201,7 @@ export class SearchResults extends React.Component<P, {}> {
         {...this.props}
         label={translate({ id: 'ui-marccat.template.record.create' })}
         labels={this.renderDropdownLabels()}
-        onToggle={this.renderTemplateRoute}
+        onToggle={this.handleCreateRecord}
         noDropdown
       />);
   };

@@ -15,7 +15,6 @@
     "start": "node script/js/start",
     "status": "stripes status config/stripes.config.js",
     "build": "node ./script/js/build",
-    "build:local": "stripes build config/stripes.config.js --languages en",
     "build:analizer": "stripes build config/stripes.config.js ./dist/analyze/ui-marccat-analyze --analyze --sourcemap",
     "lint": "yarn eslint && yarn stylelint",
     "test": "stripes test karma",
@@ -23,7 +22,7 @@
     "stylelint": "stylelint --fix \"src/**/*.css\"",
     "flow": "flow status ./src/",
     "gen:authors": ". ./script/sh/authors.sh",
-    "clean": "rm -rf lib/ dist/",
+    "clean": "rm -rf lib/",
     "show:descriptor": "stripes mod descriptor --full",
     "release": "node script/ci/release.js"
   },
@@ -33,8 +32,8 @@
     "@bigtest/mocha": "^0.5.1",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^3.2.1",
-    "@folio/stripes": "^1.1.0",
-    "@folio/stripes-cli": "^1.6.0",
+    "@folio/stripes": "^1.0.0",
+    "@folio/stripes-cli": "^1.5.0",
     "@folio/stripes-core": "^2.15.5",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^10.0.1",
@@ -46,9 +45,9 @@
     "eslint": "^5.9.0",
     "flow-bin": "^0.78.0",
     "mocha": "^5.2.0",
-    "react": "~16.6.3",
-    "react-dom": "~16.6.3",
-    "react-redux": "~5.1.1",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0",
+    "react-redux": "^5.0.7",
     "redux": "^4.0.0",
     "sinon": "^7.0.0"
   },
@@ -61,19 +60,15 @@
     "react-hot-loader": "^4.3.12",
     "react-intl": "^2.4.0",
     "react-router-dom": "^4.0.0",
-    "redux-actions": "^2.6.4",
     "redux-form": "^7.4.2",
-    "semafor": "^0.0.1",
     "stylelint": "^9.9.0",
     "stylelint-config-standard": "^18.2.0",
     "webpack": "^4.0.0"
   },
   "peerDependencies": {
-    "@folio/stripes": "^1.1.0",
+    "@folio/stripes": "^1.0.0",
     "react": "*",
-    "react-dom": "*",
-    "react-redux": "*",
-    "redux": "*"
+    "react-dom": "*"
   },
   "resolutions": {
     "**/domelementtype": "*",
@@ -88,14 +83,14 @@
   },
   "stripes": {
     "type": "app",
-    "displayName": "ui-marccat.app.title",
+    "displayName": "MARCcat",
     "route": "/marccat",
     "defaultPopoverSize": "400px",
     "defaultPreviewWidth": "40%",
     "helpPage": "https://wiki.folio.org/pages/",
     "hasSettings": true,
     "okapiInterfaces": {
-      "marccat": "1.0"
+      "marccat": "1.2"
     },
     "icons": [
       {

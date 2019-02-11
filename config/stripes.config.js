@@ -33,18 +33,20 @@ const servePlugin = {
     };
   },
 };
-
 module.exports = {
   okapi: { url, tenant: 'diku' },
-  hasAllPerms: true,
-  logCategories: '',
-  plugins: {
-    serve: servePlugin
+  config: {
+    logCategories: 'redux',
+    hasAllPerms: true,
+    // Custom command extension
+    plugins: {
+      serve: servePlugin
+    }
   },
   branding: {
     logo: {
       src: './icons/app.png',
       alt: 'MARCcat',
     }
-  }
+  },
 };

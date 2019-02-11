@@ -42,6 +42,7 @@
   "search.record.new.from.template": "New from template (CTRL+N)",
   "search.record.actions": "Actions",
   "search.record.edit": "Edit",
+  "search.record.delete": "Delete Record",
   "search.goto.inventory": "View in Inventory",
   "search.details.bibliographic": "Bibliographic record",
   "search.details.authority": "Authority record",

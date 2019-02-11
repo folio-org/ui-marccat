@@ -28,7 +28,6 @@ import { buildUrl } from '../../redux/helpers/Utilities';
 import * as C from '../../utils/Constant';
 
 import style from './Style/style.css';
-import { uuid } from './Utils/MarcUtils';
 import { StoreReducer } from '../../redux';
 
 type P = {
@@ -97,7 +96,6 @@ export class CreateMarcRecord extends React.Component<P, {
         this.handleClose();
       }, 2000);
     });
-    if (isEditingMode) this.lockRecord(false);
   };
 
   composeBodyJson = () => {

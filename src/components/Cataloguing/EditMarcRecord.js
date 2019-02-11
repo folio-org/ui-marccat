@@ -153,11 +153,13 @@ class EditMarcRecord extends React.Component {
     const userName = okapi.currentUser.username;
     const id = recordDetail.id;
     const uid = uuid();
-    remove(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id, `id=${id}&uuid=${uid}&userName=${userName}&lang=ita&view=1`), null);
+    remove(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id, `id=${id}&uuid=${uid}&userName=${userName}&lang=ita&view=1`), this.showMessage('Record detele with success'));
     setTimeout(() => {
-      data.search.bibliographicResults = data.search.bibliographicResults.filter(item => '' + id !== item.data.fields[0]['001'].replace(/^0+/, '')) || {};
+      data.search.bibliographicResults = data.search.bibliographicResults
+      .filter(item => '' + id !== item.data.fields[0]['001']
+      .replace(/^0+/, '')) || {};
       this.handleClose();
-    });
+    }, 3000);
   };
 
   showMessage(message) {
@@ -200,7 +202,7 @@ class EditMarcRecord extends React.Component {
             marginBottom0
           >
             <Icon icon="trash">
-              Delete Record
+            {translate({ id: 'ui-marccat.template.record.delete' })}
             </Icon>
           </Button>
         </PaneMenu>

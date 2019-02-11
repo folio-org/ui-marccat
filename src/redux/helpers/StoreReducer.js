@@ -29,7 +29,7 @@ StoreReducer.get = (store, reducer, prop) => {
  * @returns
  */
 StoreReducer.resolve = (data, model) => {
-  return (data[model] && data[model].records) ? data[model].records : null;
+  return (data[model] && data[model].records) ? data[model].records : {};
 };
 
 /**

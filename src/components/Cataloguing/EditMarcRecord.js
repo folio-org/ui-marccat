@@ -50,7 +50,7 @@ class EditMarcRecord extends React.Component {
   };
 
   composeBodyJson = () => {
-    const { recordDetail, store: { getState } } = this.props;
+    const { data, recordDetail, store: { getState } } = this.props;
     const formData = getState().form.bibliographicRecordForm.values;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
     const initialTag = getState().form.marcEditableListForm.values.items.length;
@@ -110,10 +110,10 @@ class EditMarcRecord extends React.Component {
           let keyNumber = '';
           let category = '';
           if (t.code === '245') {
-            keyNumber = 2215279;
+            keyNumber = 1;
             category = 3;
           } else if (t.code === '100') {
-            keyNumber = 1000;
+            keyNumber = 2;
             category = 2;
           }
           t.mandatory = false;
@@ -135,19 +135,27 @@ class EditMarcRecord extends React.Component {
         }
       });
     }
-    if (initialTag < tagVariableData.length) { bibliographicRecord.fields = _.union(bibliographicRecord.fields, tagVariableData); }
-    return bibliographicRecord;
+    const recordTemplate = data.template.records[3];
+    bibliographicRecord.fields = _.union(bibliographicRecord.fields, tagVariableData);
+    bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
+    bibliographicRecord.fields = _.sortBy(bibliographicRecord.fields, 'code');
+    bibliographicRecord.verificationLevel = 1;
+    return {
+      bibliographicRecord,
+      recordTemplate
+    };
   }
 
 
   deleteRecord = () => {
-    const { store, recordDetail } = this.props;
+    const { data, store, recordDetail } = this.props;
     const okapi = store.getState().okapi;
     const userName = okapi.currentUser.username;
     const id = recordDetail.id;
     const uid = uuid();
     remove(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id, `id=${id}&uuid=${uid}&userName=${userName}&lang=ita&view=1`), null);
     setTimeout(() => {
+      data.search.bibliographicResults = data.search.bibliographicResults.filter(item => '' + id !== item.data.fields[0]['001'].replace(/^0+/, '')) || {};
       this.handleClose();
     });
   };
@@ -214,62 +222,80 @@ class EditMarcRecord extends React.Component {
     let bibliographicRecord;
     if (recordDetail) {
       bibliographicRecord = recordDetail;
+      bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     }
-    return (!bibliographicRecord) ? <Icon icon="spinner-ellipsis" /> : (
-      <React.Fragment>
+    return (!bibliographicRecord) ?
+      (
         <Paneset static>
           <Pane
             defaultWidth="fullWidth"
-            dismissible
-            paneTitle="Edit Record"
+            paneTitle={(bibliographicRecord) ? 'New Monograph' : 'Edit Record'}
+            paneSub={(bibliographicRecord) ? 'id. ' + bibliographicRecord.id : 'Edit Record id. '}
             appIcon={{ app: C.META.ICON_TITLE }}
             actionMenu={ActionMenuTemplate}
-            paneSub={(bibliographicRecord) ? 'id. ' + bibliographicRecord.id : ''}
-            onClose={this.handleClose}
+            dismissible
+            onClose={() => this.handleClose()}
             lastMenu={this.renderButtonMenu()}
           >
-            <Row center="xs">
-              <div className={style.recordContainer}>
-                <AccordionSet>
-                  <KeyValue />
-                  <form name="bibliographicRecordForm" onSubmit={this.saveRecord} formKey="bibliograficKey">
-                    <Accordion label="Suppress" id="suppress" separator={false}>
-                      <SingleCheckboxIconButton labels={['Suppress from Discovery']} pullLeft widthPadding />
-                    </Accordion>
-                    <Accordion label="Leader" id="leader">
-                      <MarcLeader
-                        {...this.props}
-                        readOnly
-                        leaderData={leaderData}
-                        leaderCode={bibliographicRecord.leader.code}
-                        leaderValue={bibliographicRecord.leader.value}
-                      />
-                    </Accordion>
-                    <Accordion label="Control fields (001, 003, 005)" id="control-field">
-                      <FixedFields
-                        {...this.props}
-                        recordDetail={data.recordDetail}
-                        headerTypes006IsLoading={headerTypes006IsLoading}
-                        headerTypes007IsLoading={headerTypes007IsLoading}
-                        headerTypes008IsLoading={headerTypes008IsLoading}
-                        record={bibliographicRecord}
-                      />
-                    </Accordion>
-                  </form>
-                  <Accordion label={translate({ id: 'ui-marccat.cataloging.variablefield.section.label' })} id="variable-field">
-                    <VariableFields
-                      {...this.props}
-                      fields={bibliographicRecord.fields.filter(f => f.fixedField === undefined || !f.fixedField)}
-                    />
-                  </Accordion>
-                </AccordionSet>
-              </div>
-            </Row>
+            <Icon icon="spinner-ellipsis" />
           </Pane>
         </Paneset>
-        <Callout ref={this.callout} />
-      </React.Fragment>
-    );
+      ) :
+      (
+        <React.Fragment>
+          <Paneset static>
+            <Pane
+              defaultWidth="fullWidth"
+              dismissible
+              paneTitle="Edit Record"
+              appIcon={{ app: C.META.ICON_TITLE }}
+              actionMenu={ActionMenuTemplate}
+              paneSub={(bibliographicRecord) ? 'id. ' + bibliographicRecord.id : ''}
+              onClose={this.handleClose}
+              lastMenu={this.renderButtonMenu()}
+            >
+              <Row center="xs">
+                <div className={style.recordContainer}>
+                  <AccordionSet>
+                    <KeyValue />
+                    <form name="bibliographicRecordForm" onSubmit={this.saveRecord} formKey="bibliograficKey">
+                      <Accordion label="Suppress" id="suppress" separator={false}>
+                        <SingleCheckboxIconButton labels={['Suppress from Discovery']} pullLeft widthPadding />
+                      </Accordion>
+                      <Accordion label="Leader" id="leader">
+                        <MarcLeader
+                          {...this.props}
+                          readOnly
+                          leaderData={leaderData}
+                          leaderCode={bibliographicRecord.leader.code}
+                          leaderValue={bibliographicRecord.leader.value}
+                        />
+                      </Accordion>
+                      <Accordion label="Control fields (001, 003, 005)" id="control-field">
+                        <FixedFields
+                          {...this.props}
+                          recordDetail={data.recordDetail}
+                          headerTypes006IsLoading={headerTypes006IsLoading}
+                          headerTypes007IsLoading={headerTypes007IsLoading}
+                          headerTypes008IsLoading={headerTypes008IsLoading}
+                          record={bibliographicRecord}
+                        />
+                      </Accordion>
+                    </form>
+                    <Accordion label={translate({ id: 'ui-marccat.cataloging.variablefield.section.label' })} id="variable-field">
+                      <VariableFields
+                        {...this.props}
+                        fields={bibliographicRecord.fields.filter(f => f.fixedField === undefined || !f.fixedField)}
+                      />
+                    </Accordion>
+                  </AccordionSet>
+                </div>
+              </Row>
+            </Pane>
+          </Paneset>
+          <Callout ref={this.callout} />
+        </React.Fragment>
+      );
   }
 }
 

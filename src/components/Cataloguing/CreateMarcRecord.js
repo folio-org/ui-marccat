@@ -131,10 +131,11 @@ export class CreateMarcRecord extends React.Component<P, {
   };
 
   deleteRecord = () => {
-    const { store, bibliographicRecord } = this.props;
+    const { store, emptyRecord, bibliographicRecord } = this.props;
     const okapi = store.getState().okapi;
     const userName = okapi.currentUser.username;
-    const id = bibliographicRecord.id;
+    const id = emptyRecord.id || bibliographicRecord.id;
+    const serahcResutls = store.getState().marccat;
     const uid = uuid();
     remove(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id, `uuid=${uid}&userName=${userName}&lang=ita&view=1`), bibliographicRecord, this.showMessage('Record delete successfully'));
     setTimeout(() => {
@@ -205,10 +206,10 @@ export class CreateMarcRecord extends React.Component<P, {
         let keyNumber = '';
         let category = '';
         if (t.code === '245') {
-          keyNumber = 2215279;
+          keyNumber = 1;
           category = 3;
         } else if (t.code === '100') {
-          keyNumber = 1000;
+          keyNumber = 2;
           category = 2;
         }
         t.mandatory = false;
@@ -220,7 +221,7 @@ export class CreateMarcRecord extends React.Component<P, {
           ind2: (t.code === '100') ? 1 : 4,
           code: t.code,
           categoryCode: category,
-          displayValue: '\u001fa' + t.displayValue,
+          displayValue: '\u001f' + t.displayValue,
           functionCode: '-1',
           headingTypeCode: '1',
           itemTypeCode: '-1',
@@ -229,13 +230,11 @@ export class CreateMarcRecord extends React.Component<P, {
         };
       }
     });
-    const recordTemplate = data.template.records[1];
+    const recordTemplate = data.template.records[3];
     bibliographicRecord.fields = _.union(bibliographicRecord.fields, tagVariableData);
     bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
+    bibliographicRecord.fields = _.sortBy(bibliographicRecord.fields, 'code');
     bibliographicRecord.verificationLevel = 1;
-    recordTemplate.fields = bibliographicRecord.fields;
-    recordTemplate.leader = bibliographicRecord.leader;
-    recordTemplate.type = 'B';
     return {
       bibliographicRecord,
       recordTemplate
@@ -274,7 +273,7 @@ export class CreateMarcRecord extends React.Component<P, {
     } = this.state;
     let { bibliographicRecord } = this.props;
     const defaultTemplate = (settings) ? settings.defaultTemplate : C.SETTINGS.DEFAULT_TEMPLATE;
-    if (emptyRecord) {
+    if (!_.isEmpty(emptyRecord)) {
       bibliographicRecord = emptyRecord;
       bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     }

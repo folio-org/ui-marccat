@@ -165,6 +165,21 @@ export class SearchResults extends React.Component<P, {}> {
     }];
   };
 
+  renderRightMenuEdit = props => {
+    return (
+      <PaneMenu>
+        <ToolbarButtonMenu
+          create
+          {...props}
+          onClick={this.handleClickEdit}
+          label={<FormattedMessage id="ui-marccat.search.record.edit" />}
+        />
+        <Icon icon="bookmark" />
+        <Icon icon="tag" />
+      </PaneMenu>
+    );
+  };
+
   renderLastMenu = () => {
     const { openDropDownMenu } = this.state;
     const { translate, activeFilterName, activeFilterChecked } = this.props;
@@ -293,7 +308,7 @@ export class SearchResults extends React.Component<P, {}> {
               isFetchingDetail={isFetchingDetail}
               isReadyDetail={isReadyDetail}
               onClose={() => this.setState({ detailPanelIsVisible: false })}
-              handleClickEdit={this.handleClickEdit}
+              rightMenuEdit={this.renderRightMenuEdit()}
             />
           }
           {isPanelBibAssOpen && !noResults &&

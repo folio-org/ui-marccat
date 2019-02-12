@@ -93,7 +93,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
   };
 
   composeBodyJson = () => {
-    const { data, emptyRecord, store: { getState } } = this.props;
+    const { emptyRecord, store: { getState } } = this.props;
     let { bibliographicRecord } = this.props;
     const formData = getState().form.bibliographicRecordForm.values;
     const tagVariableData = getState().form.marcEditableListForm.values.items;

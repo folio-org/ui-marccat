@@ -25,7 +25,6 @@ import {
   getLanguageFilterQuery,
   getFormatFilterQuery,
 } from '../../../utils/SearchUtils';
-import { EMPTY_MESSAGE } from '../../../utils/Constant';
 
 import styles from '../index.css';
 

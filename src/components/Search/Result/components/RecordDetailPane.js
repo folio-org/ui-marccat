@@ -3,15 +3,32 @@
  * @flow
  */
 import React from 'react';
-import { Pane, Icon } from '@folio/stripes/components';
+import { Pane, PaneMenu, Button, Icon } from '@folio/stripes/components';
+import { FormattedMessage } from 'react-intl';
 import RecordDetails from '../RecordDetails';
 import { Props, injectCommonProp } from '../../../../core';
 import { ActionMenuDetail } from '../../../../lib';
 import { META } from '../../../../utils/Constant';
 
 class RecordDetailPane extends React.Component<Props, {}> {
+  renderRightMenuEdit = () => {
+    const { handleClickEdit } = this.props;
+    return (
+      <PaneMenu>
+        <Button
+          {...this.props}
+          buttonStyle="primary"
+          onClick={handleClickEdit()}
+          label={<FormattedMessage id="ui-marccat.search.record.edit" />}
+        />
+        <Icon icon="bookmark" />
+        <Icon icon="tag" />
+      </PaneMenu>
+    );
+  };
+
   render() {
-    const { detailPaneMeta, detail, isFetchingDetail, isReadyDetail, onClose, rightMenuEdit } = this.props;
+    const { detailPaneMeta, detail, isFetchingDetail, isReadyDetail, onClose } = this.props;
     return (
       <React.Fragment>
         <Pane
@@ -23,7 +40,7 @@ class RecordDetailPane extends React.Component<Props, {}> {
           actionMenu={ActionMenuDetail}
           dismissible
           onClose={onClose}
-          lastMenu={rightMenuEdit}
+          lastMenu={this.renderRightMenuEdit()}
         >
           {(isFetchingDetail) ?
             <Icon icon="spinner-ellipsis" /> :

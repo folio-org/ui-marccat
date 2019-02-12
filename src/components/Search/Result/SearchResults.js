@@ -52,25 +52,18 @@ export class SearchResults extends React.Component<P, {}> {
     };
 
     this.handleDetails = this.handleDetails.bind(this);
-    // this.onNeedMoreData = this.onNeedMoreData.bind(this);
     this.handleCreateRecord = this.handleCreateRecord.bind(this);
     this.renderRightMenuEdit = this.renderRightMenuEdit.bind(this);
     this.renderLastMenu = this.renderLastMenu.bind(this);
     this.transitionToParams = this.transitionToParams.bind(this);
-    this.renderTemplateRoute = this.renderTemplateRoute.bind(this);
+    this.handleClickEdit = this.handleClickEdit.bind(this);
     this.keys = {
       'new': ['backspace'],
     };
     this.handlers = {
-      'new': this.renderTemplateRoute,
+      'new': this.handleCreateRecord,
     };
   }
-
-  renderTemplateRoute = () => {
-    const { dispatch, router } = this.props;
-    dispatch({ type: ActionTypes.TEMPLATE_GET_BY_ID, query: 408 });
-    router.push(`/marccat/record/template?templateId=${408}`);
-  };
 
   handleClickEdit = () => {
     const { dispatch, router, toggleFilterPane } = this.props;
@@ -86,13 +79,13 @@ export class SearchResults extends React.Component<P, {}> {
     dispatch({
       type: '@@ui-marccat/QUERY',
       data: {
-        path: C.ENDPOINT.EMPTY_RECORD_URL + '/' + 63,
+        path: C.ENDPOINT.EMPTY_RECORD_URL + '/' + 408,
         type: 'emptyRecord',
         params: 'type=B&lang=ita&view=1',
       } });
     toggleFilterPane();
     this.setState(prevState => ({ layerOpen: !prevState.layerOpen }));
-    router.push('/marccat/record/template');
+    router.push(`/marccat/record/template?templateId=${408}`);
   };
 
   handleOnToggle = () => {
@@ -300,7 +293,7 @@ export class SearchResults extends React.Component<P, {}> {
               isFetchingDetail={isFetchingDetail}
               isReadyDetail={isReadyDetail}
               onClose={() => this.setState({ detailPanelIsVisible: false })}
-              rightMenuEdit={this.renderRightMenuEdit()}
+              handleClickEdit={this.handleClickEdit}
             />
           }
           {isPanelBibAssOpen && !noResults &&

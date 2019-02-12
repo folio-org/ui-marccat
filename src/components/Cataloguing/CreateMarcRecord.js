@@ -35,14 +35,9 @@ type P = {
   isEditingMode: boolean
 } & Props;
 
-export class CreateMarcRecord extends React.Component<P, {
-  editable: boolean
-}> {
+export class CreateMarcRecord extends React.Component<P, {}> {
   constructor(props: P) {
     super(props);
-    this.state = {
-      isEditingMode: false,
-    };
     this.renderDropdownLabels = this.renderDropdownLabels.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.saveRecord = this.saveRecord.bind(this);
@@ -88,7 +83,6 @@ export class CreateMarcRecord extends React.Component<P, {
   };
 
   saveRecord = () => {
-    const { isEditingMode } = this.state;
     const body = this.composeBodyJson();
     post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'lang=ita&view=1'), body, () => {
       this.showMessage('Record saved with success');
@@ -109,7 +103,7 @@ export class CreateMarcRecord extends React.Component<P, {
     const tag008Values = [];
 
     // Set leader
-    if (emptyRecord) bibliographicRecord = emptyRecord;
+    if (!bibliographicRecord) bibliographicRecord = emptyRecord;
     bibliographicRecord.leader.value = formData.Leader;
 
     // populate tag 006 tag 007 tag 008
@@ -184,17 +178,11 @@ export class CreateMarcRecord extends React.Component<P, {
         };
       }
     });
-    const recordTemplate = data.template.records[3];
+    const recordTemplate = emptyRecord;
     bibliographicRecord.fields = _.union(bibliographicRecord.fields, tagVariableData);
     bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     bibliographicRecord.fields = _.sortBy(bibliographicRecord.fields, 'code');
     bibliographicRecord.verificationLevel = 1;
-    const savedObj = data.search.bibliographicResults[3];
-    savedObj.data = {
-      fields: bibliographicRecord.fields,
-      leader: bibliographicRecord.leader.value
-    };
-    // data.search.bibliographicResults.push(savedObj);
     return {
       bibliographicRecord,
       recordTemplate
@@ -228,9 +216,6 @@ export class CreateMarcRecord extends React.Component<P, {
       leaderData,
       emptyRecord
     } = this.props;
-    const {
-      editable,
-    } = this.state;
     let { bibliographicRecord } = this.props;
     const defaultTemplate = (settings) ? settings.defaultTemplate : C.SETTINGS.DEFAULT_TEMPLATE;
     if (!_.isEmpty(emptyRecord)) {
@@ -273,7 +258,7 @@ export class CreateMarcRecord extends React.Component<P, {
                     <KeyValue
                       value={<h2>{bibliographicRecord.name}</h2>}
                     />
-                    <form name="bibliographicRecordForm" onSubmit={this.saveRecord} formKey="bibliograficKey">
+                    <form name="bibliographicRecordForm" onSubmit={this.saveRecord}>
                       <Accordion label="Suppress" id="suppress" separator={false}>
                         <SingleCheckboxIconButton labels={['Suppress from Discovery']} pullLeft widthPadding />
                       </Accordion>
@@ -300,7 +285,6 @@ export class CreateMarcRecord extends React.Component<P, {
                       <VariableFields
                         fields={bibliographicRecord.fields.filter(f => f.fixedField === undefined || !f.fixedField)}
                         {...this.props}
-                        editable={editable}
                       />
                     </Accordion>
                   </AccordionSet>

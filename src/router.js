@@ -3,7 +3,7 @@
  * @flow
  */
 import * as React from 'react';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { Search, Browse, CreateMarcRecord, EditMarcRecord } from './components';
 import { ToolbarMenu } from './lib';
 import type { Props } from './core';
@@ -23,15 +23,14 @@ export function Router({ ...props }:P) {
     return (<ToolbarMenu icon={['search']} {...props} onClick={toggleFilterPane} />);
   };
 
-
   const searchMenu = renderSearchIconMenu();
   return (
     <Switch>
-      <ConnectedRoute path={`${path}/search`} {...props} component={Search} firstMenu={searchMenu} id="search_component_root" />
-      <ConnectedRoute path={`${path}/browse`} {...props} component={Browse} firstMenu={searchMenu} id="browsing_component_root" />
-      <ConnectedRoute path={`${path}/record/template`} {...props} component={CreateMarcRecord} firstMenu={searchMenu} id="record_from_template_component_root" />
-      <ConnectedRoute path={`${path}/records/view`} {...props} component={EditMarcRecord} firstMenu={searchMenu} id="view_record_component_root" />
-      <Route render={() => (<Redirect to={`${path}/search`} id="nav_root_redirect" />)} />
+      <ConnectedRoute path={`${path}/search`} {...props} component={Search} firstMenu={searchMenu} data-search-component-root />
+      <ConnectedRoute path={`${path}/browse`} {...props} component={Browse} firstMenu={searchMenu} data-browsing-component-root />
+      <ConnectedRoute path={`${path}/record/template`} {...props} component={CreateMarcRecord} firstMenu={searchMenu} data-record-from-template-component-root />
+      <ConnectedRoute path={`${path}/records/view`} {...props} component={EditMarcRecord} firstMenu={searchMenu} data-view-record-component-root />
+      <Route render={() => (<Redirect to={`${path}/search`} data-redirect-from-404 />)} />
     </Switch>
   );
 }

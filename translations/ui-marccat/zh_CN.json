@@ -85,5 +85,7 @@
     "template.record.delete": "删除记录",
     "template.record.edit": "编辑记录",
     "cataloging.variablefield.section.add.newtag": "添加新字段",
-    "button.add.search.form": "添加"
+    "button.add.search.form": "添加",
+    "search.record.delete": "Delete Record",
+    "search.record.create": "Create Record"
 }

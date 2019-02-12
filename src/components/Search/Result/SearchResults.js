@@ -7,7 +7,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Paneset, HotKeys, PaneMenu, Icon } from '@folio/stripes/components';
+import { Paneset, HotKeys, PaneMenu, Icon, Button } from '@folio/stripes/components';
 import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
@@ -165,17 +165,23 @@ export class SearchResults extends React.Component<P, {}> {
     }];
   };
 
-  renderRightMenuEdit = props => {
+  renderRightMenuEdit = () => {
+    const rightButton = {
+      marginRight: '10px',
+      float: 'right',
+    };
     return (
       <PaneMenu>
-        <ToolbarButtonMenu
-          create
-          {...props}
+        <Button
+          {...this.props}
+          style={rightButton}
+          buttonStyle="primary"
+          type="button"
+          marginBottom0
           onClick={this.handleClickEdit}
-          label={<FormattedMessage id="ui-marccat.search.record.edit" />}
-        />
-        <Icon icon="bookmark" />
-        <Icon icon="tag" />
+        >
+          <FormattedMessage id="ui-marccat.search.record.edit" />
+        </Button>
       </PaneMenu>
     );
   };

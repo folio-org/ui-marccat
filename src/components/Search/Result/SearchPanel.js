@@ -25,7 +25,6 @@ import {
   getLanguageFilterQuery,
   getFormatFilterQuery,
 } from '../../../utils/SearchUtils';
-import { EMPTY_MESSAGE } from '../../../utils/Constant';
 
 import styles from '../index.css';
 
@@ -65,7 +64,7 @@ class SearchPanel extends React.Component<P, {}> {
       e.preventDefault();
       store.dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: true });
       store.dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
-      const inputValue = '' + e.target.form[2].defaultValue;
+      const inputValue = '"' + e.target.form[2].defaultValue + '"';
       isBrowseRequested = false;
       let baseQuery;
       let indexForQuery;
@@ -96,10 +95,10 @@ class SearchPanel extends React.Component<P, {}> {
       if (state.marccat.filter && state.marccat.filter.filters) {
         const { languageFilter, formatType } = remapFilters(state.marccat.filter.filters);
         if (languageFilter && languageFilter.length) {
-          bibQuery += ' AND ( ' + getLanguageFilterQuery(languageFilter) + ' ) ';
+          bibQuery += ' AND ( ' + getLanguageFilterQuery(languageFilter).toUpperCase() + ' ) ';
         }
         if (formatType && formatType.length) {
-          bibQuery += ' AND ( ' + getFormatFilterQuery(formatType) + ' ) ';
+          bibQuery += ' AND ( ' + getFormatFilterQuery(formatType).toUpperCase() + ' ) ';
         }
       }
       if (conditionFilter === 'BROWSE') {

@@ -7,7 +7,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Paneset, HotKeys, PaneMenu, Icon } from '@folio/stripes/components';
+import { Paneset, HotKeys, PaneMenu, Icon, Button } from '@folio/stripes/components';
 import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
@@ -165,6 +165,27 @@ export class SearchResults extends React.Component<P, {}> {
     }];
   };
 
+  renderRightMenuEdit = () => {
+    const rightButton = {
+      marginRight: '10px',
+      float: 'right',
+    };
+    return (
+      <PaneMenu>
+        <Button
+          {...this.props}
+          style={rightButton}
+          buttonStyle="primary"
+          type="button"
+          marginBottom0
+          onClick={this.handleClickEdit}
+        >
+          <FormattedMessage id="ui-marccat.search.record.edit" />
+        </Button>
+      </PaneMenu>
+    );
+  };
+
   renderLastMenu = () => {
     const { openDropDownMenu } = this.state;
     const { translate, activeFilterName, activeFilterChecked } = this.props;
@@ -293,7 +314,7 @@ export class SearchResults extends React.Component<P, {}> {
               isFetchingDetail={isFetchingDetail}
               isReadyDetail={isReadyDetail}
               onClose={() => this.setState({ detailPanelIsVisible: false })}
-              handleClickEdit={this.handleClickEdit}
+              rightMenuEdit={this.renderRightMenuEdit()}
             />
           }
           {isPanelBibAssOpen && !noResults &&

@@ -109,11 +109,11 @@ export default class MarcLeader extends React.Component<P, {
               <Row xs={12}>
                 {leaderData &&
                     remappedValues.map(elem => {
-                      return elem.map(item => {
+                      return elem.map((item, i) => {
                         let exactDisplayValue = EMPTY_MESSAGE;
                         item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue));
                         return (
-                          <Col xs={4}>
+                          <Col xs={4} key={i}>
                             <Field
                               id={`${item.name}`}
                               name={`Leader-${item.name}`}

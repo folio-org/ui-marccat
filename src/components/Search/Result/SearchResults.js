@@ -71,7 +71,7 @@ export class SearchResults extends React.Component<P, {}> {
     dispatch({ type: ActionTypes.VIEW_TEMPLATE, query: '000' });
     const id = detail[0].data.fields[0]['001'];
     toggleFilterPane();
-    router.push(`/marccat/records/view?id=${id}`);
+    router.push(`/marccat/record/view?id=${id}&mode=edit`);
   }
 
   handleCreateRecord = () => {
@@ -85,7 +85,7 @@ export class SearchResults extends React.Component<P, {}> {
       } });
     toggleFilterPane();
     this.setState(prevState => ({ layerOpen: !prevState.layerOpen }));
-    router.push(`/marccat/record/template?templateId=${408}`);
+    router.push(`/marccat/record/new?templateId=${408}&mode=new`);
   };
 
   handleOnToggle = () => {

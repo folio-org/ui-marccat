@@ -1,9 +1,23 @@
 import { post, put, remove } from '../../../core/api/HttpService';
 import { buildUrl, ENDPOINT } from '../../../utils/Constant';
 import { uuid } from './MarcUtils';
+import { ACTION } from '../../../redux/helpers/Action';
 
-// eslint-disable-next-line no-unused-vars
-const getOkapiLoggedUser = ({ store }) => store.getState().okapi.currentUser.username;
+// MARC action
+export const headingAction = (payload, key) => {
+  return {
+    type: ACTION.CREATE,
+    data: {
+      path: ENDPOINT.CREATE_HEADING_URL,
+      type: `newHeading-${key}-` + Date.now(),
+      params: 'view=1',
+      key
+    },
+    payload
+  };
+};
+
+export const getOkapiLoggedUser = ({ store }) => store.getState().okapi.currentUser.username;
 
 /**
  * @param {*} props the props

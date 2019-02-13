@@ -69,21 +69,19 @@ export class CreateMarcRecord extends React.Component<P, {}> {
       float: 'right',
     };
     return (
-      <React.Fragment>
-        <PaneMenu>
-          <Button
-            style={rightButton}
-            buttonStyle="primary"
-            onClick={this.saveRecord}
-            type="button"
-            marginBottom0
-          >
-            <Icon icon="plus-sign">
-              {<FormattedMessage id="ui-marccat.template.record.create" />}
-            </Icon>
-          </Button>
-        </PaneMenu>
-      </React.Fragment>
+      <PaneMenu>
+        <Button
+          style={rightButton}
+          buttonStyle="primary"
+          onClick={this.saveRecord}
+          type="button"
+          marginBottom0
+        >
+          <Icon icon="plus-sign">
+            {<FormattedMessage id="ui-marccat.template.record.create" />}
+          </Icon>
+        </Button>
+      </PaneMenu>
     );
   };
 
@@ -184,20 +182,6 @@ export class CreateMarcRecord extends React.Component<P, {}> {
 
     tagVariableData.forEach(t => {
       if (t.code !== '040') {
-        let category = '';
-        if (t.code === '245') {
-          category = 3;
-        } else if (t.code === '300') {
-          category = 7;
-        } else if (t.code === '500') {
-          category = 7;
-        } else if (t.code === '700') {
-          category = 2;
-        } else if (t.code === '997') {
-          category = 6;
-        } else if (t.code === '100') {
-          category = 2;
-        }
         t.mandatory = false;
         t.added = true;
         t.fieldStatus = 'new';
@@ -206,7 +190,6 @@ export class CreateMarcRecord extends React.Component<P, {}> {
           ind1: (t.code === '100') ? 1 : 0,
           ind2: (t.code === '100') ? 1 : 4,
           code: t.code,
-          categoryCode: category,
           displayValue: SUBFILED_DELIMITER + t.displayValue,
           functionCode: '-1',
           headingTypeCode: '1',

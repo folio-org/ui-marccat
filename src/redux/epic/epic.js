@@ -25,6 +25,23 @@ export const query = (type, params, { path }) => ({
   }
 });
 
+/**
+ * Action creator for create a new record
+ * @param {String} type - resource type
+ * @param {Object} payload - record payload
+ * @param {String} [options.path] - path to use
+ */
+export const create = (type, payload, params, { path }) => ({
+  type: ACTION.CREATE,
+  data: {
+    type,
+    path,
+    params,
+    timestamp: Date.now()
+  },
+  payload
+});
+
 export const resolveRequest = (name, data, record) => ({
   type: REQUEST_RESOLVE,
   name,

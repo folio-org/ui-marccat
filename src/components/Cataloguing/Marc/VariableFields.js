@@ -4,22 +4,17 @@
  * @flow
  */
 import React from 'react';
-import { HotKeys, Callout } from '@folio/stripes/components';
+import { HotKeys } from '@folio/stripes/components';
 import MarcEditableList from './Editable';
 import { Props, injectCommonProp } from '../../../core';
 import { separator } from '../../../utils';
+import { SUBFILED_DELIMITER } from '../Utils/MarcUtils';
 
 class VariableFields extends React.Component<Props, {}> {
   constructor(props: Props) {
     super(props);
     this.keys = { 'new' : ['enter'] };
     this.handlers = { 'new': this.handleAdd };
-    this.callout = React.createRef();
-
-    this.onCreate = this.onCreate.bind(this);
-    this.onUpdate = this.onUpdate.bind(this);
-    this.onDelete = this.onDelete.bind(this);
-    this.onSave = this.onSave.bind(this);
   }
 
   handleAdd = () => {
@@ -34,25 +29,11 @@ class VariableFields extends React.Component<Props, {}> {
     }));
   }
 
-  onSave = () => { this.showCallout('Tag saved sucesfully'); }
-  onUpdate = () => { this.showCallout('Tag update sucesfully'); }
-  onDelete = () => { this.showCallout('Tag delete sucesfully'); }
-  onCreate = () => { this.showCallout('Tag create sucesfully'); }
-
-  showCallout = msg => this.callout.current.sendCallout({
-    type: 'success',
-    message: (
-      <span>
-        {msg}
-      </span>
-    )
-  });
-
   renderList() {
-    const { fields, itemTemplate, translate } = this.props;
+    const { fields, itemTemplate, translate, onUpdate, onSave, onDelete, onCreate } = this.props;
     fields.forEach((f, i) => {
       f.displayValue = fields[i].variableField.displayValue;
-      separator(f.displayValue, '\u001f');
+      separator(f.displayValue, SUBFILED_DELIMITER);
     });
     return (
       <React.Fragment>
@@ -77,14 +58,13 @@ class VariableFields extends React.Component<Props, {}> {
             ind2: '10%',
             displayValue: '50%',
           }}
-          onUpdate={this.onUpdate}
-          onSave={this.onSave}
-          onDelete={this.onDelete}
-          onCreate={this.onCreate}
+          onUpdate={onUpdate}
+          onSave={onSave}
+          onDelete={onDelete}
+          onCreate={onCreate}
           nameKey="code"
           itemTemplate={itemTemplate}
         />
-        <Callout ref={this.callout} />
       </React.Fragment>
     );
   }

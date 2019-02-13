@@ -2,6 +2,8 @@
 /* eslint-disable no-bitwise */
 /* eslint-disable one-var */
 import { SPACED_STRING } from '../../../utils/Constant';
+
+export const SUBFILED_DELIMITER = '\u001fa';
 /**
  * @author: cchiama
  *

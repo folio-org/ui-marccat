@@ -1,6 +1,8 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable react/destructuring-assignment */
 import isEqual from 'lodash/isEqual';
-import { cloneDeep, uniqueId } from 'lodash';
+import { cloneDeep, uniqueId, sortBy } from 'lodash';
+
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { reduxForm, FieldArray } from 'redux-form';
@@ -91,7 +93,7 @@ class EditableListForm extends React.Component {
   }
 
   buildStatusArray(items) {
-    return items.map(() => ({ editing: false, error: false }));
+    return items.map(() => ({ code: items.code, editing: false, error: false }));
   }
 
   onAdd(fields) {
@@ -127,15 +129,10 @@ class EditableListForm extends React.Component {
 
   onSave(fields, index) {
     const item = fields.get(index);
-    const callback = (item.code) ?
-      this.props.onUpdate :
-      this.props.onCreate;
+    const callback = (item.code) ? this.props.onUpdate : this.props.onCreate;
     const res = callback(item);
     Promise.resolve(res).then(
       () => {
-        // Set props.initialValues to the currently-saved field values.
-        // this.props.initialize(fields.getAll());
-
         this.toggleEdit(index);
       },
       () => this.setError(index, 'Error on saving data'),
@@ -149,6 +146,8 @@ class EditableListForm extends React.Component {
   onDelete(fields, index) {
     const { uniqueField } = this.props;
     const item = fields.get(index);
+    sortBy(this.props.contentData, 'code');
+    this.props.contentData.splice(index, 1);
     const res = this.props.onDelete(item[uniqueField]);
     Promise.resolve(res).then(
       () => {

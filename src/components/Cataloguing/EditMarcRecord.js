@@ -22,7 +22,7 @@ import { buildUrl } from '../../redux/helpers/Utilities';
 import * as C from '../../utils/Constant';
 import style from './Style/style.css';
 import { remove, post } from '../../core/api/HttpService';
-import { uuid } from './Utils/MarcUtils';
+import { uuid, SUBFILED_DELIMITER } from './Utils/MarcUtils';
 import VariableFields from './Marc/VariableFields';
 import { StoreReducer } from '../../redux';
 
@@ -30,6 +30,10 @@ class EditMarcRecord extends React.Component {
   constructor(props) {
     super(props);
     this.callout = React.createRef();
+    this.onSave = this.onSave.bind(this);
+    this.onUpdate = this.onUpdate.bind(this);
+    this.onCreate = this.onCreate.bind(this);
+    this.onDelete = this.onDelete.bind(this);
   }
 
   handleClose = () => {
@@ -40,17 +44,42 @@ class EditMarcRecord extends React.Component {
   };
 
   saveRecord = () => {
-    const body = { bibliographicRecord: this.composeBodyJson() };
-    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'lang=ita&view=1'), body, () => {
+    const body = this.composeBodyJson();
+    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'lang=ita&view=1'), body).then(() => {
       this.showMessage('Record update with success');
       setTimeout(() => {
         this.handleClose();
-      }, 2000);
+      }, 2);
     });
   };
 
+  onSave = () => {}
+  onUpdate = (item) => {
+    const { store: { getState } } = this.props;
+    const tagVariableData = getState().form.marcEditableListForm.values.items;
+    const heading = {
+      indicator1: item.ind1 || '',
+      indicator2: item.ind2 || '',
+      stringText: SUBFILED_DELIMITER + item.displayValue,
+      tag: item.code
+    };
+    post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, 'lang=ita&view=1'), heading)
+      .then((r) => {
+        return r.json();
+      }).then((data) => {
+        tagVariableData.filter(t => t.code === item.code).map(k => {
+          k.headingNumber = data.headingNumber;
+          k.fieldStatus = 'changed';
+          return k;
+        });
+      });
+  }
+
+  onCreate = () => { this.showMessage('Tag Saved sucesfully'); }
+  onDelete = () => {};
+
   composeBodyJson = () => {
-    const { data, recordDetail, store: { getState } } = this.props;
+    const { data, reset, recordDetail, store: { getState } } = this.props;
     const formData = getState().form.bibliographicRecordForm.values;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
     const initialTag = getState().form.marcEditableListForm.values.items.length;
@@ -107,25 +136,29 @@ class EditMarcRecord extends React.Component {
     if (initialTag < tagVariableData.length) {
       tagVariableData.forEach(t => {
         if (t.code !== '040') {
-          let keyNumber = '';
           let category = '';
           if (t.code === '245') {
-            keyNumber = 1;
             category = 3;
+          } else if (t.code === '300') {
+            category = 7;
+          } else if (t.code === '500') {
+            category = 7;
+          } else if (t.code === '700') {
+            category = 2;
+          } else if (t.code === '997') {
+            category = 6;
           } else if (t.code === '100') {
-            keyNumber = 2;
             category = 2;
           }
           t.mandatory = false;
           t.added = true;
-          t.fieldStatus = 'changed';
           t.variableField = {
-            keyNumber,
+            keyNumber: t.headingNumber,
             ind1: (t.code === '100') ? 1 : 0,
             ind2: (t.code === '100') ? 1 : 4,
             code: t.code,
             categoryCode: category,
-            displayValue: t.displayValue,
+            displayValue: SUBFILED_DELIMITER + t.displayValue,
             functionCode: '-1',
             headingTypeCode: '1',
             itemTypeCode: '-1',
@@ -135,11 +168,22 @@ class EditMarcRecord extends React.Component {
         }
       });
     }
-    const recordTemplate = data.template.records[3];
-    bibliographicRecord.fields = _.union(bibliographicRecord.fields, tagVariableData);
-    bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
+    const recordTemplate = {
+      id: data.settings.defaultTemplate.id,
+      name: data.settings.defaultTemplate.name,
+      type: 'B',
+      fields: recordDetail.fields.filter(f => f.code === '001' || f.code === '005' || f.code === '008' || f.code === '040')
+    };
+    const difference = _.difference(bibliographicRecord.fields, getState().form.marcEditableListForm.values.items);
+    let tagToDeleted = difference.filter(f => f.code !== '001' || f.code !== '005' || f.code !== '008' || f.code !== '040');
+    tagToDeleted = tagToDeleted.filter(f => f.code !== '001' && f.code !== '005' && f.code !== '008');
+    tagToDeleted.forEach(f => {
+      f.fieldStatus = 'deleted';
+    });
+    bibliographicRecord.fields = _.union(recordTemplate.fields, tagToDeleted, getState().form.marcEditableListForm.values.items);
     bibliographicRecord.fields = _.sortBy(bibliographicRecord.fields, 'code');
     bibliographicRecord.verificationLevel = 1;
+    reset();
     return {
       bibliographicRecord,
       recordTemplate
@@ -159,7 +203,7 @@ class EditMarcRecord extends React.Component {
         .filter(item => '' + id !== item.data.fields[0]['001']
           .replace(/^0+/, '')) || {};
       this.handleClose();
-    }, 3000);
+    }, 3);
   };
 
   showMessage(message) {
@@ -287,6 +331,10 @@ class EditMarcRecord extends React.Component {
                     <Accordion label={translate({ id: 'ui-marccat.cataloging.variablefield.section.label' })} id="variable-field">
                       <VariableFields
                         {...this.props}
+                        onDelete={this.onDelete}
+                        onSave={this.onSave}
+                        onUpdate={this.onUpdate}
+                        onCreate={this.onCreate}
                         fields={bibliographicRecord.fields.filter(f => f.fixedField === undefined || !f.fixedField)}
                       />
                     </Accordion>

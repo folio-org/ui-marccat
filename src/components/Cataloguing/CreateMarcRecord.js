@@ -29,6 +29,7 @@ import * as C from '../../utils/Constant';
 
 import style from './Style/style.css';
 import { StoreReducer } from '../../redux';
+import { SUBFILED_DELIMITER } from './Utils/MarcUtils';
 
 type P = {
   callout: Object,
@@ -42,6 +43,10 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     this.handleClose = this.handleClose.bind(this);
     this.saveRecord = this.saveRecord.bind(this);
     this.callout = React.createRef();
+    this.onSave = this.onSave.bind(this);
+    this.onUpdate = this.onUpdate.bind(this);
+    this.onCreate = this.onCreate.bind(this);
+    this.onDelete = this.onDelete.bind(this);
   }
 
   renderDropdownLabels = () => {
@@ -82,9 +87,37 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     );
   };
 
+  onSave = () => {}
+
+  onUpdate = (item) => {
+    const { store: { getState } } = this.props;
+    const tagVariableData = getState().form.marcEditableListForm.values.items;
+    const heading = {
+      indicator1: item.ind1 || '',
+      indicator2: item.ind2 || '',
+      stringText: SUBFILED_DELIMITER + item.displayValue,
+      tag: item.code
+    };
+    post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, 'lang=ita&view=1'), heading)
+      .then((r) => {
+        return r.json();
+      }).then((data) => {
+        tagVariableData.filter(t => t.code === item.code).map(k => {
+          k.headingNumber = data.headingNumber;
+          k.fieldStatus = 'new';
+          return k;
+        });
+      });
+  }
+
+  onCreate = () => { this.showMessage('Tag Saved sucesfully'); }
+
+  onDelete = () => {};
+
+
   saveRecord = () => {
     const body = this.composeBodyJson();
-    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'lang=ita&view=1'), body, () => {
+    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'lang=ita&view=1'), body).then(() => {
       this.showMessage('Record saved with success');
       setTimeout(() => {
         this.handleClose();
@@ -151,25 +184,30 @@ export class CreateMarcRecord extends React.Component<P, {}> {
 
     tagVariableData.forEach(t => {
       if (t.code !== '040') {
-        let keyNumber = '';
         let category = '';
         if (t.code === '245') {
-          keyNumber = 1;
           category = 3;
+        } else if (t.code === '300') {
+          category = 7;
+        } else if (t.code === '500') {
+          category = 7;
+        } else if (t.code === '700') {
+          category = 2;
+        } else if (t.code === '997') {
+          category = 6;
         } else if (t.code === '100') {
-          keyNumber = 2;
           category = 2;
         }
         t.mandatory = false;
         t.added = true;
         t.fieldStatus = 'new';
         t.variableField = {
-          keyNumber,
+          keyNumber: t.headingNumber,
           ind1: (t.code === '100') ? 1 : 0,
           ind2: (t.code === '100') ? 1 : 4,
           code: t.code,
           categoryCode: category,
-          displayValue: '\u001f' + t.displayValue,
+          displayValue: SUBFILED_DELIMITER + t.displayValue,
           functionCode: '-1',
           headingTypeCode: '1',
           itemTypeCode: '-1',
@@ -178,7 +216,8 @@ export class CreateMarcRecord extends React.Component<P, {}> {
         };
       }
     });
-    const recordTemplate = emptyRecord;
+    const recordTemplate = Object.assign({}, emptyRecord);
+    recordTemplate.id = 408;
     bibliographicRecord.fields = _.union(bibliographicRecord.fields, tagVariableData);
     bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     bibliographicRecord.fields = _.sortBy(bibliographicRecord.fields, 'code');
@@ -284,6 +323,10 @@ export class CreateMarcRecord extends React.Component<P, {}> {
                     <Accordion label="variable fields" id="variable-field">
                       <VariableFields
                         fields={bibliographicRecord.fields.filter(f => f.fixedField === undefined || !f.fixedField)}
+                        onDelete={this.onDelete}
+                        onSave={this.onSave}
+                        onUpdate={this.onUpdate}
+                        onCreate={this.onCreate}
                         {...this.props}
                       />
                     </Accordion>

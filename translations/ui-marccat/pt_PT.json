@@ -85,5 +85,7 @@
     "template.record.delete": "Excluir registo",
     "template.record.edit": "Editar registo",
     "cataloging.variablefield.section.add.newtag": "+ Adicionar nova tag",
-    "button.add.search.form": "Adicionar"
+    "button.add.search.form": "Adicionar",
+    "search.record.delete": "Delete Record",
+    "search.record.create": "Create Record"
 }

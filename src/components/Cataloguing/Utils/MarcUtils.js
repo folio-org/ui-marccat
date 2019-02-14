@@ -3,9 +3,13 @@
 /* eslint-disable one-var */
 import { SPACED_STRING } from '../../../utils/Constant';
 
+export const RECORD_ACTION = {
+  CREATION_MODE: 'new',
+  EDIT_MODE: 'edit'
+};
+
 export const SUBFILED_DELIMITER = '\u001fa';
 /**
- * @author: cchiama
  *
  * @param {text} string Text to camelize
  * @return string Camelized text
@@ -17,7 +21,6 @@ export const camelizify = (str) => {
 };
 
 /**
- * @author: cchiama
  *
  * @param {text} s Text to make first char uppercase
  * @param {*} string with first char uppercase
@@ -25,7 +28,6 @@ export const camelizify = (str) => {
 export const firstCharUppercase = s => s.charAt(0).toUpperCase() + s.slice(1);
 
 /**
- * @author: cchiama
  *
  * @param {text} string Text to camelize
  * @param {*} string Decamelized text

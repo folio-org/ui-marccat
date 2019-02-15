@@ -114,16 +114,14 @@ class FixedFields extends React.Component<P, {}> {
   };
 
   handleTags008 = (tag) => {
-    const { expand008 } = this.state;
-    const { dispatch, record, headerTypes008Result } = this.props;
-    if (isEmpty(headerTypes008Result)) {
-      dispatch({ type: ActionTypes.HEADER_TYPES_008, code: TAGS._008 });
-    } else {
+    const { expand008, isPresent008 } = this.state;
+    const { dispatch, record } = this.props;
+    if (!isPresent008) {
       dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: record.leader.value, code: tag.fixedField.code, typeCode: tag.fixedField.headerTypeCode });
-      dispatch({ type: ActionTypes.HEADER_TYPES_008, code: TAGS._008, valueHeaderTypeCode: tag.fixedField.headerTypeCode });
     }
     this.setState({
-      expand008: !expand008
+      expand008: !expand008,
+      isPresent008: true
     });
   };
 

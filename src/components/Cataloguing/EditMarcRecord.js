@@ -21,10 +21,11 @@ import { ActionTypes } from '../../redux/actions';
 import { buildUrl } from '../../redux/helpers/Utilities';
 import * as C from '../../utils/Constant';
 import style from './Style/style.css';
-import { remove, post } from '../../core/api/HttpService';
-import { uuid, SUBFILED_DELIMITER } from './Utils/MarcUtils';
+import { post, put } from '../../core/api/HttpService';
+import { SUBFILED_DELIMITER } from './Utils/MarcUtils';
 import VariableFields from './Marc/VariableFields';
 import { StoreReducer } from '../../redux';
+import { deleteRecordAction } from './Utils/MarcApiUtils';
 
 class EditMarcRecord extends React.Component {
   constructor(props) {
@@ -61,18 +62,33 @@ class EditMarcRecord extends React.Component {
       indicator1: item.ind1 || '',
       indicator2: item.ind2 || '',
       stringText: SUBFILED_DELIMITER + item.displayValue,
+      category: (item.variableField) ? item.variableField.categoryCode : '',
+      headingNumber: (item.variableField) ? item.variableField.keyNumber : '',
       tag: item.code
     };
-    post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, 'lang=ita&view=1'), heading)
-      .then((r) => {
-        return r.json();
-      }).then((data) => {
-        tagVariableData.filter(t => t.code === item.code).map(k => {
-          k.headingNumber = data.headingNumber;
-          k.fieldStatus = 'changed';
-          return k;
+    if (item.variableField && item.variableField.keyNumber) {
+      put(buildUrl(C.ENDPOINT.UPDATE_HEADING_URL, 'lang=ita&view=1'), heading)
+        .then((r) => {
+          return r.json();
+        }).then((data) => {
+          tagVariableData.filter(t => t.code === item.code).map(k => {
+            k.headingNumber = data.headingNumber;
+            k.fieldStatus = 'changed';
+            return data;
+          });
         });
-      });
+    } else {
+      post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, 'lang=ita&view=1'), heading)
+        .then((r) => {
+          return r.json();
+        }).then((data) => {
+          tagVariableData.filter(t => t.code === item.code).map(k => {
+            k.headingNumber = data.headingNumber;
+            k.fieldStatus = 'new';
+            return k;
+          });
+        });
+    }
   }
 
   onCreate = () => { this.showMessage('Tag Saved sucesfully'); }
@@ -133,41 +149,7 @@ class EditMarcRecord extends React.Component {
           });
         }
       });
-    if (initialTag < tagVariableData.length) {
-      tagVariableData.forEach(t => {
-        if (t.code !== '040') {
-          let category = '';
-          if (t.code === '245') {
-            category = 3;
-          } else if (t.code === '300') {
-            category = 7;
-          } else if (t.code === '500') {
-            category = 7;
-          } else if (t.code === '700') {
-            category = 2;
-          } else if (t.code === '997') {
-            category = 6;
-          } else if (t.code === '100') {
-            category = 2;
-          }
-          t.mandatory = false;
-          t.added = true;
-          t.variableField = {
-            keyNumber: t.headingNumber,
-            ind1: (t.code === '100') ? 1 : 0,
-            ind2: (t.code === '100') ? 1 : 4,
-            code: t.code,
-            categoryCode: category,
-            displayValue: SUBFILED_DELIMITER + t.displayValue,
-            functionCode: '-1',
-            headingTypeCode: '1',
-            itemTypeCode: '-1',
-            sequenceNumber: 0,
-            skipInFiling: 0,
-          };
-        }
-      });
-    }
+
     const recordTemplate = {
       id: data.settings.defaultTemplate.id,
       name: data.settings.defaultTemplate.name,
@@ -182,8 +164,8 @@ class EditMarcRecord extends React.Component {
     });
     bibliographicRecord.fields = _.union(recordTemplate.fields, tagToDeleted, getState().form.marcEditableListForm.values.items);
     bibliographicRecord.fields = _.sortBy(bibliographicRecord.fields, 'code');
+    bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     bibliographicRecord.verificationLevel = 1;
-    reset();
     return {
       bibliographicRecord,
       recordTemplate
@@ -192,12 +174,9 @@ class EditMarcRecord extends React.Component {
 
 
   deleteRecord = () => {
-    const { data, store, recordDetail } = this.props;
-    const okapi = store.getState().okapi;
-    const userName = okapi.currentUser.username;
+    const { data, dispatch, recordDetail } = this.props;
     const id = recordDetail.id;
-    const uid = uuid();
-    remove(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id, `id=${id}&uuid=${uid}&userName=${userName}&lang=ita&view=1`), this.showMessage('Record detele with success'));
+    dispatch(deleteRecordAction(id, recordDetail));
     setTimeout(() => {
       data.search.bibliographicResults = data.search.bibliographicResults
         .filter(item => '' + id !== item.data.fields[0]['001']

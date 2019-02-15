@@ -44,7 +44,7 @@ export function post(url:string, data: any) {
  * @param {*} store - the data store
  */
 export function put(url:string, data: any) {
-  fetch(url, {
+  return fetch(url, {
     method: HTTP_METHOD.PUT,
     headers: Object.assign({}, {
       'x-okapi-tenant': 'tnx',

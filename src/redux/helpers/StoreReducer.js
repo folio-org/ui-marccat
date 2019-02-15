@@ -77,6 +77,8 @@ StoreReducer.createDataStore = (model, data, payload) => { // metodo statico
       isPending: true,
       isResolved: false,
       isRejected: false,
+      headingNumber: payload.headingNumber || null,
+      deleted: data.payload || [],
       records: payload || [],
       meta: {},
       errors: []
@@ -148,6 +150,22 @@ StoreReducer.getRecord = (store, id) => (
     isSaving: false,
   }
 );
+
+/**
+ * Helper remove record from the resource
+ * type's state
+ * @param {Object} store - the resource type's
+ * @param {String} id - the record's id
+ */
+StoreReducer.reduce = (store, id) => (
+  store.records[id] || {
+    id,
+    isLoading: true,
+    isLoaded: false,
+    isSaving: false,
+  }
+);
+
 
 StoreReducer.deduplicate = (obj, key) => (
   Object.values(obj.reduce((acc, cur) => Object.assign(acc, { [cur[`${key}`]]: cur }), {}))

@@ -30,6 +30,7 @@ import * as C from '../../utils/Constant';
 import style from './Style/style.css';
 import { StoreReducer } from '../../redux';
 import { SUBFILED_DELIMITER } from './Utils/MarcUtils';
+import { headingAction } from './Utils/MarcApiUtils';
 
 type P = {
   callout: Object,
@@ -87,6 +88,17 @@ export class CreateMarcRecord extends React.Component<P, {}> {
 
   onSave = () => {}
 
+  createNewHeading = (item) => {
+    const { dispatch } = this.props;
+    const heading = {
+      indicator1: item.ind1 || '',
+      indicator2: item.ind2 || '',
+      stringText: SUBFILED_DELIMITER + item.displayValue,
+      tag: item.code
+    };
+    dispatch(headingAction(heading));
+  };
+
   onUpdate = (item) => {
     const { store: { getState } } = this.props;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
@@ -96,6 +108,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
       stringText: SUBFILED_DELIMITER + item.displayValue,
       tag: item.code
     };
+    // this.createNewHeading(item);
     post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, 'lang=ita&view=1'), heading)
       .then((r) => {
         return r.json();
@@ -109,7 +122,6 @@ export class CreateMarcRecord extends React.Component<P, {}> {
   }
 
   onCreate = () => { this.showMessage('Tag Saved sucesfully'); }
-
   onDelete = () => {};
 
 
@@ -204,6 +216,25 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     bibliographicRecord.fields = _.union(bibliographicRecord.fields, tagVariableData);
     bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     bibliographicRecord.fields = _.sortBy(bibliographicRecord.fields, 'code');
+    tagVariableData.forEach(t => {
+      if (t.code !== '040') {
+        t.mandatory = false;
+        t.added = true;
+        t.fieldStatus = 'new';
+        t.variableField = {
+          keyNumber: t.headingNumber,
+          ind1: (t.code === '100') ? 1 : 0,
+          ind2: (t.code === '100') ? 1 : 4,
+          code: t.code,
+          displayValue: SUBFILED_DELIMITER + t.displayValue,
+          functionCode: '-1',
+          headingTypeCode: '1',
+          itemTypeCode: '-1',
+          sequenceNumber: 0,
+          skipInFiling: 0,
+        };
+      }
+    });
     bibliographicRecord.verificationLevel = 1;
     return {
       bibliographicRecord,
@@ -236,6 +267,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
       headerTypes007IsLoading,
       headerTypes008IsLoading,
       leaderData,
+      dispatch,
       emptyRecord
     } = this.props;
     let { bibliographicRecord } = this.props;
@@ -343,4 +375,5 @@ export default reduxForm({
     headerTypes008Result: headerTypes008.records,
     headerTypes008IsLoading: headerTypes008.isLoading
   }),
+  // ({}) =>dispatch({ type: ActionTypes.HEADER_TYPES_008, code: C.TAGS._008 })
 )(CreateMarcRecord));

@@ -29,7 +29,7 @@ export function Router({ ...props }:P) {
       <ConnectedRoute path={`${path}/search`} exact {...props} component={Search} firstMenu={searchMenu} data-search-component-root />
       <ConnectedRoute path={`${path}/browse`} exact {...props} component={Browse} firstMenu={searchMenu} data-browsing-component-root />
       <ConnectedRoute path={`${path}/record/template`} exact {...props} component={CreateMarcRecord} firstMenu={searchMenu} data-record-from-template-component-root />
-      <ConnectedRoute path={`${path}/records/view`} exact {...props} component={EditMarcRecord} firstMenu={searchMenu} data-view-record-component-root />
+      <ConnectedRoute path={`${path}/record/view`} exact {...props} component={EditMarcRecord} firstMenu={searchMenu} data-view-record-component-root />
       <Redirect from="*" to={`${path}/search`} />
     </Switch>
   );

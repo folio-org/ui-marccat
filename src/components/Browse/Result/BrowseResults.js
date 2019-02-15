@@ -4,6 +4,7 @@
  */
 import React from 'react';
 import { MultiColumnList, Pane, Paneset, Icon } from '@folio/stripes/components';
+import { AppIcon } from '@folio/stripes-core';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Props, injectCommonProp } from '../../../core';
@@ -173,7 +174,7 @@ export class BrowseResults extends React.Component<Props, S> {
           defaultWidth="25%"
           paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
           paneSub={C.EMPTY_MESSAGE}
-          appIcon={{ app: C.META.ICON_TITLE }}
+          appIcon={<AppIcon app={C.META.ICON_TITLE} />}
           actionMenu={this.getActionMenu}
           dismissible
           onClose={() => {

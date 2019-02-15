@@ -8,6 +8,7 @@ import type { Props } from '../../core';
 import { findParam } from '../../redux';
 import { headingAction, RECORD_ACTION } from '.';
 
+
 class MarcRecord extends React.Component<Props, {}> {
   constructor(props: Props) {
     super(props);

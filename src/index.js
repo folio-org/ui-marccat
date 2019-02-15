@@ -52,7 +52,7 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
     store.dispatch({ type: ActionTypes.SETTINGS,
       data:
       {
-        defaultTemplate : {
+        defaultTemplate: {
           id: 408,
           name: 'Monograph'
         } } });

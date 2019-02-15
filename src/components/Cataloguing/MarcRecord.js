@@ -8,14 +8,9 @@ import type { Props } from '../../core';
 import { findParam } from '../../redux';
 import { headingAction, RECORD_ACTION } from '.';
 
-type P = {
-  callout: Object,
-  isEditingMode: boolean
-} & Props;
 
-
-class MarcRecord extends React.Component<P, {}> {
-  constructor(props: P) {
+class MarcRecord extends React.Component<Props, {}> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       page: RECORD_ACTION.CREATION_MODE

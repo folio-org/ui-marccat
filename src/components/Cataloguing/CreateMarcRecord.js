@@ -16,6 +16,7 @@ import {
   KeyValue,
   Icon
 } from '@folio/stripes/components';
+import { AppIcon } from '@folio/stripes-core';
 import { reduxForm } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import _ from 'lodash';
@@ -280,7 +281,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
             defaultWidth="fullWidth"
             paneTitle={(bibliographicRecord) ? 'New Monograph' : 'New Monograph'}
             paneSub={(bibliographicRecord) ? 'id. ' + bibliographicRecord.id : 'id. ' + defaultTemplate.id}
-            appIcon={{ app: C.META.ICON_TITLE }}
+            appIcon={<AppIcon app={C.META.ICON_TITLE} />}
             actionMenu={ActionMenuTemplate}
             dismissible
             onClose={() => this.handleClose()}
@@ -297,7 +298,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
               defaultWidth="fullWidth"
               paneTitle={(bibliographicRecord) ? 'New Monograph' : 'New Monograph'}
               paneSub={(bibliographicRecord) ? 'id. ' + bibliographicRecord.id : 'id. ' + defaultTemplate.id}
-              appIcon={{ app: C.META.ICON_TITLE }}
+              appIcon={<AppIcon app={C.META.ICON_TITLE} />}
               actionMenu={ActionMenuTemplate}
               dismissible
               onClose={() => this.handleClose()}

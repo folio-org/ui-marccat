@@ -11,13 +11,12 @@ module.exports = {
   },
   extends: ["@folio/eslint-config-stripes"],
   env: {
-    browser: true,
-    jest: true
+    browser: true
   },
   globals: {
-    Promise: true,
+    process: true,
+    Promise: true
   },
-  plugins: ["jsx-a11y" , "import"],
   "rules": {		
 		"indent": ["error", 2],
     "react/jsx-indent": ["error", 2],

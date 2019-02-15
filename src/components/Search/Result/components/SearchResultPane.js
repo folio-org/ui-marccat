@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import { Pane, Icon, MultiColumnList } from '@folio/stripes/components';
+import { AppIcon } from '@folio/stripes-core';
 import { ActionMenu } from '../../../../lib';
 import { Props, injectCommonProp } from '../../../../core';
 import { resultsFormatter, columnMapper, columnWidthMapper } from '../../../../utils/Formatter';
@@ -72,9 +73,9 @@ class SearchResultPane extends React.Component<Props, {}> {
           padContent={(marcJSONRecords.length > 0) || isFetching}
           defaultWidth="fill"
           actionMenu={ActionMenu}
-          paneTitle={translate({ id:'ui-marccat.search.record' })}
+          paneTitle={translate({ id: 'ui-marccat.search.record' })}
           paneSub={(mergedRecord && mergedRecord.length > 0) ? message : messageNoContent}
-          appIcon={{ app: C.META.ICON_TITLE }}
+          appIcon={<AppIcon app={C.META.ICON_TITLE} />}
           firstMenu={firstMenu}
           lastMenu={lastMenu}
         >

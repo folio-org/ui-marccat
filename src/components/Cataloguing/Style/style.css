@@ -89,3 +89,8 @@
 [visible] {
   display: block;
 }
+
+.rightPosition {
+  margin-right: '10px';
+  float: 'right';
+}

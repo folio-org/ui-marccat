@@ -85,7 +85,7 @@ export class SearchResults extends React.Component<P, {}> {
       } });
     toggleFilterPane();
     this.setState(prevState => ({ layerOpen: !prevState.layerOpen }));
-    router.push(`/marccat/record/new?templateId=${408}&mode=new`);
+    router.push(`/marccat/record/template?templateId=${408}&mode=new`);
   };
 
   handleOnToggle = () => {

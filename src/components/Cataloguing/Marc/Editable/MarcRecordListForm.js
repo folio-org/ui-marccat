@@ -1,9 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/destructuring-assignment */
-import isEqual from 'lodash/isEqual';
-import { cloneDeep, uniqueId, sortBy } from 'lodash';
-
 import React from 'react';
+import { cloneDeep, isEqual, uniqueId, sortBy } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { reduxForm, FieldArray } from 'redux-form';
 import PropTypes from 'prop-types';
@@ -93,7 +91,11 @@ class EditableListForm extends React.Component {
   }
 
   buildStatusArray(items) {
-    return items.map(() => ({ code: items.code, editing: false, error: false }));
+    return items.map(() => ({ editing: false, error: false }));
+  }
+
+  buildStatusArrayWithParam(items, editing) {
+    return items.map(() => ({ editing, error: false }));
   }
 
   onAdd(fields) {
@@ -111,20 +113,7 @@ class EditableListForm extends React.Component {
   }
 
   onCancel(fields, index) {
-    const { uniqueField } = this.props;
-    const item = fields.get(index);
-    if (item[uniqueField]) {
-      this.toggleEdit(index);
-    } else {
-      fields.remove(index);
-      this.setState((curState) => {
-        const newState = cloneDeep(curState);
-        newState.status.splice(index, 1);
-        return newState;
-      });
-    }
-
-    this.props.reset();
+    this.toggleEdit(index);
   }
 
   onSave(fields, index) {
@@ -216,7 +205,7 @@ class EditableListForm extends React.Component {
     });
   }
 
-  ItemFormatter = ({
+  TagRowFormatter = ({
     rowIndex,
     rowData,
     cells,
@@ -344,7 +333,7 @@ class EditableListForm extends React.Component {
               {...this.props}
               visibleColumns={this.getVisibleColumns()}
               contentData={fields.getAll()}
-              rowFormatter={this.ItemFormatter}
+              rowFormatter={this.TagRowFormatter}
               rowProps={{ fields }}
               formatter={cellFormatters}
               columnWidths={this.getColumnWidths()}

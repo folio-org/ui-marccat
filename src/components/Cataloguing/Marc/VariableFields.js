@@ -50,7 +50,7 @@ class VariableFields extends React.Component<Props, {}> {
             code: 'code',
             ind1: 'ind1',
             ind2: 'ind2',
-            displayValue: 'displayValue',
+            displayValue: 'variableField.displayValue',
           }}
           columnWidths={{
             code: '10%',

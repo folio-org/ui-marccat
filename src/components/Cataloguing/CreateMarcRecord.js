@@ -31,6 +31,7 @@ import * as C from '../../utils/Constant';
 import style from './Style/style.css';
 import { StoreReducer } from '../../redux';
 import { SUBFILED_DELIMITER } from './Utils/MarcUtils';
+import { headingAction } from './Utils/MarcApiUtils';
 
 type P = {
   callout: Object,
@@ -88,6 +89,17 @@ export class CreateMarcRecord extends React.Component<P, {}> {
 
   onSave = () => {}
 
+  createNewHeading = (item) => {
+    const { dispatch } = this.props;
+    const heading = {
+      indicator1: item.ind1 || '',
+      indicator2: item.ind2 || '',
+      stringText: SUBFILED_DELIMITER + item.displayValue,
+      tag: item.code
+    };
+    dispatch(headingAction(heading));
+  };
+
   onUpdate = (item) => {
     const { store: { getState } } = this.props;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
@@ -97,12 +109,15 @@ export class CreateMarcRecord extends React.Component<P, {}> {
       stringText: SUBFILED_DELIMITER + item.displayValue,
       tag: item.code
     };
+    // this.createNewHeading(item);
     post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, 'lang=ita&view=1'), heading)
       .then((r) => {
         return r.json();
       }).then((data) => {
         tagVariableData.filter(t => t.code === item.code).map(k => {
           k.headingNumber = data.headingNumber;
+          k.ind1 = data.indicator1;
+          k.ind1 = data.indicator1;
           k.fieldStatus = 'new';
           return k;
         });
@@ -110,7 +125,6 @@ export class CreateMarcRecord extends React.Component<P, {}> {
   }
 
   onCreate = () => { this.showMessage('Tag Saved sucesfully'); }
-
   onDelete = () => {};
 
 
@@ -183,14 +197,29 @@ export class CreateMarcRecord extends React.Component<P, {}> {
 
     tagVariableData.forEach(t => {
       if (t.code !== '040') {
+        let category = '';
+        if (t.code === '245') {
+          category = 3;
+        } else if (t.code === '300') {
+          category = 7;
+        } else if (t.code === '500') {
+          category = 7;
+        } else if (t.code === '700') {
+          category = 2;
+        } else if (t.code === '997') {
+          category = 6;
+        } else if (t.code === '100') {
+          category = 2;
+        }
         t.mandatory = false;
         t.added = true;
         t.fieldStatus = 'new';
         t.variableField = {
           keyNumber: t.headingNumber,
-          ind1: (t.code === '100') ? 1 : 0,
-          ind2: (t.code === '100') ? 1 : 4,
+          ind1: t.ind1,
+          ind2: t.ind2,
           code: t.code,
+          categoryCode: category,
           displayValue: SUBFILED_DELIMITER + t.displayValue,
           functionCode: '-1',
           headingTypeCode: '1',

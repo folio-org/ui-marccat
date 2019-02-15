@@ -18,6 +18,7 @@ export class Tag008 extends React.Component<Props, {}> {
     this.state = {
       isChangedHeaderType: false,
     };
+    this.handleOnChange = this.handleOnChange.bind(this);
   }
 
   handleOnChange = (e) => {
@@ -28,9 +29,16 @@ export class Tag008 extends React.Component<Props, {}> {
     record.fields.filter(f => f.code === C.TAGS._008)[0].fieldStatus = C.RECORD_FIELD_STATUS.CHANGED;
   }
 
+  populateFirstAccess = () => {
+    const { record } = this.props;
+    this.state.isChangedHeaderType = true;
+    record.fields.filter(f => f.code === C.TAGS._008)[0].fieldStatus = C.RECORD_FIELD_STATUS.CHANGED;
+  };
+
   render() {
     const { headerTypesResult, tag008ValuesResults } = this.props;
     const { isChangedHeaderType } = this.state;
+    if (!tag008ValuesResults) this.populateFirstAccess();
     const remappedValues = [];
     if (isChangedHeaderType && tag008ValuesResults) {
       const result = Object.keys(tag008ValuesResults.results).map((key) => tag008ValuesResults.results[key]);
@@ -40,14 +48,13 @@ export class Tag008 extends React.Component<Props, {}> {
       <div>
         <Row>
           <Col xs={4}>
-            <Field
+            <Select
               id="Tag008"
               name="Tag008"
-              component={Select}
               onChange={this.handleOnChange}
               label="Header types"
               placeholder="Select header..."
-              dataOptions={headerTypesResult.headingTypes || 31}
+              dataOptions={headerTypesResult.headingTypes}
             />
           </Col>
         </Row>

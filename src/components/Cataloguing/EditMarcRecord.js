@@ -95,10 +95,8 @@ class EditMarcRecord extends React.Component {
   onDelete = () => {};
 
   composeBodyJson = () => {
-    const { data, reset, recordDetail, store: { getState } } = this.props;
+    const { data, recordDetail, store: { getState } } = this.props;
     const formData = getState().form.bibliographicRecordForm.values;
-    const tagVariableData = getState().form.marcEditableListForm.values.items;
-    const initialTag = getState().form.marcEditableListForm.values.items.length;
     const tag006Values = [];
     const tag007Values = [];
     const tag008Values = [];

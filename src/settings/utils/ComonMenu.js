@@ -15,7 +15,7 @@ const rightMenu = ({ ...props }) => {
       label={
         <Icon icon="edit">
           {translate({
-            id:'ui-marccat.search.record.edit' })}
+            id: 'ui-marccat.search.record.edit' })}
         </Icon>
       }
     />);

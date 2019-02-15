@@ -22,8 +22,8 @@ class FixedFields extends React.Component<P, {}> {
       expand007: false,
       expand008: false,
       fixedFields: [],
-      tag006Fields:[{}],
-      tag007Fields:[{}],
+      tag006Fields: [{}],
+      tag007Fields: [{}],
     };
   }
 

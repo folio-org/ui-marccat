@@ -13,7 +13,7 @@ import { SUBFILED_DELIMITER } from '../Utils/MarcUtils';
 class VariableFields extends React.Component<Props, {}> {
   constructor(props: Props) {
     super(props);
-    this.keys = { 'new' : ['enter'] };
+    this.keys = { 'new': ['enter'] };
     this.handlers = { 'new': this.handleAdd };
   }
 

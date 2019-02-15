@@ -14,6 +14,7 @@ import {
   KeyValue,
   Icon
 } from '@folio/stripes/components';
+import { AppIcon } from '@folio/stripes-core';
 import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../lib';
 import { MarcLeader, FixedFields } from '.';
 import { injectCommonProp } from '../../core';
@@ -277,7 +278,7 @@ class EditMarcRecord extends React.Component {
             defaultWidth="fullWidth"
             paneTitle={(bibliographicRecord) ? 'New Monograph' : 'Edit Record'}
             paneSub={(bibliographicRecord) ? 'id. ' + bibliographicRecord.id : 'Edit Record id. '}
-            appIcon={{ app: C.META.ICON_TITLE }}
+            appIcon={<AppIcon app={C.META.ICON_TITLE} />}
             actionMenu={ActionMenuTemplate}
             dismissible
             onClose={() => this.handleClose()}
@@ -294,7 +295,7 @@ class EditMarcRecord extends React.Component {
               defaultWidth="fullWidth"
               dismissible
               paneTitle="Edit Record"
-              appIcon={{ app: C.META.ICON_TITLE }}
+              appIcon={<AppIcon app={C.META.ICON_TITLE} />}
               actionMenu={ActionMenuTemplate}
               paneSub={(bibliographicRecord) ? 'id. ' + bibliographicRecord.id : ''}
               onClose={this.handleClose}

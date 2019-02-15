@@ -16,7 +16,7 @@ class MARCcat extends React.Component<Props, {}> {
     const { translate } = this.props;
     return (
       <Headline size="small" margin="medium" tag="h3">
-        {translate({ id:'ui-marccat.search.actionmenu.title' })}
+        {translate({ id: 'ui-marccat.search.actionmenu.title' })}
       </Headline>
     );
   };

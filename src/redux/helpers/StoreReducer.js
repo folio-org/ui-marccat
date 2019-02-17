@@ -80,8 +80,9 @@ StoreReducer.createDataStore = (model, data, payload) => { // metodo statico
       headingNumber: payload.headingNumber || null,
       deleted: data.payload || [],
       records: payload || [],
-      meta: {},
-      errors: []
+      query: data.query,
+      meta: data.meta,
+      errors: data.errors
     }
   };
 };

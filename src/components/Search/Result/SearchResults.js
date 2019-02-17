@@ -20,6 +20,8 @@ import {
   RecordDetailPane,
   AssociatedRecordPane,
 } from './components';
+import { StoreReducer } from '../../../redux';
+import { findParam } from '../../../redux/helpers/Utilities';
 
 
 type P = Props & {
@@ -65,11 +67,23 @@ export class SearchResults extends React.Component<P, {}> {
     };
   }
 
+  componentDidMount() {
+    const { store: { getState }, dispatch, change } = this.props;
+    const editRecord = findParam('edited');
+    if (editRecord) {
+      this.openDetailFromCataloguing();
+      const formValues = getState().form.searchForm.values;
+      const searchFieldValue = formValues.searchTextArea;
+      // document.getElementsByName('searchTextArea')[0].value = searchFieldValue;
+      dispatch(change('searchTextArea', searchFieldValue));
+    }
+  }
+
   handleClickEdit = () => {
     const { dispatch, router, toggleFilterPane } = this.props;
     const { detail } = this.state;
     dispatch({ type: ActionTypes.VIEW_TEMPLATE, query: '000' });
-    const id = detail[0].data.fields[0]['001'];
+    const id = detail.id || detail[0].data.fields[0]['001'];
     toggleFilterPane();
     router.push(`/marccat/record/view?id=${id}&mode=edit`);
   }
@@ -98,25 +112,56 @@ export class SearchResults extends React.Component<P, {}> {
     router.push((url.match(/[\?]/g) ? '&' : '?') + `${key}=${value}`);
   };
 
+
+  openDetailFromCataloguing = () => {
+    const { dispatch, data: { data } } = this.props;
+    const detail = data.marcRecordDetail;
+    if (isAuthorityRecord(detail.meta)) {
+      this.setState({
+        detail,
+        detailPanelIsVisible: true,
+        detailPaneMeta: {
+          title: 'Auth. • ' + detail.id,
+          subTitle: detail.meta['100']
+        }
+      });
+    } else {
+      this.setState({
+        detail,
+        detailPanelIsVisible: true,
+        detailPaneMeta: {
+          title: 'Bib. • ' + detail.id,
+          subTitle: detail.meta['245']
+        }
+      });
+    }
+    dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
+  };
+
   handleDetails = (e, meta) => {
     const { dispatch, data } = this.props;
     dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: false });
+    const detail = StoreReducer.resolve(data, 'marcRecordDetail').bibliographicRecord;
     const id = meta['001'];
     const detailSelected = data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001']) || {};
     this.transitionToParams('id', id);
-    dispatch({
-      type: '@@ui-marccat/QUERY',
-      data: {
-        path: C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id,
-        id,
-        type: 'marcRecordDetail',
-        params: 'type=B&lang=ita&view=1',
-      } });
+    if (!detail) {
+      dispatch({
+        type: '@@ui-marccat/QUERY',
+        data: {
+          path: C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id,
+          id,
+          meta,
+          panelOpen: true,
+          type: 'marcRecordDetail',
+          params: 'type=B&lang=ita&view=1',
+        } });
+    }
     dispatch({ type: ActionTypes.DETAILS, query: id, recordType: meta.recordView });
     if (isAuthorityRecord(meta)) {
       dispatch({ type: ActionTypes.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView, openPanel: true });
       this.setState({
-        detail: detailSelected,
+        detail: detail || detailSelected,
         detailPanelIsVisible: true,
         detailPaneMeta: {
           title: 'Auth. • ' + id,

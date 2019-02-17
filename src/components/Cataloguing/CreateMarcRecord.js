@@ -30,7 +30,7 @@ import * as C from '../../utils/Constant';
 
 import style from './Style/style.css';
 import { StoreReducer } from '../../redux';
-import { SUBFILED_DELIMITER } from './Utils/MarcUtils';
+import { SUBFIELD_DELIMITER } from './Utils/MarcUtils';
 import { headingAction } from './Utils/MarcApiUtils';
 
 type P = {
@@ -94,7 +94,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     const heading = {
       indicator1: item.ind1 || '',
       indicator2: item.ind2 || '',
-      stringText: SUBFILED_DELIMITER + item.displayValue,
+      stringText: SUBFIELD_DELIMITER + item.displayValue,
       tag: item.code
     };
     dispatch(headingAction(heading));
@@ -106,7 +106,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     const heading = {
       indicator1: item.ind1 || '',
       indicator2: item.ind2 || '',
-      stringText: SUBFILED_DELIMITER + item.displayValue,
+      stringText: SUBFIELD_DELIMITER + item.displayValue,
       tag: item.code
     };
     // this.createNewHeading(item);
@@ -116,17 +116,19 @@ export class CreateMarcRecord extends React.Component<P, {}> {
       }).then((data) => {
         tagVariableData.filter(t => t.code === item.code).map(k => {
           k.headingNumber = data.headingNumber;
-          k.ind1 = data.indicator1;
-          k.ind1 = data.indicator1;
+          k.variableField.ind1 = data.indicator1;
+          k.variableField.ind1 = data.indicator1;
+          k.variableField.categoryCode = data.category;
+          k.variableField.displayValue = data.stringText;
+          k.variableField.headingNumber = data.headingNumber;
           k.fieldStatus = 'new';
-          return k;
+          return data;
         });
       });
   }
 
   onCreate = () => { this.showMessage('Tag Saved sucesfully'); }
   onDelete = () => {};
-
 
   saveRecord = () => {
     const body = this.composeBodyJson();
@@ -220,7 +222,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
           ind2: t.ind2,
           code: t.code,
           categoryCode: category,
-          displayValue: SUBFILED_DELIMITER + t.displayValue,
+          displayValue: SUBFIELD_DELIMITER + t.displayValue,
           functionCode: '-1',
           headingTypeCode: '1',
           itemTypeCode: '-1',

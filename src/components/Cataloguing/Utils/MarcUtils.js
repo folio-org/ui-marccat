@@ -8,7 +8,27 @@ export const RECORD_ACTION = {
   EDIT_MODE: 'edit'
 };
 
-export const SUBFILED_DELIMITER = '\u001fa';
+export const SUBFIELD_DELIMITER = '\u001fa';
+export const VARIABLE_FIELD_EMPTY = {
+  'added': true,
+  'mandatory': false,
+  'code': '',
+  'fieldStatus': 'new',
+  'variableField': {
+    categoryCode: 1,
+    code: '',
+    displayValue: '',
+    functionCode: '-1',
+    headingTypeCode: '1',
+    ind1: '0',
+    ind2: '0',
+    itemTypeCode: '-1',
+    keyNumber: 0,
+    sequenceNumber: 0,
+    skipInFiling: 0,
+    subfields: []
+  },
+};
 /**
  *
  * @param {text} string Text to camelize

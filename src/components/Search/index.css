@@ -31,25 +31,6 @@
   line-height: 12px;
 }
 
-.select_margin {
-  & * {
-    margin-bottom: 0;
-  }
-
-  & .isfocused {
-    border-bottom: 0;
-  }
-}
-
-.popover {
-  padding-left: 0;
-
-  & svg {
-    width: 18px;
-    height: 18px;
-  }
-}
-
 .mt16 {
   margin-top: var(--margin-top-xxl);
 }
@@ -65,7 +46,7 @@
 .leftBracket {
   border-left: solid 4px var(--primary);
   border-radius: 50%;
-  height: 90px;
+  height: 70px;
   width: 60px;
   padding-top: 10px;
   cursor: pointer;
@@ -74,7 +55,7 @@
 .rightBracket {
   border-right: solid 4px var(--primary);
   border-radius: 50%;
-  height: 90px;
+  height: 70px;
   width: 60px;
   padding-top: 10px;
   float: right;
@@ -84,7 +65,7 @@
 .leftBracketDisabled {
   border-left: solid 4px rgba(0, 0, 0, 0.62);
   border-radius: 50%;
-  height: 90px;
+  height: 70px;
   width: 60px;
   padding-top: 10px;
   cursor: pointer;
@@ -93,7 +74,7 @@
 .rightBracketDisabled {
   border-right: solid 4px rgba(0, 0, 0, 0.62);
   border-radius: 50%;
-  height: 90px;
+  height: 70px;
   width: 60px;
   padding-top: 10px;
   float: right;

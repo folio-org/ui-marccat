@@ -66,7 +66,7 @@
   "search.actionmenu.authority.records": "Authority Records",
   "indexes.title": "Indexes",
   "diacritic.title": "Diacritic",
-  "cataloging.variablefield.section.add.newtag": "+ Add tag",
+  "cataloging.variablefield.section.add.newtag": "+ Add new tag",
   "template.actionmenu.new": "New Template",
   "template.actionmenu.load": "Load template...",
   "template.actionmenu.load.shortcut": "CTRL + L",

@@ -23,7 +23,7 @@ import { buildUrl } from '../../redux/helpers/Utilities';
 import * as C from '../../utils/Constant';
 import style from './Style/style.css';
 import { post, put } from '../../core/api/HttpService';
-import { SUBFILED_DELIMITER } from './Utils/MarcUtils';
+import { SUBFIELD_DELIMITER } from './Utils/MarcUtils';
 import VariableFields from './Marc/VariableFields';
 import { StoreReducer } from '../../redux';
 import { deleteRecordAction } from './Utils/MarcApiUtils';
@@ -42,7 +42,7 @@ class EditMarcRecord extends React.Component {
     const { dispatch, router, toggleFilterPane } = this.props;
     dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', filterChecked: false });
     toggleFilterPane();
-    router.push('/marccat/search');
+    router.push(`/marccat/search?edited=${true}`);
   };
 
   saveRecord = () => {
@@ -56,39 +56,62 @@ class EditMarcRecord extends React.Component {
   };
 
   onSave = () => {}
-  onUpdate = (item) => {
+
+  saveHeading = item => {
     const { store: { getState } } = this.props;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
     const heading = {
       indicator1: item.ind1 || '',
       indicator2: item.ind2 || '',
-      stringText: SUBFILED_DELIMITER + item.displayValue,
-      category: (item.variableField) ? item.variableField.categoryCode : '',
-      headingNumber: (item.variableField) ? item.variableField.keyNumber : '',
+      stringText: SUBFIELD_DELIMITER + item.displayValue,
       tag: item.code
     };
+    post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, 'lang=ita&view=1'), heading)
+      .then((r) => {
+        return r.json();
+      }).then((data) => {
+        tagVariableData.filter(t => t.code === item.code)[0].variableField.ind1 = data.tag;
+        tagVariableData.filter(t => t.code === item.code)[0].variableField.ind1 = data.indicator1;
+        tagVariableData.filter(t => t.code === item.code)[0].variableField.ind2 = data.indicator2;
+        tagVariableData.filter(t => t.code === item.code)[0].variableField.displayValue = data.stringText;
+        tagVariableData.filter(t => t.code === item.code)[0].variableField.keyNumber = data.headingNumber;
+        tagVariableData.filter(t => t.code === item.code)[0].fieldStatus = 'new';
+        return data;
+      }).catch(() => this.showMessage('Error on save heading'));
+  };
+
+  editHeading = item => {
+    const { store: { getState } } = this.props;
+    const tagVariableData = getState().form.marcEditableListForm.values.items;
+    const tagSelected = tagVariableData.filter(t => t.code === item.code)[0];
+    const heading = {
+      indicator1: item.ind1 || tagSelected.variableField.ind1,
+      indicator2: item.ind2 || tagSelected.variableField.ind2,
+      stringText: item.displayValue || tagSelected.variableField.displayValue,
+      category: item.categoryCode || tagSelected.variableField.categoryCode,
+      headingNumber: item.keyNumber || tagSelected.variableField.keyNumber,
+      tag: item.code || tagSelected.code,
+    };
+    put(buildUrl(C.ENDPOINT.UPDATE_HEADING_URL, 'lang=ita&view=1'), heading)
+      .then((r) => {
+        return r.json();
+      }).then((data) => {
+        tagVariableData.filter(t => t.code === item.code)[0].variableField.code = data.tag;
+        tagVariableData.filter(t => t.code === item.code)[0].variableField.ind1 = data.indicator1;
+        tagVariableData.filter(t => t.code === item.code)[0].variableField.ind2 = data.indicator2;
+        tagVariableData.filter(t => t.code === item.code)[0].variableField.oldKeyNumber = tagVariableData.filter(t => t.code === item.code)[0].variableField.keyNumber;
+        tagVariableData.filter(t => t.code === item.code)[0].variableField.displayValue = data.stringText;
+        tagVariableData.filter(t => t.code === item.code)[0].variableField.keyNumber = data.headingNumber;
+        tagVariableData.filter(t => t.code === item.code)[0].fieldStatus = 'changed';
+        return data;
+      });
+  };
+
+  onUpdate = (item) => {
     if (item.variableField && item.variableField.keyNumber) {
-      put(buildUrl(C.ENDPOINT.UPDATE_HEADING_URL, 'lang=ita&view=1'), heading)
-        .then((r) => {
-          return r.json();
-        }).then((data) => {
-          tagVariableData.filter(t => t.code === item.code).map(k => {
-            k.headingNumber = data.headingNumber;
-            k.fieldStatus = 'changed';
-            return data;
-          });
-        });
+      this.editHeading(item);
     } else {
-      post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, 'lang=ita&view=1'), heading)
-        .then((r) => {
-          return r.json();
-        }).then((data) => {
-          tagVariableData.filter(t => t.code === item.code).map(k => {
-            k.headingNumber = data.headingNumber;
-            k.fieldStatus = 'new';
-            return k;
-          });
-        });
+      this.saveHeading(item);
     }
   }
 
@@ -96,7 +119,7 @@ class EditMarcRecord extends React.Component {
   onDelete = () => {};
 
   composeBodyJson = () => {
-    const { data, recordDetail, store: { getState } } = this.props;
+    const { data, recordDetail, dispatch, store: { getState } } = this.props;
     const formData = getState().form.bibliographicRecordForm.values;
     const tag006Values = [];
     const tag007Values = [];
@@ -165,6 +188,17 @@ class EditMarcRecord extends React.Component {
     bibliographicRecord.fields = _.sortBy(bibliographicRecord.fields, 'code');
     bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     bibliographicRecord.verificationLevel = 1;
+    const id = bibliographicRecord.id;
+    dispatch({
+      type: '@@ui-marccat/QUERY',
+      data: {
+        path: C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id,
+        id,
+        meta: data.data.marcRecordDetail.meta,
+        panelOpen: true,
+        type: 'marcRecordDetail',
+        params: 'type=B&lang=ita&view=1',
+      } });
     return {
       bibliographicRecord,
       recordTemplate
@@ -237,9 +271,6 @@ class EditMarcRecord extends React.Component {
     const {
       translate,
       data,
-      headerTypes006IsLoading,
-      headerTypes007IsLoading,
-      headerTypes008IsLoading,
       recordDetail,
       leaderData,
     } = this.props;
@@ -295,13 +326,10 @@ class EditMarcRecord extends React.Component {
                           leaderValue={bibliographicRecord.leader.value}
                         />
                       </Accordion>
-                      <Accordion label="Control fields (001, 003, 005)" id="control-field">
+                      <Accordion label="Control fields (001, 003, 005, 008)" id="control-field">
                         <FixedFields
                           {...this.props}
                           recordDetail={data.recordDetail}
-                          headerTypes006IsLoading={headerTypes006IsLoading}
-                          headerTypes007IsLoading={headerTypes007IsLoading}
-                          headerTypes008IsLoading={headerTypes008IsLoading}
                           record={bibliographicRecord}
                         />
                       </Accordion>
@@ -339,10 +367,7 @@ export default reduxForm({
     queryAuth: settings.queryAuth,
     headerTypes006Result: headerTypes006.records,
     leaderData: leaderData.records,
-    headerTypes006IsLoading: headerTypes006.isLoading,
     headerTypes007Result: headerTypes007.records,
-    headerTypes007IsLoading: headerTypes007.isLoading,
     headerTypes008Result: headerTypes008.records,
-    headerTypes008IsLoading: headerTypes008.isLoading
   }),
 )(injectCommonProp(EditMarcRecord)));

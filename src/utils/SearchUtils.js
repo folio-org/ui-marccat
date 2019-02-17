@@ -29,6 +29,10 @@ const transitionToParams = (key, value, props) => {
 //   return includes(url, '?') ? `${url}&layer=${mode}` : `${url}?layer=${mode}`;
 // };
 
+const safeObject = (obj, prop) => {
+  return (obj) ? obj[prop] : '';
+};
+
 export {
   getLanguageFilterQuery,
   getFormatFilterQuery,

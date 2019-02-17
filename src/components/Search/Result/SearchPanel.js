@@ -41,6 +41,7 @@ class SearchPanel extends React.Component<P, {}> {
       searchForm: [''],
       filterEnable: true,
       counter: [{}],
+      fieldValue: '',
       leftBracketEnable: false,
       rightBracketEnable: false,
     };
@@ -88,6 +89,9 @@ class SearchPanel extends React.Component<P, {}> {
         baseQuery = inputValue;
       }
 
+      this.setState({
+        fieldValue: form.values.searchTextArea,
+      });
       let bibQuery = baseQuery;
       const authQuery = baseQuery;
       this.transitionToParams('q', bibQuery);
@@ -170,7 +174,7 @@ class SearchPanel extends React.Component<P, {}> {
 
   render() {
     const { translate, ...rest } = this.props;
-    const { filterEnable, leftBracketEnable, rightBracketEnable } = this.state;
+    const { filterEnable, leftBracketEnable, rightBracketEnable, fieldValue } = this.state;
     return (
       <React.Fragment>
         <AccordionSet>
@@ -217,7 +221,10 @@ class SearchPanel extends React.Component<P, {}> {
                           id="searchTextArea"
                           name="searchTextArea"
                           fullWidth
+                          // onChange={(e) => { this.setState({ fieldValue: e.target.value }); }}
+                          // onChangeIndex={(e) => { this.setState({ fieldValue: e.target.value }); }}
                           component={SearchField}
+                          onBlur={() => 'tttt'}
                           placeholder="Search..."
                         />
                       </div>
@@ -244,5 +251,7 @@ class SearchPanel extends React.Component<P, {}> {
 
 export default reduxForm({
   form: 'searchForm',
-  destroyOnUnmount: false
+  navigationCheck: true,
+  enableReinitialize: true,
+  destroyOnUnmount: false,
 })(SearchPanel);

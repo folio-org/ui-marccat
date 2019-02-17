@@ -81,7 +81,6 @@
     "search.record.new.auth": "新建 (ctrl + A)",
     "cataloging.variablefield.empty": "没有可变字段显示",
     "cataloging.variablefield.section.label": "可变数据字段",
-    "app.title": "MARC编目",
     "template.record.delete": "删除记录",
     "template.record.edit": "编辑记录",
     "cataloging.variablefield.section.add.newtag": "添加新字段",

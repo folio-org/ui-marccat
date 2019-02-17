@@ -7,8 +7,7 @@ import React from 'react';
 import { HotKeys } from '@folio/stripes/components';
 import MarcEditableList from './Editable';
 import { Props, injectCommonProp } from '../../../core';
-import { separator } from '../../../utils';
-import { SUBFILED_DELIMITER } from '../Utils/MarcUtils';
+import { SUBFIELD_DELIMITER, VARIABLE_FIELD_EMPTY } from '../Utils/MarcUtils';
 
 class VariableFields extends React.Component<Props, {}> {
   constructor(props: Props) {
@@ -30,15 +29,23 @@ class VariableFields extends React.Component<Props, {}> {
   }
 
   renderList() {
-    const { fields, itemTemplate, translate, onUpdate, onSave, onDelete, onCreate } = this.props;
-    fields.forEach((f, i) => {
-      f.displayValue = fields[i].variableField.displayValue;
-      separator(f.displayValue, SUBFILED_DELIMITER);
-    });
+    const { fields, translate, onUpdate, onSave, onDelete, onCreate } = this.props;
+    const resultFormatter = {
+      displayValue: x => (
+        (x.variableField) ? x.variableField.displayValue : ''
+      ),
+      ind1: x => (
+        (x.variableField) ? x.variableField.ind1 : ''
+      ),
+      ind2: x => (
+        (x.variableField) ? x.variableField.ind2 : ''
+      ),
+    };
     return (
       <React.Fragment>
         <MarcEditableList
           createButtonLabel={translate({ id: 'ui-marccat.cataloging.variablefield.section.add.newtag' })}
+          itemTemplate={VARIABLE_FIELD_EMPTY}
           contentData={fields}
           visibleFields={[
             'code',
@@ -50,7 +57,7 @@ class VariableFields extends React.Component<Props, {}> {
             code: 'code',
             ind1: 'ind1',
             ind2: 'ind2',
-            displayValue: 'variableField.displayValue',
+            displayValue: 'displayValue',
           }}
           columnWidths={{
             code: '10%',
@@ -62,8 +69,7 @@ class VariableFields extends React.Component<Props, {}> {
           onSave={onSave}
           onDelete={onDelete}
           onCreate={onCreate}
-          nameKey="code"
-          itemTemplate={itemTemplate}
+          formatter={resultFormatter}
         />
       </React.Fragment>
     );

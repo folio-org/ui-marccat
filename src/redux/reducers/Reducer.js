@@ -1,4 +1,4 @@
-import { ActionTypes } from '../actions/Actions';
+import { ActionTypes, ReduxActionTypes } from '../actions/Actions';
 
 const isLoading = false;
 const isReady = false;
@@ -560,6 +560,24 @@ export function settingsReducer(state = {}, action) {
       ...state,
       queryBib: action.queryBib,
       queryAuth: action.queryAuth,
+    };
+  default:
+    return state;
+  }
+}
+
+export function reduxFormReducer(state = {}, action) {
+  switch (action.type) {
+  case ReduxActionTypes.REGISTER:
+    return {
+      ...state,
+    }; case ReduxActionTypes.FOCUS:
+    return {
+      ...state,
+    };
+  case ReduxActionTypes.BLUR:
+    return {
+      ...state,
     };
   default:
     return state;

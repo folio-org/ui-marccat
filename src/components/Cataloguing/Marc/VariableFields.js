@@ -8,7 +8,6 @@ import { HotKeys } from '@folio/stripes/components';
 import MarcEditableList from './Editable';
 import { Props, injectCommonProp } from '../../../core';
 import { VARIABLE_FIELD_EMPTY } from '../Utils/MarcUtils';
-import { safeObject } from '../../Search';
 
 class VariableFields extends React.Component<Props, {}> {
   constructor(props: Props) {
@@ -33,46 +32,44 @@ class VariableFields extends React.Component<Props, {}> {
     const { fields, translate, onUpdate, onSave, onDelete, onCreate } = this.props;
     const resultFormatter = {
       displayValue: x => (
-        safeObject(x.variableField, 'displayValue')
+        (x.variableField) ? x.variableField.displayValue : ''
       ),
       ind1: x => (
-        safeObject(x.variableField, 'ind1')
+        (x.variableField) ? x.variableField.ind1 : ''
       ),
       ind2: x => (
-        safeObject(x.variableField, 'ind2')
+        (x.variableField) ? x.variableField.ind2 : ''
       ),
     };
     return (
-      <React.Fragment>
-        <MarcEditableList
-          createButtonLabel={translate({ id: 'ui-marccat.cataloging.variablefield.section.add.newtag' })}
-          itemTemplate={VARIABLE_FIELD_EMPTY}
-          contentData={fields}
-          visibleFields={[
-            'code',
-            'ind1',
-            'ind2',
-            'displayValue'
-          ]}
-          columnMapping={{
-            code: 'code',
-            ind1: 'ind1',
-            ind2: 'ind2',
-            displayValue: 'displayValue',
-          }}
-          columnWidths={{
-            code: '10%',
-            ind1: '10%',
-            ind2: '10%',
-            displayValue: '50%',
-          }}
-          onUpdate={onUpdate}
-          onSave={onSave}
-          onDelete={onDelete}
-          onCreate={onCreate}
-          formatter={resultFormatter}
-        />
-      </React.Fragment>
+      <MarcEditableList
+        createButtonLabel={translate({ id: 'ui-marccat.cataloging.variablefield.section.add.newtag' })}
+        itemTemplate={VARIABLE_FIELD_EMPTY}
+        contentData={fields}
+        visibleFields={[
+          'code',
+          'ind1',
+          'ind2',
+          'displayValue'
+        ]}
+        columnMapping={{
+          code: 'code',
+          ind1: 'ind1',
+          ind2: 'ind2',
+          displayValue: 'displayValue',
+        }}
+        columnWidths={{
+          code: '10%',
+          ind1: '10%',
+          ind2: '10%',
+          displayValue: '50%',
+        }}
+        onUpdate={onUpdate}
+        onSave={onSave}
+        onDelete={onDelete}
+        onCreate={onCreate}
+        formatter={resultFormatter}
+      />
     );
   }
 

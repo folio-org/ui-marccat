@@ -28,10 +28,11 @@ import { post } from '../../core/api/HttpService';
 import { buildUrl } from '../../redux/helpers/Utilities';
 import * as C from '../../utils/Constant';
 
-import style from './Style/style.css';
 import { StoreReducer } from '../../redux';
 import { SUBFIELD_DELIMITER } from './Utils/MarcUtils';
 import { headingAction } from './Utils/MarcApiUtils';
+import style from './Style/style.css';
+
 
 type P = {
   callout: Object,
@@ -66,16 +67,12 @@ export class CreateMarcRecord extends React.Component<P, {}> {
   };
 
   renderButtonMenu = () => {
-    const rightButton = {
-      marginRight: '10px',
-      float: 'right',
-    };
     return (
       <PaneMenu>
         <Button
-          style={rightButton}
           buttonStyle="primary"
           onClick={this.saveRecord}
+          buttonClass={style.rightPosition}
           type="button"
           marginBottom0
         >
@@ -264,9 +261,6 @@ export class CreateMarcRecord extends React.Component<P, {}> {
   render() {
     const {
       settings,
-      headerTypes006IsLoading,
-      headerTypes007IsLoading,
-      headerTypes008IsLoading,
       leaderData,
       emptyRecord
     } = this.props;
@@ -325,13 +319,11 @@ export class CreateMarcRecord extends React.Component<P, {}> {
                           leaderValue={bibliographicRecord.leader.value}
                         />
                       </Accordion>
-                      <Accordion label="Control fields (001, 003, 005)" id="control-field">
+                      <Accordion label="Control fields (001, 003, 005, 008)" id="control-field-create-record">
                         <FixedFields
                           {...this.props}
-                          headerTypes006IsLoading={headerTypes006IsLoading}
-                          headerTypes007IsLoading={headerTypes007IsLoading}
-                          headerTypes008IsLoading={headerTypes008IsLoading}
                           record={bibliographicRecord}
+                          fidexFields={bibliographicRecord.fields}
                         />
                       </Accordion>
                     </form>
@@ -369,10 +361,7 @@ export default reduxForm({
     tagIsLoading: leaderData.isLoading,
     tagIsReady: leaderData.isReady,
     headerTypes006Result: headerTypes006.records,
-    headerTypes006IsLoading: headerTypes006.isLoading,
     headerTypes007Result: headerTypes007.records,
-    headerTypes007IsLoading: headerTypes007.isLoading,
     headerTypes008Result: headerTypes008.records,
-    headerTypes008IsLoading: headerTypes008.isLoading
   }),
 )(CreateMarcRecord));

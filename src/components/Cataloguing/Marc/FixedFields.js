@@ -8,32 +8,9 @@ class FixedFields extends React.Component<Props, {}> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      // eslint-disable-next-line react/no-unused-state
-      tag008: false,
       isPresent008: false,
       expand008: false,
-      fixedFields: [],
     };
-  }
-
-  // eslint-disable-next-line react/no-unused-state
-  checkTag008 = c => { if (c === '008') this.setState({ tag008: true }); };
-
-
-  // eslint-disable-next-line react/no-deprecated
-  componentWillMount() {
-    const { record } = this.props;
-    const fixedField = [];
-    record.fields
-      .filter(f => f.fixedField !== undefined)
-      .forEach(f => fixedField.push(f));
-    this.setState({
-      fixedFields: fixedField
-    });
-
-    fixedField.forEach(f => {
-      this.checkTag008(f.fixedField.code);
-    });
   }
 
   handleTags008 = (tag) => {
@@ -91,13 +68,13 @@ class FixedFields extends React.Component<Props, {}> {
   };
 
   render() {
-    const { fixedFields } = this.state;
-    const fixedFieldsxxx = fixedFields.filter(f => f.fixedField.code === '001' || f.fixedField.code === '003' || f.fixedField.code === '005');
-    const fixedFields008 = fixedFields.filter(f => f.fixedField.code === '008')[0];
+    const { fidexFields } = this.props;
+    const fixedFieldsxxx = fidexFields.filter(f => f.code === '001' || f.code === '003' || f.code === '005');
+    const fixedFields008 = fidexFields.filter(f => f.code === '008');
     return (
       <React.Fragment>
         {this.renderTag00X(fixedFieldsxxx)}
-        {this.renderTag008(fixedFields008)}
+        {this.renderTag008(fixedFields008[0])}
       </React.Fragment>
     );
   }

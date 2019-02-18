@@ -190,7 +190,7 @@ class EditMarcRecord extends React.Component {
     });
     bibliographicRecord.fields = _.union(recordTemplate.fields, tagToDeleted, getState().form.marcEditableListForm.values.items);
     bibliographicRecord.fields = _.sortBy(bibliographicRecord.fields, 'code');
-    bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
+    bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur, [cur.displayValue]: cur }), {}));
     bibliographicRecord.verificationLevel = 1;
     // const id = bibliographicRecord.id;
     // dispatch({
@@ -269,11 +269,10 @@ class EditMarcRecord extends React.Component {
     const {
       translate,
       data,
+      recordDetail,
       leaderData,
-      store: { getState }
     } = this.props;
-
-    const bibliographicRecord = getState().marccat.search.bibliographicResults.filter(item => this.id === item.data.fields[0]['001'])[0];
+    const bibliographicRecord = If(recordDetail);
     return (!bibliographicRecord) ?
       (
         <Paneset static>
@@ -308,7 +307,7 @@ class EditMarcRecord extends React.Component {
                 <div className={style.recordContainer}>
                   <AccordionSet>
                     <KeyValue />
-                    <form name="bibliographicRecordForm" onSubmit={this.saveRecord} formkey="bibliograficFormKey">
+                    <form name="bibliographicRecordForm" onSubmit={this.saveRecord} formKey="bibliograficKey">
                       <Accordion label="Suppress" id="suppress" separator={false}>
                         <SingleCheckboxIconButton labels={['Suppress from Discovery']} pullLeft widthPadding />
                       </Accordion>
@@ -321,11 +320,11 @@ class EditMarcRecord extends React.Component {
                           leaderValue={bibliographicRecord.leader.value}
                         />
                       </Accordion>
-                      <Accordion label="Control fields (001, 003, 005, 008)" id="control-field">
+                      <Accordion label="Control fields (001, 003, 005, 008)" id="control-field-edit-record">
                         <FixedFields
                           {...this.props}
-                          recordDetail={data.recordDetail}
                           record={bibliographicRecord}
+                          fidexFields={bibliographicRecord.fields}
                         />
                       </Accordion>
                     </form>
@@ -360,7 +359,6 @@ export default reduxForm({
     recordDetail: StoreReducer.resolve(data, 'marcRecordDetail').bibliographicRecord,
     queryBib: settings.queryBib,
     queryAuth: settings.queryAuth,
-    id: settings.id,
     leaderData: leaderData.records,
   }),
 )(injectCommonProp(EditMarcRecord)));

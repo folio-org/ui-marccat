@@ -47,7 +47,8 @@ export class SearchResults extends React.Component<P, {}> {
       openDropDownMenu: false,
       detail: {},
       detailPaneMeta: {
-        title: C.EMPTY_MESSAGE,
+        title: '',
+        subTitle: ''
       }
     };
 
@@ -65,13 +66,14 @@ export class SearchResults extends React.Component<P, {}> {
   }
 
   componentDidMount() {
-    const { store: { getState } } = this.props;
+    const { store: { getState }, dispatch, change } = this.props;
     const editRecord = findParam('edited');
     if (editRecord) {
       this.openDetailFromCataloguing();
       const formValues = getState().form.searchForm.values;
       const searchFieldValue = formValues.searchTextArea;
-      document.getElementsByName('searchTextArea')[0].value = searchFieldValue;
+      // document.getElementsByName('searchTextArea')[0].value = searchFieldValue;
+      dispatch(change('searchTextArea', searchFieldValue));
     }
   }
 
@@ -134,16 +136,18 @@ export class SearchResults extends React.Component<P, {}> {
     const id = meta['001'];
     const detailSelected = data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001']) || {};
     transitionToParams('id', id);
-    dispatch({
-      type: '@@ui-marccat/QUERY',
-      data: {
-        path: C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id,
-        id,
-        meta,
-        panelOpen: true,
-        type: 'marcRecordDetail',
-        params: 'type=B&lang=ita&view=1',
-      } });
+    if (!detail) {
+      dispatch({
+        type: '@@ui-marccat/QUERY',
+        data: {
+          path: C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id,
+          id,
+          meta,
+          panelOpen: true,
+          type: 'marcRecordDetail',
+          params: 'type=B&lang=ita&view=1',
+        } });
+    }
     dispatch({ type: ActionTypes.DETAILS, query: id, recordType: meta.recordView });
     if (isAuthorityRecord(meta)) {
       dispatch({ type: ActionTypes.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView, openPanel: true });

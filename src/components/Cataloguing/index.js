@@ -1,3 +1,6 @@
+import React, { Component } from 'react';
+
+
 export { default as Tag00X } from './Marc/Tags/Tag00X';
 export { default as Tag006 } from './Marc/Tags/Tag006';
 export { default as Tag007 } from './Marc/Tags/Tag007';
@@ -20,3 +23,11 @@ export {
 }
   from './Utils/MarcUtils';
 export { headingAction } from './Utils/MarcApiUtils';
+
+export default class componentName extends Component {
+  render() {
+    return (
+      <div />
+    );
+  }
+}

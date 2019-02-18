@@ -4,10 +4,8 @@
  * @flow
  */
 import React from 'react';
-import { HotKeys } from '@folio/stripes/components';
 import MarcEditableList from './Editable';
 import { Props, injectCommonProp } from '../../../core';
-import { VARIABLE_FIELD_EMPTY } from '../Utils/MarcUtils';
 
 class VariableFields extends React.Component<Props, {}> {
   constructor(props: Props) {
@@ -32,19 +30,18 @@ class VariableFields extends React.Component<Props, {}> {
     const { fields, translate, onUpdate, onSave, onDelete, onCreate } = this.props;
     const resultFormatter = {
       displayValue: x => (
-        (x.variableField) ? x.variableField.displayValue : ''
+        (x.variableField) ? x.variableField.displayValue : x.displayValue
       ),
       ind1: x => (
-        (x.variableField) ? x.variableField.ind1 : ''
+        (x.variableField) ? x.variableField.ind1 : x.ind1
       ),
       ind2: x => (
-        (x.variableField) ? x.variableField.ind2 : ''
+        (x.variableField) ? x.variableField.ind2 : x.ind2
       ),
     };
     return (
       <MarcEditableList
         createButtonLabel={translate({ id: 'ui-marccat.cataloging.variablefield.section.add.newtag' })}
-        itemTemplate={VARIABLE_FIELD_EMPTY}
         contentData={fields}
         visibleFields={[
           'code',
@@ -75,9 +72,9 @@ class VariableFields extends React.Component<Props, {}> {
 
   render() {
     return (
-      <HotKeys keyMap={this.keys} handlers={this.handlers} data-full-width>
+      <React.Fragment>
         {this.renderList()}
-      </HotKeys>
+      </React.Fragment>
     );
   }
 }

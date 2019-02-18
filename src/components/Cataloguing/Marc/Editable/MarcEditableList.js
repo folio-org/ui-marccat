@@ -14,7 +14,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  nameKey: 'name',
+  nameKey: 'code',
 };
 
 const EditableList = (props) => {

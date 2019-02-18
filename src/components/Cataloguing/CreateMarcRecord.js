@@ -19,7 +19,7 @@ import {
 import { AppIcon } from '@folio/stripes-core';
 import { reduxForm } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
-import _ from 'lodash';
+import { isEmpty, union, sortBy } from 'lodash';
 import type { Props } from '../../core';
 import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../lib';
 import { VariableFields, MarcLeader, FixedFields } from '.';
@@ -29,14 +29,13 @@ import { buildUrl } from '../../redux/helpers/Utilities';
 import * as C from '../../utils/Constant';
 
 import { StoreReducer } from '../../redux';
-import { SUBFIELD_DELIMITER } from './Utils/MarcUtils';
+import { SUBFIELD_DELIMITER, RECORD_FIELD_STATUS } from './Utils/MarcUtils';
 import { headingAction } from './Utils/MarcApiUtils';
 import style from './Style/style.css';
 
 
 type P = {
   callout: Object,
-  isEditingMode: boolean
 } & Props;
 
 export class CreateMarcRecord extends React.Component<P, {}> {
@@ -118,7 +117,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
           k.variableField.categoryCode = data.category;
           k.variableField.displayValue = data.stringText;
           k.variableField.headingNumber = data.headingNumber;
-          k.fieldStatus = 'new';
+          k.fieldStatus = RECORD_FIELD_STATUS.NEW;
           return data;
         });
       });
@@ -196,29 +195,15 @@ export class CreateMarcRecord extends React.Component<P, {}> {
 
     tagVariableData.forEach(t => {
       if (t.code !== '040') {
-        let category = '';
-        if (t.code === '245') {
-          category = 3;
-        } else if (t.code === '300') {
-          category = 7;
-        } else if (t.code === '500') {
-          category = 7;
-        } else if (t.code === '700') {
-          category = 2;
-        } else if (t.code === '997') {
-          category = 6;
-        } else if (t.code === '100') {
-          category = 2;
-        }
         t.mandatory = false;
         t.added = true;
-        t.fieldStatus = 'new';
+        t.fieldStatus = RECORD_FIELD_STATUS.NEW;
         t.variableField = {
           keyNumber: t.headingNumber,
           ind1: t.ind1,
           ind2: t.ind2,
           code: t.code,
-          categoryCode: category,
+          categoryCode: t.categoryCode,
           displayValue: SUBFIELD_DELIMITER + t.displayValue,
           functionCode: '-1',
           headingTypeCode: '1',
@@ -230,9 +215,9 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     });
     const recordTemplate = Object.assign({}, emptyRecord);
     recordTemplate.id = 408;
-    bibliographicRecord.fields = _.union(bibliographicRecord.fields, tagVariableData);
+    bibliographicRecord.fields = union(bibliographicRecord.fields, tagVariableData);
     bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
-    bibliographicRecord.fields = _.sortBy(bibliographicRecord.fields, 'code');
+    bibliographicRecord.fields = sortBy(bibliographicRecord.fields, 'code');
     bibliographicRecord.verificationLevel = 1;
     return {
       bibliographicRecord,
@@ -266,10 +251,8 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     } = this.props;
     let { bibliographicRecord } = this.props;
     const defaultTemplate = (settings) ? settings.defaultTemplate : C.SETTINGS.DEFAULT_TEMPLATE;
-    if (!_.isEmpty(emptyRecord)) {
-      bibliographicRecord = emptyRecord;
-      bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
-    }
+    bibliographicRecord = !isEmpty(emptyRecord) ? emptyRecord : undefined;
+
     return (!bibliographicRecord) ?
       (
         <Paneset static>

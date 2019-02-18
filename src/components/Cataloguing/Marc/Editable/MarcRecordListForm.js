@@ -74,11 +74,11 @@ class EditableListForm extends React.Component {
     this.getReadOnlyColumns = this.getReadOnlyColumns.bind(this);
 
     if (this.props.id) {
-      this.testingId = this.props.id;
+      this.marcTagrowTestingId = this.props.id;
     } else if (this.props.label) {
-      this.testingId = this.props.label.replace(/\s/, '').toLowerCase();
+      this.marcTagrowTestingId = this.props.label.replace(/\s/, '').toLowerCase();
     } else {
-      this.testingId = uniqueId();
+      this.marcTagrowTestingId = uniqueId();
     }
   }
 
@@ -258,7 +258,7 @@ class EditableListForm extends React.Component {
           <Button
             disabled={pristine || submitting || invalid}
             marginBottom0
-            id={`clickable-save-${this.testingId}-${item.rowIndex}`}
+            id={`clickable-save-${this.marcTagrowTestingId}-${item.rowIndex}`}
             onClick={() => this.onSave(fields, item.rowIndex)}
             {...(typeof actionProps.save === 'function' ? actionProps.save(item) : {})}
           >
@@ -266,7 +266,7 @@ class EditableListForm extends React.Component {
           </Button>
           <Button
             marginBottom0
-            id={`clickable-cancel-${this.testingId}-${item.rowIndex}`}
+            id={`clickable-cancel-${this.marcTagrowTestingId}-${item.rowIndex}`}
             onClick={() => this.onCancel(fields, item.rowIndex)}
             {...(typeof actionProps.cancel === 'function' ? actionProps.cancel(item) : {})}
           >
@@ -283,7 +283,7 @@ class EditableListForm extends React.Component {
               <IconButton
                 icon="edit"
                 size="small"
-                id={`clickable-edit-${this.testingId}-${item.rowIndex}`}
+                id={`clickable-edit-${this.marcTagrowTestingId}-${item.rowIndex}`}
                 aria-label={ariaLabel}
                 onClick={() => this.onEdit(item.rowIndex)}
                 {...(typeof actionProps.edit === 'function' ? actionProps.edit(item) : {})}
@@ -297,7 +297,7 @@ class EditableListForm extends React.Component {
               <IconButton
                 icon="trash"
                 size="small"
-                id={`clickable-delete-${this.testingId}-${item.rowIndex}`}
+                id={`clickable-delete-${this.marcTagrowTestingId}-${item.rowIndex}`}
                 aria-label={ariaLabel}
                 onClick={() => this.onDelete(fields, item.rowIndex)}
                 {...(typeof actionProps.delete === 'function' ? actionProps.delete(item) : {})}
@@ -320,7 +320,7 @@ class EditableListForm extends React.Component {
           <Col xs>
             <Row end="xs">
               <Col xs>
-                <Button onClick={() => this.onAdd(fields)} marginBottom0 id={`clickable-add-${this.testingId}`}>
+                <Button onClick={() => this.onAdd(fields)} marginBottom0 id={`clickable-add-${this.marcTagrowTestingId}`}>
                   {this.props.createButtonLabel}
                 </Button>
               </Col>
@@ -339,9 +339,8 @@ class EditableListForm extends React.Component {
               columnWidths={this.getColumnWidths()}
               isEmptyMessage={this.props.isEmptyMessage}
               headerRowClass={css.editListHeaders}
-              id={`editList-${this.testingId}`}
+              id={`editList-${this.marcTagrowTestingId}`}
             />
-
           </Col>
         </Row>
       </div>

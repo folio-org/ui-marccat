@@ -14,17 +14,20 @@ import {
 } from '@folio/stripes/components';
 import { reduxForm, Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
-import { includes } from 'lodash';
 import ResetButton from '../Filter/ResetButton';
 import { Props } from '../../../core';
-import { SearchIndexes, SearchConditions, FiltersContainer } from '..';
+import {
+  SearchIndexes,
+  SearchConditions,
+  FiltersContainer,
+  getLanguageFilterQuery,
+  getFormatFilterQuery,
+  transitionToParams
+} from '..';
 import { ActionTypes } from '../../../redux/actions/Actions';
 import { findYourQuery } from '../Filter';
 import { remapFilters } from '../../../utils/Mapper';
-import {
-  getLanguageFilterQuery,
-  getFormatFilterQuery,
-} from '../../../utils/SearchUtils';
+import { EMPTY_MESSAGE } from '../../../utils';
 
 import styles from '../index.css';
 
@@ -38,10 +41,9 @@ class SearchPanel extends React.Component<P, {}> {
     super(props);
     this.state = {
       isBrowseRequested: false,
-      searchForm: [''],
+      searchForm: [EMPTY_MESSAGE],
       filterEnable: true,
       counter: [{}],
-      fieldValue: '',
       leftBracketEnable: false,
       rightBracketEnable: false,
     };
@@ -51,12 +53,6 @@ class SearchPanel extends React.Component<P, {}> {
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleResetAllButton = this.handleResetAllButton.bind(this);
   }
-
-  transitionToParams = (key, value) => {
-    const { location } = this.props;
-    const url = location.pathname;
-    return includes(url, `${key}=${value}`);
-  };
 
   handleKeyDown(e) {
     let { isBrowseRequested } = this.state;
@@ -88,13 +84,9 @@ class SearchPanel extends React.Component<P, {}> {
       } else {
         baseQuery = inputValue;
       }
-
-      this.setState({
-        fieldValue: form.values.searchTextArea,
-      });
       let bibQuery = baseQuery;
       const authQuery = baseQuery;
-      this.transitionToParams('q', bibQuery);
+      transitionToParams('q', bibQuery);
 
       if (state.marccat.filter && state.marccat.filter.filters) {
         const { languageFilter, formatType } = remapFilters(state.marccat.filter.filters);
@@ -109,7 +101,7 @@ class SearchPanel extends React.Component<P, {}> {
         isBrowseRequested = true;
         dispatch({ type: ActionTypes.BROWSE_FIRST_PAGE, query: bibQuery });
         router.push('/marccat/browse');
-        this.transitionToParams('q', bibQuery);
+        transitionToParams('q', bibQuery);
         this.setState({
           filterEnable: false
         });
@@ -126,10 +118,10 @@ class SearchPanel extends React.Component<P, {}> {
           || indexForQuery === 'CP '
           || indexForQuery === 'PW ') {
           dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: '' });
-          this.transitionToParams('q', bibQuery);
+          transitionToParams('q', bibQuery);
         } else {
           dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: authQuery });
-          this.transitionToParams('q', authQuery);
+          transitionToParams('q', authQuery);
         }
       }
     }
@@ -157,7 +149,7 @@ class SearchPanel extends React.Component<P, {}> {
     const { dispatch, reset } = this.props;
     dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', filterChecked: false });
     dispatch(reset('searchForm'));
-    this.transitionToParams('filter', 'false');
+    transitionToParams('filter', 'false');
   };
 
   renderResetButton = () => {
@@ -174,7 +166,7 @@ class SearchPanel extends React.Component<P, {}> {
 
   render() {
     const { translate, ...rest } = this.props;
-    const { filterEnable, leftBracketEnable, rightBracketEnable, fieldValue } = this.state;
+    const { filterEnable, leftBracketEnable, rightBracketEnable } = this.state;
     return (
       <React.Fragment>
         <AccordionSet>

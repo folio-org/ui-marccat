@@ -10,6 +10,7 @@ import { injectCommonProp, Props } from '../../../../core';
 import { ActionTypes } from '../../../../redux/actions';
 import { decamelizify } from '../..';
 import * as C from '../../../../utils/Constant';
+import { RECORD_FIELD_STATUS, TAGS } from '../../Utils/MarcUtils';
 
 
 export class Tag008 extends React.Component<Props, {}> {
@@ -24,15 +25,15 @@ export class Tag008 extends React.Component<Props, {}> {
   handleOnChange = (e) => {
     const { dispatch, leaderValue, record } = this.props;
     const headerTypeCode = e.target.value;
-    dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: C.TAGS._008, typeCode: headerTypeCode || 31 });
+    dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: headerTypeCode || 31 });
     this.state.isChangedHeaderType = true;
-    record.fields.filter(f => f.code === C.TAGS._008)[0].fieldStatus = C.RECORD_FIELD_STATUS.CHANGED;
+    record.fields.filter(f => f.code === TAGS._008)[0].fieldStatus = RECORD_FIELD_STATUS.CHANGED;
   }
 
   populateFirstAccess = () => {
     const { record } = this.props;
     this.state.isChangedHeaderType = true;
-    record.fields.filter(f => f.code === C.TAGS._008)[0].fieldStatus = C.RECORD_FIELD_STATUS.CHANGED;
+    record.fields.filter(f => f.code === TAGS._008)[0].fieldStatus = RECORD_FIELD_STATUS.CHANGED;
   };
 
   render() {

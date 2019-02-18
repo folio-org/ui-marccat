@@ -19,14 +19,15 @@ import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../lib';
 import { MarcLeader, FixedFields } from '.';
 import { injectCommonProp } from '../../core';
 import { ActionTypes } from '../../redux/actions';
-import { buildUrl } from '../../redux/helpers/Utilities';
-import * as C from '../../utils/Constant';
-import style from './Style/style.css';
+import { buildUrl, findParam } from '../../redux/helpers/Utilities';
 import { post, put } from '../../core/api/HttpService';
 import { SUBFIELD_DELIMITER } from './Utils/MarcUtils';
 import VariableFields from './Marc/VariableFields';
 import { StoreReducer } from '../../redux';
 import { deleteRecordAction } from './Utils/MarcApiUtils';
+import * as C from '../../utils/Constant';
+import style from './Style/style.css';
+import { If } from '../Search';
 
 class EditMarcRecord extends React.Component {
   constructor(props) {
@@ -36,13 +37,16 @@ class EditMarcRecord extends React.Component {
     this.onUpdate = this.onUpdate.bind(this);
     this.onCreate = this.onCreate.bind(this);
     this.onDelete = this.onDelete.bind(this);
+
+    this.id = findParam('id');
   }
 
   handleClose = () => {
     const { dispatch, router, toggleFilterPane } = this.props;
     dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', filterChecked: false });
     toggleFilterPane();
-    router.push(`/marccat/search?edited=${true}`);
+    router.push('/marccat/search');
+    // router.push(`/marccat/search?edited=${true}`);
   };
 
   saveRecord = () => {
@@ -119,7 +123,7 @@ class EditMarcRecord extends React.Component {
   onDelete = () => {};
 
   composeBodyJson = () => {
-    const { data, recordDetail, dispatch, store: { getState } } = this.props;
+    const { data, recordDetail, store: { getState } } = this.props;
     const formData = getState().form.bibliographicRecordForm.values;
     const tag006Values = [];
     const tag007Values = [];
@@ -186,19 +190,19 @@ class EditMarcRecord extends React.Component {
     });
     bibliographicRecord.fields = _.union(recordTemplate.fields, tagToDeleted, getState().form.marcEditableListForm.values.items);
     bibliographicRecord.fields = _.sortBy(bibliographicRecord.fields, 'code');
-    bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
+    bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur, [cur.displayValue]: cur }), {}));
     bibliographicRecord.verificationLevel = 1;
-    const id = bibliographicRecord.id;
-    dispatch({
-      type: '@@ui-marccat/QUERY',
-      data: {
-        path: C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id,
-        id,
-        meta: data.data.marcRecordDetail.meta,
-        panelOpen: true,
-        type: 'marcRecordDetail',
-        params: 'type=B&lang=ita&view=1',
-      } });
+    // const id = bibliographicRecord.id;
+    // dispatch({
+    //   type: '@@ui-marccat/QUERY',
+    //   data: {
+    //     path: C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id,
+    //     id,
+    //     meta: data.data.marcRecordDetail.meta,
+    //     panelOpen: true,
+    //     type: 'marcRecordDetail',
+    //     params: 'type=B&lang=ita&view=1',
+    //   } });
     return {
       bibliographicRecord,
       recordTemplate
@@ -231,38 +235,32 @@ class EditMarcRecord extends React.Component {
 
   renderButtonMenu = () => {
     const { translate } = this.props;
-    const rightButton = {
-      marginRight: '10px',
-      float: 'right',
-    };
     return (
-      <React.Fragment>
-        <PaneMenu>
-          <Button
-            style={rightButton}
-            buttonStyle="primary"
-            onClick={this.saveRecord}
-            type="button"
-            marginBottom0
-          >
-            <Icon icon="plus-sign">
-              {translate({ id: 'ui-marccat.search.record.edit' })}
-            </Icon>
-          </Button>
-          <Button
-            style={rightButton}
-            buttonStyle="primary"
-            onClick={this.deleteRecord}
-            type="button"
-            disabled={false}
-            marginBottom0
-          >
-            <Icon icon="trash">
-              {translate({ id: 'ui-marccat.search.record.delete' })}
-            </Icon>
-          </Button>
-        </PaneMenu>
-      </React.Fragment>
+      <PaneMenu>
+        <Button
+          buttonStyle="primary"
+          onClick={this.saveRecord}
+          buttonClass={style.rightPosition}
+          type="button"
+          marginBottom0
+        >
+          <Icon icon="plus-sign">
+            {translate({ id: 'ui-marccat.search.record.edit' })}
+          </Icon>
+        </Button>
+        <Button
+          buttonStyle="primary"
+          buttonClass={style.rightPosition}
+          onClick={this.deleteRecord}
+          type="button"
+          disabled={false}
+          marginBottom0
+        >
+          <Icon icon="trash">
+            {translate({ id: 'ui-marccat.search.record.delete' })}
+          </Icon>
+        </Button>
+      </PaneMenu>
     );
   };
 
@@ -270,15 +268,10 @@ class EditMarcRecord extends React.Component {
   render() {
     const {
       translate,
-      data,
       recordDetail,
       leaderData,
     } = this.props;
-    let bibliographicRecord;
-    if (recordDetail) {
-      bibliographicRecord = recordDetail;
-      bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
-    }
+    const bibliographicRecord = If(recordDetail);
     return (!bibliographicRecord) ?
       (
         <Paneset static>
@@ -326,11 +319,11 @@ class EditMarcRecord extends React.Component {
                           leaderValue={bibliographicRecord.leader.value}
                         />
                       </Accordion>
-                      <Accordion label="Control fields (001, 003, 005, 008)" id="control-field">
+                      <Accordion label="Control fields (001, 003, 005, 008)" id="control-field-edit-record">
                         <FixedFields
                           {...this.props}
-                          recordDetail={data.recordDetail}
                           record={bibliographicRecord}
+                          fidexFields={bibliographicRecord.fields}
                         />
                       </Accordion>
                     </form>
@@ -361,13 +354,10 @@ export default reduxForm({
   enableReinitialize: true,
   destroyOnUnmount: false,
 })(connect(
-  ({ marccat: { data, leaderData, settings, headerTypes006, headerTypes007, headerTypes008 } }) => ({
+  ({ marccat: { data, leaderData, settings } }) => ({
     recordDetail: StoreReducer.resolve(data, 'marcRecordDetail').bibliographicRecord,
     queryBib: settings.queryBib,
     queryAuth: settings.queryAuth,
-    headerTypes006Result: headerTypes006.records,
     leaderData: leaderData.records,
-    headerTypes007Result: headerTypes007.records,
-    headerTypes008Result: headerTypes008.records,
   }),
 )(injectCommonProp(EditMarcRecord)));

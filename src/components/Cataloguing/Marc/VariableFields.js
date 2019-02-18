@@ -7,7 +7,7 @@ import React from 'react';
 import { HotKeys } from '@folio/stripes/components';
 import MarcEditableList from './Editable';
 import { Props, injectCommonProp } from '../../../core';
-import { SUBFIELD_DELIMITER, VARIABLE_FIELD_EMPTY } from '../Utils/MarcUtils';
+import { VARIABLE_FIELD_EMPTY } from '../Utils/MarcUtils';
 
 class VariableFields extends React.Component<Props, {}> {
   constructor(props: Props) {
@@ -42,36 +42,34 @@ class VariableFields extends React.Component<Props, {}> {
       ),
     };
     return (
-      <React.Fragment>
-        <MarcEditableList
-          createButtonLabel={translate({ id: 'ui-marccat.cataloging.variablefield.section.add.newtag' })}
-          itemTemplate={VARIABLE_FIELD_EMPTY}
-          contentData={fields}
-          visibleFields={[
-            'code',
-            'ind1',
-            'ind2',
-            'displayValue'
-          ]}
-          columnMapping={{
-            code: 'code',
-            ind1: 'ind1',
-            ind2: 'ind2',
-            displayValue: 'displayValue',
-          }}
-          columnWidths={{
-            code: '10%',
-            ind1: '10%',
-            ind2: '10%',
-            displayValue: '50%',
-          }}
-          onUpdate={onUpdate}
-          onSave={onSave}
-          onDelete={onDelete}
-          onCreate={onCreate}
-          formatter={resultFormatter}
-        />
-      </React.Fragment>
+      <MarcEditableList
+        createButtonLabel={translate({ id: 'ui-marccat.cataloging.variablefield.section.add.newtag' })}
+        itemTemplate={VARIABLE_FIELD_EMPTY}
+        contentData={fields}
+        visibleFields={[
+          'code',
+          'ind1',
+          'ind2',
+          'displayValue'
+        ]}
+        columnMapping={{
+          code: 'code',
+          ind1: 'ind1',
+          ind2: 'ind2',
+          displayValue: 'displayValue',
+        }}
+        columnWidths={{
+          code: '10%',
+          ind1: '10%',
+          ind2: '10%',
+          displayValue: '50%',
+        }}
+        onUpdate={onUpdate}
+        onSave={onSave}
+        onDelete={onDelete}
+        onCreate={onCreate}
+        formatter={resultFormatter}
+      />
     );
   }
 

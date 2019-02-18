@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-escape */
 /* eslint-disable dot-notation */
 /**
  * @format
@@ -13,7 +12,7 @@ import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
 import { ToolbarButtonMenu, DropdownButtonMenu as CreateButtonMenu, NoResultsMessage } from '../../../lib';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
-import { isAuthorityRecord } from '../../../utils/SearchUtils';
+import { isAuthorityRecord, transitionToParams } from '../Utils/SearchUtils';
 import { injectCommonProp } from '../../../core';
 import {
   SearchResultPane,
@@ -57,7 +56,6 @@ export class SearchResults extends React.Component<P, {}> {
     this.handleCreateRecord = this.handleCreateRecord.bind(this);
     this.renderRightMenuEdit = this.renderRightMenuEdit.bind(this);
     this.renderLastMenu = this.renderLastMenu.bind(this);
-    this.transitionToParams = this.transitionToParams.bind(this);
     this.handleClickEdit = this.handleClickEdit.bind(this);
     this.keys = {
       'new': ['backspace'],
@@ -106,13 +104,6 @@ export class SearchResults extends React.Component<P, {}> {
     this.setState(prevState => ({ openDropDownMenu: !prevState.openDropDownMenu }));
   }
 
-  transitionToParams = (key, value) => {
-    const { location, router } = this.props;
-    const url = location.pathname;
-    router.push((url.match(/[\?]/g) ? '&' : '?') + `${key}=${value}`);
-  };
-
-
   openDetailFromCataloguing = () => {
     const { dispatch, data: { data } } = this.props;
     const detail = data.marcRecordDetail;
@@ -144,7 +135,7 @@ export class SearchResults extends React.Component<P, {}> {
     const detail = StoreReducer.resolve(data, 'marcRecordDetail').bibliographicRecord;
     const id = meta['001'];
     const detailSelected = data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001']) || {};
-    this.transitionToParams('id', id);
+    transitionToParams('id', id);
     if (!detail) {
       dispatch({
         type: '@@ui-marccat/QUERY',

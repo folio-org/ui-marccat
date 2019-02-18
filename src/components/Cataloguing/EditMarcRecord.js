@@ -268,7 +268,6 @@ class EditMarcRecord extends React.Component {
   render() {
     const {
       translate,
-      data,
       recordDetail,
       leaderData,
     } = this.props;

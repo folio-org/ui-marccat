@@ -13,6 +13,7 @@ import MARCcat from './MARCcat';
 import { ActionTypes } from './redux/actions';
 
 import './styles/common.css';
+import { TAGS } from './components/Cataloguing/Utils/MarcUtils';
 
 type RoutingProps = {
   root: {
@@ -46,9 +47,9 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
   componentDidMount() {
     const { store } = this.props;
     store.dispatch({ type: ActionTypes.VIEW_TEMPLATE });
-    store.dispatch({ type: ActionTypes.HEADER_TYPES_006, code: C.TAGS._006 });
-    store.dispatch({ type: ActionTypes.HEADER_TYPES_007, code: C.TAGS._007 });
-    store.dispatch({ type: ActionTypes.HEADER_TYPES_008, code: C.TAGS._008 });
+    store.dispatch({ type: ActionTypes.HEADER_TYPES_006, code: TAGS._006 });
+    store.dispatch({ type: ActionTypes.HEADER_TYPES_007, code: TAGS._007 });
+    store.dispatch({ type: ActionTypes.HEADER_TYPES_008, code: TAGS._008 });
     store.dispatch({ type: ActionTypes.SETTINGS,
       data:
       {

@@ -4,7 +4,7 @@
  */
 /* eslint-disable react/no-unused-prop-types */
 import * as React from 'react';
-import { PaneMenu, IconButton, IfPermission, Button } from '@folio/stripes/components';
+import { PaneMenu, IconButton, Button } from '@folio/stripes/components';
 import classNames from 'classnames';
 
 type ToolbarMenuProps = {
@@ -60,19 +60,18 @@ export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
   const { onClick, label, type, disabled, secondButton } = props;
 
   return (
-    <IfPermission perm="marccat.create">
-      <PaneMenu>
-        <Button
-          style={rightButton}
-          buttonStyle="primary"
-          onClick={onClick}
-          type={type || 'button'}
-          disabled={disabled}
-          marginBottom0
-        >
-          {label}
-        </Button>
-        {secondButton &&
+    <PaneMenu>
+      <Button
+        style={rightButton}
+        buttonStyle="primary"
+        onClick={onClick}
+        type={type || 'button'}
+        disabled={disabled}
+        marginBottom0
+      >
+        {label}
+      </Button>
+      {secondButton &&
         <Button
           style={rightButton}
           buttonStyle="primary"
@@ -83,7 +82,6 @@ export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
         >
           {label}
         </Button>}
-      </PaneMenu>
-    </IfPermission>
+    </PaneMenu>
   );
 };

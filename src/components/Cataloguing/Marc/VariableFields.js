@@ -7,7 +7,8 @@ import React from 'react';
 import { HotKeys } from '@folio/stripes/components';
 import MarcEditableList from './Editable';
 import { Props, injectCommonProp } from '../../../core';
-import { SUBFIELD_DELIMITER, VARIABLE_FIELD_EMPTY } from '../Utils/MarcUtils';
+import { VARIABLE_FIELD_EMPTY } from '../Utils/MarcUtils';
+import { safeObject } from '../../Search';
 
 class VariableFields extends React.Component<Props, {}> {
   constructor(props: Props) {
@@ -32,13 +33,13 @@ class VariableFields extends React.Component<Props, {}> {
     const { fields, translate, onUpdate, onSave, onDelete, onCreate } = this.props;
     const resultFormatter = {
       displayValue: x => (
-        (x.variableField) ? x.variableField.displayValue : ''
+        safeObject(x.variableField, 'displayValue')
       ),
       ind1: x => (
-        (x.variableField) ? x.variableField.ind1 : ''
+        safeObject(x.variableField, 'ind1')
       ),
       ind2: x => (
-        (x.variableField) ? x.variableField.ind2 : ''
+        safeObject(x.variableField, 'ind2')
       ),
     };
     return (

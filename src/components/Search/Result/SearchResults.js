@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-escape */
 /* eslint-disable dot-notation */
 /**
  * @format
@@ -13,7 +12,7 @@ import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
 import { ToolbarButtonMenu, DropdownButtonMenu as CreateButtonMenu, NoResultsMessage } from '../../../lib';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
-import { isAuthorityRecord } from '../../../utils/SearchUtils';
+import { isAuthorityRecord, transitionToParams } from '../Utils/SearchUtils';
 import { injectCommonProp } from '../../../core';
 import {
   SearchResultPane,
@@ -48,8 +47,7 @@ export class SearchResults extends React.Component<P, {}> {
       openDropDownMenu: false,
       detail: {},
       detailPaneMeta: {
-        title: '',
-        subTitle: ''
+        title: C.EMPTY_MESSAGE,
       }
     };
 
@@ -57,7 +55,6 @@ export class SearchResults extends React.Component<P, {}> {
     this.handleCreateRecord = this.handleCreateRecord.bind(this);
     this.renderRightMenuEdit = this.renderRightMenuEdit.bind(this);
     this.renderLastMenu = this.renderLastMenu.bind(this);
-    this.transitionToParams = this.transitionToParams.bind(this);
     this.handleClickEdit = this.handleClickEdit.bind(this);
     this.keys = {
       'new': ['backspace'],
@@ -68,14 +65,13 @@ export class SearchResults extends React.Component<P, {}> {
   }
 
   componentDidMount() {
-    const { store: { getState }, dispatch, change } = this.props;
+    const { store: { getState } } = this.props;
     const editRecord = findParam('edited');
     if (editRecord) {
       this.openDetailFromCataloguing();
       const formValues = getState().form.searchForm.values;
       const searchFieldValue = formValues.searchTextArea;
-      // document.getElementsByName('searchTextArea')[0].value = searchFieldValue;
-      dispatch(change('searchTextArea', searchFieldValue));
+      document.getElementsByName('searchTextArea')[0].value = searchFieldValue;
     }
   }
 
@@ -105,13 +101,6 @@ export class SearchResults extends React.Component<P, {}> {
   handleOnToggle = () => {
     this.setState(prevState => ({ openDropDownMenu: !prevState.openDropDownMenu }));
   }
-
-  transitionToParams = (key, value) => {
-    const { location, router } = this.props;
-    const url = location.pathname;
-    router.push((url.match(/[\?]/g) ? '&' : '?') + `${key}=${value}`);
-  };
-
 
   openDetailFromCataloguing = () => {
     const { dispatch, data: { data } } = this.props;
@@ -144,19 +133,17 @@ export class SearchResults extends React.Component<P, {}> {
     const detail = StoreReducer.resolve(data, 'marcRecordDetail').bibliographicRecord;
     const id = meta['001'];
     const detailSelected = data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001']) || {};
-    this.transitionToParams('id', id);
-    if (!detail) {
-      dispatch({
-        type: '@@ui-marccat/QUERY',
-        data: {
-          path: C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id,
-          id,
-          meta,
-          panelOpen: true,
-          type: 'marcRecordDetail',
-          params: 'type=B&lang=ita&view=1',
-        } });
-    }
+    transitionToParams('id', id);
+    dispatch({
+      type: '@@ui-marccat/QUERY',
+      data: {
+        path: C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id,
+        id,
+        meta,
+        panelOpen: true,
+        type: 'marcRecordDetail',
+        params: 'type=B&lang=ita&view=1',
+      } });
     dispatch({ type: ActionTypes.DETAILS, query: id, recordType: meta.recordView });
     if (isAuthorityRecord(meta)) {
       dispatch({ type: ActionTypes.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView, openPanel: true });

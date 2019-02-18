@@ -14,19 +14,22 @@ import {
 } from '@folio/stripes/components';
 import { reduxForm, Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
-import { includes } from 'lodash';
 import ResetButton from '../Filter/ResetButton';
 import { Props } from '../../../core';
-import { SearchIndexes, SearchConditions, FiltersContainer } from '..';
+import {
+  SearchIndexes,
+  SearchConditions,
+  FiltersContainer,
+  getLanguageFilterQuery,
+  getFormatFilterQuery,
+  transitionToParams
+} from '..';
 import { ActionTypes } from '../../../redux/actions/Actions';
 import { findYourQuery } from '../Filter';
 import { remapFilters } from '../../../utils/Mapper';
-import {
-  getLanguageFilterQuery,
-  getFormatFilterQuery,
-} from '../../../utils/SearchUtils';
 
 import styles from '../index.css';
+import { EMPTY_MESSAGE } from '../../../utils/Constant';
 
 type P = Props & {
   inputErrorCheck: string,
@@ -38,10 +41,9 @@ class SearchPanel extends React.Component<P, {}> {
     super(props);
     this.state = {
       isBrowseRequested: false,
-      searchForm: [''],
+      searchForm: [EMPTY_MESSAGE],
       filterEnable: true,
       counter: [{}],
-      fieldValue: '',
       leftBracketEnable: false,
       rightBracketEnable: false,
     };
@@ -51,12 +53,6 @@ class SearchPanel extends React.Component<P, {}> {
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleResetAllButton = this.handleResetAllButton.bind(this);
   }
-
-  transitionToParams = (key, value) => {
-    const { location } = this.props;
-    const url = location.pathname;
-    return includes(url, `${key}=${value}`);
-  };
 
   handleKeyDown(e) {
     let { isBrowseRequested } = this.state;
@@ -89,12 +85,9 @@ class SearchPanel extends React.Component<P, {}> {
         baseQuery = inputValue;
       }
 
-      this.setState({
-        fieldValue: form.values.searchTextArea,
-      });
       let bibQuery = baseQuery;
       const authQuery = baseQuery;
-      this.transitionToParams('q', bibQuery);
+      transitionToParams('q', bibQuery);
 
       if (state.marccat.filter && state.marccat.filter.filters) {
         const { languageFilter, formatType } = remapFilters(state.marccat.filter.filters);
@@ -109,7 +102,7 @@ class SearchPanel extends React.Component<P, {}> {
         isBrowseRequested = true;
         dispatch({ type: ActionTypes.BROWSE_FIRST_PAGE, query: bibQuery });
         router.push('/marccat/browse');
-        this.transitionToParams('q', bibQuery);
+        transitionToParams('q', bibQuery);
         this.setState({
           filterEnable: false
         });
@@ -126,10 +119,10 @@ class SearchPanel extends React.Component<P, {}> {
           || indexForQuery === 'CP '
           || indexForQuery === 'PW ') {
           dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: '' });
-          this.transitionToParams('q', bibQuery);
+          transitionToParams('q', bibQuery);
         } else {
           dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: authQuery });
-          this.transitionToParams('q', authQuery);
+          transitionToParams('q', authQuery);
         }
       }
     }
@@ -157,7 +150,7 @@ class SearchPanel extends React.Component<P, {}> {
     const { dispatch, reset } = this.props;
     dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', filterChecked: false });
     dispatch(reset('searchForm'));
-    this.transitionToParams('filter', 'false');
+    transitionToParams('filter', 'false');
   };
 
   renderResetButton = () => {
@@ -174,77 +167,75 @@ class SearchPanel extends React.Component<P, {}> {
 
   render() {
     const { translate, ...rest } = this.props;
-    const { filterEnable, leftBracketEnable, rightBracketEnable, fieldValue } = this.state;
+    const { filterEnable, leftBracketEnable, rightBracketEnable } = this.state;
     return (
-      <React.Fragment>
-        <AccordionSet>
-          <Accordion
-            {...rest}
-            separator={false}
-            label={translate({ id: 'ui-marccat.navigator.search' })}
-            header={FilterAccordionHeader}
-          >
-            <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}>
-              <Row>
-                <Col xs={1}>
-                  <div
-                    className={(leftBracketEnable) ? styles.leftBracket : styles.leftBracketDisabled}
-                    onClick={() => this.setState({
-                      leftBracketEnable: !leftBracketEnable
-                    })}
-                  />
-                </Col>
-                <Col xs={10} className={styles.forwardBracket}>
-                  <Row>
-                    <Col xs={12}>
-                      <div>
-                        <SearchIndexes
-                          id="selectIndexes"
-                          name="selectIndexes"
-                          {...this.props}
-                        />
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col xs={12}>
-                      <SearchConditions
-                        id="selectCondition"
-                        name="selectCondition"
+      <AccordionSet>
+        <Accordion
+          {...rest}
+          separator={false}
+          label={translate({ id: 'ui-marccat.navigator.search' })}
+          header={FilterAccordionHeader}
+        >
+          <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}>
+            <Row>
+              <Col xs={1}>
+                <div
+                  className={(leftBracketEnable) ? styles.leftBracket : styles.leftBracketDisabled}
+                  onClick={() => this.setState({
+                    leftBracketEnable: !leftBracketEnable
+                  })}
+                />
+              </Col>
+              <Col xs={10} className={styles.forwardBracket}>
+                <Row>
+                  <Col xs={12}>
+                    <div>
+                      <SearchIndexes
+                        id="selectIndexes"
+                        name="selectIndexes"
+                        {...this.props}
                       />
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col xs={12}>
-                      <div>
-                        <Field
-                          id="searchTextArea"
-                          name="searchTextArea"
-                          fullWidth
-                          // onChange={(e) => { this.setState({ fieldValue: e.target.value }); }}
-                          // onChangeIndex={(e) => { this.setState({ fieldValue: e.target.value }); }}
-                          component={SearchField}
-                          onBlur={() => 'tttt'}
-                          placeholder="Search..."
-                        />
-                      </div>
-                    </Col>
-                  </Row>
-                </Col>
-                <Col xs={1}>
-                  <div
-                    className={(rightBracketEnable) ? styles.rightBracket : styles.rightBracketDisabled}
-                    onClick={() => this.setState({
-                      rightBracketEnable: !rightBracketEnable
-                    })}
-                  />
-                </Col>
-              </Row>
-            </form>
-          </Accordion>
-          <FiltersContainer {...this.props} filterEnable={!!(filterEnable)} />
-        </AccordionSet>
-      </React.Fragment>
+                    </div>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12}>
+                    <SearchConditions
+                      id="selectCondition"
+                      name="selectCondition"
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12}>
+                    <div>
+                      <Field
+                        id="searchTextArea"
+                        name="searchTextArea"
+                        fullWidth
+                        // onChange={(e) => { this.setState({ fieldValue: e.target.value }); }}
+                        // onChangeIndex={(e) => { this.setState({ fieldValue: e.target.value }); }}
+                        component={SearchField}
+                        onBlur={() => 'tttt'}
+                        placeholder="Search..."
+                      />
+                    </div>
+                  </Col>
+                </Row>
+              </Col>
+              <Col xs={1}>
+                <div
+                  className={(rightBracketEnable) ? styles.rightBracket : styles.rightBracketDisabled}
+                  onClick={() => this.setState({
+                    rightBracketEnable: !rightBracketEnable
+                  })}
+                />
+              </Col>
+            </Row>
+          </form>
+        </Accordion>
+        <FiltersContainer {...this.props} filterEnable={!!(filterEnable)} />
+      </AccordionSet>
     );
   }
 }

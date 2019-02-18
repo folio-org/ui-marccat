@@ -3,12 +3,45 @@
 /* eslint-disable one-var */
 import { SPACED_STRING } from '../../../utils/Constant';
 
+export const RECORD_FIELD_STATUS = {
+  NEW: 'new',
+  UNCHANGED: 'unchanged',
+  CHANGED: 'changed',
+  DELETED: 'deleted'
+};
+
+export const TAGS = {
+  _001: '001',
+  _003: '003',
+  _005: '005',
+  _006: '006',
+  _007: '007',
+  _008: '008',
+  _040: '040'
+};
+
+export const FIXED_FIELD_TEMPLATE = (code, typeCode) => {
+  return {
+    'code': code,
+    'mandatory': true,
+    'fixedField': {
+      'categoryCode': 1,
+      'headerTypeCode': typeCode,
+      'code': code,
+      'displayValue': '',
+      'sequenceNumber': 0
+    },
+    'added': true
+  };
+};
+
 export const RECORD_ACTION = {
   CREATION_MODE: 'new',
   EDIT_MODE: 'edit'
 };
 
 export const SUBFIELD_DELIMITER = '\u001fa';
+
 export const VARIABLE_FIELD_EMPTY = {
   'added': true,
   'mandatory': false,

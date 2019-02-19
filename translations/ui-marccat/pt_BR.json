@@ -81,10 +81,11 @@
     "search.record.new.auth": "Novo (CTRL+A)",
     "cataloging.variablefield.empty": "Nenhum campo de dados variável presente",
     "cataloging.variablefield.section.label": "Campo de dados variável",
+    "app.title": "MARCcat",
     "template.record.delete": "Excluir registro",
     "template.record.edit": "Editar registro",
     "cataloging.variablefield.section.add.newtag": "+ Adicionar nova tag",
     "button.add.search.form": "Adicionar",
     "search.record.delete": "Excluir registro",
-    "search.record.create": "Create Record"
+    "search.record.create": "Criar registro"
 }

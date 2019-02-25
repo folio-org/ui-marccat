@@ -317,9 +317,13 @@ export class SearchResults extends React.Component<P, {}> {
 
     if (autOnly) {
       message = messageAuth;
-    } else if (bibsOnly) {
+    }
+    if (bibsOnly) {
       message = messageBib;
-    } else {
+    }
+    if (bibsOnly && autOnly) {
+      message = messageAuth.concat('/').concat(messageBib);
+    } else if (!bibsOnly && !autOnly) {
       message = messageAuth.concat('/').concat(messageBib);
     }
 

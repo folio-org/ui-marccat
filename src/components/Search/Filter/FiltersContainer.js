@@ -75,9 +75,9 @@ export default class FiltersContainer extends React.Component<Props, {}> {
     if (filterArray.includes('recordType.Authority records:true')) {
       containsAuthFilter = true;
       disableFilters.recordType = false;
-      disableFilters.suppressedFilter = false;
+      disableFilters.suppressedFilter = true;
       disableFilters.languageFilter = true;
-      disableFilters.formatType = false;
+      disableFilters.formatType = true;
     } else {
       containsAuthFilter = false;
       disableFilters.recordType = true;

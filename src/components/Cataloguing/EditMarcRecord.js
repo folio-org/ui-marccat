@@ -1,6 +1,7 @@
+/* eslint-disable quotes */
 import React from 'react';
 import { connect } from 'react-redux';
-import _ from 'lodash';
+import { includes, difference, union, sortBy } from 'lodash';
 import { reduxForm } from 'redux-form';
 import {
   Pane,
@@ -21,7 +22,7 @@ import { injectCommonProp } from '../../core';
 import { ActionTypes } from '../../redux/actions';
 import { buildUrl, findParam } from '../../redux/helpers/Utilities';
 import { post, put } from '../../core/api/HttpService';
-import { SUBFIELD_DELIMITER } from './Utils/MarcUtils';
+import { SUBFIELD_DELIMITER, TAG_WITH_NO_HEADING_ASSOCIATED, RECORD_FIELD_STATUS } from './Utils/MarcUtils';
 import VariableFields from './Marc/VariableFields';
 import { StoreReducer } from '../../redux';
 import { deleteRecordAction } from './Utils/MarcApiUtils';
@@ -51,7 +52,7 @@ class EditMarcRecord extends React.Component {
 
   saveRecord = () => {
     const body = this.composeBodyJson();
-    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'lang=ita&view=1'), body).then(() => {
+    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), body).then(() => {
       this.showMessage('Record update with success');
       setTimeout(() => {
         this.handleClose();
@@ -61,27 +62,45 @@ class EditMarcRecord extends React.Component {
 
   onSave = () => {}
 
+
   saveHeading = item => {
     const { store: { getState } } = this.props;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
+    const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const heading = {
       indicator1: item.ind1 || '',
       indicator2: item.ind2 || '',
       stringText: SUBFIELD_DELIMITER + item.displayValue,
       tag: item.code
     };
-    post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, 'lang=ita&view=1'), heading)
-      .then((r) => {
-        return r.json();
-      }).then((data) => {
-        tagVariableData.filter(t => t.code === item.code)[0].variableField.ind1 = data.tag;
-        tagVariableData.filter(t => t.code === item.code)[0].variableField.ind1 = data.indicator1;
-        tagVariableData.filter(t => t.code === item.code)[0].variableField.ind2 = data.indicator2;
-        tagVariableData.filter(t => t.code === item.code)[0].variableField.displayValue = data.stringText;
-        tagVariableData.filter(t => t.code === item.code)[0].variableField.keyNumber = data.headingNumber;
-        tagVariableData.filter(t => t.code === item.code)[0].fieldStatus = 'new';
-        return data;
-      }).catch(() => this.showMessage('Error on save heading'));
+    if (!cretaeHeadingForTag) {
+      post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
+        .then((r) => {
+          return r.json();
+        }).then((data) => {
+          tagVariableData.filter(t => t.code === item.code).map(k => {
+            k.variableField = {
+              ind1: data.indicator1 || " ",
+              ind2: data.indicator2 || " ",
+              displayValue: data.stringText,
+              keyNumber: data.headingNumber,
+            };
+            k.fieldStatus = RECORD_FIELD_STATUS.NEW;
+            return data;
+          });
+        });
+    } else {
+      tagVariableData.filter(t => t.code === item.code).map(k => {
+        k.variableField = {
+          ind1: item.ind1 || " ",
+          ind2: item.ind2 || " ",
+          displayValue: item.displayValue || " ",
+          keyNumber: 0,
+        };
+        k.fieldStatus = RECORD_FIELD_STATUS.NEW;
+        return k;
+      });
+    }
   };
 
   editHeading = item => {
@@ -96,23 +115,27 @@ class EditMarcRecord extends React.Component {
       headingNumber: item.keyNumber || tagSelected.variableField.keyNumber,
       tag: item.code || tagSelected.code,
     };
-    put(buildUrl(C.ENDPOINT.UPDATE_HEADING_URL, 'lang=ita&view=1'), heading)
+    put(buildUrl(C.ENDPOINT.UPDATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
       .then((r) => {
         return r.json();
       }).then((data) => {
-        tagVariableData.filter(t => t.code === item.code)[0].variableField.code = data.tag;
-        tagVariableData.filter(t => t.code === item.code)[0].variableField.ind1 = data.indicator1;
-        tagVariableData.filter(t => t.code === item.code)[0].variableField.ind2 = data.indicator2;
-        tagVariableData.filter(t => t.code === item.code)[0].variableField.oldKeyNumber = tagVariableData.filter(t => t.code === item.code)[0].variableField.keyNumber;
-        tagVariableData.filter(t => t.code === item.code)[0].variableField.displayValue = data.stringText;
-        tagVariableData.filter(t => t.code === item.code)[0].variableField.keyNumber = data.headingNumber;
-        tagVariableData.filter(t => t.code === item.code)[0].fieldStatus = 'changed';
-        return data;
+        tagVariableData.filter(t => t.code === item.code).map(k => {
+          k.fieldStatus = 'changed';
+          k.variableField = {
+            ind1: data.indicator1 || " ",
+            ind2: data.indicator2 || " ",
+            oldKeyNumber: k.variableField.keyNumber,
+            displayValue: data.stringText,
+            keyNumber: data.headingNumber,
+          };
+          return k;
+        });
       });
-  };
+  }
 
   onUpdate = (item) => {
-    if (item.variableField && item.variableField.keyNumber) {
+    const updateHeadingOnTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
+    if (item.variableField && item.variableField.keyNumber && !updateHeadingOnTag) {
       this.editHeading(item);
     } else {
       this.saveHeading(item);
@@ -182,27 +205,16 @@ class EditMarcRecord extends React.Component {
       type: 'B',
       fields: recordDetail.fields.filter(f => f.code === '001' || f.code === '005' || f.code === '008' || f.code === '040')
     };
-    const difference = _.difference(bibliographicRecord.fields, getState().form.marcEditableListForm.values.items);
-    let tagToDeleted = difference.filter(f => f.code !== '001' || f.code !== '005' || f.code !== '008' || f.code !== '040');
+    const differenceValue = difference(bibliographicRecord.fields, getState().form.marcEditableListForm.values.items);
+    let tagToDeleted = differenceValue.filter(f => f.code !== '001' || f.code !== '005' || f.code !== '008' || f.code !== '040');
     tagToDeleted = tagToDeleted.filter(f => f.code !== '001' && f.code !== '005' && f.code !== '008');
     tagToDeleted.forEach(f => {
       f.fieldStatus = 'deleted';
     });
-    bibliographicRecord.fields = _.union(recordTemplate.fields, tagToDeleted, getState().form.marcEditableListForm.values.items);
-    bibliographicRecord.fields = _.sortBy(bibliographicRecord.fields, 'code');
+    bibliographicRecord.fields = union(recordTemplate.fields, tagToDeleted, getState().form.marcEditableListForm.values.items);
+    bibliographicRecord.fields = sortBy(bibliographicRecord.fields, 'code');
     bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur, [cur.displayValue]: cur }), {}));
     bibliographicRecord.verificationLevel = 1;
-    // const id = bibliographicRecord.id;
-    // dispatch({
-    //   type: '@@ui-marccat/QUERY',
-    //   data: {
-    //     path: C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id,
-    //     id,
-    //     meta: data.data.marcRecordDetail.meta,
-    //     panelOpen: true,
-    //     type: 'marcRecordDetail',
-    //     params: 'type=B&lang=ita&view=1',
-    //   } });
     return {
       bibliographicRecord,
       recordTemplate

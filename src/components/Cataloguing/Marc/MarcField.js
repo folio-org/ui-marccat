@@ -60,16 +60,14 @@ export default class MarcField extends React.Component<P, {}> {
         </div>
       </div>
     ) :
-      <React.Fragment>
-        <Field
-          id={name}
-          name={name}
-          type="text"
-          readOnly={readOnly}
-          component={component || 'input'}
-          label={label}
-          value={value}
-        />
-      </React.Fragment>;
+      <Field
+        id={name}
+        name={name}
+        type="text"
+        readOnly={readOnly}
+        component={component || 'input'}
+        label={label}
+        value={value}
+      />;
   }
 }

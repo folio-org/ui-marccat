@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 /**
  * @format
  * @flow
@@ -19,18 +20,17 @@ import {
 import { AppIcon } from '@folio/stripes-core';
 import { reduxForm } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
-import { isEmpty, union, sortBy } from 'lodash';
+import { isEmpty, union, sortBy, includes } from 'lodash';
 import type { Props } from '../../core';
 import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../lib';
 import { VariableFields, MarcLeader, FixedFields } from '.';
 import { ActionTypes } from '../../redux/actions/Actions';
-import { post } from '../../core/api/HttpService';
+import { post, put } from '../../core/api/HttpService';
 import { buildUrl } from '../../redux/helpers/Utilities';
 import * as C from '../../utils/Constant';
 
 import { StoreReducer } from '../../redux';
-import { SUBFIELD_DELIMITER, RECORD_FIELD_STATUS } from './Utils/MarcUtils';
-import { headingAction } from './Utils/MarcApiUtils';
+import { SUBFIELD_DELIMITER, RECORD_FIELD_STATUS, TAG_WITH_NO_HEADING_ASSOCIATED } from './Utils/MarcUtils';
 import style from './Style/style.css';
 
 
@@ -51,76 +51,79 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     this.onDelete = this.onDelete.bind(this);
   }
 
-  renderDropdownLabels = () => {
-    return [
-      {
-        label: <FormattedMessage id="ui-marccat.button.new.auth" />,
-        shortcut: <FormattedMessage id="ui-marccat.button.new.short.auth" />,
-        onClick: () => { },
-      },
-      {
-        label: <FormattedMessage id="ui-marccat.button.new.bib" />,
-        shortcut: <FormattedMessage id="ui-marccat.button.new.short.bib" />,
-        onClick: () => { },
-      }];
-  };
-
-  renderButtonMenu = () => {
-    return (
-      <PaneMenu>
-        <Button
-          buttonStyle="primary"
-          onClick={this.saveRecord}
-          buttonClass={style.rightPosition}
-          type="button"
-          marginBottom0
-        >
-          <Icon icon="plus-sign">
-            {<FormattedMessage id="ui-marccat.template.record.create" />}
-          </Icon>
-        </Button>
-      </PaneMenu>
-    );
-  };
-
   onSave = () => {}
 
-  createNewHeading = (item) => {
-    const { dispatch } = this.props;
-    const heading = {
-      indicator1: item.ind1 || '',
-      indicator2: item.ind2 || '',
-      stringText: SUBFIELD_DELIMITER + item.displayValue,
-      tag: item.code
-    };
-    dispatch(headingAction(heading));
-  };
-
-  onUpdate = (item) => {
+  editHeading = item => {
     const { store: { getState } } = this.props;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
+    const tagSelected = tagVariableData.filter(t => t.code === item.code)[0];
     const heading = {
-      indicator1: item.ind1 || '',
-      indicator2: item.ind2 || '',
-      stringText: SUBFIELD_DELIMITER + item.displayValue,
-      tag: item.code
+      indicator1: item.ind1 || tagSelected.variableField.ind1,
+      indicator2: item.ind2 || tagSelected.variableField.ind2,
+      stringText: item.displayValue || tagSelected.variableField.displayValue,
+      category: item.categoryCode || tagSelected.variableField.categoryCode,
+      headingNumber: item.keyNumber || tagSelected.variableField.keyNumber,
+      tag: item.code || tagSelected.code,
     };
-    // this.createNewHeading(item);
-    post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, 'lang=ita&view=1'), heading)
+    put(buildUrl(C.ENDPOINT.UPDATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
       .then((r) => {
         return r.json();
       }).then((data) => {
         tagVariableData.filter(t => t.code === item.code).map(k => {
-          k.headingNumber = data.headingNumber;
-          k.variableField.ind1 = data.indicator1;
-          k.variableField.ind1 = data.indicator1;
-          k.variableField.categoryCode = data.category;
-          k.variableField.displayValue = data.stringText;
-          k.variableField.headingNumber = data.headingNumber;
-          k.fieldStatus = RECORD_FIELD_STATUS.NEW;
-          return data;
+          k.fieldStatus = 'changed';
+          k.variableField = {
+            ind1: data.indicator1 || " ",
+            ind2: data.indicator2 || " ",
+            oldKeyNumber: k.variableField.keyNumber,
+            displayValue: data.stringText,
+            keyNumber: data.headingNumber,
+          };
+          return k;
         });
       });
+  }
+
+  onUpdate = (item) => {
+    const tag = Object.assign({}, item);
+    const { store: { getState } } = this.props;
+    const tagVariableData = getState().form.marcEditableListForm.values.items;
+    const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
+    const heading = {
+      indicator1: item.ind1 || '',
+      indicator2: item.ind2 || '',
+      stringText: SUBFIELD_DELIMITER + item.displayValue,
+      tag: item.code
+    };
+    if (tag.variableField) {
+      this.editHeading(tag);
+    } else if (!cretaeHeadingForTag) {
+      post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
+        .then((r) => {
+          return r.json();
+        }).then((data) => {
+          tagVariableData.filter(t => t.code === item.code).map(k => {
+            k.variableField = {
+              ind1: data.indicator1 || " ",
+              ind2: data.indicator2 || " ",
+              displayValue: data.stringText,
+              keyNumber: data.headingNumber,
+            };
+            k.fieldStatus = RECORD_FIELD_STATUS.NEW;
+            return data;
+          });
+        });
+    } else {
+      tagVariableData.filter(t => t.code === item.code).map(k => {
+        k.variableField = {
+          ind1: item.ind1 || " ",
+          ind2: item.ind2 || " ",
+          displayValue: item.displayValue || " ",
+          keyNumber: 0,
+        };
+        k.fieldStatus = RECORD_FIELD_STATUS.NEW;
+        return k;
+      });
+    }
   }
 
   onCreate = () => { this.showMessage('Tag Saved sucesfully'); }
@@ -128,12 +131,15 @@ export class CreateMarcRecord extends React.Component<P, {}> {
 
   saveRecord = () => {
     const body = this.composeBodyJson();
-    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, 'lang=ita&view=1'), body).then(() => {
-      this.showMessage('Record saved with success');
-      setTimeout(() => {
-        this.handleClose();
-      }, 2000);
-    });
+    post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), body)
+      .then(() => {
+        this.showMessage('Record saved with success');
+        setTimeout(() => {
+          this.handleClose();
+        }, 2000);
+      }).catch(() => {
+        this.showMessage('Error on saved record!');
+      });
   };
 
   composeBodyJson = () => {
@@ -193,26 +199,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
         }
       });
 
-    tagVariableData.forEach(t => {
-      if (t.code !== '040') {
-        t.mandatory = false;
-        t.added = true;
-        t.fieldStatus = RECORD_FIELD_STATUS.NEW;
-        t.variableField = {
-          keyNumber: t.headingNumber,
-          ind1: t.ind1,
-          ind2: t.ind2,
-          code: t.code,
-          categoryCode: t.categoryCode,
-          displayValue: SUBFIELD_DELIMITER + t.displayValue,
-          functionCode: '-1',
-          headingTypeCode: '1',
-          itemTypeCode: '-1',
-          sequenceNumber: 0,
-          skipInFiling: 0,
-        };
-      }
-    });
+
     const recordTemplate = Object.assign({}, emptyRecord);
     recordTemplate.id = 408;
     bibliographicRecord.fields = union(bibliographicRecord.fields, tagVariableData);
@@ -242,6 +229,38 @@ export class CreateMarcRecord extends React.Component<P, {}> {
       )
     });
   }
+
+  renderDropdownLabels = () => {
+    return [
+      {
+        label: <FormattedMessage id="ui-marccat.button.new.auth" />,
+        shortcut: <FormattedMessage id="ui-marccat.button.new.short.auth" />,
+        onClick: () => { },
+      },
+      {
+        label: <FormattedMessage id="ui-marccat.button.new.bib" />,
+        shortcut: <FormattedMessage id="ui-marccat.button.new.short.bib" />,
+        onClick: () => { },
+      }];
+  };
+
+  renderButtonMenu = () => {
+    return (
+      <PaneMenu>
+        <Button
+          buttonStyle="primary"
+          onClick={this.saveRecord}
+          buttonClass={style.rightPosition}
+          type="button"
+          marginBottom0
+        >
+          <Icon icon="plus-sign">
+            {<FormattedMessage id="ui-marccat.template.record.create" />}
+          </Icon>
+        </Button>
+      </PaneMenu>
+    );
+  };
 
   render() {
     const {
@@ -343,8 +362,8 @@ export default reduxForm({
     leaderData: leaderData.records,
     tagIsLoading: leaderData.isLoading,
     tagIsReady: leaderData.isReady,
-    headerTypes006Result: headerTypes006.records,
-    headerTypes007Result: headerTypes007.records,
-    headerTypes008Result: headerTypes008.records,
+    headerTypes006Result: headerTypes006.results,
+    headerTypes007Result: headerTypes007.results,
+    headerTypes008Result: headerTypes008.results,
   }),
 )(CreateMarcRecord));

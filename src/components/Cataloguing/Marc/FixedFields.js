@@ -42,7 +42,7 @@ class FixedFields extends React.Component<Props, {}> {
 
   renderTag008 = (tag) => {
     const { expand008 } = this.state;
-    const { record } = this.props;
+    const { record, data: { settings } } = this.props;
     return (
       <div className={style.controlFieldContainer}>
         <MarcField
@@ -51,7 +51,7 @@ class FixedFields extends React.Component<Props, {}> {
           withIcon
           label={tag.fixedField.code}
           name={tag.fixedField.code}
-          value={tag.fixedField.displayValue}
+          value={settings.currentTag008HeaderType || tag.fixedField.displayValue}
           onClick={() => this.handleTags008(tag)}
         />
         {
@@ -69,7 +69,8 @@ class FixedFields extends React.Component<Props, {}> {
 
   render() {
     const { fidexFields } = this.props;
-    const fixedFieldsxxx = fidexFields.filter(f => f.code === '001' || f.code === '003' || f.code === '005');
+    let fixedFieldsxxx = fidexFields.filter(f => f.code === '001' || f.code === '003' || f.code === '005');
+    fixedFieldsxxx = Object.values(fixedFieldsxxx.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     const fixedFields008 = fidexFields.filter(f => f.code === '008');
     return (
       <React.Fragment>

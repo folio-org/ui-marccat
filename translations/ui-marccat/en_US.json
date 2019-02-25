@@ -86,6 +86,6 @@
     "template.record.edit": "Edit Record",
     "cataloging.variablefield.section.add.newtag": "Add new tag",
     "button.add.search.form": "Add",
-    "search.record.delete": "Delete Record",
-    "search.record.create": "Create Record"
+    "search.record.delete": "Delete record",
+    "search.record.create": "Create record"
 }

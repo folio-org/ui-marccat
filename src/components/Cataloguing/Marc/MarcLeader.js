@@ -9,7 +9,7 @@ import type { Props } from '../../../core';
 import MarcField from './MarcField';
 import { EMPTY_MESSAGE, SPACED_STRING } from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions/Actions';
-import { decamelizify } from '../Utils/MarcUtils';
+import { decamelizify, TAGS } from '../Utils/MarcUtils';
 import style from '../Style/style.css';
 
 
@@ -52,7 +52,7 @@ export default class MarcLeader extends React.Component<P, {
 
   /**
    *
-   * @param {*} string - a currnt leader
+   * @param {*} string - a current leader
    * @param {*} index - index to replace
    * @param {*} replace - a mutate leader
    */
@@ -61,6 +61,14 @@ export default class MarcLeader extends React.Component<P, {
       leader: string.substring(0, index) + replace + string.substring(index + 1)
     });
   }
+
+  handleTag008Change = (k) => {
+    const { dispatch, leaderValue } = this.props;
+    if (k === 'm') {
+      dispatch({ type: ActionTypes.SETTINGS, data:{ currentTag008HeaderType: 32 } });
+      dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: 32 });
+    }
+  };
 
   handleChange = () => {
     const { store: { getState } } = this.props;
@@ -71,7 +79,7 @@ export default class MarcLeader extends React.Component<P, {
         if (k.split('-')[0] === 'Leader') {
           switch (k.split('-')[1]) {
           case 'itemRecordStatusCode': this.replaceAt(leader, 5, formData[k]); break;
-          case 'itemRecordTypeCode': this.replaceAt(leader, 6, formData[k]); break;
+          case 'itemRecordTypeCode': this.replaceAt(leader, 6, formData[k]); this.handleTag008Change(formData[k]); break;
           case 'itemBibliographicLevelCode': this.replaceAt(leader, 7, formData[k]); break;
           case 'itemControlTypeCode': this.replaceAt(leader, 8, formData[k]); break;
           case 'characterCodingSchemeCode': this.replaceAt(leader, 9, formData[k]); break;

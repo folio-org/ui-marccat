@@ -50,6 +50,7 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
     store.dispatch({ type: ActionTypes.HEADER_TYPES_006, code: TAGS._006 });
     store.dispatch({ type: ActionTypes.HEADER_TYPES_007, code: TAGS._007 });
     store.dispatch({ type: ActionTypes.HEADER_TYPES_008, code: TAGS._008 });
+    store.dispatch({ type: ActionTypes.SETTINGS, data:{ currentTag008HeaderType: undefined } });
     store.dispatch({ type: ActionTypes.SETTINGS,
       data:
       {

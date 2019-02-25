@@ -29,7 +29,7 @@ StoreReducer.get = (store, reducer, prop) => {
  * @returns
  */
 StoreReducer.resolve = (data, model) => {
-  return (data[model] && data[model].records) ? data[model].records : {};
+  return (data[model] && data[model].results) ? data[model].results : {};
 };
 
 /**
@@ -79,7 +79,7 @@ StoreReducer.createDataStore = (model, data, payload) => { // metodo statico
       isRejected: false,
       headingNumber: payload.headingNumber || null,
       deleted: data.payload || [],
-      records: payload || [],
+      results: payload || [],
       query: data.query,
       meta: data.meta,
       errors: data.errors
@@ -106,7 +106,7 @@ StoreReducer.createRequestError = (model, data, errors) => { // metodo statico
       isPending: false,
       isResolved: false,
       isRejected: true,
-      records: [],
+      results: [],
       meta: {},
       errors
     }

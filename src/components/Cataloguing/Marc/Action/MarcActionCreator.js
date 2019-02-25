@@ -1,8 +1,6 @@
-import { SUBFIELD_DELIMITER } from './MarcUtils';
-import { ACTION } from '../../../redux/helpers/Action';
-import { ENDPOINT } from './Constant';
-
+import { ACTION } from '../../../../redux/helpers/Action';
 // MARC action creator
+import { ENDPOINT } from '../../Utils/Constant';
 
 /**
  *
@@ -19,11 +17,28 @@ export const headingAction = (payload) => {
     payload
   };
 };
+
 /**
  *
- * @param {*} id
  * @param {*} payload
  */
+export const changeDisplayValueAction = (tag, payload) => {
+  return {
+    type: ACTION.CREATE,
+    data: {
+      path: ENDPOINT.CHANGE_DISPLAY_VALUE,
+      type: `displayvalue-${tag}`,
+      params: ENDPOINT.DEFAULT_LANG_VIEW,
+      tag
+    },
+    payload
+  };
+};
+  /**
+   *
+   * @param {*} id
+   * @param {*} payload
+   */
 export const deleteRecordAction = (id, payload) => {
   return {
     type: ACTION.DELETE,
@@ -35,20 +50,4 @@ export const deleteRecordAction = (id, payload) => {
       payload
     }
   };
-};
-
-/**
- *
- * @param {*} item
- * @param {*} props
- */
-export const createNewHeading = (item, props) => {
-  const { dispatch } = props;
-  const heading = {
-    indicator1: item.ind1 || '',
-    indicator2: item.ind2 || '',
-    stringText: SUBFIELD_DELIMITER + item.displayValue,
-    tag: item.code
-  };
-  dispatch(headingAction(heading));
 };

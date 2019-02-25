@@ -21,6 +21,7 @@ import {
 } from './components';
 import { StoreReducer } from '../../../redux';
 import { findParam } from '../../../redux/helpers/Utilities';
+import { ACTION } from '../../../redux/helpers/Action';
 
 
 type P = Props & {
@@ -89,7 +90,7 @@ export class SearchResults extends React.Component<P, {}> {
   handleCreateRecord = () => {
     const { router, dispatch, toggleFilterPane } = this.props;
     dispatch({
-      type: '@@ui-marccat/QUERY',
+      type: ACTION.QUERY,
       data: {
         path: C.ENDPOINT.EMPTY_RECORD_URL + '/' + 408,
         type: 'emptyRecord',
@@ -138,7 +139,7 @@ export class SearchResults extends React.Component<P, {}> {
     transitionToParams('id', id);
     if (!detail) {
       dispatch({
-        type: '@@ui-marccat/QUERY',
+        type: ACTION.QUERY,
         data: {
           path: C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id,
           id,

@@ -34,9 +34,12 @@ export class Tag008 extends React.Component<Props, {}> {
   }
 
   populateFirstAccess = () => {
-    const { record } = this.props;
+    const { record, leaderValue, dispatch, change } = this.props;
     this.state.isChangedHeaderType = true;
-    record.fields.filter(f => f.code === TAGS._008)[0].fieldStatus = RECORD_FIELD_STATUS.CHANGED;
+    const tag008 = record.fields.filter(f => f.code === TAGS._008)[0];
+    tag008.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
+    dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: tag008.fixedField.headerTypeCode });
+    dispatch(change('Tag008', tag008.fixedField.headerTypeCode));
   };
 
   changeDisplayValue = () => {
@@ -81,7 +84,6 @@ export class Tag008 extends React.Component<Props, {}> {
     } else {
       this.changeDisplayValue();
     }
-
     const remappedValues = [];
     if (isChangedHeaderType && tag008ValuesResults) {
       const result = Object.keys(tag008ValuesResults.results).map((key) => tag008ValuesResults.results[key]);

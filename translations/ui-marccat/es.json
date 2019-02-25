@@ -81,6 +81,7 @@
     "search.record.new.auth": "New (CTRL+A)",
     "cataloging.variablefield.empty": "No variable fields presents",
     "cataloging.variablefield.section.label": "Variable data field",
+    "app.title": "MARCcat",
     "template.record.delete": "Delete Record",
     "template.record.edit": "Edit Record",
     "cataloging.variablefield.section.add.newtag": "+ Add new tag",

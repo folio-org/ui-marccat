@@ -47,7 +47,7 @@ export class Tag008 extends React.Component<Props, {}> {
     const jsonReq = {};
     const dropdown = getState().form.bibliographicRecordForm.values;
     Object.keys(getState().form.bibliographicRecordForm.registeredFields)
-      .filter(k => k.split('-').shift() === 'Tag008')
+      .filter(k => k.split('-') !== undefined && k.split('-').shift() === 'Tag008')
       .forEach(c => jsonReq[c.split('-')[1]] = C.SPACED_STRING);
     Object.keys(dropdown)
       .filter(k => k.split('-')
@@ -55,18 +55,22 @@ export class Tag008 extends React.Component<Props, {}> {
       .forEach(d => {
         const key = d.split('-')[1];
         const value = dropdown[d] || ' ';
+        if (d === 'Tag008') jsonReq.headerTypeCode = value;
         jsonReq[key] = value;
       });
 
     if (!isEmpty(jsonReq)) {
       jsonReq.categoryCode = 1;
-      jsonReq.headerTypeCode = 34;
       jsonReq.displayValue = dropdown[TAGS._008];
       jsonReq.code = TAGS._008;
       jsonReq.dateEnteredOnFile = '180924';
       jsonReq.languageCode = 'ita';
       jsonReq.sequenceNumber = 0;
       jsonReq.recordCataloguingSourceCode = 'r';
+      jsonReq.dateFirstPublication = '     ';
+      jsonReq.dateLastPublication = '     ';
+      jsonReq.placeOfPublication = 'ita';
+      jsonReq.recordModifiedCode = 'x';
       dispatch(changeDisplayValueAction(TAGS._008, jsonReq));
       const data = getState().marccat.data;
       if (!isEmpty(data) && !isEmpty(data[`displayvalue-${TAGS._008}`])) {

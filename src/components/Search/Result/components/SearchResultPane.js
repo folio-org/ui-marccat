@@ -8,7 +8,7 @@ import { Pane, Icon, MultiColumnList } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
 import { ActionMenu } from '../../../../lib';
 import { Props, injectCommonProp } from '../../../../core';
-import { resultsFormatter, columnMapper, columnWidthMapper } from '../../../../utils/Formatter';
+import { resultsFormatter, columnMapper, columnWidthMapper, renderColumn } from '../../../../utils/Formatter';
 import { EmptyMessage, NoResultsMessage } from '../../../../lib/components/Message';
 import * as C from '../../../../utils/Constant';
 import { FormReducer } from '../../../../redux/helpers/StoreReducer';
@@ -66,6 +66,7 @@ class SearchResultPane extends React.Component<Props, {}> {
         handleDetails,
         translate,
         bibsOnly,
+        autOnly,
         messageNoContent,
       } = this.props;
       return (
@@ -92,9 +93,9 @@ class SearchResultPane extends React.Component<Props, {}> {
                     rowMetadata={['001', 'recordView']}
                     onRowClick={handleDetails}
                     contentData={marcJSONRecords}
-                    formatter={resultsFormatter(bibsOnly, true)}
-                    columnMapping={columnMapper(bibsOnly, false)}
-                    visibleColumns={this.renderVisibleColumns()}
+                    formatter={resultsFormatter(bibsOnly, autOnly)}
+                    columnMapping={columnMapper(bibsOnly, autOnly)}
+                    visibleColumns={renderColumn(bibsOnly, autOnly)}
                   /> : <EmptyMessage {...this.props} />
           }
         </Pane>

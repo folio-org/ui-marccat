@@ -14,6 +14,14 @@ import * as C from '../../../../utils/Constant';
 import { FormReducer } from '../../../../redux/helpers/StoreReducer';
 
 class SearchResultPane extends React.Component<Props, {}> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      // eslint-disable-next-line react/no-unused-state
+      concatenatedRecords: []
+    };
+  }
+
     renderVisibleColumns = () => {
       const { store } = this.props;
       const form = FormReducer.resolve(store, 'checkboxForm');
@@ -53,10 +61,10 @@ class SearchResultPane extends React.Component<Props, {}> {
 
     render() {
       const {
-        marcJSONRecords,
         isFetching,
         firstMenu,
         lastMenu,
+        marcJSONRecords,
         mergedRecord,
         message,
         noResults,
@@ -69,6 +77,7 @@ class SearchResultPane extends React.Component<Props, {}> {
         autOnly,
         messageNoContent,
       } = this.props;
+      let { concatenatedRecords } = this.state;
       return (
         <Pane
           padContent={(marcJSONRecords.length > 0) || isFetching}
@@ -87,12 +96,25 @@ class SearchResultPane extends React.Component<Props, {}> {
                 <NoResultsMessage {...this.props} /> :
                 (isReady) ?
                   <MultiColumnList
+                    autosize
+                    onScroll={(e) => {
+                      const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+                      if (bottom) {
+                        if (marcJSONRecords.length > 0) {
+                          concatenatedRecords = [...marcJSONRecords, ...marcJSONRecords];
+                          this.setState({
+                            concatenatedRecords
+                          });
+                        }
+                      }
+                    }
+                    }
                     id="data-test-search-results-table"
                     defaultWidth="fill"
                     columnWidths={columnWidthMapper(false, false)}
                     rowMetadata={['001', 'recordView']}
                     onRowClick={handleDetails}
-                    contentData={marcJSONRecords}
+                    contentData={(concatenatedRecords.length === 0) ? marcJSONRecords : concatenatedRecords}
                     formatter={resultsFormatter(bibsOnly, autOnly)}
                     columnMapping={columnMapper(bibsOnly, autOnly)}
                     visibleColumns={renderColumn(bibsOnly, autOnly)}

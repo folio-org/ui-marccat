@@ -30,6 +30,7 @@ import { remapFilters } from '../../../utils/Mapper';
 import { EMPTY_MESSAGE } from '../../../utils';
 
 import styles from '../index.css';
+import { findParam } from '../../../redux';
 
 type P = Props & {
   inputErrorCheck: string,
@@ -53,6 +54,23 @@ class SearchPanel extends React.Component<P, {}> {
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleResetAllButton = this.handleResetAllButton.bind(this);
   }
+
+
+  // componentDidMount() {
+  //   const id = findParam('id');
+  //   if (findParam('id') !== null) {
+  //     this.handleSearchFromCataloging();
+  //   }
+  // }
+
+  handleSearchFromCataloging = () => {
+    const { dispatch } = this.props;
+    const conditionFilter = 'START';
+    const indexForQuery = 'NUMID';
+    let baseQuery = indexForQuery + findParam('id');
+    baseQuery = (conditionFilter === 'MATCH') ? baseQuery + '!' : baseQuery;
+    dispatch({ type: ActionTypes.SEARCH, queryBib: baseQuery, queryAuth: '' });
+  };
 
   handleKeyDown(e) {
     let { isBrowseRequested } = this.state;

@@ -130,7 +130,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
   onDelete = () => {};
 
   saveRecord = () => {
-    const { reset, dispatch } = this.props;
+    const { reset } = this.props;
     const body = this.composeBodyJson();
     post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), body)
       .then(() => {

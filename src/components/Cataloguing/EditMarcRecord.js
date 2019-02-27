@@ -51,12 +51,14 @@ class EditMarcRecord extends React.Component {
   };
 
   saveRecord = () => {
+    // const { dispatch } = this.props;
     const body = this.composeBodyJson();
     post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), body).then(() => {
       this.showMessage('Record update with success');
+      // dispatch({ type: ActionTypes.DETAILS, query: id, recordType: 1 });
       setTimeout(() => {
         this.handleClose();
-      }, 2);
+      }, 2000);
     });
   };
 
@@ -148,56 +150,10 @@ class EditMarcRecord extends React.Component {
   composeBodyJson = () => {
     const { data, recordDetail, store: { getState } } = this.props;
     const formData = getState().form.bibliographicRecordForm.values;
-    const tag006Values = [];
-    const tag007Values = [];
-    const tag008Values = [];
 
     // Set leader
     const bibliographicRecord = recordDetail;
     bibliographicRecord.leader.value = formData.Leader;
-
-    // populate tag 006 tag 007 tag 008
-    Object.keys(formData)
-      .forEach((z) => {
-        if (z.split('-')[0] === 'Tag006' || z === 'Tag006') {
-          tag006Values.push({
-            name: z.split('-')[1] || 'headerTypeCode',
-            value: formData[z]
-          });
-        }
-        if (z.split('-')[0] === 'Tag007' || z === 'Tag007') {
-          tag007Values.push({
-            name: z.split('-')[1] || 'headerTypeCode',
-            value: formData[z]
-          });
-        }
-        if (z.split('-')[0] === 'Tag008' || z === 'Tag008') {
-          tag008Values.push({
-            name: z.split('-')[1] || 'headerTypeCode',
-            value: formData[z]
-          });
-        }
-      });
-
-    bibliographicRecord.fields
-      .filter(f => f.code !== '001' || f.code !== '003' || f.code !== '005')
-      .forEach(f => {
-        if (f.code === '006') {
-          tag006Values.forEach(v => {
-            f.fixedField[v.name] = v.value;
-          });
-        }
-        if (f.code === '007') {
-          tag007Values.forEach(v => {
-            f.fixedField[v.name] = v.value;
-          });
-        }
-        if (f.code === '008') {
-          tag008Values.forEach(v => {
-            f.fixedField[v.name] = v.value;
-          });
-        }
-      });
 
     const recordTemplate = {
       id: data.settings.defaultTemplate.id,
@@ -213,7 +169,7 @@ class EditMarcRecord extends React.Component {
     });
     bibliographicRecord.fields = union(recordTemplate.fields, tagToDeleted, getState().form.marcEditableListForm.values.items);
     bibliographicRecord.fields = sortBy(bibliographicRecord.fields, 'code');
-    bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur, [cur.displayValue]: cur }), {}));
+    bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     bibliographicRecord.verificationLevel = 1;
     return {
       bibliographicRecord,

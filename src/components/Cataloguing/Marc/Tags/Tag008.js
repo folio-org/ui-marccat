@@ -85,9 +85,10 @@ export class Tag008 extends React.Component<Props, {}> {
     const { isChangedHeaderType } = this.state;
     if (!tag008ValuesResults) {
       this.populateFirstAccess();
-    } else {
-      this.changeDisplayValue();
     }
+    // } else {
+    //   this.changeDisplayValue();
+    // }
     const remappedValues = [];
     if (isChangedHeaderType && tag008ValuesResults) {
       const result = Object.keys(tag008ValuesResults.results).map((key) => tag008ValuesResults.results[key]);

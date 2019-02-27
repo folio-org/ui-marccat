@@ -135,6 +135,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), body)
       .then(() => {
         this.showMessage('Record saved with success');
+        // dispatch({ type: ActionTypes.DETAILS, query: id, recordType: 1 });
         setTimeout(() => {
           this.handleClose();
           reset();
@@ -167,10 +168,11 @@ export class CreateMarcRecord extends React.Component<P, {}> {
   }
 
   handleClose = () => {
-    const { dispatch, router, toggleFilterPane } = this.props;
+    const { dispatch, router, toggleFilterPane, emptyRecord } = this.props;
     dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', filterChecked: false });
     toggleFilterPane();
-    router.push('/marccat/search');
+    const id = emptyRecord.id;
+    router.push(`/marccat/search?id=${id}`);
   };
 
   showMessage(message: string) {

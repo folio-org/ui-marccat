@@ -12,13 +12,13 @@ import { resultsFormatter, columnMapper, columnWidthMapper, renderColumn } from 
 import { EmptyMessage, NoResultsMessage } from '../../../../lib/components/Message';
 import * as C from '../../../../utils/Constant';
 import { FormReducer } from '../../../../redux/helpers/StoreReducer';
+import { ActionTypes } from '../../../../redux/actions/Actions';
+
 
 class SearchResultPane extends React.Component<Props, {}> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      // eslint-disable-next-line react/no-unused-state
-      concatenatedRecords: []
     };
   }
 
@@ -64,23 +64,26 @@ class SearchResultPane extends React.Component<Props, {}> {
         isFetching,
         firstMenu,
         lastMenu,
-        marcJSONRecords,
         mergedRecord,
         message,
         noResults,
-        bibliographicResults,
-        authorityResults,
+        queryMoreBib,
+        queryMoreAuth,
+        countMoreData,
         isReady,
         handleDetails,
         translate,
         bibsOnly,
         autOnly,
         messageNoContent,
+        containerMarcJSONRecords,
+        store
       } = this.props;
-      let { concatenatedRecords } = this.state;
       return (
         <Pane
-          padContent={(marcJSONRecords.length > 0) || isFetching}
+          padContent={(containerMarcJSONRecords.length > 0) || isFetching}
+          virtualize
+          autosize
           defaultWidth="fill"
           actionMenu={ActionMenu}
           paneTitle={translate({ id: 'ui-marccat.search.record' })}
@@ -88,33 +91,27 @@ class SearchResultPane extends React.Component<Props, {}> {
           appIcon={<AppIcon app={C.META.ICON_TITLE} />}
           firstMenu={firstMenu}
           lastMenu={lastMenu}
+          onScroll={(e) => {
+            const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+            if (bottom) {
+              store.dispatch({ type: ActionTypes.SEARCH, queryBib: queryMoreBib, queryAuth: queryMoreAuth, from: parseInt(countMoreData, 10) + 1, to: parseInt(countMoreData, 10) + 100, dataOld: mergedRecord });
+            }
+          }
+          }
         >
           {
             (isFetching) ?
               <Icon icon="spinner-ellipsis" /> :
-              ((!isFetching && noResults && !(bibliographicResults === undefined && authorityResults === undefined))) ?
+              ((!isFetching && noResults && mergedRecord.length === 0)) ?
                 <NoResultsMessage {...this.props} /> :
                 (isReady) ?
                   <MultiColumnList
-                    autosize
-                    onScroll={(e) => {
-                      const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-                      if (bottom) {
-                        if (marcJSONRecords.length > 0) {
-                          concatenatedRecords = [...marcJSONRecords, ...marcJSONRecords];
-                          this.setState({
-                            concatenatedRecords
-                          });
-                        }
-                      }
-                    }
-                    }
                     id="data-test-search-results-table"
-                    defaultWidth="fill"
+                    defaultWidth="100%"
                     columnWidths={columnWidthMapper(false, false)}
                     rowMetadata={['001', 'recordView']}
                     onRowClick={handleDetails}
-                    contentData={(concatenatedRecords.length === 0) ? marcJSONRecords : concatenatedRecords}
+                    contentData={mergedRecord.length > containerMarcJSONRecords.length ? mergedRecord : containerMarcJSONRecords}
                     formatter={resultsFormatter(bibsOnly, autOnly)}
                     columnMapping={columnMapper(bibsOnly, autOnly)}
                     visibleColumns={renderColumn(bibsOnly, autOnly)}

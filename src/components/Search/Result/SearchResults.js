@@ -266,6 +266,10 @@ export class SearchResults extends React.Component<P, {}> {
       totalBibCount,
       bibliographicResults,
       authorityResults,
+      oldDataToIncrement,
+      queryMoreBib,
+      queryMoreAuth,
+      countMoreData,
       firstMenu,
       isFetching,
       isReady,
@@ -310,10 +314,11 @@ export class SearchResults extends React.Component<P, {}> {
         return <NoResultsMessage {...this.props} />;
       }
     }
-    const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForAssociatedBibList(mergedRecord) : [];
+    const containerMarcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForAssociatedBibList(mergedRecord) : [];
     const messageAuth = (totalAuthCount && totalAuthCount > 0) ? totalAuthCount + ' Authority records ' : ' No Authority records found ';
     const messageBib = (totalBibCount && totalBibCount > 0) ? totalBibCount + ' Bibliographic records ' : ' No Bibliographic records found ';
     let message = C.EMPTY_MESSAGE;
+    let reMergedRecord = [];
 
     if (autOnly) {
       message = messageAuth;
@@ -326,17 +331,23 @@ export class SearchResults extends React.Component<P, {}> {
     } else if (!bibsOnly && !autOnly) {
       message = messageAuth.concat('/').concat(messageBib);
     }
+    if (!(oldDataToIncrement === undefined) && oldDataToIncrement.length > 0) {
+      reMergedRecord = [...oldDataToIncrement, ...containerMarcJSONRecords];
+    }
 
     const messageNoContent = <FormattedMessage id="ui-marccat.search.initial.message" />;
     return (
       <HotKeys keyMap={this.keys} handlers={this.handlers} style={{ width: 100 + '%' }}>
         <Paneset static>
           <SearchResultPane
-            marcJSONRecords={marcJSONRecords}
+            containerMarcJSONRecords={reMergedRecord.length > 0 ? reMergedRecord : containerMarcJSONRecords}
             isFetching={isFetching}
+            queryMoreAuth={queryMoreAuth}
+            queryMoreBib={queryMoreBib}
+            countMoreData={countMoreData}
             firstMenu={firstMenu}
             lastMenu={this.renderLastMenu()}
-            mergedRecord={mergedRecord}
+            mergedRecord={reMergedRecord.length > 0 ? reMergedRecord : containerMarcJSONRecords}
             message={message}
             noResults={noResults}
             bibliographicResults={bibliographicResults}
@@ -378,6 +389,10 @@ export class SearchResults extends React.Component<P, {}> {
 export default (connect(
   ({ marccat: { search, details, countDoc, filter, associatedBibDetails, template, settings, panels } }) => ({
     bibliographicResults: search.bibliographicResults,
+    oldDataToIncrement: search.dataOld,
+    queryMoreBib: search.queryBib,
+    queryMoreAuth: search.queryAuth,
+    countMoreData: search.to,
     totalBibCount: search.bibCounter,
     totalAuthCount: search.authCounter,
     authorityResults: search.authorityResults || [],

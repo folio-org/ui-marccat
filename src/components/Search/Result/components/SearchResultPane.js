@@ -67,6 +67,8 @@ class SearchResultPane extends React.Component<Props, {}> {
         mergedRecord,
         message,
         noResults,
+        bibliographicResults,
+        authorityResults,
         queryMoreBib,
         queryMoreAuth,
         countMoreData,
@@ -82,7 +84,6 @@ class SearchResultPane extends React.Component<Props, {}> {
       return (
         <Pane
           padContent={(containerMarcJSONRecords.length > 0) || isFetching}
-          virtualize
           autosize
           defaultWidth="fill"
           actionMenu={ActionMenu}
@@ -94,7 +95,7 @@ class SearchResultPane extends React.Component<Props, {}> {
           onScroll={(e) => {
             const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
             if (bottom) {
-              store.dispatch({ type: ActionTypes.SEARCH, queryBib: queryMoreBib, queryAuth: queryMoreAuth, from: parseInt(countMoreData, 10) + 1, to: parseInt(countMoreData, 10) + 100, dataOld: mergedRecord });
+              store.dispatch({ type: ActionTypes.SEARCH, queryBib: queryMoreBib, queryAuth: queryMoreAuth, from: parseInt(countMoreData, 10) + 1, to: parseInt(countMoreData, 10) + 100, dataOld: mergedRecord, oldBibArray: bibliographicResults, oldAuthArray: authorityResults });
             }
           }
           }
@@ -107,11 +108,11 @@ class SearchResultPane extends React.Component<Props, {}> {
                 (isReady) ?
                   <MultiColumnList
                     id="data-test-search-results-table"
-                    defaultWidth="100%"
+                    defaultWidth="fill"
                     columnWidths={columnWidthMapper(false, false)}
                     rowMetadata={['001', 'recordView']}
                     onRowClick={handleDetails}
-                    contentData={mergedRecord.length > containerMarcJSONRecords.length ? mergedRecord : containerMarcJSONRecords}
+                    contentData={mergedRecord}
                     formatter={resultsFormatter(bibsOnly, autOnly)}
                     columnMapping={columnMapper(bibsOnly, autOnly)}
                     visibleColumns={renderColumn(bibsOnly, autOnly)}

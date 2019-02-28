@@ -98,10 +98,10 @@ export const columnWidthMapper = (isBibsOnly:?boolean, isAuthOnly:?boolean) => {
     'resultView': '6%',
     '001': '10%',
     '245': '30%',
-    'preferredTitle': '25%',
+    'preferredTitle': '10%',
     'date1': '5%',
     'date2': '5%',
-    'name': '15%',
+    'name': '10%',
     'tagHighlighted': '5%',
     'countDoc': '9%'
   };

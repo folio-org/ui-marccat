@@ -24,7 +24,9 @@ export const searchEpic = (action$, store) => action$.ofType(ActionTypes.SEARCH)
         record[1].numFound,
         record[0].docs,
         record[0].numFound,
-        d.dataOld
+        d.dataOld,
+        d.oldBibArray,
+        d.oldAuthArray
       ))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));

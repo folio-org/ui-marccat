@@ -109,7 +109,7 @@ class SearchResultPane extends React.Component<Props, {}> {
                   <MultiColumnList
                     id="data-test-search-results-table"
                     defaultWidth="fill"
-                    columnWidths={columnWidthMapper(false, false)}
+                    columnWidths={columnWidthMapper(bibsOnly, autOnly)}
                     rowMetadata={['001', 'recordView']}
                     onRowClick={handleDetails}
                     contentData={mergedRecord}

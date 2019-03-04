@@ -21,7 +21,7 @@ import {
 } from './components';
 import { StoreReducer } from '../../../redux';
 import { findParam } from '../../../redux/helpers/Utilities';
-import { ACTION } from '../../../redux/helpers/Action';
+import { searchDetailAction, emptyRecordAction } from '../Actions/ActionCreator';
 
 
 type P = Props & {
@@ -73,7 +73,7 @@ export class SearchResults extends React.Component<P, {}> {
       this.openDetailFromCataloguing();
       const formValues = getState().form.searchForm.values;
       const searchFieldValue = formValues.searchTextArea;
-      // document.getElementsByName('searchTextArea')[0].value = searchFieldValue;
+      document.getElementsByName('searchTextArea')[0].value = searchFieldValue;
       dispatch(change('searchTextArea', searchFieldValue));
     }
   }
@@ -89,13 +89,7 @@ export class SearchResults extends React.Component<P, {}> {
 
   handleCreateRecord = () => {
     const { router, dispatch, toggleFilterPane } = this.props;
-    dispatch({
-      type: ACTION.QUERY,
-      data: {
-        path: C.ENDPOINT.EMPTY_RECORD_URL + '/' + 408,
-        type: 'emptyRecord',
-        params: 'type=B&lang=ita&view=1',
-      } });
+    dispatch(emptyRecordAction());
     toggleFilterPane();
     this.setState(prevState => ({ layerOpen: !prevState.layerOpen }));
     router.push(`/marccat/record/template?templateId=${408}&mode=new`);
@@ -138,16 +132,7 @@ export class SearchResults extends React.Component<P, {}> {
     const detailSelected = data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001']) || {};
     transitionToParams('id', id);
     if (!detail) {
-      dispatch({
-        type: ACTION.QUERY,
-        data: {
-          path: C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id,
-          id,
-          meta,
-          panelOpen: true,
-          type: 'marcRecordDetail',
-          params: 'type=B&lang=ita&view=1',
-        } });
+      dispatch(searchDetailAction(id, meta));
     }
     dispatch({ type: ActionTypes.DETAILS, query: id, recordType: meta.recordView });
     if (isAuthorityRecord(meta)) {
@@ -264,7 +249,6 @@ export class SearchResults extends React.Component<P, {}> {
       activeFilter,
       totalAuthCount,
       totalBibCount,
-      oldDataToIncrement,
       oldBibToIncrement,
       oldAuthToIncrement,
       queryMoreBib,

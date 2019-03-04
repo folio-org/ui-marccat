@@ -11,7 +11,7 @@ import { injectCommonProp, Props } from '../../../../core';
 import { ActionTypes } from '../../../../redux/actions';
 import { decamelizify } from '../..';
 import { RECORD_FIELD_STATUS, TAGS } from '../../Utils/MarcUtils';
-import { changeDisplayValueAction } from '../Action/MarcActionCreator';
+import { changeDisplayValueAction } from '../../Actions/MarcActionCreator';
 import * as C from '../../../../utils/Constant';
 
 

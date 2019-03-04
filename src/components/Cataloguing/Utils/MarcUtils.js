@@ -135,3 +135,7 @@ export const first = (arr, n) => {
   if (n < 0) { return []; }
   return arr.slice(0, n);
 };
+
+export const deduplicate = (obj, prop) => {
+  return Object.values(obj.reduce((acc, cur) => Object.assign(acc, { [`${prop}`]: cur }), {}));
+};

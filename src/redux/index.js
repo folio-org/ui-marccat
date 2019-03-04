@@ -35,16 +35,13 @@ import {
   browseAuthorityDetailEpic,
   browseDetailAssociatedEpic,
   templateViewEpic,
-  leaderEpic,
   recordDetailEpic,
-  templateByIdEpic,
   headerTypes006Epic,
   headerTypes007Epic,
   headerTypes008Epic,
   tag006ValuesEpic,
   tag007ValuesEpic,
-  tag008ValuesEpic,
-  headingSuggestionEpic,
+  tag008ValuesEpic
 } from './epic/epics';
 
 import {
@@ -89,8 +86,6 @@ export const epics = combineEpics(
   browseAuthorityDetailEpic,
   browseDetailAssociatedEpic,
   templateViewEpic,
-  templateByIdEpic,
-  leaderEpic,
   headerTypes006Epic,
   headerTypes007Epic,
   headerTypes008Epic,
@@ -98,7 +93,6 @@ export const epics = combineEpics(
   tag007ValuesEpic,
   tag008ValuesEpic,
   recordDetailEpic,
-  headingSuggestionEpic,
   dataEpic
 );
 export { StoreReducer } from './helpers/StoreReducer';

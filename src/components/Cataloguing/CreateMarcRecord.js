@@ -32,7 +32,7 @@ import * as C from '../../utils/Constant';
 import { StoreReducer } from '../../redux';
 import { RECORD_FIELD_STATUS, TAG_WITH_NO_HEADING_ASSOCIATED } from './Utils/MarcUtils';
 import style from './Style/style.css';
-import { headingAction } from './Marc/Action/MarcActionCreator';
+import { headingAction } from './Actions/MarcActionCreator';
 
 
 type P = {

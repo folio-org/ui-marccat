@@ -188,12 +188,3 @@ export const tag008ValuesEpic = (action$, store) => action$.ofType(ActionTypes.V
       .map(record => marccatActions.fetchValuesFromTag008(record))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
-
-export const headingSuggestionEpic = (action$, store) => action$.ofType(ActionTypes.FETCH_HEADING_TAG)
-  .switchMap((d) => concat$(
-    of$(marccatActions.isFetchingHeadingByTag(true)),
-    ajax
-      .getJSON(buildUrl(ENDPOINT.HEADING_BY_TAG, `tag=${d.tag || 245}&indicator1=${1}&indicator2=${0}&stringText=${d.query || 'Manzoni'}&view=1&mainLibrary=170&pageSize=20&lang=ita`), ENDPOINT.HEADERS)
-      .map(record => marccatActions.fetchHeadingByTag(record))
-      .catch(e => of$(marccatActions.fetchFailure(e))),
-  ));

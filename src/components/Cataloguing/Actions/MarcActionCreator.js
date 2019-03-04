@@ -1,6 +1,7 @@
-import { ACTION } from '../../../../redux/helpers/Action';
-// MARC action creator
-import { ENDPOINT } from '../../Utils/Constant';
+import { ACTION } from '../../../redux/helpers/Action';
+import { ENDPOINT } from '../Utils/Constant';
+
+// MARC API action creator
 
 /**
  *

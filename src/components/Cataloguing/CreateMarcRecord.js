@@ -30,8 +30,9 @@ import { buildUrl } from '../../redux/helpers/Utilities';
 import * as C from '../../utils/Constant';
 
 import { StoreReducer } from '../../redux';
-import { SUBFIELD_DELIMITER, RECORD_FIELD_STATUS, TAG_WITH_NO_HEADING_ASSOCIATED } from './Utils/MarcUtils';
+import { RECORD_FIELD_STATUS, TAG_WITH_NO_HEADING_ASSOCIATED } from './Utils/MarcUtils';
 import style from './Style/style.css';
+import { headingAction } from './Marc/Action/MarcActionCreator';
 
 
 type P = {
@@ -83,35 +84,27 @@ export class CreateMarcRecord extends React.Component<P, {}> {
       });
   }
 
+  createNewHeading = (item) => {
+    const { dispatch, emptyRecord } = this.props;
+    const heading = {
+      indicator1: item.ind1 || '',
+      indicator2: item.ind2 || '',
+      stringText: item.displayValue,
+      tag: item.code
+    };
+    const id = emptyRecord.results.id;
+    dispatch(headingAction(id, heading));
+  };
+
   onUpdate = (item) => {
     const tag = Object.assign({}, item);
     const { store: { getState } } = this.props;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
-    const heading = {
-      indicator1: item.ind1 || '',
-      indicator2: item.ind2 || '',
-      stringText: SUBFIELD_DELIMITER + item.displayValue,
-      tag: item.code
-    };
     if (tag.variableField) {
       this.editHeading(tag);
     } else if (!cretaeHeadingForTag) {
-      post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
-        .then((r) => {
-          return r.json();
-        }).then((data) => {
-          tagVariableData.filter(t => t.code === item.code).map(k => {
-            k.variableField = {
-              ind1: data.indicator1 || " ",
-              ind2: data.indicator2 || " ",
-              displayValue: data.stringText,
-              keyNumber: data.headingNumber,
-            };
-            k.fieldStatus = RECORD_FIELD_STATUS.NEW;
-            return data;
-          });
-        });
+      this.createNewHeading(item);
     } else {
       tagVariableData.filter(t => t.code === item.code).map(k => {
         k.variableField = {

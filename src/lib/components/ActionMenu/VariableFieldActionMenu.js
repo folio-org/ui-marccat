@@ -34,7 +34,7 @@ export default class VariableFieldActionMenu extends React.Component<P, {}> {
             data-role="toggle"
             align="end"
             bottomMargin0
-            aria-haspopup="true"
+            aria-haspopup
           >
             <FormattedMessage id="ui-marccat.search.record.actions" />
             <Icon

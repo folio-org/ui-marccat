@@ -264,8 +264,12 @@ export class SearchResults extends React.Component<P, {}> {
       activeFilter,
       totalAuthCount,
       totalBibCount,
-      bibliographicResults,
-      authorityResults,
+      oldDataToIncrement,
+      oldBibToIncrement,
+      oldAuthToIncrement,
+      queryMoreBib,
+      queryMoreAuth,
+      countMoreData,
       firstMenu,
       isFetching,
       isReady,
@@ -276,10 +280,23 @@ export class SearchResults extends React.Component<P, {}> {
       isReadyAssociatedRecord,
       closePanels
     } = this.props;
+    let { bibliographicResults, authorityResults } = this.props;
     if (activeFilter) {
       const filterArray = [];
       Object.keys(activeFilter).forEach((key) => filterArray.push(key + ':' + activeFilter[key]));
       filterArray.map(filterEl => (filterEl === 'recordType.Bibliographic records:true' ? bibsOnly = true : filterEl === 'recordType.Bibliographic records:false' ? bibsOnly = false : filterEl === 'recordType.Authority records:true' ? autOnly = true : filterEl === 'recordType.Authority records:false' ? autOnly = false : null));
+    }
+    if (!(oldBibToIncrement === undefined) && oldBibToIncrement.length > 0 && bibliographicResults.length > 0) {
+      bibliographicResults = [...oldBibToIncrement, ...bibliographicResults];
+    }
+    if (!(oldBibToIncrement === undefined) && oldBibToIncrement.length > 0 && bibliographicResults.length === 0) {
+      bibliographicResults = oldBibToIncrement;
+    }
+    if (!(oldAuthToIncrement === undefined) && oldAuthToIncrement.length > 0 && authorityResults.length > 0) {
+      authorityResults = [...oldAuthToIncrement, ...authorityResults];
+    }
+    if (!(oldAuthToIncrement === undefined) && oldAuthToIncrement.length > 0 && authorityResults.length === 0) {
+      authorityResults = oldAuthToIncrement;
     }
     if ((bibliographicResults === undefined && authorityResults === undefined)
       || (bibliographicResults && (bibliographicResults.length === undefined
@@ -310,11 +327,10 @@ export class SearchResults extends React.Component<P, {}> {
         return <NoResultsMessage {...this.props} />;
       }
     }
-    const marcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForAssociatedBibList(mergedRecord) : [];
+    const containerMarcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForAssociatedBibList(mergedRecord) : [];
     const messageAuth = (totalAuthCount && totalAuthCount > 0) ? totalAuthCount + ' Authority records ' : ' No Authority records found ';
     const messageBib = (totalBibCount && totalBibCount > 0) ? totalBibCount + ' Bibliographic records ' : ' No Bibliographic records found ';
     let message = C.EMPTY_MESSAGE;
-
     if (autOnly) {
       message = messageAuth;
     }
@@ -326,17 +342,19 @@ export class SearchResults extends React.Component<P, {}> {
     } else if (!bibsOnly && !autOnly) {
       message = messageAuth.concat('/').concat(messageBib);
     }
-
     const messageNoContent = <FormattedMessage id="ui-marccat.search.initial.message" />;
     return (
       <HotKeys keyMap={this.keys} handlers={this.handlers} style={{ width: 100 + '%' }}>
         <Paneset static>
           <SearchResultPane
-            marcJSONRecords={marcJSONRecords}
+            containerMarcJSONRecords={containerMarcJSONRecords}
             isFetching={isFetching}
+            queryMoreAuth={queryMoreAuth}
+            queryMoreBib={queryMoreBib}
+            countMoreData={countMoreData}
             firstMenu={firstMenu}
             lastMenu={this.renderLastMenu()}
-            mergedRecord={mergedRecord}
+            mergedRecord={containerMarcJSONRecords}
             message={message}
             noResults={noResults}
             bibliographicResults={bibliographicResults}
@@ -378,6 +396,12 @@ export class SearchResults extends React.Component<P, {}> {
 export default (connect(
   ({ marccat: { search, details, countDoc, filter, associatedBibDetails, template, settings, panels } }) => ({
     bibliographicResults: search.bibliographicResults,
+    oldDataToIncrement: search.dataOld,
+    oldBibToIncrement: search.oldBibArray,
+    oldAuthToIncrement: search.oldAuthArray,
+    queryMoreBib: search.queryBib,
+    queryMoreAuth: search.queryAuth,
+    countMoreData: search.to,
     totalBibCount: search.bibCounter,
     totalAuthCount: search.authCounter,
     authorityResults: search.authorityResults || [],

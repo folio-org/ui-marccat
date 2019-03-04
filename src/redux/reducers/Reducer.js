@@ -34,7 +34,7 @@ export function searchEngineReducer(state = { isLoading, isReady }, action) {
     return {
       ...state,
       isReady: false,
-      isLoading: false
+      isLoading: false,
     };
   case ActionTypes.FETCH_SEARCH_REQUESTED:
     return {
@@ -45,12 +45,18 @@ export function searchEngineReducer(state = { isLoading, isReady }, action) {
   case ActionTypes.RECORD_SUCCESS:
     return {
       ...state,
+      queryBib: action.queryBib,
+      queryAuth: action.queryAuth,
+      to: action.to,
       bibliographicResults: action.bibliographicResults,
       authorityResults: action.authorityResults,
       bibCounter: action.bibCounter,
       authCounter: action.authCounter,
+      dataOld: action.dataOld,
+      oldBibArray:action.oldBibArray,
+      oldAuthArray: action.oldAuthArray,
       isLoading: false,
-      isReady: true
+      isReady: true,
     };
   default:
     return state;

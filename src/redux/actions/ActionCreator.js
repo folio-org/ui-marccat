@@ -78,12 +78,18 @@ export const fetchBrowseDetailAssociatedRecords = (records, mustOpenPanel) => ({
   payload: records,
   mustOpenPanel
 });
-export const fetchSearchEngineRecords = (bibliographicResults, bibCounter, authorityResults, authCounter) => ({
+export const fetchSearchEngineRecords = (queryBib, queryAuth, to, bibliographicResults, bibCounter, authorityResults, authCounter, dataOld, oldBibArray, oldAuthArray) => ({
   type: ActionTypes.RECORD_SUCCESS,
+  queryBib,
+  queryAuth,
+  to,
   bibliographicResults,
   bibCounter,
   authorityResults,
-  authCounter
+  authCounter,
+  dataOld,
+  oldBibArray,
+  oldAuthArray
 });
 export const fetchBrowseDetail = (results, counter, isAuthority) => ({
   type: ActionTypes.DETAILS_BROWSE_SUCCESS,

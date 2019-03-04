@@ -4,39 +4,46 @@ import { getFieldPosition, getFormat, getMicroformat } from './Mapper';
 import style from '../components/Search/index.css';
 
 export const columnMapper = (isBibsOnly:?boolean, isAuthOnly:?boolean = true) => {
-  const isBib = {
-    'resultView': '',
-    '001': 'Id. Number (001)',
-    '245': 'Title (245)',
-    'name': (isBibsOnly) ? 'Name (100, 110, 111)' : 'Access point (1XX)',
-    'preferredTitle': (isBibsOnly) ? 'Uniform title (130, 240)' : 'Uniform title (240)',
-    'subject': 'Subject (6xx)',
-    'date1': 'Date 1',
-    'date2': 'Date 2',
-    'format': 'Format',
-    'tagHighlighted': 'Tag',
-    'countDoc': 'Bibs'
-  };
-  const isAuth = {
-    'resultView': '',
-    '001': 'Id. Number (001)',
-    '245': 'Title (245)',
-    'name': (isBibsOnly) ? 'Name (100, 110, 111)' : 'Access point (1XX)',
-    'preferredTitle': (isBibsOnly) ? 'Uniform title (130, 240)' : 'Uniform title (240)',
-    'subject': 'Subject (6xx)',
-    'tagHighlighted': 'Tag',
-    'countDoc': 'Bibs'
-  };
-  const all = {
-    'resultView': '',
-    '001': 'Id. Number (001)',
-    '245': 'Title (245)',
-    'name': (isBibsOnly) ? 'Name (100, 110, 111)' : 'Access point (1XX)',
-    'preferredTitle': (isBibsOnly) ? 'Uniform title (130, 240)' : 'Uniform title (240)',
-    'tagHighlighted': 'Tag',
-    'countDoc': 'Bibs'
-  };
-  return all;
+  let mapper = {};
+  if (isBibsOnly === true) {
+    mapper = {
+      'resultView': '',
+      '001': 'Id. Number (001)',
+      '245': 'Title (245)',
+      'name': 'Name (100, 110, 111)',
+      'preferredTitle': 'Uniform title (130, 240)',
+      'subject': 'Subject (6xx)',
+      'date1': 'Date 1',
+      'date2': 'Date 2',
+      'format': 'Format',
+      'tagHighlighted': 'Tag',
+      'countDoc': 'Bibs'
+    };
+  }
+  if (isAuthOnly === true) {
+    mapper = {
+      'resultView': '',
+      '001': 'Id. Number (001)',
+      '245': 'Title (245)',
+      'name': 'Access point (1XX)',
+      'preferredTitle': 'Uniform title (240)',
+      'subject': 'Subject (6xx)',
+      'tagHighlighted': 'Tag',
+      'countDoc': 'Bibs'
+    };
+  }
+  if ((isAuthOnly === true && isBibsOnly === true) || (isAuthOnly === false && isBibsOnly === false)) {
+    mapper = {
+      'resultView': '',
+      '001': 'Id. Number (001)',
+      '245': 'Title (245)',
+      'name': 'Access point (1XX)',
+      'preferredTitle':'Uniform title (240)',
+      'tagHighlighted': 'Tag',
+      'countDoc': 'Bibs'
+    };
+  }
+  return mapper;
 };
 export const renderColumn = (isBibsOnly:?boolean, isAuthOnly:?boolean = true) => {
   let visibleCol = [];
@@ -81,30 +88,48 @@ export const renderColumn = (isBibsOnly:?boolean, isAuthOnly:?boolean = true) =>
   return visibleCol;
 };
 
-export const columnWidthMapper = (isBibsOnly:?boolean, isAuthOnly:?boolean) => {
-  return (isBibsOnly) ? {
-    'resultView': '5%',
-    '001': '10%',
-    '245': '30%',
-    'preferredTitle': '5%',
-    'name': '15%',
-    'subject': '8%',
-    'date1': '5%',
-    'date2': '5%',
-    'format': '8%',
-    'tagHighlighted': '5%',
-    'countDoc': '4%'
-  } : {
-    'resultView': '6%',
-    '001': '10%',
-    '245': '30%',
-    'preferredTitle': '25%',
-    'date1': '5%',
-    'date2': '5%',
-    'name': '15%',
-    'tagHighlighted': '5%',
-    'countDoc': '9%'
-  };
+export const columnWidthMapper = (isBibsOnly:?boolean, isAuthOnly:?boolean = true) => {
+  let widthMapper = {};
+  if (isBibsOnly === true) {
+    widthMapper = {
+      'resultView': '5%',
+      '001': '10%',
+      '245': '30%',
+      'preferredTitle': '10%',
+      'name': '10%',
+      'subject': '10%',
+      'date1': '5%',
+      'date2': '5%',
+      'format': '5%',
+      'tagHighlighted': '5%',
+      'countDoc': '5%'
+    };
+  }
+  if (isAuthOnly === true) {
+    widthMapper = {
+      'resultView': '5%',
+      '001': '15%',
+      '245': '30%',
+      'preferredTitle': '15%',
+      'date1': '5%',
+      'date2': '5%',
+      'name': '15%',
+      'tagHighlighted': '5%',
+      'countDoc': '5%'
+    };
+  }
+  if ((isAuthOnly === true && isBibsOnly === true) || (isAuthOnly === false && isBibsOnly === false)) {
+    widthMapper = {
+      'resultView': '5%',
+      '001': '15%',
+      '245': '30%',
+      'preferredTitle': '15%',
+      'name': '15%',
+      'tagHighlighted': '10%',
+      'countDoc': '10%'
+    };
+  }
+  return widthMapper;
 };
 
 export const columnMapperForAssociated = {

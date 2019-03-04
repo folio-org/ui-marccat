@@ -50,13 +50,10 @@ export class BrowseResults extends React.Component<Props, S> {
     const { dispatch, store } = this.props;
     const id = meta.headingNumber;
     const containsAuthorities = meta.countAuthorities > 0;
-    const indexFilter = store.getState().form.searchForm.values['selectIndexes-0'];
-    const conditionFilter = store.getState().form.searchForm.values['selectCondition-0'];
+    const indexFilter = store.getState().form.searchForm.values.selectIndexes;
+    const conditionFilter = store.getState().form.searchForm.values.selectCondition;
     const indexForQuery =
-    findYourQueryFromBrowse[
-      indexFilter
-        .concat('-')
-        .concat(conditionFilter)];
+    findYourQueryFromBrowse[indexFilter + '-' + conditionFilter];
     const baseQuery = indexForQuery.concat(id);
     if (containsAuthorities) {
       dispatch({ type: ActionTypes.AUTH_DETAILS_BROWSE, query: baseQuery, isAuthority: true });

@@ -12,8 +12,16 @@ import { resultsFormatter, columnMapper, columnWidthMapper, renderColumn } from 
 import { EmptyMessage, NoResultsMessage } from '../../../../lib/components/Message';
 import * as C from '../../../../utils/Constant';
 import { FormReducer } from '../../../../redux/helpers/StoreReducer';
+import { ActionTypes } from '../../../../redux/actions/Actions';
+
 
 class SearchResultPane extends React.Component<Props, {}> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+    };
+  }
+
     renderVisibleColumns = () => {
       const { store } = this.props;
       const form = FormReducer.resolve(store, 'checkboxForm');
@@ -53,7 +61,6 @@ class SearchResultPane extends React.Component<Props, {}> {
 
     render() {
       const {
-        marcJSONRecords,
         isFetching,
         firstMenu,
         lastMenu,
@@ -62,16 +69,22 @@ class SearchResultPane extends React.Component<Props, {}> {
         noResults,
         bibliographicResults,
         authorityResults,
+        queryMoreBib,
+        queryMoreAuth,
+        countMoreData,
         isReady,
         handleDetails,
         translate,
         bibsOnly,
         autOnly,
         messageNoContent,
+        containerMarcJSONRecords,
+        store
       } = this.props;
       return (
         <Pane
-          padContent={(marcJSONRecords.length > 0) || isFetching}
+          padContent={(containerMarcJSONRecords.length > 0) || isFetching}
+          autosize
           defaultWidth="fill"
           actionMenu={ActionMenu}
           paneTitle={translate({ id: 'ui-marccat.search.record' })}
@@ -79,20 +92,27 @@ class SearchResultPane extends React.Component<Props, {}> {
           appIcon={<AppIcon app={C.META.ICON_TITLE} />}
           firstMenu={firstMenu}
           lastMenu={lastMenu}
+          onScroll={(e) => {
+            const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+            if (bottom) {
+              store.dispatch({ type: ActionTypes.SEARCH, queryBib: queryMoreBib, queryAuth: queryMoreAuth, from: parseInt(countMoreData, 10) + 1, to: parseInt(countMoreData, 10) + 100, dataOld: mergedRecord, oldBibArray: bibliographicResults, oldAuthArray: authorityResults });
+            }
+          }
+          }
         >
           {
             (isFetching) ?
               <Icon icon="spinner-ellipsis" /> :
-              ((!isFetching && noResults && !(bibliographicResults === undefined && authorityResults === undefined))) ?
+              ((!isFetching && noResults && mergedRecord.length === 0)) ?
                 <NoResultsMessage {...this.props} /> :
                 (isReady) ?
                   <MultiColumnList
                     id="data-test-search-results-table"
                     defaultWidth="fill"
-                    columnWidths={columnWidthMapper(false, false)}
+                    columnWidths={columnWidthMapper(bibsOnly, autOnly)}
                     rowMetadata={['001', 'recordView']}
                     onRowClick={handleDetails}
-                    contentData={marcJSONRecords}
+                    contentData={mergedRecord}
                     formatter={resultsFormatter(bibsOnly, autOnly)}
                     columnMapping={columnMapper(bibsOnly, autOnly)}
                     visibleColumns={renderColumn(bibsOnly, autOnly)}

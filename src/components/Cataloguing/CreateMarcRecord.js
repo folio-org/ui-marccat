@@ -30,8 +30,9 @@ import { buildUrl } from '../../redux/helpers/Utilities';
 import * as C from '../../utils/Constant';
 
 import { StoreReducer } from '../../redux';
-import { SUBFIELD_DELIMITER, RECORD_FIELD_STATUS, TAG_WITH_NO_HEADING_ASSOCIATED } from './Utils/MarcUtils';
+import { RECORD_FIELD_STATUS, TAG_WITH_NO_HEADING_ASSOCIATED } from './Utils/MarcUtils';
 import style from './Style/style.css';
+import { headingAction } from './Marc/Action/MarcActionCreator';
 
 
 type P = {
@@ -83,35 +84,27 @@ export class CreateMarcRecord extends React.Component<P, {}> {
       });
   }
 
+  createNewHeading = (item) => {
+    const { dispatch, emptyRecord } = this.props;
+    const heading = {
+      indicator1: item.ind1 || '',
+      indicator2: item.ind2 || '',
+      stringText: item.displayValue,
+      tag: item.code
+    };
+    const id = emptyRecord.results.id;
+    dispatch(headingAction(id, heading));
+  };
+
   onUpdate = (item) => {
     const tag = Object.assign({}, item);
     const { store: { getState } } = this.props;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
-    const heading = {
-      indicator1: item.ind1 || '',
-      indicator2: item.ind2 || '',
-      stringText: SUBFIELD_DELIMITER + item.displayValue,
-      tag: item.code
-    };
     if (tag.variableField) {
       this.editHeading(tag);
     } else if (!cretaeHeadingForTag) {
-      post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
-        .then((r) => {
-          return r.json();
-        }).then((data) => {
-          tagVariableData.filter(t => t.code === item.code).map(k => {
-            k.variableField = {
-              ind1: data.indicator1 || " ",
-              ind2: data.indicator2 || " ",
-              displayValue: data.stringText,
-              keyNumber: data.headingNumber,
-            };
-            k.fieldStatus = RECORD_FIELD_STATUS.NEW;
-            return data;
-          });
-        });
+      this.createNewHeading(item);
     } else {
       tagVariableData.filter(t => t.code === item.code).map(k => {
         k.variableField = {
@@ -130,12 +123,15 @@ export class CreateMarcRecord extends React.Component<P, {}> {
   onDelete = () => {};
 
   saveRecord = () => {
+    const { reset } = this.props;
     const body = this.composeBodyJson();
     post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), body)
       .then(() => {
         this.showMessage('Record saved with success');
+        // dispatch({ type: ActionTypes.DETAILS, query: id, recordType: 1 });
         setTimeout(() => {
           this.handleClose();
+          reset();
         }, 2000);
       }).catch(() => {
         this.showMessage('Error on saved record!');
@@ -148,57 +144,9 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     const formData = getState().form.bibliographicRecordForm.values;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
 
-    const tag006Values = [];
-    const tag007Values = [];
-    const tag008Values = [];
-
     // Set leader
     if (!bibliographicRecord) bibliographicRecord = emptyRecord;
     bibliographicRecord.leader.value = formData.Leader;
-
-    // populate tag 006 tag 007 tag 008
-    Object.keys(formData)
-      .forEach((z) => {
-        if (z.split('-')[0] === 'Tag006' || z === 'Tag006') {
-          tag006Values.push({
-            name: z.split('-')[1] || 'headerTypeCode',
-            value: formData[z]
-          });
-        }
-        if (z.split('-')[0] === 'Tag007' || z === 'Tag007') {
-          tag007Values.push({
-            name: z.split('-')[1] || 'headerTypeCode',
-            value: formData[z]
-          });
-        }
-        if (z.split('-')[0] === 'Tag008' || z === 'Tag008') {
-          tag008Values.push({
-            name: z.split('-')[1] || 'headerTypeCode',
-            value: formData[z]
-          });
-        }
-      });
-
-    bibliographicRecord.fields
-      .filter(f => f.code !== '001' || f.code !== '003' || f.code !== '005')
-      .forEach(f => {
-        if (f.code === '006') {
-          tag006Values.forEach(v => {
-            f.fixedField[v.name] = v.value;
-          });
-        }
-        if (f.code === '007') {
-          tag007Values.forEach(v => {
-            f.fixedField[v.name] = v.value;
-          });
-        }
-        if (f.code === '008') {
-          tag008Values.forEach(v => {
-            f.fixedField[v.name] = v.value;
-          });
-        }
-      });
-
 
     const recordTemplate = Object.assign({}, emptyRecord);
     recordTemplate.id = 408;
@@ -213,10 +161,11 @@ export class CreateMarcRecord extends React.Component<P, {}> {
   }
 
   handleClose = () => {
-    const { dispatch, router, toggleFilterPane } = this.props;
+    const { dispatch, router, toggleFilterPane, emptyRecord } = this.props;
     dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', filterChecked: false });
     toggleFilterPane();
-    router.push('/marccat/search');
+    const id = emptyRecord.id;
+    router.push(`/marccat/search?id=${id}`);
   };
 
   showMessage(message: string) {

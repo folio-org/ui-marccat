@@ -55,6 +55,8 @@ export const SEPARATOR = ';;;';
 export const EMPTY_PARAMETER = -1;
 export const EMPTY_MESSAGE = '';
 export const SPACED_STRING = ' ';
+// eslint-disable-next-line quotes
+export const SPACED_STRING_DOUBLE_QUOTE = " ";
 
 // SETTINGS
 export const SETTINGS = {

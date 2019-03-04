@@ -1,6 +1,6 @@
-import { SUBFIELD_DELIMITER } from './MarcUtils';
 import { ACTION } from '../../../redux/helpers/Action';
 import { ENDPOINT } from './Constant';
+import { EMPTY_MESSAGE } from '../../../utils/Constant';
 
 // MARC action creator
 
@@ -13,7 +13,7 @@ export const headingAction = (payload) => {
     type: ACTION.CREATE,
     data: {
       path: ENDPOINT.CREATE_HEADING_URL,
-      type: `${payload.id}-${payload.tag}-` + Date.now(),
+      type: `${payload.id}-${payload.tag}-`,
       params: ENDPOINT.DEFAULT_LANG_VIEW,
     },
     payload
@@ -29,7 +29,7 @@ export const deleteRecordAction = (id, payload) => {
     type: ACTION.DELETE,
     data: {
       path: ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id,
-      type: `deleteRecord-${id}-` + Date.now(),
+      type: `deleteRecord-${id}`,
       params: 'view=1',
       id,
       payload
@@ -45,9 +45,9 @@ export const deleteRecordAction = (id, payload) => {
 export const createNewHeading = (item, props) => {
   const { dispatch } = props;
   const heading = {
-    indicator1: item.ind1 || '',
-    indicator2: item.ind2 || '',
-    stringText: SUBFIELD_DELIMITER + item.displayValue,
+    indicator1: item.ind1 || EMPTY_MESSAGE,
+    indicator2: item.ind2 || EMPTY_MESSAGE,
+    stringText:  item.displayValue,
     tag: item.code
   };
   dispatch(headingAction(heading));

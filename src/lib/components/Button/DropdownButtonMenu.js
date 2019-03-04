@@ -51,7 +51,7 @@ export default function DropdownButtonMenu({ ...props }:P) {
           data-role="toggle"
           align="end"
           bottomMargin0
-          aria-haspopup="true"
+          aria-haspopup
           buttonStyle="primary"
         >
           <Icon

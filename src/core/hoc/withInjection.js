@@ -6,9 +6,7 @@
  */
 import * as React from 'react';
 import { withRoot } from '@folio/stripes-core/src/components/Root/RootContext';
-import { connect } from '@folio/stripes/connect';
 import { injectIntl } from 'react-intl';
-import { META } from '../../utils/Constant';
 
 /**
  * HOC
@@ -30,5 +28,5 @@ export default function injectCommonProp<Props: {
       />
     );
   }
-  return withRoot(injectIntl(connect(WrapperComponent, META.MODULE_NAME)));
+  return withRoot(injectIntl(WrapperComponent));
 }

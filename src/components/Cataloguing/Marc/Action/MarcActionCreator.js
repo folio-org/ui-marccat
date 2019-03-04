@@ -6,12 +6,12 @@ import { ENDPOINT } from '../../Utils/Constant';
  *
  * @param {*} payload
  */
-export const headingAction = (payload) => {
+export const headingAction = (id, payload) => {
   return {
     type: ACTION.CREATE,
     data: {
       path: ENDPOINT.CREATE_HEADING_URL,
-      type: `${payload.id}-${payload.tag}-` + Date.now(),
+      type: `${id}-${payload.tag}`,
       params: ENDPOINT.DEFAULT_LANG_VIEW,
     },
     payload

@@ -1,4 +1,3 @@
-/* eslint-disable quotes */
 import React from 'react';
 import { connect } from 'react-redux';
 import { includes, difference, union, sortBy } from 'lodash';
@@ -22,7 +21,7 @@ import { injectCommonProp } from '../../core';
 import { ActionTypes } from '../../redux/actions';
 import { buildUrl, findParam } from '../../redux/helpers/Utilities';
 import { post, put } from '../../core/api/HttpService';
-import { SUBFIELD_DELIMITER, TAG_WITH_NO_HEADING_ASSOCIATED, RECORD_FIELD_STATUS } from './Utils/MarcUtils';
+import { TAG_WITH_NO_HEADING_ASSOCIATED, RECORD_FIELD_STATUS } from './Utils/MarcUtils';
 import VariableFields from './Marc/VariableFields';
 import { StoreReducer } from '../../redux';
 import { deleteRecordAction } from './Utils/MarcApiUtils';
@@ -47,15 +46,12 @@ class EditMarcRecord extends React.Component {
     dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', filterChecked: false });
     toggleFilterPane();
     router.push('/marccat/search');
-    // router.push(`/marccat/search?edited=${true}`);
   };
 
   saveRecord = () => {
-    // const { dispatch } = this.props;
     const body = this.composeBodyJson();
     post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), body).then(() => {
       this.showMessage('Record update with success');
-      // dispatch({ type: ActionTypes.DETAILS, query: id, recordType: 1 });
       setTimeout(() => {
         this.handleClose();
       }, 2000);
@@ -70,9 +66,9 @@ class EditMarcRecord extends React.Component {
     const tagVariableData = getState().form.marcEditableListForm.values.items;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const heading = {
-      indicator1: item.ind1 || '',
-      indicator2: item.ind2 || '',
-      stringText: SUBFIELD_DELIMITER + item.displayValue,
+      indicator1: item.ind1 || C.EMPTY_MESSAGE,
+      indicator2: item.ind2 || C.EMPTY_MESSAGE,
+      stringText: item.displayValue,
       tag: item.code
     };
     if (!cretaeHeadingForTag) {
@@ -82,8 +78,8 @@ class EditMarcRecord extends React.Component {
         }).then((data) => {
           tagVariableData.filter(t => t.code === item.code).map(k => {
             k.variableField = {
-              ind1: data.indicator1 || " ",
-              ind2: data.indicator2 || " ",
+              ind1: data.indicator1 || C.SPACED_STRING_DOUBLE_QUOTE,
+              ind2: data.indicator2 || C.SPACED_STRING_DOUBLE_QUOTE,
               displayValue: data.stringText,
               keyNumber: data.headingNumber,
             };
@@ -94,9 +90,9 @@ class EditMarcRecord extends React.Component {
     } else {
       tagVariableData.filter(t => t.code === item.code).map(k => {
         k.variableField = {
-          ind1: item.ind1 || " ",
-          ind2: item.ind2 || " ",
-          displayValue: item.displayValue || " ",
+          ind1: item.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
+          ind2: item.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
+          displayValue: item.displayValue || C.SPACED_STRING_DOUBLE_QUOTE,
           keyNumber: 0,
         };
         k.fieldStatus = RECORD_FIELD_STATUS.NEW;
@@ -124,8 +120,8 @@ class EditMarcRecord extends React.Component {
         tagVariableData.filter(t => t.code === item.code).map(k => {
           k.fieldStatus = 'changed';
           k.variableField = {
-            ind1: data.indicator1 || " ",
-            ind2: data.indicator2 || " ",
+            ind1: data.indicator1 || C.SPACED_STRING_DOUBLE_QUOTE,
+            ind2: data.indicator2 || C.SPACED_STRING_DOUBLE_QUOTE,
             oldKeyNumber: k.variableField.keyNumber,
             displayValue: data.stringText,
             keyNumber: data.headingNumber,

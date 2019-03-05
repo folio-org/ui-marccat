@@ -32,7 +32,7 @@ import * as C from '../../utils/Constant';
 import { StoreReducer } from '../../redux';
 import { RECORD_FIELD_STATUS, TAG_WITH_NO_HEADING_ASSOCIATED } from './Utils/MarcUtils';
 import style from './Style/style.css';
-import { headingAction } from './Actions/MarcActionCreator';
+import { headingAction, headingDeleteAction } from './Actions/MarcActionCreator';
 
 
 type P = {
@@ -141,13 +141,22 @@ export class CreateMarcRecord extends React.Component<P, {}> {
 
 
   onCreate = () => { this.showMessage('Tag Saved sucesfully'); }
-  onDelete = () => {};
+  onDelete = (item) => {
+    const { dispatch } = this.props;
+    const heading = {
+      indicator1: item.ind1 || '',
+      indicator2: item.ind2 || '',
+      stringText: item.displayValue,
+      tag: item.code
+    };
+    dispatch(headingDeleteAction(heading));
+  };
 
   saveRecord = () => {
     const { reset } = this.props;
     const body = this.composeBodyJson();
     post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), body)
-      .then(() => {
+      .then((r) => {
         this.showMessage('Record saved with success');
         // dispatch({ type: ActionTypes.DETAILS, query: id, recordType: 1 });
         setTimeout(() => {

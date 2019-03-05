@@ -23,6 +23,23 @@ export const headingAction = (id, payload) => {
  *
  * @param {*} payload
  */
+export const headingDeleteAction = (payload) => {
+  return {
+    type: ACTION.DELETE,
+    data: {
+      path: ENDPOINT.DELETE_HEADING_URL + '?' + ENDPOINT.DEFAULT_LANG_VIEW,
+      type: `deleteHeading-${payload.tag}-` + Date.now(),
+      params: ENDPOINT.DEFAULT_LANG_VIEW,
+      payload
+    },
+    payload
+  };
+};
+
+/**
+ *
+ * @param {*} payload
+ */
 export const changeDisplayValueAction = (tag, payload) => {
   return {
     type: ACTION.CREATE,

@@ -56,7 +56,7 @@ class ResultMainPane extends React.Component<{}, {}> {
                   <MultiColumnList
                     contentData={browseRecords}
                     autosize
-                    isEmptyMessage={C.EMPTY_MESSAGE}
+                    isEmptyMessage={C.EMPTY_STRING}
                     formatter={browseFormatter}
                     onRowClick={handleBrowseDetails()}
                     rowMetadata={['Access point', 'Authority Records', 'Bibliographic Records']}

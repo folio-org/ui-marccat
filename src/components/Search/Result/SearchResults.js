@@ -314,7 +314,7 @@ export class SearchResults extends React.Component<P, {}> {
     const containerMarcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForAssociatedBibList(mergedRecord) : [];
     const messageAuth = (totalAuthCount && totalAuthCount > 0) ? totalAuthCount + ' Authority records ' : ' No Authority records found ';
     const messageBib = (totalBibCount && totalBibCount > 0) ? totalBibCount + ' Bibliographic records ' : ' No Bibliographic records found ';
-    let message = C.EMPTY_MESSAGE;
+    let message = C.EMPTY_STRING;
     if (autOnly) {
       message = messageAuth;
     }

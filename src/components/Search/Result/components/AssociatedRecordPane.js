@@ -25,7 +25,7 @@ class AssociatedRecordPane extends React.Component<Props, {}> {
           id="pane-associated-record-details"
           defaultWidth="25%"
           paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
-          paneSub={C.EMPTY_MESSAGE}
+          paneSub={C.EMPTY_STRING}
           appIcon={<AppIcon app={C.META.ICON_TITLE} />}
           actionMenu={ActionMenu}
           dismissible

@@ -49,7 +49,7 @@ const defaultProps = {
   createButtonLabel: '+ Add new',
   fieldComponents: {},
   itemTemplate: {},
-  uniqueField: 'id',
+  uniqueField: 'code',
 };
 
 class EditableListForm extends React.Component {
@@ -133,11 +133,10 @@ class EditableListForm extends React.Component {
   }
 
   onDelete(fields, index) {
-    const { uniqueField } = this.props;
     const item = fields.get(index);
     sortBy(this.props.contentData, 'code');
     this.props.contentData.splice(index, 1);
-    const res = this.props.onDelete(item[uniqueField]);
+    const res = this.props.onDelete(item);
     Promise.resolve(res).then(
       () => {
         fields.remove(index);

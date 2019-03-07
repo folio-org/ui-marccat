@@ -71,10 +71,10 @@ export class CreateMarcRecord extends React.Component<P, {}> {
         return r.json();
       }).then((data) => {
         tagVariableData.filter(t => t.code === item.code).map(k => {
-          k.fieldStatus = 'changed';
+          k.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
           k.variableField = {
-            ind1: data.indicator1 || " ",
-            ind2: data.indicator2 || " ",
+            ind1: data.indicator1 || C.SPACED_STRING_DOUBLE_QUOTE,
+            ind2: data.indicator2 || C.SPACED_STRING_DOUBLE_QUOTE,
             oldKeyNumber: k.variableField.keyNumber,
             displayValue: data.stringText,
             keyNumber: data.headingNumber,
@@ -87,8 +87,8 @@ export class CreateMarcRecord extends React.Component<P, {}> {
   createNewHeading = (item) => {
     const { dispatch, emptyRecord } = this.props;
     const heading = {
-      indicator1: item.ind1 || '',
-      indicator2: item.ind2 || '',
+      indicator1: item.ind1 || C.EMPTY_STRING,
+      indicator2: item.ind2 || C.EMPTY_STRING,
       stringText: item.displayValue,
       tag: item.code
     };
@@ -102,8 +102,8 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     const tagVariableData = getState().form.marcEditableListForm.values.items;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const heading = {
-      indicator1: item.ind1 || '',
-      indicator2: item.ind2 || '',
+      indicator1: item.ind1 || C.EMPTY_STRING,
+      indicator2: item.ind2 || C.EMPTY_STRING,
       stringText: item.displayValue,
       tag: item.code
     };
@@ -116,8 +116,8 @@ export class CreateMarcRecord extends React.Component<P, {}> {
         }).then((data) => {
           tagVariableData.filter(t => t.code === item.code).map(k => {
             k.variableField = {
-              ind1: data.indicator1 || " ",
-              ind2: data.indicator2 || " ",
+              ind1: data.indicator1 || C.SPACED_STRING_DOUBLE_QUOTE,
+              ind2: data.indicator2 || C.SPACED_STRING_DOUBLE_QUOTE,
               displayValue: data.stringText,
               keyNumber: data.headingNumber,
             };
@@ -128,9 +128,9 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     } else {
       tagVariableData.filter(t => t.code === item.code).map(k => {
         k.variableField = {
-          ind1: item.ind1 || " ",
-          ind2: item.ind2 || " ",
-          displayValue: item.displayValue || " ",
+          ind1: item.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
+          ind2: item.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
+          displayValue: item.displayValue || C.SPACED_STRING_DOUBLE_QUOTE,
           keyNumber: 0,
         };
         k.fieldStatus = RECORD_FIELD_STATUS.NEW;
@@ -149,7 +149,6 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), body)
       .then(() => {
         this.showMessage('Record saved with success');
-        // dispatch({ type: ActionTypes.DETAILS, query: id, recordType: 1 });
         setTimeout(() => {
           this.handleClose();
           reset();

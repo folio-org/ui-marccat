@@ -9,7 +9,7 @@ import type { Props } from '../../../core';
 import { ActionTypes } from '../../../redux/actions';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
 import { resultsFormatterForAssociated, columnMapperForAssociated } from '../../../utils/Formatter';
-import { EMPTY_MESSAGE } from '../../../utils/Constant';
+import { EMPTY_STRING } from '../../../utils/Constant';
 
 type P = Props & {
     checkRecordType: Array<any>,
@@ -33,7 +33,7 @@ function AssociatedBib({ ...props }: P) {
       <MultiColumnList
         id="bib-associated"
         defaultWidth="30%"
-        isEmptyMessage={EMPTY_MESSAGE}
+        isEmptyMessage={EMPTY_STRING}
 
         columnWidths={
           {

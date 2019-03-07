@@ -31,6 +31,7 @@ import {
   searchAssociatedBibRecords,
   associatedBibDetailEpic,
   scanBrowsingRecords,
+  leaderEpic,
   browseDetailEpic,
   browseAuthorityDetailEpic,
   browseDetailAssociatedEpic,
@@ -93,6 +94,7 @@ export const epics = combineEpics(
   tag007ValuesEpic,
   tag008ValuesEpic,
   recordDetailEpic,
+  leaderEpic,
   dataEpic
 );
 export { StoreReducer } from './helpers/StoreReducer';

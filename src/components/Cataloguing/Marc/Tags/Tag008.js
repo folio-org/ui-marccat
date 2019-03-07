@@ -48,7 +48,7 @@ export class Tag008 extends React.Component<Props, {}> {
     const dropdown = getState().form.bibliographicRecordForm.values;
     Object.keys(getState().form.bibliographicRecordForm.registeredFields)
       .filter(k => k.split('-') !== undefined && k.split('-').shift() === 'Tag008')
-      .forEach(c => jsonReq[c.split('-')[1]] = C.SPACED_STRING);
+      .forEach(c => jsonReq[c.split('-')[1]] = C.EMPTY_SPACED_STRING);
     Object.keys(dropdown)
       .filter(k => k.split('-')
         .shift() === 'Tag008')
@@ -86,9 +86,6 @@ export class Tag008 extends React.Component<Props, {}> {
     if (!tag008ValuesResults) {
       this.populateFirstAccess();
     }
-    // } else {
-    //   this.changeDisplayValue();
-    // }
     const remappedValues = [];
     if (isChangedHeaderType && tag008ValuesResults) {
       const result = Object.keys(tag008ValuesResults.results).map((key) => tag008ValuesResults.results[key]);
@@ -115,7 +112,7 @@ export class Tag008 extends React.Component<Props, {}> {
             (tag008ValuesResults) &&
               remappedValues.map((elem) => {
                 return elem.map((item, idx) => {
-                  let exactDisplayValue = C.EMPTY_MESSAGE;
+                  let exactDisplayValue = C.EMPTY_STRING;
                   item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue));
                   return (
                     <Col xs={4} key={`tag008-${idx}`}>
@@ -123,7 +120,7 @@ export class Tag008 extends React.Component<Props, {}> {
                         name={`Tag008-${item.name}`}
                         id={`Tag008-${item.name}`}
                         component={Select}
-                        label={decamelizify(`${item.name}`, C.SPACED_STRING)}
+                        label={decamelizify(`${item.name}`, C.EMPTY_SPACED_STRING)}
                         dataOptions={item.dropdownSelect}
                         onChange={this.changeDisplayValue}
                         placeholder={exactDisplayValue}

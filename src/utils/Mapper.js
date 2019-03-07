@@ -118,7 +118,7 @@ const getFormat = (leader) => {
   case 't': return 'rare book or manuscript';
   case 'm': return 'software and e-resource';
   case 'r': return '3d object';
-  default: return C.EMPTY_MESSAGE;
+  default: return C.EMPTY_STRING;
   }
 };
 
@@ -128,10 +128,10 @@ const getMicroformat = (tag007) => {
   } else {
     const pos0 = tag007.substring(0, 1);
     switch (pos0) {
-    case 'h': if (getFormat === C.EMPTY_MESSAGE) {
+    case 'h': if (getFormat === C.EMPTY_STRING) {
       return 'Microform';
     } else return ', Microform';
-    default: return C.EMPTY_MESSAGE;
+    default: return C.EMPTY_STRING;
     }
   }
 };

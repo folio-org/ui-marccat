@@ -27,7 +27,7 @@ import {
 import { ActionTypes } from '../../../redux/actions/Actions';
 import { findYourQuery } from '../Filter';
 import { remapFilters } from '../../../utils/Mapper';
-import { EMPTY_MESSAGE } from '../../../utils';
+import { EMPTY_STRING } from '../../../utils';
 
 import styles from '../index.css';
 import { findParam } from '../../../redux';
@@ -42,7 +42,7 @@ class SearchPanel extends React.Component<P, {}> {
     super(props);
     this.state = {
       isBrowseRequested: false,
-      searchForm: [EMPTY_MESSAGE],
+      searchForm: [EMPTY_STRING],
       filterEnable: true,
       counter: [{}],
       leftBracketEnable: false,

@@ -9,7 +9,7 @@ import InventoryPluggableBtn from '../Button/Inventory';
 import type { Props } from '../../../core';
 import { getTag245, getTitle245, getTag100, getTitle100 } from '../../../utils/Mapper';
 import AssociatedBib from './AssociatedBib';
-import { EMPTY_MESSAGE } from '../../../utils/Constant';
+import { EMPTY_STRING } from '../../../utils/Constant';
 
 import style from '../../../styles/common.css';
 
@@ -33,8 +33,8 @@ function RecordDetails({ translate, ...props }: P) {
       >
         <div className={style.withSpace}>
           <KeyValue
-            label={tag245 === EMPTY_MESSAGE ? getTag100(recordDetailsArray) : tag245 + 'Title'}
-            value={title245 === EMPTY_MESSAGE ? getTitle100(recordDetailsArray) : title245}
+            label={tag245 === EMPTY_STRING ? getTag100(recordDetailsArray) : tag245 + 'Title'}
+            value={title245 === EMPTY_STRING ? getTitle100(recordDetailsArray) : title245}
           />
           {recordDetailsArray.map((item, i) => (
             <Row key={i}>

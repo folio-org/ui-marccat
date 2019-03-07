@@ -16,7 +16,7 @@ import {
 import { ActionTypes } from '../../../redux/actions/Actions';
 import type { Props } from '../../../core';
 import { getTag100, getTitle100, remapForAssociatedBibList } from '../../../utils/Mapper';
-import { EMPTY_MESSAGE } from '../../../utils/Constant';
+import { EMPTY_STRING } from '../../../utils/Constant';
 import { resultsFormatterForAssociated, columnMapperForAssociated } from '../../../utils/Formatter';
 import style from '../../../styles/common.css';
 
@@ -82,7 +82,7 @@ export class BrowseItemDetail extends React.Component<P, {
             <MultiColumnList
               id="bib-associated"
               defaultWidth="30%"
-              isEmptyMessage={EMPTY_MESSAGE}
+              isEmptyMessage={EMPTY_STRING}
               columnWidths={
                 {
                   'resultView': '20%',

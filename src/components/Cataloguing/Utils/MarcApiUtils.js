@@ -1,6 +1,6 @@
 import { ACTION } from '../../../redux/helpers/Action';
 import { ENDPOINT } from './Constant';
-import { EMPTY_MESSAGE } from '../../../utils/Constant';
+import { EMPTY_STRING } from '../../../utils/Constant';
 
 // MARC action creator
 
@@ -45,8 +45,8 @@ export const deleteRecordAction = (id, payload) => {
 export const createNewHeading = (item, props) => {
   const { dispatch } = props;
   const heading = {
-    indicator1: item.ind1 || EMPTY_MESSAGE,
-    indicator2: item.ind2 || EMPTY_MESSAGE,
+    indicator1: item.ind1 || EMPTY_STRING,
+    indicator2: item.ind2 || EMPTY_STRING,
     stringText:  item.displayValue,
     tag: item.code
   };

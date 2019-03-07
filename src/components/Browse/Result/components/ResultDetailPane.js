@@ -36,7 +36,7 @@ class ResultDetailPane extends React.Component<{}, {}> {
         dismissible
         defaultWidth="35%"
         paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
-        paneSub={C.EMPTY_MESSAGE}
+        paneSub={C.EMPTY_STRING}
         lastMenu={this.renderButtonMenu()}
         onClose={handleClosePanelDetails()}
       >

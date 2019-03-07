@@ -117,8 +117,7 @@ export function epic(action$, { getState }) {
       if (method === HTTP_METHOD.PUT || method === HTTP_METHOD.POST) {
         body = JSON.stringify(payload);
       }
-      
-      if (!body || body === undefined) body = payload;
+
       const promise = fetch(url, { headers, method, body })
         .then(response => Promise.all([response.ok, StoreReducer.parseResponseBody(response)]))
         .then(([ok, body]) => (ok ? body : Promise.reject(body.errors))); // eslint-disable-line no-shadow

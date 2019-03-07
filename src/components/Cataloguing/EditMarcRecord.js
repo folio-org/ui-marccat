@@ -66,8 +66,8 @@ class EditMarcRecord extends React.Component {
     const tagVariableData = getState().form.marcEditableListForm.values.items;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const heading = {
-      indicator1: item.ind1 || C.EMPTY_MESSAGE,
-      indicator2: item.ind2 || C.EMPTY_MESSAGE,
+      indicator1: item.ind1 || C.EMPTY_STRING,
+      indicator2: item.ind2 || C.EMPTY_STRING,
       stringText: item.displayValue,
       tag: item.code
     };

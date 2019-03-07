@@ -12,6 +12,7 @@ export const ENDPOINT = {
   VIEW_TEMPLATE_URL: '/record-templates',
   VIEW_TEMPLATE_URL_BY_ID: '/record-template/',
   EMPTY_RECORD_URL: '/bibliographic-record/from-template/',
+  FIXED_FIELD_BY_LEADER_URL: '/fixed-fields-code-groups-by-leader',
   TEMPLATE_TAG_URL: '/fixed-fields-code-groups',
   HEADER_TYPES_URL: '/header-types',
   CREATE_HEADING_URL: '/create-heading',

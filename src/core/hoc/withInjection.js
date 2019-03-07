@@ -18,11 +18,13 @@ export default function injectCommonProp<Props: {
     const { history, root: { store }, intl: { formatMessage } } = props;
     const state = store.getState();
     const data = state.marccat;
+    const dataStore = state.marccat.data;
     return (
       <Component
         {...props}
         store={store}
         data={data}
+        datastore={dataStore}
         router={history}
         translate={formatMessage}
       />

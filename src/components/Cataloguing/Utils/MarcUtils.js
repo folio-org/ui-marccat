@@ -3,7 +3,7 @@
 /* eslint-disable no-bitwise */
 /* eslint-disable one-var */
 import { range, union } from 'lodash';
-import { SPACED_STRING } from '../../../utils/Constant';
+import { EMPTY_SPACED_STRING } from '../../../utils/Constant';
 
 export const RECORD_FIELD_STATUS = {
   NEW: 'new',
@@ -114,7 +114,7 @@ export const firstCharUppercase = s => s.charAt(0).toUpperCase() + s.slice(1);
  */
 export const decamelizify = (str, separator) => {
   // eslint-disable-next-line no-param-reassign
-  separator = typeof separator === 'undefined' ? SPACED_STRING : separator;
+  separator = typeof separator === 'undefined' ? EMPTY_SPACED_STRING : separator;
 
   return firstCharUppercase(str)
     .replace(/([a-z\d])([A-Z])/g, '$1' + separator + '$2')

@@ -9,7 +9,7 @@ import { Row, Col, Select } from '@folio/stripes/components';
 import { injectCommonProp, Props } from '../../../../core';
 import { ActionTypes } from '../../../../redux/actions';
 import { decamelizify, FIXED_FIELD_TEMPLATE, RECORD_FIELD_STATUS, TAGS } from '../..';
-import { SPACED_STRING, EMPTY_MESSAGE } from '../../../../utils/Constant';
+import { EMPTY_SPACED_STRING, EMPTY_STRING } from '../../../../utils/Constant';
 
 export class Tag007 extends React.Component<Props, {}> {
   constructor(props:Props) {
@@ -57,7 +57,7 @@ export class Tag007 extends React.Component<Props, {}> {
             (isChangedHeaderType === true && tag007ValuesResults) &&
               remappedValues.map(elem => {
                 return elem.map(item => {
-                  let exactDisplayValue = EMPTY_MESSAGE;
+                  let exactDisplayValue = EMPTY_STRING;
                   item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue));
                   return (
                     <Col xs={4}>
@@ -65,7 +65,7 @@ export class Tag007 extends React.Component<Props, {}> {
                         component={Select}
                         name={`Tag007-${item.name}`}
                         id={`Tag007-${item.name}`}
-                        label={decamelizify(`${item.name}`, SPACED_STRING)}
+                        label={decamelizify(`${item.name}`, EMPTY_SPACED_STRING)}
                         dataOptions={item.dropdownSelect}
                         placeholder={exactDisplayValue}
                       />

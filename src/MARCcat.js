@@ -32,7 +32,7 @@ class MARCcat extends React.Component<Props, {}> {
             actionMenu={this.searchPanelActionMenu}
             onClose={toggleFilterPane}
             paneTitle={translate({ id: 'ui-marccat.searchAndFilter' })}
-            paneSub={C.EMPTY_MESSAGE}
+            paneSub={C.EMPTY_STRING}
           >
             <SearchPanel {...this.props} />
           </Pane>}

@@ -7,10 +7,11 @@ import { Field } from 'redux-form';
 import { Row, Col, Select } from '@folio/stripes/components';
 import type { Props } from '../../../core';
 import MarcField from './MarcField';
-import { EMPTY_MESSAGE, SPACED_STRING } from '../../../utils/Constant';
+import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions/Actions';
 import { decamelizify, TAGS } from '../Utils/MarcUtils';
 import style from '../Style/style.css';
+import { fixedFieldByLeaderAction } from '../Actions/MarcActionCreator';
 
 
 type P = {
@@ -62,12 +63,11 @@ export default class MarcLeader extends React.Component<P, {
     });
   }
 
-  handleTag008Change = (k) => {
-    const { dispatch, leaderValue } = this.props;
-    if (k === 'm') {
-      dispatch({ type: ActionTypes.SETTINGS, data:{ currentTag008HeaderType: 32 } });
-      dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: 32 });
-    }
+  handleTag008Change = () => {
+    const { dispatch } = this.props;
+    const { leader } = this.state;
+    const payload = { leader };
+    dispatch(fixedFieldByLeaderAction(payload));
   };
 
   handleChange = () => {
@@ -80,7 +80,7 @@ export default class MarcLeader extends React.Component<P, {
           switch (k.split('-')[1]) {
           case 'itemRecordStatusCode': this.replaceAt(leader, 5, formData[k]); break;
           case 'itemRecordTypeCode': this.replaceAt(leader, 6, formData[k]); this.handleTag008Change(formData[k]); break;
-          case 'itemBibliographicLevelCode': this.replaceAt(leader, 7, formData[k]); break;
+          case 'itemBibliographicLevelCode': this.replaceAt(leader, 7, formData[k]); this.handleTag008Change(formData[k]); break;
           case 'itemControlTypeCode': this.replaceAt(leader, 8, formData[k]); break;
           case 'characterCodingSchemeCode': this.replaceAt(leader, 9, formData[k]); break;
           case 'encodingLevel': this.replaceAt(leader, 17, formData[k]); break;
@@ -118,14 +118,14 @@ export default class MarcLeader extends React.Component<P, {
                 {leaderData &&
                     remappedValues.map(elem => {
                       return elem.map((item, i) => {
-                        let exactDisplayValue = EMPTY_MESSAGE;
+                        let exactDisplayValue = EMPTY_STRING;
                         item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue));
                         return (
                           <Col xs={4} key={i}>
                             <Field
                               id={`${item.name}`}
                               name={`Leader-${item.name}`}
-                              label={decamelizify(`${item.name}`, SPACED_STRING)}
+                              label={decamelizify(`${item.name}`, EMPTY_SPACED_STRING)}
                               component={Select}
                               dataOptions={item.dropdownSelect}
                               placeholder={exactDisplayValue}

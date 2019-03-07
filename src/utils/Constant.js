@@ -13,7 +13,7 @@ export const ENDPOINT = {
     'x-okapi-tenant': 'tnx',
   },
   DEFAULT_LANG_VIEW: 'lang=ita&view=1',
-  BASE_URL: 'http://151.1.165.20:8080/marccat',
+  BASE_URL: 'http://127.0.0.1:8080/marccat',
   MERGED_SEARCH_URL: '/mergedSearch',
   SEARCH_URL: '/searchVertical',
   SEARCH_URL_JSON: '/search',
@@ -53,8 +53,8 @@ export const STATE_MANAGEMENT = {
 
 export const SEPARATOR = ';;;';
 export const EMPTY_PARAMETER = -1;
-export const EMPTY_MESSAGE = '';
-export const SPACED_STRING = ' ';
+export const EMPTY_STRING = '';
+export const EMPTY_SPACED_STRING = ' ';
 // eslint-disable-next-line quotes
 export const SPACED_STRING_DOUBLE_QUOTE = " ";
 

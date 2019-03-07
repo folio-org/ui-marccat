@@ -124,7 +124,7 @@ export class BrowseResults extends React.Component<Props, S> {
                   <MultiColumnList
                     contentData={browseRecords}
                     autosize
-                    isEmptyMessage={C.EMPTY_MESSAGE}
+                    isEmptyMessage={C.EMPTY_STRING}
                     formatter={browseFormatter}
                     onRowClick={this.handleBrowseDetails}
                     rowMetadata={['Access point', 'Authority Records', 'Bibliographic Records']}
@@ -170,7 +170,7 @@ export class BrowseResults extends React.Component<Props, S> {
           id="pane-details"
           defaultWidth="25%"
           paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
-          paneSub={C.EMPTY_MESSAGE}
+          paneSub={C.EMPTY_STRING}
           appIcon={<AppIcon app={C.META.ICON_TITLE} />}
           actionMenu={this.getActionMenu}
           dismissible

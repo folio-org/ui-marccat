@@ -6,7 +6,7 @@ const execSync = (cmd) => {
 };
 
 const lunchBuild = () => {
-  execSync('stripes build --output dist/');
+  execSync('stripes build --okapi http://folio-q4.aws.indexdata.com:9130 --output dist/');
 };
 
 const run = () => {

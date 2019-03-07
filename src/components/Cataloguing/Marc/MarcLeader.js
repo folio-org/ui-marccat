@@ -9,7 +9,7 @@ import type { Props } from '../../../core';
 import MarcField from './MarcField';
 import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions/Actions';
-import { decamelizify, TAGS } from '../Utils/MarcUtils';
+import { decamelizify } from '../Utils/MarcUtils';
 import style from '../Style/style.css';
 import { fixedFieldByLeaderAction } from '../Actions/MarcActionCreator';
 

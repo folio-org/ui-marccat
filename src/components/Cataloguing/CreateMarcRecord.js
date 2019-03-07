@@ -141,17 +141,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
 
 
   onCreate = () => { this.showMessage('Tag Saved sucesfully'); }
-  onDelete = (item) => {
-    const { dispatch } = this.props;
-    const heading = {
-      indicator1: item.ind1 || C.EMPTY_STRING,
-      indicator2: item.ind2 || C.EMPTY_STRING,
-      stringText: item.displayValue,
-      category: item.variableField.categoryCode,
-      tag: item.code
-    };
-    // dispatch(headingDeleteAction(heading));
-  };
+  onDelete = () => {};
 
   saveRecord = () => {
     const { reset } = this.props;

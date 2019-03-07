@@ -13,7 +13,6 @@ import { decamelizify } from '../..';
 import { RECORD_FIELD_STATUS, TAGS } from '../../Utils/MarcUtils';
 import { changeDisplayValueAction } from '../../Actions/MarcActionCreator';
 import * as C from '../../../../utils/Constant';
-import { StoreReducer } from '../../../../redux';
 
 
 export class Tag008 extends React.Component<Props, {}> {
@@ -82,9 +81,8 @@ export class Tag008 extends React.Component<Props, {}> {
   };
 
   render() {
-    const { headerTypesResult, tag008ValuesResults, store } = this.props;
+    const { headerTypesResult, tag008ValuesResults } = this.props;
     const { isChangedHeaderType } = this.state;
-    // const tag008FromLeader = StoreReducer.get(store, 'data', 'leaderData');
     if (!tag008ValuesResults) {
       this.populateFirstAccess();
     }

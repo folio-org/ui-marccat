@@ -1,7 +1,20 @@
 import { ACTION } from '../../../redux/helpers/Action';
-import { ENDPOINT } from '../Utils/Constant';
+import { EMPTY_STRING, ENDPOINT } from '../../Shared/Constants';
 
-// MARC API action creator
+// MARC action creator utility
+
+/**
+ *
+ * @param {*} payload
+ */
+export const resetFilter = () => {
+  return {
+    type: ActionTypes.FILTERS,
+    payload: {},
+    filterName: EMPTY_STRING,
+    filterChecked: false
+  };
+};
 
 /**
  *

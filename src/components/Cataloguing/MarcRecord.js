@@ -15,6 +15,7 @@ class MarcRecord extends React.Component<Props, {}> {
     this.state = {
       page: RECORD_ACTION.CREATION_MODE
     };
+    this.handleClose = this.handleClose.bind(this);
   }
 
   componentDidMount() {
@@ -25,6 +26,14 @@ class MarcRecord extends React.Component<Props, {}> {
   createNewHeading = () => {
     const { dispatch } = this.props;
     dispatch(headingAction);
+  };
+
+  handleClose = () => {
+    const { dispatch, router, toggleFilterPane, emptyRecord } = this.props;
+    dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', filterChecked: false });
+    toggleFilterPane();
+    const id = emptyRecord.id;
+    router.push(`/marccat/search?id=${id}`);
   };
 
   render() {

@@ -7,7 +7,7 @@ import { ajax } from 'rxjs/observable/dom/ajax';
 import { ActionTypes } from '../actions/Actions';
 import * as marccatActions from '../actions';
 import { buildUrl } from '../helpers/Utilities';
-import { ENDPOINT, LockEntityType } from '../../utils/Constant';
+import { ENDPOINT, LockEntityType } from '../../components/Shared/Constants';
 import { fetchFailure } from '../actions/ActionCreator';
 import { StoreReducer } from '..';
 

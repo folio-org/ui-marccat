@@ -1,11 +1,9 @@
-// action types
+// action
 export const REQUEST_MAKE = '@@ui-marccat/REQUEST_MAKE';
 export const REQUEST_REDUCE = '@@ui-marccat/REQUEST_REDUCE';
 export const REQUEST_RESOLVE = '@@ui-marccat/REQUEST_RESOLVE';
 export const REQUEST_REJECT = '@@ui-marccat/REQUEST_REJECT';
 export const REQUEST_CLEAR = '@@ui-marccat/REQUEST_CLEAR';
-
-// actions
 export const ACTION = {
   SEARCH: '@@ui-marccat/SEARCH',
   BROWSE: '@@ui-marccat/BROWSE',

@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { qs } from '..';
-import { ENDPOINT } from '../../utils/Constant';
+import { ENDPOINT } from '../../components/Shared/Constants';
 import { StoreReducer } from '../helpers/StoreReducer';
 import { HTTP_METHOD } from '../../core/api/HttpService';
 import {

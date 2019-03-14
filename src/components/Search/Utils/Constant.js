@@ -1,7 +1,3 @@
-export const FILTER_NAME = {
-  BIBLIGRAPHIC: 'recordType.Bibliographic records',
-  AUTHORITY: 'recordType.Authority records',
-};
 export const SORT_TYPE = {
   TITLE: 4,  // authority and bibliographic
   UNIFORM_TITLE: 2096, // bibliographic only

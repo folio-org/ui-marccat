@@ -1,6 +1,5 @@
 import { ACTION } from '../../../redux/helpers/Action';
-import { ENDPOINT } from './Constant';
-import { EMPTY_STRING } from '../../../utils/Constant';
+import { EMPTY_STRING, ENDPOINT } from '../../Shared/Constants';
 
 // MARC action creator
 

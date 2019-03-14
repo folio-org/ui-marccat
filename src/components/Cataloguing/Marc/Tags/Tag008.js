@@ -12,7 +12,7 @@ import { ActionTypes } from '../../../../redux/actions';
 import { decamelizify } from '../..';
 import { RECORD_FIELD_STATUS, TAGS } from '../../Utils/MarcUtils';
 import { changeDisplayValueAction } from '../../Actions/MarcActionCreator';
-import * as C from '../../../../utils/Constant';
+import * as C from '../../../Shared/Constants';
 
 
 export class Tag008 extends React.Component<Props, {}> {

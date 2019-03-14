@@ -12,8 +12,11 @@ import * as C from './utils';
 import MARCcat from './MARCcat';
 import { ActionTypes } from './redux/actions';
 
+
 import './styles/common.css';
 import { TAGS } from './components/Cataloguing/Utils/MarcUtils';
+
+const process = require('child_process');
 
 type RoutingProps = {
   root: {
@@ -46,6 +49,7 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
 
   componentDidMount() {
     const { store } = this.props;
+    console.log(process.env.);
     store.dispatch({ type: ActionTypes.VIEW_TEMPLATE });
     store.dispatch({ type: ActionTypes.HEADER_TYPES_006, code: TAGS._006 });
     store.dispatch({ type: ActionTypes.HEADER_TYPES_007, code: TAGS._007 });

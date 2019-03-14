@@ -1,5 +1,5 @@
 import queryString from 'qs';
-import { ENDPOINT } from '../../utils/Constant';
+import { ENDPOINT } from '../../components/Shared/Constants';
 
 export function findParam(param) {
   const params = new URLSearchParams(document.location.search.substring(1));

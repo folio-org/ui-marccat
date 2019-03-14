@@ -27,7 +27,7 @@ import { VariableFields, MarcLeader, FixedFields } from '.';
 import { ActionTypes } from '../../redux/actions/Actions';
 import { post, put } from '../../core/api/HttpService';
 import { buildUrl } from '../../redux/helpers/Utilities';
-import * as C from '../../utils/Constant';
+import * as C from '../Shared/Constants';
 
 import { StoreReducer } from '../../redux';
 import { RECORD_FIELD_STATUS, TAG_WITH_NO_HEADING_ASSOCIATED } from './Utils/MarcUtils';

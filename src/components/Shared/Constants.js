@@ -4,8 +4,12 @@ export const META = {
   ICON_TITLE: 'marccat',
 };
 
-// API
-export const RESOURCE_TYPE = 'okapi';
+// API ENDPOINT UTILS
+export const RESOURCE_TYPE = {
+  REST: 'REST',
+  LOCAL: 'local',
+  OKAPI: 'okapi'
+};
 export const ENDPOINT = {
   HEADERS: {
     'Accept': 'application/json',
@@ -32,17 +36,9 @@ export const ENDPOINT = {
   UNLOCK_MARC_RECORD: '/bibliographic-record/unlock/',
 };
 
-export const buildUrl = (url:string, params?:string, withslash?: boolean = false) => {
-  return ENDPOINT.BASE_URL
-    .concat((withslash) ? url.concat('/') : url)
-    .concat('?')
-    .concat(params);
-};
-
-export const LockEntityType = {
-  R: 'R',
-  H: 'H',
-  C: 'C'
+export const FILTER_NAME = {
+  BIBLIGRAPHIC: 'recordType.Bibliographic records',
+  AUTHORITY: 'recordType.Authority records',
 };
 
 // REDUX DATA STORE MANAGEMENT
@@ -55,15 +51,11 @@ export const SEPARATOR = ';;;';
 export const EMPTY_PARAMETER = -1;
 export const EMPTY_STRING = '';
 export const EMPTY_SPACED_STRING = ' ';
-// eslint-disable-next-line quotes
-export const SPACED_STRING_DOUBLE_QUOTE = " ";
+export const SPACED_STRING_DOUBLE_QUOTE = " "; // eslint-disable-line quotes
 
-// SETTINGS
 export const SETTINGS = {
   DEFAULT_TEMPLATE: {
     id: 408,
     name: 'New Monograph'
   },
 };
-
-export const separator = (s:string, sep) => s.replace(sep, '$');

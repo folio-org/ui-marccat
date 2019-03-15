@@ -6,7 +6,7 @@ import * as React from 'react';
 import { Paneset, Pane, Headline } from '@folio/stripes/components';
 import { injectCommonProp, Props } from './core';
 import { SearchPanel } from './components/Search';
-import * as C from './utils/Constant';
+import * as C from './shared/Constants';
 
 /**
  * @module MARCcat

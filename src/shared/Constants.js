@@ -4,8 +4,20 @@ export const META = {
   ICON_TITLE: 'marccat',
 };
 
-// API
-export const RESOURCE_TYPE = 'okapi';
+// API  UTILS
+export const HTTP_METHOD = {
+  GET: 'GET',
+  POST: 'POST',
+  PUT: 'PUT',
+  DELETE: 'DELETE'
+};
+
+// API ENDPOINT UTILS
+export const RESOURCE_TYPE = {
+  REST: 'REST',
+  LOCAL: 'local',
+  OKAPI: 'okapi'
+};
 export const ENDPOINT = {
   HEADERS: {
     'Accept': 'application/json',
@@ -13,7 +25,7 @@ export const ENDPOINT = {
     'x-okapi-tenant': 'tnx',
   },
   DEFAULT_LANG_VIEW: 'lang=ita&view=1',
-  BASE_URL: 'http://127.0.0.1:8080/marccat',
+  BASE_URL: 'http://151.1.165.20:8080/marccat',
   MERGED_SEARCH_URL: '/mergedSearch',
   SEARCH_URL: '/searchVertical',
   SEARCH_URL_JSON: '/search',
@@ -26,24 +38,28 @@ export const ENDPOINT = {
   HEADER_TYPES_URL: '/header-types',
   CREATE_HEADING_URL: '/create-heading',
   UPDATE_HEADING_URL: '/update-heading',
+  DELETE_HEADING_URL: '/delete-heading',
   BIBLIOGRAPHIC_RECORD: '/bibliographic-record',
   HEADING_BY_TAG: '/headings-by-tag',
   LOCK_MARC_RECORD: '/bibliographic-record/lock/',
   UNLOCK_MARC_RECORD: '/bibliographic-record/unlock/',
 };
 
-export const buildUrl = (url:string, params?:string, withslash?: boolean = false) => {
-  return ENDPOINT.BASE_URL
-    .concat((withslash) ? url.concat('/') : url)
-    .concat('?')
-    .concat(params);
+export const FILTER_NAME = {
+  BIBLIGRAPHIC: 'recordType.Bibliographic records',
+  AUTHORITY: 'recordType.Authority records',
 };
 
-export const LockEntityType = {
-  R: 'R',
-  H: 'H',
-  C: 'C'
+export const SORT_TYPE = {
+  TITLE: 4,  // authority and bibliographic
+  UNIFORM_TITLE: 2096, // bibliographic only
+  NAME: 1003, // authority and bibliographic
+  AN: 54, // authority and bibliographic
+  SUBJECT: 21, // authority and bibliographic
+  DATA1: 31, // bibliographic only
+  DATE2: 2074 // bibliographic only
 };
+
 
 // REDUX DATA STORE MANAGEMENT
 export const STATE_MANAGEMENT = {
@@ -55,15 +71,11 @@ export const SEPARATOR = ';;;';
 export const EMPTY_PARAMETER = -1;
 export const EMPTY_STRING = '';
 export const EMPTY_SPACED_STRING = ' ';
-// eslint-disable-next-line quotes
-export const SPACED_STRING_DOUBLE_QUOTE = " ";
+export const SPACED_STRING_DOUBLE_QUOTE = " "; // eslint-disable-line quotes
 
-// SETTINGS
 export const SETTINGS = {
   DEFAULT_TEMPLATE: {
     id: 408,
     name: 'New Monograph'
   },
 };
-
-export const separator = (s:string, sep) => s.replace(sep, '$');

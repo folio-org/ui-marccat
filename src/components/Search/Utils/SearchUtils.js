@@ -1,6 +1,6 @@
 import { includes } from 'lodash';
 import { languageFilterMap, formatFilterMap } from '../Filter/FilterMapper';
-import { EMPTY_STRING } from '../../../utils/Constant';
+import { EMPTY_STRING } from '../../../shared/Constants';
 
 export const getLanguageFilterQuery = (languageFilter) => {
   return languageFilter
@@ -27,4 +27,5 @@ export const transitionToParams = (key, value) => {
 
 export const If = (k) => (k) || undefined;
 export const safeString = str => (str) || EMPTY_STRING;
-export const safeObject = (obj, prop) => ((obj) ? obj[prop] : EMPTY_STRING);
+export const safeObject = (obj, prop) => ((obj) ? obj[prop] : {});
+export const safeArray = (arr:[]) => ((arr.length > 0) ? arr : []);

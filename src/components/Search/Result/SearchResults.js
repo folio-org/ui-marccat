@@ -7,7 +7,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Paneset, HotKeys, PaneMenu, Icon, Button } from '@folio/stripes/components';
-import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
 import { ToolbarButtonMenu, DropdownButtonMenu as CreateButtonMenu, NoResultsMessage } from '../../../lib';
@@ -20,8 +19,9 @@ import {
   AssociatedRecordPane,
 } from './components';
 import { StoreReducer } from '../../../redux';
-import { findParam } from '../../../redux/helpers/Utilities';
 import { searchDetailAction, emptyRecordAction } from '../Actions/ActionCreator';
+import * as C from '../../../shared/Constants';
+import { findParam } from '../../../shared/Function';
 
 
 type P = Props & {
@@ -129,11 +129,9 @@ export class SearchResults extends React.Component<P, {}> {
     dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: false });
     const detail = StoreReducer.resolve(data, 'marcRecordDetail').bibliographicRecord;
     const id = meta['001'];
+    const detailMeta = meta;
     const detailSelected = data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001']) || {};
     transitionToParams('id', id);
-    if (!detail) {
-      dispatch(searchDetailAction(id, meta));
-    }
     dispatch({ type: ActionTypes.DETAILS, query: id, recordType: meta.recordView });
     if (isAuthorityRecord(meta)) {
       dispatch({ type: ActionTypes.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView, openPanel: true });
@@ -141,15 +139,17 @@ export class SearchResults extends React.Component<P, {}> {
         detail: detail || detailSelected,
         detailPanelIsVisible: true,
         detailPaneMeta: {
+          meta,
           title: 'Auth. • ' + id,
           subTitle: meta['100']
         }
       });
     } else {
       this.setState({
-        detail: detailSelected,
+        detail: detailMeta,
         detailPanelIsVisible: true,
         detailPaneMeta: {
+          meta,
           title: 'Bib. • ' + id,
           subTitle: meta['245']
         }

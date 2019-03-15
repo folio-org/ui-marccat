@@ -26,13 +26,13 @@ import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../lib';
 import { VariableFields, MarcLeader, FixedFields } from '.';
 import { ActionTypes } from '../../redux/actions/Actions';
 import { post, put } from '../../core/api/HttpService';
-import { buildUrl } from '../../redux/helpers/Utilities';
-import * as C from '../../utils/Constant';
+import * as C from '../../shared/Constants';
 
 import { StoreReducer } from '../../redux';
 import { RECORD_FIELD_STATUS, TAG_WITH_NO_HEADING_ASSOCIATED } from './Utils/MarcUtils';
 import style from './Style/style.css';
-import { headingAction } from './Actions/MarcActionCreator';
+import { headingAction, headingDeleteAction } from './Actions/MarcActionCreator';
+import { buildUrl } from '../../shared/Function';
 
 
 type P = {
@@ -141,11 +141,24 @@ export class CreateMarcRecord extends React.Component<P, {}> {
 
 
   onCreate = () => { this.showMessage('Tag Saved sucesfully'); }
-  onDelete = () => {};
+
+  onDelete = (item) => {
+    const { dispatch } = this.props;
+    const heading = {
+      indicator1: item.variableField.ind1,
+      indicator2: item.variableField.ind2,
+      stringText: item.variableField.displayValue,
+      tag: item.code,
+      category: '',
+      headingNumber: item.variableField.keyNumber
+    };
+    dispatch(headingDeleteAction(heading));
+  };
 
   saveRecord = () => {
     const { reset } = this.props;
     const body = this.composeBodyJson();
+
     post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), body)
       .then(() => {
         this.showMessage('Record saved with success');

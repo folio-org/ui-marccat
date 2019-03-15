@@ -3,11 +3,18 @@ import { uniqueId } from 'lodash';
 export function BaseStoreReducer() {}
 export function StoreReducer() {}
 export function FormReducer() {}
+export function Dispatcher() {
+}
 
 Object.setPrototypeOf(StoreReducer, BaseStoreReducer);
+Object.setPrototypeOf(FormReducer, BaseStoreReducer);
 
 FormReducer.resolve = (store, formName) => {
   return (store.getState().form[formName]) ? store.getState().form[formName].values : undefined;
+};
+
+Dispatcher.dispatch = (action, dispatch) => {
+  return dispatch({ type: action });
 };
 
 /**

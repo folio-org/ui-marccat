@@ -1,14 +1,14 @@
 import _ from 'lodash';
-import * as C from './Constant';
+import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../shared/Constants';
 
 /**
  * concatenate all subfield text data of a tag
  * @param {*} tagNode
  */
 const getTagDisplayValue = tagNode => {
-  let result = '';
+  let result = EMPTY_STRING;
   tagNode.subfields.forEach(el => {
-    result += ' '.concat(Object.values(el)[0]);
+    result += EMPTY_SPACED_STRING.concat(Object.values(el)[0]);
   });
   return result;
 };
@@ -36,7 +36,7 @@ const remapForAssociatedBibList = i => {
 };
 
 const getTag245 = (data) => {
-  let tag245 = '';
+  let tag245 = EMPTY_STRING;
   data.map(item => {
     if (item.substring(0, 4).trim() === '245') {
       tag245 = item.substring(0, 4);
@@ -47,7 +47,7 @@ const getTag245 = (data) => {
 };
 
 const getTag100 = (bigStringArray) => {
-  let tag100 = '';
+  let tag100 = EMPTY_STRING;
   bigStringArray.map(item => {
     if (item.substring(0, 3).trim() === '100') {
       tag100 = item.substring(0, 3);
@@ -69,7 +69,7 @@ const getTitle245 = (bigStringArray) => {
 };
 
 const getTitle100 = (bigStringArray) => {
-  let titleTag100 = '';
+  let titleTag100 = EMPTY_STRING;
   bigStringArray.map(item => {
     if (item.substring(0, 3).trim() === '100') {
       titleTag100 = item.substring(3);
@@ -118,20 +118,20 @@ const getFormat = (leader) => {
   case 't': return 'rare book or manuscript';
   case 'm': return 'software and e-resource';
   case 'r': return '3d object';
-  default: return C.EMPTY_STRING;
+  default: return EMPTY_STRING;
   }
 };
 
 const getMicroformat = (tag007) => {
-  if (tag007 === '' || tag007 === undefined) {
-    return '';
+  if (tag007 === EMPTY_STRING || tag007 === undefined) {
+    return EMPTY_STRING;
   } else {
     const pos0 = tag007.substring(0, 1);
     switch (pos0) {
-    case 'h': if (getFormat === C.EMPTY_STRING) {
+    case 'h': if (getFormat === EMPTY_STRING) {
       return 'Microform';
     } else return ', Microform';
-    default: return C.EMPTY_STRING;
+    default: return EMPTY_STRING;
     }
   }
 };

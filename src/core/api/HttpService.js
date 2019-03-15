@@ -1,10 +1,4 @@
-export const HTTP_METHOD = {
-  GET: 'GET',
-  POST: 'POST',
-  PUT: 'PUT',
-  DELETE: 'DELETE'
-};
-
+import { HTTP_METHOD } from '../../shared/Constants';
 /**
  *
  * @param {*} url - the API endpoint

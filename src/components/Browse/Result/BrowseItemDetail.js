@@ -16,7 +16,7 @@ import {
 import { ActionTypes } from '../../../redux/actions/Actions';
 import type { Props } from '../../../core';
 import { getTag100, getTitle100, remapForAssociatedBibList } from '../../../utils/Mapper';
-import { EMPTY_STRING } from '../../../utils/Constant';
+import { EMPTY_STRING } from '../../../shared/Constants';
 import { resultsFormatterForAssociated, columnMapperForAssociated } from '../../../utils/Formatter';
 import style from '../../../styles/common.css';
 

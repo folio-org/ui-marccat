@@ -7,11 +7,11 @@ import { Field } from 'redux-form';
 import { Row, Col, Select } from '@folio/stripes/components';
 import type { Props } from '../../../core';
 import MarcField from './MarcField';
-import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../utils/Constant';
+import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../shared/Constants';
 import { ActionTypes } from '../../../redux/actions/Actions';
-import { decamelizify } from '../Utils/MarcUtils';
 import style from '../Style/style.css';
 import { fixedFieldByLeaderAction } from '../Actions/MarcActionCreator';
+import { decamelizify } from '../../../shared/Function';
 
 
 type P = {

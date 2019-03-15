@@ -10,9 +10,9 @@ import { ActionMenu } from '../../../../lib';
 import { Props, injectCommonProp } from '../../../../core';
 import { resultsFormatter, columnMapper, columnWidthMapper, renderColumn } from '../../../../utils/Formatter';
 import { EmptyMessage, NoResultsMessage } from '../../../../lib/components/Message';
-import * as C from '../../../../utils/Constant';
 import { FormReducer } from '../../../../redux/helpers/StoreReducer';
 import { ActionTypes } from '../../../../redux/actions/Actions';
+import * as C from '../../../../shared/Constants';
 
 
 class SearchResultPane extends React.Component<Props, {}> {

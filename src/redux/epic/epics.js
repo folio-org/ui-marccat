@@ -6,10 +6,10 @@ import { concat as concat$ } from 'rxjs/observable/concat';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import { ActionTypes } from '../actions/Actions';
 import * as marccatActions from '../actions';
-import { buildUrl } from '../helpers/Utilities';
-import { ENDPOINT, LockEntityType } from '../../utils/Constant';
+import { ENDPOINT } from '../../shared/Constants';
 import { fetchFailure } from '../actions/ActionCreator';
 import { StoreReducer } from '..';
+import { buildUrl } from '../../shared/Function';
 
 export const searchEpic = (action$, store) => action$.ofType(ActionTypes.SEARCH)
   .switchMap((d) => concat$(

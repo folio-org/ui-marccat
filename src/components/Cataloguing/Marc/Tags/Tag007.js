@@ -8,8 +8,9 @@ import { Field } from 'redux-form';
 import { Row, Col, Select } from '@folio/stripes/components';
 import { injectCommonProp, Props } from '../../../../core';
 import { ActionTypes } from '../../../../redux/actions';
-import { decamelizify, FIXED_FIELD_TEMPLATE, RECORD_FIELD_STATUS, TAGS } from '../..';
-import { EMPTY_SPACED_STRING, EMPTY_STRING } from '../../../../utils/Constant';
+import { FIXED_FIELD_TEMPLATE, RECORD_FIELD_STATUS, TAGS } from '../..';
+import { EMPTY_SPACED_STRING, EMPTY_STRING } from '../../../../shared/Constants';
+import { decamelizify } from '../../../../shared/Function';
 
 export class Tag007 extends React.Component<Props, {}> {
   constructor(props:Props) {

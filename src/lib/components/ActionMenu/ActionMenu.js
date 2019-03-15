@@ -52,7 +52,6 @@ export const ActionMenuDetail = () => {
     </React.Fragment>
   );
 };
-
 export const genericActionMenuDetail = (labels:Array<any>) => {
   return (
     <React.Fragment>

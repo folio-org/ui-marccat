@@ -1,13 +1,12 @@
 import { Observable } from 'rxjs/Observable';
 import { qs } from '..';
-import { ENDPOINT } from '../../utils/Constant';
 import { StoreReducer } from '../helpers/StoreReducer';
-import { HTTP_METHOD } from '../../core/api/HttpService';
 import {
   ACTION,
   REQUEST_MAKE,
   REQUEST_RESOLVE,
-  REQUEST_REJECT } from '../helpers/Action';
+  REQUEST_REJECT } from '../../shared/Action';
+import { ENDPOINT, HTTP_METHOD } from '../../shared/Constants';
 
 /**
  * Action creator for querying a set of records
@@ -114,7 +113,7 @@ export function epic(action$, { getState }) {
         url = `${url}?${qs.stringify({ include })}`;
       }
 
-      if (method === HTTP_METHOD.PUT || method === HTTP_METHOD.POST) {
+      if (method === HTTP_METHOD.PUT || method === HTTP_METHOD.POST || method === HTTP_METHOD.DELETE) {
         body = JSON.stringify(payload);
       }
 

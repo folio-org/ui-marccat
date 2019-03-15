@@ -7,7 +7,7 @@ import React from 'react';
 import { Field } from 'redux-form';
 import { Select } from '@folio/stripes/components';
 import { ActionTypes } from '../../../redux/actions';
-import { SORT_TYPE, FILTER_NAME } from '../Utils/Constant';
+import { SORT_TYPE, FILTER_NAME } from '../../../shared/Constants';
 
 export default function SearchIndexes({ ...props }) {
   const { rest, name, id } = props;

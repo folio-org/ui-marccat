@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
 import { combineEpics } from 'redux-observable';
 import {
-  reduxFormReducer,
   searchEngineReducer,
   filterReducer,
   getDetailsRecord,
@@ -51,7 +50,6 @@ import {
 } from './epic/epic';
 
 export const reducer = combineReducers({
-  reduxForm: reduxFormReducer,
   search: searchEngineReducer,
   details: getDetailsRecord,
   filter: filterReducer,
@@ -98,4 +96,4 @@ export const epics = combineEpics(
   dataEpic
 );
 export { StoreReducer } from './helpers/StoreReducer';
-export { findParam, buildUrl, qs } from './helpers/Utilities';
+export { findParam, buildUrl, qs } from '../shared/Function';

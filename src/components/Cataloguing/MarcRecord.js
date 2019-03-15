@@ -7,6 +7,7 @@ import React from 'react';
 import type { Props } from '../../core';
 import { findParam } from '../../redux';
 import { headingAction, RECORD_ACTION } from '.';
+import { resetFilter } from './Actions/MarcActionCreator';
 
 
 class MarcRecord extends React.Component<Props, {}> {
@@ -15,6 +16,7 @@ class MarcRecord extends React.Component<Props, {}> {
     this.state = {
       page: RECORD_ACTION.CREATION_MODE
     };
+    this.handleClose = this.handleClose.bind(this);
   }
 
   componentDidMount() {
@@ -25,6 +27,14 @@ class MarcRecord extends React.Component<Props, {}> {
   createNewHeading = () => {
     const { dispatch } = this.props;
     dispatch(headingAction);
+  };
+
+  handleClose = () => {
+    const { dispatch, router, toggleFilterPane, emptyRecord } = this.props;
+    dispatch(resetFilter());
+    toggleFilterPane();
+    const id = emptyRecord.id;
+    router.push(`/marccat/search?id=${id}`);
   };
 
   render() {

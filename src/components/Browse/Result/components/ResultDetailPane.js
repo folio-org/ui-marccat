@@ -6,7 +6,7 @@ import React from 'react';
 import { Pane, Icon } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 import { ToolbarButtonMenu } from '../../../../lib';
-import * as C from '../../../../utils/Constant';
+import * as C from '../../../../shared/Constants';
 import { injectCommonProp } from '../../../../core';
 import { BrowseItemDetail } from '../BrowseItemDetail';
 

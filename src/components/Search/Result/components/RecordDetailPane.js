@@ -7,7 +7,7 @@ import { Pane, Icon } from '@folio/stripes/components';
 import RecordDetails from '../RecordDetails';
 import { Props, injectCommonProp } from '../../../../core';
 import { ActionMenuDetail } from '../../../../lib';
-import { META } from '../../../../utils/Constant';
+import { META } from '../../../../shared/Constants';
 
 class RecordDetailPane extends React.Component<Props, {}> {
   render() {

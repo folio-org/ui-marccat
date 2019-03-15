@@ -1,5 +1,4 @@
 /**
- * @author: Christian Chiama
  *
  * @format
  * @flow
@@ -7,6 +6,7 @@
 import * as React from 'react';
 import { withRoot } from '@folio/stripes-core/src/components/Root/RootContext';
 import { injectIntl } from 'react-intl';
+import { safeObj } from '../../shared/Function';
 
 /**
  * HOC
@@ -18,7 +18,7 @@ export default function injectCommonProp<Props: {
     const { history, root: { store }, intl: { formatMessage } } = props;
     const state = store.getState();
     const data = state.marccat;
-    const dataStore = state.marccat.data;
+    const dataStore = safeObj(state.marccat, 'data');
     return (
       <Component
         {...props}

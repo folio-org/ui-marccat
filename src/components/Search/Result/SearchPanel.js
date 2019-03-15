@@ -27,10 +27,9 @@ import {
 import { ActionTypes } from '../../../redux/actions/Actions';
 import { findYourQuery } from '../Filter';
 import { remapFilters } from '../../../utils/Mapper';
-import { EMPTY_STRING } from '../../../utils';
-
+import { EMPTY_STRING } from '../../../shared/Constants';
 import styles from '../index.css';
-import { findParam } from '../../../redux';
+import { findParam } from '../../../shared/Function';
 
 type P = Props & {
   inputErrorCheck: string,
@@ -54,14 +53,6 @@ class SearchPanel extends React.Component<P, {}> {
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleResetAllButton = this.handleResetAllButton.bind(this);
   }
-
-
-  // componentDidMount() {
-  //   const id = findParam('id');
-  //   if (findParam('id') !== null) {
-  //     this.handleSearchFromCataloging();
-  //   }
-  // }
 
   handleSearchFromCataloging = () => {
     const { dispatch } = this.props;
@@ -144,6 +135,8 @@ class SearchPanel extends React.Component<P, {}> {
       }
     }
   }
+
+  handleComplexQuery = () => {};
 
   handleAddSearchForm = () => {
     const { searchForm, counter } = this.state;

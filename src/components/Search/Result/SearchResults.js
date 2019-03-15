@@ -129,9 +129,9 @@ export class SearchResults extends React.Component<P, {}> {
     dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: false });
     const detail = StoreReducer.resolve(data, 'marcRecordDetail').bibliographicRecord;
     const id = meta['001'];
+    const detailMeta = meta;
     const detailSelected = data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001']) || {};
     transitionToParams('id', id);
-
     dispatch({ type: ActionTypes.DETAILS, query: id, recordType: meta.recordView });
     if (isAuthorityRecord(meta)) {
       dispatch({ type: ActionTypes.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView, openPanel: true });
@@ -146,7 +146,7 @@ export class SearchResults extends React.Component<P, {}> {
       });
     } else {
       this.setState({
-        detail: detailSelected,
+        detail: detailMeta,
         detailPanelIsVisible: true,
         detailPaneMeta: {
           meta,

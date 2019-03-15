@@ -18,10 +18,9 @@ type P = Props & {
 }
 
 function RecordDetails({ translate, ...props }: P) {
-  const { items, data, checkDetailsInRow, detail, checkDetailsBibRec } = props;
+  const { items, checkDetailsInRow, detailPaneMeta, checkDetailsBibRec } = props;
   const recordDetails = items.replace('LEADER', '000');
   const recordDetailsArray = recordDetails.split('\n');
-  data.recordDetail = detail[0];
   const tag245 = getTag245(recordDetailsArray);
   const title245 = getTitle245(recordDetailsArray);
   return (
@@ -36,18 +35,19 @@ function RecordDetails({ translate, ...props }: P) {
             label={tag245 === EMPTY_STRING ? getTag100(recordDetailsArray) : tag245 + 'Title'}
             value={title245 === EMPTY_STRING ? getTitle100(recordDetailsArray) : title245}
           />
-          {recordDetailsArray.map((item, i) => (
-            <Row key={i}>
-              <Col xs={1} className={style.padding8}>
-                {item.trim().substring(0, 3)}
-              </Col>
-              <Col xs={1} className={style.padding8}>
-                {item.substring(6).startsWith('$') ? item.substring(3, 6) : ''}
-              </Col>
-              <Col xs={10} className={style.padding8}>
-                {!item.substring(6).startsWith('$') ? item.substring(3) : item.substring(6)}
-              </Col>
-            </Row>
+          {Object.keys(detailPaneMeta.meta).map(key => (
+            <div>
+              {/^\d+$/.test(key) &&
+              <Row>
+                <Col xs={2} className={style.padding8}>
+                  {key}
+                </Col>
+                <Col xs={10} className={style.padding8}>
+                  {detailPaneMeta.meta[key]}
+                </Col>
+              </Row>
+              }
+            </div>
           ))}
         </div>
         <InventoryPluggableBtn {...props} buttonLabel={translate({ id: 'ui-marccat.search.goto.inventory' })} />

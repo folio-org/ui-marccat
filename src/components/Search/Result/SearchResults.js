@@ -131,9 +131,7 @@ export class SearchResults extends React.Component<P, {}> {
     const id = meta['001'];
     const detailSelected = data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001']) || {};
     transitionToParams('id', id);
-    if (!detail) {
-      dispatch(searchDetailAction(id, meta));
-    }
+
     dispatch({ type: ActionTypes.DETAILS, query: id, recordType: meta.recordView });
     if (isAuthorityRecord(meta)) {
       dispatch({ type: ActionTypes.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView, openPanel: true });
@@ -141,6 +139,7 @@ export class SearchResults extends React.Component<P, {}> {
         detail: detail || detailSelected,
         detailPanelIsVisible: true,
         detailPaneMeta: {
+          meta,
           title: 'Auth. • ' + id,
           subTitle: meta['100']
         }
@@ -150,6 +149,7 @@ export class SearchResults extends React.Component<P, {}> {
         detail: detailSelected,
         detailPanelIsVisible: true,
         detailPaneMeta: {
+          meta,
           title: 'Bib. • ' + id,
           subTitle: meta['245']
         }

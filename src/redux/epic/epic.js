@@ -113,7 +113,7 @@ export function epic(action$, { getState }) {
         url = `${url}?${qs.stringify({ include })}`;
       }
 
-      if (method === HTTP_METHOD.PUT || method === HTTP_METHOD.POST) {
+      if (method === HTTP_METHOD.PUT || method === HTTP_METHOD.POST || method === HTTP_METHOD.DELETE) {
         body = JSON.stringify(payload);
       }
 

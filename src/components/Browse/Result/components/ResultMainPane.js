@@ -7,7 +7,7 @@ import { MultiColumnList, Pane, Icon } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 import { EmptyMessage, NoResultsMessage, ToolbarButtonMenu } from '../../../../lib';
 import { browseFormatter, browseColMapper } from '../../../../utils/Formatter';
-import * as C from '../../../../utils/Constant';
+import * as C from '../../../../shared/Constants';
 import { injectCommonProp } from '../../../../core';
 
 class ResultMainPane extends React.Component<{}, {}> {

@@ -27,4 +27,5 @@ export const transitionToParams = (key, value) => {
 
 export const If = (k) => (k) || undefined;
 export const safeString = str => (str) || EMPTY_STRING;
-export const safeObject = (obj, prop) => ((obj) ? obj[prop] : EMPTY_STRING);
+export const safeObject = (obj, prop) => ((obj) ? obj[prop] : {});
+export const safeArray = (arr:[]) => ((arr.length > 0) ? arr : []);

@@ -87,7 +87,7 @@ class SearchPanel extends React.Component<P, {}> {
       let indexFilter;
       const form = getState().form.searchForm;
       const state = getState();
-      if(searchForm.length > 0){
+      if (searchForm.length > 0) {
         this.handleComplexQuery();
       }
       if (form.values) {

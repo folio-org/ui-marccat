@@ -1,5 +1,5 @@
-import { ACTION } from '../../Shared/Action';
-import { ENDPOINT } from '../../../utils';
+import { ACTION } from '../../../shared/Action';
+import { ENDPOINT } from '../../../shared/Constants';
 
 // Search API action creator
 
@@ -24,13 +24,14 @@ export const searchDetailAction = (id, meta) => {
  *
  * @param {*} payload
  */
-export const emptyRecordAction = () => {
+export const emptyRecordAction = (payload) => {
   return {
     type: ACTION.QUERY,
     data: {
       path: ENDPOINT.EMPTY_RECORD_URL + '/' + 408,
       type: 'emptyRecord',
       params: ENDPOINT.DEFAULT_LANG_VIEW,
-    }
+    },
+    payload
   };
 };

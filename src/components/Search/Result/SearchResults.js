@@ -7,7 +7,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Paneset, HotKeys, PaneMenu, Icon, Button } from '@folio/stripes/components';
-import * as C from '../../../utils/Constant';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
 import { ToolbarButtonMenu, DropdownButtonMenu as CreateButtonMenu, NoResultsMessage } from '../../../lib';
@@ -20,8 +19,9 @@ import {
   AssociatedRecordPane,
 } from './components';
 import { StoreReducer } from '../../../redux';
-import { findParam } from '../../../redux/helpers/Utilities';
 import { searchDetailAction, emptyRecordAction } from '../Actions/ActionCreator';
+import * as C from '../../../shared/Constants';
+import { findParam } from '../../../shared/Function';
 
 
 type P = Props & {

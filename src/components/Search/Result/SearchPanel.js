@@ -27,7 +27,7 @@ import {
 import { ActionTypes } from '../../../redux/actions/Actions';
 import { findYourQuery } from '../Filter';
 import { remapFilters } from '../../../utils/Mapper';
-import { EMPTY_STRING } from '../../../utils';
+import { EMPTY_STRING } from '../../../shared/Constants';
 
 import styles from '../index.css';
 import { findParam } from '../../../redux';
@@ -87,6 +87,9 @@ class SearchPanel extends React.Component<P, {}> {
       let indexFilter;
       const form = getState().form.searchForm;
       const state = getState();
+      if(searchForm.length > 0){
+        this.handleComplexQuery();
+      }
       if (form.values) {
         if (form.values.selectIndexes) {
           indexFilter = form.values.selectIndexes;
@@ -144,6 +147,10 @@ class SearchPanel extends React.Component<P, {}> {
       }
     }
   }
+
+  handleComplexQuery = () => {
+
+  };
 
   handleAddSearchForm = () => {
     const { searchForm, counter } = this.state;

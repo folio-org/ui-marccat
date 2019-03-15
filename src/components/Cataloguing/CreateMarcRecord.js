@@ -26,8 +26,7 @@ import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../lib';
 import { VariableFields, MarcLeader, FixedFields } from '.';
 import { ActionTypes } from '../../redux/actions/Actions';
 import { post, put } from '../../core/api/HttpService';
-import { buildUrl } from '../../redux/helpers/Utilities';
-import * as C from '../Shared/Constants';
+import * as C from '../../shared/Constants';
 
 import { StoreReducer } from '../../redux';
 import { RECORD_FIELD_STATUS, TAG_WITH_NO_HEADING_ASSOCIATED } from './Utils/MarcUtils';
@@ -146,6 +145,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
   saveRecord = () => {
     const { reset } = this.props;
     const body = this.composeBodyJson();
+    
     post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), body)
       .then(() => {
         this.showMessage('Record saved with success');

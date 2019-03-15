@@ -19,15 +19,15 @@ import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../lib';
 import { MarcLeader, FixedFields } from '.';
 import { injectCommonProp } from '../../core';
 import { ActionTypes } from '../../redux/actions';
-import { buildUrl, findParam } from '../../redux/helpers/Utilities';
 import { post, put } from '../../core/api/HttpService';
 import { TAG_WITH_NO_HEADING_ASSOCIATED, RECORD_FIELD_STATUS } from './Utils/MarcUtils';
 import VariableFields from './Marc/VariableFields';
 import { StoreReducer } from '../../redux';
 import { deleteRecordAction } from './Utils/MarcApiUtils';
-import * as C from '../../utils/Constant';
 import style from './Style/style.css';
 import { If } from '../Search';
+import * as C from '../../shared/Constants';
+import { buildUrl, findParam } from '../../shared/Function';
 
 class EditMarcRecord extends React.Component {
   constructor(props) {

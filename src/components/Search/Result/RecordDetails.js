@@ -9,7 +9,7 @@ import InventoryPluggableBtn from '../Button/Inventory';
 import type { Props } from '../../../core';
 import { getTag245, getTitle245, getTag100, getTitle100 } from '../../../utils/Mapper';
 import AssociatedBib from './AssociatedBib';
-import { EMPTY_STRING } from '../../../utils/Constant';
+import { EMPTY_STRING } from '../../../shared/Constants';
 
 import style from '../../../styles/common.css';
 

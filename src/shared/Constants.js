@@ -4,6 +4,14 @@ export const META = {
   ICON_TITLE: 'marccat',
 };
 
+// API  UTILS
+export const HTTP_METHOD = {
+  GET: 'GET',
+  POST: 'POST',
+  PUT: 'PUT',
+  DELETE: 'DELETE'
+};
+
 // API ENDPOINT UTILS
 export const RESOURCE_TYPE = {
   REST: 'REST',

@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-mixed-operators */
 /* eslint-disable no-bitwise */
+import queryString from 'querystring';
 import { ENDPOINT, EMPTY_SPACED_STRING } from './Constants';
 
 /**
@@ -83,3 +84,22 @@ export const first = (vector, k):void => {
 export const deduplicate = (obj, prop) => {
   return Object.values(obj.reduce((acc, cur) => Object.assign(acc, { [`${prop}`]: cur }), {}));
 };
+
+/**
+ *
+ * @param {*} param the param to retrieve
+ * @returns the param or undefined
+ */
+export function findParam(param) {
+  const params = new URLSearchParams(document.location.search.substring(1));
+  return params.get(param);
+}
+
+export const qs = {
+  parse: path => queryString.parse(path, { ignoreQueryPrefix: true }),
+  stringify: params => queryString.stringify(params, { encodeValuesOnly: true })
+};
+
+export function safeObj(obj, prop) {
+  return (obj) ? obj[prop] : {};
+}

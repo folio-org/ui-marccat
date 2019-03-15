@@ -9,7 +9,7 @@ import { AppIcon } from '@folio/stripes-core';
 import AssociatedBibDetails from '../AssociatedBibDetails';
 import { Props, injectCommonProp } from '../../../../core';
 import { ActionMenu } from '../../../../lib';
-import * as C from '../../../../utils/Constant';
+import * as C from '../../../../shared/Constants';
 
 class AssociatedRecordPane extends React.Component<Props, {}> {
   render() {

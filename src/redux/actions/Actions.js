@@ -77,9 +77,3 @@ export const ActionTypes = {
   LOCK_RECORD_REQUESTED: '@@ui-marccat/LOCK_RECORD_REQUESTED',
   LOCK_RECORD_SUCCESS: '@@ui-marccat/LOCK_RECORD_REQUESTED_SUCCESS',
 };
-
-export const ReduxActionTypes = {
-  BLUR: 'redux-form/BLUR',
-  FOCUS: 'redux-form/FOCUS',
-  REGISTER: '@@redux-form/REGISTER_FIELD',
-};

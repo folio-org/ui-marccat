@@ -9,10 +9,10 @@ import { Field } from 'redux-form';
 import { Row, Col, Select } from '@folio/stripes/components';
 import { injectCommonProp, Props } from '../../../../core';
 import { ActionTypes } from '../../../../redux/actions';
-import { decamelizify } from '../..';
+import { decamelizify } from '../../../../shared/Function';
 import { RECORD_FIELD_STATUS, TAGS } from '../../Utils/MarcUtils';
 import { changeDisplayValueAction } from '../../Actions/MarcActionCreator';
-import * as C from '../../../Shared/Constants';
+import * as C from '../../../../shared/Constants';
 
 
 export class Tag008 extends React.Component<Props, {}> {

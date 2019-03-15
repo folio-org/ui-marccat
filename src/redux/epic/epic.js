@@ -1,13 +1,12 @@
 import { Observable } from 'rxjs/Observable';
 import { qs } from '..';
-import { ENDPOINT } from '../../components/Shared/Constants';
 import { StoreReducer } from '../helpers/StoreReducer';
-import { HTTP_METHOD } from '../../core/api/HttpService';
 import {
   ACTION,
   REQUEST_MAKE,
   REQUEST_RESOLVE,
-  REQUEST_REJECT } from '../helpers/Action';
+  REQUEST_REJECT } from '../../shared/Action';
+import { ENDPOINT, HTTP_METHOD } from '../../shared/Constants';
 
 /**
  * Action creator for querying a set of records

@@ -1,6 +1,6 @@
 import { includes } from 'lodash';
 import { languageFilterMap, formatFilterMap } from '../Filter/FilterMapper';
-import { EMPTY_STRING } from '../../../utils/Constant';
+import { EMPTY_STRING } from '../../../shared/Constants';
 
 export const getLanguageFilterQuery = (languageFilter) => {
   return languageFilter

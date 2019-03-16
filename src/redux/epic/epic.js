@@ -9,46 +9,25 @@ import {
 import { ENDPOINT, HTTP_METHOD } from '../../shared/Constants';
 
 /**
- * Action creator for querying a set of records
- * @param {String} type - resource type
- * @param {Object} params - query params
- * @param {String} options.path - path to use for the query
+ *
+ * @param {*} name
+ * @param {*} data
+ * @param {*} record
  */
-export const query = (type, params, { path }) => ({
-  type: ACTION.QUERY,
-  data: {
-    type,
-    path,
-    params,
-    timestamp: Date.now()
-  }
-});
-
-/**
- * Action creator for create a new record
- * @param {String} type - resource type
- * @param {Object} payload - record payload
- * @param {String} [options.path] - path to use
- */
-export const create = (type, payload, params, { path }) => ({
-  type: ACTION.CREATE,
-  data: {
-    type,
-    path,
-    params,
-    timestamp: Date.now()
-  },
-  payload
-});
-
-export const resolveRequest = (name, data, record) => ({
+export const resolveEpicRequest = (name, data, record) => ({
   type: REQUEST_RESOLVE,
   name,
   data,
   payload: record,
 });
 
-export const rejectRequest = (name, data, error) => ({
+/**
+ *
+ * @param {*} name
+ * @param {*} data
+ * @param {*} error
+ */
+export const rejectEpicRequest = (name, data, error) => ({
   type: REQUEST_REJECT,
   data,
   name,
@@ -77,6 +56,30 @@ export function reducer(state = {}, action) {
 }
 
 /**
+ *
+ * @param {*} response
+ * @returns
+ */
+const parseResponseBody = (response) => { // metodo statico
+  return response.text().then((text) => {
+    try { return JSON.parse(text); } catch (e) { return text; }
+  });
+};
+
+/**
+ *
+ * @param {*} method - Http method for fetch
+ * @returns
+ */
+const getHeaders = (method) => {
+  const headers = {
+    'x-okapi-tenant': 'tnx',
+    'Content-Type': (method === 'PUT' || method === 'POST') ? 'application/vnd.api+json' : 'application/json'
+  };
+  return headers;
+};
+
+/**
  * The epic used to actually make a requests when an action is dispatched
  * @param {Observable} action$ - the observable action
  * @param {Function} store.getState - get's the most recent redux state
@@ -85,11 +88,11 @@ export function epic(action$, { getState }) {
   const actionMethods = {
     [ACTION.QUERY]: 'GET',
     [ACTION.FIND]: 'GET',
-    [ACTION.SAVE]: 'PUT',
+    [ACTION.PUT]: 'PUT',
     [ACTION.CREATE]: 'POST',
+    [ACTION.DELETE]: 'DELETE',
     [ACTION.LOCK]: 'LOCK',
     [ACTION.UNLOCK]: 'UNLOCK',
-    [ACTION.DELETE]: 'DELETE'
   };
 
   return action$
@@ -98,12 +101,15 @@ export function epic(action$, { getState }) {
       const state = getState();
       const method = actionMethods[type];
 
+      const HTTP_GET_METHODS = (type === ACTION.QUERY || type === ACTION.FIND);
+      const REST_METHODS = (method === HTTP_METHOD.PUT || method === HTTP_METHOD.POST || method === HTTP_METHOD.DELETE);
+
       // let url = `${state.okapi.url}${data.path}`;
       let url = `${ENDPOINT.BASE_URL}${data.path}`;
-      const headers = StoreReducer.getHeaders(method, state);
+      const headers = getHeaders(method, state);
       let body;
 
-      if (type === ACTION.QUERY && Object.keys(data.params).length !== 0) {
+      if (HTTP_GET_METHODS && Object.keys(data.params).length !== 0) {
         url = `${url}?${(data.params)}`;
       }
 
@@ -113,16 +119,16 @@ export function epic(action$, { getState }) {
         url = `${url}?${qs.stringify({ include })}`;
       }
 
-      if (method === HTTP_METHOD.PUT || method === HTTP_METHOD.POST || method === HTTP_METHOD.DELETE) {
+      if (REST_METHODS) {
         body = JSON.stringify(payload);
       }
 
       const promise = fetch(url, { headers, method, body })
-        .then(response => Promise.all([response.ok, StoreReducer.parseResponseBody(response)]))
+        .then(response => Promise.all([response.ok, parseResponseBody(response)]))
         .then(([ok, body]) => (ok ? body : Promise.reject(body.errors))); // eslint-disable-line no-shadow
 
       return Observable.from(promise)
-        .map(response => resolveRequest(data.type, data, response))
-        .catch(errors => Observable.of(rejectRequest(errors)));
+        .map(response => resolveEpicRequest(data.type, data, response))
+        .catch(errors => Observable.of(rejectEpicRequest(errors)));
     });
 }

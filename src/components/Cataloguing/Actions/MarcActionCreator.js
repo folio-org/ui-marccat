@@ -8,19 +8,6 @@ import { ActionTypes } from '../../../redux/actions';
  *
  * @param {*} payload
  */
-export const resetFilter = () => {
-  return {
-    type: ActionTypes.FILTERS,
-    payload: {},
-    filterName: EMPTY_STRING,
-    filterChecked: false
-  };
-};
-
-/**
- *
- * @param {*} payload
- */
 export const leaderAction = (payload) => {
   return {
     type: ACTION.QUERY,

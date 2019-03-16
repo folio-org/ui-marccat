@@ -43,7 +43,7 @@ class EditMarcRecord extends React.Component {
 
   handleClose = () => {
     const { dispatch, router, toggleFilterPane } = this.props;
-    dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', filterChecked: false });
+    dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', isChecked: false });
     toggleFilterPane();
     router.push('/marccat/search');
   };

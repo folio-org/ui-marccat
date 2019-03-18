@@ -62,7 +62,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
       indicator1: item.ind1 || tagSelected.variableField.ind1,
       indicator2: item.ind2 || tagSelected.variableField.ind2,
       stringText: item.displayValue || tagSelected.variableField.displayValue,
-      category: item.categoryCode || tagSelected.variableField.categoryCode,
+      category: item.category || tagSelected.variableField.category,
       headingNumber: item.keyNumber || tagSelected.variableField.keyNumber,
       tag: item.code || tagSelected.code,
     };

@@ -12,6 +12,7 @@ import { ActionTypes } from '../../../redux/actions/Actions';
 import style from '../Style/style.css';
 import { fixedFieldByLeaderAction } from '../Actions/MarcActionCreator';
 import { decamelizify } from '../../../shared/Function';
+import { TAGS } from '../Utils/MarcUtils';
 
 
 type P = {
@@ -66,8 +67,6 @@ export default class MarcLeader extends React.Component<P, {
   handleTag008Change = () => {
     const { dispatch } = this.props;
     const { leader } = this.state;
-    const payload = { leader };
-    dispatch(fixedFieldByLeaderAction(payload));
   };
 
   handleChange = () => {

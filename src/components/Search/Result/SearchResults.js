@@ -18,8 +18,7 @@ import {
   RecordDetailPane,
   AssociatedRecordPane,
 } from './components';
-import { StoreReducer } from '../../../redux';
-import { searchDetailAction, emptyRecordAction } from '../Actions/ActionCreator';
+import { emptyRecordAction } from '../Actions/ActionCreator';
 import * as C from '../../../shared/Constants';
 import { findParam } from '../../../shared/Function';
 
@@ -48,8 +47,8 @@ export class SearchResults extends React.Component<P, {}> {
       openDropDownMenu: false,
       detail: {},
       detailPaneMeta: {
-        title: '',
-        subTitle: ''
+        title: C.EMPTY_STRING,
+        subTitle: C.EMPTY_STRING
       }
     };
 
@@ -82,9 +81,8 @@ export class SearchResults extends React.Component<P, {}> {
     const { dispatch, router, toggleFilterPane } = this.props;
     const { detail } = this.state;
     dispatch({ type: ActionTypes.VIEW_TEMPLATE, query: '000' });
-    const id = detail.id || detail[0].data.fields[0]['001'];
     toggleFilterPane();
-    router.push(`/marccat/record/view?id=${id}&mode=edit`);
+    router.push(`/marccat/record/view?id=${detail['001']}&mode=edit`);
   }
 
   handleCreateRecord = () => {
@@ -127,7 +125,6 @@ export class SearchResults extends React.Component<P, {}> {
   handleDetails = (e, meta) => {
     const { dispatch, data } = this.props;
     dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: false });
-    const detail = StoreReducer.resolve(data, 'marcRecordDetail').bibliographicRecord;
     const id = meta['001'];
     const detailMeta = meta;
     const detailSelected = data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001']) || {};
@@ -136,7 +133,7 @@ export class SearchResults extends React.Component<P, {}> {
     if (isAuthorityRecord(meta)) {
       dispatch({ type: ActionTypes.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView, openPanel: true });
       this.setState({
-        detail: detail || detailSelected,
+        detail: detailSelected,
         detailPanelIsVisible: true,
         detailPaneMeta: {
           meta,

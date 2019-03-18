@@ -140,7 +140,6 @@ class EditableListForm extends React.Component {
     Promise.resolve(res).then(
       () => {
         fields.remove(index);
-        // remove item from editable tracking...
         this.setState((curState) => {
           const newState = cloneDeep(curState);
           newState.status.splice(index, 1);

@@ -39,6 +39,7 @@ export const ENDPOINT = {
   CREATE_HEADING_URL: '/create-heading',
   UPDATE_HEADING_URL: '/update-heading',
   DELETE_HEADING_URL: '/delete-heading',
+  CHANGE_DISPLAY_VALUE: '/bibliographic-record/fixed-field-display-value',
   BIBLIOGRAPHIC_RECORD: '/bibliographic-record',
   FIXED_FIELD_BY_LEADER_URL: '/fixed-fields-code-groups-by-leader',
   HEADING_BY_TAG: '/headings-by-tag',

@@ -14,6 +14,7 @@ export const ACTION = {
   DELETE: '@@ui-marccat/DELETE',
   RESOLVE: '@@ui-marccat/RESOLVE',
   REJECT: '@@ui-marccat/REJECT',
+  FILTERS: '@@ui-marccat/FILTER',
   LOCK: '@@ui-marccat/LOCK',
   UNLOCK: '@@ui-marccat/UNLOCK',
 };

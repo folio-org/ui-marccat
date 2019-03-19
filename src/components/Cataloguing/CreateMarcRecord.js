@@ -62,7 +62,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
       indicator1: item.ind1 || tagSelected.variableField.ind1,
       indicator2: item.ind2 || tagSelected.variableField.ind2,
       stringText: item.displayValue || tagSelected.variableField.displayValue,
-      category: item.categoryCode || tagSelected.variableField.categoryCode,
+      category: item.category || tagSelected.variableField.category,
       headingNumber: item.keyNumber || tagSelected.variableField.keyNumber,
       tag: item.code || tagSelected.code,
     };
@@ -118,6 +118,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
             k.variableField = {
               ind1: data.indicator1 || C.SPACED_STRING_DOUBLE_QUOTE,
               ind2: data.indicator2 || C.SPACED_STRING_DOUBLE_QUOTE,
+              category: data.category,
               displayValue: data.stringText,
               keyNumber: data.headingNumber,
             };
@@ -195,7 +196,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
 
   handleClose = () => {
     const { dispatch, router, toggleFilterPane, emptyRecord } = this.props;
-    dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', filterChecked: false });
+    dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', isChecked: false });
     toggleFilterPane();
     const id = emptyRecord.id;
     router.push(`/marccat/search?id=${id}`);

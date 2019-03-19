@@ -10,9 +10,9 @@ import { ActionMenu } from '../../../../lib';
 import { Props, injectCommonProp } from '../../../../core';
 import { resultsFormatter, columnMapper, columnWidthMapper, renderColumn } from '../../../../utils/Formatter';
 import { EmptyMessage, NoResultsMessage } from '../../../../lib/components/Message';
-import { FormReducer } from '../../../../redux/helpers/StoreReducer';
 import { ActionTypes } from '../../../../redux/actions/Actions';
 import * as C from '../../../../shared/Constants';
+import { FormReducer } from '../../../../redux/actions/StoreReducer';
 
 
 class SearchResultPane extends React.Component<Props, {}> {
@@ -40,8 +40,7 @@ class SearchResultPane extends React.Component<Props, {}> {
 
       if (form) {
         Object.keys(form)
-          // eslint-disable-next-line no-unused-vars
-          .forEach((z, i) => {
+          .forEach((z) => {
             switch (z) {
             case 'id Number': if (form[z]) visibleColumns[1] = '001'; break;
             case 'Title': if (form[z]) visibleColumns[2] = '245'; break;

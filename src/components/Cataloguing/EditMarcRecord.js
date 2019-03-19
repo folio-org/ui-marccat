@@ -28,6 +28,7 @@ import style from './Style/style.css';
 import { If } from '../Search';
 import * as C from '../../shared/Constants';
 import { buildUrl, findParam } from '../../shared/Function';
+import { searchDetailAction } from '../Search/Actions/ActionCreator';
 
 class EditMarcRecord extends React.Component {
   constructor(props) {
@@ -39,11 +40,12 @@ class EditMarcRecord extends React.Component {
     this.onDelete = this.onDelete.bind(this);
 
     this.id = findParam('id');
+    props.dispatch(searchDetailAction(this.id));
   }
 
   handleClose = () => {
     const { dispatch, router, toggleFilterPane } = this.props;
-    dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', filterChecked: false });
+    dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', isChecked: false });
     toggleFilterPane();
     router.push('/marccat/search');
   };

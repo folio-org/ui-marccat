@@ -10,11 +10,7 @@ Object.setPrototypeOf(StoreReducer, BaseStoreReducer);
 Object.setPrototypeOf(FormReducer, BaseStoreReducer);
 
 FormReducer.resolve = (store, formName) => {
-  return (store.getState().form[formName]) ? store.getState().form[formName].values : undefined;
-};
-
-Dispatcher.dispatch = (action, dispatch) => {
-  return dispatch({ type: action });
+  return (store.getState().form) ? store.getState().form[formName || 0].values : undefined;
 };
 
 /**
@@ -81,8 +77,8 @@ StoreReducer.createDataStore = (model, data, payload) => { // metodo statico
       host: window.location.hostname,
       params: data.params,
       id: data.id || uniqueId('@@marccat-'),
-      isPending: true,
-      isResolved: false,
+      isPending: false,
+      isResolved: true,
       isRejected: false,
       headingNumber: payload.headingNumber || null,
       deleted: data.payload || [],
@@ -118,30 +114,6 @@ StoreReducer.createRequestError = (model, data, errors) => { // metodo statico
       errors
     }
   };
-};
-
-/**
- *
- * @param {*} response
- * @returns
- */
-StoreReducer.parseResponseBody = (response) => { // metodo statico
-  return response.text().then((text) => {
-    try { return JSON.parse(text); } catch (e) { return text; }
-  });
-};
-
-/**
- *
- * @param {*} method - Http method for fetch
- * @returns
- */
-StoreReducer.getHeaders = (method) => { // metodo statico
-  const headers = {
-    'x-okapi-tenant': 'tnx', // TODO FIXME
-    'Content-Type': (method === 'PUT' || method === 'POST') ? 'application/vnd.api+json' : 'application/json'
-  };
-  return headers;
 };
 
 /**

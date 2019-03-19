@@ -10,7 +10,6 @@ import MarcField from './MarcField';
 import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../shared/Constants';
 import { ActionTypes } from '../../../redux/actions/Actions';
 import style from '../Style/style.css';
-import { fixedFieldByLeaderAction } from '../Actions/MarcActionCreator';
 import { decamelizify } from '../../../shared/Function';
 
 
@@ -64,10 +63,7 @@ export default class MarcLeader extends React.Component<P, {
   }
 
   handleTag008Change = () => {
-    const { dispatch } = this.props;
-    const { leader } = this.state;
-    const payload = { leader };
-    dispatch(fixedFieldByLeaderAction(payload));
+    // call old epic
   };
 
   handleChange = () => {

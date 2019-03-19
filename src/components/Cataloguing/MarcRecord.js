@@ -29,8 +29,7 @@ class MarcRecord extends React.Component<Props, {}> {
   };
 
   handleClose = () => {
-    const { dispatch, router, toggleFilterPane, emptyRecord } = this.props;
-    dispatch(resetFilter());
+    const { router, toggleFilterPane, emptyRecord } = this.props;
     toggleFilterPane();
     const id = emptyRecord.id;
     router.push(`/marccat/search?id=${id}`);

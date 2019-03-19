@@ -12,7 +12,7 @@ describe('Application', () => {
   setupApplication();
 
   beforeEach(async function () {
-    const instance = this.server.create('marccat');
+    // const instance = this.server.create('marccat');
 
     this.visit(`/marccat/record/template?templateId=${408}&mode=new`);
   });

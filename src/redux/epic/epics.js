@@ -197,4 +197,3 @@ export const changeTag008ValueFromLeader = (action$, store) => action$.ofType(Ac
       .map(record => marccatActions.fetchValuesFromTag008(record))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
-

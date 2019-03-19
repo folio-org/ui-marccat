@@ -376,6 +376,32 @@ export function headerTypes008Reducer(state = { isLoading, isReady }, action) {
   }
 }
 
+export function change008ByLeaderReducer(state = { isLoading, isReady }, action) {
+  switch (action.type) {
+  case ActionTypes.CHANGE_008_BY_LEADER:
+    return {
+      ...state,
+      isLoading: false,
+      isReady: false
+    };
+  case ActionTypes.CHANGE_008_BY_LEADER_REQUESTED:
+    return {
+      ...state,
+      isLoading: action.payload,
+      isReady: false
+    };
+  case ActionTypes.CHANGE_008_BY_LEADER_SUCCESS:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: false,
+      isReady: true,
+    };
+  default:
+    return state;
+  }
+}
+
 export function tag006ValuesReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
   case ActionTypes.VALUES_FROM_TAG_006:

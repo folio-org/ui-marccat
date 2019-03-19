@@ -188,3 +188,12 @@ export const tag008ValuesEpic = (action$, store) => action$.ofType(ActionTypes.V
       .map(record => marccatActions.fetchValuesFromTag008(record))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
+
+export const tag008ByLeaderEpic = (action$, store) => action$.ofType(ActionTypes.CHANGE_008_BY_LEADER)
+  .switchMap((d) => concat$(
+    of$(marccatActions.isFetchingTag008ByLeaderRequest(true)),
+    ajax
+      .getJSON(buildUrl(ENDPOINT.CHANGE_008_BY_LEADER, `leader=${d.leader}&lang=ita`), ENDPOINT.HEADERS)
+      .map(record => marccatActions.fetchValuesTag008ByLeader(record))
+      .catch(e => of$(marccatActions.fetchFailure(e))),
+  ));

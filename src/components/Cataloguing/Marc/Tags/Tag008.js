@@ -20,6 +20,7 @@ export class Tag008 extends React.Component<Props, {}> {
     super(props);
     this.state = {
       isChangedHeaderType: false,
+      currentHeaderTypeCode: String
     };
     this.handleOnChange = this.handleOnChange.bind(this);
     this.changeDisplayValue = this.changeDisplayValue.bind(this);
@@ -38,6 +39,7 @@ export class Tag008 extends React.Component<Props, {}> {
     this.state.isChangedHeaderType = true;
     const tag008 = record.fields.filter(f => f.code === TAGS._008)[0];
     tag008.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
+    this.state.currentHeaderTypeCode = tag008.fixedField.headerTypeCode;
     dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: tag008.fixedField.headerTypeCode });
     dispatch(change('Tag008', tag008.fixedField.headerTypeCode));
   };
@@ -81,7 +83,7 @@ export class Tag008 extends React.Component<Props, {}> {
   };
 
   render() {
-    const { headerTypesResult, tag008ValuesResults } = this.props;
+    const { headerTypesResult, tag008ValuesResults, leaderValue, newValuesFromChangedLeader, dispatch, change } = this.props;
     const { isChangedHeaderType } = this.state;
     if (!tag008ValuesResults) {
       this.populateFirstAccess();
@@ -91,6 +93,14 @@ export class Tag008 extends React.Component<Props, {}> {
       const result = Object.keys(tag008ValuesResults.results).map((key) => tag008ValuesResults.results[key]);
       remappedValues.push(result);
     }
+    const { currentHeaderTypeCode } = this.state;
+    if (newValuesFromChangedLeader && newValuesFromChangedLeader.headerTypeCode !== currentHeaderTypeCode) {
+      dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: newValuesFromChangedLeader.headerTypeCode });
+      dispatch(change('Tag008', newValuesFromChangedLeader.headerTypeCode));
+      this.setState({ currentHeaderTypeCode: newValuesFromChangedLeader.headerTypeCode });
+      this.changeDisplayValue();
+    }
+
     return (headerTypesResult) ? (
       <div>
         <Row>
@@ -136,8 +146,9 @@ export class Tag008 extends React.Component<Props, {}> {
   }
 }
 export default (connect(
-  ({ marccat: { headerTypes008, tag008Values } }) => ({
+  ({ marccat: { headerTypes008, tag008Values, change008ByLeader } }) => ({
     headerTypesResult: headerTypes008.records,
-    tag008ValuesResults: tag008Values.records
+    tag008ValuesResults: tag008Values.records,
+    newValuesFromChangedLeader: change008ByLeader.records
   }),
 )(injectCommonProp(Tag008)));

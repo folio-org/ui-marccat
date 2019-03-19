@@ -33,6 +33,7 @@ export const ENDPOINT = {
   BROWSE_FIRST_PAGE_URL: '/browse',
   VIEW_TEMPLATE_URL: '/record-templates',
   VIEW_TEMPLATE_URL_BY_ID: '/record-template/',
+  FIXED_FIELD_BY_LEADER_URL:'/fixed-fields-code-groups-by-leader',
   EMPTY_RECORD_URL: '/bibliographic-record/from-template/',
   TEMPLATE_TAG_URL: '/fixed-fields-code-groups',
   HEADER_TYPES_URL: '/header-types',
@@ -41,6 +42,8 @@ export const ENDPOINT = {
   DELETE_HEADING_URL: '/delete-heading',
   BIBLIOGRAPHIC_RECORD: '/bibliographic-record',
   HEADING_BY_TAG: '/headings-by-tag',
+  CHANGE_DISPLAY_VALUE:'/bibliographic-record/fixed-field-display-value',
+  CHANGE_008_BY_LEADER: '/fixed-fields-code-groups-by-leader',
   LOCK_MARC_RECORD: '/bibliographic-record/lock/',
   UNLOCK_MARC_RECORD: '/bibliographic-record/unlock/',
 };

@@ -181,6 +181,14 @@ export const fetchValuesFromTag008 = (records) => ({
   type: ActionTypes.VALUES_FROM_TAG_008_SUCCESS,
   payload: records
 });
+export const isFetchingTag008ByLeaderRequest = (isLoading) => ({
+  type: ActionTypes.CHANGE_008_BY_LEADER_REQUESTED,
+  payload: isLoading
+});
+export const fetchValuesTag008ByLeader = (records) => ({
+  type: ActionTypes.CHANGE_008_BY_LEADER_SUCCESS,
+  payload: records
+});
 export const isSettingsRequest = () => ({
   type: ActionTypes.SETTINGS,
   payload: {} // generic payload

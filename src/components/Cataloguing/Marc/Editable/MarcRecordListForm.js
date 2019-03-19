@@ -76,7 +76,7 @@ class EditableListForm extends React.Component {
     if (this.props.id) {
       this.marcTagrowTestingId = this.props.id;
     } else if (this.props.label) {
-      this.marcTagrowTestingId = this.props.label.replace(/\s/, '').toLowerCase();
+      this.marcTagrowTestingId = this.props.label.replace(/\s/, '\u001f').toLowerCase();
     } else {
       this.marcTagrowTestingId = uniqueId();
     }

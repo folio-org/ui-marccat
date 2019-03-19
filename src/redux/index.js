@@ -20,6 +20,7 @@ import {
   tag007ValuesReducer,
   tag008ValuesReducer,
   headingByTagReducer,
+  change008ByLeaderReducer,
   settingsReducer,
   panelsReducer,
 } from './reducers/Reducer';
@@ -41,7 +42,8 @@ import {
   headerTypes008Epic,
   tag006ValuesEpic,
   tag007ValuesEpic,
-  tag008ValuesEpic
+  tag008ValuesEpic,
+  tag008ByLeaderEpic
 } from './epic/epics';
 
 import {
@@ -69,6 +71,7 @@ export const reducer = combineReducers({
   tag007Values: tag007ValuesReducer,
   tag008Values: tag008ValuesReducer,
   headingByTag: headingByTagReducer,
+  change008ByLeader: change008ByLeaderReducer,
   settings: settingsReducer,
   panels: panelsReducer,
   data
@@ -92,6 +95,7 @@ export const epics = combineEpics(
   tag007ValuesEpic,
   tag008ValuesEpic,
   recordDetailEpic,
+  tag008ByLeaderEpic,
   leaderEpic,
   dataEpic
 );

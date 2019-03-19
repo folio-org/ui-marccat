@@ -20,7 +20,7 @@ import { MarcLeader, FixedFields } from '.';
 import { injectCommonProp } from '../../core';
 import { ActionTypes } from '../../redux/actions';
 import { post, put } from '../../core/api/HttpService';
-import { TAG_WITH_NO_HEADING_ASSOCIATED, RECORD_FIELD_STATUS } from './Utils/MarcUtils';
+import { TAG_WITH_NO_HEADING_ASSOCIATED, RECORD_FIELD_STATUS, SUBFIELD_DELIMITER } from './Utils/MarcUtils';
 import VariableFields from './Marc/VariableFields';
 import { StoreReducer } from '../../redux';
 import { deleteRecordAction } from './Utils/MarcApiUtils';
@@ -28,7 +28,6 @@ import style from './Style/style.css';
 import { If } from '../Search';
 import * as C from '../../shared/Constants';
 import { buildUrl, findParam } from '../../shared/Function';
-import { searchDetailAction } from '../Search/Actions/ActionCreator';
 
 class EditMarcRecord extends React.Component {
   constructor(props) {
@@ -40,7 +39,6 @@ class EditMarcRecord extends React.Component {
     this.onDelete = this.onDelete.bind(this);
 
     this.id = findParam('id');
-    props.dispatch(searchDetailAction(this.id));
   }
 
   handleClose = () => {
@@ -70,7 +68,7 @@ class EditMarcRecord extends React.Component {
     const heading = {
       indicator1: item.ind1 || C.EMPTY_STRING,
       indicator2: item.ind2 || C.EMPTY_STRING,
-      stringText: item.displayValue,
+      stringText: SUBFIELD_DELIMITER + item.displayValue,
       tag: item.code
     };
     if (!cretaeHeadingForTag) {
@@ -82,7 +80,7 @@ class EditMarcRecord extends React.Component {
             k.variableField = {
               ind1: data.indicator1 || C.SPACED_STRING_DOUBLE_QUOTE,
               ind2: data.indicator2 || C.SPACED_STRING_DOUBLE_QUOTE,
-              displayValue: data.stringText,
+              displayValue: SUBFIELD_DELIMITER + data.stringText,
               keyNumber: data.headingNumber,
             };
             k.fieldStatus = RECORD_FIELD_STATUS.NEW;
@@ -94,7 +92,7 @@ class EditMarcRecord extends React.Component {
         k.variableField = {
           ind1: item.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
           ind2: item.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
-          displayValue: item.displayValue || C.SPACED_STRING_DOUBLE_QUOTE,
+          displayValue: SUBFIELD_DELIMITER + item.displayValue || C.SPACED_STRING_DOUBLE_QUOTE,
           keyNumber: 0,
         };
         k.fieldStatus = RECORD_FIELD_STATUS.NEW;
@@ -110,7 +108,7 @@ class EditMarcRecord extends React.Component {
     const heading = {
       indicator1: item.ind1 || tagSelected.variableField.ind1,
       indicator2: item.ind2 || tagSelected.variableField.ind2,
-      stringText: item.displayValue || tagSelected.variableField.displayValue,
+      stringText: SUBFIELD_DELIMITER + item.displayValue || SUBFIELD_DELIMITER + tagSelected.variableField.displayValue,
       category: item.categoryCode || tagSelected.variableField.categoryCode,
       headingNumber: item.keyNumber || tagSelected.variableField.keyNumber,
       tag: item.code || tagSelected.code,
@@ -125,7 +123,7 @@ class EditMarcRecord extends React.Component {
             ind1: data.indicator1 || C.SPACED_STRING_DOUBLE_QUOTE,
             ind2: data.indicator2 || C.SPACED_STRING_DOUBLE_QUOTE,
             oldKeyNumber: k.variableField.keyNumber,
-            displayValue: data.stringText,
+            displayValue: SUBFIELD_DELIMITER + data.stringText,
             keyNumber: data.headingNumber,
           };
           return k;

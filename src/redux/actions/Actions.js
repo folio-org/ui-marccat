@@ -1,6 +1,11 @@
 /* MARCCAT ACTIONS TYPES */
 
-// eslint-disable-next-line import/prefer-default-export
+export const HEADER_TYPES_ACTION = {
+  TYPES_006: '@@ui-marccat/HEADER_TYPES_006',
+  TYPES_007: '@@ui-marccat/HEADER_TYPES_007',
+  TYPES_008: '@@ui-marccat/HEADER_TYPES_008',
+};
+
 export const ActionTypes = {
   SEARCH: '@@ui-marccat/SEARCH',
   SCAN: '@@ui-marccat/SCAN',

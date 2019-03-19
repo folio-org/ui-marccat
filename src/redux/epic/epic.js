@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { qs } from '..';
-import { StoreReducer } from '../helpers/StoreReducer';
+import { StoreReducer } from '../actions/StoreReducer';
 import {
   ACTION,
   REQUEST_MAKE,

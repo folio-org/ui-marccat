@@ -28,7 +28,6 @@ import style from './Style/style.css';
 import { If } from '../Search';
 import * as C from '../../shared/Constants';
 import { buildUrl, findParam } from '../../shared/Function';
-import { searchDetailAction } from '../Search/Actions/ActionCreator';
 
 class EditMarcRecord extends React.Component {
   constructor(props) {

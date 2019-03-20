@@ -119,6 +119,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
           return r.json();
         }).then((data) => {
           tagVariableData.filter(t => t.code === item.code).map(k => {
+            k.fieldStatus = RECORD_FIELD_STATUS.NEW;
             k.variableField = {
               ind1: data.indicator1 || C.SPACED_STRING_DOUBLE_QUOTE,
               ind2: data.indicator2 || C.SPACED_STRING_DOUBLE_QUOTE,
@@ -126,7 +127,6 @@ export class CreateMarcRecord extends React.Component<P, {}> {
               displayValue: data.stringText.replace(SUBFIELD_DELIMITER, '$'),
               keyNumber: data.headingNumber,
             };
-            k.fieldStatus = RECORD_FIELD_STATUS.NEW;
             return data;
           });
         });
@@ -154,7 +154,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
       indicator2: item.variableField.ind2,
       stringText: item.variableField.displayValue,
       tag: item.code,
-      category: '',
+      category: item.category,
       headingNumber: item.variableField.keyNumber
     };
     dispatch(headingDeleteAction(heading));
@@ -191,6 +191,12 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     bibliographicRecord.fields = union(bibliographicRecord.fields, tagVariableData);
     bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     bibliographicRecord.fields = sortBy(bibliographicRecord.fields, 'code');
+    bibliographicRecord.fields
+      .filter(f => f.fixedField === undefined || !f.fixedField)
+      .forEach(f => {
+        f.fieldStatus = RECORD_FIELD_STATUS.NEW;
+        f.variableField.displayValue = f.variableField.displayValue.replace('$', SUBFIELD_DELIMITER);
+      });
     bibliographicRecord.verificationLevel = 1;
     return {
       bibliographicRecord,

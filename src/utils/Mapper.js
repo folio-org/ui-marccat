@@ -13,25 +13,26 @@ const getTagDisplayValue = tagNode => {
   return result;
 };
 
-const remapForAssociatedBibList = i => {
+const remapForAssociatedBibList = (i:[]) => {
   const result = [];
-  i.forEach(el => {
-    const record = {
-      countDoc: el.countDoc,
-      tagHighlighted: el.tagHighlighted,
-      queryForBibs: el.queryForAssociatedDoc,
-      recordView: el.recordView,
-      leader: el.data.leader
-    };
-    const { fields } = el.data;
-    fields.forEach(field => {
-      const tag = Object.keys(field)[0];
-      record[tag] = (typeof field[tag] === 'string' || field[tag] instanceof String)
-        ? field[tag]
-        : getTagDisplayValue(field[tag]);
+  i
+    .forEach(el => {
+      const record = {
+        countDoc: el.countDoc,
+        tagHighlighted: el.tagHighlighted,
+        queryForBibs: el.queryForAssociatedDoc,
+        recordView: el.recordView,
+        leader: (el.data && el.data.leader) ? el.data.leader : ''
+      };
+      const fields = (el.data && el.data.fields) ? el.data.fields : [];
+      fields.forEach(field => {
+        const tag = Object.keys(field)[0];
+        record[tag] = (typeof field[tag] === 'string' || field[tag] instanceof String)
+          ? field[tag]
+          : getTagDisplayValue(field[tag]);
+      });
+      result.push(record);
     });
-    result.push(record);
-  });
   return result;
 };
 

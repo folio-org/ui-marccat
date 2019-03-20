@@ -18,7 +18,7 @@ import {
   RecordDetailPane,
   AssociatedRecordPane,
 } from './components';
-import { emptyRecordAction } from '../Actions/ActionCreator';
+import { emptyRecordAction, searchDetailAction } from '../Actions/ActionCreator';
 import * as C from '../../../shared/Constants';
 import { findParam } from '../../../shared/Function';
 
@@ -81,6 +81,7 @@ export class SearchResults extends React.Component<P, {}> {
     const { dispatch, router, toggleFilterPane } = this.props;
     const { detail } = this.state;
     dispatch({ type: ActionTypes.VIEW_TEMPLATE, query: '000' });
+    dispatch(searchDetailAction(detail['001']));
     toggleFilterPane();
     router.push(`/marccat/record/view?id=${detail['001']}&mode=edit`);
   }

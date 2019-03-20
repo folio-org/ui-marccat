@@ -25,6 +25,7 @@ export default class MarcField extends React.Component<P, {}> {
       placeholder,
       component,
       display,
+      text,
       withIcon,
     } = this.props;
     dispatch(change(name, value));
@@ -34,7 +35,7 @@ export default class MarcField extends React.Component<P, {}> {
         <Field
           id={name}
           name={name}
-          type="text"
+          type={text || 'text'}
           placeholder={placeholder}
           readOnly={readOnly}
           component={component || 'input'}

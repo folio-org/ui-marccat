@@ -123,7 +123,9 @@ export class Tag008 extends React.Component<Props, {}> {
               remappedValues.map((elem) => {
                 return elem.map((item, idx) => {
                   let exactDisplayValue = C.EMPTY_STRING;
-                  item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue));
+                  item.dropdownSelect
+                    .filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue))
+                  dispatch(change(`Tag008-${item.name}`, exactDisplayValue));
                   return (
                     <Col xs={4} key={`tag008-${idx}`}>
                       <Field

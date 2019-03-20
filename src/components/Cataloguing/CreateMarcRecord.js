@@ -157,7 +157,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
       category: item.category,
       headingNumber: item.variableField.keyNumber
     };
-    dispatch(headingDeleteAction(heading));
+    // dispatch(headingDeleteAction(heading));
   };
 
   saveRecord = () => {
@@ -188,15 +188,10 @@ export class CreateMarcRecord extends React.Component<P, {}> {
 
     const recordTemplate = Object.assign({}, emptyRecord);
     recordTemplate.id = 408;
+
     bibliographicRecord.fields = union(bibliographicRecord.fields, tagVariableData);
     bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     bibliographicRecord.fields = sortBy(bibliographicRecord.fields, 'code');
-    bibliographicRecord.fields
-      .filter(f => f.fixedField === undefined || !f.fixedField)
-      .forEach(f => {
-        f.fieldStatus = RECORD_FIELD_STATUS.NEW;
-        f.variableField.displayValue = f.variableField.displayValue.replace('$', SUBFIELD_DELIMITER);
-      });
     bibliographicRecord.verificationLevel = 1;
     return {
       bibliographicRecord,

@@ -35,12 +35,14 @@ export function searchEngineReducer(state = { isLoading, isReady }, action) {
       ...state,
       isReady: false,
       isLoading: false,
+      moreData: action.moreData
     };
   case ActionTypes.FETCH_SEARCH_REQUESTED:
     return {
       ...state,
       isReady: false,
       isLoading: action.payload,
+      moreData: action.moreData
     };
   case ActionTypes.RECORD_SUCCESS:
     return {
@@ -56,6 +58,7 @@ export function searchEngineReducer(state = { isLoading, isReady }, action) {
       oldBibArray:action.oldBibArray,
       oldAuthArray: action.oldAuthArray,
       isLoading: false,
+      moreData: action.moreData,
       isReady: true,
     };
   default:
@@ -365,6 +368,32 @@ export function headerTypes008Reducer(state = { isLoading, isReady }, action) {
       isReady: false
     };
   case ActionTypes.HEADER_TYPES_008_SUCCESS:
+    return {
+      ...state,
+      records: action.payload,
+      isLoading: false,
+      isReady: true,
+    };
+  default:
+    return state;
+  }
+}
+
+export function change008ByLeaderReducer(state = { isLoading, isReady }, action) {
+  switch (action.type) {
+  case ActionTypes.CHANGE_008_BY_LEADER:
+    return {
+      ...state,
+      isLoading: false,
+      isReady: false
+    };
+  case ActionTypes.CHANGE_008_BY_LEADER_REQUESTED:
+    return {
+      ...state,
+      isLoading: action.payload,
+      isReady: false
+    };
+  case ActionTypes.CHANGE_008_BY_LEADER_SUCCESS:
     return {
       ...state,
       records: action.payload,

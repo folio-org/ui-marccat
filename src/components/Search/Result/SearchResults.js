@@ -258,7 +258,7 @@ export class SearchResults extends React.Component<P, {}> {
       isFetchingDetail,
       isLoadingAssociatedRecord,
       isReadyAssociatedRecord,
-      closePanels
+      closePanels,
     } = this.props;
     let { bibliographicResults, authorityResults } = this.props;
     if (activeFilter) {

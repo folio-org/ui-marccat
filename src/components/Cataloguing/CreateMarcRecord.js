@@ -28,10 +28,9 @@ import { ActionTypes } from '../../redux/actions/Actions';
 import { post, put } from '../../core/api/HttpService';
 import * as C from '../../shared/Constants';
 
-import { StoreReducer } from '../../redux';
 import { RECORD_FIELD_STATUS, TAG_WITH_NO_HEADING_ASSOCIATED, SUBFIELD_DELIMITER } from './Utils/MarcUtils';
 import style from './Style/style.css';
-import { headingAction, headingDeleteAction } from './Actions/MarcActionCreator';
+import { headingAction, headingDeleteAction, settingsAction } from './Actions/MarcActionCreator';
 import { buildUrl } from '../../shared/Function';
 
 
@@ -50,6 +49,8 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     this.onUpdate = this.onUpdate.bind(this);
     this.onCreate = this.onCreate.bind(this);
     this.onDelete = this.onDelete.bind(this);
+
+    props.dispatch(settingsAction({ fromCataloging: true }));
   }
 
   onSave = () => {}
@@ -59,13 +60,12 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     const tagVariableData = getState().form.marcEditableListForm.values.items;
     const tagSelected = tagVariableData.filter(t => t.code === item.code)[0];
     const displayValue = item.displayValue.replace('$', SUBFIELD_DELIMITER);
-    const displayValueOptional = tagSelected.variableField.displayValue.replace('$', SUBFIELD_DELIMITER);
     const heading = {
       indicator1: item.ind1 || tagSelected.variableField.ind1,
       indicator2: item.ind2 || tagSelected.variableField.ind2,
-      stringText: displayValue || displayValueOptional,
-      category: item.category || tagSelected.variableField.category,
-      headingNumber: item.keyNumber || tagSelected.variableField.keyNumber,
+      stringText: displayValue,
+      category: item.categoryCode || tagSelected.variableField.categoryCode,
+      headingNumber: (item.code === '040') ? 123456 : item.keyNumber || (item.code === '040') ? 0 : tagSelected.variableField.keyNumber,
       tag: item.code || tagSelected.code,
     };
     put(buildUrl(C.ENDPOINT.UPDATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
@@ -119,6 +119,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
           return r.json();
         }).then((data) => {
           tagVariableData.filter(t => t.code === item.code).map(k => {
+            k.fieldStatus = RECORD_FIELD_STATUS.NEW;
             k.variableField = {
               ind1: data.indicator1 || C.SPACED_STRING_DOUBLE_QUOTE,
               ind2: data.indicator2 || C.SPACED_STRING_DOUBLE_QUOTE,
@@ -126,7 +127,6 @@ export class CreateMarcRecord extends React.Component<P, {}> {
               displayValue: data.stringText.replace(SUBFIELD_DELIMITER, '$'),
               keyNumber: data.headingNumber,
             };
-            k.fieldStatus = RECORD_FIELD_STATUS.NEW;
             return data;
           });
         });
@@ -154,7 +154,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
       indicator2: item.variableField.ind2,
       stringText: item.variableField.displayValue,
       tag: item.code,
-      category: '',
+      category: item.category,
       headingNumber: item.variableField.keyNumber
     };
     dispatch(headingDeleteAction(heading));
@@ -177,20 +177,32 @@ export class CreateMarcRecord extends React.Component<P, {}> {
   };
 
   composeBodyJson = () => {
-    const { emptyRecord, store: { getState } } = this.props;
-    let { bibliographicRecord } = this.props;
+    const { data, data: { data: { emptyRecord } }, store: { getState } } = this.props;
+    let bibliographicRecord;
     const formData = getState().form.bibliographicRecordForm.values;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
 
     // Set leader
-    if (!bibliographicRecord) bibliographicRecord = emptyRecord;
+    if (!bibliographicRecord) bibliographicRecord = Object.assign(emptyRecord.results, bibliographicRecord);
     bibliographicRecord.leader.value = formData.Leader;
 
-    const recordTemplate = Object.assign({}, emptyRecord);
-    recordTemplate.id = 408;
+    const recordTemplate = {
+      id: data.template.records[0].id,
+      name: data.template.records[0].name,
+      type: 'B',
+      fields: emptyRecord.results.fields
+    };
     bibliographicRecord.fields = union(bibliographicRecord.fields, tagVariableData);
     bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     bibliographicRecord.fields = sortBy(bibliographicRecord.fields, 'code');
+    bibliographicRecord.fields
+      .filter(f => f.fixedField === undefined || !f.fixedField)
+      .filter(f => f.variableField.code !== '040')
+      .forEach(element => {
+        element.fieldStatus = RECORD_FIELD_STATUS.NEW;
+        element.displayValue = element.variableField.displayValue.replace('$', SUBFIELD_DELIMITER);
+        element.variableField.displayValue = element.variableField.displayValue.replace('$', SUBFIELD_DELIMITER);
+      });
     bibliographicRecord.verificationLevel = 1;
     return {
       bibliographicRecord,
@@ -199,10 +211,11 @@ export class CreateMarcRecord extends React.Component<P, {}> {
   }
 
   handleClose = () => {
-    const { dispatch, router, toggleFilterPane, emptyRecord } = this.props;
+    const { datastore, dispatch, router, toggleFilterPane } = this.props;
     dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', isChecked: false });
     toggleFilterPane();
-    const id = emptyRecord.id;
+    const { emptyRecord } = datastore;
+    const id = emptyRecord.results.id;
     router.push(`/marccat/search?id=${id}`);
   };
 
@@ -253,11 +266,10 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     const {
       settings,
       leaderData,
-      emptyRecord
+      datastore: { emptyRecord },
     } = this.props;
-    let { bibliographicRecord } = this.props;
     const defaultTemplate = (settings) ? settings.defaultTemplate : C.SETTINGS.DEFAULT_TEMPLATE;
-    bibliographicRecord = !isEmpty(emptyRecord) ? emptyRecord : undefined;
+    const bibliographicRecord = !isEmpty(emptyRecord) ? emptyRecord.results : {};
 
     return (!bibliographicRecord) ?
       (
@@ -342,7 +354,7 @@ export default reduxForm({
   destroyOnUnmount: false,
 })(connect(
   ({ marccat: { data, template, recordDetail, leaderData, headerTypes006, headerTypes007, headerTypes008 } }) => ({
-    emptyRecord: StoreReducer.resolve(data, 'emptyRecord'),
+    emptyRecord: data.results,
     bibliographicRecord: template.recordsById,
     recordDetail: recordDetail.isReady,
     defaultTemplate: template.records,

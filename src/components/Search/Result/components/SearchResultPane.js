@@ -13,7 +13,7 @@ import { resultsFormatter, columnMapper, columnWidthMapper, renderColumn } from 
 import { EmptyMessage, NoResultsMessage } from '../../../../lib/components/Message';
 import { ActionTypes } from '../../../../redux/actions/Actions';
 import * as C from '../../../../shared/Constants';
-import { FormReducer } from '../../../../redux/actions/StoreReducer';
+import { FormReducer } from '../../../../redux/helpers/StoreReducer';
 
 
 class SearchResultPane extends React.Component<Props, {}> {

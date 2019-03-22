@@ -1,8 +1,8 @@
 import {
   interactor,
-  isPresent
+  // isPresent
 } from '@bigtest/interactor';
 
 export default interactor(class MarccatInteractor {
-    hasCreateRecordButton = isPresent('[data-test-clickable-new-order]');
+  // hasCreateRecordButton = isPresent('[data-test-clickable-new-order]');
 });

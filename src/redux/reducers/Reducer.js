@@ -589,7 +589,7 @@ export function panelsReducer(state = {}, action) { // TO BE REMOVED
 export function settingsReducer(state = {}, action) {
   switch (action.type) {
   case ActionTypes.SETTINGS:
-    return Object.assign({}, state, action.data);
+    return Object.assign(state, state, action.data);
   case ActionTypes.SEARCH:
     return {
       ...state,

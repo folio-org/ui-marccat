@@ -15,4 +15,3 @@ export {
   FIXED_FIELD_TEMPLATE
 }
   from './Utils/MarcUtils';
-export { headingAction } from './Utils/MarcApiUtils';

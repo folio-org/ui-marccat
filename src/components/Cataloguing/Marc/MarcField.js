@@ -19,6 +19,7 @@ export default class MarcField extends React.Component<P, {}> {
       name,
       value,
       onClick,
+      text,
       readOnly,
       onAdd,
       onDelete,
@@ -34,7 +35,7 @@ export default class MarcField extends React.Component<P, {}> {
         <Field
           id={name}
           name={name}
-          type="text"
+          type={'text' || text}
           placeholder={placeholder}
           readOnly={readOnly}
           component={component || 'input'}

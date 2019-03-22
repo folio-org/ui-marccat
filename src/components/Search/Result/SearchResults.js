@@ -19,7 +19,7 @@ import {
   AssociatedRecordPane,
 } from './components';
 import { StoreReducer } from '../../../redux';
-import { searchDetailAction, emptyRecordAction } from '../Actions/ActionCreator';
+import { emptyRecordAction } from '../Actions/ActionCreator';
 import * as C from '../../../shared/Constants';
 import { findParam } from '../../../shared/Function';
 
@@ -262,7 +262,7 @@ export class SearchResults extends React.Component<P, {}> {
       isFetchingDetail,
       isLoadingAssociatedRecord,
       isReadyAssociatedRecord,
-      closePanels
+      closePanels,
     } = this.props;
     let { bibliographicResults, authorityResults } = this.props;
     if (activeFilter) {

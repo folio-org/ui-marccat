@@ -13,13 +13,14 @@ import { buildUrl } from '../../shared/Function';
 
 export const searchEpic = (action$, store) => action$.ofType(ActionTypes.SEARCH)
   .switchMap((d) => concat$(
-    of$(marccatActions.isfetchingSearchRequest(true)),
+    of$(marccatActions.isfetchingSearchRequest(true, d.moreData)),
     ajax
       .getJSON(buildUrl(ENDPOINT.MERGED_SEARCH_URL, `lang=ita&ml=170&qbib=${d.queryBib}&qauth=${d.queryAuth}&from=${d.from}&to=${d.to}&dpo=1&sortBy=${StoreReducer.get(store, 'settings', 'sortType') || 4}&sortOrder=0`), ENDPOINT.HEADERS)
       .map(record => marccatActions.fetchSearchEngineRecords(
         d.queryBib,
         d.queryAuth,
         d.to,
+        d.moreData,
         record[1].docs,
         record[1].numFound,
         record[0].docs,

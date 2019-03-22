@@ -1,8 +1,9 @@
 import { ActionTypes } from './Actions';
 
-export const isfetchingSearchRequest = (isLoading) => ({
+export const isfetchingSearchRequest = (isLoading, moreResult) => ({
   type: ActionTypes.FETCH_SEARCH_REQUESTED,
-  payload: isLoading
+  payload: isLoading,
+  moreData: moreResult
 });
 export const isfetchingDetailsRequest = (isLoading) => ({
   type: ActionTypes.FETCH_DETAILS_REQUESTED,
@@ -78,10 +79,11 @@ export const fetchBrowseDetailAssociatedRecords = (records, mustOpenPanel) => ({
   payload: records,
   mustOpenPanel
 });
-export const fetchSearchEngineRecords = (queryBib, queryAuth, to, bibliographicResults, bibCounter, authorityResults, authCounter, dataOld, oldBibArray, oldAuthArray) => ({
+export const fetchSearchEngineRecords = (queryBib, queryAuth, to, moreData, bibliographicResults, bibCounter, authorityResults, authCounter, dataOld, oldBibArray, oldAuthArray) => ({
   type: ActionTypes.RECORD_SUCCESS,
   queryBib,
   queryAuth,
+  moreData,
   to,
   bibliographicResults,
   bibCounter,

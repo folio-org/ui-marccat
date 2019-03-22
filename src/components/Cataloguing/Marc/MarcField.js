@@ -26,6 +26,7 @@ export default class MarcField extends React.Component<P, {}> {
       placeholder,
       component,
       display,
+      text,
       withIcon,
     } = this.props;
     dispatch(change(name, value));

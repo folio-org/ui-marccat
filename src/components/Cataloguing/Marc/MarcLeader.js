@@ -10,7 +10,6 @@ import MarcField from './MarcField';
 import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../shared/Constants';
 import { ActionTypes } from '../../../redux/actions/Actions';
 import style from '../Style/style.css';
-import { fixedFieldByLeaderAction } from '../Actions/MarcActionCreator';
 import { decamelizify } from '../../../shared/Function';
 
 

@@ -23,7 +23,7 @@ export const searchDetailAction = (id) => {
  *
  * @param {*} payload
  */
-export const emptyRecordAction = (payload) => {
+export const emptyRecordAction = () => {
   return {
     type: ACTION.QUERY,
     data: {
@@ -31,6 +31,5 @@ export const emptyRecordAction = (payload) => {
       type: 'emptyRecord',
       params: ENDPOINT.DEFAULT_LANG_VIEW,
     },
-    payload
   };
 };

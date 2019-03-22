@@ -1,5 +1,5 @@
-import { ENDPOINT } from '../../../shared/Constants';
-import { ACTION } from '../../../shared/Action';
+import { ENDPOINT, EMPTY_STRING } from '../../../shared/Constants';
+import { ACTION, COMMON_ACTION } from '../../../shared/Action';
 
 // MARC action creator utility
 
@@ -81,11 +81,12 @@ export const changeDisplayValueAction = (tag, payload) => {
     payload
   };
 };
-  /**
-   *
-   * @param {*} id
-   * @param {*} payload
-   */
+
+/**
+ *
+ * @param {*} id
+ * @param {*} payload
+ */
 export const deleteRecordAction = (id, payload) => {
   return {
     type: ACTION.DELETE,
@@ -97,4 +98,32 @@ export const deleteRecordAction = (id, payload) => {
       payload
     }
   };
+};
+
+/**
+ *
+ * @param {*} id
+ * @param {*} payload
+ */
+export const settingsAction = (data) => {
+  return {
+    type: COMMON_ACTION.SETTINGS,
+    data
+  };
+};
+
+/**
+ *
+ * @param {*} item
+ * @param {*} props
+ */
+export const createNewHeading = (item, props) => {
+  const { dispatch } = props;
+  const heading = {
+    indicator1: item.ind1 || EMPTY_STRING,
+    indicator2: item.ind2 || EMPTY_STRING,
+    stringText:  item.displayValue,
+    tag: item.code
+  };
+  dispatch(headingAction(heading));
 };

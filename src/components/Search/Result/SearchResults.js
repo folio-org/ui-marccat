@@ -21,6 +21,7 @@ import {
 import { emptyRecordAction, searchDetailAction } from '../Actions/ActionCreator';
 import * as C from '../../../shared/Constants';
 import { findParam } from '../../../shared/Function';
+import { StoreReducer } from '../../../redux';
 
 
 type P = Props & {
@@ -66,29 +67,27 @@ export class SearchResults extends React.Component<P, {}> {
   }
 
   componentDidMount() {
-    const { store: { getState }, dispatch, change } = this.props;
-    const editRecord = findParam('edited');
-    if (editRecord) {
-      this.openDetailFromCataloguing();
+    const { store: { getState } } = this.props;
+    // const editRecord = findParam('edited');
+    if (getState().marccat.settings && getState().marccat.settings.fromCataloginge) {
+      // this.openDetailFromCataloguing();
       const formValues = getState().form.searchForm.values;
       const searchFieldValue = formValues.searchTextArea;
       document.getElementsByName('searchTextArea')[0].value = searchFieldValue;
-      dispatch(change('searchTextArea', searchFieldValue));
+      // dispatch(change('searchTextArea', searchFieldValue));
     }
   }
 
   handleClickEdit = () => {
-    const { dispatch, router, toggleFilterPane } = this.props;
+    const { router, toggleFilterPane } = this.props;
     const { detail } = this.state;
-    dispatch({ type: ActionTypes.VIEW_TEMPLATE, query: '000' });
-    dispatch(searchDetailAction(detail['001']));
+    const id = detail['001'];
     toggleFilterPane();
-    router.push(`/marccat/record/view?id=${detail['001']}&mode=edit`);
+    router.push(`/marccat/record/view?id=${id}&mode=edit`);
   }
 
   handleCreateRecord = () => {
-    const { router, dispatch, toggleFilterPane } = this.props;
-    dispatch(emptyRecordAction());
+    const { router, toggleFilterPane } = this.props;
     toggleFilterPane();
     this.setState(prevState => ({ layerOpen: !prevState.layerOpen }));
     router.push(`/marccat/record/template?templateId=${408}&mode=new`);
@@ -124,12 +123,13 @@ export class SearchResults extends React.Component<P, {}> {
   };
 
   handleDetails = (e, meta) => {
-    const { dispatch, data } = this.props;
+    const { store: { dispatch }, data } = this.props;
     dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: false });
     const id = meta['001'];
     const detailMeta = meta;
     const detailSelected = data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001']) || {};
     transitionToParams('id', id);
+    dispatch(searchDetailAction(id));
     dispatch({ type: ActionTypes.DETAILS, query: id, recordType: meta.recordView });
     if (isAuthorityRecord(meta)) {
       dispatch({ type: ActionTypes.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView, openPanel: true });
@@ -403,4 +403,5 @@ export default (connect(
     isPanelBibAssOpen: associatedBibDetails.mustOpenPanel,
     closePanels: panels.closePanels
   }),
+  (dispatcher) => dispatcher(emptyRecordAction())
 )(injectCommonProp(SearchResults)));

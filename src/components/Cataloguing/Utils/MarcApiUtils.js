@@ -1,54 +1,15 @@
+import { union, sortBy } from 'lodash';
 
-import { EMPTY_STRING, ENDPOINT } from '../../../shared/Constants';
-import { ACTION } from '../../../shared/Action';
-
-// MARC action creator
-
-/**
- *
- * @param {*} payload
- */
-export const headingAction = (payload) => {
-  return {
-    type: ACTION.CREATE,
-    data: {
-      path: ENDPOINT.CREATE_HEADING_URL,
-      type: `${payload.id}-${payload.tag}-`,
-      params: ENDPOINT.DEFAULT_LANG_VIEW,
-    },
-    payload
-  };
-};
-/**
- *
- * @param {*} id
- * @param {*} payload
- */
-export const deleteRecordAction = (id, payload) => {
-  return {
-    type: ACTION.DELETE,
-    data: {
-      path: ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id,
-      type: `deleteRecord-${id}`,
-      params: 'view=1',
-      id,
-      payload
-    }
-  };
+export const unionSortAndDedupe = (sortByProp, ...obj) => {
+  union(obj[0], obj[1]);
+  sortBy(obj[0], sortByProp);
+  return Object.values(obj[0].reduce((acc, cur) => Object.assign(acc, { [`cur.${sortByProp}`]: cur }), {}));
 };
 
-/**
- *
- * @param {*} item
- * @param {*} props
- */
-export const createNewHeading = (item, props) => {
-  const { dispatch } = props;
-  const heading = {
-    indicator1: item.ind1 || EMPTY_STRING,
-    indicator2: item.ind2 || EMPTY_STRING,
-    stringText:  item.displayValue,
-    tag: item.code
-  };
-  dispatch(headingAction(heading));
+export const filterFixedFields = (obj) => {
+  return obj.filter(f => f.code === '001' || f.code === '003' || f.code === '005' || f.code === '008' || f.code === '040');
+};
+
+export const filterVariableFields = (obj) => {
+  return obj.filter(f => f.fixedField === undefined || !f.fixedField);
 };

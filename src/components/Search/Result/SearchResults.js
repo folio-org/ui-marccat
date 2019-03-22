@@ -18,7 +18,6 @@ import {
   RecordDetailPane,
   AssociatedRecordPane,
 } from './components';
-import { StoreReducer } from '../../../redux';
 import { emptyRecordAction } from '../Actions/ActionCreator';
 import * as C from '../../../shared/Constants';
 import { findParam } from '../../../shared/Function';

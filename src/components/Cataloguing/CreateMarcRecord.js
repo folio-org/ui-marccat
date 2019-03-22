@@ -190,7 +190,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
       id: data.template.records[0].id,
       name: data.template.records[0].name,
       type: 'B',
-      fields: []
+      fields: emptyRecord.results.fields
     };
     bibliographicRecord.fields = union(bibliographicRecord.fields, tagVariableData);
     bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
@@ -200,7 +200,8 @@ export class CreateMarcRecord extends React.Component<P, {}> {
       .filter(f => f.variableField.code !== '040')
       .forEach(element => {
         element.fieldStatus = RECORD_FIELD_STATUS.NEW;
-        element.variableField.displayValue = element.variableField.displayValue.replace('$', 'ee');
+        element.displayValue = element.variableField.displayValue.replace('$', SUBFIELD_DELIMITER);
+        element.variableField.displayValue = element.variableField.displayValue.replace('$', SUBFIELD_DELIMITER);
       });
     bibliographicRecord.verificationLevel = 1;
     return {

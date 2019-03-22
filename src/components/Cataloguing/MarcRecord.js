@@ -7,7 +7,6 @@ import React from 'react';
 import type { Props } from '../../core';
 import { findParam } from '../../redux';
 import { headingAction, RECORD_ACTION } from '.';
-import { resetFilter } from './Actions/MarcActionCreator';
 
 
 class MarcRecord extends React.Component<Props, {}> {
@@ -30,8 +29,7 @@ class MarcRecord extends React.Component<Props, {}> {
   };
 
   handleClose = () => {
-    const { dispatch, router, toggleFilterPane, emptyRecord } = this.props;
-    dispatch(resetFilter());
+    const { router, toggleFilterPane, emptyRecord } = this.props;
     toggleFilterPane();
     const id = emptyRecord.id;
     router.push(`/marccat/search?id=${id}`);

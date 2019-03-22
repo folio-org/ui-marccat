@@ -97,3 +97,5 @@ export const LOCK_ENTITY_TYPE = {
   H: 'H',
   C: 'C'
 };
+export const SUBFIELD_DELIMITER = '\u001f';
+export const withSeparator = (s) => ((s) ? s.replace(SUBFIELD_DELIMITER, '$') : '');

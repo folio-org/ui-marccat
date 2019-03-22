@@ -42,7 +42,7 @@ class FixedFields extends React.Component<Props, {}> {
 
   renderTag008 = (tag) => {
     const { expand008 } = this.state;
-    const { record, data: { settings } } = this.props;
+    const { record } = this.props;
     return (
       <div className={style.controlFieldContainer}>
         <MarcField
@@ -51,7 +51,7 @@ class FixedFields extends React.Component<Props, {}> {
           withIcon
           label={tag.fixedField.code}
           name={tag.fixedField.code}
-          value={settings.currentTag008HeaderType || tag.fixedField.displayValue}
+          value={tag.fixedField.displayValue}
           onClick={() => this.handleTags008(tag)}
         />
         {

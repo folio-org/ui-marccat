@@ -8,6 +8,8 @@ import { ActionTypes } from '../../../redux/actions';
 import { Props } from '../../../core';
 
 import styles from './FiltersContainer.css';
+import { filterAction } from '../../../shared/ActionCreator';
+import { EMPTY_STRING } from '../../../shared/Constants';
 
 export default class FiltersContainer extends React.Component<Props, {}> {
   constructor(props) {
@@ -51,7 +53,7 @@ export default class FiltersContainer extends React.Component<Props, {}> {
     this.setState(prevState => {
       const filters = Object.assign({}, prevState.filters);
       filters[name] = checked;
-      dispatch({ type: ActionTypes.FILTERS, payload: filters, filterName: name, filterChecked: checked });
+      dispatch({ type: ActionTypes.FILTERS, payload: filters, filterName: name, isChecked: checked });
       return { filters };
     });
   }
@@ -62,7 +64,7 @@ export default class FiltersContainer extends React.Component<Props, {}> {
       const filters = {};
       return { filters };
     });
-    dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', filterChecked: false });
+    dispatch(filterAction({}, EMPTY_STRING, false));
   }
 
   render() {

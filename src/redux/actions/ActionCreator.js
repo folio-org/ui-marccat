@@ -171,6 +171,10 @@ export const isFetchingTag008Request = (isLoading) => ({
   type: ActionTypes.FETCH_VALUES_FROM_TAG_008,
   payload: isLoading
 });
+export const isFetchingChangeTag008 = (isLoading) => ({
+  type: ActionTypes.CHANGE_LEADER_REQUEST,
+  payload: isLoading
+});
 export const isFetchingHeadingByTag = (isLoading) => ({
   type: ActionTypes.FETCH_HEADING_BY_TAG,
   payload: isLoading

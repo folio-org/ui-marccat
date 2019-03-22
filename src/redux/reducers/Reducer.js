@@ -567,7 +567,7 @@ export function filterReducer(state = { isLoading }, action) {
       ...state,
       filters: action.payload,
       name: action.filterName,
-      checked: action.filterChecked
+      checked: action.isChecked
     };
   default:
     return state;

@@ -28,7 +28,6 @@ import { ActionTypes } from '../../redux/actions/Actions';
 import { post, put } from '../../core/api/HttpService';
 import * as C from '../../shared/Constants';
 
-import { StoreReducer } from '../../redux';
 import { RECORD_FIELD_STATUS, TAG_WITH_NO_HEADING_ASSOCIATED, SUBFIELD_DELIMITER } from './Utils/MarcUtils';
 import style from './Style/style.css';
 import { headingAction, headingDeleteAction, settingsAction } from './Actions/MarcActionCreator';
@@ -61,13 +60,12 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     const tagVariableData = getState().form.marcEditableListForm.values.items;
     const tagSelected = tagVariableData.filter(t => t.code === item.code)[0];
     const displayValue = item.displayValue.replace('$', SUBFIELD_DELIMITER);
-    const displayValueOptional = tagSelected.variableField.displayValue.replace('$', SUBFIELD_DELIMITER);
     const heading = {
       indicator1: item.ind1 || tagSelected.variableField.ind1,
       indicator2: item.ind2 || tagSelected.variableField.ind2,
-      stringText: displayValue || displayValueOptional,
-      category: item.category || tagSelected.variableField.category,
-      headingNumber: item.keyNumber || tagSelected.variableField.keyNumber,
+      stringText: displayValue,
+      category: item.categoryCode || tagSelected.variableField.categoryCode,
+      headingNumber: (item.code === '040') ? 123456 : item.keyNumber || (item.code === '040') ? 0 : tagSelected.variableField.keyNumber,
       tag: item.code || tagSelected.code,
     };
     put(buildUrl(C.ENDPOINT.UPDATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)

@@ -20,8 +20,6 @@ import {
 } from './components';
 import { emptyRecordAction, searchDetailAction } from '../Actions/ActionCreator';
 import * as C from '../../../shared/Constants';
-import { findParam } from '../../../shared/Function';
-import { StoreReducer } from '../../../redux';
 
 
 type P = Props & {

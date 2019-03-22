@@ -23,7 +23,7 @@ import { post, put } from '../../core/api/HttpService';
 import { TAG_WITH_NO_HEADING_ASSOCIATED, RECORD_FIELD_STATUS, SUBFIELD_DELIMITER } from './Utils/MarcUtils';
 import VariableFields from './Marc/VariableFields';
 import { StoreReducer } from '../../redux';
-import { deleteRecordAction } from './Utils/MarcApiUtils';
+import { deleteRecordAction } from './Actions/MarcActionCreator';
 import style from './Style/style.css';
 import { If } from '../Search';
 import * as C from '../../shared/Constants';

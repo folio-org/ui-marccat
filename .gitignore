@@ -15,7 +15,7 @@ ModuleDescriptor.json
 *.icloud
 ## maven
 target/
-
+artifacts/
 ## gradle
 .gradle/
 build/

@@ -158,7 +158,7 @@ class SearchPanel extends React.Component<P, {}> {
 
   handleResetAllButton = () => {
     const { dispatch, reset } = this.props;
-    dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', filterChecked: false });
+    dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', isChecked: false });
     dispatch(reset('searchForm'));
     transitionToParams('filter', 'false');
   };
@@ -224,8 +224,6 @@ class SearchPanel extends React.Component<P, {}> {
                           id="searchTextArea"
                           name="searchTextArea"
                           fullWidth
-                          // onChange={(e) => { this.setState({ fieldValue: e.target.value }); }}
-                          // onChangeIndex={(e) => { this.setState({ fieldValue: e.target.value }); }}
                           component={SearchField}
                           onBlur={() => 'tttt'}
                           placeholder="Search..."

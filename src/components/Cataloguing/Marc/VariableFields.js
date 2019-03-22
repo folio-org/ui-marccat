@@ -6,6 +6,7 @@
 import React from 'react';
 import MarcEditableList from './Editable';
 import { Props, injectCommonProp } from '../../../core';
+import { withSeparator } from '../Utils/MarcUtils';
 
 class VariableFields extends React.Component<Props, {}> {
   constructor(props: Props) {
@@ -30,7 +31,7 @@ class VariableFields extends React.Component<Props, {}> {
     const { fields, translate, onUpdate, onSave, onDelete, onCreate } = this.props;
     const resultFormatter = {
       displayValue: x => (
-        (x.variableField) ? x.variableField.displayValue : x.displayValue
+        (x.variableField) ? withSeparator(x.variableField.displayValue) : withSeparator(x.displayValue)
       ),
       ind1: x => (
         (x.variableField) ? x.variableField.ind1 : x.ind1

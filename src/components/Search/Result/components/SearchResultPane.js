@@ -11,9 +11,9 @@ import { ActionMenu } from '../../../../lib';
 import { Props, injectCommonProp } from '../../../../core';
 import { resultsFormatter, columnMapper, columnWidthMapper, renderColumn } from '../../../../utils/Formatter';
 import { EmptyMessage, NoResultsMessage } from '../../../../lib/components/Message';
-import { FormReducer } from '../../../../redux/helpers/StoreReducer';
 import { ActionTypes } from '../../../../redux/actions/Actions';
 import * as C from '../../../../shared/Constants';
+import { FormReducer } from '../../../../redux/actions/StoreReducer';
 
 
 class SearchResultPane extends React.Component<Props, {}> {
@@ -59,6 +59,7 @@ class SearchResultPane extends React.Component<Props, {}> {
     }
     return (visibleColumns.length > 1) ? visibleColumns : visibleColumns2;
   };
+
 
   render() {
     const {

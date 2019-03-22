@@ -63,6 +63,11 @@ export default class MarcLeader extends React.Component<P, {
     });
   }
 
+
+  handleTag008Change = () => {
+    // call old epic
+  };
+
   handleChange = () => {
     const { store: { getState } } = this.props;
     const { leaderVal } = this.state;

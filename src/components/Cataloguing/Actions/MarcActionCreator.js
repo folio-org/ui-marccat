@@ -1,21 +1,7 @@
-import { EMPTY_STRING, ENDPOINT } from '../../../shared/Constants';
+import { ENDPOINT } from '../../../shared/Constants';
 import { ACTION } from '../../../shared/Action';
-import { ActionTypes } from '../../../redux/actions';
 
 // MARC action creator utility
-
-/**
- *
- * @param {*} payload
- */
-export const resetFilter = () => {
-  return {
-    type: ActionTypes.FILTERS,
-    payload: {},
-    filterName: EMPTY_STRING,
-    filterChecked: false
-  };
-};
 
 /**
  *
@@ -42,7 +28,7 @@ export const fixedFieldByLeaderAction = (payload) => {
     data: {
       path: ENDPOINT.FIXED_FIELD_BY_LEADER_URL,
       type: 'leaderData',
-      params: `leader=${payload.leader}&lang=ita`,
+      params: `leader=${payload.leader}&lang=ita&code=008`,
     },
   };
 };

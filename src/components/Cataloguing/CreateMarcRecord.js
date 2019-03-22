@@ -29,7 +29,7 @@ import { post, put } from '../../core/api/HttpService';
 import * as C from '../../shared/Constants';
 
 import { StoreReducer } from '../../redux';
-import { RECORD_FIELD_STATUS, TAG_WITH_NO_HEADING_ASSOCIATED } from './Utils/MarcUtils';
+import { RECORD_FIELD_STATUS, TAG_WITH_NO_HEADING_ASSOCIATED, SUBFIELD_DELIMITER } from './Utils/MarcUtils';
 import style from './Style/style.css';
 import { headingAction, headingDeleteAction } from './Actions/MarcActionCreator';
 import { buildUrl } from '../../shared/Function';
@@ -58,11 +58,13 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     const { store: { getState } } = this.props;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
     const tagSelected = tagVariableData.filter(t => t.code === item.code)[0];
+    const displayValue = item.displayValue.replace('$', SUBFIELD_DELIMITER);
+    const displayValueOptional = tagSelected.variableField.displayValue.replace('$', SUBFIELD_DELIMITER);
     const heading = {
       indicator1: item.ind1 || tagSelected.variableField.ind1,
       indicator2: item.ind2 || tagSelected.variableField.ind2,
-      stringText: item.displayValue || tagSelected.variableField.displayValue,
-      category: item.categoryCode || tagSelected.variableField.categoryCode,
+      stringText: displayValue || displayValueOptional,
+      category: item.category || tagSelected.variableField.category,
       headingNumber: item.keyNumber || tagSelected.variableField.keyNumber,
       tag: item.code || tagSelected.code,
     };
@@ -86,10 +88,11 @@ export class CreateMarcRecord extends React.Component<P, {}> {
 
   createNewHeading = (item) => {
     const { dispatch, emptyRecord } = this.props;
+    const displayValue = item.displayValue.replace('$', SUBFIELD_DELIMITER);
     const heading = {
       indicator1: item.ind1 || C.EMPTY_STRING,
       indicator2: item.ind2 || C.EMPTY_STRING,
-      stringText: item.displayValue,
+      stringText: displayValue,
       tag: item.code
     };
     const id = emptyRecord.id;
@@ -101,10 +104,11 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     const { store: { getState } } = this.props;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
+    const displayValue: string = item.displayValue.replace('$', SUBFIELD_DELIMITER);
     const heading = {
       indicator1: item.ind1 || C.EMPTY_STRING,
       indicator2: item.ind2 || C.EMPTY_STRING,
-      stringText: item.displayValue,
+      stringText: displayValue,
       tag: item.code
     };
     if (tag.variableField) {
@@ -118,7 +122,8 @@ export class CreateMarcRecord extends React.Component<P, {}> {
             k.variableField = {
               ind1: data.indicator1 || C.SPACED_STRING_DOUBLE_QUOTE,
               ind2: data.indicator2 || C.SPACED_STRING_DOUBLE_QUOTE,
-              displayValue: data.stringText,
+              category: data.category,
+              displayValue: data.stringText.replace(SUBFIELD_DELIMITER, '$'),
               keyNumber: data.headingNumber,
             };
             k.fieldStatus = RECORD_FIELD_STATUS.NEW;
@@ -130,7 +135,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
         k.variableField = {
           ind1: item.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
           ind2: item.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
-          displayValue: item.displayValue || C.SPACED_STRING_DOUBLE_QUOTE,
+          displayValue: displayValue || C.SPACED_STRING_DOUBLE_QUOTE,
           keyNumber: 0,
         };
         k.fieldStatus = RECORD_FIELD_STATUS.NEW;
@@ -195,7 +200,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
 
   handleClose = () => {
     const { dispatch, router, toggleFilterPane, emptyRecord } = this.props;
-    dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', filterChecked: false });
+    dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', isChecked: false });
     toggleFilterPane();
     const id = emptyRecord.id;
     router.push(`/marccat/search?id=${id}`);

@@ -7,13 +7,12 @@ import { ENDPOINT } from '../../../shared/Constants';
  *
  * @param {*} payload
  */
-export const searchDetailAction = (id, meta) => {
+export const searchDetailAction = (id) => {
   return {
     type: ACTION.QUERY,
     data: {
       path: ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id,
       id,
-      meta,
       panelOpen: true,
       type: 'marcRecordDetail',
       params: ENDPOINT.DEFAULT_LANG_VIEW,

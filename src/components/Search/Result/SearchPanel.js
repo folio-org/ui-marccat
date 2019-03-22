@@ -60,7 +60,7 @@ class SearchPanel extends React.Component<P, {}> {
     const indexForQuery = 'NUMID';
     let baseQuery = indexForQuery + findParam('id');
     baseQuery = (conditionFilter === 'MATCH') ? baseQuery + '!' : baseQuery;
-    dispatch({ type: ActionTypes.SEARCH, queryBib: baseQuery, queryAuth: '' });
+    dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: baseQuery, queryAuth: '' });
   };
 
   handleKeyDown(e) {
@@ -126,10 +126,10 @@ class SearchPanel extends React.Component<P, {}> {
           || indexForQuery === 'BC '
           || indexForQuery === 'CP '
           || indexForQuery === 'PW ') {
-          dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: '', from: '1', to: '100' });
+          dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: bibQuery, queryAuth: '', from: '1', to: '100' });
           transitionToParams('q', bibQuery);
         } else {
-          dispatch({ type: ActionTypes.SEARCH, queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '100' });
+          dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '100' });
           transitionToParams('q', authQuery);
         }
       }

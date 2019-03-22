@@ -30,7 +30,8 @@ export default class MarcLeader extends React.Component<P, {
     this.state = {
       leaderDataDispatched: false,
       leaderCss: false,
-      leader: props.leaderValue,
+      leaderVal: props.leaderValue,
+      leaderChangedFor008: false,
     };
     this.handleLeader = this.handleLeader.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -58,9 +59,10 @@ export default class MarcLeader extends React.Component<P, {
    */
   replaceAt(string, index, replace) {
     this.setState({
-      leader: string.substring(0, index) + replace + string.substring(index + 1)
+      leaderVal: string.substring(0, index) + replace + string.substring(index + 1)
     });
   }
+
 
   handleTag008Change = () => {
     // call old epic
@@ -68,20 +70,22 @@ export default class MarcLeader extends React.Component<P, {
 
   handleChange = () => {
     const { store: { getState } } = this.props;
-    const { leader } = this.state;
+    const { leaderVal } = this.state;
     const formData = getState().form.bibliographicRecordForm.values;
+    // this.handleTag008Change(formData[k]);
+    // this.handleTag008Change(formData[k]);
     Object.keys(formData)
       .forEach((k) => {
         if (k.split('-')[0] === 'Leader') {
           switch (k.split('-')[1]) {
-          case 'itemRecordStatusCode': this.replaceAt(leader, 5, formData[k]); break;
-          case 'itemRecordTypeCode': this.replaceAt(leader, 6, formData[k]); this.handleTag008Change(formData[k]); break;
-          case 'itemBibliographicLevelCode': this.replaceAt(leader, 7, formData[k]); this.handleTag008Change(formData[k]); break;
-          case 'itemControlTypeCode': this.replaceAt(leader, 8, formData[k]); break;
-          case 'characterCodingSchemeCode': this.replaceAt(leader, 9, formData[k]); break;
-          case 'encodingLevel': this.replaceAt(leader, 17, formData[k]); break;
-          case 'descriptiveCataloguingCode': this.replaceAt(leader, 18, formData[k]); break;
-          case 'linkedRecordCode': this.replaceAt(leader, 19, formData[k]); break;
+          case 'itemRecordStatusCode': this.replaceAt(leaderVal, 5, formData[k]); this.state.leaderChangedFor008 = false; break;
+          case 'itemRecordTypeCode': this.replaceAt(leaderVal, 6, formData[k]); this.state.leaderChangedFor008 = true; break;
+          case 'itemBibliographicLevelCode': this.replaceAt(leaderVal, 7, formData[k]); this.state.leaderChangedFor008 = true; break;
+          case 'itemControlTypeCode': this.replaceAt(leaderVal, 8, formData[k]); this.state.leaderChangedFor008 = false; break;
+          case 'characterCodingSchemeCode': this.replaceAt(leaderVal, 9, formData[k]); this.state.leaderChangedFor008 = false; break;
+          case 'encodingLevel': this.replaceAt(leaderVal, 17, formData[k]); this.state.leaderChangedFor008 = false; break;
+          case 'descriptiveCataloguingCode': this.replaceAt(leaderVal, 18, formData[k]); this.state.leaderChangedFor008 = false; break;
+          case 'linkedRecordCode': this.replaceAt(leaderVal, 19, formData[k]); this.state.leaderChangedFor008 = false; break;
           default: break;
           }
         }
@@ -89,9 +93,14 @@ export default class MarcLeader extends React.Component<P, {
   };
 
   render() {
-    const { leaderCss, leader } = this.state;
-    const { leaderData, leaderValue } = this.props;
+    const { leaderCss, leaderVal } = this.state;
+    let { leaderChangedFor008 } = this.state;
+    const { leaderData, leaderValue, dispatch } = this.props;
     const remappedValues = [];
+    if (leaderChangedFor008 === true) {
+      dispatch({ type: ActionTypes.CHANGE_008_BY_LEADER, leader: leaderVal });
+      leaderChangedFor008 = false;
+    }
     if (leaderData) {
       const result = Object.keys(leaderData.results).map((key) => leaderData.results[key]);
       remappedValues.push(result);
@@ -105,7 +114,7 @@ export default class MarcLeader extends React.Component<P, {
           name="Leader"
           withIcon
           onClick={this.handleLeader}
-          value={(leader) || leaderValue}
+          value={(leaderVal) || leaderValue}
         />
         {leaderData &&
           <div className={(leaderCss) ? style.leaderResultsActive : style.leaderResults}>

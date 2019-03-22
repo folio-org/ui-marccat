@@ -13,13 +13,14 @@ import { buildUrl } from '../../shared/Function';
 
 export const searchEpic = (action$, store) => action$.ofType(ActionTypes.SEARCH)
   .switchMap((d) => concat$(
-    of$(marccatActions.isfetchingSearchRequest(true)),
+    of$(marccatActions.isfetchingSearchRequest(true, d.moreData)),
     ajax
       .getJSON(buildUrl(ENDPOINT.MERGED_SEARCH_URL, `lang=ita&ml=170&qbib=${d.queryBib}&qauth=${d.queryAuth}&from=${d.from}&to=${d.to}&dpo=1&sortBy=${StoreReducer.get(store, 'settings', 'sortType') || 4}&sortOrder=0`), ENDPOINT.HEADERS)
       .map(record => marccatActions.fetchSearchEngineRecords(
         d.queryBib,
         d.queryAuth,
         d.to,
+        d.moreData,
         record[1].docs,
         record[1].numFound,
         record[0].docs,
@@ -189,11 +190,11 @@ export const tag008ValuesEpic = (action$, store) => action$.ofType(ActionTypes.V
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
 
-export const changeTag008ValueFromLeader = (action$, store) => action$.ofType(ActionTypes.CHANGE_LEADER_REQUEST)
+export const tag008ByLeaderEpic = (action$, store) => action$.ofType(ActionTypes.CHANGE_008_BY_LEADER)
   .switchMap((d) => concat$(
-    of$(marccatActions.isFetchingTag008Request(true)),
+    of$(marccatActions.isFetchingTag008ByLeaderRequest(true)),
     ajax
-      .getJSON(buildUrl(ENDPOINT.TEMPLATE_TAG_URL, `leader=${d.leader}&code=008&headerTypeCode=${d.typeCode}&lang=ita`), ENDPOINT.HEADERS)
-      .map(record => marccatActions.fetchValuesFromTag008(record))
+      .getJSON(buildUrl(ENDPOINT.CHANGE_008_BY_LEADER, `leader=${d.leader}&lang=ita`), ENDPOINT.HEADERS)
+      .map(record => marccatActions.fetchValuesTag008ByLeader(record))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));

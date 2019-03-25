@@ -12,19 +12,13 @@
     "node": ">=6.0.0"
   },
   "scripts": {
-    "start": "node script/js/start",
-    "status": "stripes status config/stripes.config.js",
-    "build": "node ./script/js/build",
-    "build:analizer": "stripes build config/stripes.config.js ./dist/analyze/ui-marccat-analyze --analyze --sourcemap",
+    "start": "stripes serve --lint config/stripes.config.js",
+    "build": "stripes build --okapi http://folio-q4.aws.indexdata.com:9130 --output dist/",
     "lint": "yarn eslint && yarn stylelint",
     "test": "stripes test karma --coverage",
     "eslint": "eslint --fix ./",
     "stylelint": "stylelint --fix \"src/**/*.css\"",
-    "flow": "flow status ./src/",
-    "gen:authors": ". ./script/sh/authors.sh",
-    "clean": "rm -rf lib/",
-    "show:descriptor": "stripes mod descriptor --full",
-    "release": "node script/ci/release.js"
+    "clean": "rm -rf lib/"
   },
   "devDependencies": {
     "@bigtest/interactor": "^0.7.2",
@@ -81,6 +75,7 @@
     "redux-observable": "^0.15.0"
   },
   "peerDependencies": {
+    "react-router-dom": "*",
     "react": "*"
   },
   "stripes": {

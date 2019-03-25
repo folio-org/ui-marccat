@@ -61,11 +61,11 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     const tagSelected = tagVariableData.filter(t => t.code === item.code)[0];
     const displayValue = item.displayValue.replace('$', SUBFIELD_DELIMITER);
     const heading = {
-      indicator1: item.ind1 || tagSelected.variableField.ind1,
-      indicator2: item.ind2 || tagSelected.variableField.ind2,
-      stringText: displayValue,
-      category: item.categoryCode || tagSelected.variableField.categoryCode,
-      headingNumber: (item.code === '040') ? 123456 : item.keyNumber || (item.code === '040') ? 0 : tagSelected.variableField.keyNumber,
+      ind1: item.ind1 || tagSelected.variableField.ind1,
+      ind2: item.ind2 || tagSelected.variableField.ind2,
+      displayValue,
+      categoryCode: item.categoryCode || tagSelected.variableField.categoryCode,
+      keyNumber: item.keyNumber || tagSelected.variableField.keyNumber,
       tag: item.code || tagSelected.code,
     };
     put(buildUrl(C.ENDPOINT.UPDATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
@@ -75,11 +75,11 @@ export class CreateMarcRecord extends React.Component<P, {}> {
         tagVariableData.filter(t => t.code === item.code).map(k => {
           k.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
           k.variableField = {
-            ind1: data.indicator1 || C.SPACED_STRING_DOUBLE_QUOTE,
-            ind2: data.indicator2 || C.SPACED_STRING_DOUBLE_QUOTE,
+            ind1: data.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
+            ind2: data.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
             oldKeyNumber: k.variableField.keyNumber,
-            displayValue: data.stringText,
-            keyNumber: data.headingNumber,
+            displayValue: data.displayValue,
+            keyNumber: data.keyNumber,
           };
           return k;
         });
@@ -89,14 +89,9 @@ export class CreateMarcRecord extends React.Component<P, {}> {
   createNewHeading = (item) => {
     const { dispatch, emptyRecord } = this.props;
     const displayValue = item.displayValue.replace('$', SUBFIELD_DELIMITER);
-    const heading = {
-      indicator1: item.ind1 || C.EMPTY_STRING,
-      indicator2: item.ind2 || C.EMPTY_STRING,
-      stringText: displayValue,
-      tag: item.code
-    };
+    item.displayValue = displayValue;
     const id = emptyRecord.id;
-    dispatch(headingAction(id, heading));
+    dispatch(headingAction(id, item));
   };
 
   onUpdate = (item) => {
@@ -105,27 +100,23 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     const tagVariableData = getState().form.marcEditableListForm.values.items;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const displayValue: string = item.displayValue.replace('$', SUBFIELD_DELIMITER);
-    const heading = {
-      indicator1: item.ind1 || C.EMPTY_STRING,
-      indicator2: item.ind2 || C.EMPTY_STRING,
-      stringText: displayValue,
-      tag: item.code
-    };
+    item.displayValue = displayValue;
+    item.tag = item.code;
     if (tag.variableField) {
       this.editHeading(tag);
     } else if (!cretaeHeadingForTag) {
-      post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
+      post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), item)
         .then((r) => {
           return r.json();
         }).then((data) => {
           tagVariableData.filter(t => t.code === item.code).map(k => {
             k.fieldStatus = RECORD_FIELD_STATUS.NEW;
             k.variableField = {
-              ind1: data.indicator1 || C.SPACED_STRING_DOUBLE_QUOTE,
-              ind2: data.indicator2 || C.SPACED_STRING_DOUBLE_QUOTE,
-              category: data.category,
-              displayValue: data.stringText.replace(SUBFIELD_DELIMITER, '$'),
-              keyNumber: data.headingNumber,
+              ind1: data.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
+              ind2: data.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
+              categoryCode: data.categoryCode,
+              displayValue: data.displayValue.replace(SUBFIELD_DELIMITER, '$'),
+              keyNumber: data.keyNumber,
             };
             return data;
           });
@@ -150,12 +141,12 @@ export class CreateMarcRecord extends React.Component<P, {}> {
   onDelete = (item) => {
     const { dispatch } = this.props;
     const heading = {
-      indicator1: item.variableField.ind1,
-      indicator2: item.variableField.ind2,
-      stringText: item.variableField.displayValue,
+      ind1: item.variableField.ind1,
+      ind2: item.variableField.ind2,
+      displayValue: item.variableField.displayValue,
       tag: item.code,
-      category: item.category,
-      headingNumber: item.variableField.keyNumber
+      categoryCode: item.categoryCode,
+      keyNumber: item.variableField.keyNumber
     };
     dispatch(headingDeleteAction(heading));
   };
@@ -190,18 +181,19 @@ export class CreateMarcRecord extends React.Component<P, {}> {
       id: data.template.records[0].id,
       name: data.template.records[0].name,
       type: 'B',
-      fields: emptyRecord.results.fields
+      fields: Object.values(emptyRecord.results.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}))
     };
     bibliographicRecord.fields = union(bibliographicRecord.fields, tagVariableData);
     bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     bibliographicRecord.fields = sortBy(bibliographicRecord.fields, 'code');
     bibliographicRecord.fields
       .filter(f => f.fixedField === undefined || !f.fixedField)
-      .filter(f => f.variableField.code !== '040')
       .forEach(element => {
-        element.fieldStatus = RECORD_FIELD_STATUS.NEW;
-        element.displayValue = element.variableField.displayValue.replace('$', SUBFIELD_DELIMITER);
-        element.variableField.displayValue = element.variableField.displayValue.replace('$', SUBFIELD_DELIMITER);
+        if (element.variableField.code !== '040') {
+          element.fieldStatus = RECORD_FIELD_STATUS.NEW;
+          element.displayValue = element.variableField.displayValue.replace('$', SUBFIELD_DELIMITER);
+          element.variableField.displayValue = element.variableField.displayValue.replace('$', SUBFIELD_DELIMITER);
+        }
       });
     bibliographicRecord.verificationLevel = 1;
     return {

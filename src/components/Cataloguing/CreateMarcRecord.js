@@ -60,6 +60,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     const tagVariableData = getState().form.marcEditableListForm.values.items;
     const tagSelected = tagVariableData.filter(t => t.code === item.code)[0];
     const displayValue = item.displayValue.replace('$', SUBFIELD_DELIMITER);
+    const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const heading = {
       ind1: item.ind1 || tagSelected.variableField.ind1,
       ind2: item.ind2 || tagSelected.variableField.ind2,
@@ -68,22 +69,35 @@ export class CreateMarcRecord extends React.Component<P, {}> {
       keyNumber: item.keyNumber || tagSelected.variableField.keyNumber,
       tag: item.code || tagSelected.code,
     };
-    put(buildUrl(C.ENDPOINT.UPDATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
-      .then((r) => {
-        return r.json();
-      }).then((data) => {
-        tagVariableData.filter(t => t.code === item.code).map(k => {
-          k.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
-          k.variableField = {
-            ind1: data.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
-            ind2: data.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
-            oldKeyNumber: k.variableField.keyNumber,
-            displayValue: data.displayValue,
-            keyNumber: data.keyNumber,
-          };
-          return k;
+    if (!cretaeHeadingForTag) {
+      put(buildUrl(C.ENDPOINT.UPDATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
+        .then((r) => {
+          return r.json();
+        }).then((data) => {
+          tagVariableData.filter(t => t.code === item.code).map(k => {
+            k.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
+            k.variableField = {
+              ind1: data.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
+              ind2: data.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
+              oldKeyNumber: k.variableField.keyNumber,
+              displayValue: data.displayValue,
+              keyNumber: data.keyNumber,
+            };
+            return k;
+          });
         });
+    } else {
+      tagVariableData.filter(t => t.code === item.code).map(k => {
+        k.variableField = {
+          ind1: item.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
+          ind2: item.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
+          displayValue: displayValue || C.SPACED_STRING_DOUBLE_QUOTE,
+          keyNumber: 0,
+        };
+        k.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
+        return k;
       });
+    }
   }
 
   createNewHeading = (item) => {

@@ -58,14 +58,24 @@ export default class MarcField extends React.Component<P, {}> {
         </div>
       </div>
     ) :
-      <Field
-        id={name}
-        name={name}
-        type="text"
-        readOnly={readOnly}
-        component={component || 'input'}
-        label={label}
-        value={value}
-      />;
+      <div>
+        <label htmlFor={name}>{label}</label>
+        <Field
+          id={name}
+          name={name}
+          type="text"
+          readOnly={readOnly}
+          component={component || 'input'}
+          label={label}
+          value={value}
+        />
+        <div className={style.marcFieldIconCaret}>
+          <IconButton
+            icon="caret-down"
+            size="large"
+            onClick={onClick}
+          />
+        </div>
+      </div>;
   }
 }

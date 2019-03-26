@@ -21,6 +21,8 @@ class FixedFields extends React.Component<P, {}> {
       expand007: false,
       expand008: false,
       fixedFields: [],
+      tag006Fields:[{}],
+      tag007Fields:[{}],
     };
   }
 
@@ -42,6 +44,24 @@ class FixedFields extends React.Component<P, {}> {
       this.checkTag006(f.fixedField.code);
       this.checkTag007(f.fixedField.code);
     });
+  }
+
+  onAdd = (tag) => {
+    const { tag006Fields, tag007Fields } = this.state;
+    switch (tag) {
+    case TAGS._006: this.setState({ tag006Fields: tag006Fields.concat({}) }); break;
+    case TAGS._007: this.setState({ tag007Fields: tag007Fields.concat({}) }); break;
+    default: break;
+    }
+  }
+
+  onDelete = (tag, index) => {
+    const { tag006Fields, tag007Fields } = this.state;
+    switch (tag) {
+    case TAGS._006: this.setState({ tag006Fields: tag006Fields.splice(index, 1) }); break;
+    case TAGS._007: this.setState({ tag007Fields: tag007Fields.splice(index, 1) }); break;
+    default: break;
+    }
   }
 
   handleTag006 = (tag) => {
@@ -102,7 +122,7 @@ class FixedFields extends React.Component<P, {}> {
   }
 
 
-  renderTag006 = (tag) => {
+  renderTag006 = (tag, index) => {
     const { expand006 } = this.state;
     const { record, headerTypes006IsLoading } = this.props;
     return (
@@ -111,6 +131,8 @@ class FixedFields extends React.Component<P, {}> {
           {...this.props}
           readOnly={tag}
           withIcon
+          onAdd={() => this.onAdd(TAGS._006)}
+          onDelete={() => this.onDelete(TAGS._006, index)}
           label={(tag) ? tag.fixedField.code : TAGS._006}
           name={(tag) ? tag.fixedField.code : TAGS._006}
           value={(tag) ? tag.fixedField.displayValue : EMPTY_STRING}
@@ -130,7 +152,7 @@ class FixedFields extends React.Component<P, {}> {
       </div>);
   };
 
-  renderTag007 = (tag) => {
+  renderTag007 = (tag, index) => {
     const { expand007 } = this.state;
     const { record, headerTypes007IsLoading } = this.props;
     return (
@@ -139,6 +161,8 @@ class FixedFields extends React.Component<P, {}> {
           {...this.props}
           readOnly={tag}
           withIcon
+          onAdd={() => this.onAdd(TAGS._006)}
+          onDelete={() => this.onDelete(TAGS._006, index)}
           label={(tag) ? tag.fixedField.code : TAGS._007}
           name={(tag) ? tag.fixedField.code : TAGS._007}
           value={(tag) ? tag.fixedField.displayValue : EMPTY_STRING}
@@ -186,16 +210,16 @@ class FixedFields extends React.Component<P, {}> {
 
 
   render() {
-    const { fixedFields } = this.state;
+    const { fixedFields, tag006Fields, tag007Fields } = this.state;
     const fixedFieldsxxx = filterFixedFields(fixedFields);
-    const fixedFields006 = M.head(fixedFields.filter(f => f.fixedField.code === '006'));
-    const fixedFields007 = M.head(fixedFields.filter(f => f.fixedField.code === '007'));
-    const fixedFields008 = M.head(fixedFields.filter(f => f.fixedField.code === '008'));
+    const fixedFields006 = M.head(fixedFields.filter(f => f.fixedField.code === TAGS._006));
+    const fixedFields007 = M.head(fixedFields.filter(f => f.fixedField.code === TAGS._007));
+    const fixedFields008 = M.head(fixedFields.filter(f => f.fixedField.code === TAGS._008));
     return (
       <React.Fragment>
         {this.renderTagxxx(fixedFieldsxxx)}
-        {this.renderTag006(fixedFields006)}
-        {this.renderTag007(fixedFields007)}
+        {tag006Fields.map((f, i) => (this.renderTag006(fixedFields006, i)))}
+        {tag007Fields.map((f, i) => (this.renderTag007(fixedFields007, i)))}
         {this.renderTag008(fixedFields008)}
       </React.Fragment>
     );

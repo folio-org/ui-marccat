@@ -206,18 +206,20 @@ export class SearchResults extends React.Component<P, {}> {
 
   renderLastMenu = () => {
     const { openDropDownMenu } = this.state;
-    const { translate, activeFilterName, activeFilterChecked } = this.props;
+    const { translate, activeFilterName, activeFilterChecked, data: { data: { emptyRecord } } } = this.props;
     return (activeFilterName === 'recordType.Bibliographic records' && activeFilterChecked) ?
       (<CreateButtonMenu
         {...this.props}
         label={translate({ id: 'ui-marccat.search.record.new.from.template' })}
         labels={this.renderDropdownLabels()}
         onToggle={this.handleCreateRecord}
+        disabled={!emptyRecord}
         noDropdown
       />) : (<CreateButtonMenu
         {...this.props}
         label={translate({ id: 'ui-marccat.search.record.new' })}
         labels={this.renderDropdownLabels()}
+        disabled={!emptyRecord}
         onToggle={() => this.setState({
           openDropDownMenu: !openDropDownMenu
         })}

@@ -66,9 +66,9 @@ class EditMarcRecord extends React.Component {
     const tagVariableData = getState().form.marcEditableListForm.values.items;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const heading = {
-      indicator1: item.ind1 || C.EMPTY_STRING,
-      indicator2: item.ind2 || C.EMPTY_STRING,
-      stringText: SUBFIELD_DELIMITER + item.displayValue,
+      ind1: item.ind1 || C.EMPTY_STRING,
+      ind2: item.ind2 || C.EMPTY_STRING,
+      displayValue: SUBFIELD_DELIMITER + item.displayValue,
       tag: item.code
     };
     if (!cretaeHeadingForTag) {
@@ -78,10 +78,10 @@ class EditMarcRecord extends React.Component {
         }).then((data) => {
           tagVariableData.filter(t => t.code === item.code).map(k => {
             k.variableField = {
-              ind1: data.indicator1 || C.SPACED_STRING_DOUBLE_QUOTE,
-              ind2: data.indicator2 || C.SPACED_STRING_DOUBLE_QUOTE,
-              displayValue: SUBFIELD_DELIMITER + data.stringText,
-              keyNumber: data.headingNumber,
+              ind1: data.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
+              ind2: data.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
+              displayValue: SUBFIELD_DELIMITER + data.displayValue,
+              keyNumber: data.keyNumber,
             };
             k.fieldStatus = RECORD_FIELD_STATUS.NEW;
             return data;
@@ -106,11 +106,11 @@ class EditMarcRecord extends React.Component {
     const tagVariableData = getState().form.marcEditableListForm.values.items;
     const tagSelected = tagVariableData.filter(t => t.code === item.code)[0];
     const heading = {
-      indicator1: item.ind1 || tagSelected.variableField.ind1,
-      indicator2: item.ind2 || tagSelected.variableField.ind2,
-      stringText: SUBFIELD_DELIMITER + item.displayValue || SUBFIELD_DELIMITER + tagSelected.variableField.displayValue,
-      category: item.categoryCode || tagSelected.variableField.categoryCode,
-      headingNumber: item.keyNumber || tagSelected.variableField.keyNumber,
+      ind1: item.ind1 || tagSelected.variableField.ind1,
+      ind2: item.ind2 || tagSelected.variableField.ind2,
+      displayValue: SUBFIELD_DELIMITER + item.displayValue || SUBFIELD_DELIMITER + tagSelected.variableField.displayValue,
+      categoryCode: item.categoryCode || tagSelected.variableField.categoryCode,
+      keyNumber: item.keyNumber || tagSelected.variableField.keyNumber,
       tag: item.code || tagSelected.code,
     };
     put(buildUrl(C.ENDPOINT.UPDATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
@@ -120,11 +120,11 @@ class EditMarcRecord extends React.Component {
         tagVariableData.filter(t => t.code === item.code).map(k => {
           k.fieldStatus = 'changed';
           k.variableField = {
-            ind1: data.indicator1 || C.SPACED_STRING_DOUBLE_QUOTE,
-            ind2: data.indicator2 || C.SPACED_STRING_DOUBLE_QUOTE,
+            ind1: data.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
+            ind2: data.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
             oldKeyNumber: k.variableField.keyNumber,
-            displayValue: SUBFIELD_DELIMITER + data.stringText,
-            keyNumber: data.headingNumber,
+            displayValue: SUBFIELD_DELIMITER + data.displayValue,
+            keyNumber: data.keyNumber,
           };
           return k;
         });
@@ -146,24 +146,25 @@ class EditMarcRecord extends React.Component {
   composeBodyJson = () => {
     const { data, recordDetail, store: { getState } } = this.props;
     const formData = getState().form.bibliographicRecordForm.values;
+    const tagVariableData = getState().form.marcEditableListForm.values.items;
 
     // Set leader
     const bibliographicRecord = recordDetail;
     bibliographicRecord.leader.value = formData.Leader;
 
     const recordTemplate = {
-      id: data.settings.defaultTemplate.id,
-      name: data.settings.defaultTemplate.name,
+      id: data.template.records[0].id,
+      name: data.template.records[0].name,
       type: 'B',
-      fields: recordDetail.fields.filter(f => f.code === '001' || f.code === '005' || f.code === '008' || f.code === '040')
+      fields: recordDetail.fields.filter(f => f.code === '001' || f.code === '005' || f.code === '008')
     };
-    const differenceValue = difference(bibliographicRecord.fields, getState().form.marcEditableListForm.values.items);
+    const differenceValue = difference(bibliographicRecord.fields, tagVariableData);
     let tagToDeleted = differenceValue.filter(f => f.code !== '001' || f.code !== '005' || f.code !== '008' || f.code !== '040');
     tagToDeleted = tagToDeleted.filter(f => f.code !== '001' && f.code !== '005' && f.code !== '008');
     tagToDeleted.forEach(f => {
       f.fieldStatus = 'deleted';
     });
-    bibliographicRecord.fields = union(recordTemplate.fields, tagToDeleted, getState().form.marcEditableListForm.values.items);
+    bibliographicRecord.fields = union(recordTemplate.fields, tagToDeleted, tagVariableData);
     bibliographicRecord.fields = sortBy(bibliographicRecord.fields, 'code');
     bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     bibliographicRecord.verificationLevel = 1;

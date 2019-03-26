@@ -102,6 +102,26 @@ export const deleteRecordAction = (id, payload) => {
 
 /**
  *
+ * @param {*} item
+ * @param {*} props
+ */
+export const onDelete = (item, props) => {
+  const { dispatch } = props;
+  if (item.variableField) {
+    const heading = {
+      ind1: item.variableField.ind1,
+      ind2: item.variableField.ind2,
+      displayValue: item.variableField.displayValue,
+      tag: item.variableField.code,
+      categoryCode: item.variableField.categoryCode,
+      keyNumber: item.variableField.keyNumber
+    };
+    dispatch(headingDeleteAction(heading));
+  }
+};
+
+/**
+ *
  * @param {*} id
  * @param {*} payload
  */

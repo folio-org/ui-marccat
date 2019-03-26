@@ -145,6 +145,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
           ind1: item.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
           ind2: item.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
           displayValue: displayValue || C.SPACED_STRING_DOUBLE_QUOTE,
+          code: item.code,
           keyNumber: 0,
         };
         k.fieldStatus = RECORD_FIELD_STATUS.NEW;
@@ -156,7 +157,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
 
   onCreate = () => { this.showMessage('Tag Saved sucesfully'); }
 
-  onDelete = (item) => {
+  onDelete = item => {
     const { dispatch } = this.props;
     if (item.variableField) {
       const heading = {
@@ -164,7 +165,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
         ind2: item.variableField.ind2,
         displayValue: item.variableField.displayValue,
         tag: item.code,
-        categoryCode: item.categoryCode,
+        categoryCode: item.variableField.categoryCode,
         keyNumber: item.variableField.keyNumber
       };
       dispatch(headingDeleteAction(heading));

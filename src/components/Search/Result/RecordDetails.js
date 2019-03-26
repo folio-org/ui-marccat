@@ -23,7 +23,8 @@ function RecordDetails({ translate, ...props }: P) {
   const recordDetailsArray = recordDetails.split('\n');
   const tag245 = getTag245(recordDetailsArray);
   const title245 = getTitle245(recordDetailsArray);
-  const detail = (marcRecordDetail) ? marcRecordDetail.results.bibliographicRecord : {};
+  const tags = [];
+  if (marcRecordDetail) marcRecordDetail.results.bibliographicRecord.fields.map(f => tags.push(Object.assign({}, f)));
   return (
     <AccordionSet>
       <Accordion

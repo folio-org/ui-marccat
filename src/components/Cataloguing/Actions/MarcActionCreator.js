@@ -127,3 +127,31 @@ export const createNewHeading = (item, props) => {
   };
   dispatch(headingAction(heading));
 };
+
+/**
+ *
+ * @param {*} action
+ * @param {*} leader
+ * @param {*} tag
+ */
+export const tagValuesAction = (type, leader, tag) => {
+  return {
+    type,
+    leader,
+    code: tag.fixedField.code,
+    typeCode: tag.fixedField.headerTypeCode
+  };
+};
+
+/**
+ *
+ * @param {*} action
+ * @param {*} leader
+ * @param {*} tag
+ */
+export const typeCodeAction = (type, code) => {
+  return {
+    type,
+    code,
+  };
+};

@@ -276,7 +276,6 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     } = this.props;
     const defaultTemplate = (settings) ? settings.defaultTemplate : C.SETTINGS.DEFAULT_TEMPLATE;
     const bibliographicRecord = !isEmpty(emptyRecord) ? emptyRecord.results : {};
-
     return (!bibliographicRecord) ?
       (
         <Paneset static>
@@ -330,7 +329,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
                         <FixedFields
                           {...this.props}
                           record={bibliographicRecord}
-                          fidexFields={bibliographicRecord.fields}
+                          fixedFields={bibliographicRecord.fields}
                         />
                       </Accordion>
                     </form>

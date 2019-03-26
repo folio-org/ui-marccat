@@ -25,7 +25,6 @@ export default class MarcField extends React.Component<P, {}> {
       onDelete,
       placeholder,
       component,
-      display,
       withIcon,
     } = this.props;
     dispatch(change(name, value));
@@ -49,13 +48,11 @@ export default class MarcField extends React.Component<P, {}> {
           <IconButton
             icon="plus-sign"
             size="large"
-            style={{ display: (display) || 'none' }}
             onClick={onAdd}
           />
           <IconButton
             icon="trash"
             size="large"
-            style={{ display: (display) || 'none' }}
             onClick={onDelete}
           />
         </div>

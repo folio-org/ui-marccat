@@ -66,18 +66,6 @@ export const uuid = () => {
 
 /**
  *
- * @param {*} vector
- * @param {*} k
- */
-export const first = (vector, k):void => {
-  if (vector === null) { return; }
-  if (k == null) { return vector[0]; }
-  if (k < 0) { return []; }
-  return vector.slice(0, k);
-};
-
-/**
- *
  * @param {*} obj
  * @param {*} prop
  */

@@ -210,16 +210,16 @@ class FixedFields extends React.Component<P, {}> {
 
 
   render() {
-    const { fixedFields, tag006Fields, tag007Fields } = this.state;
+    const { fixedFields } = this.state;
     const fixedFieldsxxx = filterFixedFields(fixedFields);
-    const fixedFields006 = M.head(fixedFields.filter(f => f.fixedField.code === TAGS._006));
-    const fixedFields007 = M.head(fixedFields.filter(f => f.fixedField.code === TAGS._007));
+    // const fixedFields006 = M.head(fixedFields.filter(f => f.fixedField.code === TAGS._006));
+    // const fixedFields007 = M.head(fixedFields.filter(f => f.fixedField.code === TAGS._007));
     const fixedFields008 = M.head(fixedFields.filter(f => f.fixedField.code === TAGS._008));
     return (
       <React.Fragment>
         {this.renderTagxxx(fixedFieldsxxx)}
-        {tag006Fields.map((f, i) => (this.renderTag006(fixedFields006, i)))}
-        {tag007Fields.map((f, i) => (this.renderTag007(fixedFields007, i)))}
+        {/* {tag006Fields.map((f, i) => (this.renderTag006(fixedFields006, i)))}
+        {tag007Fields.map((f, i) => (this.renderTag007(fixedFields007, i)))} */}
         {this.renderTag008(fixedFields008)}
       </React.Fragment>
     );

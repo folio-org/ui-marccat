@@ -23,7 +23,7 @@ import { post, put } from '../../core/api/HttpService';
 import { TAG_WITH_NO_HEADING_ASSOCIATED, RECORD_FIELD_STATUS, SUBFIELD_DELIMITER } from './Utils/MarcUtils';
 import VariableFields from './Marc/VariableFields';
 import { StoreReducer } from '../../redux';
-import { deleteRecordAction } from './Actions/MarcActionCreator';
+import { deleteRecordAction, headingDeleteAction } from './Actions/MarcActionCreator';
 import style from './Style/style.css';
 import { If } from '../Search';
 import * as C from '../../shared/Constants';
@@ -61,29 +61,34 @@ class EditMarcRecord extends React.Component {
   onSave = () => {}
 
 
-  saveHeading = item => {
+  onUpdate = item => {
+    const tag = Object.assign({}, item);
     const { store: { getState } } = this.props;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
+    const displayValue: string = item.displayValue.replace('$', SUBFIELD_DELIMITER);
     const heading = {
-      indicator1: item.ind1 || C.EMPTY_STRING,
-      indicator2: item.ind2 || C.EMPTY_STRING,
-      stringText: SUBFIELD_DELIMITER + item.displayValue,
+      ind1: item.ind1 || C.EMPTY_STRING,
+      ind2: item.ind2 || C.EMPTY_STRING,
+      displayValue,
       tag: item.code
     };
-    if (!cretaeHeadingForTag) {
+    if (tag.variableField) {
+      this.editHeading(tag);
+    } else if (!cretaeHeadingForTag) {
       post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
         .then((r) => {
           return r.json();
         }).then((data) => {
           tagVariableData.filter(t => t.code === item.code).map(k => {
-            k.variableField = {
-              ind1: data.indicator1 || C.SPACED_STRING_DOUBLE_QUOTE,
-              ind2: data.indicator2 || C.SPACED_STRING_DOUBLE_QUOTE,
-              displayValue: SUBFIELD_DELIMITER + data.stringText,
-              keyNumber: data.headingNumber,
-            };
             k.fieldStatus = RECORD_FIELD_STATUS.NEW;
+            k.variableField = {
+              ind1: data.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
+              ind2: data.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
+              categoryCode: data.categoryCode,
+              displayValue: data.displayValue.replace(SUBFIELD_DELIMITER, '$'),
+              keyNumber: data.keyNumber,
+            };
             return data;
           });
         });
@@ -92,78 +97,101 @@ class EditMarcRecord extends React.Component {
         k.variableField = {
           ind1: item.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
           ind2: item.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
-          displayValue: SUBFIELD_DELIMITER + item.displayValue || C.SPACED_STRING_DOUBLE_QUOTE,
+          displayValue: displayValue || C.SPACED_STRING_DOUBLE_QUOTE,
+          code: item.code,
           keyNumber: 0,
         };
         k.fieldStatus = RECORD_FIELD_STATUS.NEW;
         return k;
       });
     }
-  };
+  }
 
   editHeading = item => {
     const { store: { getState } } = this.props;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
     const tagSelected = tagVariableData.filter(t => t.code === item.code)[0];
+    const displayValue = item.displayValue.replace('$', SUBFIELD_DELIMITER);
+    const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const heading = {
-      indicator1: item.ind1 || tagSelected.variableField.ind1,
-      indicator2: item.ind2 || tagSelected.variableField.ind2,
-      stringText: SUBFIELD_DELIMITER + item.displayValue || SUBFIELD_DELIMITER + tagSelected.variableField.displayValue,
-      category: item.categoryCode || tagSelected.variableField.categoryCode,
-      headingNumber: item.keyNumber || tagSelected.variableField.keyNumber,
+      ind1: item.ind1 || tagSelected.variableField.ind1,
+      ind2: item.ind2 || tagSelected.variableField.ind2,
+      displayValue,
+      categoryCode: item.categoryCode || tagSelected.variableField.categoryCode,
+      keyNumber: item.keyNumber || tagSelected.variableField.keyNumber,
       tag: item.code || tagSelected.code,
     };
-    put(buildUrl(C.ENDPOINT.UPDATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
-      .then((r) => {
-        return r.json();
-      }).then((data) => {
-        tagVariableData.filter(t => t.code === item.code).map(k => {
-          k.fieldStatus = 'changed';
-          k.variableField = {
-            ind1: data.indicator1 || C.SPACED_STRING_DOUBLE_QUOTE,
-            ind2: data.indicator2 || C.SPACED_STRING_DOUBLE_QUOTE,
-            oldKeyNumber: k.variableField.keyNumber,
-            displayValue: SUBFIELD_DELIMITER + data.stringText,
-            keyNumber: data.headingNumber,
-          };
-          return k;
+    if (!cretaeHeadingForTag) {
+      put(buildUrl(C.ENDPOINT.UPDATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
+        .then((r) => {
+          return r.json();
+        }).then((data) => {
+          tagVariableData.filter(t => t.code === item.code).map(k => {
+            k.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
+            k.variableField = {
+              ind1: data.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
+              ind2: data.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
+              oldKeyNumber: data.keyNumber,
+              displayValue: data.displayValue,
+              categoryCode: data.categoryCode,
+              keyNumber: data.keyNumber,
+            };
+            return k;
+          });
         });
-      });
-  }
-
-  onUpdate = (item) => {
-    const updateHeadingOnTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
-    if (item.variableField && item.variableField.keyNumber && !updateHeadingOnTag) {
-      this.editHeading(item);
     } else {
-      this.saveHeading(item);
+      tagVariableData.filter(t => t.code === item.code).map(k => {
+        k.variableField = {
+          ind1: item.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
+          ind2: item.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
+          displayValue: displayValue || C.SPACED_STRING_DOUBLE_QUOTE,
+          code: item.code,
+          keyNumber: 0,
+        };
+        k.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
+        return k;
+      });
     }
   }
 
   onCreate = () => { this.showMessage('Tag Saved sucesfully'); }
-  onDelete = () => {};
+  onDelete = item => {
+    const { dispatch } = this.props;
+    if (item.variableField) {
+      const heading = {
+        ind1: item.variableField.ind1,
+        ind2: item.variableField.ind2,
+        displayValue: item.variableField.displayValue,
+        tag: item.code,
+        categoryCode: item.variableField.categoryCode,
+        keyNumber: item.variableField.keyNumber
+      };
+      dispatch(headingDeleteAction(heading));
+    }
+  };
 
   composeBodyJson = () => {
     const { data, recordDetail, store: { getState } } = this.props;
     const formData = getState().form.bibliographicRecordForm.values;
+    const tagVariableData = getState().form.marcEditableListForm.values.items;
 
     // Set leader
     const bibliographicRecord = recordDetail;
     bibliographicRecord.leader.value = formData.Leader;
 
     const recordTemplate = {
-      id: data.settings.defaultTemplate.id,
-      name: data.settings.defaultTemplate.name,
+      id: data.template.records[0].id,
+      name: data.template.records[0].name,
       type: 'B',
-      fields: recordDetail.fields.filter(f => f.code === '001' || f.code === '005' || f.code === '008' || f.code === '040')
+      fields: recordDetail.fields.filter(f => f.code === '001' || f.code === '005' || f.code === '008')
     };
-    const differenceValue = difference(bibliographicRecord.fields, getState().form.marcEditableListForm.values.items);
+    const differenceValue = difference(bibliographicRecord.fields, tagVariableData);
     let tagToDeleted = differenceValue.filter(f => f.code !== '001' || f.code !== '005' || f.code !== '008' || f.code !== '040');
     tagToDeleted = tagToDeleted.filter(f => f.code !== '001' && f.code !== '005' && f.code !== '008');
     tagToDeleted.forEach(f => {
       f.fieldStatus = 'deleted';
     });
-    bibliographicRecord.fields = union(recordTemplate.fields, tagToDeleted, getState().form.marcEditableListForm.values.items);
+    bibliographicRecord.fields = union(recordTemplate.fields, tagToDeleted, tagVariableData);
     bibliographicRecord.fields = sortBy(bibliographicRecord.fields, 'code');
     bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     bibliographicRecord.verificationLevel = 1;

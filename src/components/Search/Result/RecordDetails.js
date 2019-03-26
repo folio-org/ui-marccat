@@ -18,11 +18,13 @@ type P = Props & {
 }
 
 function RecordDetails({ translate, ...props }: P) {
-  const { items, checkDetailsInRow, detailPaneMeta, checkDetailsBibRec } = props;
+  const { items, checkDetailsInRow, detailPaneMeta, checkDetailsBibRec, data: { data: { marcRecordDetail } } } = props;
   const recordDetails = items.replace('LEADER', '000');
   const recordDetailsArray = recordDetails.split('\n');
   const tag245 = getTag245(recordDetailsArray);
   const title245 = getTitle245(recordDetailsArray);
+  const tags = [];
+  if (marcRecordDetail) marcRecordDetail.results.bibliographicRecord.fields.map(f => tags.push(Object.assign({}, f)));
   return (
     <AccordionSet>
       <Accordion

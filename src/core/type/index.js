@@ -8,7 +8,6 @@ export type Props = {
 export type VariableField = {
   categoryCode: number;
   code: string;
-  description: string;
   displayValue: string;
   functionCode: string;
   headingTypeCode: string;
@@ -16,8 +15,9 @@ export type VariableField = {
   ind2: string;
   itemTypeCode: string;
   sequenceNumber: number;
+  keyNumber: number;
   skipInFiling: number;
-  subfields: Array;
+  subfields: Array<any>;
 };
 
 export type LockType = 'R' | 'H' | 'C';

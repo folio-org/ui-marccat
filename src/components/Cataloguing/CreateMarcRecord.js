@@ -114,12 +114,16 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     const tagVariableData = getState().form.marcEditableListForm.values.items;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const displayValue: string = item.displayValue.replace('$', SUBFIELD_DELIMITER);
-    item.displayValue = displayValue;
-    item.tag = item.code;
+    const heading = {
+      ind1: item.ind1 || C.EMPTY_STRING,
+      ind2: item.ind2 || C.EMPTY_STRING,
+      displayValue,
+      tag: item.code
+    };
     if (tag.variableField) {
       this.editHeading(tag);
     } else if (!cretaeHeadingForTag) {
-      post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), item)
+      post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
         .then((r) => {
           return r.json();
         }).then((data) => {
@@ -127,7 +131,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
             k.fieldStatus = RECORD_FIELD_STATUS.NEW;
             k.variableField = {
               ind1: data.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
-              ind2: data.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
+              ind2: data.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
               categoryCode: data.categoryCode,
               displayValue: data.displayValue.replace(SUBFIELD_DELIMITER, '$'),
               keyNumber: data.keyNumber,
@@ -141,6 +145,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
           ind1: item.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
           ind2: item.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
           displayValue: displayValue || C.SPACED_STRING_DOUBLE_QUOTE,
+          code: item.code,
           keyNumber: 0,
         };
         k.fieldStatus = RECORD_FIELD_STATUS.NEW;
@@ -152,17 +157,19 @@ export class CreateMarcRecord extends React.Component<P, {}> {
 
   onCreate = () => { this.showMessage('Tag Saved sucesfully'); }
 
-  onDelete = (item) => {
+  onDelete = item => {
     const { dispatch } = this.props;
-    const heading = {
-      ind1: item.variableField.ind1,
-      ind2: item.variableField.ind2,
-      displayValue: item.variableField.displayValue,
-      tag: item.code,
-      categoryCode: item.categoryCode,
-      keyNumber: item.variableField.keyNumber
-    };
-    dispatch(headingDeleteAction(heading));
+    if (item.variableField) {
+      const heading = {
+        ind1: item.variableField.ind1,
+        ind2: item.variableField.ind2,
+        displayValue: item.variableField.displayValue,
+        tag: item.code,
+        categoryCode: item.variableField.categoryCode,
+        keyNumber: item.variableField.keyNumber
+      };
+      dispatch(headingDeleteAction(heading));
+    }
   };
 
   saveRecord = () => {

@@ -7,7 +7,8 @@ export const unionSortAndDedupe = (sortByProp, ...obj) => {
 };
 
 export const filterFixedFields = (obj) => {
-  return obj.filter(f => f.code === '001' || f.code === '003' || f.code === '005' || f.code === '008' || f.code === '040');
+  const dedupe = Object.values(obj.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
+  return dedupe.filter(f => f.code === '001' || f.code === '003' || f.code === '005');
 };
 
 export const filterVariableFields = (obj) => {

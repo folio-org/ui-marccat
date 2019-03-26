@@ -82,8 +82,8 @@ export class Tag006 extends React.Component<Props, {}> {
 }
 
 export default (connect(
-  ({ marccat: { template, headerTypes006, tag006Values } }) => ({
-    leaderValue: template.recordsById.leader.value,
+  ({ marccat: { data, headerTypes006, tag006Values } }) => ({
+    leaderValue: data.emptyRecord.results.leader.value,
     headerTypesResult: headerTypes006.records,
     tag006ValuesResults: tag006Values.records
   }),

@@ -14,6 +14,7 @@ import { ActionTypes } from './redux/actions';
 
 import './styles/common.css';
 import { STATE_MANAGEMENT } from './shared/Constants';
+import { TAGS } from './components/Cataloguing';
 
 type RoutingProps = {
   root: {
@@ -46,6 +47,9 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
   componentDidMount() {
     const { store: { dispatch } } = this.props;
     dispatch({ type: ActionTypes.VIEW_TEMPLATE });
+    dispatch({ type: ActionTypes.HEADER_TYPES_006, code: TAGS._006 });
+    dispatch({ type: ActionTypes.HEADER_TYPES_007, code: TAGS._007 });
+    dispatch({ type: ActionTypes.HEADER_TYPES_008, code: TAGS._008 });
     dispatch({ type: ActionTypes.SETTINGS, data: {} });
   }
 

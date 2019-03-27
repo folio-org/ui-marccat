@@ -20,7 +20,7 @@ import { MarcLeader, FixedFields } from '.';
 import { injectCommonProp } from '../../core';
 import { ActionTypes } from '../../redux/actions';
 import { post, put } from '../../core/api/HttpService';
-import { TAG_WITH_NO_HEADING_ASSOCIATED, RECORD_FIELD_STATUS, SUBFIELD_DELIMITER } from './Utils/MarcUtils';
+import { TAG_WITH_NO_HEADING_ASSOCIATED, RECORD_FIELD_STATUS, replaceAll, replaceAllinverted } from './Utils/MarcUtils';
 import VariableFields from './Marc/VariableFields';
 import { StoreReducer } from '../../redux';
 import { deleteRecordAction, headingDeleteAction } from './Actions/MarcActionCreator';
@@ -66,7 +66,7 @@ class EditMarcRecord extends React.Component {
     const { store: { getState } } = this.props;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
-    const displayValue: string = item.displayValue.replace('$', SUBFIELD_DELIMITER);
+    const displayValue: string = replaceAll(item.displayValue);
     const heading = {
       ind1: item.ind1 || C.EMPTY_STRING,
       ind2: item.ind2 || C.EMPTY_STRING,
@@ -86,7 +86,7 @@ class EditMarcRecord extends React.Component {
               ind1: data.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
               ind2: data.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
               categoryCode: data.categoryCode,
-              displayValue: data.displayValue.replace(SUBFIELD_DELIMITER, '$'),
+              displayValue: replaceAllinverted(data.displayValue),
               keyNumber: data.keyNumber,
             };
             return data;
@@ -111,7 +111,7 @@ class EditMarcRecord extends React.Component {
     const { store: { getState } } = this.props;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
     const tagSelected = tagVariableData.filter(t => t.code === item.code)[0];
-    const displayValue = item.displayValue.replace('$', SUBFIELD_DELIMITER);
+    const displayValue = replaceAll(item.displayValue);
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const heading = {
       ind1: item.ind1 || tagSelected.variableField.ind1,
@@ -132,7 +132,7 @@ class EditMarcRecord extends React.Component {
               ind1: data.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
               ind2: data.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
               oldKeyNumber: data.keyNumber,
-              displayValue: data.displayValue,
+              displayValue: replaceAllinverted(data.displayValue),
               categoryCode: data.categoryCode,
               keyNumber: data.keyNumber,
             };

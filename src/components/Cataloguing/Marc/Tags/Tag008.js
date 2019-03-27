@@ -6,7 +6,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
 import { Field } from 'redux-form';
-import { Row, Col, Select } from '@folio/stripes/components';
+import { Row, Col, Select, TextField } from '@folio/stripes/components';
 import { injectCommonProp, Props } from '../../../../core';
 import { ActionTypes } from '../../../../redux/actions';
 import { decamelizify } from '../../../../shared/Function';
@@ -20,7 +20,8 @@ export class Tag008 extends React.Component<Props, {}> {
     super(props);
     this.state = {
       isChangedHeaderType: false,
-      currentHeaderTypeCode: String
+      currentHeaderTypeCode: String,
+      jsonReq: {}
     };
     this.handleOnChange = this.handleOnChange.bind(this);
     this.changeDisplayValue = this.changeDisplayValue.bind(this);
@@ -44,41 +45,28 @@ export class Tag008 extends React.Component<Props, {}> {
     dispatch(change('Tag008', tag008.fixedField.headerTypeCode));
   };
 
-  changeDisplayValue = () => {
+  changeDisplayValue = (e) => {
     const { store: { getState }, dispatch, change } = this.props;
-    const jsonReq = {};
-    const dropdown = getState().form.bibliographicRecordForm.values;
-    Object.keys(getState().form.bibliographicRecordForm.registeredFields)
-      .filter(k => k.split('-') !== undefined && k.split('-').shift() === 'Tag008')
-      .forEach(c => jsonReq[c.split('-')[1]] = C.EMPTY_SPACED_STRING);
-    Object.keys(dropdown)
-      .filter(k => k.split('-')
-        .shift() === 'Tag008')
-      .forEach(d => {
-        const key = d.split('-')[1];
-        const value = dropdown[d] || ' ';
-        if (d === 'Tag008') jsonReq.headerTypeCode = value;
-        jsonReq[key] = value;
-      });
-
-    if (!isEmpty(jsonReq)) {
-      jsonReq.categoryCode = 1;
-      jsonReq.displayValue = dropdown[TAGS._008];
-      jsonReq.code = TAGS._008;
-      jsonReq.dateEnteredOnFile = '180924';
-      jsonReq.languageCode = 'ita';
-      jsonReq.sequenceNumber = 0;
-      jsonReq.recordCataloguingSourceCode = 'r';
-      jsonReq.dateFirstPublication = '     ';
-      jsonReq.dateLastPublication = '     ';
-      jsonReq.placeOfPublication = 'ita';
-      jsonReq.recordModifiedCode = 'x';
-      dispatch(changeDisplayValueAction(TAGS._008, jsonReq));
-      const data = getState().marccat.data;
-      if (!isEmpty(data) && !isEmpty(data[`displayvalue-${TAGS._008}`])) {
-        const displayValue = data[`displayvalue-${TAGS._008}`].results.displayValue;
-        dispatch(change(TAGS._008, displayValue));
-      }
+    const { jsonReq, currentHeaderTypeCode } = this.state;
+    const changedFieldLabel = e.target.id.split('-')[1];
+    let changedFieldValue = '';
+    jsonReq.dateEnteredOnFile = getState().form.bibliographicRecordForm.values['008'].substring(0, 6);
+    jsonReq.categoryCode = 1;
+    jsonReq.sequenceNumber = 0;
+    jsonReq.headerTypeCode = currentHeaderTypeCode;
+    jsonReq.code = '008';
+    jsonReq.displayValue = '';
+    if (changedFieldLabel === 'dateFirstPublication' || changedFieldLabel === 'dateLastPublication') {
+      changedFieldValue = e.target.value.lenght < 4 ? '' : e.target.value;
+    } else {
+      changedFieldValue = e.target.selectedOptions[0].value;
+    }
+    jsonReq[changedFieldLabel] = changedFieldValue;
+    dispatch(changeDisplayValueAction(TAGS._008, jsonReq));
+    const data = getState().marccat.data;
+    if (!isEmpty(data) && !isEmpty(data[`displayvalue-${TAGS._008}`])) {
+      const displayValue = data[`displayvalue-${TAGS._008}`].results.displayValue;
+      dispatch(change(TAGS._008, displayValue));
     }
   };
 
@@ -118,12 +106,30 @@ export class Tag008 extends React.Component<Props, {}> {
         </Row>
         <hr />
         <Row xs={12}>
+          <Col xs={4} key="tag008-dateFirstPublication">
+            <Field
+              name="tag008-dateFirstPublication"
+              id="tag008-dateFirstPublication"
+              component={TextField}
+              label="dateFirstPublication"
+              onChange={this.changeDisplayValue}
+            />
+          </Col>
+          <Col xs={4} key="tag008-dateLastPublication">
+            <Field
+              name="tag008-dateLastPublication"
+              id="tag008-dateLastPublication"
+              component={TextField}
+              label="dateLastPublication"
+              onChange={this.changeDisplayValue}
+            />
+          </Col>
           {
             (tag008ValuesResults) &&
               remappedValues.map((elem) => {
                 return elem.map((item, idx) => {
                   let exactDisplayValue = C.EMPTY_STRING;
-                  item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue));
+                  item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.value + '-' + x.label : exactDisplayValue));
                   dispatch(change(`Tag008-${item.name}`, exactDisplayValue));
                   return (
                     <Col xs={4} key={`tag008-${idx}`}>

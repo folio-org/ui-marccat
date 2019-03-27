@@ -99,3 +99,5 @@ export const LOCK_ENTITY_TYPE = {
 };
 export const SUBFIELD_DELIMITER = '\u001f';
 export const withSeparator = (s) => ((s) ? s.replace(SUBFIELD_DELIMITER, '$') : '');
+export const replaceAll = (s) => ((s) ? s.replace(/\$/g, SUBFIELD_DELIMITER) : '');
+export const replaceAllinverted = (s) => ((s) ? s.replace(/\uf001/g, '$') : '');

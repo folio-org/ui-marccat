@@ -28,7 +28,7 @@ import { ActionTypes } from '../../redux/actions/Actions';
 import { post, put } from '../../core/api/HttpService';
 import * as C from '../../shared/Constants';
 
-import { RECORD_FIELD_STATUS, TAG_WITH_NO_HEADING_ASSOCIATED, SUBFIELD_DELIMITER } from './Utils/MarcUtils';
+import { RECORD_FIELD_STATUS, TAG_WITH_NO_HEADING_ASSOCIATED, SUBFIELD_DELIMITER, replaceAll, replaceAllinverted } from './Utils/MarcUtils';
 import style from './Style/style.css';
 import { headingAction, headingDeleteAction, settingsAction } from './Actions/MarcActionCreator';
 import { buildUrl } from '../../shared/Function';
@@ -59,7 +59,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     const { store: { getState } } = this.props;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
     const tagSelected = tagVariableData.filter(t => t.code === item.code)[0];
-    const displayValue = item.displayValue.replace('$', SUBFIELD_DELIMITER);
+    const displayValue = replaceAll(item.displayValue);
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const heading = {
       ind1: item.ind1 || tagSelected.variableField.ind1,
@@ -80,7 +80,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
               ind1: data.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
               ind2: data.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
               oldKeyNumber: k.variableField.keyNumber,
-              displayValue: data.displayValue,
+              displayValue: replaceAllinverted(data.displayValue),
               keyNumber: data.keyNumber,
             };
             return k;
@@ -102,7 +102,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
 
   createNewHeading = (item) => {
     const { dispatch, emptyRecord } = this.props;
-    const displayValue = item.displayValue.replace('$', SUBFIELD_DELIMITER);
+    const displayValue = replaceAll(item.displayValue);
     item.displayValue = displayValue;
     const id = emptyRecord.id;
     dispatch(headingAction(id, item));
@@ -113,7 +113,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     const { store: { getState } } = this.props;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
-    const displayValue: string = item.displayValue.replace('$', SUBFIELD_DELIMITER);
+    const displayValue: string = replaceAll(item.displayValue);
     const heading = {
       ind1: item.ind1 || C.EMPTY_STRING,
       ind2: item.ind2 || C.EMPTY_STRING,
@@ -133,7 +133,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
               ind1: data.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
               ind2: data.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
               categoryCode: data.categoryCode,
-              displayValue: data.displayValue.replace(SUBFIELD_DELIMITER, '$'),
+              displayValue: replaceAllinverted(data.displayValue),
               keyNumber: data.keyNumber,
             };
             return data;

@@ -198,6 +198,12 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     if (!bibliographicRecord) bibliographicRecord = Object.assign(emptyRecord.results, bibliographicRecord);
     bibliographicRecord.leader.value = formData.Leader;
 
+    const Tag006 = bibliographicRecord.fields.filter(t => t.code === '006')[0];
+    const Tag007 = bibliographicRecord.fields.filter(t => t.code === '007')[0];
+
+    if (Tag006.fixedField.displayValue === C.EMPTY_STRING) bibliographicRecord.fields.filter(t => t.code === '006')[0].fixedField.displayValue = 'a           000 ua';
+    if (Tag007.fixedField.displayValue === C.EMPTY_STRING) bibliographicRecord.fields.filter(t => t.code === '007')[0].fixedField.displayValue = 'cu uuu   uuuuu';
+
     const recordTemplate = {
       id: data.template.records[0].id,
       name: data.template.records[0].name,

@@ -5,7 +5,7 @@ import { Tag00X, Tag006, Tag007, Tag008, MarcField } from '..';
 import type { Props } from '../../../core';
 import style from '../Style/style.css';
 import { ActionTypes } from '../../../redux/actions/Actions';
-import { TAGS, SUBFIELD_DELIMITER } from '../Utils/MarcUtils';
+import { TAGS } from '../Utils/MarcUtils';
 import { filterFixedFields } from '../Utils/MarcApiUtils';
 import { tagValuesAction, typeCodeAction } from '../Actions/MarcActionCreator';
 

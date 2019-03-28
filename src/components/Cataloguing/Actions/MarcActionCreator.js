@@ -28,7 +28,7 @@ export const fixedFieldByLeaderAction = (payload) => {
     data: {
       path: ENDPOINT.FIXED_FIELD_BY_LEADER_URL,
       type: 'leaderData',
-      params: `leader=${payload.leader}&lang=ita&code=008`,
+      params: `leader=${payload.leader}&lang=ita&code=${payload.tag}`,
     },
   };
 };

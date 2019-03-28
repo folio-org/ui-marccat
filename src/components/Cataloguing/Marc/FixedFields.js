@@ -1,6 +1,6 @@
 import React from 'react';
 import { isEmpty } from 'lodash';
-import * as M from 'ramda';
+import { head } from 'ramda';
 import { Tag00X, Tag006, Tag007, Tag008, MarcField } from '..';
 import type { Props } from '../../../core';
 import style from '../Style/style.css';
@@ -67,7 +67,7 @@ class FixedFields extends React.Component<P, {}> {
 
   handleChage00X = (e) => {
     const { datastore: { emptyRecord } } = this.props;
-    const fixedField = M.head(emptyRecord.results.fields.filter(f => f.code === e.target.name));
+    const fixedField = head(emptyRecord.results.fields.filter(f => f.code === e.target.name));
     if (fixedField) {
       fixedField.fixedField.displayValue = (e.target.value);
       fixedField.mandatory = true;
@@ -223,9 +223,9 @@ class FixedFields extends React.Component<P, {}> {
   render() {
     const { fixedFields } = this.state;
     const fixedFieldsxxx = filterFixedFields(fixedFields);
-    const fixedFields006 = M.head(fixedFields.filter(f => f.fixedField.code === TAGS._006));
-    const fixedFields007 = M.head(fixedFields.filter(f => f.fixedField.code === TAGS._007));
-    const fixedFields008 = M.head(fixedFields.filter(f => f.fixedField.code === TAGS._008));
+    const fixedFields006 = head(fixedFields.filter(f => f.fixedField.code === TAGS._006));
+    const fixedFields007 = head(fixedFields.filter(f => f.fixedField.code === TAGS._007));
+    const fixedFields008 = head(fixedFields.filter(f => f.fixedField.code === TAGS._008));
     return (
       <React.Fragment>
         {this.renderTagxxx(fixedFieldsxxx)}

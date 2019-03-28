@@ -58,15 +58,19 @@ export const TAG_WIDH_CAT_8 = [
 
 export const TAG_WITH_NO_HEADING_ASSOCIATED = union(TAG_WIDH_CAT_7, TAG_WIDH_CAT_8);
 
-export const FIXED_FIELD_TEMPLATE = (code, typeCode) => {
+export const TAG006_DISPLAY_VALUE_DEFAULT = 'a           000 ua';
+export const TAG007_DISPLAY_VALUE_DEFAULT = 'cu uuu   uuuuu';
+
+export const FIXED_FIELD_TEMPLATE = (code, typeCode, displayValue) => {
   return {
     'code': code,
     'mandatory': true,
+    'fieldStatus': 'new',
     'fixedField': {
       'categoryCode': 1,
       'headerTypeCode': typeCode,
       'code': code,
-      'displayValue': '',
+      'displayValue': displayValue,
       'sequenceNumber': 0
     },
     'added': true

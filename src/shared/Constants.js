@@ -44,6 +44,7 @@ export const ENDPOINT = {
   BIBLIOGRAPHIC_RECORD: '/bibliographic-record',
   HEADING_BY_TAG: '/headings-by-tag',
   CHANGE_008_BY_LEADER: '/fixed-fields-code-groups-by-leader',
+  CHANGE_TAG_DISPLAY_VALUE_FROM_LEADER: '/fixed-fields-code-groups-by-leader',
   LOCK_MARC_RECORD: '/bibliographic-record/lock/',
   UNLOCK_MARC_RECORD: '/bibliographic-record/unlock/',
 };

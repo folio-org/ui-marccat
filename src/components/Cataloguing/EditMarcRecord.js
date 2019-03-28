@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { includes, difference, union, sortBy } from 'lodash';
 import { reduxForm } from 'redux-form';
+import { head } from 'ramda';
 import {
   Pane,
   Paneset,
@@ -110,7 +111,7 @@ class EditMarcRecord extends React.Component {
   editHeading = item => {
     const { store: { getState } } = this.props;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
-    const tagSelected = tagVariableData.filter(t => t.code === item.code)[0];
+    const tagSelected = head(tagVariableData.filter(t => t.code === item.code));
     const displayValue = replaceAll(item.displayValue);
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const heading = {
@@ -180,8 +181,8 @@ class EditMarcRecord extends React.Component {
     bibliographicRecord.leader.value = formData.Leader;
 
     const recordTemplate = {
-      id: data.template.records[0].id,
-      name: data.template.records[0].name,
+      id: head(data.template.records).id,
+      name: head(data.template.records).name,
       type: 'B',
       fields: recordDetail.fields.filter(f => f.code === '001' || f.code === '005' || f.code === '008')
     };

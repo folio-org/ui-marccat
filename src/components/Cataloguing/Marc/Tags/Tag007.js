@@ -5,37 +5,33 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field } from 'redux-form';
+import { head } from 'ramda';
 import { Row, Col, Select } from '@folio/stripes/components';
 import { injectCommonProp, Props } from '../../../../core';
 import { ActionTypes } from '../../../../redux/actions';
 import { FIXED_FIELD_TEMPLATE, RECORD_FIELD_STATUS, TAGS } from '../..';
 import { EMPTY_SPACED_STRING, EMPTY_STRING } from '../../../../shared/Constants';
 import { decamelizify } from '../../../../shared/Function';
+import { TAG007_DISPLAY_VALUE_DEFAULT } from '../../Utils/MarcUtils';
 
 export class Tag007 extends React.Component<Props, {}> {
-  constructor(props:Props) {
-    super(props);
-    this.state = {
-      isChangedHeaderType: false,
-    };
-  }
-
   handleOnChange = (e) => {
-    const { dispatch, record, leaderValue } = this.props;
-    const headerTypeCode = e.target.value;
+    const { dispatch, change, record, leaderValue } = this.props;
+    const headerTypeCode = (e && e.target) ? e.target.value : 23;
+    dispatch(change('Tag007', headerTypeCode));
     dispatch({ type: ActionTypes.VALUES_FROM_TAG_007, leader: leaderValue, code: TAGS._007, typeCode: headerTypeCode });
-    this.state.isChangedHeaderType = true;
-    record.fields.push(FIXED_FIELD_TEMPLATE(TAGS._007, headerTypeCode));
-    record.fields.filter(f => f.code === TAGS._007)[0].fieldStatus = RECORD_FIELD_STATUS.NEW;
+    record.fields.push(FIXED_FIELD_TEMPLATE(TAGS._007, headerTypeCode, TAG007_DISPLAY_VALUE_DEFAULT));
+    head(record.fields.filter(f => f.code === TAGS._007)).fieldStatus = RECORD_FIELD_STATUS.NEW;
   }
 
   render() {
     const { headerTypesResult, tag007ValuesResults } = this.props;
-    const { isChangedHeaderType } = this.state;
     const remappedValues = [];
-    if (isChangedHeaderType && tag007ValuesResults) {
+    if (tag007ValuesResults) {
       const result = Object.keys(tag007ValuesResults.results).map((key) => tag007ValuesResults.results[key]);
       remappedValues.push(result);
+    } else {
+      this.handleOnChange();
     }
     return (headerTypesResult) ? (
       <div>
@@ -55,7 +51,7 @@ export class Tag007 extends React.Component<Props, {}> {
         <hr />
         <Row xs={12}>
           {
-            (isChangedHeaderType === true && tag007ValuesResults) &&
+            (tag007ValuesResults) &&
               remappedValues.map(elem => {
                 return elem.map(item => {
                   let exactDisplayValue = EMPTY_STRING;

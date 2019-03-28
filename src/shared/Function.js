@@ -1,3 +1,4 @@
+/* eslint-disable no-redeclare */
 /* eslint-disable consistent-return */
 /* eslint-disable no-mixed-operators */
 /* eslint-disable no-bitwise */
@@ -91,3 +92,11 @@ export const qs = {
 export function safeObj(obj, prop) {
   return (obj) ? obj[prop] : {};
 }
+export function safeArray(obj, res, ...prop) {
+  return (obj && obj[prop]) ? obj[prop[0]][prop[1]] : res;
+}
+/* @flow */
+// eslint-disable-next-line no-unused-vars
+declare function safe<K>(obj: K): string;
+declare function safe<K, K1>(obj: K, s: K1): string;
+declare function safe<K, K1, K2>(obj: K, s: K1, s1: K2): string;

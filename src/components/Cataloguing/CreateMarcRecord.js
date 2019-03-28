@@ -20,6 +20,7 @@ import {
 import { AppIcon } from '@folio/stripes-core';
 import { reduxForm } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
+import { head } from 'ramda';
 import { isEmpty, union, sortBy, includes } from 'lodash';
 import type { Props } from '../../core';
 import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../lib';
@@ -58,7 +59,7 @@ export class CreateMarcRecord extends React.Component<P, {}> {
   editHeading = item => {
     const { store: { getState } } = this.props;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
-    const tagSelected = tagVariableData.filter(t => t.code === item.code)[0];
+    const tagSelected = head(tagVariableData.filter(t => t.code === item.code));
     const displayValue = replaceAll(item.displayValue);
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const heading = {
@@ -198,15 +199,9 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     if (!bibliographicRecord) bibliographicRecord = Object.assign(emptyRecord.results, bibliographicRecord);
     bibliographicRecord.leader.value = formData.Leader;
 
-    const Tag006 = bibliographicRecord.fields.filter(t => t.code === '006')[0];
-    const Tag007 = bibliographicRecord.fields.filter(t => t.code === '007')[0];
-
-    if (Tag006.fixedField.displayValue === C.EMPTY_STRING) bibliographicRecord.fields.filter(t => t.code === '006')[0].fixedField.displayValue = 'a           000 ua';
-    if (Tag007.fixedField.displayValue === C.EMPTY_STRING) bibliographicRecord.fields.filter(t => t.code === '007')[0].fixedField.displayValue = 'cu uuu   uuuuu';
-
     const recordTemplate = {
-      id: data.template.records[0].id,
-      name: data.template.records[0].name,
+      id: head(data.template.records).id,
+      name: head(data.template.records).name,
       type: 'B',
       fields: Object.values(emptyRecord.results.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}))
     };
@@ -326,8 +321,8 @@ export class CreateMarcRecord extends React.Component<P, {}> {
                       value={<h2>{bibliographicRecord.name}</h2>}
                     />
                     <form name="bibliographicRecordForm" onSubmit={this.saveRecord}>
-                      <Accordion label="Suppress" id="suppress" separator={false}>
-                        <SingleCheckboxIconButton labels={['Suppress from Discovery']} pullLeft widthPadding />
+                      <Accordion label={<FormattedMessage id="ui-marccat.cataloging.accordion.checkbox.label" />} id="suppress" separator={false}>
+                        <SingleCheckboxIconButton labels={[<FormattedMessage id="ui-marccat.cataloging.checkbox.label" />]} pullLeft widthPadding />
                       </Accordion>
                       <Accordion label="Leader" id="leader">
                         <MarcLeader
@@ -338,7 +333,10 @@ export class CreateMarcRecord extends React.Component<P, {}> {
                           leaderValue={bibliographicRecord.leader.value}
                         />
                       </Accordion>
-                      <Accordion label="Control fields (001, 003, 005, 008)" id="control-field-create-record">
+                      <Accordion
+                        label={<FormattedMessage id="ui-marccat.cataloging.accordion.fixedfield.label" />}
+                        id="control-field-create-record"
+                      >
                         <FixedFields
                           {...this.props}
                           record={bibliographicRecord}
@@ -346,7 +344,10 @@ export class CreateMarcRecord extends React.Component<P, {}> {
                         />
                       </Accordion>
                     </form>
-                    <Accordion label="variable fields" id="variable-field">
+                    <Accordion
+                      label={<FormattedMessage id="ui-marccat.cataloging.accordion.variableField.label" />}
+                      id="variable-field"
+                    >
                       <VariableFields
                         fields={bibliographicRecord.fields.filter(f => f.fixedField === undefined || !f.fixedField)}
                         onDelete={this.onDelete}

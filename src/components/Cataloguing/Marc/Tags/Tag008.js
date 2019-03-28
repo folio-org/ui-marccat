@@ -47,8 +47,11 @@ export class Tag008 extends React.Component<Props, {}> {
   };
 
   changeDisplayValue = (e) => {
-    const { store: { getState }, dispatch, change } = this.props;
+    const { store: { getState }, dispatch, change, tag008ValuesResults } = this.props;
     const { jsonReq, currentHeaderTypeCode } = this.state;
+    if (isEmpty(jsonReq)) {
+      Object.keys(tag008ValuesResults.results).map((key) => tag008ValuesResults.results[key]).map((x) => jsonReq[x.name] = x.defaultValue);
+    }
     const changedFieldLabel = (e.target) ? e.target.id.split('-')[1] : '';
     let changedFieldValue = '';
     jsonReq.dateEnteredOnFile = getState().form.bibliographicRecordForm.values['008'].substring(0, 6);

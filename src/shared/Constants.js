@@ -29,6 +29,7 @@ export const ENDPOINT = {
   MERGED_SEARCH_URL: '/mergedSearch',
   SEARCH_URL: '/searchVertical',
   SEARCH_URL_JSON: '/search',
+  TOTAL_COUNT_SEARCH_URL: '/countSearch',
   DOC_COUNT_URL: 'document-count-by-id',
   BROWSE_FIRST_PAGE_URL: '/browse',
   VIEW_TEMPLATE_URL: '/record-templates',

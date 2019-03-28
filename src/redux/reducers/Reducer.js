@@ -301,6 +301,38 @@ export function templateViewReducer(state = { isLoading, isReady }, action) {
   }
 }
 
+export function totalBibCountDocReducer(state = {}, action) {
+  switch (action.type) {
+  case ActionTypes.TOTAL_BIB_COUNT:
+    return {
+      ...state,
+    };
+  case ActionTypes.TOTAL_BIB_COUNT_SUCCESS:
+    return {
+      ...state,
+      totalBibDoc: action.payload,
+    };
+  default:
+    return state;
+  }
+}
+
+export function totalAuthCountDocReducer(state = {}, action) {
+  switch (action.type) {
+  case ActionTypes.TOTAL_AUTH_COUNT:
+    return {
+      ...state,
+    };
+  case ActionTypes.TOTAL_AUTH_COUNT_SUCCESS:
+    return {
+      ...state,
+      totalAuthDoc: action.payload,
+    };
+  default:
+    return state;
+  }
+}
+
 export function headerTypes006Reducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
   case ActionTypes.HEADER_TYPES_006:

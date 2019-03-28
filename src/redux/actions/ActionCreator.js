@@ -93,6 +93,15 @@ export const fetchSearchEngineRecords = (queryBib, queryAuth, to, moreData, bibl
   oldBibArray,
   oldAuthArray
 });
+export const fetchTotalCountBibRecords = (records) => ({
+  type: ActionTypes.TOTAL_BIB_COUNT_SUCCESS,
+  payload: records
+});
+
+export const fetchTotalCountAuthRecords = (records) => ({
+  type: ActionTypes.TOTAL_AUTH_COUNT_SUCCESS,
+  payload: records
+});
 export const fetchBrowseDetail = (results, counter, isAuthority) => ({
   type: ActionTypes.DETAILS_BROWSE_SUCCESS,
   payload: results,

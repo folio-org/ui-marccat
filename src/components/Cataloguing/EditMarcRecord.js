@@ -156,6 +156,22 @@ class EditMarcRecord extends React.Component {
   }
 
   onCreate = () => { this.showMessage('Tag Saved sucesfully'); }
+
+  onDelete = item => {
+    const { dispatch } = this.props;
+    if (item.variableField) {
+      const heading = {
+        ind1: item.variableField.ind1,
+        ind2: item.variableField.ind2,
+        displayValue: item.variableField.displayValue,
+        tag: item.code,
+        categoryCode: item.variableField.categoryCode,
+        keyNumber: item.variableField.keyNumber
+      };
+      dispatch(headingDeleteAction(heading));
+    }
+  };
+
   onDelete = item => {
     const { dispatch } = this.props;
     if (item.variableField) {

@@ -5,24 +5,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field } from 'redux-form';
-import { head } from 'ramda';
 import { Row, Col, Select } from '@folio/stripes/components';
 import { injectCommonProp, Props } from '../../../../core';
-import { ActionTypes } from '../../../../redux/actions';
-import { FIXED_FIELD_TEMPLATE, RECORD_FIELD_STATUS, TAGS } from '../..';
 import { EMPTY_SPACED_STRING, EMPTY_STRING } from '../../../../shared/Constants';
 import { decamelizify } from '../../../../shared/Function';
-import { TAG007_DISPLAY_VALUE_DEFAULT } from '../../Utils/MarcUtils';
+import { TAGS_NAME, TAG007_DISPLAY_VALUE_DEFAULT, TAGS } from '../../Utils/MarcUtils';
+import { handleTagXXXHeaderTypeChange } from '../../Utils/MarcApiUtils';
+import { ActionTypes } from '../../../../redux/actions';
 
 export class Tag007 extends React.Component<Props, {}> {
   handleOnChange = (e) => {
-    const { dispatch, change, record, leaderValue } = this.props;
     const headerTypeCode = (e && e.target) ? e.target.value : 23;
-    dispatch(change('Tag007', headerTypeCode));
-    dispatch({ type: ActionTypes.VALUES_FROM_TAG_007, leader: leaderValue, code: TAGS._007, typeCode: headerTypeCode });
-    record.fields.push(FIXED_FIELD_TEMPLATE(TAGS._007, headerTypeCode, TAG007_DISPLAY_VALUE_DEFAULT));
-    head(record.fields.filter(f => f.code === TAGS._007)).fieldStatus = RECORD_FIELD_STATUS.NEW;
+    const tag = {
+      action: ActionTypes.VALUES_FROM_TAG_007,
+      code: TAGS._007,
+      name: TAGS_NAME.TAG_007,
+      default: TAG007_DISPLAY_VALUE_DEFAULT
+    };
+    handleTagXXXHeaderTypeChange(this.props, tag, headerTypeCode);
   }
+
+  changeDisplayValue = () => {}
 
   render() {
     const { headerTypesResult, tag007ValuesResults } = this.props;
@@ -38,8 +41,8 @@ export class Tag007 extends React.Component<Props, {}> {
         <Row>
           <Col xs={4}>
             <Field
-              id="Tag007"
-              name="Tag007"
+              id={`${TAGS_NAME.TAG_007}`}
+              name={`${TAGS_NAME.TAG_007}`}
               component={Select}
               onChange={this.handleOnChange}
               label="Header types"
@@ -60,8 +63,8 @@ export class Tag007 extends React.Component<Props, {}> {
                     <Col xs={4}>
                       <Field
                         component={Select}
-                        name={`Tag007-${item.name}`}
-                        id={`Tag007-${item.name}`}
+                        name={`${TAGS_NAME.TAG_007}-${item.name}`}
+                        id={`${TAGS_NAME.TAG_007}-${item.name}`}
                         label={decamelizify(`${item.name}`, EMPTY_SPACED_STRING)}
                         dataOptions={item.dropdownSelect}
                         placeholder={exactDisplayValue}

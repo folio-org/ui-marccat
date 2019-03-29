@@ -33,3 +33,17 @@ export const emptyRecordAction = () => {
     },
   };
 };
+/**
+ *
+ * @param {*} payload
+ */
+export const countRecordAction = (payload) => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.TOTAL_COUNT_SEARCH_URL,
+      type: `record${(payload.view === 1) ? 'Bib' : 'Auth'}Count`,
+      params: `lang=ita&view=${payload.view}&ml=170&q=${payload.query}`,
+    }
+  };
+};

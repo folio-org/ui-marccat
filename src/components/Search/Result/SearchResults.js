@@ -379,7 +379,7 @@ export class SearchResults extends React.Component<P, {}> {
 }
 
 export default (connect(
-  ({ marccat: { search, details, countDoc, filter, totalBibRecords, totalAuthRecords, associatedBibDetails, template, settings, panels } }) => ({
+  ({ marccat: { search, details, countDoc, filter, data, associatedBibDetails, template, settings, panels } }) => ({
     bibliographicResults: search.bibliographicResults,
     oldDataToIncrement: search.dataOld,
     oldBibToIncrement: search.oldBibArray,
@@ -405,8 +405,8 @@ export default (connect(
     associatedRecordDetails: associatedBibDetails.records,
     isPanelBibAssOpen: associatedBibDetails.mustOpenPanel,
     closePanels: panels.closePanels,
-    totalBib: totalBibRecords.totalBibDoc,
-    totalAuth: totalAuthRecords.totalAuthDoc
+    totalBib: (data.recordBibCount) ? data.recordBibCount.results : 0,
+    totalAuth: (data.recordAuthCount) ? data.recordAuthCount.results : 0
   }),
   (dispatcher) => dispatcher(emptyRecordAction())
 )(injectCommonProp(SearchResults)));

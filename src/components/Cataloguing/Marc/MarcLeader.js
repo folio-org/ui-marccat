@@ -33,16 +33,8 @@ export default class MarcLeader extends React.Component<P, {
       leaderCss: false,
       leaderVal: props.leaderValue,
     };
-    this.handleLeader = this.handleLeader.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-
-  handleLeader = () => {
-    const { leaderCss } = this.state;
-    this.setState({
-      leaderCss: !leaderCss
-    });
-  };
 
   /**
    *
@@ -99,7 +91,7 @@ export default class MarcLeader extends React.Component<P, {
           readOnly
           label="Leader"
           name="Leader"
-          onClick={this.handleLeader}
+          onClick={() => this.setState({ leaderCss: !leaderCss })}
           value={(leaderVal) || leaderValue}
         />
         {leaderData &&

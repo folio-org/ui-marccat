@@ -16,6 +16,15 @@ export const TAGS = {
   _008: '008',
   _040: '040'
 };
+export const TAGS_NAME = {
+  TAG_001: 'Tag001',
+  TAG_003: 'Tag003',
+  TAG_005: 'Tag005',
+  TAG_006: 'Tag006',
+  TAG_007: 'Tag007',
+  TAG_008: 'Tag008',
+  TAG_040: 'Tag040'
+};
 
 /*
  * Create array with all tags code in a range

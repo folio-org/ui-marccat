@@ -22,7 +22,6 @@ import { reduxForm } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { head } from 'ramda';
 import { isEmpty, union, sortBy, includes } from 'lodash';
-import type { Props } from '../../core';
 import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../lib';
 import { VariableFields, MarcLeader, FixedFields } from '.';
 import { ActionTypes } from '../../redux/actions/Actions';
@@ -34,13 +33,10 @@ import style from './Style/style.css';
 import { headingAction, headingDeleteAction, settingsAction } from './Actions/MarcActionCreator';
 import { buildUrl } from '../../shared/Function';
 
-
-type P = {
-  callout: Object,
-} & Props;
-
-export class CreateMarcRecord extends React.Component<P, {}> {
-  constructor(props: P) {
+export class CreateMarcRecord extends React.Component<{}, {
+  callout: React.RefObject<Callout>,
+}> {
+  constructor(props) {
     super(props);
     this.renderDropdownLabels = this.renderDropdownLabels.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -50,9 +46,16 @@ export class CreateMarcRecord extends React.Component<P, {}> {
     this.onUpdate = this.onUpdate.bind(this);
     this.onCreate = this.onCreate.bind(this);
     this.onDelete = this.onDelete.bind(this);
-
-    props.dispatch(settingsAction({ fromCataloging: true }));
   }
+
+  componentWillMount() {
+    const { dispatch, datastore: { emptyRecord: { results: { leader } } } } = this.props;
+    dispatch({ type: ActionTypes.LEADER_VALUES_FROM_TAG, leader: leader.value, code: leader.code, typeCode: '15' });
+    // const payload = { value: leader.value, code: leader.code, typeCode: 15 };
+    // dispatch(leaderAction(payload));
+    dispatch(settingsAction({ fromCataloging: true }));
+  }
+
 
   onSave = () => {}
 
@@ -380,6 +383,7 @@ export default reduxForm({
     leaderData: leaderData.records,
     tagIsLoading: leaderData.isLoading,
     tagIsReady: leaderData.isReady,
+    // leaderData: (data.leaderData) ? data.leaderData.payload : {},
     headerTypes006Result: headerTypes006.results,
     headerTypes007Result: headerTypes007.results,
     headerTypes008Result: headerTypes008.results,

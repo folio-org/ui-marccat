@@ -110,18 +110,6 @@ export const templateViewEpic = (action$, store) => action$.ofType(ActionTypes.V
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
 
-export const totalCountBibEpic = (action$, store) => action$.ofType(ActionTypes.TOTAL_BIB_COUNT)
-  .switchMap((d) => ajax
-    .getJSON(buildUrl(ENDPOINT.TOTAL_COUNT_SEARCH_URL, `lang=ita&view=1&ml=170&q=${d.query}`), ENDPOINT.HEADERS)
-    .map(record => marccatActions.fetchTotalCountBibRecords(record))
-    .catch(e => of$(marccatActions.fetchFailure(e))));
-
-export const totalCountAuthEpic = (action$, store) => action$.ofType(ActionTypes.TOTAL_AUTH_COUNT)
-  .switchMap((d) => ajax
-    .getJSON(buildUrl(ENDPOINT.TOTAL_COUNT_SEARCH_URL, `lang=ita&view=-1&ml=170&q=${d.query}`), ENDPOINT.HEADERS)
-    .map(record => marccatActions.fetchTotalCountAuthRecords(record))
-    .catch(e => of$(marccatActions.fetchFailure(e))));
-
 export const templateByIdEpic = (action$, store) => action$.ofType(ActionTypes.TEMPLATE_GET_BY_ID)
   .switchMap((d) => concat$(
     of$(marccatActions.isFetchingTemplateByIdRequest(true)),

@@ -30,6 +30,7 @@ import { remapFilters } from '../../../utils/Mapper';
 import { EMPTY_STRING } from '../../../shared/Constants';
 import styles from '../index.css';
 import { findParam } from '../../../shared/Function';
+import { countRecordAction } from '../Actions/ActionCreator';
 
 type P = Props & {
   inputErrorCheck: string,
@@ -128,12 +129,13 @@ class SearchPanel extends React.Component<P, {}> {
           || indexForQuery === 'PW ') {
           dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: bibQuery, queryAuth: '', from: '1', to: '100' });
           transitionToParams('q', bibQuery);
-          dispatch({ type: ActionTypes.TOTAL_BIB_COUNT, query: bibQuery });
+          dispatch(countRecordAction({ view: 1, query: bibQuery }));
         } else {
           dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '100' });
           transitionToParams('q', authQuery);
-          dispatch({ type: ActionTypes.TOTAL_BIB_COUNT, query: bibQuery });
-          dispatch({ type: ActionTypes.TOTAL_AUTH_COUNT, query: authQuery });
+
+          dispatch(countRecordAction({ view: 1, query: bibQuery }));
+          dispatch(countRecordAction({ view: -1, query: authQuery }));
         }
       }
     }

@@ -13,7 +13,7 @@ export const leaderAction = (payload) => {
     data: {
       path: ENDPOINT.TEMPLATE_TAG_URL,
       type: 'leaderData',
-      params:  `leader=${payload.value}&code=${payload.code}&headerTypeCode=${payload.typeCode}&lang=ita`,
+      params: `leader=${payload.value}&code=${payload.code}&headerTypeCode=${payload.typeCode}&lang=ita`,
     },
   };
 };

@@ -90,7 +90,6 @@ export class Tag008 extends React.Component<Props, {}> {
       dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: newValuesFromChangedLeader.headerTypeCode });
       dispatch(change('Tag008', newValuesFromChangedLeader.headerTypeCode));
       this.setState({ currentHeaderTypeCode: newValuesFromChangedLeader.headerTypeCode });
-      this.changeDisplayValue();
     }
 
     return (headerTypesResult) ? (

@@ -109,7 +109,7 @@ class SearchPanel extends React.Component<P, {}> {
       }
       if (conditionFilter === 'BROWSE') {
         isBrowseRequested = true;
-        dispatch({ type: ActionTypes.BROWSE_FIRST_PAGE, query: bibQuery, from: '1', to: '100' });
+        dispatch({ type: ActionTypes.BROWSE_FIRST_PAGE, query: bibQuery, from: '1', to: '30' });
         router.push('/marccat/browse');
         transitionToParams('q', bibQuery);
         this.setState({
@@ -127,11 +127,11 @@ class SearchPanel extends React.Component<P, {}> {
           || indexForQuery === 'BC '
           || indexForQuery === 'CP '
           || indexForQuery === 'PW ') {
-          dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: bibQuery, queryAuth: '', from: '1', to: '100' });
+          dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: bibQuery, queryAuth: '', from: '1', to: '30' });
           transitionToParams('q', bibQuery);
           dispatch(countRecordAction({ view: 1, query: bibQuery }));
         } else {
-          dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '100' });
+          dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
           transitionToParams('q', authQuery);
 
           dispatch(countRecordAction({ view: 1, query: bibQuery }));

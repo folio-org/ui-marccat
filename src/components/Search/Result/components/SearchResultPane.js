@@ -99,7 +99,7 @@ class SearchResultPane extends React.Component<Props, {}> {
           onScroll={(e) => {
             const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
             if (bottom) {
-              store.dispatch({ type: ActionTypes.SEARCH, queryBib: queryMoreBib, queryAuth: queryMoreAuth, moreData: 'Y', from: parseInt(countMoreData, 10) + 1, to: parseInt(countMoreData, 10) + 100, dataOld: mergedRecord, oldBibArray: bibliographicResults, oldAuthArray: authorityResults });
+              store.dispatch({ type: ActionTypes.SEARCH, queryBib: queryMoreBib, queryAuth: queryMoreAuth, moreData: 'Y', from: parseInt(countMoreData, 10) + 1, to: parseInt(countMoreData, 10) + 30, dataOld: mergedRecord, oldBibArray: bibliographicResults, oldAuthArray: authorityResults });
             }
           }
           }
@@ -136,7 +136,7 @@ class SearchResultPane extends React.Component<Props, {}> {
           onScroll={(e) => {
             const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
             if (bottom) {
-              store.dispatch({ type: ActionTypes.SEARCH, queryBib: queryMoreBib, queryAuth: queryMoreAuth, moreData: 'Y', from: parseInt(countMoreData, 10) + 1, to: parseInt(countMoreData, 10) + 100, dataOld: mergedRecord, oldBibArray: bibliographicResults, oldAuthArray: authorityResults });
+              store.dispatch({ type: ActionTypes.SEARCH, queryBib: queryMoreBib, queryAuth: queryMoreAuth, moreData: 'Y', from: parseInt(countMoreData, 10) + 1, to: parseInt(countMoreData, 10) + 30, dataOld: mergedRecord, oldBibArray: bibliographicResults, oldAuthArray: authorityResults });
             }
           }
           }

@@ -128,9 +128,12 @@ class SearchPanel extends React.Component<P, {}> {
           || indexForQuery === 'PW ') {
           dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: bibQuery, queryAuth: '', from: '1', to: '100' });
           transitionToParams('q', bibQuery);
+          dispatch({ type: ActionTypes.TOTAL_BIB_COUNT, query: bibQuery });
         } else {
           dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '100' });
           transitionToParams('q', authQuery);
+          dispatch({ type: ActionTypes.TOTAL_BIB_COUNT, query: bibQuery });
+          dispatch({ type: ActionTypes.TOTAL_AUTH_COUNT, query: authQuery });
         }
       }
     }

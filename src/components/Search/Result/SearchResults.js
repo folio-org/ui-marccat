@@ -261,6 +261,8 @@ export class SearchResults extends React.Component<P, {}> {
       isLoadingAssociatedRecord,
       isReadyAssociatedRecord,
       closePanels,
+      totalAuth,
+      totalBib
     } = this.props;
     let { bibliographicResults, authorityResults } = this.props;
     if (activeFilter) {
@@ -309,9 +311,10 @@ export class SearchResults extends React.Component<P, {}> {
         return <NoResultsMessage {...this.props} />;
       }
     }
+
     const containerMarcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForAssociatedBibList(mergedRecord) : [];
-    const messageAuth = (totalAuthCount && totalAuthCount > 0) ? totalAuthCount + ' Authority records ' : ' No Authority records found ';
-    const messageBib = (totalBibCount && totalBibCount > 0) ? totalBibCount + ' Bibliographic records ' : ' No Bibliographic records found ';
+    const messageAuth = (totalAuthCount !== undefined && totalAuth > 0) ? authorityResults.length + ' of ' + totalAuth + ' Authority records ' : ' No Authority records found ';
+    const messageBib = (totalBibCount !== undefined && totalBib > 0) ? bibliographicResults.length + ' of ' + totalBib + ' Bibliographic records ' : ' No Bibliographic records found ';
     let message = C.EMPTY_STRING;
     if (autOnly) {
       message = messageAuth;
@@ -376,7 +379,7 @@ export class SearchResults extends React.Component<P, {}> {
 }
 
 export default (connect(
-  ({ marccat: { search, details, countDoc, filter, associatedBibDetails, template, settings, panels } }) => ({
+  ({ marccat: { search, details, countDoc, filter, totalBibRecords, totalAuthRecords, associatedBibDetails, template, settings, panels } }) => ({
     bibliographicResults: search.bibliographicResults,
     oldDataToIncrement: search.dataOld,
     oldBibToIncrement: search.oldBibArray,
@@ -401,7 +404,9 @@ export default (connect(
     isReadyAssociatedRecord: associatedBibDetails.isReady,
     associatedRecordDetails: associatedBibDetails.records,
     isPanelBibAssOpen: associatedBibDetails.mustOpenPanel,
-    closePanels: panels.closePanels
+    closePanels: panels.closePanels,
+    totalBib: totalBibRecords.totalBibDoc,
+    totalAuth: totalAuthRecords.totalAuthDoc
   }),
   (dispatcher) => dispatcher(emptyRecordAction())
 )(injectCommonProp(SearchResults)));

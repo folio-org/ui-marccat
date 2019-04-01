@@ -143,7 +143,6 @@ class FixedFields extends React.Component<P, {}> {
         <MarcField
           {...this.props}
           readOnly={tag}
-          withIcon
           onChange={this.handleChage00X}
           label={(tag) ? tag.fixedField.code : TAGS._006}
           name={(tag) ? tag.fixedField.code : TAGS._006}
@@ -172,11 +171,11 @@ class FixedFields extends React.Component<P, {}> {
         <MarcField
           {...this.props}
           readOnly={tag}
-          withIcon
           onChange={this.handleChage00X}
           label={(tag) ? tag.fixedField.code : TAGS._007}
           name={(tag) ? tag.fixedField.code : TAGS._007}
-          value={(tag) ? tag.fixedField.displayValue : 'cu uuu   uuuuu'}
+          // eslint-disable-next-line no-new-wrappers
+          value={(tag) ? tag.fixedField.displayValue : new String('cu uuu   uuuuu')}
           onClick={() => this.handleTag007(tag)}
         />
         {
@@ -224,13 +223,14 @@ class FixedFields extends React.Component<P, {}> {
     const { fixedFields } = this.state;
     const fixedFieldsxxx = filterFixedFields(fixedFields);
     const fixedFields006 = head(fixedFields.filter(f => f.fixedField.code === TAGS._006));
+    // eslint-disable-next-line no-unused-vars
     const fixedFields007 = head(fixedFields.filter(f => f.fixedField.code === TAGS._007));
     const fixedFields008 = head(fixedFields.filter(f => f.fixedField.code === TAGS._008));
     return (
       <React.Fragment>
         {this.renderTagxxx(fixedFieldsxxx)}
         {this.renderTag006(fixedFields006)}
-        {this.renderTag007(fixedFields007)}
+        {/* {this.renderTag007(fixedFields007)} */}
         {this.renderTag008(fixedFields008)}
       </React.Fragment>
     );

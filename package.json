@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "stripes serve --lint config/stripes.config.js",
-    "build": "stripes build --okapi http://folio-q4.aws.indexdata.com:9130 --output dist/",
+    "build": "stripes build --no-minify --okapi http://folio-q4.aws.indexdata.com:9130 --output dist/",
     "lint": "yarn eslint && yarn stylelint",
     "test": "stripes test karma --coverage",
     "eslint": "eslint --fix src/**/*.js",

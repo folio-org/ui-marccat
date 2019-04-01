@@ -4,7 +4,6 @@
  */
 import React from 'react';
 import { Field } from 'redux-form';
-import { head } from 'ramda';
 import { Row, Col, Select } from '@folio/stripes/components';
 import type { Props } from '../../../core';
 import MarcField from './MarcField';
@@ -63,32 +62,27 @@ export default class MarcLeader extends React.Component<P, {
     });
   }
 
-  handleChange = () => {
-    const { store: { getState } } = this.props;
+  handleChange = (e) => {
     const { leaderVal } = this.state;
-    const formData = getState().form.bibliographicRecordForm.values;
-    Object.keys(formData)
-      .forEach((k) => {
-        if (head(k.split('-')) === 'Leader') {
-          switch (k.split('-')[1]) {
-          case 'itemRecordStatusCode': this.replaceAt(leaderVal, 5, formData[k]); this.state.leaderChangedFor008 = false; break;
-          case 'itemRecordTypeCode': this.replaceAt(leaderVal, 6, formData[k]); this.state.leaderChangedFor008 = true; break;
-          case 'itemBibliographicLevelCode': this.replaceAt(leaderVal, 7, formData[k]); this.state.leaderChangedFor008 = true; break;
-          case 'itemControlTypeCode': this.replaceAt(leaderVal, 8, formData[k]); this.state.leaderChangedFor008 = false; break;
-          case 'characterCodingSchemeCode': this.replaceAt(leaderVal, 9, formData[k]); this.state.leaderChangedFor008 = false; break;
-          case 'encodingLevel': this.replaceAt(leaderVal, 17, formData[k]); this.state.leaderChangedFor008 = false; break;
-          case 'descriptiveCataloguingCode': this.replaceAt(leaderVal, 18, formData[k]); this.state.leaderChangedFor008 = false; break;
-          case 'linkedRecordCode': this.replaceAt(leaderVal, 19, formData[k]); this.state.leaderChangedFor008 = false; break;
-          default: break;
-          }
-        }
-      });
-  };
+    const selectedValue = e.target.value;
+    const selectedName = e.target.id;
+    switch (selectedName) {
+    case 'itemRecordStatusCode': this.replaceAt(leaderVal, 5, selectedValue); this.state.leaderChangedFor008 = false; break;
+    case 'itemRecordTypeCode': this.replaceAt(leaderVal, 6, selectedValue); this.state.leaderChangedFor008 = true; break;
+    case 'itemBibliographicLevelCode': this.replaceAt(leaderVal, 7, selectedValue); this.state.leaderChangedFor008 = true; break;
+    case 'itemControlTypeCode': this.replaceAt(leaderVal, 8, selectedValue); this.state.leaderChangedFor008 = false; break;
+    case 'characterCodingSchemeCode': this.replaceAt(leaderVal, 9, selectedValue); this.state.leaderChangedFor008 = false; break;
+    case 'encodingLevel': this.replaceAt(leaderVal, 17, selectedValue); this.state.leaderChangedFor008 = false; break;
+    case 'descriptiveCataloguingCode': this.replaceAt(leaderVal, 18, selectedValue); this.state.leaderChangedFor008 = false; break;
+    case 'linkedRecordCode': this.replaceAt(leaderVal, 19, selectedValue); this.state.leaderChangedFor008 = false; break;
+    default: break;
+    }
+  }
 
   render() {
     const { leaderCss, leaderVal } = this.state;
     let { leaderChangedFor008 } = this.state;
-    const { leaderData, leaderValue, dispatch } = this.props;
+    const { leaderData, leaderValue, dispatch, change } = this.props;
     const remappedValues = [];
     if (leaderChangedFor008 === true) {
       dispatch({ type: ActionTypes.CHANGE_008_BY_LEADER, leader: leaderVal });
@@ -113,25 +107,26 @@ export default class MarcLeader extends React.Component<P, {
             <div className={style.leaderData} id="leaderData">
               <Row xs={12}>
                 {leaderData &&
-                    remappedValues.map(elem => {
-                      return elem.map((item, i) => {
-                        let exactDisplayValue = EMPTY_STRING;
-                        item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue));
-                        return (
-                          <Col xs={4} key={i}>
-                            <Field
-                              id={`${item.name}`}
-                              name={`Leader-${item.name}`}
-                              label={decamelizify(`${item.name}`, EMPTY_SPACED_STRING)}
-                              component={Select}
-                              dataOptions={item.dropdownSelect}
-                              placeholder={exactDisplayValue}
-                              onChange={this.handleChange}
-                            />
-                          </Col>
-                        );
-                      });
-                    })
+                  remappedValues.map(elem => {
+                    return elem.map((item, i) => {
+                      let exactDisplayValue = EMPTY_STRING;
+                      item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue));
+                      dispatch(change(`Leader-${item.name}`, exactDisplayValue));
+                      return (
+                        <Col xs={4} key={i}>
+                          <Field
+                            id={`${item.name}`}
+                            name={`Leader-${item.name}`}
+                            label={decamelizify(`${item.name}`, EMPTY_SPACED_STRING)}
+                            component={Select}
+                            dataOptions={item.dropdownSelect}
+                            placeholder={exactDisplayValue}
+                            onChange={this.handleChange}
+                          />
+                        </Col>
+                      );
+                    });
+                  })
                 }
               </Row>
             </div>

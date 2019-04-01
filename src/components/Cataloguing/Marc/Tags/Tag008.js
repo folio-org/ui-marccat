@@ -4,8 +4,7 @@
  */
 import React from 'react';
 import { connect } from 'react-redux';
-import { isEmpty } from 'lodash';
-import { head } from 'ramda';
+import { isEmpty, first } from 'lodash';
 import { Field } from 'redux-form';
 import { Row, Col, Select, TextField } from '@folio/stripes/components';
 import { injectCommonProp, Props } from '../../../../core';
@@ -17,7 +16,7 @@ import * as C from '../../../../shared/Constants';
 
 
 export class Tag008 extends React.Component<Props, {}> {
-  constructor(props:Props) {
+  constructor(props: Props) {
     super(props);
     this.state = {
       isChangedHeaderType: false,
@@ -30,16 +29,18 @@ export class Tag008 extends React.Component<Props, {}> {
 
   handleOnChange = (e) => {
     const { dispatch, leaderValue, record } = this.props;
+    const { currentHeaderTypeCode } = this.state;
     const headerTypeCode = e.target.value;
+    if (currentHeaderTypeCode !== headerTypeCode) {
+      this.state.isChangedHeaderType = true;
+    }
     dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: headerTypeCode || 31 });
-    this.state.isChangedHeaderType = true;
-    head(record.fields.filter(f => f.code === TAGS._008)).fieldStatus = RECORD_FIELD_STATUS.CHANGED;
+    first(record.fields.filter(f => f.code === TAGS._008)).fieldStatus = RECORD_FIELD_STATUS.CHANGED;
   }
 
   populateFirstAccess = () => {
     const { record, leaderValue, dispatch, change } = this.props;
-    this.state.isChangedHeaderType = true;
-    const tag008 = head(record.fields.filter(f => f.code === TAGS._008));
+    const tag008 = first(record.fields.filter(f => f.code === TAGS._008));
     tag008.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
     this.state.currentHeaderTypeCode = tag008.fixedField.headerTypeCode;
     dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: tag008.fixedField.headerTypeCode });
@@ -48,11 +49,17 @@ export class Tag008 extends React.Component<Props, {}> {
 
   changeDisplayValue = (e) => {
     const { store: { getState }, dispatch, change, tag008ValuesResults } = this.props;
-    const { jsonReq, currentHeaderTypeCode } = this.state;
+    const { currentHeaderTypeCode, isChangedHeaderType } = this.state;
+    let { jsonReq } = this.state;
+    if (isChangedHeaderType) {
+      jsonReq = {};
+    }
     if (isEmpty(jsonReq)) {
+      jsonReq.dateFirstPublication = '    ';
+      jsonReq.dateLastPublication = '    ';
       Object.keys(tag008ValuesResults.results).map((key) => tag008ValuesResults.results[key]).map((x) => jsonReq[x.name] = x.defaultValue);
     }
-    const changedFieldLabel = (e.target) ? e.target.id.split('-')[1] : '';
+    const changedFieldLabel = (e.target) ? e.target.name.split('-')[1] : '';
     let changedFieldValue = '';
     jsonReq.dateEnteredOnFile = getState().form.bibliographicRecordForm.values['008'].substring(0, 6);
     jsonReq.categoryCode = 1;
@@ -63,9 +70,10 @@ export class Tag008 extends React.Component<Props, {}> {
     if (changedFieldLabel === 'dateFirstPublication' || changedFieldLabel === 'dateLastPublication') {
       changedFieldValue = e.target.value.lenght < 4 ? '' : e.target.value;
     } else {
-      changedFieldValue = head(e.target.selectedOptions).value;
+      changedFieldValue = e.target.value;
     }
     jsonReq[changedFieldLabel] = changedFieldValue;
+    this.setState({ jsonReq });
     dispatch(changeDisplayValueAction(TAGS._008, jsonReq));
     const data = getState().marccat.data;
     if (!isEmpty(data) && !isEmpty(data[`displayvalue-${TAGS._008}`])) {
@@ -81,7 +89,7 @@ export class Tag008 extends React.Component<Props, {}> {
       this.populateFirstAccess();
     }
     const remappedValues = [];
-    if (isChangedHeaderType && tag008ValuesResults) {
+    if (tag008ValuesResults || isChangedHeaderType) {
       const result = Object.keys(tag008ValuesResults.results).map((key) => tag008ValuesResults.results[key]);
       remappedValues.push(result);
     }
@@ -129,26 +137,26 @@ export class Tag008 extends React.Component<Props, {}> {
           </Col>
           {
             (tag008ValuesResults) &&
-              remappedValues.map((elem) => {
-                return elem.map((item, idx) => {
-                  let exactDisplayValue = C.EMPTY_STRING;
-                  item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.value + '-' + x.label : exactDisplayValue));
-                  dispatch(change(`Tag008-${item.name}`, exactDisplayValue));
-                  return (
-                    <Col xs={4} key={`tag008-${idx}`}>
-                      <Field
-                        name={`Tag008-${item.name}`}
-                        id={`Tag008-${item.name}`}
-                        component={Select}
-                        label={decamelizify(`${item.name}`, C.EMPTY_SPACED_STRING)}
-                        dataOptions={item.dropdownSelect}
-                        onChange={this.changeDisplayValue}
-                        placeholder={exactDisplayValue}
-                      />
-                    </Col>
-                  );
-                });
-              })
+            remappedValues.map((elem) => {
+              return elem.map((item, idx) => {
+                let exactDisplayValue = C.EMPTY_STRING;
+                item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue));
+                dispatch(change(`Tag008-${item.name}`, exactDisplayValue));
+                return (
+                  <Col xs={4} key={`tag008-${idx}`}>
+                    <Field
+                      name={`Tag008-${item.name}`}
+                      id={`Tag008-${item.name}`}
+                      component={Select}
+                      label={decamelizify(`${item.name}`, C.EMPTY_SPACED_STRING)}
+                      dataOptions={item.dropdownSelect}
+                      onChange={this.changeDisplayValue}
+                      placeholder={exactDisplayValue}
+                    />
+                  </Col>
+                );
+              });
+            })
           }
         </Row>
       </div>

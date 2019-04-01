@@ -262,6 +262,7 @@ export class CreateMarcRecord extends React.Component<{}, {
   };
 
   renderButtonMenu = () => {
+    const { translate } = this.props;
     return (
       <PaneMenu>
         <Button
@@ -272,7 +273,7 @@ export class CreateMarcRecord extends React.Component<{}, {
           marginBottom0
         >
           <Icon icon="plus-sign">
-            {<FormattedMessage id="ui-marccat.template.record.create" />}
+            {translate({ id: 'ui-marccat.cataloging.record.create' })}
           </Icon>
         </Button>
       </PaneMenu>
@@ -348,7 +349,7 @@ export class CreateMarcRecord extends React.Component<{}, {
                       </Accordion>
                     </form>
                     <Accordion
-                      label={<FormattedMessage id="ui-marccat.cataloging.accordion.variableField.label" />}
+                      label={<FormattedMessage id="ui-marccat.cataloging.accordion.variablefield.label" />}
                       id="variable-field"
                     >
                       <VariableFields

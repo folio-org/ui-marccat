@@ -254,7 +254,7 @@ class EditMarcRecord extends React.Component {
           marginBottom0
         >
           <Icon icon="plus-sign">
-            {translate({ id: 'ui-marccat.search.record.edit' })}
+            {translate({ id: 'ui-marccat.cataloging.record.edit' })}
           </Icon>
         </Button>
         <Button
@@ -266,13 +266,12 @@ class EditMarcRecord extends React.Component {
           marginBottom0
         >
           <Icon icon="trash">
-            {translate({ id: 'ui-marccat.search.record.delete' })}
+            {translate({ id: 'ui-marccat.cataloging.record.delete' })}
           </Icon>
         </Button>
       </PaneMenu>
     );
   };
-
 
   render() {
     const {

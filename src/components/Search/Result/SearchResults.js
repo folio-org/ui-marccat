@@ -198,7 +198,7 @@ export class SearchResults extends React.Component<P, {}> {
           marginBottom0
           onClick={this.handleClickEdit}
         >
-          <FormattedMessage id="ui-marccat.search.record.edit" />
+          <FormattedMessage id="ui-marccat.cataloging.record.edit" />
         </Button>
       </PaneMenu>
     );

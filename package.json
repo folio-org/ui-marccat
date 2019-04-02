@@ -21,6 +21,12 @@
     "local:deploy": "sh script/deploy/folio-frontside.sh",
     "clean": "rm -rf lib/"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint",
+      "pre-push": "yarn lint"
+    }
+  },
   "devDependencies": {
     "@bigtest/interactor": "^0.7.2",
     "@bigtest/mirage": "^0.0.1",
@@ -62,12 +68,6 @@
     "react-router-dom": "^4.3.1",
     "redux-actions": "^2.2.1",
     "redux-observable": "^0.15.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint",
-      "pre-push": "yarn lint"
-    }
   },
   "peerDependencies": {
     "react": "*"

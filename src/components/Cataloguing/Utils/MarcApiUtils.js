@@ -1,5 +1,5 @@
 import { union, sortBy, first } from 'lodash';
-import { FIXED_FIELD_TEMPLATE, RECORD_FIELD_STATUS, TAGS } from './MarcUtils';
+import { FIXED_FIELD_TEMPLATE, RECORD_FIELD_STATUS } from './MarcUtils';
 
 export const dedupe = (o) => Object.values(o.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
 

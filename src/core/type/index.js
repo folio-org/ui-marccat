@@ -5,10 +5,10 @@
 import React from 'react';
 
 export type Props = {
-  translate: (o: Object) => string,
-  children: React.ReactNodeArray,
-  store: Object,
-  stripes: Object,
+  translate: (o: Object) => string;
+  children: React.ReactNodeArray;
+  store: Object;
+  stripes: Object;
 };
 
 export type VariableField = {
@@ -24,9 +24,4 @@ export type VariableField = {
   keyNumber: number;
   skipInFiling: number;
   subfields: Array<any>;
-};
-
-export type LockType = 'R' | 'H' | 'C';
-export type LockEntityType<K = LockType> = {
-  type: K;
 };

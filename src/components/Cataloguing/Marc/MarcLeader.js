@@ -4,7 +4,6 @@
  */
 import React from 'react';
 import { Field } from 'redux-form';
-import { first } from 'lodash';
 import { Row, Col, Select } from '@folio/stripes/components';
 import type { Props } from '../../../core';
 import MarcField from './MarcField';

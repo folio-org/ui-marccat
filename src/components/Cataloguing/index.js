@@ -11,7 +11,14 @@ export { default as MarcRecord } from './CreateMarcRecord';
 export {
   RECORD_FIELD_STATUS,
   RECORD_ACTION,
-  TAGS,
-  FIXED_FIELD_TEMPLATE
-}
-  from './Utils/MarcUtils';
+  TAG_WITH_NO_HEADING_ASSOCIATED,
+  SUBFIELD_DELIMITER,
+  TAGS
+} from './Utils/MarcConstant';
+
+export {
+  getFixedField,
+  getEmptyVariableField,
+  replaceAll,
+  replaceAllinverted
+} from './Utils/MarcApiUtils';

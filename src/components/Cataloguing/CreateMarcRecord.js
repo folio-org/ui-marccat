@@ -21,18 +21,21 @@ import { AppIcon } from '@folio/stripes-core';
 import { FormattedMessage } from 'react-intl';
 import { isEmpty, union, sortBy, includes, first } from 'lodash';
 import { Redux, ReduxForm } from '../../redux/helpers/Redux';
+import {
+  RECORD_FIELD_STATUS,
+  TAG_WITH_NO_HEADING_ASSOCIATED,
+  SUBFIELD_DELIMITER,
+  replaceAll,
+  replaceAllinverted,
+  VariableFields, MarcLeader, FixedFields
+} from '.';
 import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../lib';
-import { VariableFields, MarcLeader, FixedFields } from '.';
 import { ActionTypes } from '../../redux/actions/Actions';
 import { post, put } from '../../core/api/HttpService';
-import * as MarcUtils from './Utils/MarcUtils';
-import style from './Style/style.css';
-import {
-  headingAction,
-  headingDeleteAction,
-  settingsAction } from './Actions/MarcActionCreator';
-import { buildUrl } from '../../shared/Function';
 import * as C from '../../shared/Constants';
+import { headingAction, headingDeleteAction, settingsAction } from './Actions/MarcActionCreator';
+import { buildUrl } from '../../shared/Function';
+import style from './Style/style.css';
 
 export class CreateMarcRecord extends React.Component<{}, {
   callout: React.RefObject<Callout>,
@@ -62,11 +65,10 @@ export class CreateMarcRecord extends React.Component<{}, {
 
   editHeading = item => {
     const { store: { getState } } = this.props;
-    // const { replaceAll, replaceAllinverted, RECORD_FIELD_STATUS, TAG_WITH_NO_HEADING_ASSOCIATED } = MarcUtils;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
     const tagSelected = first(tagVariableData.filter(t => t.code === item.code));
-    const displayValue = MarcUtils.replaceAll(item.displayValue);
-    const cretaeHeadingForTag = includes(MarcUtils.TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
+    const displayValue = replaceAll(item.displayValue);
+    const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const heading = {
       ind1: item.ind1 || tagSelected.variableField.ind1,
       ind2: item.ind2 || tagSelected.variableField.ind2,
@@ -81,12 +83,12 @@ export class CreateMarcRecord extends React.Component<{}, {
           return r.json();
         }).then((data) => {
           tagVariableData.filter(t => t.code === item.code).map(k => {
-            k.fieldStatus = MarcUtils.RECORD_FIELD_STATUS.CHANGED;
+            k.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
             k.variableField = {
               ind1: data.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
               ind2: data.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
               oldKeyNumber: k.variableField.keyNumber,
-              displayValue: MarcUtils.replaceAllinverted(data.displayValue),
+              displayValue: replaceAllinverted(data.displayValue),
               keyNumber: data.keyNumber,
             };
             return k;
@@ -100,7 +102,7 @@ export class CreateMarcRecord extends React.Component<{}, {
           displayValue: displayValue || C.SPACED_STRING_DOUBLE_QUOTE,
           keyNumber: 0,
         };
-        k.fieldStatus = MarcUtils.RECORD_FIELD_STATUS.CHANGED;
+        k.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
         return k;
       });
     }
@@ -108,7 +110,7 @@ export class CreateMarcRecord extends React.Component<{}, {
 
   createNewHeading = (item) => {
     const { dispatch, emptyRecord } = this.props;
-    const displayValue = MarcUtils.replaceAll(item.displayValue);
+    const displayValue = replaceAll(item.displayValue);
     item.displayValue = displayValue;
     const id = emptyRecord.id;
     dispatch(headingAction(id, item));
@@ -117,9 +119,9 @@ export class CreateMarcRecord extends React.Component<{}, {
   onUpdate = (item) => {
     const tag = Object.assign({}, item);
     const { store: { getState } } = this.props;
-    const tagVariableData = getState().form.marcEditableListForm.values.items;
-    const cretaeHeadingForTag = includes(MarcUtils.TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
-    const displayValue: string = MarcUtils.replaceAll(item.displayValue);
+    const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
+    const displayValue: string = replaceAll(item.displayValue);
+    const tagSelected = getState().form.marcEditableListForm.values.items;
     const heading = {
       ind1: item.ind1 || C.EMPTY_STRING,
       ind2: item.ind2 || C.EMPTY_STRING,
@@ -133,22 +135,22 @@ export class CreateMarcRecord extends React.Component<{}, {
         .then((r) => {
           return r.json();
         }).then((data) => {
-          tagVariableData
+          tagSelected
             .filter(t => t.code === item.code && !t.variableField)
             .map(k => {
-              k.fieldStatus = MarcUtils.RECORD_FIELD_STATUS.NEW;
+              k.fieldStatus = RECORD_FIELD_STATUS.NEW;
               k.variableField = {
                 ind1: data.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
                 ind2: data.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
                 categoryCode: data.categoryCode,
-                displayValue: MarcUtils.replaceAllinverted(data.displayValue),
+                displayValue: replaceAllinverted(data.displayValue),
                 keyNumber: data.keyNumber,
               };
               return data;
             });
         });
     } else {
-      tagVariableData.filter(t => t.code === item.code).map(k => {
+      tagSelected.filter(t => t.code === item.code).map(k => {
         k.variableField = {
           ind1: item.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
           ind2: item.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
@@ -156,7 +158,7 @@ export class CreateMarcRecord extends React.Component<{}, {
           code: item.code,
           keyNumber: 0,
         };
-        k.fieldStatus = MarcUtils.RECORD_FIELD_STATUS.NEW;
+        k.fieldStatus = RECORD_FIELD_STATUS.NEW;
         return k;
       });
     }
@@ -219,9 +221,9 @@ export class CreateMarcRecord extends React.Component<{}, {
       .filter(f => f.fixedField === undefined || !f.fixedField)
       .forEach(element => {
         if (element.variableField.code !== '040') {
-          element.fieldStatus = MarcUtils.RECORD_FIELD_STATUS.NEW;
-          element.displayValue = element.variableField.displayValue.replace('$', MarcUtils.SUBFIELD_DELIMITER);
-          element.variableField.displayValue = element.variableField.displayValue.replace('$', MarcUtils.SUBFIELD_DELIMITER);
+          element.fieldStatus = RECORD_FIELD_STATUS.NEW;
+          element.displayValue = element.variableField.displayValue.replace('$', SUBFIELD_DELIMITER);
+          element.variableField.displayValue = element.variableField.displayValue.replace('$', SUBFIELD_DELIMITER);
         }
       });
     bibliographicRecord.verificationLevel = 1;

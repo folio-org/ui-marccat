@@ -15,6 +15,7 @@ import {
 } from '@folio/stripes/components';
 import MarcEditableItem from './MarcEditableItem';
 import css from './EditableList.css';
+import { getEmptyVariableField } from '../../Utils/MarcApiUtils';
 
 const propTypes = {
   actionProps: PropTypes.object,
@@ -96,6 +97,11 @@ class EditableListForm extends React.Component {
 
   buildStatusArrayWithParam(items, editing) {
     return items.map(() => ({ editing, error: false }));
+  }
+
+  normalizeField(fields: Array<*>, index: number): Object {
+    const item = fields.get(index);
+    return getEmptyVariableField(item);
   }
 
   onAdd(fields) {

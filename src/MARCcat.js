@@ -36,7 +36,7 @@ class MARCcat extends React.Component<Props, {}> {
           >
             <SearchPanel {...this.props} />
           </Pane>}
-        {...children}
+        {children}
       </Paneset>
     );
   }

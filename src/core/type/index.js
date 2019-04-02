@@ -1,8 +1,14 @@
+/**
+ * @format
+ * @flow
+ */
+import React from 'react';
+
 export type Props = {
-  translate: (o: Object) => string;
-  children: any;
-  store: Object;
-  stripes: Object;
+  translate: (o: Object) => string,
+  children: React.ReactNodeArray,
+  store: Object,
+  stripes: Object,
 };
 
 export type VariableField = {

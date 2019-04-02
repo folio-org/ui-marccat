@@ -8,7 +8,7 @@ import { ENDPOINT } from '../../../shared/Constants';
  * @param {*} payload
  */
 export const searchDetailAction = (id) => {
-  return  {
+  return {
     type: ACTION.QUERY,
     data: {
       path: ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id,

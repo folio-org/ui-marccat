@@ -123,7 +123,7 @@ export class BrowseResults extends React.Component<Props, S> {
                 (isReadyBrowse) ?
                   <MultiColumnList
                     contentData={browseRecords}
-                    autosize
+                    autosize="true"
                     isEmptyMessage={C.EMPTY_STRING}
                     formatter={browseFormatter}
                     onRowClick={this.handleBrowseDetails}

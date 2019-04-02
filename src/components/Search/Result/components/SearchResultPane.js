@@ -88,7 +88,7 @@ class SearchResultPane extends React.Component<Props, {}> {
       isLoadMore === 'N' || isLoadMore === undefined ?
         <Pane
           padContent={(containerMarcJSONRecords.length > 0) || isFetching}
-          autosize
+          autosize="true"
           defaultWidth="fill"
           actionMenu={ActionMenu}
           paneTitle={translate({ id: 'ui-marccat.search.record' })}
@@ -125,7 +125,7 @@ class SearchResultPane extends React.Component<Props, {}> {
         </Pane> : (isLoadMore === 'Y') &&
         <Pane
           padContent={(containerMarcJSONRecords.length > 0)}
-          autosize
+          autosize="true"
           defaultWidth="fill"
           actionMenu={ActionMenu}
           paneTitle={translate({ id: 'ui-marccat.search.record' })}

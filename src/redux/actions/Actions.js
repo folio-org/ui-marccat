@@ -1,5 +1,4 @@
 /* MARCCAT ACTIONS TYPES */
-
 export const HEADER_TYPES_ACTION = {
   TYPES_006: '@@ui-marccat/HEADER_TYPES_006',
   TYPES_007: '@@ui-marccat/HEADER_TYPES_007',

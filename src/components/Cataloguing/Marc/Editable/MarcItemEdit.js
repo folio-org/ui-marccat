@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { TextField } from '@folio/stripes-components';
+import { TextField } from '@folio/stripes/components';
 import css from './EditableList.css';
 
 const ItemEdit = ({

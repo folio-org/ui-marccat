@@ -1,11 +1,14 @@
 import React from 'react';
-import { isEmpty } from 'lodash';
-import { head } from 'ramda';
+import { isEmpty, first } from 'lodash';
 import { Tag00X, Tag006, Tag007, Tag008, MarcField } from '..';
 import type { Props } from '../../../core';
 import style from '../Style/style.css';
 import { ActionTypes } from '../../../redux/actions/Actions';
-import { TAGS } from '../Utils/MarcUtils';
+import {
+  TAGS,
+  TAG007_DISPLAY_VALUE_DEFAULT,
+  TAG006_DISPLAY_VALUE_DEFAULT
+} from '../Utils/MarcUtils';
 import { filterFixedFields } from '../Utils/MarcApiUtils';
 import { tagValuesAction, typeCodeAction } from '../Actions/MarcActionCreator';
 
@@ -67,7 +70,7 @@ class FixedFields extends React.Component<P, {}> {
 
   handleChage00X = (e) => {
     const { datastore: { emptyRecord } } = this.props;
-    const fixedField = head(emptyRecord.results.fields.filter(f => f.code === e.target.name));
+    const fixedField = first(emptyRecord.results.fields.filter(f => f.code === e.target.name));
     if (fixedField) {
       fixedField.fixedField.displayValue = (e.target.value);
       fixedField.mandatory = true;
@@ -146,7 +149,7 @@ class FixedFields extends React.Component<P, {}> {
           onChange={this.handleChage00X}
           label={(tag) ? tag.fixedField.code : TAGS._006}
           name={(tag) ? tag.fixedField.code : TAGS._006}
-          value={(tag) ? tag.fixedField.displayValue : 'a           000 ua'}
+          value={(tag) ? tag.fixedField.displayValue : TAG006_DISPLAY_VALUE_DEFAULT}
           onClick={() => this.handleTag006(tag)}
         />
         {
@@ -174,8 +177,7 @@ class FixedFields extends React.Component<P, {}> {
           onChange={this.handleChage00X}
           label={(tag) ? tag.fixedField.code : TAGS._007}
           name={(tag) ? tag.fixedField.code : TAGS._007}
-          // eslint-disable-next-line no-new-wrappers
-          value={(tag) ? tag.fixedField.displayValue : new String('cu uuu   uuuuu')}
+          value={(tag) ? tag.fixedField.displayValue : TAG007_DISPLAY_VALUE_DEFAULT}
           onClick={() => this.handleTag007(tag)}
         />
         {
@@ -222,15 +224,14 @@ class FixedFields extends React.Component<P, {}> {
   render() {
     const { fixedFields } = this.state;
     const fixedFieldsxxx = filterFixedFields(fixedFields);
-    const fixedFields006 = head(fixedFields.filter(f => f.fixedField.code === TAGS._006));
-    // eslint-disable-next-line no-unused-vars
-    const fixedFields007 = head(fixedFields.filter(f => f.fixedField.code === TAGS._007));
-    const fixedFields008 = head(fixedFields.filter(f => f.fixedField.code === TAGS._008));
+    const fixedFields006 = first(fixedFields.filter(f => f.fixedField.code === TAGS._006));
+    const fixedFields007 = first(fixedFields.filter(f => f.fixedField.code === TAGS._007));
+    const fixedFields008 = first(fixedFields.filter(f => f.fixedField.code === TAGS._008));
     return (
       <React.Fragment>
         {this.renderTagxxx(fixedFieldsxxx)}
         {this.renderTag006(fixedFields006)}
-        {/* {this.renderTag007(fixedFields007)} */}
+        {this.renderTag007(fixedFields007)}
         {this.renderTag008(fixedFields008)}
       </React.Fragment>
     );

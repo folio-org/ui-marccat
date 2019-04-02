@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { includes, difference, union, sortBy } from 'lodash';
+import { includes, difference, union, sortBy, fist } from 'lodash';
 import { reduxForm } from 'redux-form';
-import { head } from 'ramda';
 import {
   Pane,
   Paneset,
@@ -23,7 +22,7 @@ import { ActionTypes } from '../../redux/actions';
 import { post, put } from '../../core/api/HttpService';
 import { TAG_WITH_NO_HEADING_ASSOCIATED, RECORD_FIELD_STATUS, replaceAll, replaceAllinverted } from './Utils/MarcUtils';
 import VariableFields from './Marc/VariableFields';
-import { StoreReducer } from '../../redux';
+import { Redux } from '../../redux';
 import { deleteRecordAction, headingDeleteAction } from './Actions/MarcActionCreator';
 import style from './Style/style.css';
 import { If } from '../Search';
@@ -111,7 +110,7 @@ class EditMarcRecord extends React.Component {
   editHeading = item => {
     const { store: { getState } } = this.props;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
-    const tagSelected = head(tagVariableData.filter(t => t.code === item.code));
+    const tagSelected = fist(tagVariableData.filter(t => t.code === item.code));
     const displayValue = replaceAll(item.displayValue);
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const heading = {
@@ -197,8 +196,8 @@ class EditMarcRecord extends React.Component {
     bibliographicRecord.leader.value = formData.Leader;
 
     const recordTemplate = {
-      id: head(data.template.records).id,
-      name: head(data.template.records).name,
+      id: fist(data.template.records).id,
+      name: fist(data.template.records).name,
       type: 'B',
       fields: recordDetail.fields.filter(f => f.code === '001' || f.code === '005' || f.code === '008')
     };
@@ -208,9 +207,9 @@ class EditMarcRecord extends React.Component {
     tagToDeleted.forEach(f => {
       f.fieldStatus = 'deleted';
     });
+    bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     bibliographicRecord.fields = union(recordTemplate.fields, tagToDeleted, tagVariableData);
     bibliographicRecord.fields = sortBy(bibliographicRecord.fields, 'code');
-    bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     bibliographicRecord.verificationLevel = 1;
     return {
       bibliographicRecord,
@@ -363,7 +362,7 @@ export default reduxForm({
   destroyOnUnmount: false,
 })(connect(
   ({ marccat: { data, leaderData, settings } }) => ({
-    recordDetail: StoreReducer.resolve(data, 'marcRecordDetail').bibliographicRecord,
+    recordDetail: Redux.resolve(data, 'marcRecordDetail').bibliographicRecord,
     queryBib: settings.queryBib,
     queryAuth: settings.queryAuth,
     leaderData: leaderData.records,

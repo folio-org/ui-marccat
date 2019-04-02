@@ -19,7 +19,7 @@ export class Tag006 extends React.Component<Props, {}> {
     const tag = {
       action: ActionTypes.VALUES_FROM_TAG_006,
       code: TAGS._006,
-      name: TAGS_NAME.TAG_006,
+      name: TAGS_NAME._006,
       default: TAG006_DISPLAY_VALUE_DEFAULT
     };
     handleTagXXXHeaderTypeChange(this.props, tag, headerTypeCode);
@@ -41,8 +41,8 @@ export class Tag006 extends React.Component<Props, {}> {
         <Row>
           <Col xs={4}>
             <Field
-              id={`${TAGS_NAME.TAG_006}`}
-              name={`${TAGS_NAME.TAG_006}`}
+              id={`${TAGS_NAME._006}`}
+              name={`${TAGS_NAME._006}`}
               component={Select}
               onChange={this.handleOnChange}
               label="Header types"
@@ -63,8 +63,8 @@ export class Tag006 extends React.Component<Props, {}> {
                     <Col xs={4}>
                       <Field
                         component={Select}
-                        name={`${TAGS_NAME.TAG_006}-${item.name}`}
-                        id={`${TAGS_NAME.TAG_006}-${item.name}`}
+                        name={`${TAGS_NAME._006}-${item.name}`}
+                        id={`${TAGS_NAME._006}-${item.name}`}
                         label={decamelizify(`${item.name}`, EMPTY_SPACED_STRING)}
                         dataOptions={item.dropdownSelect}
                         placeholder={exactDisplayValue}

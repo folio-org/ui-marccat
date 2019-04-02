@@ -1,8 +1,5 @@
-import {
-  interactor,
-  // isPresent
-} from '@bigtest/interactor';
+import { interactor } from '@bigtest/interactor';
 
-export default interactor(class MarccatInteractor {
-  // hasCreateRecordButton = isPresent('[data-test-clickable-new-order]');
-});
+export default @interactor class MarccatInteractor {
+  static defaultScope = '#ModuleContainer';
+}

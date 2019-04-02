@@ -17,13 +17,13 @@ export const TAGS = {
   _040: '040'
 };
 export const TAGS_NAME = {
-  TAG_001: 'Tag001',
-  TAG_003: 'Tag003',
-  TAG_005: 'Tag005',
-  TAG_006: 'Tag006',
-  TAG_007: 'Tag007',
-  TAG_008: 'Tag008',
-  TAG_040: 'Tag040'
+  _001: 'Tag001',
+  _003: 'Tag003',
+  _005: 'Tag005',
+  _006: 'Tag006',
+  _007: 'Tag007',
+  _008: 'Tag008',
+  _040: 'Tag040'
 };
 
 /*
@@ -69,7 +69,7 @@ export const TAG_WIDH_CAT_8 = [
 export const TAG_WITH_NO_HEADING_ASSOCIATED = union(TAG_WIDH_CAT_7, TAG_WIDH_CAT_8);
 
 export const TAG006_DISPLAY_VALUE_DEFAULT = 'a           000 ua';
-export const TAG007_DISPLAY_VALUE_DEFAULT = 'cu uuu   uuuuu';
+export const TAG007_DISPLAY_VALUE_DEFAULT = 'cu uuu---uuuuu';
 
 export const FIXED_FIELD_TEMPLATE = (code, typeCode, displayValue) => {
   return {

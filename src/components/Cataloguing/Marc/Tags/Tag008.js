@@ -10,7 +10,7 @@ import { Row, Col, Select, TextField } from '@folio/stripes/components';
 import { injectCommonProp, Props } from '../../../../core';
 import { ActionTypes } from '../../../../redux/actions';
 import { decamelizify } from '../../../../shared/Function';
-import { RECORD_FIELD_STATUS, TAGS } from '../../Utils/MarcUtils';
+import { RECORD_FIELD_STATUS, TAGS, TAGS_NAME } from '../../Utils/MarcUtils';
 import { changeDisplayValueAction } from '../../Actions/MarcActionCreator';
 import * as C from '../../../../shared/Constants';
 
@@ -44,7 +44,7 @@ export class Tag008 extends React.Component<Props, {}> {
     tag008.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
     this.state.currentHeaderTypeCode = tag008.fixedField.headerTypeCode;
     dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: tag008.fixedField.headerTypeCode });
-    dispatch(change('Tag008', tag008.fixedField.headerTypeCode));
+    dispatch(change(TAGS_NAME._008, tag008.fixedField.headerTypeCode));
   };
 
   changeDisplayValue = (e) => {
@@ -61,11 +61,11 @@ export class Tag008 extends React.Component<Props, {}> {
     }
     const changedFieldLabel = (e.target) ? e.target.name.split('-')[1] : '';
     let changedFieldValue = '';
-    jsonReq.dateEnteredOnFile = getState().form.bibliographicRecordForm.values['008'].substring(0, 6);
+    jsonReq.dateEnteredOnFile = getState().form.bibliographicRecordForm.values[TAGS._008].substring(0, 6);
     jsonReq.categoryCode = 1;
     jsonReq.sequenceNumber = 0;
     jsonReq.headerTypeCode = currentHeaderTypeCode;
-    jsonReq.code = '008';
+    jsonReq.code = TAGS._008;
     jsonReq.displayValue = '';
     if (changedFieldLabel === 'dateFirstPublication' || changedFieldLabel === 'dateLastPublication') {
       changedFieldValue = e.target.value.lenght < 4 ? '' : e.target.value;
@@ -96,12 +96,12 @@ export class Tag008 extends React.Component<Props, {}> {
     const { currentHeaderTypeCode } = this.state;
     if (newValuesFromChangedLeader && newValuesFromChangedLeader.headerTypeCode !== currentHeaderTypeCode) {
       dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: newValuesFromChangedLeader.headerTypeCode });
-      dispatch(change('Tag008', newValuesFromChangedLeader.headerTypeCode));
+      dispatch(change(TAGS_NAME._008, newValuesFromChangedLeader.headerTypeCode));
       this.setState({ currentHeaderTypeCode: newValuesFromChangedLeader.headerTypeCode });
     }
 
     return (headerTypesResult) ? (
-      <div>
+      <React.Fragment>
         <Row>
           <Col xs={4}>
             <Field
@@ -159,8 +159,8 @@ export class Tag008 extends React.Component<Props, {}> {
             })
           }
         </Row>
-      </div>
-    ) : <div />;
+      </React.Fragment>
+    ) : <React.Fragment />;
   }
 }
 export default (connect(

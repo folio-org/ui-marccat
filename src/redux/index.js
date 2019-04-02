@@ -99,5 +99,5 @@ export const epics = combineEpics(
   leaderEpic,
   dataEpic
 );
-export { StoreReducer } from './helpers/StoreReducer';
+export { Redux } from './helpers/Redux';
 export { findParam, buildUrl, qs } from '../shared/Function';

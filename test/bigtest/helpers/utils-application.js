@@ -1,6 +1,5 @@
-// eslint-disable-next-line no-unused-vars
-import React from 'react';
 import ReactDOM from 'react-dom';
+import { computed } from '@bigtest/interactor';
 
 function getCleanTestingRoot() {
   let $root = document.getElementById('root');
@@ -27,3 +26,16 @@ export function mount(component) {
 export function selectorFromClassnameString(str) {
   return str.replace(/\s/, '.');
 }
+
+export const hasClassBeginningWith = (selector, className) => {
+  return computed(function () {
+    return this.$(selector).className.includes(className);
+  });
+};
+
+export const getComputedStyle = (selector, className) => {
+  return computed(function () {
+    const element = this.$(selector);
+    return window.getComputedStyle(element)[className];
+  });
+};

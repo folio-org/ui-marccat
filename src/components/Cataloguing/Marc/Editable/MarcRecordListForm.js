@@ -12,7 +12,7 @@ import {
   IconButton,
   MultiColumnList,
   Row
-} from '@folio/stripes-components';
+} from '@folio/stripes/components';
 import MarcEditableItem from './MarcEditableItem';
 import css from './EditableList.css';
 

@@ -1,6 +1,4 @@
-// eslint-disable-next-line import/no-unresolved
 import { describe, beforeEach, it } from '@bigtest/mocha';
-// eslint-disable-next-line import/no-unresolved
 import { expect } from 'chai';
 
 import setupApplication from '../helpers/setup-application';

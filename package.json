@@ -12,7 +12,7 @@
     "node": ">=6.0.0"
   },
   "scripts": {
-    "start": "stripes serve --lint config/stripes.config.js",
+    "start": "stripes serve --lint stripes.config.js",
     "build": "stripes build --no-minify --okapi http://folio-q4.aws.indexdata.com:9130 --output dist/",
     "lint": "yarn eslint && yarn stylelint",
     "test": "stripes test karma --coverage",

@@ -56,7 +56,6 @@
   vertical-align: middle;
 }
 
-
 [type="checkbox"] + label::after,
 [type="radio"] + label::after {
   box-sizing: content-box;
@@ -100,7 +99,7 @@
 [type="checkbox"] + label::after {
   background-color: transparent;
   top: 50%;
-  left: calc(6px + 1px + 24px/5);
+  left: calc(6px + 1px + 24px / 5);
   width: 15px;
   height: 4.8px;
   margin-top: calc(24px / -2 / 2 * 0.8);

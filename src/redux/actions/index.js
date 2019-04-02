@@ -1,2 +1,2 @@
-export { ActionTypes, HEADER_TYPES_ACTION } from './Actions';
+export { ActionTypes } from './Actions';
 export * from './ActionCreator';

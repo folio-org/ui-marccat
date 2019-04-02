@@ -8,14 +8,14 @@ import { ActionTypes } from '../actions/Actions';
 import * as marccatActions from '../actions';
 import { ENDPOINT } from '../../shared/Constants';
 import { fetchFailure } from '../actions/ActionCreator';
-import { StoreReducer } from '..';
+import { Redux } from '..';
 import { buildUrl } from '../../shared/Function';
 
 export const searchEpic = (action$, store) => action$.ofType(ActionTypes.SEARCH)
   .switchMap((d) => concat$(
     of$(marccatActions.isfetchingSearchRequest(true, d.moreData)),
     ajax
-      .getJSON(buildUrl(ENDPOINT.MERGED_SEARCH_URL, `lang=ita&ml=170&qbib=${d.queryBib}&qauth=${d.queryAuth}&from=${d.from}&to=${d.to}&dpo=1&sortBy=${StoreReducer.get(store, 'settings', 'sortType') || 4}&sortOrder=0`), ENDPOINT.HEADERS)
+      .getJSON(buildUrl(ENDPOINT.MERGED_SEARCH_URL, `lang=ita&ml=170&qbib=${d.queryBib}&qauth=${d.queryAuth}&from=${d.from}&to=${d.to}&dpo=1&sortBy=${Redux.get(store, 'settings', 'sortType') || 4}&sortOrder=0`), ENDPOINT.HEADERS)
       .map(record => marccatActions.fetchSearchEngineRecords(
         d.queryBib,
         d.queryAuth,
@@ -54,7 +54,7 @@ export const searchAssociatedBibRecords = (action$, store) => action$.ofType(Act
   .switchMap((d) => concat$(
     of$(marccatActions.isfetchingAssociatedRequest(true)),
     ajax
-      .getJSON(buildUrl(ENDPOINT.SEARCH_URL_JSON, `lang=ita&view=1&ml=170&q=${d.query}&from=1&to=10&dpo=1&sortBy=${StoreReducer.get(store, 'settings', 'sortType') || 4}&sortOrder=0`), ENDPOINT.HEADERS)
+      .getJSON(buildUrl(ENDPOINT.SEARCH_URL_JSON, `lang=ita&view=1&ml=170&q=${d.query}&from=1&to=10&dpo=1&sortBy=${Redux.get(store, 'settings', 'sortType') || 4}&sortOrder=0`), ENDPOINT.HEADERS)
       .map(record => marccatActions.fetchAssociatedBibRecords(record.docs, d.recordType, d.count))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));

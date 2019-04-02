@@ -18,20 +18,18 @@ import {
   Icon
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
-import { reduxForm } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
-import { head } from 'ramda';
-import { isEmpty, union, sortBy, includes } from 'lodash';
+import { isEmpty, union, sortBy, includes, first } from 'lodash';
+import { Redux, ReduxForm } from '../../redux/helpers/Redux';
 import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../lib';
 import { VariableFields, MarcLeader, FixedFields } from '.';
 import { ActionTypes } from '../../redux/actions/Actions';
 import { post, put } from '../../core/api/HttpService';
-import * as C from '../../shared/Constants';
-
 import { RECORD_FIELD_STATUS, TAG_WITH_NO_HEADING_ASSOCIATED, SUBFIELD_DELIMITER, replaceAll, replaceAllinverted } from './Utils/MarcUtils';
 import style from './Style/style.css';
 import { headingAction, headingDeleteAction, settingsAction } from './Actions/MarcActionCreator';
 import { buildUrl } from '../../shared/Function';
+import * as C from '../../shared/Constants';
 
 export class CreateMarcRecord extends React.Component<{}, {
   callout: React.RefObject<Callout>,
@@ -62,7 +60,7 @@ export class CreateMarcRecord extends React.Component<{}, {
   editHeading = item => {
     const { store: { getState } } = this.props;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
-    const tagSelected = head(tagVariableData.filter(t => t.code === item.code));
+    const tagSelected = first(tagVariableData.filter(t => t.code === item.code));
     const displayValue = replaceAll(item.displayValue);
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const heading = {
@@ -76,6 +74,11 @@ export class CreateMarcRecord extends React.Component<{}, {
     if (!cretaeHeadingForTag) {
       put(buildUrl(C.ENDPOINT.UPDATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
         .then((r) => {
+          if (!r.ok) {
+            this.showMessage('Error on saved heading. Try again!', 'error');
+            return;
+          }
+          // eslint-disable-next-line consistent-return
           return r.json();
         }).then((data) => {
           tagVariableData.filter(t => t.code === item.code).map(k => {
@@ -203,8 +206,8 @@ export class CreateMarcRecord extends React.Component<{}, {
     bibliographicRecord.leader.value = formData.Leader;
 
     const recordTemplate = {
-      id: head(data.template.records).id,
-      name: head(data.template.records).name,
+      id: first(data.template.records).id,
+      name: first(data.template.records).name,
       type: 'B',
       fields: Object.values(emptyRecord.results.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}))
     };
@@ -228,17 +231,18 @@ export class CreateMarcRecord extends React.Component<{}, {
   }
 
   handleClose = () => {
-    const { datastore, dispatch, router, toggleFilterPane } = this.props;
+    const { store, datastore, dispatch, router, toggleFilterPane } = this.props;
     dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', isChecked: false });
     toggleFilterPane();
     const { emptyRecord } = datastore;
     const id = emptyRecord.results.id;
     router.push(`/marccat/search?id=${id}`);
+    Redux.reset(store, 'data');
   };
 
-  showMessage(message: string) {
+  showMessage(message: string, type?: string) {
     this.callout.current.sendCallout({
-      type: 'success',
+      type: type || 'success',
       message: (
         <span>
           {message}
@@ -372,7 +376,7 @@ export class CreateMarcRecord extends React.Component<{}, {
   }
 }
 
-export default reduxForm({
+export default ReduxForm.bind({
   form: 'bibliographicRecordForm',
   destroyOnUnmount: false,
 })(connect(

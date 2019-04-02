@@ -4,7 +4,7 @@
  */
 import React from 'react';
 import { Field } from 'redux-form';
-import { head } from 'ramda';
+import { first } from 'lodash';
 import { Row, Col, Select } from '@folio/stripes/components';
 import type { Props } from '../../../core';
 import MarcField from './MarcField';
@@ -69,7 +69,7 @@ export default class MarcLeader extends React.Component<P, {
     const formData = getState().form.bibliographicRecordForm.values;
     Object.keys(formData)
       .forEach((k) => {
-        if (head(k.split('-')) === 'Leader') {
+        if (first(k.split('-')) === 'Leader') {
           switch (k.split('-')[1]) {
           case 'itemRecordStatusCode': this.replaceAt(leaderVal, 5, formData[k]); this.state.leaderChangedFor008 = false; break;
           case 'itemRecordTypeCode': this.replaceAt(leaderVal, 6, formData[k]); this.state.leaderChangedFor008 = true; break;

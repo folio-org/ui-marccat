@@ -10,11 +10,11 @@ import { reducer, epics } from './redux';
 import { injectCommonProp } from './core';
 import MARCcat from './MARCcat';
 import { ActionTypes } from './redux/actions';
-
-
-import './styles/common.css';
 import { STATE_MANAGEMENT } from './shared/Constants';
 import { TAGS } from './components/Cataloguing';
+
+import './styles/common.css';
+
 
 type RoutingProps = {
   root: {

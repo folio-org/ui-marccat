@@ -1,12 +1,30 @@
 import { Observable } from 'rxjs/Observable';
 import { qs } from '..';
-import { StoreReducer } from '../helpers/StoreReducer';
+import { Redux } from '../helpers/Redux';
 import {
   ACTION,
   REQUEST_MAKE,
   REQUEST_RESOLVE,
   REQUEST_REJECT } from '../../shared/Action';
 import { ENDPOINT, HTTP_METHOD } from '../../shared/Constants';
+
+export const EPIC_MODEL_KEY = {
+  EMPTY_RECORD: 'emptyRecord',
+  RECORD_DETAIL: 'marcRecordDetail',
+  LEADER_DATA: 'leaderData'
+};
+/**
+ *
+ * @param {*} name
+ * @param {*} data
+ * @param {*} record
+ */
+export const createEpicRequest = (name, data, record) => ({
+  type: REQUEST_MAKE,
+  name,
+  data,
+  payload: record,
+});
 
 /**
  *
@@ -43,13 +61,13 @@ export function reducer(state = {}, action) {
   switch (action.type) {
   case REQUEST_MAKE:
     return Object.assign({
-    }, state, StoreReducer.createRequestData(action.name, action.data));
+    }, state, Redux.pendingRequestData(action.name, action.data));
   case REQUEST_RESOLVE:
     return Object.assign({
-    }, state, StoreReducer.createDataStore(action.name, action.data, action.payload));
+    }, state, Redux.resolveRequestData(action.name, action.data, action.payload));
   case REQUEST_REJECT:
     return Object.assign({
-    }, state, StoreReducer.createRequestError(action.name, action.data, action.error));
+    }, state, Redux.rejectRequestData(action.name, action.data, action.error));
   default:
     return state;
   }

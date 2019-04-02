@@ -13,7 +13,7 @@ import { resultsFormatter, columnMapper, columnWidthMapper, renderColumn } from 
 import { EmptyMessage, NoResultsMessage } from '../../../../lib/components/Message';
 import { ActionTypes } from '../../../../redux/actions/Actions';
 import * as C from '../../../../shared/Constants';
-import { FormReducer } from '../../../../redux/helpers/StoreReducer';
+import { ReduxForm } from '../../../../redux/helpers/Redux';
 
 
 class SearchResultPane extends React.Component<Props, {}> {
@@ -25,7 +25,7 @@ class SearchResultPane extends React.Component<Props, {}> {
 
   renderVisibleColumns = () => {
     const { store } = this.props;
-    const form = FormReducer.resolve(store, 'checkboxForm');
+    const form = ReduxForm.resolve(store, 'checkboxForm');
     const visibleColumns = [];
     const visibleColumns2 = [
       'resultView',

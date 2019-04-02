@@ -1,16 +1,19 @@
+import { reduxForm, ConfigProps } from 'redux-form';
 import { uniqueId } from 'lodash';
 
-export function BaseStoreReducer() {}
-export function StoreReducer() {}
-export function FormReducer() {}
-export function Dispatcher() {
-}
+const Redux = () => {};
+const ReduxForm = () => {};
 
-Object.setPrototypeOf(StoreReducer, BaseStoreReducer);
-Object.setPrototypeOf(FormReducer, BaseStoreReducer);
+ReduxForm.bind = (config: ConfigProps<{}, {}, string>) => {
+  return reduxForm(config);
+};
 
-FormReducer.resolve = (store, formName) => {
+ReduxForm.resolve = (store, formName) => {
   return (store.getState().form) ? store.getState().form[formName || 0].values : undefined;
+};
+
+ReduxForm.reset = (store, ...forms) => {
+  return (dispatch, reset) => forms.map(f => dispatch(reset(f.name)));
 };
 
 /**
@@ -20,7 +23,7 @@ FormReducer.resolve = (store, formName) => {
  * @param {*} prop
  * @returns
  */
-StoreReducer.get = (store, reducer, prop) => {
+Redux.get = (store, reducer, prop) => {
   return store.getState().marccat[reducer][prop];
 };
 
@@ -31,7 +34,7 @@ StoreReducer.get = (store, reducer, prop) => {
  * @param {*} jsonApiKey
  * @returns
  */
-StoreReducer.resolve = (data, model) => {
+Redux.resolve = (data, model) => {
   return (data[model] && data[model].results) ? data[model].results : {};
 };
 
@@ -42,7 +45,7 @@ StoreReducer.resolve = (data, model) => {
  * @param {*} payload
  * @returns
  */
-StoreReducer.createRequestData = (model, data) => { // metodo statico
+Redux.pendingRequestData = (model, data) => { // metodo statico
   return {
     [model]: {
       timestamp: new Date(),
@@ -50,7 +53,7 @@ StoreReducer.createRequestData = (model, data) => { // metodo statico
       resource: data.type,
       host: window.location.hostname,
       params: data.params,
-      id: data.id || uniqueId('@@marccat-'),
+      id: data.id || uniqueId(`@@marccat-${model}`),
       isPending: true,
       isResolved: false,
       isRejected: false,
@@ -68,7 +71,7 @@ StoreReducer.createRequestData = (model, data) => { // metodo statico
  * @param {*} payload
  * @returns
  */
-StoreReducer.createDataStore = (model, data, payload) => { // metodo statico
+Redux.resolveRequestData = (model, data, payload) => { // metodo statico
   return {
     [model]: {
       timestamp: new Date(),
@@ -76,7 +79,7 @@ StoreReducer.createDataStore = (model, data, payload) => { // metodo statico
       resource: data.type,
       host: window.location.hostname,
       params: data.params,
-      id: data.id || uniqueId('@@marccat-'),
+      id: data.id || payload.id,
       isPending: false,
       isResolved: true,
       isRejected: false,
@@ -98,7 +101,7 @@ StoreReducer.createDataStore = (model, data, payload) => { // metodo statico
  * @param {*} payload
  * @returns
  */
-StoreReducer.createRequestError = (model, data, errors) => { // metodo statico
+Redux.rejectRequestData = (model, data, errors) => { // metodo statico
   return {
     [model]: {
       timestamp: new Date(),
@@ -106,7 +109,7 @@ StoreReducer.createRequestError = (model, data, errors) => { // metodo statico
       resource: data.type,
       host: window.location.hostname,
       params: data.params,
-      id: data.id || uniqueId('@@marccat-'),
+      id: data.id || uniqueId(`@@marccat-${model}`),
       isPending: false,
       isResolved: false,
       isRejected: true,
@@ -123,7 +126,7 @@ StoreReducer.createRequestError = (model, data, errors) => { // metodo statico
  * @param {Object} store - the resource type's
  * @param {String} id - the record's id
  */
-StoreReducer.getRecord = (store, id) => (
+Redux.getRecord = (store, id) => (
   store.records[id] || {
     id,
     isLoading: true,
@@ -131,14 +134,13 @@ StoreReducer.getRecord = (store, id) => (
     isSaving: false,
   }
 );
-
 /**
  * Helper remove record from the resource
  * type's state
  * @param {Object} store - the resource type's
  * @param {String} id - the record's id
  */
-StoreReducer.reduce = (store, id) => (
+Redux.reduce = (store, id) => (
   store.records[id] || {
     id,
     isLoading: true,
@@ -147,7 +149,28 @@ StoreReducer.reduce = (store, id) => (
   }
 );
 
+Redux.observe = (reducerKey: Object, cb: () => void) => {
+  // eslint-disable-next-line no-alert
+  // E' abilitato solo in ES7 come Array.observe
+  Object.observe(reducerKey, cb);
+};
 
-StoreReducer.deduplicate = (obj, key) => (
+Redux.deduplicate = (obj, key) => (
   Object.values(obj.reduce((acc, cur) => Object.assign(acc, { [cur[`${key}`]]: cur }), {}))
 );
+
+Redux.multiDispatch = (...actions: Array<any>) => {
+  return (dispatch) => actions.map(a => dispatch(a));
+};
+
+Redux.reset = (store: Object, reducer: Object): void => {
+  const obj = store.getState().marccat[reducer];
+  for (const prop of Object.getOwnPropertyNames(obj)) {
+    delete obj[prop];
+  }
+};
+
+export {
+  Redux,
+  ReduxForm
+};

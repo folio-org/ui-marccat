@@ -1,5 +1,4 @@
-import { union, sortBy } from 'lodash';
-import { head } from 'ramda';
+import { union, sortBy, first } from 'lodash';
 import { FIXED_FIELD_TEMPLATE, RECORD_FIELD_STATUS } from './MarcUtils';
 
 export const unionSortAndDedupe = (sortByProp, ...obj) => {
@@ -21,6 +20,6 @@ export const handleTagXXXHeaderTypeChange = (props, tag, headerTypeCode) => {
   const { dispatch, change, record, leaderValue } = props;
   dispatch({ type: tag.action, leader: leaderValue, code: tag.code, typeCode: headerTypeCode });
   record.fields.push(FIXED_FIELD_TEMPLATE(tag.code, headerTypeCode, tag.default));
-  head(record.fields.filter(f => f.code === tag.code)).fieldStatus = RECORD_FIELD_STATUS.NEW;
+  first(record.fields.filter(f => f.code === tag.code)).fieldStatus = RECORD_FIELD_STATUS.NEW;
   dispatch(change(tag.name, headerTypeCode));
 };

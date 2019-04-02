@@ -42,7 +42,6 @@ export class SearchResults extends React.Component<P, {}> {
       bibsOnly: false,
       autOnly: false,
       loading: false,
-      layerOpen: false,
       openDropDownMenu: false,
       detail: {},
       detailPaneMeta: {
@@ -87,7 +86,6 @@ export class SearchResults extends React.Component<P, {}> {
   handleCreateRecord = () => {
     const { router, toggleFilterPane } = this.props;
     toggleFilterPane();
-    this.setState(prevState => ({ layerOpen: !prevState.layerOpen }));
     router.push(`/marccat/record/template?templateId=${408}&mode=new`);
   };
 

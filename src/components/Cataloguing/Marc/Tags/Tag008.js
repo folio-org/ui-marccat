@@ -4,8 +4,7 @@
  */
 import React from 'react';
 import { connect } from 'react-redux';
-import { isEmpty } from 'lodash';
-import { head } from 'ramda';
+import { isEmpty, first } from 'lodash';
 import { Field } from 'redux-form';
 import { Row, Col, Select, TextField } from '@folio/stripes/components';
 import { injectCommonProp, Props } from '../../../../core';
@@ -33,13 +32,13 @@ export class Tag008 extends React.Component<Props, {}> {
     const headerTypeCode = e.target.value;
     dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: headerTypeCode || 31 });
     this.state.isChangedHeaderType = true;
-    head(record.fields.filter(f => f.code === TAGS._008)).fieldStatus = RECORD_FIELD_STATUS.CHANGED;
+    first(record.fields.filter(f => f.code === TAGS._008)).fieldStatus = RECORD_FIELD_STATUS.CHANGED;
   }
 
   populateFirstAccess = () => {
     const { record, leaderValue, dispatch, change } = this.props;
     this.state.isChangedHeaderType = true;
-    const tag008 = head(record.fields.filter(f => f.code === TAGS._008));
+    const tag008 = first(record.fields.filter(f => f.code === TAGS._008));
     tag008.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
     this.state.currentHeaderTypeCode = tag008.fixedField.headerTypeCode;
     dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: tag008.fixedField.headerTypeCode });
@@ -63,7 +62,7 @@ export class Tag008 extends React.Component<Props, {}> {
     if (changedFieldLabel === 'dateFirstPublication' || changedFieldLabel === 'dateLastPublication') {
       changedFieldValue = e.target.value.lenght < 4 ? '' : e.target.value;
     } else {
-      changedFieldValue = head(e.target.selectedOptions).value;
+      changedFieldValue = first(e.target.selectedOptions).value;
     }
     jsonReq[changedFieldLabel] = changedFieldValue;
     dispatch(changeDisplayValueAction(TAGS._008, jsonReq));

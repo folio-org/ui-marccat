@@ -73,9 +73,9 @@ export class Tag008 extends React.Component<Props, {}> {
       changedFieldValue = e.target.value;
     }
     jsonReq[changedFieldLabel] = changedFieldValue;
-    this.setState({ jsonReq });
     dispatch(changeDisplayValueAction(TAGS._008, jsonReq));
     const data = getState().marccat.data;
+    // this.setState({ jsonReq });
     if (!isEmpty(data) && !isEmpty(data[`displayvalue-${TAGS._008}`])) {
       const displayValue = data[`displayvalue-${TAGS._008}`].results.displayValue;
       dispatch(change(TAGS._008, displayValue));

@@ -20,7 +20,7 @@ import { MarcLeader, FixedFields } from '.';
 import { injectCommonProp } from '../../core';
 import { ActionTypes } from '../../redux/actions';
 import { post, put } from '../../core/api/HttpService';
-import { TAG_WITH_NO_HEADING_ASSOCIATED, RECORD_FIELD_STATUS, replaceAll, replaceAllinverted } from './Utils/MarcUtils';
+import { TAG_WITH_NO_HEADING_ASSOCIATED, RECORD_FIELD_STATUS } from './Utils/MarcConstant';
 import VariableFields from './Marc/VariableFields';
 import { Redux } from '../../redux';
 import { deleteRecordAction, headingDeleteAction } from './Actions/MarcActionCreator';
@@ -28,6 +28,7 @@ import style from './Style/style.css';
 import { If } from '../Search';
 import * as C from '../../shared/Constants';
 import { buildUrl, findParam } from '../../shared/Function';
+import { replaceAll, replaceAllinverted } from './Utils/MarcApiUtils';
 
 class EditMarcRecord extends React.Component {
   constructor(props) {

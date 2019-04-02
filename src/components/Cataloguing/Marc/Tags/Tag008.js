@@ -10,7 +10,7 @@ import { Row, Col, Select, TextField } from '@folio/stripes/components';
 import { injectCommonProp, Props } from '../../../../core';
 import { ActionTypes } from '../../../../redux/actions';
 import { decamelizify } from '../../../../shared/Function';
-import { RECORD_FIELD_STATUS, TAGS, TAGS_NAME } from '../../Utils/MarcUtils';
+import { RECORD_FIELD_STATUS, TAGS, TAGS_NAME } from '../../Utils/MarcConstant';
 import { changeDisplayValueAction } from '../../Actions/MarcActionCreator';
 import * as C from '../../../../shared/Constants';
 

@@ -8,7 +8,7 @@ import {
   TAGS,
   TAG007_DISPLAY_VALUE_DEFAULT,
   TAG006_DISPLAY_VALUE_DEFAULT
-} from '../Utils/MarcUtils';
+} from '../Utils/MarcConstant';
 import { filterFixedFields } from '../Utils/MarcApiUtils';
 import { tagValuesAction, typeCodeAction } from '../Actions/MarcActionCreator';
 

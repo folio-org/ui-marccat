@@ -9,7 +9,7 @@ import { Row, Col, Select } from '@folio/stripes/components';
 import { injectCommonProp, Props } from '../../../../core';
 import { EMPTY_SPACED_STRING, EMPTY_STRING } from '../../../../shared/Constants';
 import { decamelizify } from '../../../../shared/Function';
-import { TAGS_NAME, TAG007_DISPLAY_VALUE_DEFAULT, TAGS } from '../../Utils/MarcUtils';
+import { TAGS_NAME, TAG007_DISPLAY_VALUE_DEFAULT, TAGS } from '../../Utils/MarcConstant';
 import { handleTagXXXHeaderTypeChange } from '../../Utils/MarcApiUtils';
 import { ActionTypes } from '../../../../redux/actions';
 

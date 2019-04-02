@@ -6,7 +6,7 @@
 import React from 'react';
 import MarcEditableList from './Editable';
 import { Props, injectCommonProp } from '../../../core';
-import { withSeparator } from '../Utils/MarcUtils';
+import { getEmptyVariableField } from '..';
 
 class VariableFields extends React.Component<Props, {}> {
   constructor(props: Props) {
@@ -17,7 +17,7 @@ class VariableFields extends React.Component<Props, {}> {
 
   handleAdd = () => {
     this.setState(({ fields }) => ({
-      fields: fields.concat({}),
+      fields: fields.concat(getEmptyVariableField({})),
     }));
   }
 
@@ -29,21 +29,11 @@ class VariableFields extends React.Component<Props, {}> {
 
   renderList() {
     const { fields, translate, onUpdate, onSave, onDelete, onCreate } = this.props;
-    const resultFormatter = {
-      displayValue: x => (
-        (x.variableField) ? withSeparator(x.variableField.displayValue) : withSeparator(x.displayValue)
-      ),
-      ind1: x => (
-        (x.variableField) ? x.variableField.ind1 : x.ind1
-      ),
-      ind2: x => (
-        (x.variableField) ? x.variableField.ind2 : x.ind2
-      ),
-    };
     return (
       <MarcEditableList
         createButtonLabel={translate({ id: 'ui-marccat.cataloging.variablefield.section.add.newtag' })}
         contentData={fields}
+        itemTemplate={getEmptyVariableField({})}
         visibleFields={[
           'code',
           'ind1',
@@ -66,7 +56,6 @@ class VariableFields extends React.Component<Props, {}> {
         onSave={onSave}
         onDelete={onDelete}
         onCreate={onCreate}
-        formatter={resultFormatter}
       />
     );
   }

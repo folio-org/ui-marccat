@@ -71,36 +71,6 @@ export const TAG_WITH_NO_HEADING_ASSOCIATED = union(TAG_WIDH_CAT_7, TAG_WIDH_CAT
 export const TAG006_DISPLAY_VALUE_DEFAULT = 'a           000 ua';
 export const TAG007_DISPLAY_VALUE_DEFAULT = 'cu uuu---uuuuu';
 
-export const FIXED_FIELD_TEMPLATE = (code, typeCode, displayValue) => {
-  return {
-    'code': code,
-    'mandatory': true,
-    'fieldStatus': 'new',
-    'fixedField': {
-      'categoryCode': 1,
-      'headerTypeCode': typeCode,
-      'code': code,
-      'displayValue': displayValue,
-      'sequenceNumber': 0
-    },
-    'added': true
-  };
-};
-
-export const VARIABLE_EMPTY_TEMPLATE = (tag) => {
-  return {
-    'code': tag.code,
-    'mandatory': false,
-    'variableField': {
-      'keyNumebr': 0,
-      'code': tag.code,
-      'displayValue': tag.displayValue,
-      'sequenceNumber': 0
-    },
-    'added': true
-  };
-};
-
 export const RECORD_ACTION = {
   CREATION_MODE: 'new',
   EDIT_MODE: 'edit'
@@ -112,7 +82,4 @@ export const LOCK_ENTITY_TYPE = {
   C: 'C'
 };
 export const SUBFIELD_DELIMITER = '\u001f';
-export const addSeparator = (s) => SUBFIELD_DELIMITER.concat(s);
-export const withSeparator = (s) => ((s) ? s.replace(SUBFIELD_DELIMITER, '$') : '');
-export const replaceAll = (s) => ((s) ? s.replace(/\$/g, SUBFIELD_DELIMITER) : '');
-export const replaceAllinverted = (s) => ((s) ? s.replace(/\uf001/g, '$') : '');
+export const SUBFIELD_CHARACTER = '$';

@@ -1,5 +1,11 @@
+/* eslint-disable no-use-before-define */
 import { union, sortBy, first } from 'lodash';
-import { FIXED_FIELD_TEMPLATE, RECORD_FIELD_STATUS } from './MarcUtils';
+import {
+  RECORD_FIELD_STATUS as STATUS,
+  SUBFIELD_DELIMITER,
+  SUBFIELD_CHARACTER
+} from './MarcConstant';
+import { EMPTY_STRING } from '../../../shared/Constants';
 
 export const dedupe = (o) => Object.values(o.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
 
@@ -35,7 +41,6 @@ export const filterVariableFields = (obj) => {
 };
 
 /**
- * @description
  *
  * @param {*} props
  * @param {*} tag
@@ -44,7 +49,73 @@ export const filterVariableFields = (obj) => {
 export const handleTagXXXHeaderTypeChange = (props, tag, headerTypeCode) => {
   const { dispatch, change, record, leaderValue } = props;
   dispatch({ type: tag.action, leader: leaderValue, code: tag.code, typeCode: headerTypeCode });
-  record.fields.push(FIXED_FIELD_TEMPLATE(tag.code, headerTypeCode, tag.default));
-  first(record.fields.filter(f => f.code === tag.code)).fieldStatus = RECORD_FIELD_STATUS.NEW;
+  record.fields.push(getFixedField(tag, headerTypeCode));
+  first(record.fields.filter(f => f.code === tag.code)).fieldStatus = STATUS.NEW;
   dispatch(change(tag.name, headerTypeCode));
+};
+
+/**
+ *
+ * @param {*} s
+ * @returns s - appen SUBFIELD_DELIMITER to @param s
+ */
+export const addSeparator = (s: string): string => SUBFIELD_DELIMITER.concat(s);
+
+/**
+ *
+ * @param {*} s
+ * @returns s - a string with all SUBFIELD_CHARACTER replaced with SUBFIELD_DELIMITER
+ */
+export const replaceAll = (s: string): string => ((s) ? s.replace(/\$/g, SUBFIELD_DELIMITER) : EMPTY_STRING);
+
+/**
+ *
+ * @param {*} s
+ * @returns s - a string with all SUBFIELD_DELIMITER replaced with SUBFIELD_CHARACTER
+ */
+export const replaceAllinverted = (s: string): string => ((s) ? s.replace(/\uf001/g, SUBFIELD_CHARACTER) : EMPTY_STRING);
+
+/**
+ *
+ * @param {*} tag
+ * @param {*} typeCode
+ */
+export const getFixedField = (tag: Object, typeCode): Object => {
+  return {
+    'code': tag.code,
+    'mandatory': false,
+    'fieldStatus': STATUS.NEW,
+    'fixedField': {
+      'categoryCode': 1,
+      'headerTypeCode': typeCode,
+      'code': tag.code,
+      'displayValue': tag.default,
+      'sequenceNumber': 0
+    },
+    'added': false
+  };
+};
+
+/**
+ *
+ * @param {*} tag
+ */
+export const getEmptyVariableField = (tag?: Object): Object => {
+  return {
+    code: tag.code || EMPTY_STRING,
+    mandatory: false,
+    fieldStatus: STATUS.NEW,
+    variableField: {
+      keyNumber: tag.keyNumber || -1,
+      code: tag.code || EMPTY_STRING,
+      ind1: tag.ind1 || EMPTY_STRING,
+      ind2: tag.ind2 || EMPTY_STRING,
+      headerTypeCode: 0,
+      displayValue: tag.displayValue || EMPTY_STRING,
+      subfields: [],
+      sequenceNumber: 0,
+      skipInFiling: 0
+    },
+    added: true
+  };
 };

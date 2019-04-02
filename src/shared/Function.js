@@ -89,9 +89,21 @@ export const qs = {
   stringify: params => queryString.stringify(params, { encodeValuesOnly: true })
 };
 
+/**
+ *
+ * @param {*} obj
+ * @param {*} prop
+ */
 export function safeObj(obj, prop) {
   return (obj) ? obj[prop] : {};
 }
+
+/**
+ *
+ * @param {*} obj
+ * @param {*} res
+ * @param  {...any} prop
+ */
 export function safeArray(obj, res, ...prop) {
   return (obj && obj[prop]) ? obj[prop[0]][prop[1]] : res;
 }

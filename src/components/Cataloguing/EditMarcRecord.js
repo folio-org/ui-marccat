@@ -207,9 +207,9 @@ class EditMarcRecord extends React.Component {
     tagToDeleted.forEach(f => {
       f.fieldStatus = 'deleted';
     });
+    bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     bibliographicRecord.fields = union(recordTemplate.fields, tagToDeleted, tagVariableData);
     bibliographicRecord.fields = sortBy(bibliographicRecord.fields, 'code');
-    bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     bibliographicRecord.verificationLevel = 1;
     return {
       bibliographicRecord,

@@ -21,12 +21,6 @@
     "local:deploy": "sh script/deploy/folio-frontside.sh",
     "clean": "rm -rf lib/"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint",
-      "pre-push": "yarn lint"
-    }
-  },
   "devDependencies": {
     "@bigtest/interactor": "^0.7.2",
     "@bigtest/mirage": "^0.0.1",

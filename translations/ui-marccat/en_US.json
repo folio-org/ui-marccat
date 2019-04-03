@@ -77,7 +77,7 @@
     "cataloging.accordion.checkbox.label": "Suppress",
     "cataloging.checkbox.label": "Suppress from discovery",
     "cataloging.record.actions": "Actions",
-    "cataloging.record.edit": "Edit Record",
-    "cataloging.record.create": "Create Record",
-    "cataloging.record.delete": "Delete Record"
+    "cataloging.record.edit": "Edit record",
+    "cataloging.record.create": "Create record",
+    "cataloging.record.delete": "Delete record"
 }

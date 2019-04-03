@@ -76,8 +76,8 @@
     "cataloging.accordion.variablefield.label": "حقول متغيرة",
     "cataloging.accordion.checkbox.label": "منع",
     "cataloging.checkbox.label": "منع من الاكتشاف",
-    "cataloging.record.actions": "Actions",
-    "cataloging.record.edit": "Edit Record",
-    "cataloging.record.create": "Create Record",
-    "cataloging.record.delete": "Delete Record"
+    "cataloging.record.actions": "الإجراءات",
+    "cataloging.record.edit": "تحرير التسجيلة",
+    "cataloging.record.create": "إنشاء تسجيلة",
+    "cataloging.record.delete": "حذف التسجيلة"
 }

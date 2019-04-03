@@ -66,14 +66,14 @@ export const addSeparator = (s: string): string => SUBFIELD_DELIMITER.concat(s);
  * @param {*} s
  * @returns s - a string with all SUBFIELD_CHARACTER replaced with SUBFIELD_DELIMITER
  */
-export const replaceAll = (s: string): string => ((s) ? s.replace(/\$/g, SUBFIELD_DELIMITER) : EMPTY_STRING);
+export const replaceAll = (s: string): string => ((s) ? s.replace(RegExp(String.fromCharCode(31), 'g'), '$') : EMPTY_STRING);
 
 /**
  *
  * @param {*} s
  * @returns s - a string with all SUBFIELD_DELIMITER replaced with SUBFIELD_CHARACTER
  */
-export const replaceAllinverted = (s: string): string => ((s) ? s.replace(/\uf001/g, SUBFIELD_CHARACTER) : EMPTY_STRING);
+export const replaceAllinverted = (s: string): string => ((s) ? s.replace(SUBFIELD_CHARACTER, RegExp(String.fromCharCode(31), 'g')) : EMPTY_STRING);
 
 /**
  *

@@ -24,7 +24,6 @@ import { Redux, ReduxForm } from '../../redux/helpers/Redux';
 import {
   RECORD_FIELD_STATUS,
   TAG_WITH_NO_HEADING_ASSOCIATED,
-  SUBFIELD_DELIMITER,
   replaceAll,
   replaceAllinverted,
   VariableFields, MarcLeader, FixedFields

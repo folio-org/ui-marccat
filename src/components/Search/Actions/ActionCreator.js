@@ -27,7 +27,7 @@ export const emptyRecordAction = () => {
   return {
     type: ACTION.QUERY,
     data: {
-      path: ENDPOINT.EMPTY_RECORD_URL + '/' + 22,
+      path: ENDPOINT.EMPTY_RECORD_URL + 408,
       type: 'emptyRecord',
       params: ENDPOINT.DEFAULT_LANG_VIEW,
     },

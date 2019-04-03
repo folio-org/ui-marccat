@@ -82,7 +82,7 @@ export default class MarcLeader extends React.Component<P, {
   render() {
     const { leaderCss, leaderVal } = this.state;
     let { leaderChangedFor008 } = this.state;
-    const { leaderData, leaderValue, dispatch, change } = this.props;
+    const { leaderData, leaderValue, dispatch } = this.props;
     const remappedValues = [];
     if (leaderChangedFor008 === true) {
       dispatch({ type: ActionTypes.CHANGE_008_BY_LEADER, leader: leaderVal });
@@ -111,7 +111,6 @@ export default class MarcLeader extends React.Component<P, {
                     return elem.map((item, i) => {
                       let exactDisplayValue = EMPTY_STRING;
                       item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue));
-                      dispatch(change(`Leader-${item.name}`, exactDisplayValue));
                       return (
                         <Col xs={4} key={i}>
                           <Field
@@ -120,7 +119,7 @@ export default class MarcLeader extends React.Component<P, {
                             label={decamelizify(`${item.name}`, EMPTY_SPACED_STRING)}
                             component={Select}
                             dataOptions={item.dropdownSelect}
-                            placeholder={exactDisplayValue}
+                            selected={exactDisplayValue}
                             onChange={this.handleChange}
                           />
                         </Col>

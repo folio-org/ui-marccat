@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { includes, difference, union, sortBy, fist } from 'lodash';
+import { includes, difference, union, sortBy, first } from 'lodash';
 import { reduxForm } from 'redux-form';
 import {
   Pane,
@@ -20,7 +20,7 @@ import { MarcLeader, FixedFields } from '.';
 import { injectCommonProp } from '../../core';
 import { ActionTypes } from '../../redux/actions';
 import { post, put } from '../../core/api/HttpService';
-import { TAG_WITH_NO_HEADING_ASSOCIATED, RECORD_FIELD_STATUS } from './Utils/MarcConstant';
+import { TAG_WITH_NO_HEADING_ASSOCIATED } from './Utils/MarcConstant';
 import VariableFields from './Marc/VariableFields';
 import { Redux } from '../../redux';
 import { deleteRecordAction, headingDeleteAction } from './Actions/MarcActionCreator';
@@ -63,95 +63,44 @@ class EditMarcRecord extends React.Component {
 
 
   onUpdate = item => {
-    const tag = Object.assign({}, item);
-    const { store: { getState } } = this.props;
-    const tagVariableData = getState().form.marcEditableListForm.values.items;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
-    const displayValue: string = replaceAll(item.displayValue);
+    const displayValue: string = replaceAll(item.variableField.displayValue);
     const heading = {
       ind1: item.ind1 || C.EMPTY_STRING,
       ind2: item.ind2 || C.EMPTY_STRING,
       displayValue,
       tag: item.code
     };
-    if (tag.variableField) {
-      this.editHeading(tag);
+    if (item.variableField.keyNumber !== -1) {
+      this.editHeading(item);
     } else if (!cretaeHeadingForTag) {
       post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
         .then((r) => {
           return r.json();
         }).then((data) => {
-          tagVariableData.filter(t => t.code === item.code).map(k => {
-            k.fieldStatus = RECORD_FIELD_STATUS.NEW;
-            k.variableField = {
-              ind1: data.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
-              ind2: data.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
-              categoryCode: data.categoryCode,
-              displayValue: replaceAllinverted(data.displayValue),
-              keyNumber: data.keyNumber,
-            };
-            return data;
-          });
+          item.variableField.keyNumber = data.keyNumber;
         });
-    } else {
-      tagVariableData.filter(t => t.code === item.code).map(k => {
-        k.variableField = {
-          ind1: item.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
-          ind2: item.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
-          displayValue: displayValue || C.SPACED_STRING_DOUBLE_QUOTE,
-          code: item.code,
-          keyNumber: 0,
-        };
-        k.fieldStatus = RECORD_FIELD_STATUS.NEW;
-        return k;
-      });
     }
   }
 
   editHeading = item => {
-    const { store: { getState } } = this.props;
-    const tagVariableData = getState().form.marcEditableListForm.values.items;
-    const tagSelected = fist(tagVariableData.filter(t => t.code === item.code));
-    const displayValue = replaceAll(item.displayValue);
+    const displayValue = replaceAllinverted(item.variableField.displayValue);
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const heading = {
-      ind1: item.ind1 || tagSelected.variableField.ind1,
-      ind2: item.ind2 || tagSelected.variableField.ind2,
+      ind1: item.variableField.ind1,
+      ind2: item.variableField.ind2,
       displayValue,
-      categoryCode: item.categoryCode || tagSelected.variableField.categoryCode,
-      keyNumber: item.keyNumber || tagSelected.variableField.keyNumber,
-      tag: item.code || tagSelected.code,
+      categoryCode: item.variableField.categoryCode,
+      keyNumber: item.variableField.keyNumber,
+      tag: item.code,
     };
     if (!cretaeHeadingForTag) {
       put(buildUrl(C.ENDPOINT.UPDATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
         .then((r) => {
           return r.json();
         }).then((data) => {
-          tagVariableData.filter(t => t.code === item.code).map(k => {
-            k.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
-            k.variableField = {
-              ind1: data.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
-              ind2: data.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
-              oldKeyNumber: data.keyNumber,
-              displayValue: replaceAllinverted(data.displayValue),
-              categoryCode: data.categoryCode,
-              keyNumber: data.keyNumber,
-            };
-            return k;
-          });
+          item.variableField.keyNumber = data.keyNumber;
         });
-    } else {
-      tagVariableData.filter(t => t.code === item.code).map(k => {
-        k.variableField = {
-          ind1: item.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
-          ind2: item.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
-          displayValue: displayValue || C.SPACED_STRING_DOUBLE_QUOTE,
-          code: item.code,
-          keyNumber: 0,
-        };
-        k.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
-        return k;
-      });
     }
   }
 
@@ -192,13 +141,12 @@ class EditMarcRecord extends React.Component {
     const formData = getState().form.bibliographicRecordForm.values;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
 
-    // Set leader
-    const bibliographicRecord = recordDetail;
+    const bibliographicRecord = Object.assign({}, recordDetail);
     bibliographicRecord.leader.value = formData.Leader;
 
     const recordTemplate = {
-      id: fist(data.template.records).id,
-      name: fist(data.template.records).name,
+      id: first(data.template.records).id,
+      name: first(data.template.records).name,
       type: 'B',
       fields: recordDetail.fields.filter(f => f.code === '001' || f.code === '005' || f.code === '008')
     };

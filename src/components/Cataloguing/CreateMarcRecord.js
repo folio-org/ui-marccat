@@ -24,7 +24,6 @@ import { Redux, ReduxForm } from '../../redux/helpers/Redux';
 import {
   RECORD_FIELD_STATUS,
   TAG_WITH_NO_HEADING_ASSOCIATED,
-  SUBFIELD_DELIMITER,
   replaceAll,
   replaceAllinverted,
   VariableFields, MarcLeader, FixedFields
@@ -200,12 +199,10 @@ export class CreateMarcRecord extends React.Component<{}, {
 
   composeBodyJson = () => {
     const { data, data: { data: { emptyRecord } }, store: { getState } } = this.props;
-    let bibliographicRecord;
     const formData = getState().form.bibliographicRecordForm.values;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
 
-    // Set leader
-    if (!bibliographicRecord) bibliographicRecord = Object.assign(emptyRecord.results, bibliographicRecord);
+    const bibliographicRecord = Object.assign({}, emptyRecord.results);
     bibliographicRecord.leader.value = formData.Leader;
 
     const recordTemplate = {
@@ -217,16 +214,6 @@ export class CreateMarcRecord extends React.Component<{}, {
     bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     bibliographicRecord.fields = union(bibliographicRecord.fields, tagVariableData);
     bibliographicRecord.fields = sortBy(bibliographicRecord.fields, 'code');
-    bibliographicRecord.fields
-      .filter(f => f.fixedField === undefined || !f.fixedField)
-      .forEach(element => {
-        if (element.variableField.code !== '040') {
-          element.fieldStatus = RECORD_FIELD_STATUS.NEW;
-          element.displayValue = element.variableField.displayValue.replace('$', SUBFIELD_DELIMITER);
-          element.variableField.displayValue = element.variableField.displayValue.replace('$', SUBFIELD_DELIMITER);
-        }
-      });
-    bibliographicRecord.verificationLevel = 1;
     return {
       bibliographicRecord,
       recordTemplate

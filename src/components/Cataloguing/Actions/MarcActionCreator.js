@@ -102,22 +102,20 @@ export const deleteRecordAction = (id, payload) => {
 
 /**
  *
- * @param {*} item
- * @param {*} props
+ * @param {*} id
+ * @param {*} payload
  */
-export const onDelete = (item, props) => {
-  const { dispatch } = props;
-  if (item.variableField) {
-    const heading = {
-      ind1: item.variableField.ind1,
-      ind2: item.variableField.ind2,
-      displayValue: item.variableField.displayValue,
-      tag: item.variableField.code,
-      categoryCode: item.variableField.categoryCode,
-      keyNumber: item.variableField.keyNumber
-    };
-    dispatch(headingDeleteAction(heading));
-  }
+export const createRecordAction = (payload) => {
+  return {
+    type: ACTION.DELETE,
+    data: {
+      path: ENDPOINT.BIBLIOGRAPHIC_RECORD,
+      type: `record-${payload.bibliographicRecord.id}-` + Date.now(),
+      params: ENDPOINT.DEFAULT_LANG_VIEW,
+      id: payload.bibliographicRecord.id,
+      payload
+    }
+  };
 };
 
 /**

@@ -7,6 +7,7 @@ import React from 'react';
 import MarcEditableList from './Editable';
 import { Props, injectCommonProp } from '../../../core';
 import { getEmptyVariableField } from '..';
+import { replaceAll } from '../Utils/MarcApiUtils';
 
 class VariableFields extends React.Component<Props, {}> {
   constructor(props: Props) {
@@ -29,6 +30,13 @@ class VariableFields extends React.Component<Props, {}> {
 
   renderList() {
     const { fields, translate, onUpdate, onSave, onDelete, onCreate } = this.props;
+    const resultsFormatter = {
+      code: item => `${item.code}`,
+      ind1: item => `${item.variableField.ind1}`,
+      ind2: item => `${item.variableField.ind2}`,
+      displayValue: item => `${replaceAll(item.variableField.displayValue)}`,
+    };
+
     return (
       <MarcEditableList
         createButtonLabel={translate({ id: 'ui-marccat.cataloging.variablefield.section.add.newtag' })}
@@ -52,6 +60,7 @@ class VariableFields extends React.Component<Props, {}> {
           ind2: '10%',
           displayValue: '50%',
         }}
+        formatter={resultsFormatter}
         onUpdate={onUpdate}
         onSave={onSave}
         onDelete={onDelete}

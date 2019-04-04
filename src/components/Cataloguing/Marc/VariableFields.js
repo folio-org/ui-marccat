@@ -32,9 +32,9 @@ class VariableFields extends React.Component<Props, {}> {
     const { fields, translate, onUpdate, onSave, onDelete, onCreate } = this.props;
     const resultsFormatter = {
       code: item => `${item.code}`,
-      ind1: item => `${item.variableField.ind1}`,
-      ind2: item => `${item.variableField.ind2}`,
-      displayValue: item => `${replaceAll(item.variableField.displayValue)}`,
+      ind1: item => `${item.ind1}` || `${item.variableField.ind1}`,
+      ind2: item => `${item.ind2}` || `${item.variableField.ind2}`,
+      displayValue: item => `${replaceAll(item.displayValue)}` || `${replaceAll(item.variableField.displayValue)}`,
     };
 
     return (

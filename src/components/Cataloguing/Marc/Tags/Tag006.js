@@ -12,6 +12,7 @@ import { EMPTY_SPACED_STRING, EMPTY_STRING } from '../../../../shared/Constants'
 import { TAGS_NAME, TAG006_DISPLAY_VALUE_DEFAULT, TAGS } from '../../Utils/MarcConstant';
 import { handleTagXXXHeaderTypeChange } from '../../Utils/MarcApiUtils';
 import { ActionTypes } from '../../../../redux/actions';
+import { changeDisplayValueAction } from '../../Actions/MarcActionCreator';
 
 export class Tag006 extends React.Component<Props, {}> {
   handleOnChange = (e) => {
@@ -25,10 +26,14 @@ export class Tag006 extends React.Component<Props, {}> {
     handleTagXXXHeaderTypeChange(this.props, tag, headerTypeCode);
   }
 
-  changeDisplayValue = () => {}
+  changeDisplayValue = () => {
+    const { store: { getState }, dispatch, change, tag006ValuesResults } = this.props;
+    const form = getState().form.bibliographicRecordForm.values;
+    dispatch(changeDisplayValueAction(TAGS._006, {}));
+  }
 
   render() {
-    const { headerTypesResult, tag006ValuesResults } = this.props;
+    const { store, headerTypesResult, tag006ValuesResults, dispatch, change, reset } = this.props;
     const remappedValues = [];
     if (tag006ValuesResults) {
       const result = Object.keys(tag006ValuesResults.results).map((key) => tag006ValuesResults.results[key]);
@@ -59,6 +64,8 @@ export class Tag006 extends React.Component<Props, {}> {
                 return elem.map(item => {
                   let exactDisplayValue = EMPTY_STRING;
                   item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue));
+                  reset(store.getState().form.bibliographicRecordForm.fields.Tag006);
+                  dispatch(change(`${TAGS_NAME._006}-${item.name}`, exactDisplayValue));
                   return (
                     <Col xs={4}>
                       <Field

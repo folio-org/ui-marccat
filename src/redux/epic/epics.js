@@ -10,25 +10,34 @@ import { ENDPOINT } from '../../shared/Constants';
 import { fetchFailure } from '../actions/ActionCreator';
 import { Redux } from '..';
 import { buildUrl } from '../../shared/Function';
+import { TAGS } from '../../components/Cataloguing';
 
 export const searchEpic = (action$, store) => action$.ofType(ActionTypes.SEARCH)
   .switchMap((d) => concat$(
     of$(marccatActions.isfetchingSearchRequest(true, d.moreData)),
     ajax
       .getJSON(buildUrl(ENDPOINT.MERGED_SEARCH_URL, `lang=ita&ml=170&qbib=${d.queryBib}&qauth=${d.queryAuth}&from=${d.from}&to=${d.to}&dpo=1&sortBy=${Redux.get(store, 'settings', 'sortType') || 4}&sortOrder=0`), ENDPOINT.HEADERS)
-      .map(record => marccatActions.fetchSearchEngineRecords(
-        d.queryBib,
-        d.queryAuth,
-        d.to,
-        d.moreData,
-        record[1].docs,
-        record[1].numFound,
-        record[0].docs,
-        record[0].numFound,
-        d.dataOld,
-        d.oldBibArray,
-        d.oldAuthArray
-      ))
+      .map(record => {
+        if (record[1].docs.length > 0) {
+          record[1].docs.forEach((r, i) => r.id = record[1].docs[i].data.fields[0][TAGS._001]);
+        }
+        if (record[0].docs.length > 0) {
+          record[0].docs.forEach((r, i) => r.id = record[0].docs[i].data.fields[0][TAGS._001]);
+        }
+        return marccatActions.fetchSearchEngineRecords(
+          d.queryBib,
+          d.queryAuth,
+          d.to,
+          d.moreData,
+          record[1].docs,
+          record[1].numFound,
+          record[0].docs,
+          record[0].numFound,
+          d.dataOld,
+          d.oldBibArray,
+          d.oldAuthArray
+        );
+      })
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
 

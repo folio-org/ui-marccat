@@ -6,7 +6,7 @@ import * as React from 'react';
 import { hot } from 'react-hot-loader';
 import { MarcatSettings as Settings } from './settings';
 import { Router } from './router';
-import { reducer, epics, Redux } from './redux';
+import { reducer, epics } from './redux';
 import { injectCommonProp } from './core';
 import MARCcat from './MARCcat';
 import { ActionTypes } from './redux/actions';
@@ -46,9 +46,7 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
 
   componentDidMount() {
     const { store: { dispatch } } = this.props;
-    Redux.multiDispatch(
-      ActionTypes.VIEW_TEMPLATE
-    );
+    dispatch({ type: ActionTypes.VIEW_TEMPLATE });
     dispatch({ type: ActionTypes.HEADER_TYPES_006, code: TAGS._006 });
     dispatch({ type: ActionTypes.HEADER_TYPES_007, code: TAGS._007 });
     dispatch({ type: ActionTypes.HEADER_TYPES_008, code: TAGS._008 });

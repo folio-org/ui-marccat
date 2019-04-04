@@ -34,7 +34,7 @@ class VariableFields extends React.Component<Props, {}> {
       code: item => `${item.code}`,
       ind1: item => `${item.variableField.ind1}`,
       ind2: item => `${item.variableField.ind2}`,
-      displayValue: item => `${replaceAll(item.variableField.displayValue)}`,
+      displayValue: item => `${replaceAll(item.displayValue)}` || `${replaceAll(item.variableField.displayValue)}`,
     };
 
     return (

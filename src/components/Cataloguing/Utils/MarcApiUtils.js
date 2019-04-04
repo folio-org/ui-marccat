@@ -5,7 +5,7 @@ import {
   SUBFIELD_DELIMITER,
   SUBFIELD_CHARACTER
 } from './MarcConstant';
-import { EMPTY_STRING } from '../../../shared/Constants';
+import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../shared/Constants';
 
 export const dedupe = (o) => Object.values(o.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
 
@@ -28,7 +28,7 @@ export const unionSortAndDedupe = (sortByProp, ...obj) => {
  */
 export const filterFixedFields = (obj) => {
   const dedepuObj = dedupe(obj);
-  return dedepuObj.filter(f => f.fixedField !== undefined || f.fixedField);
+  return dedepuObj.filter(f => f.fixedField !== undefined || f.fixedField).filter(f => f.code !== '008');
 };
 
 /**
@@ -117,5 +117,49 @@ export const getEmptyVariableField = (tag?: Object): Object => {
       skipInFiling: 0
     },
     added: true
+  };
+};
+
+export const getEmptyTag007 = (tag: Object): Object => { // Book
+  return {
+    categoryCode: 1,
+    headerTypeCode: 45,
+    code: '007',
+    displayValue: '',
+    sequenceNumber: 0,
+  };
+};
+
+export const getEmptyTag008 = (tag: Object): Object => { // Book
+  return {
+    'categoryCode': tag.categoryCode || 1,
+    'headerTypeCode':tag.headerTypeCode || 31,
+    'code': '008',
+    'displayValue': EMPTY_STRING,
+    'dateEnteredOnFile': tag.dateEnteredOnFile || EMPTY_SPACED_STRING,
+    'dateTypeCode': tag.dateTypeCode || 's',
+    'dateFirstPublication': tag.dateFirstPublication || EMPTY_STRING.padStart(4),
+    'dateLastPublication': tag.dateLastPublication || EMPTY_STRING.padStart(4),
+    'placeOfPublication': tag.placeOfPublication || EMPTY_SPACED_STRING,
+    'bookIllustrationCode1': tag.bookIllustrationCode1 || EMPTY_SPACED_STRING,
+    'bookIllustrationCode2': tag.bookIllustrationCode2 || EMPTY_SPACED_STRING,
+    'bookIllustrationCode3': tag.bookIllustrationCode3 || EMPTY_SPACED_STRING,
+    'bookIllustrationCode4': tag.bookIllustrationCode4 || EMPTY_SPACED_STRING,
+    'targetAudienceCode': tag.targetAudienceCode || EMPTY_SPACED_STRING,
+    'formOfItemCode': tag.formOfItemCode || EMPTY_SPACED_STRING,
+    'natureOfContent1':tag.natureOfContent1 || EMPTY_SPACED_STRING,
+    'natureOfContent2': tag.natureOfContent2 || EMPTY_SPACED_STRING,
+    'natureOfContent3': tag.natureOfContent3 || EMPTY_SPACED_STRING,
+    'natureOfContent4': tag.natureOfContent4 || EMPTY_SPACED_STRING,
+    'governmentPublicationCode': tag.governmentPublicationCode || 'u',
+    'conferencePublicationCode': tag.conferencePublicationCode || '0',
+    'bookFestschrift': tag.bookFestschrift || '1',
+    'bookIndexAvailabilityCode': tag.bookIndexAvailabilityCode || '1',
+    'bookLiteraryFormTypeCode': tag.bookLiteraryFormTypeCode || 'u',
+    'bookBiographyCode': tag.bookBiographyCode || EMPTY_SPACED_STRING,
+    'languageCode': tag.languageCode || 'ita',
+    'recordModifiedCode': tag.recordModifiedCode || EMPTY_SPACED_STRING,
+    'recordCataloguingSourceCode':  tag.recordCataloguingSourceCode || 'r',
+    'sequenceNumber': 0,
   };
 };

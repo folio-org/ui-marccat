@@ -35,6 +35,7 @@ import * as C from '../../shared/Constants';
 import { headingAction, headingDeleteAction, settingsAction } from './Actions/MarcActionCreator';
 import { buildUrl } from '../../shared/Function';
 import style from './Style/style.css';
+import { SUBFIELD_DELIMITER } from './Utils/MarcConstant';
 
 export class CreateMarcRecord extends React.Component<{}, {
   callout: React.RefObject<Callout>,
@@ -116,50 +117,29 @@ export class CreateMarcRecord extends React.Component<{}, {
   };
 
   onUpdate = (item) => {
-    const tag = Object.assign({}, item);
     const { store: { getState } } = this.props;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
-    const displayValue: string = replaceAll(item.displayValue);
-    const tagSelected = getState().form.marcEditableListForm.values.items;
+    const displayValue: string = item.variableField.displayValue.replace(/\$/g, SUBFIELD_DELIMITER);
+    // eslint-disable-next-line no-unused-vars
+    let tagSelected = getState().form.marcEditableListForm.values.items;
+    tagSelected = item;
     const heading = {
-      ind1: item.ind1 || C.EMPTY_STRING,
-      ind2: item.ind2 || C.EMPTY_STRING,
+      ind1: item.variableField.ind1,
+      ind2: item.variableField.ind2,
       displayValue,
       tag: item.code
     };
-    if (tag.variableField) {
-      this.editHeading(tag);
+    if (item.variableField.keyNumber !== -1) {
+      this.editHeading(item);
     } else if (!cretaeHeadingForTag) {
       post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
         .then((r) => {
           return r.json();
         }).then((data) => {
-          tagSelected
-            .filter(t => t.code === item.code && !t.variableField)
-            .map(k => {
-              k.fieldStatus = RECORD_FIELD_STATUS.NEW;
-              k.variableField = {
-                ind1: data.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
-                ind2: data.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
-                categoryCode: data.categoryCode,
-                displayValue: replaceAllinverted(data.displayValue),
-                keyNumber: data.keyNumber,
-              };
-              return data;
-            });
+          item.variableField.categoryCode = data.categoryCode;
+          item.variableField.keyNumber = data.keyNumber;
+          item.variableField.displayValue = displayValue;
         });
-    } else {
-      tagSelected.filter(t => t.code === item.code).map(k => {
-        k.variableField = {
-          ind1: item.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
-          ind2: item.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
-          displayValue: displayValue || C.SPACED_STRING_DOUBLE_QUOTE,
-          code: item.code,
-          keyNumber: 0,
-        };
-        k.fieldStatus = RECORD_FIELD_STATUS.NEW;
-        return k;
-      });
     }
   }
 

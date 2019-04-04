@@ -120,7 +120,7 @@ export const getEmptyVariableField = (tag?: Object): Object => {
   };
 };
 
-export const getEmptyTag007 = (tag: Object): Object => { // Book
+export const getEmptyTag007 = (): Object => { // Book
   return {
     categoryCode: 1,
     headerTypeCode: 45,

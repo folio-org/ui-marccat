@@ -12,7 +12,6 @@ import { EMPTY_SPACED_STRING, EMPTY_STRING } from '../../../../shared/Constants'
 import { TAGS_NAME, TAG006_DISPLAY_VALUE_DEFAULT, TAGS } from '../../Utils/MarcConstant';
 import { handleTagXXXHeaderTypeChange } from '../../Utils/MarcApiUtils';
 import { ActionTypes } from '../../../../redux/actions';
-import { changeDisplayValueAction } from '../../Actions/MarcActionCreator';
 
 export class Tag006 extends React.Component<Props, {}> {
   handleOnChange = (e) => {
@@ -27,9 +26,9 @@ export class Tag006 extends React.Component<Props, {}> {
   }
 
   changeDisplayValue = () => {
-    const { store: { getState }, dispatch, change, tag006ValuesResults } = this.props;
-    const form = getState().form.bibliographicRecordForm.values;
-    dispatch(changeDisplayValueAction(TAGS._006, {}));
+    // const { store: { getState }, dispatch } = this.props;
+    // // const form = getState().form.bibliographicRecordForm.values;
+    // dispatch(changeDisplayValueAction(TAGS._006, {}));
   }
 
   render() {

@@ -116,7 +116,7 @@ export class CreateMarcRecord extends React.Component<{}, {
     dispatch(headingAction(id, item));
   };
 
-  onUpdate = (item) => {
+  onUpdate = item => {
     const { store: { getState } } = this.props;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const displayValue: string = item.variableField.displayValue.replace(/\$/g, SUBFIELD_DELIMITER);

@@ -63,6 +63,7 @@ class EditMarcRecord extends React.Component {
 
 
   onUpdate = item => {
+    const { store: { getState } } = this.props;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const displayValue: string = item.variableField.displayValue.replace(/\$/g, SUBFIELD_DELIMITER);
     // eslint-disable-next-line no-unused-vars

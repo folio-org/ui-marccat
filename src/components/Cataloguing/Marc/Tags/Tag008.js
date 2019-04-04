@@ -50,6 +50,7 @@ export class Tag008 extends React.Component<Props, {}> {
   changeDisplayValue = (e) => {
     const { store: { getState }, dispatch, change, tag008ValuesResults } = this.props;
     const { currentHeaderTypeCode, isChangedHeaderType } = this.state;
+    const formData = getState().form.bibliographicRecordForm.values;
     let { jsonReq } = this.state;
     if (isChangedHeaderType) {
       jsonReq = {};
@@ -66,6 +67,8 @@ export class Tag008 extends React.Component<Props, {}> {
     jsonReq.sequenceNumber = 0;
     jsonReq.headerTypeCode = currentHeaderTypeCode;
     jsonReq.code = TAGS._008;
+    jsonReq.languageCode = formData['Tag008-languageCode'] || 'ita';
+    jsonReq.recordCataloguingSourceCode = formData['Tag008-recordCataloguingSourceCode'] || 'r';
     jsonReq.displayValue = '';
     if (changedFieldLabel === 'dateFirstPublication' || changedFieldLabel === 'dateLastPublication') {
       changedFieldValue = e.target.value.lenght < 4 ? '' : e.target.value;

@@ -8,17 +8,9 @@ export class BaseFixedFields<K, V> {
       this.key = k;
       this.value = v;
     }
-
-    setValue(k) {
-      this.key = k;
-    }
-
-    getValue() {
-      return this.value;
-    }
 }
 
-export class FixedFields<K, V, I1, I2, S> {
+export class FixedFields<K, I1, I2, S> {
     code: K;
     ind1:I1;
     ind2:I2

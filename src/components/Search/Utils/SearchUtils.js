@@ -65,12 +65,12 @@ export const mapFields = (fields: []) :FixedFields<String, String, String, Array
       } else {
         const fixedField = new FixedFields(code, tag.ind1, tag.ind2, tag.subfields);
         const subfieldArray = [];
-        fixedField.getSubfield().forEach((f, codex) => subfieldArray.push(
+        fixedField.subfield.forEach((f, codex) => subfieldArray.push(
           new BaseFixedFields(
-            Object.keys(Object.entries(fixedField.getSubfield())[codex][1])[0], Object.values(Object.entries(fixedField.getSubfield())[codex][1])[0]
+            Object.keys(Object.entries(fixedField.subfield)[codex][1])[0], Object.values(Object.entries(fixedField.subfield)[codex][1])[0]
           )
         ));
-        fixedField.setSubfield(subfieldArray);
+        fixedField.subfield = (subfieldArray);
         fixedFields.push(fixedField);
       }
     }

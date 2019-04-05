@@ -49,6 +49,19 @@ export const headingAction = (id, payload) => {
   };
 };
 
+
+export const headingCreateAction = (payload) => {
+  return {
+    type: ACTION.CREATE,
+    data: {
+      path: ENDPOINT.CREATE_HEADING_URL,
+      type: `${payload.id}-${payload.tag}-` + Date.now(),
+      params: ENDPOINT.DEFAULT_LANG_VIEW,
+    },
+    payload
+  };
+};
+
 /**
  *
  * @param {*} payload

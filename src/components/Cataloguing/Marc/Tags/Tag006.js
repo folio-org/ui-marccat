@@ -32,7 +32,7 @@ export class Tag006 extends React.Component<Props, {}> {
   }
 
   render() {
-    const { store, headerTypesResult, tag006ValuesResults, dispatch, change, reset } = this.props;
+    const { headerTypesResult, tag006ValuesResults, dispatch, change } = this.props;
     const remappedValues = [];
     if (tag006ValuesResults) {
       const result = Object.keys(tag006ValuesResults.results).map((key) => tag006ValuesResults.results[key]);
@@ -63,7 +63,7 @@ export class Tag006 extends React.Component<Props, {}> {
                 return elem.map(item => {
                   let exactDisplayValue = EMPTY_STRING;
                   item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue));
-                  reset(store.getState().form.bibliographicRecordForm.fields.Tag006);
+                  // reset(store.getState().form.bibliographicRecordForm.fields.Tag006);
                   dispatch(change(`${TAGS_NAME._006}-${item.name}`, exactDisplayValue));
                   return (
                     <Col xs={4}>

@@ -32,7 +32,7 @@ import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../lib';
 import { ActionTypes } from '../../redux/actions/Actions';
 import { post, put } from '../../core/api/HttpService';
 import * as C from '../../shared/Constants';
-import { headingAction, headingDeleteAction, settingsAction } from './Actions/MarcActionCreator';
+import { headingAction, headingDeleteAction, settingsAction, headingCreateAction } from './Actions/MarcActionCreator';
 import { buildUrl } from '../../shared/Function';
 import style from './Style/style.css';
 import { SUBFIELD_DELIMITER } from './Utils/MarcConstant';
@@ -63,66 +63,43 @@ export class CreateMarcRecord extends React.Component<{}, {
 
   onSave = () => {}
 
-  editHeading = item => {
-    const { store: { getState } } = this.props;
-    const tagVariableData = getState().form.marcEditableListForm.values.items;
-    const tagSelected = first(tagVariableData.filter(t => t.code === item.code));
-    const displayValue = replaceAll(item.displayValue);
+  onUpdate = item => {
+    const displayValue: string = item.variableField.displayValue.replace(/\$/g, SUBFIELD_DELIMITER);
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const heading = {
-      ind1: item.ind1 || tagSelected.variableField.ind1,
-      ind2: item.ind2 || tagSelected.variableField.ind2,
+      ind1: item.variableField.ind1,
+      ind2: item.variableField.ind2,
+      categoryCode: item.variableField.categoryCode,
+      keyNumber: item.variableField.keyNumber,
       displayValue,
-      categoryCode: item.categoryCode || tagSelected.variableField.categoryCode,
-      keyNumber: item.keyNumber || tagSelected.variableField.keyNumber,
-      tag: item.code || tagSelected.code,
+      tag: item.code
     };
     if (!cretaeHeadingForTag) {
       put(buildUrl(C.ENDPOINT.UPDATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
         .then((r) => {
           return r.json();
         }).then((data) => {
-          tagVariableData.filter(t => t.code === item.code).map(k => {
-            k.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
-            k.variableField = {
-              ind1: data.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
-              ind2: data.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
-              oldKeyNumber: k.variableField.keyNumber,
-              displayValue: replaceAllinverted(data.displayValue),
-              keyNumber: data.keyNumber,
-            };
-            return k;
-          });
+          item.variableField.categoryCode = data.categoryCode;
+          item.variableField.keyNumber = data.keyNumber;
+          item.variableField.displayValue = displayValue;
         });
-    } else {
-      tagVariableData.filter(t => t.code === item.code).map(k => {
-        k.variableField = {
-          ind1: item.ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
-          ind2: item.ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
-          displayValue: displayValue || C.SPACED_STRING_DOUBLE_QUOTE,
-          keyNumber: 0,
-        };
-        k.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
-        return k;
-      });
     }
   }
 
   createNewHeading = (item) => {
     const { dispatch, emptyRecord } = this.props;
-    const displayValue = replaceAll(item.displayValue);
+    const displayValue: string = item.variableField.displayValue.replace(/\$/g, SUBFIELD_DELIMITER);
     item.displayValue = displayValue;
     const id = emptyRecord.id;
     dispatch(headingAction(id, item));
   };
-
-  onUpdate = item => {
+  
+  onCreate = item => {
     const { store: { getState } } = this.props;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const displayValue: string = item.variableField.displayValue.replace(/\$/g, SUBFIELD_DELIMITER);
     // eslint-disable-next-line no-unused-vars
-    let tagSelected = getState().form.marcEditableListForm.values.items;
-    tagSelected = item;
+    getState().form.marcEditableListForm.values.items[0] = item;
     const heading = {
       ind1: item.variableField.ind1,
       ind2: item.variableField.ind2,
@@ -143,8 +120,18 @@ export class CreateMarcRecord extends React.Component<{}, {
     }
   }
 
+  onCreateHeading = item => {
+    const { dispatch } = this.props;
+    const displayValue: string = item.variableField.displayValue.replace(/\$/g, SUBFIELD_DELIMITER);
+    const heading = {
+      ind1: item.variableField.ind1,
+      ind2: item.variableField.ind2,
+      displayValue,
+      tag: item.code
+    };
+    dispatch(headingCreateAction(heading));
+  };
 
-  onCreate = () => { this.showMessage('Tag Saved sucesfully'); }
 
   onDelete = item => {
     const { dispatch } = this.props;

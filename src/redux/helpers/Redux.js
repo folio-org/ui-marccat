@@ -160,7 +160,7 @@ Redux.deduplicate = (obj, key) => (
 );
 
 Redux.multiDispatch = (...actions: Array<any>) => {
-  return (dispatch) => actions.map(a => dispatch(a));
+  return (dispatch) => actions.map((a: Object) => dispatch(a));
 };
 
 Redux.reset = (store: Object, reducer: Object): void => {

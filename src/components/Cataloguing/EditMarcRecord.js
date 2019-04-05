@@ -20,7 +20,7 @@ import { MarcLeader, FixedFields } from '.';
 import { injectCommonProp } from '../../core';
 import { ActionTypes } from '../../redux/actions';
 import { post, put } from '../../core/api/HttpService';
-import { TAG_WITH_NO_HEADING_ASSOCIATED } from './Utils/MarcConstant';
+import { TAG_WITH_NO_HEADING_ASSOCIATED, SUBFIELD_DELIMITER } from './Utils/MarcConstant';
 import VariableFields from './Marc/VariableFields';
 import { Redux } from '../../redux';
 import { deleteRecordAction, headingDeleteAction } from './Actions/MarcActionCreator';
@@ -28,7 +28,7 @@ import style from './Style/style.css';
 import { If } from '../Search';
 import * as C from '../../shared/Constants';
 import { buildUrl, findParam } from '../../shared/Function';
-import { replaceAll, replaceAllinverted } from './Utils/MarcApiUtils';
+import { replaceAllinverted } from './Utils/MarcApiUtils';
 
 class EditMarcRecord extends React.Component {
   constructor(props) {
@@ -63,11 +63,15 @@ class EditMarcRecord extends React.Component {
 
 
   onUpdate = item => {
+    const { store: { getState } } = this.props;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
-    const displayValue: string = replaceAll(item.variableField.displayValue);
+    const displayValue: string = item.variableField.displayValue.replace(/\$/g, SUBFIELD_DELIMITER);
+    // eslint-disable-next-line no-unused-vars
+    let tagSelected = getState().form.marcEditableListForm.values.items;
+    tagSelected = item;
     const heading = {
-      ind1: item.ind1 || C.EMPTY_STRING,
-      ind2: item.ind2 || C.EMPTY_STRING,
+      ind1: item.variableField.ind1,
+      ind2: item.variableField.ind2,
       displayValue,
       tag: item.code
     };
@@ -78,14 +82,20 @@ class EditMarcRecord extends React.Component {
         .then((r) => {
           return r.json();
         }).then((data) => {
+          item.variableField.categoryCode = data.categoryCode;
           item.variableField.keyNumber = data.keyNumber;
+          item.variableField.displayValue = displayValue;
         });
     }
   }
 
   editHeading = item => {
+    const { store: { getState } } = this.props;
     const displayValue = replaceAllinverted(item.variableField.displayValue);
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
+    // eslint-disable-next-line no-unused-vars
+    let tagSelected = getState().form.marcEditableListForm.values.items;
+    tagSelected = item;
     const heading = {
       ind1: item.variableField.ind1,
       ind2: item.variableField.ind2,

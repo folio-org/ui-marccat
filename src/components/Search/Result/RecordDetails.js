@@ -9,6 +9,7 @@ import InventoryPluggableBtn from '../Button/Inventory';
 import type { Props } from '../../../core';
 import { getTag245, getTitle245, getTag100, getTitle100 } from '../../../utils/Mapper';
 import AssociatedBib from './AssociatedBib';
+import { ActionTypes } from '../../../redux/actions/Actions';
 import { EMPTY_STRING } from '../../../shared/Constants';
 
 import style from '../../../styles/common.css';
@@ -23,8 +24,16 @@ class RecordDetails extends React.Component<P, {}> {
   constructor(props:P) {
     super(props);
     const id = props.detailPaneMeta.meta['001'];
+    let mergedResults;
+    let detailSelected;
+    if (props.data.search.dataOld !== undefined) {
+      mergedResults = [...props.data.search.bibliographicResults, ...props.data.search.oldBibArray];
+      detailSelected = mergedResults.filter(item => id === item.data.fields[0]['001']);
+    } else {
+      detailSelected = props.data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001']);
+    }
     this.state = {
-      detail: props.data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001'])
+      detail: detailSelected
     };
   }
 

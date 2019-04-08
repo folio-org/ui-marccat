@@ -37,7 +37,7 @@ class RecordDetails extends React.Component<P, {}> {
     const recordDetailsArray = recordDetails.split('\n');
     const tag245 = getTag245(recordDetailsArray);
     const title245 = getTitle245(recordDetailsArray);
-    const tags: FixedFields<String, String, String, Array>[] = mapFields(detail[0].data.fields);
+    const tags: FixedFields<String, String, String, Array>[] = mapFields(detail.fields);
     return (
       <AccordionSet>
         <Accordion
@@ -50,22 +50,26 @@ class RecordDetails extends React.Component<P, {}> {
               label={tag245 === EMPTY_STRING ? getTag100(recordDetailsArray) : tag245 + 'Title'}
               value={title245 === EMPTY_STRING ? getTitle100(recordDetailsArray) : title245}
             />
-            {tags.filter(t => parseInt(t.key, 10) < 10).map((t:FixedFields<String, String, String, Array>) => (
+            {tags.filter(t => parseInt(t.key, 10) < 10).map((t: FixedFields<String, String, String, Array>) => (
               <React.Fragment>
-                <KeyValue
-                  label={t.key}
-                  value={t.value}
-                />
+                <Row>
+                  <Col xs={3}>{t.key}</Col>
+                  <Col xs={9}>{t.value}</Col>
+                </Row>
               </React.Fragment>
             ))}
-            {tags.filter(t => parseInt(t.key, 10) > 10).map((t:FixedFields<String, String, String, Array>) => (
+            {tags.filter(t => t.code).map((t: FixedFields<String, String, String, Array>) => (
               <React.Fragment>
                 <Row>
                   <Col xs={1}>{t.code}</Col>
-                  <Col xs={3}>{`ind1: ${t.ind1}`}</Col>
-                  <Col xs={3}>{`ind2: ${t.ind2}`}</Col>
-                  <Col xs={3}>{`ind1: ${t.ind1}`}</Col>
-                  <Col xs={3}>{`code: ${t.code}`}</Col>
+                  <Col xs={1}>{t.ind1}</Col>
+                  <Col xs={1}>{t.ind2}</Col>
+                  <Col xs={9}>
+                    {t.subfield.map(x => {
+                      return '$' + x.key + x.value;
+                    })
+                    }
+                  </Col>
                 </Row>
               </React.Fragment>
             ))}
@@ -73,17 +77,15 @@ class RecordDetails extends React.Component<P, {}> {
           <InventoryPluggableBtn {...this.props} buttonLabel={translate({ id: 'ui-marccat.search.goto.inventory' })} />
         </Accordion>
         {checkDetailsBibRec === checkDetailsInRow &&
-        <AssociatedBib {...this.props} />}
+          <AssociatedBib {...this.props} />}
       </AccordionSet>
     );
   }
 }
-
 export default (connect(
-  state => ({
-    items: state.marccat.details.records,
-    checkDetailsInRow: state.marccat.details.recordType,
-    checkDetailsBibRec: state.marccat.associatedRecords.recordType,
-    detail: state.detailSelected,
+  ({ marccat: { details, associatedRecords } }) => ({
+    items: details.records,
+    checkDetailsInRow: details.recordType,
+    checkDetailsBibRec: associatedRecords.recordType
   }), () => ({})
-))(RecordDetails);
+)(RecordDetails));

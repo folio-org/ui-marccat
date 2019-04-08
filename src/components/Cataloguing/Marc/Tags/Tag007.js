@@ -26,7 +26,7 @@ export class Tag007 extends React.Component<Props, {}> {
   }
 
   changeDisplayValue = () => {
-    
+
   }
 
   render() {

@@ -34,7 +34,7 @@ import { buildUrl, findParam } from '../../../shared/Function';
 import style from '../Style/style.css';
 import { injectCommonProp, Props } from '../../../core';
 import { SUBFIELD_DELIMITER } from '../Utils/MarcConstant';
-import { filterMandatoryFields, showValidationMessage } from '../Utils/MarcApiUtils';
+import { filterMandatoryFields } from '../Utils/MarcApiUtils';
 import * as MarcAction from '../Actions';
 import { FixedFields, MarcLeader, VariableFields } from '.';
 

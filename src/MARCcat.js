@@ -7,6 +7,7 @@ import { Paneset, Pane, Headline } from '@folio/stripes/components';
 import { injectCommonProp, Props } from './core';
 import { SearchPanel } from './components/Search';
 import * as C from './shared/Constants';
+import PanelHistory from './components';
 
 /**
  * @module MARCcat
@@ -15,9 +16,7 @@ class MARCcat extends React.Component<Props, {}> {
   searchPanelActionMenu = () => {
     const { translate } = this.props;
     return (
-      <Headline size="small" margin="medium" tag="h3">
-        {translate({ id: 'ui-marccat.search.actionmenu.title' })}
-      </Headline>
+      <PanelHistory />
     );
   };
 

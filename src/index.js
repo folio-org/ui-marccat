@@ -3,14 +3,13 @@
  * @flow
  */
 import * as React from 'react';
-import { hot } from 'react-hot-loader';
 import { MarcatSettings as Settings } from './settings';
 import { Router } from './router';
 import { reducer, epics } from './redux';
 import { injectCommonProp } from './core';
 import MARCcat from './MARCcat';
 import { ActionTypes } from './redux/actions';
-import { STATE_MANAGEMENT } from './shared/Constants';
+import { REDUX } from './shared/Constants';
 import { TAGS } from './components/Cataloguing';
 
 import './styles/common.css';
@@ -38,8 +37,8 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
      * all the reducer and the epic are load in the Redux folder
      * and combine in a  unique reducer and unique epic$
      */
-    props.root.addReducer(STATE_MANAGEMENT.REDUCER, reducer);
-    props.root.addEpic(STATE_MANAGEMENT.EPIC, epics);
+    props.root.addReducer(REDUX.REDUCER, reducer);
+    props.root.addEpic(REDUX.EPIC, epics);
 
     this.toggleFilterPane = this.toggleFilterPane.bind(this);
   }
@@ -85,4 +84,4 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
   * @example: this.props.root
   * @example: const { state } = this.props.root;
   */
-export default hot(module)(injectCommonProp(MARCCatRouting));
+export default injectCommonProp(MARCCatRouting);

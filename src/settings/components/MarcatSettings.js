@@ -4,13 +4,15 @@
  */
 import * as React from 'react';
 import { Settings } from '@folio/stripes/smart-components';
+import { connect } from 'react-redux';
 import FieldGroupings from './FieldGroupings';
 import DefaultTemplate from './DefaultTemplate';
 import RecordsOverlayRules from './RecordOverlayRules';
 import LocalAuthorityRecords from './LocalAuthorityRecords';
 import type { Props } from '../../core';
+import { loadTemplateAction } from '../../components/Search/Actions';
 
-export default class MARCcatSettings extends React.Component<Props, {}> {
+class MARCcatSettings extends React.Component<Props, {}> {
   constructor(props) {
     super(props);
 
@@ -61,3 +63,5 @@ export default class MARCcatSettings extends React.Component<Props, {}> {
     );
   }
 }
+
+export default connect({}, (dispatch) => dispatch(loadTemplateAction()))(MARCcatSettings);

@@ -101,7 +101,7 @@ class EditableListForm extends React.Component {
 
   normalizeField(fields: Array<*>, index: number): Object {
     const item = fields.get(index);
-    return getEmptyVariableField(item);
+    return (item.variableField.keyNumber > 0) ? getEmptyVariableField(true, item) : getEmptyVariableField(false, item);
   }
 
   onAdd(fields) {
@@ -124,7 +124,7 @@ class EditableListForm extends React.Component {
 
   onSave(fields, index) {
     const item = this.normalizeField(fields, index);
-    const callback = (item.variableField.keyNumber !== -1) ? this.props.onUpdate : this.props.onCreate;
+    const callback = (item.variableField.keyNumber > 0) ? this.props.onUpdate : this.props.onCreate;
     const res = callback(item);
     Promise.resolve(res).then(
       () => {
@@ -139,7 +139,7 @@ class EditableListForm extends React.Component {
   }
 
   onDelete(fields, index) {
-    const item = fields.get(index);
+    const item = this.normalizeField(fields, index);
     sortBy(this.props.contentData, 'code');
     this.props.contentData.splice(index, 1);
     const res = this.props.onDelete(item);

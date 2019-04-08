@@ -71,6 +71,15 @@
   "cataloging.record.edit": "Edit Record",
   "cataloging.record.create": "Create Record",
   "cataloging.record.delete": "Delete Record",
+
+  "cataloging.record.create.success": "Record create succesfully",
+  "cataloging.record.create.failure":"Record create succesfully",
+  "cataloging.record.delete.success": "Delete create succesfully",
+  "cataloging.record.delete.failure": "Delete create failed",
+  "cataloging.record.tag.create.success": "Tag create succesfully",
+  "cataloging.record.tag.create.failure": "Tag create succesfully",
+  "cataloging.record.tag.duplicate.error": "The tag {0} is duplicate!",
+
   "template.actionmenu.new": "New Template",
   "template.actionmenu.load": "Load template...",
   "template.actionmenu.load.shortcut": "CTRL + L",

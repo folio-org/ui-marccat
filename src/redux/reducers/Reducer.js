@@ -600,3 +600,12 @@ export function settingsReducer(state = {}, action) {
     return state;
   }
 }
+
+export function historyReducer(state = {}, action) {
+  switch (action.type) {
+  case ActionTypes.HISTORY:
+    return Object.assign(state, state, action.data);
+  default:
+    return state;
+  }
+}

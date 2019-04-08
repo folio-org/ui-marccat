@@ -66,8 +66,16 @@ export const TAG_WIDH_CAT_8 = [
   '760', '762', '765', '767', '770', '772', '773', '774', '775',
   '776', '777', '780', '785', '786', '787', '791', '792'];
 
-export const TAG_WITH_NO_HEADING_ASSOCIATED = union(TAG_WIDH_CAT_7, TAG_WIDH_CAT_8);
+export const TAG_NOT_REPEATABLE = [
+  '001', '003', '005', '010', '018', '036', '038', '040',
+  '042', '043', '044', '045', '066', '100', '110', '111',
+  '130', '240', '245', '250', '254', '256', '257', '263',
+  '306', '310', '357', '507', '514', '841', '842', '844'
+];
 
+export const TAG_MANDATORY = ['001', '005', '008', '040'];
+
+export const TAG_WITH_NO_HEADING_ASSOCIATED = union(TAG_WIDH_CAT_7, TAG_WIDH_CAT_8);
 export const TAG006_DISPLAY_VALUE_DEFAULT = 'a           000 ua';
 export const TAG007_DISPLAY_VALUE_DEFAULT = 'cu uuu---uuuuu';
 
@@ -75,6 +83,7 @@ export const RECORD_ACTION = {
   CREATION_MODE: 'new',
   EDIT_MODE: 'edit'
 };
+
 
 export const LOCK_ENTITY_TYPE = {
   R: 'R',

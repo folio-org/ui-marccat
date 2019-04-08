@@ -18,7 +18,8 @@ import {
   RecordDetailPane,
   AssociatedRecordPane,
 } from './components';
-import { emptyRecordAction, searchDetailAction } from '../Actions/ActionCreator';
+import { emptyRecordAction } from '../../Cataloguing/Actions';
+import { searchDetailAction } from '../Actions';
 import * as C from '../../../shared/Constants';
 
 
@@ -77,16 +78,16 @@ export class SearchResults extends React.Component<P, {}> {
 
   handleClickEdit = () => {
     const { router, toggleFilterPane } = this.props;
-    const { detail } = this.state;
-    const id = detail['001'];
+    const { detailPaneMeta } = this.state;
+    const id = detailPaneMeta.meta['001'];
     toggleFilterPane();
-    router.push(`/marccat/record/view?id=${id}&mode=edit`);
+    router.push(`/marccat/cataloging?id=${id}&mode=edit`);
   }
 
   handleCreateRecord = () => {
-    const { router, toggleFilterPane } = this.props;
+    const { router, toggleFilterPane, datastore: { emptyRecord } } = this.props;
     toggleFilterPane();
-    router.push(`/marccat/record/template?templateId=${408}&mode=new`);
+    router.push(`/marccat/cataloging?id=${emptyRecord.results.id}&mode=new`);
   };
 
   handleOnToggle = () => {
@@ -122,10 +123,12 @@ export class SearchResults extends React.Component<P, {}> {
     const { store: { dispatch }, data } = this.props;
     dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: false });
     const id = meta['001'];
-    const detailMeta = meta;
     const detailSelected = data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001']) || {};
     transitionToParams('id', id);
+
+    // to do fix this, we must use the selcted record already in the store (to remove next line)
     dispatch(searchDetailAction(id));
+
     dispatch({ type: ActionTypes.DETAILS, query: id, recordType: meta.recordView });
     if (isAuthorityRecord(meta)) {
       dispatch({ type: ActionTypes.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView, openPanel: true });
@@ -140,7 +143,7 @@ export class SearchResults extends React.Component<P, {}> {
       });
     } else {
       this.setState({
-        detail: detailMeta,
+        detail: detailSelected,
         detailPanelIsVisible: true,
         detailPaneMeta: {
           meta,
@@ -225,7 +228,7 @@ export class SearchResults extends React.Component<P, {}> {
       />);
   };
 
-  renderCreateTemplateButton = () => {
+  renderCreateRecordButton = () => {
     const { translate } = this.props;
     return (
       <CreateButtonMenu

@@ -28,9 +28,10 @@ import { ActionTypes } from '../../../redux/actions/Actions';
 import { findYourQuery } from '../Filter';
 import { remapFilters } from '../../../utils/Mapper';
 import { EMPTY_STRING } from '../../../shared/Constants';
+import * as Action from '../../../shared/Action';
 import styles from '../index.css';
 import { findParam } from '../../../shared/Function';
-import { countRecordAction } from '../Actions/ActionCreator';
+import { countRecordAction } from '../Actions';
 
 type P = Props & {
   inputErrorCheck: string,
@@ -127,21 +128,31 @@ class SearchPanel extends React.Component<P, {}> {
           || indexForQuery === 'BC '
           || indexForQuery === 'CP '
           || indexForQuery === 'PW ') {
-          dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: bibQuery, queryAuth: '', from: '1', to: '30' });
+          dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: bibQuery, queryAuth: EMPTY_STRING, from: '1', to: '30' });
+          this.handleSearchHistory({
+            type: ActionTypes.SEARCH, data: { moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' }
+          });
           transitionToParams('q', bibQuery);
           dispatch(countRecordAction({ view: 1, query: bibQuery }));
         } else {
           dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
           transitionToParams('q', authQuery);
-
           dispatch(countRecordAction({ view: 1, query: bibQuery }));
           dispatch(countRecordAction({ view: -1, query: authQuery }));
+          this.handleSearchHistory({
+            type: ActionTypes.SEARCH, data: { moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' }
+          });
         }
       }
     }
   }
 
   handleComplexQuery = () => {};
+
+  handleSearchHistory = (payload) => {
+    const { dispatch } = this.props;
+    dispatch({ type: Action.REQUEST_HISTORY, data: { type: 'history', payload } });
+  };
 
   handleAddSearchForm = () => {
     const { searchForm, counter } = this.state;

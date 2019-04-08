@@ -1,22 +1,37 @@
-
+/**
+ *
+ * @format
+ * @flow
+ */
 import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-const withDispatcher = WrappedComponent => class WithDispatcherComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    const { dispatch, actions } = props;
-    this.dispatcher = bindActionCreators(actions, dispatch);
-  }
+type ReduxPrpops = {};
 
-  render() {
-    return (
-      <WrappedComponent
-        {...this.dispatcher}
-        {...this.props}
-      />
-    );
+
+export default function (
+  ReduxBindActionCreatorWrapper:React.ComponentType<ReduxPrpops>,
+  mapStatetoProps: () => void,
+  actionCreators: () => void
+) : React.ComponentType<ReduxPrpops> {
+  class ReduxContainer extends React.PureComponent<ReduxPrpops, {
+  }> {
+    constructor(props) {
+      super(props);
+      const { dispatch } = props;
+      this.boundActionCreators = bindActionCreators(actionCreators,
+        dispatch);
+    }
+
+    render() {
+      return (
+        <ReduxBindActionCreatorWrapper
+          {...this.props}
+          {...this.boundActionCreators}
+        />
+      );
+    }
   }
-};
-export default connect()(withDispatcher);
+  return connect(mapStatetoProps)(ReduxContainer);
+}

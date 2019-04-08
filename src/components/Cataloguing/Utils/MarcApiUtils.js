@@ -1,13 +1,18 @@
 /* eslint-disable no-use-before-define */
-import { union, sortBy, first } from 'lodash';
+import React from 'react';
+import { union, sortBy, first, includes } from 'lodash';
+import { FormattedMessage } from 'react-intl';
+import { Callout } from '@folio/stripes/components';
 import {
   RECORD_FIELD_STATUS as STATUS,
   SUBFIELD_DELIMITER,
-  SUBFIELD_CHARACTER
+  TAG_NOT_REPEATABLE,
+  TAG_MANDATORY
 } from './MarcConstant';
 import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../shared/Constants';
 
 export const dedupe = (o) => Object.values(o.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
+export const validate = t => includes(TAG_NOT_REPEATABLE, t.code);
 
 /**
  * @description
@@ -27,8 +32,18 @@ export const unionSortAndDedupe = (sortByProp, ...obj) => {
  * @param {*} obj
  */
 export const filterFixedFields = (obj) => {
-  const dedepuObj = dedupe(obj);
-  return dedepuObj.filter(f => f.fixedField !== undefined || f.fixedField).filter(f => f.code !== '008');
+  const dedupeObj = dedupe(obj);
+  return dedupeObj.filter(f => f.fixedField !== undefined || f.fixedField).filter(f => f.code !== '008');
+};
+
+/**
+ * @description
+ *
+ * @param {*} obj
+ */
+export const filterMandatoryFields = (obj) => {
+  const dedupeObj = dedupe(obj);
+  return dedupeObj.filter(f => includes(TAG_MANDATORY, f.code));
 };
 
 /**
@@ -56,6 +71,22 @@ export const handleTagXXXHeaderTypeChange = (props, tag, headerTypeCode) => {
 
 /**
  *
+ * @param {*} message
+ * @param {*} type
+ */
+export const showValidationMessage = (callout: React.RefObject<Callout>, message: string, type?: string) => {
+  callout.current.sendCallout({
+    type: type || 'success',
+    message: (
+      <span>
+        <FormattedMessage id={message} />
+      </span>
+    )
+  });
+};
+
+/**
+ *
  * @param {*} s
  * @returns s - appen SUBFIELD_DELIMITER to @param s
  */
@@ -73,7 +104,7 @@ export const replaceAll = (s: string): string => ((s) ? s.replace(RegExp(String.
  * @param {*} s
  * @returns s - a string with all SUBFIELD_DELIMITER replaced with SUBFIELD_CHARACTER
  */
-export const replaceAllinverted = (s: string): string => ((s) ? s.replace(SUBFIELD_CHARACTER, RegExp(String.fromCharCode(31), 'g')) : EMPTY_STRING);
+export const replaceAllinverted = (s: string): string => ((s) ? s.replace(/\$/g, SUBFIELD_DELIMITER) : EMPTY_STRING);
 
 /**
  *
@@ -100,18 +131,35 @@ export const getFixedField = (tag: Object, typeCode): Object => {
  *
  * @param {*} tag
  */
-export const getEmptyVariableField = (tag?: Object): Object => {
-  return {
+export const getEmptyVariableField = (editMode: boolean, tag?: Object): Object => {
+  return (!editMode) ? {
     code: tag.code || EMPTY_STRING,
     mandatory: false,
     fieldStatus: STATUS.NEW,
     variableField: {
-      keyNumber: tag.keyNumber || -1,
+      keyNumber: tag.keyNumber || 0,
       code: tag.code || EMPTY_STRING,
-      ind1: tag.ind1 || EMPTY_STRING,
-      ind2: tag.ind2 || EMPTY_STRING,
+      ind1: tag.ind1 || EMPTY_SPACED_STRING,
+      ind2: tag.ind2 || EMPTY_SPACED_STRING,
       headerTypeCode: 0,
       displayValue: tag.displayValue || EMPTY_STRING,
+      subfields: [],
+      sequenceNumber: 0,
+      skipInFiling: 0
+    },
+    added: true
+  } : {
+    code: tag.code,
+    mandatory: false,
+    fieldStatus: STATUS.CHANGED,
+    variableField: {
+      keyNumber: tag.variableField.keyNumber,
+      categoryCode: tag.variableField.categoryCode,
+      code: tag.code,
+      ind1: tag.ind1,
+      ind2: tag.ind2,
+      headerTypeCode: 0,
+      displayValue: tag.displayValue,
       subfields: [],
       sequenceNumber: 0,
       skipInFiling: 0

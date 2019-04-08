@@ -1,6 +1,6 @@
 import React from 'react';
 import { isEmpty, first } from 'lodash';
-import { Tag00X, Tag006, Tag007, Tag008, MarcField } from '..';
+import { Tag00X, Tag006, Tag007, Tag008, MarcField } from '.';
 import type { Props } from '../../../core';
 import style from '../Style/style.css';
 import { ActionTypes } from '../../../redux/actions/Actions';
@@ -10,7 +10,7 @@ import {
   TAG006_DISPLAY_VALUE_DEFAULT
 } from '../Utils/MarcConstant';
 import { filterFixedFields } from '../Utils/MarcApiUtils';
-import { tagValuesAction, typeCodeAction } from '../Actions/MarcActionCreator';
+import { tagValuesAction, typeCodeAction } from '../Actions';
 
 type P = Props & {};
 class FixedFields extends React.Component<P, {}> {
@@ -231,7 +231,7 @@ class FixedFields extends React.Component<P, {}> {
       <React.Fragment>
         {this.renderTagxxx(fixedFieldsxxx)}
         {this.renderTag006(fixedFields006)}
-        {/* {this.renderTag007(fixedFields007)} */}
+        {this.renderTag007(fixedFields007)}
         {this.renderTag008(fixedFields008)}
       </React.Fragment>
     );

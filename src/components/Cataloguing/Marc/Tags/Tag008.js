@@ -11,7 +11,7 @@ import { injectCommonProp, Props } from '../../../../core';
 import { ActionTypes } from '../../../../redux/actions';
 import { decamelizify } from '../../../../shared/Function';
 import { RECORD_FIELD_STATUS, TAGS, TAGS_NAME } from '../../Utils/MarcConstant';
-import { changeDisplayValueAction } from '../../Actions/MarcActionCreator';
+import { changeDisplayValueAction } from '../../Actions';
 import * as C from '../../../../shared/Constants';
 
 
@@ -48,8 +48,9 @@ export class Tag008 extends React.Component<Props, {}> {
   };
 
   changeDisplayValue = (e) => {
-    const { store: { getState }, dispatch, change, tag008ValuesResults } = this.props;
+    const { record, store: { getState }, dispatch, change, tag008ValuesResults } = this.props;
     const { currentHeaderTypeCode, isChangedHeaderType } = this.state;
+    const tag008 = first(record.fields.filter(f => f.code === TAGS._008));
     const formData = getState().form.bibliographicRecordForm.values;
     let { jsonReq } = this.state;
     if (isChangedHeaderType) {
@@ -82,6 +83,7 @@ export class Tag008 extends React.Component<Props, {}> {
     if (!isEmpty(data) && !isEmpty(data[`displayvalue-${TAGS._008}`])) {
       const displayValue = data[`displayvalue-${TAGS._008}`].results.displayValue;
       dispatch(change(TAGS._008, displayValue));
+      tag008.fixedField.displayValue = displayValue;
     }
   };
 

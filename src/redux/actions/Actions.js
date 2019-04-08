@@ -1,17 +1,13 @@
-/* MARCCAT ACTIONS TYPES */
-export const HEADER_TYPES_ACTION = {
-  TYPES_006: '@@ui-marccat/HEADER_TYPES_006',
-  TYPES_007: '@@ui-marccat/HEADER_TYPES_007',
-  TYPES_008: '@@ui-marccat/HEADER_TYPES_008',
-};
 
+// eslint-disable-next-line import/prefer-default-export
 export const ActionTypes = {
   SEARCH: '@@ui-marccat/SEARCH',
   SCAN: '@@ui-marccat/SCAN',
   DETAILS: '@@ui-marccat/DETAILS',
   DETAILS_BY_TITLE: '@@ui-marccat/DETAILS_BY_TITLE',
-  QUERY: '@@ui-marccat/QUERY',
+  GET: '@@ui-marccat/GET',
   SETTINGS: '@@ui-marccat/SETTINGS',
+  HISTORY: '@@ui-marccat/HISTORY',
   ASSOCIATED_BIB_REC: '@@ui-marccat/ASSOCIATED_BIBS_REC',
   FETCH_ASSOCIATED_BIB_REQUESTED: '@@ui-marccat/FETCH_ASSOCIATED_BIB_REQUESTED',
   ASSOCIATED_BIB_REC_SUCCESS: '@@ui-marccat/ASSOCIATED_BIB_REC_SUCCESS',

@@ -1,7 +1,24 @@
-import { ENDPOINT, EMPTY_STRING } from '../../../shared/Constants';
+import { ENDPOINT } from '../../../shared/Constants';
 import { ACTION, COMMON_ACTION } from '../../../shared/Action';
 
 // MARC action creator utility
+
+
+/**
+ *
+ * @param {*} payload
+ */
+export const headerTypeAction = (code) => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.HEADER_TYPES_URL,
+      type: `headertype${code}`,
+      params: `code=${code}&lang=ita`,
+    },
+  };
+};
+
 
 /**
  *
@@ -37,7 +54,7 @@ export const fixedFieldByLeaderAction = (payload) => {
  *
  * @param {*} payload
  */
-export const headingAction = (id, payload) => {
+export const createHeadingAction = (id, payload) => {
   return {
     type: ACTION.CREATE,
     data: {
@@ -53,12 +70,12 @@ export const headingAction = (id, payload) => {
  *
  * @param {*} payload
  */
-export const headingDeleteAction = (payload) => {
+export const deleteHeadingAction = (payload) => {
   return {
     type: ACTION.DELETE,
     data: {
       path: ENDPOINT.DELETE_HEADING_URL,
-      type: `deleteHeading-${payload.tag}-` + Date.now(),
+      type: `deleteHeading-${payload.tag}`,
       params: ENDPOINT.DEFAULT_LANG_VIEW,
     },
     payload
@@ -76,7 +93,57 @@ export const changeDisplayValueAction = (tag, payload) => {
       path: ENDPOINT.CHANGE_DISPLAY_VALUE,
       type: `displayvalue-${tag}`,
       params: ENDPOINT.DEFAULT_LANG_VIEW,
-      tag
+      tag,
+    },
+    payload
+  };
+};
+
+/**
+ *
+ * @param {*} payload
+ */
+export const saveRecordAction = (payload) => {
+  return {
+    type: ACTION.CREATE,
+    data: {
+      path: ENDPOINT.BIBLIOGRAPHIC_RECORD,
+      type: `[${payload.bibliographicRecord.id}]-` + new Date(),
+      params: ENDPOINT.DEFAULT_LANG_VIEW,
+      id: payload.bibliographicRecord.id,
+    },
+    payload
+  };
+};
+
+/**
+ *
+ * @param {*} payload
+ */
+export const emptyRecordAction = () => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.EMPTY_RECORD_URL + 408,
+      type: 'emptyRecord',
+      params: ENDPOINT.DEFAULT_LANG_VIEW,
+    },
+  };
+};
+
+/**
+ *
+ * @param {*} id
+ * @param {*} payload
+ */
+export const createRecordAction = (id, payload) => {
+  return {
+    type: ACTION.CREATE,
+    data: {
+      path: ENDPOINT.BIBLIOGRAPHIC_RECORD,
+      type: `createRecord-${id}-` + Date.now(),
+      params: ENDPOINT.DEFAULT_LANG_VIEW,
+      id,
     },
     payload
   };
@@ -87,16 +154,16 @@ export const changeDisplayValueAction = (tag, payload) => {
  * @param {*} id
  * @param {*} payload
  */
-export const deleteRecordAction = (id, payload) => {
+export const deleteRecordAction = (payload) => {
   return {
     type: ACTION.DELETE,
     data: {
-      path: ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id,
-      type: `deleteRecord-${id}-` + Date.now(),
+      path: ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + payload.id,
+      type: `deleteRecord-${payload.id}-` + Date.now(),
       params: 'view=1',
-      id,
-      payload
-    }
+      id: payload.id,
+    },
+    payload
   };
 };
 
@@ -105,45 +172,13 @@ export const deleteRecordAction = (id, payload) => {
  * @param {*} id
  * @param {*} payload
  */
-export const createRecordAction = (payload) => {
-  return {
-    type: ACTION.DELETE,
-    data: {
-      path: ENDPOINT.BIBLIOGRAPHIC_RECORD,
-      type: `record-${payload.bibliographicRecord.id}-` + Date.now(),
-      params: ENDPOINT.DEFAULT_LANG_VIEW,
-      id: payload.bibliographicRecord.id,
-      payload
-    }
-  };
-};
-
-/**
- *
- * @param {*} id
- * @param {*} payload
- */
-export const settingsAction = (data) => {
+export const settingsAction = (payload) => {
   return {
     type: COMMON_ACTION.SETTINGS,
-    data
+    data: {
+      payload
+    }
   };
-};
-
-/**
- *
- * @param {*} item
- * @param {*} props
- */
-export const createNewHeading = (item, props) => {
-  const { dispatch } = props;
-  const heading = {
-    indicator1: item.ind1 || EMPTY_STRING,
-    indicator2: item.ind2 || EMPTY_STRING,
-    stringText:  item.displayValue,
-    tag: item.code
-  };
-  dispatch(headingAction(heading));
 };
 
 /**

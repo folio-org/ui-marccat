@@ -1,12 +1,14 @@
 import { Observable } from 'rxjs/Observable';
-import { qs } from '..';
 import { Redux } from '../helpers/Redux';
 import {
   ACTION,
   REQUEST_MAKE,
   REQUEST_RESOLVE,
-  REQUEST_REJECT } from '../../shared/Action';
-import { ENDPOINT, HTTP_METHOD } from '../../shared/Constants';
+  REQUEST_REJECT,
+  REQUEST_HISTORY,
+  REQUEST_CLEAR
+} from '../../shared/Action';
+import { ENDPOINT } from '../../shared/Constants';
 
 export const EPIC_MODEL_KEY = {
   EMPTY_RECORD: 'emptyRecord',
@@ -53,11 +55,23 @@ export const rejectEpicRequest = (name, data, error) => ({
 });
 
 /**
+ *
+ * @param {*} name
+ * @param {*} data
+ * @param {*} error
+ */
+export const resolveHistoryRequest = (data) => ({
+  type: REQUEST_HISTORY,
+  data,
+});
+
+
+/**
  * The main data store reducer simply uses the handlers defined above
  * @param {Object} state - data store state leaf
  * @param {Object} action - redux action being dispatched
  */
-export function reducer(state = {}, action) {
+export function reducer(state = {}, action, initialState = {}) {
   switch (action.type) {
   case REQUEST_MAKE:
     return Object.assign({
@@ -68,6 +82,14 @@ export function reducer(state = {}, action) {
   case REQUEST_REJECT:
     return Object.assign({
     }, state, Redux.rejectRequestData(action.name, action.data, action.error));
+  case REQUEST_HISTORY:
+    return Object.assign({
+    }, state, Redux.storeHistoryData(action.data));
+  case REQUEST_CLEAR:
+    return () => ({
+      ...state,
+      ...initialState
+    });
   default:
     return state;
   }
@@ -89,10 +111,10 @@ const parseResponseBody = (response) => { // metodo statico
  * @param {*} method - Http method for fetch
  * @returns
  */
-const getHeaders = (method) => {
+const getHeaders = () => {
   const headers = {
     'x-okapi-tenant': 'tnx',
-    'Content-Type': (method === 'PUT' || method === 'POST') ? 'application/vnd.api+json' : 'application/json'
+    'Content-Type': 'application/json'
   };
   return headers;
 };
@@ -102,11 +124,13 @@ const getHeaders = (method) => {
  * @param {Observable} action$ - the observable action
  * @param {Function} store.getState - get's the most recent redux state
  */
+// eslint-disable-next-line no-unused-vars
 export function epic(action$, { getState }) {
   const actionMethods = {
     [ACTION.QUERY]: 'GET',
     [ACTION.FIND]: 'GET',
-    [ACTION.PUT]: 'PUT',
+    [ACTION.UPDATE]: 'PUT',
+    [ACTION.SAVE]: 'POST',
     [ACTION.CREATE]: 'POST',
     [ACTION.DELETE]: 'DELETE',
     [ACTION.LOCK]: 'LOCK',
@@ -116,32 +140,14 @@ export function epic(action$, { getState }) {
   return action$
     .filter(({ type }) => actionMethods[type])
     .mergeMap(({ type, data, payload }) => {
-      const state = getState();
       const method = actionMethods[type];
 
-      const HTTP_GET_METHODS = (type === ACTION.QUERY || type === ACTION.FIND);
-      const REST_METHODS = (method === HTTP_METHOD.PUT || method === HTTP_METHOD.POST || method === HTTP_METHOD.DELETE);
-
       // let url = `${state.okapi.url}${data.path}`;
-      let url = `${ENDPOINT.BASE_URL}${data.path}`;
-      const headers = getHeaders(method, state);
-      let body;
+      const url = `${ENDPOINT.BASE_URL}${data.path}?${(data.params)}`;
+      const headers = getHeaders();
+      const body = JSON.stringify(payload);
 
-      if (HTTP_GET_METHODS && Object.keys(data.params).length !== 0) {
-        url = `${url}?${(data.params)}`;
-      }
-
-      if (data.params.include) {
-        let include = data.params.include;
-        include = Array.isArray(include) ? include.join(',') : include;
-        url = `${url}?${qs.stringify({ include })}`;
-      }
-
-      if (REST_METHODS) {
-        body = JSON.stringify(payload);
-      }
-
-      const promise = fetch(url, { headers, method, body })
+      const promise = fetch(url, { method, headers, body })
         .then(response => Promise.all([response.ok, parseResponseBody(response)]))
         .then(([ok, body]) => (ok ? body : Promise.reject(body.errors))); // eslint-disable-line no-shadow
 

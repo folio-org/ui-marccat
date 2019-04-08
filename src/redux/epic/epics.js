@@ -3,6 +3,7 @@
 import { Observable } from 'rxjs';
 import { of as of$ } from 'rxjs/observable/of';
 import { concat as concat$ } from 'rxjs/observable/concat';
+import { map } from 'rxjs/operators/map';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import { ActionTypes } from '../actions/Actions';
 import * as marccatActions from '../actions';
@@ -115,7 +116,7 @@ export const templateByIdEpic = (action$, store) => action$.ofType(ActionTypes.T
   .switchMap((d) => concat$(
     of$(marccatActions.isFetchingTemplateByIdRequest(true)),
     ajax
-      .getJSON(buildUrl(ENDPOINT.EMPTY_RECORD_URL + `${d.query}`, 'view=1&lang=ita'), ENDPOINT.HEADERS)
+      .getJSON(buildUrl(ENDPOINT.EMPTY_RECORD_URL + `${d.query}`, ENDPOINT.DEFAULT_LANG_VIEW), ENDPOINT.HEADERS)
       .map(record => marccatActions.fetchTemplateById(record))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
@@ -123,7 +124,7 @@ export const recordDetailEpic = (action$, store) => action$.ofType(ActionTypes.L
   .switchMap((d) => concat$(
     of$(marccatActions.isRecordDetailRequest(true)),
     ajax
-      .getJSON(buildUrl(ENDPOINT.BIBLIOGRAPHIC_RECORD + `/${d.id}`, 'view=1&lang=ita'), ENDPOINT.HEADERS)
+      .getJSON(buildUrl(ENDPOINT.BIBLIOGRAPHIC_RECORD + `/${d.id}`, ENDPOINT.DEFAULT_LANG_VIEW), ENDPOINT.HEADERS)
       .map(record => marccatActions.recordDetailSuccess(record))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));

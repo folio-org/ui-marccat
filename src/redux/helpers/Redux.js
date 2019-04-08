@@ -83,11 +83,24 @@ Redux.resolveRequestData = (model, data, payload) => { // metodo statico
       isPending: false,
       isResolved: true,
       isRejected: false,
-      headingNumber: payload.headingNumber || null,
-      deleted: data.payload || [],
-      payload: payload.results || [],
       results: payload || [],
       query: data.query,
+      meta: data.meta,
+      errors: data.errors
+    }
+  };
+};
+
+/**
+ *
+ * @param {*} data
+ * @returns
+ */
+Redux.storeHistoryData = (data) => { // metodo statico
+  return {
+    history: {
+      timestamp: new Date(),
+      ...data,
       meta: data.meta,
       errors: data.errors
     }
@@ -105,6 +118,7 @@ Redux.rejectRequestData = (model, data, errors) => { // metodo statico
   return {
     [model]: {
       timestamp: new Date(),
+      action: model,
       path: data.path,
       resource: data.type,
       host: window.location.hostname,
@@ -150,8 +164,6 @@ Redux.reduce = (store, id) => (
 );
 
 Redux.observe = (reducerKey: Object, cb: () => void) => {
-  // eslint-disable-next-line no-alert
-  // E' abilitato solo in ES7 come Array.observe
   Object.observe(reducerKey, cb);
 };
 
@@ -160,7 +172,7 @@ Redux.deduplicate = (obj, key) => (
 );
 
 Redux.multiDispatch = (...actions: Array<any>) => {
-  return (dispatch) => actions.map((a: Object) => dispatch(a));
+  return ({ dispatch }) => actions.map((a: Object) => dispatch((a)));
 };
 
 Redux.reset = (store: Object, reducer: Object): void => {

@@ -22,7 +22,8 @@ import {
   headingByTagReducer,
   change008ByLeaderReducer,
   settingsReducer,
-  panelsReducer
+  panelsReducer,
+  historyReducer as history
 } from './reducers/Reducer';
 import {
   searchEpic,
@@ -74,6 +75,7 @@ export const reducer = combineReducers({
   change008ByLeader: change008ByLeaderReducer,
   settings: settingsReducer,
   panels: panelsReducer,
+  history,
   data
 });
 

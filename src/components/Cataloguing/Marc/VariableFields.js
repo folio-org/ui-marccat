@@ -18,7 +18,7 @@ class VariableFields extends React.Component<Props, {}> {
 
   handleAdd = () => {
     this.setState(({ fields }) => ({
-      fields: fields.concat(getEmptyVariableField({})),
+      fields: fields.concat(getEmptyVariableField(false, {})),
     }));
   }
 
@@ -41,7 +41,7 @@ class VariableFields extends React.Component<Props, {}> {
       <MarcEditableList
         createButtonLabel={translate({ id: 'ui-marccat.cataloging.variablefield.section.add.newtag' })}
         contentData={fields}
-        itemTemplate={getEmptyVariableField({})}
+        itemTemplate={getEmptyVariableField(false, {})}
         visibleFields={[
           'code',
           'ind1',

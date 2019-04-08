@@ -25,7 +25,7 @@ export const ENDPOINT = {
     'x-okapi-tenant': 'tnx',
   },
   DEFAULT_LANG_VIEW: 'lang=ita&view=1',
-  BASE_URL: 'http://151.1.165.20:8080/marccat',
+  BASE_URL: 'http://127.0.0.1:8080/marccat',
   MERGED_SEARCH_URL: '/mergedSearch',
   SEARCH_URL: '/searchVertical',
   SEARCH_URL_JSON: '/search',
@@ -55,6 +55,7 @@ export const FILTER_NAME = {
   AUTHORITY: 'recordType.Authority records',
 };
 
+
 export const SORT_TYPE = {
   TITLE: 4,  // authority and bibliographic
   UNIFORM_TITLE: 2096, // bibliographic only
@@ -67,10 +68,16 @@ export const SORT_TYPE = {
 
 
 // REDUX DATA STORE MANAGEMENT
-export const STATE_MANAGEMENT = {
+export const REDUX = {
   REDUCER: 'marccat',
   EPIC: 'marccat',
+  FORM: {
+    SEARCH_FORM: 'serchForm',
+    BIBLIOGRAPHIC_FORM: 'bibliographicRecordForm',
+    EDITABLE_FORM: 'marcEditableListForm'
+  }
 };
+
 
 export const SEPARATOR = ';;;';
 export const EMPTY_PARAMETER = -1;

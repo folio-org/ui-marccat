@@ -25,10 +25,12 @@ export class Tag007 extends React.Component<Props, {}> {
     handleTagXXXHeaderTypeChange(this.props, tag, headerTypeCode);
   }
 
-  changeDisplayValue = () => {}
+  changeDisplayValue = () => {
+    
+  }
 
   render() {
-    const { headerTypesResult, tag007ValuesResults } = this.props;
+    const { headerTypesResult, tag007ValuesResults, change, dispatch } = this.props;
     const remappedValues = [];
     if (tag007ValuesResults) {
       const result = Object.keys(tag007ValuesResults.results).map((key) => tag007ValuesResults.results[key]);
@@ -59,6 +61,7 @@ export class Tag007 extends React.Component<Props, {}> {
                 return elem.map(item => {
                   let exactDisplayValue = EMPTY_STRING;
                   item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue));
+                  dispatch(change(`${TAGS_NAME._007}-${item.name}`, exactDisplayValue));
                   return (
                     <Col xs={4}>
                       <Field

@@ -224,8 +224,8 @@ class FixedFields extends React.Component<P, {}> {
   render() {
     const { fixedFields } = this.state;
     const fixedFieldsxxx = filterFixedFields(fixedFields);
-    const fixedFields006 = first(fixedFields.filter(f => f.fixedField.code === TAGS._006));
-    const fixedFields007 = first(fixedFields.filter(f => f.fixedField.code === TAGS._007));
+    // const fixedFields006 = first(fixedFields.filter(f => f.fixedField.code === TAGS._006));
+    // const fixedFields007 = first(fixedFields.filter(f => f.fixedField.code === TAGS._007));
     const fixedFields008 = first(fixedFields.filter(f => f.fixedField.code === TAGS._008));
     return (
       <React.Fragment>

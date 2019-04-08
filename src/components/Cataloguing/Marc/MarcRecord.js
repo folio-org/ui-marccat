@@ -19,13 +19,13 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
 import { FormattedMessage } from 'react-intl';
-import { union, sortedUniqBy, includes, intersection, first } from 'lodash';
+import { union, sortedUniqBy, includes, first } from 'lodash';
 import { Redux, ReduxForm } from '../../../redux/helpers/Redux';
 import {
-    TAG_WITH_NO_HEADING_ASSOCIATED,
-    replaceAllinverted,
-    RECORD_ACTION,
-    RECORD_FIELD_STATUS
+  TAG_WITH_NO_HEADING_ASSOCIATED,
+  replaceAllinverted,
+  RECORD_ACTION,
+  RECORD_FIELD_STATUS
 } from '..';
 import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../../lib';
 import { ActionTypes } from '../../../redux/actions/Actions';
@@ -34,8 +34,8 @@ import * as C from '../../../shared/Constants';
 import { buildUrl, findParam } from '../../../shared/Function';
 import style from '../Style/style.css';
 import { injectCommonProp, Props } from '../../../core';
-import { SUBFIELD_DELIMITER, TAG_NOT_REPEATABLE } from '../Utils/MarcConstant';
-import { filterMandatoryFields, showValidationMessage } from '../Utils/MarcApiUtils';
+import { SUBFIELD_DELIMITER } from '../Utils/MarcConstant';
+import { filterMandatoryFields } from '../Utils/MarcApiUtils';
 import * as MarcAction from '../Actions';
 import { FixedFields, MarcLeader, VariableFields } from '.';
 

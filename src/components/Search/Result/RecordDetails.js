@@ -37,7 +37,7 @@ class RecordDetails extends React.Component<P, {}> {
     const recordDetailsArray = recordDetails.split('\n');
     const tag245 = getTag245(recordDetailsArray);
     const title245 = getTitle245(recordDetailsArray);
-    const tags: FixedFields<String, String, String, Array>[] = mapFields(detail.fields);
+    const tags: FixedFields<String, String, String, Array>[] = mapFields(detail[0].data.fields);
     return (
       <AccordionSet>
         <Accordion

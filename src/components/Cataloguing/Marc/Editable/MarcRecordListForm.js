@@ -139,7 +139,7 @@ class EditableListForm extends React.Component {
   }
 
   onDelete(fields, index) {
-    const item = this.normalizeField(fields, index);
+    const item = fields.get(index);
     sortBy(this.props.contentData, 'code');
     this.props.contentData.splice(index, 1);
     const res = this.props.onDelete(item);

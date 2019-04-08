@@ -19,66 +19,68 @@ type P = Props & {
   items: Array<any>,
 }
 
-function RecordDetails({ translate, ...props }: P) {
-  const { items, checkDetailsInRow, data, detailPaneMeta, checkDetailsBibRec } = props;
-  const id = detailPaneMeta.meta['001'];
-  let detailSelected;
-  let mergedResults;
-  if (data.search.dataOld !== undefined) {
-    mergedResults = [...data.search.bibliographicResults, ...data.search.oldBibArray];
-    detailSelected = mergedResults.filter(item => id === item.data.fields[0]['001'])[0].data;
-  } else {
-    detailSelected = data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001'])[0].data;
+class RecordDetails extends React.Component<P, {}> {
+  constructor(props:P) {
+    super(props);
+    const id = props.detailPaneMeta.meta['001'];
+    this.state = {
+      detail: props.data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001'])
+    };
   }
-  const recordDetails = items.replace('LEADER', '000');
-  const recordDetailsArray = recordDetails.split('\n');
-  const tag245 = getTag245(recordDetailsArray);
-  const title245 = getTitle245(recordDetailsArray);
-  const tags: FixedFields<String, String, String, Array>[] = mapFields(detailSelected.fields);
-  return (
-    <AccordionSet>
-      <Accordion
-        separator={false}
-        header={FilterAccordionHeader}
-        label={checkDetailsInRow !== checkDetailsBibRec ? translate({ id: 'ui-marccat.search.details.bibliographic' }) : translate({ id: 'ui-marccat.search.details.authority' })}
-      >
-        <div className={style.withSpace}>
-          <KeyValue
-            label={tag245 === EMPTY_STRING ? getTag100(recordDetailsArray) : tag245 + 'Title'}
-            value={title245 === EMPTY_STRING ? getTitle100(recordDetailsArray) : title245}
-          />
-          {tags.filter(t => parseInt(t.key, 10) < 10).map((t: FixedFields<String, String, String, Array>) => (
-            <React.Fragment>
-              <Row>
-                <Col xs={3}>{t.key}</Col>
-                <Col xs={9}>{t.value}</Col>
-              </Row>
-            </React.Fragment>
-          ))}
-          {tags.filter(t => t.code).map((t: FixedFields<String, String, String, Array>) => (
-            <React.Fragment>
-              <Row>
-                <Col xs={1}>{t.code}</Col>
-                <Col xs={1}>{t.ind1}</Col>
-                <Col xs={1}>{t.ind2}</Col>
-                <Col xs={9}>
-                  {t.subfield.map(x => {
-                    return '$' + x.key + x.value;
-                  })
-                  }
-                </Col>
-              </Row>
-            </React.Fragment>
-          ))}
-        </div>
-        <InventoryPluggableBtn {...props} buttonLabel={translate({ id: 'ui-marccat.search.goto.inventory' })} />
-      </Accordion>
-      {checkDetailsBibRec === checkDetailsInRow &&
-        <AssociatedBib {...props} />}
-    </AccordionSet>
-  );
-}
 
+  render() {
+    const { store: { dispatch }, items, checkDetailsInRow, translate, checkDetailsBibRec } = this.props;
+    const { detail } = this.state;
+    dispatch({ type: ActionTypes.SETTINGS, data: { detail } });
+    const recordDetails = items.replace('LEADER', '000');
+    const recordDetailsArray = recordDetails.split('\n');
+    const tag245 = getTag245(recordDetailsArray);
+    const title245 = getTitle245(recordDetailsArray);
+    const tags: FixedFields<String, String, String, Array>[] = mapFields(detail[0].data.fields);
+    return (
+      <AccordionSet>
+        <Accordion
+          separator={false}
+          header={FilterAccordionHeader}
+          label={checkDetailsInRow !== checkDetailsBibRec ? translate({ id: 'ui-marccat.search.details.bibliographic' }) : translate({ id: 'ui-marccat.search.details.authority' })}
+        >
+          <div className={style.withSpace}>
+            <KeyValue
+              label={tag245 === EMPTY_STRING ? getTag100(recordDetailsArray) : tag245 + 'Title'}
+              value={title245 === EMPTY_STRING ? getTitle100(recordDetailsArray) : title245}
+            />
+            {tags.filter(t => parseInt(t.key, 10) < 10).map((t: FixedFields<String, String, String, Array>) => (
+              <React.Fragment>
+                <Row>
+                  <Col xs={3}>{t.key}</Col>
+                  <Col xs={9}>{t.value}</Col>
+                </Row>
+              </React.Fragment>
+            ))}
+            {tags.filter(t => t.code).map((t: FixedFields<String, String, String, Array>) => (
+              <React.Fragment>
+                <Row>
+                  <Col xs={1}>{t.code}</Col>
+                  <Col xs={1}>{t.ind1}</Col>
+                  <Col xs={1}>{t.ind2}</Col>
+                  <Col xs={9}>
+                    {t.subfield.map(x => {
+                      return '$' + x.key + x.value;
+                    })
+                    }
+                  </Col>
+                </Row>
+              </React.Fragment>
+            ))}
+          </div>
+          <InventoryPluggableBtn {...this.props} buttonLabel={translate({ id: 'ui-marccat.search.goto.inventory' })} />
+        </Accordion>
+        {checkDetailsBibRec === checkDetailsInRow &&
+          <AssociatedBib {...this.props} />}
+      </AccordionSet>
+    );
+  }
+}
 export default (connect(
   ({ marccat: { details, associatedRecords } }) => ({
     items: details.records,

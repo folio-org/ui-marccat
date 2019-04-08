@@ -19,12 +19,13 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
 import { FormattedMessage } from 'react-intl';
-import { union, sortedUniqBy, includes, intersection, first } from 'lodash';
+import { union, sortedUniqBy, includes, first } from 'lodash';
 import { Redux, ReduxForm } from '../../../redux/helpers/Redux';
 import {
   TAG_WITH_NO_HEADING_ASSOCIATED,
   replaceAllinverted,
-  RECORD_ACTION
+  RECORD_ACTION,
+  RECORD_FIELD_STATUS
 } from '..';
 import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../../lib';
 import { ActionTypes } from '../../../redux/actions/Actions';
@@ -33,8 +34,8 @@ import * as C from '../../../shared/Constants';
 import { buildUrl, findParam } from '../../../shared/Function';
 import style from '../Style/style.css';
 import { injectCommonProp, Props } from '../../../core';
-import { SUBFIELD_DELIMITER, TAG_NOT_REPEATABLE } from '../Utils/MarcConstant';
-import { filterMandatoryFields, showValidationMessage } from '../Utils/MarcApiUtils';
+import { SUBFIELD_DELIMITER } from '../Utils/MarcConstant';
+import { filterMandatoryFields } from '../Utils/MarcApiUtils';
 import * as MarcAction from '../Actions';
 import { FixedFields, MarcLeader, VariableFields } from '.';
 
@@ -112,20 +113,20 @@ export class MarcRecord extends React.Component<Props, {
 
   onCreate = item => {
     const { store } = this.props;
-    const { variableField: { code, ind1, ind2 } } = item;
+    const { variableField: { code, ind1, ind2, headingNumber } } = item;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const displayVal: string = replaceAllinverted(item.variableField.displayValue);
     ReduxForm.resolve(store, 'marcEditableListForm').items[0] = item;
-    const heading = { ind1, ind2, displayValue: displayVal, tag: code };
+    const heading = { ind1, ind2, headingNumber, displayValue: displayVal, tag: code };
 
     const tagVariableData = store.getState().form.marcEditableListForm.values.items;
     const temp = [];
     tagVariableData.map(k => temp.push(k.code));
 
-    if (intersection(TAG_NOT_REPEATABLE, temp) > 0) {
-      showValidationMessage(this.callout, 'Non sono ammessi tag repeatble', 'error');
-      return;
-    }
+    // if (intersection(TAG_NOT_REPEATABLE, temp) > 0) {
+    //   showValidationMessage(this.callout, 'Non sono ammessi tag repeatble', 'error');
+    //   return;
+    // }
 
     if (!cretaeHeadingForTag) {
       post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
@@ -142,6 +143,7 @@ export class MarcRecord extends React.Component<Props, {
   onDelete = item => {
     const { dispatch } = this.props;
     const { variableField } = item;
+    item.fieldStatus = RECORD_FIELD_STATUS.DELETED;
     const heading = {
       ind1: variableField.ind1,
       ind2: variableField.ind2,

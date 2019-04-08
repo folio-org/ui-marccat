@@ -127,6 +127,7 @@ class SearchPanel extends React.Component<P, {}> {
           || indexForQuery === 'LL '
           || indexForQuery === 'BC '
           || indexForQuery === 'CP '
+          || indexForQuery === 'PP '
           || indexForQuery === 'PW ') {
           dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: bibQuery, queryAuth: EMPTY_STRING, from: '1', to: '30' });
           this.handleSearchHistory({

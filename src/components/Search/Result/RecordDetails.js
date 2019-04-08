@@ -14,7 +14,6 @@ import { EMPTY_STRING } from '../../../shared/Constants';
 import style from '../../../styles/common.css';
 import { mapFields } from '../Utils/SearchUtils';
 import { FixedFields } from '../../../models/model';
-import { ActionTypes } from '../../../redux/actions';
 
 type P = Props & {
   items: Array<any>,

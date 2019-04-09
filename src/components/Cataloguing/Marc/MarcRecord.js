@@ -25,15 +25,13 @@ import {
   TAG_WITH_NO_HEADING_ASSOCIATED,
   replaceAllinverted,
   RECORD_ACTION,
-  RECORD_FIELD_STATUS
 } from '..';
 import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../../lib';
 import { ActionTypes } from '../../../redux/actions/Actions';
-import { post, put } from '../../../core/api/HttpService';
+import { post } from '../../../core/api/HttpService';
 import * as C from '../../../shared/Constants';
 import { buildUrl, findParam, Localize } from '../../../shared/Function';
 import { injectCommonProp, Props } from '../../../core';
-import { SUBFIELD_DELIMITER } from '../Utils/MarcConstant';
 import { filterMandatoryFields, showValidationMessage } from '../Utils/MarcApiUtils';
 import * as MarcAction from '../Actions';
 import { FixedFields, MarcLeader, VariableFields } from '.';
@@ -81,30 +79,6 @@ export class MarcRecord extends React.Component<Props, {
     const emptyRecordTemplate = Object.assign({}, emptyRecord.results);
     return (!isEditMode) ? emptyRecordTemplate : recordDetail;
   };
-
-  onUpdate = item => {
-    // eslint-disable-next-line prefer-const
-    const { store } = this.props;
-    let { variableField: { displayValue, keyNumber, categoryCode } } = item;
-    const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
-    const heading = {
-      ind1: ind1 || C.SPACED_STRING_DOUBLE_QUOTE,
-      ind2: ind2 || C.SPACED_STRING_DOUBLE_QUOTE,
-      categoryCode,
-      keyNumber,
-      displayValue: displayValue.replace(/\$/g, SUBFIELD_DELIMITER),
-      tag: code
-    };
-    ReduxForm.resolve(store, C.REDUX.FORM.EDITABLE_FORM).items[0] = item;
-    if (!cretaeHeadingForTag) {
-      put(buildUrl(C.ENDPOINT.UPDATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
-        .then((r) => { return r.json(); }).then((data) => {
-          categoryCode = data.categoryCode;
-          keyNumber = data.keyNumber;
-          displayValue = data.displayValue;
-        });
-    }
-  }
 
   asyncCreateHeading = async (item, heading) => {
     await post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
@@ -307,7 +281,6 @@ export class MarcRecord extends React.Component<Props, {
                       <VariableFields
                         fields={bibliographicRecord.fields.filter(f => f.fixedField === undefined || !f.fixedField)}
                         onDelete={this.onDelete}
-                        onUpdate={this.onUpdate}
                         onCreate={this.onCreate}
                         {...this.props}
                       />

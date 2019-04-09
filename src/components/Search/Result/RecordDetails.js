@@ -4,6 +4,7 @@
  */
 import React from 'react';
 import { connect } from 'react-redux';
+import { isEmpty } from 'lodash';
 import { AccordionSet, Col, Row, FilterAccordionHeader, Accordion } from '@folio/stripes/components';
 import InventoryPluggableBtn from '../Button/Inventory';
 import type { Props } from '../../../core';
@@ -14,6 +15,7 @@ import style from '../Style/index.css';
 import { mapFields } from '../Utils/SearchUtils';
 import { FixedFields } from '../../../models/model';
 import { SUBFIELD_CHARACTER } from '../../Cataloguing/Utils/MarcConstant';
+import { findParam } from '../../../redux';
 
 type P = Props & {
   items: Array<any>,
@@ -23,6 +25,7 @@ class RecordDetails extends React.Component<P, {}> {
   constructor(props:P) {
     super(props);
     const id = props.detailPaneMeta.meta['001'];
+    const marcRecordDetail = props.datastore.marcRecordDetail;
     let mergedResults;
     let detailSelected;
     if (props.data.search.dataOld !== undefined) {
@@ -31,17 +34,28 @@ class RecordDetails extends React.Component<P, {}> {
     } else {
       detailSelected = props.data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001']);
     }
+    props.dispatch({ type: ActionTypes.SETTINGS, data: { detailSelected } });
     this.state = {
-      detail: detailSelected
+      detail: detailSelected,
+      recordDetails: marcRecordDetail,
+      recordId: findParam('id')
     };
   }
 
   render() {
-    const { store: { dispatch }, checkDetailsInRow, translate, checkDetailsBibRec, datastore: { marcRecordDetail } } = this.props;
-    const { detail } = this.state;
-    dispatch({ type: ActionTypes.SETTINGS, data: { detail } });
-    const tags = (detail[0].data.fields.length > 0) ? mapFields(detail[0].data.fields) : [];
-    return (
+    const { recorDetaild, checkDetailsInRow, data: { settings }, translate, checkDetailsBibRec, datastore: { marcRecordDetail } } = this.props;
+    const { recordId, recordDetails, detail } = this.state;
+    const tags = [];
+    const currentRecord = (recorDetaild || marcRecordDetail || detail || settings.detail);
+    if (!isEmpty(currentRecord)) {
+      if (currentRecord.id && currentRecord.id !== recordId) {
+        this.setState({
+          recordDetails: currentRecord,
+        });
+      }
+      mapFields(currentRecord.results.fields);
+    }
+    return (recordDetails) ? (
       <AccordionSet>
         <Accordion
           separator={false}
@@ -75,15 +89,14 @@ class RecordDetails extends React.Component<P, {}> {
         </Accordion>
         {checkDetailsBibRec === checkDetailsInRow &&
           <AssociatedBib {...this.props} />}
-      </AccordionSet>
-    );
+      </AccordionSet>) : (<div />);
   }
 }
 export default (connect(
   state => ({
+    recorDetaild: state.marccat.data.marcRecordDetail,
     items: state.marccat.details.records,
     checkDetailsInRow: state.marccat.details.recordType,
     checkDetailsBibRec: state.marccat.associatedRecords.recordType,
-    recorDetaild: state.marccat.data.marcRecordDetail
   }), () => ({})
 )(RecordDetails));

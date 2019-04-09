@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-import { includes } from 'lodash';
 import { languageFilterMap, formatFilterMap } from '../Filter/FilterMapper';
 import { EMPTY_STRING } from '../../../shared/Constants';
 import { FixedFields, BaseFixedFields } from '../../../models';
@@ -24,7 +23,7 @@ export const isAuthorityRecord = (meta) => {
 
 export const transitionToParams = (key, value) => {
   const url = window.location.pathname;
-  return includes(url, `${key}=${value}`);
+  return url.concat(`${key}=${value}`);
 };
 
 export const If = (k) => (k) || undefined;

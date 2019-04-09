@@ -124,7 +124,7 @@ class EditableListForm extends React.Component {
 
   onSave(fields, index) {
     const item = this.normalizeField(fields, index);
-    const callback = (item.variableField.keyNumber > 0) ? this.props.onUpdate : this.props.onCreate;
+    const callback = this.props.onCreate;
     const res = callback(item);
     Promise.resolve(res).then(
       () => {

@@ -120,7 +120,7 @@ export class SearchResults extends React.Component<P, {}> {
   };
 
   handleDetails = (e, meta) => {
-    const { store: { dispatch }, data } = this.props;
+    const { store: { dispatch }, data, router } = this.props;
     const id = meta['001'];
     dispatch(searchDetailAction(id));
     dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: false });
@@ -136,7 +136,8 @@ export class SearchResults extends React.Component<P, {}> {
         detailPaneMeta: {
           meta,
           title: 'Auth. • ' + id,
-          subTitle: meta['100']
+          subTitle: meta['100'],
+          detail: detailSelected,
         }
       });
     } else {
@@ -146,11 +147,13 @@ export class SearchResults extends React.Component<P, {}> {
         detailPaneMeta: {
           meta,
           title: 'Bib. • ' + id,
-          subTitle: meta['245']
+          subTitle: meta['245'],
+          detail: detailSelected
         }
       });
     }
     dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
+    router.push(`/marccat/search?id=${id}`);
   };
 
   renderRightMenuEdit = props => {

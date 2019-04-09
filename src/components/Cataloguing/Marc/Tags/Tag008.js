@@ -11,8 +11,9 @@ import { injectCommonProp, Props } from '../../../../core';
 import { ActionTypes } from '../../../../redux/actions';
 import { decamelizify } from '../../../../shared/Function';
 import { RECORD_FIELD_STATUS, TAGS, TAGS_NAME } from '../../Utils/MarcConstant';
-import { changeDisplayValueAction } from '../../Actions';
 import * as C from '../../../../shared/Constants';
+import { buildUrl } from '../../../../redux';
+import { post } from '../../../../core/api/HttpService';
 
 
 export class Tag008 extends React.Component<Props, {}> {
@@ -20,7 +21,7 @@ export class Tag008 extends React.Component<Props, {}> {
     super(props);
     this.state = {
       isChangedHeaderType: false,
-      currentHeaderTypeCode: String,
+      currentHeaderTypeCode: 0,
       jsonReq: {}
     };
     this.handleOnChange = this.handleOnChange.bind(this);
@@ -48,7 +49,7 @@ export class Tag008 extends React.Component<Props, {}> {
   };
 
   changeDisplayValue = (e) => {
-    const { record, store: { getState }, dispatch, change, tag008ValuesResults } = this.props;
+    const { record, store: { getState }, tag008ValuesResults } = this.props;
     const { currentHeaderTypeCode, isChangedHeaderType } = this.state;
     const tag008 = first(record.fields.filter(f => f.code === TAGS._008));
     const formData = getState().form.bibliographicRecordForm.values;
@@ -77,19 +78,21 @@ export class Tag008 extends React.Component<Props, {}> {
       changedFieldValue = e.target.value;
     }
     jsonReq[changedFieldLabel] = changedFieldValue;
-    dispatch(changeDisplayValueAction(TAGS._008, jsonReq));
-    const data = getState().marccat.data;
-    // this.setState({ jsonReq });
-    if (!isEmpty(data) && !isEmpty(data[`displayvalue-${TAGS._008}`])) {
-      const displayValue = data[`displayvalue-${TAGS._008}`].results.displayValue;
-      dispatch(change(TAGS._008, displayValue));
-      tag008.fixedField.displayValue = displayValue;
-    }
+
+    this.asyncChangeDisplayValue(jsonReq);
   };
 
+  asyncChangeDisplayValue = async (jsonReq) => {
+    const { dispatch, change } = this.props;
+    await post(buildUrl(C.ENDPOINT.CHANGE_DISPLAY_VALUE, C.ENDPOINT.DEFAULT_LANG_VIEW), jsonReq)
+      .then((r) => { return r.json(); }).then((data) => {
+        dispatch(change(TAGS._008, data.displayValue));
+      });
+  }
+
   render() {
-    const { headerTypesResult, tag008ValuesResults, leaderValue, newValuesFromChangedLeader, dispatch, change } = this.props;
-    const { isChangedHeaderType } = this.state;
+    const { headerTypesResult, store: { getState }, tag008ValuesResults, leaderValue, newValuesFromChangedLeader, dispatch, change } = this.props;
+    const { isChangedHeaderType, currentHeaderTypeCode, jsonReq } = this.state;
     if (!tag008ValuesResults) {
       this.populateFirstAccess();
     }
@@ -98,11 +101,23 @@ export class Tag008 extends React.Component<Props, {}> {
       const result = Object.keys(tag008ValuesResults.results).map((key) => tag008ValuesResults.results[key]);
       remappedValues.push(result);
     }
-    const { currentHeaderTypeCode } = this.state;
+    const formData = getState().form.bibliographicRecordForm.values;
     if (newValuesFromChangedLeader && newValuesFromChangedLeader.headerTypeCode !== currentHeaderTypeCode) {
       dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: newValuesFromChangedLeader.headerTypeCode });
       dispatch(change(TAGS_NAME._008, newValuesFromChangedLeader.headerTypeCode));
       this.setState({ currentHeaderTypeCode: newValuesFromChangedLeader.headerTypeCode });
+      let json = Object.assign({}, jsonReq);
+      json = {};
+      json.dateFirstPublication = '    ';
+      json.dateLastPublication = '    ';
+      json.dateEnteredOnFile = getState().form.bibliographicRecordForm.values[TAGS._008].substring(0, 6);
+      json.categoryCode = 1;
+      json.sequenceNumber = 0;
+      json.headerTypeCode = currentHeaderTypeCode;
+      json.code = TAGS._008;
+      json.languageCode = formData['Tag008-languageCode'] || 'ita';
+      Object.keys(tag008ValuesResults.results).map((key) => tag008ValuesResults.results[key]).map((x) => json[x.name] = x.defaultValue);
+      this.asyncChangeDisplayValue(json);
     }
 
     return (headerTypesResult) ? (
@@ -155,7 +170,7 @@ export class Tag008 extends React.Component<Props, {}> {
                       label={decamelizify(`${item.name}`, C.EMPTY_SPACED_STRING)}
                       dataOptions={item.dropdownSelect}
                       onChange={this.changeDisplayValue}
-                      selected={exactDisplayValue}
+                      placeholder={exactDisplayValue}
                     />
                   </Col>
                 );

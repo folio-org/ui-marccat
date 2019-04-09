@@ -53,7 +53,6 @@ export class MarcRecord extends React.Component<Props, {
     this.handleClose = this.handleClose.bind(this);
     this.callout = React.createRef();
     this.onCreate = this.onCreate.bind(this);
-    this.onUpdate = this.onUpdate.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.saveRecord = this.saveRecord.bind(this);
     this.deleteRecord = this.deleteRecord.bind(this);
@@ -121,17 +120,14 @@ export class MarcRecord extends React.Component<Props, {
 
   onCreate = item => {
     const { store } = this.props;
-    const { variableField: { code, ind1, ind2, headingNumber } } = item;
+    const { variableField: { code, ind1, ind2, categoryCode, keyNumber } } = item;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
-    const displayVal: string = replaceAllinverted(item.variableField.displayValue);
+    const displayVal: string = replaceAllinverted(item.variableField.displayValue)
+    item.variableField.displayValue = displayVal;
     ReduxForm.resolve(store, C.REDUX.FORM.EDITABLE_FORM).items[0] = item;
-    const heading = { ind1, ind2, headingNumber, displayValue: displayVal, tag: code };
+    const heading = { ind1: ind1 || C.EMPTY_SPACED_STRING, ind2: ind2 || EMPTY_SPACED_STRING, displayValue: displayVal, tag: code, categoryCode, keyNumber };
 
-    if (!cretaeHeadingForTag) {
-      this.asyncCreateHeading(item, heading);
-    } else {
-      item.variableField.displayValue = displayVal;
-    }
+    if (!cretaeHeadingForTag) { this.asyncCreateHeading(item, heading); }
   }
 
   onDelete = async item => {
@@ -144,7 +140,7 @@ export class MarcRecord extends React.Component<Props, {
     const tagVariableData = getState().form.marcEditableListForm.values.items;
 
     const bibliographicRecord = this.getCurrentRecord();
-    bibliographicRecord.leader.value = formData.Leader;
+    bibliographicRecord.leader.value = formData.leader;
 
     // eslint-disable-next-line no-unused-vars
     const recordTemplates = Object.assign({}, emptyRecord.results);

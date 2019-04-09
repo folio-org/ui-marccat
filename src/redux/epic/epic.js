@@ -1,4 +1,5 @@
-import { Observable } from 'rxjs/Observable';
+import { from } from 'rxjs/observable/from';
+import { of } from 'rxjs/observable/of';
 import { Redux } from '../helpers/Redux';
 import {
   ACTION,
@@ -9,6 +10,8 @@ import {
   REQUEST_CLEAR
 } from '../../shared/Action';
 import { ENDPOINT } from '../../shared/Constants';
+
+const initialState = {};
 
 export const EPIC_MODEL_KEY = {
   EMPTY_RECORD: 'emptyRecord',
@@ -71,7 +74,7 @@ export const resolveHistoryRequest = (data) => ({
  * @param {Object} state - data store state leaf
  * @param {Object} action - redux action being dispatched
  */
-export function reducer(state = {}, action, initialState = {}) {
+export function reducer(state = initialState, action) {
   switch (action.type) {
   case REQUEST_MAKE:
     return Object.assign({
@@ -86,10 +89,10 @@ export function reducer(state = {}, action, initialState = {}) {
     return Object.assign({
     }, state, Redux.storeHistoryData(action.data));
   case REQUEST_CLEAR:
-    return () => ({
+    return {
       ...state,
       ...initialState
-    });
+    };
   default:
     return state;
   }
@@ -151,8 +154,8 @@ export function epic(action$, { getState }) {
         .then(response => Promise.all([response.ok, parseResponseBody(response)]))
         .then(([ok, body]) => (ok ? body : Promise.reject(body.errors))); // eslint-disable-line no-shadow
 
-      return Observable.from(promise)
+      return from(promise)
         .map(response => resolveEpicRequest(data.type, data, response))
-        .catch(errors => Observable.of(rejectEpicRequest(errors)));
+        .catch(errors => of(rejectEpicRequest(errors)));
     });
 }

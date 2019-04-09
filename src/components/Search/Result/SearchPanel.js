@@ -29,7 +29,7 @@ import { findYourQuery } from '../Filter';
 import { remapFilters } from '../../../utils/Mapper';
 import { EMPTY_STRING } from '../../../shared/Constants';
 import * as Action from '../../../shared/Action';
-import styles from '../index.css';
+import styles from '../Style/index.css';
 import { findParam } from '../../../shared/Function';
 import { countRecordAction } from '../Actions';
 

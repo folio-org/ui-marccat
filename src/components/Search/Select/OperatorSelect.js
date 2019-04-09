@@ -2,9 +2,9 @@ import React from 'react';
 import { Field } from 'redux-form';
 import { Select } from '@folio/stripes/components';
 
-import style from '../index.css';
+import style from '../Style/index.css';
 
-export default function OperatorSelect({ ...props }) {
+export default function ({ ...props }) {
   const { rest, name, id } = props;
   const options = [
     { label: 'AND', value: 'AND' },

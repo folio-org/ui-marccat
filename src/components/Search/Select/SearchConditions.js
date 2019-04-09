@@ -7,7 +7,7 @@ import React from 'react';
 import { Field } from 'redux-form';
 import { Select } from '@folio/stripes/components';
 
-export default function SearchConditions({ ...props }) {
+export default function ({ ...props }) {
   const { rest, name, id } = props;
   const options = [
     { label: 'Browse', value: 'BROWSE' },

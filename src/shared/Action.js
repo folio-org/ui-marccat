@@ -7,7 +7,6 @@ export const REQUEST_HISTORY = '@@ui-marccat/REQUEST_HISTORY';
 export const REQUEST_CLEAR = '@@ui-marccat/REQUEST_CLEAR';
 
 export const ACTION = {
-  SEARCH: '@@ui-marccat/SEARCH',
   BROWSE: '@@ui-marccat/BROWSE',
   REQUEST_HISTORY: '@@ui-marccat/REQUEST_HISTORY',
   GET: '@@ui-marccat/GET',
@@ -22,9 +21,6 @@ export const ACTION = {
   FILTERS: '@@ui-marccat/FILTER',
   LOCK: '@@ui-marccat/LOCK',
   UNLOCK: '@@ui-marccat/UNLOCK',
-  HISTORY: '@@ui-marccat/HISTORY',
-};
-
-export const COMMON_ACTION = {
   SETTINGS: '@@ui-marccat/SETTINGS',
+  HISTORY: '@@ui-marccat/HISTORY',
 };

@@ -1,5 +1,5 @@
 import { ENDPOINT } from '../../../shared/Constants';
-import { ACTION, COMMON_ACTION } from '../../../shared/Action';
+import { ACTION } from '../../../shared/Action';
 
 // MARC action creator utility
 
@@ -174,7 +174,7 @@ export const deleteRecordAction = (payload) => {
  */
 export const settingsAction = (payload) => {
   return {
-    type: COMMON_ACTION.SETTINGS,
+    type: ACTION.SETTINGS,
     data: {
       payload
     }

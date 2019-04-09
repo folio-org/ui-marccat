@@ -25,7 +25,7 @@ export const ENDPOINT = {
     'x-okapi-tenant': 'tnx',
   },
   DEFAULT_LANG_VIEW: 'lang=ita&view=1',
-  BASE_URL: 'http://151.1.165.20:8080/marccat',
+  BASE_URL: 'http://127.0.0.1:8080/marccat',
   MERGED_SEARCH_URL: '/mergedSearch',
   SEARCH_URL: '/searchVertical',
   SEARCH_URL_JSON: '/search',
@@ -66,7 +66,6 @@ export const SORT_TYPE = {
   DATE2: 2074 // bibliographic only
 };
 
-
 // REDUX DATA STORE MANAGEMENT
 export const REDUX = {
   REDUCER: 'marccat',
@@ -78,7 +77,12 @@ export const REDUX = {
   }
 };
 
-
+export const VALIDATION_MESSAGE_TYPE = {
+  INFO: 'info',
+  SUCCESS: 'success',
+  WARING: 'warning',
+  ERROR: 'error'
+};
 export const SEPARATOR = ';;;';
 export const EMPTY_PARAMETER = -1;
 export const EMPTY_STRING = '';

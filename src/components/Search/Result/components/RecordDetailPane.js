@@ -11,7 +11,7 @@ import { META } from '../../../../shared/Constants';
 
 class RecordDetailPane extends React.Component<Props, {}> {
   render() {
-    const { detailPaneMeta, detail, isFetchingDetail, isReadyDetail, onClose, rightMenuEdit } = this.props;
+    const { detailPaneMeta, detail, onClose, rightMenuEdit } = this.props;
     return (
       <React.Fragment>
         <Pane
@@ -25,10 +25,9 @@ class RecordDetailPane extends React.Component<Props, {}> {
           onClose={onClose}
           lastMenu={rightMenuEdit}
         >
-          {(isFetchingDetail) ?
+          {(!detail) ?
             <Icon icon="spinner-ellipsis" /> :
-            (isReadyDetail) ?
-              <RecordDetails {...this.props} detail={detail} /> : null
+            <RecordDetails {...this.props} detail={detail} />
           }
         </Pane>
       </React.Fragment>

@@ -1,4 +1,4 @@
-@import '../../styles/variable.css';
+@import '../../../styles/variable.css';
 
 .authority {
   width: 18px;
@@ -40,7 +40,7 @@
 }
 
 .tagHighLighted {
-  background-color: #ff0;
+  background-color: var(--tag-highlight-color);
 }
 
 .leftBracket {
@@ -93,4 +93,24 @@
 .forwardBracket {
   z-index: 999;
   background-color: #fff;
+}
+
+.record-detail-row {
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  & .key {
+    display: block;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.62);
+  }
+
+  & .indicator {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.82);
+  }
+}
+
+.inventoryButton {
+  margin-top: 1.5rem;
 }

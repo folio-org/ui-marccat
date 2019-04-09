@@ -22,7 +22,7 @@ function AssociatedBib({ ...props }: P) {
     ? remapForAssociatedBibList(associatedBibRecords)
     : undefined;
 
-  return (
+  return (bibRecords) ? (
     <Accordion
       {...rest}
       separator={false}
@@ -59,8 +59,7 @@ function AssociatedBib({ ...props }: P) {
           'format'
         ]}
       />}
-    </Accordion>
-  );
+    </Accordion>) : (<div />);
 }
 
 export default (connect(

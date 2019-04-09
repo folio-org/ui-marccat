@@ -9,7 +9,7 @@ import type { Props } from '../../../core';
 import MarcField from './MarcField';
 import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../shared/Constants';
 import { ActionTypes } from '../../../redux/actions/Actions';
-import style from '../Style/style.css';
+import style from '../Style/index.css';
 import { decamelizify } from '../../../shared/Function';
 
 type P = {

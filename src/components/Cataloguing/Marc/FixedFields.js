@@ -2,7 +2,7 @@ import React from 'react';
 import { isEmpty, first } from 'lodash';
 import { Tag00X, Tag006, Tag007, Tag008, MarcField } from '.';
 import type { Props } from '../../../core';
-import style from '../Style/style.css';
+import style from '../Style/index.css';
 import { ActionTypes } from '../../../redux/actions/Actions';
 import {
   TAGS,
@@ -224,13 +224,13 @@ class FixedFields extends React.Component<P, {}> {
   render() {
     const { fixedFields } = this.state;
     const fixedFieldsxxx = filterFixedFields(fixedFields);
-    // const fixedFields006 = first(fixedFields.filter(f => f.fixedField.code === TAGS._006));
+    const fixedFields006 = first(fixedFields.filter(f => f.fixedField.code === TAGS._006));
     // const fixedFields007 = first(fixedFields.filter(f => f.fixedField.code === TAGS._007));
     const fixedFields008 = first(fixedFields.filter(f => f.fixedField.code === TAGS._008));
     return (
       <React.Fragment>
         {this.renderTagxxx(fixedFieldsxxx)}
-        {/* {this.renderTag006(fixedFields006)} */}
+        {this.renderTag006(fixedFields006)}
         {/* {this.renderTag007(fixedFields007)} */}
         {this.renderTag008(fixedFields008)}
       </React.Fragment>

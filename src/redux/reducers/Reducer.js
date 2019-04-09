@@ -590,21 +590,6 @@ export function settingsReducer(state = {}, action) {
   switch (action.type) {
   case ActionTypes.SETTINGS:
     return Object.assign(state, state, action.data);
-  case ActionTypes.SEARCH:
-    return {
-      ...state,
-      queryBib: action.queryBib,
-      queryAuth: action.queryAuth,
-    };
-  default:
-    return state;
-  }
-}
-
-export function historyReducer(state = {}, action) {
-  switch (action.type) {
-  case ActionTypes.HISTORY:
-    return Object.assign(state, state, action.data);
   default:
     return state;
   }

@@ -2,8 +2,10 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-mixed-operators */
 /* eslint-disable no-bitwise */
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import queryString from 'querystring';
-import { ENDPOINT, EMPTY_SPACED_STRING } from './Constants';
+import { META, ENDPOINT, EMPTY_SPACED_STRING } from './Constants';
 
 /**
  *
@@ -106,6 +108,16 @@ export function safeObj(obj, prop) {
  */
 export function safeArray(obj, res, ...prop) {
   return (obj && obj[prop]) ? obj[prop[0]][prop[1]] : res;
+}
+
+/**
+ *
+ * @param  {...any} labels
+ */
+export function Localize(...labels: Array<String>): React.JSX.Element {
+  return (labels.length === 1) ?
+    (<FormattedMessage id={META.MODULE_NAME.concat('.').concat(labels[0])} />) :
+    labels.map(l => <FormattedMessage id={META.MODULE_NAME.concat('.').concat(l)} />);
 }
 /* @flow */
 // eslint-disable-next-line no-unused-vars

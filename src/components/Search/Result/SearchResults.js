@@ -121,13 +121,11 @@ export class SearchResults extends React.Component<P, {}> {
 
   handleDetails = (e, meta) => {
     const { store: { dispatch }, data } = this.props;
-    dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: false });
     const id = meta['001'];
+    dispatch(searchDetailAction(id));
+    dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: false });
     const detailSelected = data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001']) || {};
     transitionToParams('id', id);
-
-    // to do fix this, we must use the selcted record already in the store (to remove next line)
-    dispatch(searchDetailAction(id));
 
     dispatch({ type: ActionTypes.DETAILS, query: id, recordType: meta.recordView });
     if (isAuthorityRecord(meta)) {

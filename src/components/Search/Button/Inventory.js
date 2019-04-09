@@ -7,7 +7,7 @@ import { Button } from '@folio/stripes/components';
 import type { Props } from '../../../core';
 
 const InventoryPluggableBtn = ({ buttonLabel, ...props }:Props) => {
-  const { buttonTarget, style, withLine } = props;
+  const { buttonTarget, className, withLine } = props;
   return (
     <div>
       {withLine &&
@@ -19,7 +19,7 @@ const InventoryPluggableBtn = ({ buttonLabel, ...props }:Props) => {
         fullWidth
         paddingSide0
         marginBottom0
-        buttonClass={style}
+        buttonClass={className}
       >
         {buttonLabel}
       </Button>

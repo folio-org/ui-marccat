@@ -2,7 +2,7 @@ import React from 'react';
 import { Field } from 'redux-form';
 import { IconButton } from '@folio/stripes/components';
 import type { Props } from '../../../core';
-import style from '../Style/style.css';
+import style from '../Style/index.css';
 
 type P = Props & {
   label?: string,

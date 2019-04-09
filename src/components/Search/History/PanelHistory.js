@@ -1,12 +1,11 @@
 import React from 'react';
 import { Headline } from '@folio/stripes/components';
+import { Localize } from '../../../shared/Function';
 
-export default ({ ...props }) => {
-  const { translate } = props;
-
+export default () => {
   return (
     <Headline size="small" margin="medium" tag="h3">
-      {translate({ id: 'ui-marccat.search.actionmenu.title' })}
+      {Localize('search.history.title')}
     </Headline>
   );
 };

@@ -5,7 +5,7 @@ import {
   getFormat,
   getMicroformat
 } from '../../../../utils/Mapper';
-import style from '../../index.css';
+import style from '../../Style/index.css';
 
 export const columnMapper = (isBibsOnly:?boolean, isAuthOnly:?boolean = true) => {
   const isBib = {

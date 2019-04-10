@@ -37,6 +37,7 @@ import * as MarcAction from '../Actions';
 import { FixedFields, MarcLeader, VariableFields } from '.';
 import { resetStore } from '../../../shared/ActionCreator';
 import style from '../Style/index.css';
+import { RECORD_FIELD_STATUS } from '../Utils/MarcConstant';
 
 export class MarcRecord extends React.Component<Props, {
   callout: React.RefObject<Callout>,
@@ -136,22 +137,12 @@ export class MarcRecord extends React.Component<Props, {
     }
   };
 
-  onDelete = async item => {
-    await this.asyncDeleteHeading(item);
+  asyncDeleteTag = async (item) => {
+    item.fieldStatus = RECORD_FIELD_STATUS.DELETED;
   };
 
-  asyncDeleteHeading = item => {
-    const { dispatch } = this.props;
-    const { variableField } = item;
-    const heading = {
-      ind1: variableField.ind1,
-      ind2: variableField.ind2,
-      displayValue: variableField.displayValue,
-      tag: item.code,
-      categoryCode: variableField.categoryCode,
-      keyNumber: variableField.keyNumber
-    };
-    dispatch(MarcAction.deleteHeadingAction(heading));
+  onDelete = async item => {
+    await this.asyncDeleteTag(item);
   };
 
   saveRecord = () => {

@@ -69,9 +69,10 @@ export class Tag006 extends React.Component<Props, {}> {
 
   asyncChangeDisplayValue = async (jsonReq) => {
     const { dispatch, change } = this.props;
-    const response = await post(buildUrl(ENDPOINT.CHANGE_DISPLAY_VALUE, ENDPOINT.DEFAULT_LANG_VIEW), jsonReq);
-    const data = await response.json;
-    dispatch(change(TAGS._006, data.displayValue));
+    await post(buildUrl(ENDPOINT.CHANGE_DISPLAY_VALUE, ENDPOINT.DEFAULT_LANG_VIEW), jsonReq)
+      .then((r) => { return r.json(); }).then((data) => {
+        dispatch(change(TAGS._006, data.displayValue));
+      });
   }
 
   render() {

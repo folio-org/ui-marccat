@@ -7,7 +7,8 @@ import {
   RECORD_FIELD_STATUS as STATUS,
   SUBFIELD_DELIMITER,
   TAG_NOT_REPEATABLE,
-  TAG_MANDATORY
+  TAG_MANDATORY,
+  TAGS
 } from './MarcConstant';
 import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../shared/Constants';
 
@@ -33,7 +34,9 @@ export const unionSortAndDedupe = (sortByProp, ...obj) => {
  */
 export const filterFixedFields = (obj) => {
   const dedupeObj = dedupe(obj);
-  return dedupeObj.filter(f => f.fixedField !== undefined || f.fixedField).filter(f => f.code !== '008');
+  return dedupeObj
+    .filter(f => f.fixedField !== undefined || f.fixedField)
+    .filter(f => f.code !== TAGS._008);
 };
 
 /**

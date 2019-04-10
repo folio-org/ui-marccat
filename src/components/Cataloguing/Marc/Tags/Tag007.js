@@ -31,7 +31,7 @@ export class Tag007 extends React.Component<Props, {}> {
   }
 
   handleOnChange = (e) => {
-    const headerTypeCode = (e && e.target) ? e.target.value : 16;
+    const headerTypeCode = (e && e.target) ? e.target.value : 23;
     const tag = {
       action: ActionTypes.VALUES_FROM_TAG_007,
       code: TAGS._007,
@@ -67,41 +67,42 @@ export class Tag007 extends React.Component<Props, {}> {
     this.asyncChangeDisplayValue(jsonReq);
   };
 
-   asyncChangeDisplayValue = async (jsonReq) => {
-     const { dispatch, change } = this.props;
-     const response = await post(buildUrl(ENDPOINT.CHANGE_DISPLAY_VALUE, ENDPOINT.DEFAULT_LANG_VIEW), jsonReq);
-     const data = await response.json;
-     dispatch(change(TAGS._007, data.displayValue));
-   }
+  asyncChangeDisplayValue = async (jsonReq) => {
+    const { dispatch, change } = this.props;
+    await post(buildUrl(ENDPOINT.CHANGE_DISPLAY_VALUE, ENDPOINT.DEFAULT_LANG_VIEW), jsonReq)
+      .then((r) => { return r.json(); }).then((data) => {
+        dispatch(change(TAGS._007, data.displayValue));
+      });
+  }
 
-   render() {
-     const { headerTypesResult, tag007ValuesResults } = this.props;
-     const remappedValues = [];
-     if (tag007ValuesResults) {
-       const result = Object.keys(tag007ValuesResults.results).map((key) => tag007ValuesResults.results[key]);
-       remappedValues.push(result);
-     } else {
-       this.handleOnChange();
-     }
-     return (headerTypesResult) ? (
-       <React.Fragment>
-         <Row>
-           <Col xs={4}>
-             <Field
-               id={`${TAGS_NAME._007}`}
-               name={`${TAGS_NAME._007}`}
-               component={Select}
-               onChange={this.handleOnChange}
-               label="Header types"
-               placeholder="Select header..."
-               dataOptions={headerTypesResult.headingTypes}
-             />
-           </Col>
-         </Row>
-         <hr />
-         <Row xs={12}>
-           {
-             (tag007ValuesResults) &&
+  render() {
+    const { headerTypesResult, tag007ValuesResults } = this.props;
+    const remappedValues = [];
+    if (tag007ValuesResults) {
+      const result = Object.keys(tag007ValuesResults.results).map((key) => tag007ValuesResults.results[key]);
+      remappedValues.push(result);
+    } else {
+      this.handleOnChange();
+    }
+    return (headerTypesResult) ? (
+      <React.Fragment>
+        <Row>
+          <Col xs={4}>
+            <Field
+              id={`${TAGS_NAME._007}`}
+              name={`${TAGS_NAME._007}`}
+              component={Select}
+              onChange={this.handleOnChange}
+              label="Header types"
+              placeholder="Select header..."
+              dataOptions={headerTypesResult.headingTypes}
+            />
+          </Col>
+        </Row>
+        <hr />
+        <Row xs={12}>
+          {
+            (tag007ValuesResults) &&
               remappedValues.map(elem => {
                 return elem.map(item => {
                   let exactDisplayValue = EMPTY_STRING;
@@ -121,11 +122,11 @@ export class Tag007 extends React.Component<Props, {}> {
                   );
                 });
               })
-           }
-         </Row>
-       </React.Fragment>
-     ) : (<React.Fragment />);
-   }
+          }
+        </Row>
+      </React.Fragment>
+    ) : (<React.Fragment />);
+  }
 }
 
 export default (connect(

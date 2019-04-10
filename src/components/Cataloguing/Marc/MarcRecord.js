@@ -96,7 +96,7 @@ export class MarcRecord extends React.Component<Props, {
     }
     const tagLenght = tagVariableItems.filter(t => t.code === code);
     if (tagLenght.length > 1 && isNotRepetble) {
-      showValidationMessage(this.callout, 'cataloging.record.tag.duplicate.error', 'error', code);
+      showValidationMessage(this.callout, 'ui-marccat.cataloging.record.tag.duplicate.error', 'error');
       tagVariableItems.splice(0, 1);
     } else if (!cretaeHeadingForTag) { this.asyncCreateHeading(item, heading); }
   }

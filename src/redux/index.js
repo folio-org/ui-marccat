@@ -23,6 +23,8 @@ import {
   change008ByLeaderReducer,
   settingsReducer,
   panelsReducer,
+  totalBibCountDocReducer,
+  totalAuthCountDocReducer,
 } from './reducers/Reducer';
 import {
   searchEpic,
@@ -44,6 +46,8 @@ import {
   tag007ValuesEpic,
   tag008ValuesEpic,
   tag008ByLeaderEpic,
+  totalCountBibEpic,
+  totalCountAuthEpic
 } from './epic/epics';
 
 import {
@@ -74,6 +78,8 @@ export const reducer = combineReducers({
   change008ByLeader: change008ByLeaderReducer,
   settings: settingsReducer,
   panels: panelsReducer,
+  totalBibRecords: totalBibCountDocReducer,
+  totalAuthRecords: totalAuthCountDocReducer,
   data
 });
 
@@ -97,6 +103,8 @@ export const epics = combineEpics(
   recordDetailEpic,
   tag008ByLeaderEpic,
   leaderEpic,
+  totalCountBibEpic,
+  totalCountAuthEpic,
   dataEpic
 );
 export { Redux } from './helpers/Redux';

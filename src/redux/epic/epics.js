@@ -200,3 +200,14 @@ export const tag008ByLeaderEpic = (action$, store) => action$.ofType(ActionTypes
       .map(record => marccatActions.fetchValuesTag008ByLeader(record))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
+export const totalCountBibEpic = (action$, store) => action$.ofType(ActionTypes.TOTAL_BIB_COUNT)
+  .switchMap((d) => ajax
+    .getJSON(buildUrl(ENDPOINT.TOTAL_COUNT_SEARCH_URL, `lang=ita&view=1&ml=170&q=${d.query}&sortBy=${Redux.get(store, 'settings', 'sortType') || 4}&sortOrder=0`), ENDPOINT.HEADERS)
+    .map(record => marccatActions.fetchTotalCountBibRecords(record))
+    .catch(e => of$(marccatActions.fetchFailure(e))));
+
+export const totalCountAuthEpic = (action$, store) => action$.ofType(ActionTypes.TOTAL_AUTH_COUNT)
+  .switchMap((d) => ajax
+    .getJSON(buildUrl(ENDPOINT.TOTAL_COUNT_SEARCH_URL, `lang=ita&view=-1&ml=170&q=${d.query}&sortBy=${Redux.get(store, 'settings', 'sortType') || 4}&sortOrder=0`), ENDPOINT.HEADERS)
+    .map(record => marccatActions.fetchTotalCountAuthRecords(record))
+    .catch(e => of$(marccatActions.fetchFailure(e))));

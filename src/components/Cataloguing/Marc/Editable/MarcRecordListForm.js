@@ -131,7 +131,7 @@ class EditableListForm extends React.Component {
       () => {
         this.toggleEdit(index);
       },
-      () => this.setError(index, 'Error on saving data'),
+      () => this.setError(index, 'Error on save data'),
     );
   }
 

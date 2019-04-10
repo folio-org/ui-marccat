@@ -97,6 +97,7 @@ export class MarcRecord extends React.Component<Props, {
     const tagLenght = tagVariableItems.filter(t => t.code === code);
     if (tagLenght.length > 1 && isNotRepetble) {
       showValidationMessage(this.callout, 'cataloging.record.tag.duplicate.error', 'error', code);
+      tagVariableItems.splice(0, 1);
     } else if (!cretaeHeadingForTag) { this.asyncCreateHeading(item, heading); }
   }
 
@@ -113,7 +114,7 @@ export class MarcRecord extends React.Component<Props, {
     }
   };
 
-  asyncDeleteTag = async (item) => {
+  asyncDeleteTag = (item) => {
     item.fieldStatus = RECORD_FIELD_STATUS.DELETED;
   };
 
@@ -267,6 +268,7 @@ export class MarcRecord extends React.Component<Props, {
                         fields={bibliographicRecord.fields.filter(f => f.fixedField === undefined || !f.fixedField)}
                         onCreate={this.onCreate}
                         onUpdate={this.onUpdate}
+                        onDelete={this.onDelete}
                         {...this.props}
                       />
                     </Accordion>

@@ -84,7 +84,6 @@ export const VALIDATION_MESSAGE_TYPE = {
   ERROR: 'error'
 };
 export const SEPARATOR = ';;;';
-export const EMPTY_PARAMETER = -1;
 export const EMPTY_STRING = '';
 export const EMPTY_SPACED_STRING = ' ';
 export const SPACED_STRING_DOUBLE_QUOTE = " "; // eslint-disable-line quotes

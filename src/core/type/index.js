@@ -25,3 +25,11 @@ export type VariableField = {
   skipInFiling: number;
   subfields: Array<any>;
 };
+
+// API  UTILS
+export type HTTPMETHOD = {
+  GET: 'GET',
+  POST: 'POST',
+  PUT: 'PUT',
+  DELETE: 'DELETE'
+};

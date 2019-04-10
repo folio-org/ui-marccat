@@ -97,8 +97,8 @@ export default class MarcLeader extends React.Component<P, {
         <MarcField
           {...this.props}
           readOnly
-          label="Leader"
-          name="Leader"
+          label="leader"
+          name="leader"
           onClick={this.handleLeader}
           value={(leaderVal) || leaderValue}
         />
@@ -119,7 +119,7 @@ export default class MarcLeader extends React.Component<P, {
                             label={decamelizify(`${item.name}`, EMPTY_SPACED_STRING)}
                             component={Select}
                             dataOptions={item.dropdownSelect}
-                            selected={exactDisplayValue}
+                            placeholder={exactDisplayValue}
                             onChange={this.handleChange}
                           />
                         </Col>

@@ -196,6 +196,15 @@ export const fetchValuesTag008ByLeader = (records) => ({
   type: ActionTypes.CHANGE_008_BY_LEADER_SUCCESS,
   payload: records
 });
+export const fetchTotalCountBibRecords = (records) => ({
+  type: ActionTypes.TOTAL_BIB_COUNT_SUCCESS,
+  payload: records
+});
+
+export const fetchTotalCountAuthRecords = (records) => ({
+  type: ActionTypes.TOTAL_AUTH_COUNT_SUCCESS,
+  payload: records
+});
 export const isSettingsRequest = () => ({
   type: ActionTypes.SETTINGS,
   payload: {} // generic payload

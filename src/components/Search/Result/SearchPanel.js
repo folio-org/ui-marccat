@@ -31,7 +31,6 @@ import { EMPTY_STRING } from '../../../shared/Constants';
 import * as Action from '../../../shared/Action';
 import styles from '../Style/index.css';
 import { findParam } from '../../../shared/Function';
-import { countRecordAction } from '../Actions';
 
 type P = Props & {
   inputErrorCheck: string,
@@ -134,12 +133,12 @@ class SearchPanel extends React.Component<P, {}> {
             type: ActionTypes.SEARCH, data: { moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' }
           });
           transitionToParams('q', bibQuery);
-          dispatch(countRecordAction({ view: 1, query: bibQuery }));
+          dispatch({ type: ActionTypes.TOTAL_BIB_COUNT, query: bibQuery });
         } else {
           dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
           transitionToParams('q', authQuery);
-          dispatch(countRecordAction({ view: 1, query: bibQuery }));
-          dispatch(countRecordAction({ view: -1, query: authQuery }));
+          dispatch({ type: ActionTypes.TOTAL_BIB_COUNT, query: bibQuery });
+          dispatch({ type: ActionTypes.TOTAL_AUTH_COUNT, query: authQuery });
           this.handleSearchHistory({
             type: ActionTypes.SEARCH, data: { moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' }
           });

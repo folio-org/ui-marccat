@@ -12,7 +12,18 @@ import {
 } from './MarcConstant';
 import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../shared/Constants';
 
+/**
+ *
+ * @param {*} o - the object to deduplicate
+ * @returns the objcet passed as parameter without duplicate code
+ */
 export const dedupe = (o) => Object.values(o.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
+
+/**
+ *
+ * @param {*} t - the tag to validate
+ * @returns true if code of @param t is not repeatble
+ */
 export const validate = t => includes(TAG_NOT_REPEATABLE, t.code);
 
 /**
@@ -22,7 +33,7 @@ export const validate = t => includes(TAG_NOT_REPEATABLE, t.code);
  * @param  {...any} obj
  */
 export const unionSortAndDedupe = (sortByProp, ...obj) => {
-  union(first(obj), obj[1]);
+  union(...obj);
   sortBy(first(obj), sortByProp);
   return dedupe(first(obj));
 };
@@ -33,8 +44,7 @@ export const unionSortAndDedupe = (sortByProp, ...obj) => {
  * @param {*} obj
  */
 export const filterFixedFields = (obj) => {
-  const dedupeObj = dedupe(obj);
-  return dedupeObj
+  return dedupe(obj)
     .filter(f => f.fixedField !== undefined || f.fixedField)
     .filter(f => f.code !== TAGS._008);
 };
@@ -45,8 +55,7 @@ export const filterFixedFields = (obj) => {
  * @param {*} obj
  */
 export const filterMandatoryFields = (obj) => {
-  const dedupeObj = dedupe(obj);
-  return dedupeObj.filter(f => includes(TAG_MANDATORY, f.code));
+  return dedupe(obj).filter(f => includes(TAG_MANDATORY, f.code));
 };
 
 /**
@@ -74,12 +83,12 @@ export const handleTagXXXHeaderTypeChange = (props, tag, headerTypeCode) => {
 
 /**
  *
- * @param {*} message
- * @param {*} type
+ * @param {*} message - a message validation to display
+ * @param {*} type - a type of callout
  */
-export const showValidationMessage = (callout: React.RefObject<Callout>, message: string, type?: string) => {
+export const showValidationMessage = (callout: React.RefObject<Callout>, message: string, type: string) => {
   callout.current.sendCallout({
-    type: type || 'success',
+    type: (type) || 'success',
     message: (
       <span>
         <FormattedMessage id={message} />
@@ -90,21 +99,21 @@ export const showValidationMessage = (callout: React.RefObject<Callout>, message
 
 /**
  *
- * @param {*} s
+ * @param {*} s - an input string
  * @returns s - appen SUBFIELD_DELIMITER to @param s
  */
 export const addSeparator = (s: string): string => SUBFIELD_DELIMITER.concat(s);
 
 /**
  *
- * @param {*} s
+ * @param {*} s - an input string
  * @returns s - a string with all SUBFIELD_CHARACTER replaced with SUBFIELD_DELIMITER
  */
 export const replaceAll = (s: string): string => ((s) ? s.replace(RegExp(String.fromCharCode(31), 'g'), '$') : EMPTY_STRING);
 
 /**
  *
- * @param {*} s
+ * @param {*} s - an input string
  * @returns s - a string with all SUBFIELD_DELIMITER replaced with SUBFIELD_CHARACTER
  */
 export const replaceAllinverted = (s: string): string => ((s) ? s.replace(/\$/g, SUBFIELD_DELIMITER) : EMPTY_STRING);

@@ -3,6 +3,7 @@ export {
   RECORD_ACTION,
   TAG_WITH_NO_HEADING_ASSOCIATED,
   SUBFIELD_DELIMITER,
+  SORTED_BY,
   TAGS
 } from './Utils/MarcConstant';
 

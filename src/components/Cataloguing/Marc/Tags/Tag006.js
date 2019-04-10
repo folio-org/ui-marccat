@@ -54,8 +54,7 @@ export class Tag006 extends React.Component<Props, {}> {
       Object.keys(tag006ValuesResults.results).map((key) => tag006ValuesResults.results[key]).map((x) => jsonReq[x.name] = x.defaultValue);
     }
     const changedFieldLabel = (e.target) ? e.target.name.split('-')[1] : EMPTY_STRING;
-    const changedFieldValue = EMPTY_STRING;
-    jsonReq.dateEnteredOnFile = getState().form.bibliographicRecordForm.values[TAGS._006].substring(0, 6);
+    const changedFieldValue = e.target.value;
     jsonReq.categoryCode = 1;
     jsonReq.sequenceNumber = 0;
     jsonReq.headerTypeCode = formData.Tag006;

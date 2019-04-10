@@ -124,7 +124,21 @@ export class SearchResults extends React.Component<P, {}> {
     const id = meta['001'];
     dispatch(searchDetailAction(id));
     dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: false });
-    const detailSelected = data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001']) || {};
+    let mergedResults;
+    let detailSelected;
+    if (data.search.dataOld !== undefined) {
+      mergedResults = [
+        ...data.search.bibliographicResults,
+        ...data.search.oldBibArray,
+        ...data.search.authorityResults,
+        ...data.search.oldAuthArray];
+      detailSelected = mergedResults.filter(item => id === item.data.fields[0]['001']);
+    } else {
+      detailSelected = data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001']);
+    }
+    if (detailSelected.length === 0) {
+      detailSelected = data.search.authorityResults.filter(item => id === item.data.fields[0]['001']);
+    }
     transitionToParams('id', id);
 
     dispatch({ type: ActionTypes.DETAILS, query: id, recordType: meta.recordView });

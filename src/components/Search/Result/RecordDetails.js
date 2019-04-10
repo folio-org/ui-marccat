@@ -37,10 +37,13 @@ class RecordDetails extends React.Component<P, {}> {
   }
 
   render() {
-    const { store: { dispatch }, checkDetailsInRow, translate, checkDetailsBibRec } = this.props;
+    const { store: { dispatch }, detailPaneMeta, checkDetailsInRow, translate, checkDetailsBibRec } = this.props;
+    // eslint-disable-next-line no-unused-vars
     const { detail } = this.state;
-    dispatch({ type: ActionTypes.SETTINGS, data: { detail } });
-    const tags = (detail[0].data.fields.length > 0) ? mapFields(detail[0].data.fields) : [];
+    const currentDatail = detailPaneMeta.detail[0];
+    dispatch({ type: ActionTypes.SETTINGS, data: { currentDatail } });
+
+    const tags = (currentDatail) ? mapFields(currentDatail.data.fields) : [];
     return (
       <AccordionSet>
         <Accordion

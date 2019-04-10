@@ -60,8 +60,8 @@ class RecordDetails extends React.Component<P, {}> {
             <React.Fragment>
               <Row className={style['record-detail-row']}>
                 <Col xs={1} className={style.key}>{t.code}</Col>
-                <Col xs={1}>{t.ind1}</Col>
-                <Col xs={1}>{t.ind2}</Col>
+                <Col xs={1} className={style.key}>{t.ind1}</Col>
+                <Col xs={1} className={style.key}>{t.ind2}</Col>
                 <Col xs={8} className={style.value}>
                   {t.subfield.map(x => {
                     return SUBFIELD_CHARACTER.concat(x.key).concat(x.value);

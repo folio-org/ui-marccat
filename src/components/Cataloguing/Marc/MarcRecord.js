@@ -164,13 +164,15 @@ export class MarcRecord extends React.Component<Props, {
     bibliographicRecord.fields = sortedUniqBy(bibliographicRecord.fields, 'code');
     const payload = { bibliographicRecord, recordTemplate };
 
-    await post(buildUrl(post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), payload)
-      .then((r) => { return r.json(); }).then(async response => {
-        if (response.statusCodeValue === 200 || response.statusCode === 'OK') {
-          await showValidationMessage(this.callout, 'cataloging.record.update.success', 'success');
-          await this.handleClose();
-        }
-      })));
+    await post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), payload)
+      .then((r) => { return r.json(); }).then(() => {
+        showValidationMessage(this.callout, 'cataloging.record.update.success', 'success');
+        setTimeout(() => {
+          this.handleClose();
+        }, 2000);
+      }).catch(() => {
+        showValidationMessage(this.callout, 'cataloging.record.update.error', 'error');
+      });
   }
 
   deleteRecord = () => {

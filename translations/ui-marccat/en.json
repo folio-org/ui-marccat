@@ -81,7 +81,7 @@
   "cataloging.record.tag.create.failure": "Save Tag failed!",
   "cataloging.record.tag.update.success": "Tag update succesfully!",
   "cataloging.record.tag.update.failure": "Update tag failed!",
-  "cataloging.record.tag.duplicate.error": "The tag {0} is duplicate!",
+  "cataloging.record.tag.duplicate.error": "The tag {tagcode} is duplicate!",
 
   "template.actionmenu.new": "New Template",
   "template.actionmenu.load": "Load template...",

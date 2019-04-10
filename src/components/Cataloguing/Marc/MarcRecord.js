@@ -37,7 +37,7 @@ import * as MarcAction from '../Actions';
 import { FixedFields, MarcLeader, VariableFields } from '.';
 import { resetStore } from '../../../shared/ActionCreator';
 import style from '../Style/index.css';
-import { RECORD_FIELD_STATUS, SORTED_BY } from '../Utils/MarcConstant';
+import { RECORD_FIELD_STATUS, SORTED_BY, TAG_NOT_REPEATABLE } from '../Utils/MarcConstant';
 
 export class MarcRecord extends React.Component<Props, {
   callout: React.RefObject<Callout>,
@@ -84,6 +84,8 @@ export class MarcRecord extends React.Component<Props, {
     const { store } = this.props;
     const { variableField: { code, ind1, ind2, displayValue, keyNumber, categoryCode } } = item;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
+    const isNotRepetble = includes(TAG_NOT_REPEATABLE, item.code);
+    const tagVariableItems: [] = ReduxForm.resolve(store, C.REDUX.FORM.EDITABLE_FORM).items;
     ReduxForm.resolve(store, C.REDUX.FORM.EDITABLE_FORM).items[0] = item;
     const idEditMode = (keyNumber > 0);
     const heading = { ind1, ind2, displayValue: replaceAllinverted(displayValue), tag: code };
@@ -92,7 +94,10 @@ export class MarcRecord extends React.Component<Props, {
       item.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
       merge(heading, { keyNumber, categoryCode });
     }
-    if (!cretaeHeadingForTag) { this.asyncCreateHeading(item, heading); }
+    const tagLenght = tagVariableItems.filter(t => t.code === code);
+    if (tagLenght.length > 1 && isNotRepetble) {
+      showValidationMessage(this.callout, 'cataloging.record.tag.duplicate.error', 'error', code);
+    } else if (!cretaeHeadingForTag) { this.asyncCreateHeading(item, heading); }
   }
 
   asyncCreateHeading = async (item, heading) => {

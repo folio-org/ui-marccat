@@ -145,16 +145,13 @@ export class MarcRecord extends React.Component<Props, {
     await this.asyncDeleteTag(item);
   };
 
-  saveRecord = () => {
-    const { data, dispatch, datastore: { emptyRecord }, store: { getState } } = this.props;
+  saveRecord = async () => {
+    const { data, datastore: { emptyRecord }, store: { getState } } = this.props;
     const formData = getState().form.bibliographicRecordForm.values;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
 
     const bibliographicRecord = this.getCurrentRecord();
     bibliographicRecord.leader.value = formData.leader;
-
-    // eslint-disable-next-line no-unused-vars
-    const recordTemplates = Object.assign({}, emptyRecord.results);
 
     const recordTemplate = {
       id: first(data.template.records).id,
@@ -166,11 +163,14 @@ export class MarcRecord extends React.Component<Props, {
     bibliographicRecord.fields = union(bibliographicRecord.fields, tagVariableData);
     bibliographicRecord.fields = sortedUniqBy(bibliographicRecord.fields, 'code');
     const payload = { bibliographicRecord, recordTemplate };
-    dispatch(MarcAction.saveRecordAction(payload));
-    setTimeout(() => {
-      showValidationMessage(this.callout, Localize('cataloging.record.create.success'), C.VALIDATION_MESSAGE_TYPE.SUCCESS);
-      this.handleClose();
-    }, 3000);
+
+    await post(buildUrl(post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), payload)
+      .then((r) => { return r.json(); }).then(async response => {
+        if (response.statusCodeValue === 200 || response.statusCode === 'OK') {
+          await showValidationMessage(this.callout, 'cataloging.record.update.success', 'success');
+          await this.handleClose();
+        }
+      })));
   }
 
   deleteRecord = () => {

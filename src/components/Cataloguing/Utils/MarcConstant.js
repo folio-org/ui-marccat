@@ -84,6 +84,9 @@ export const RECORD_ACTION = {
   EDIT_MODE: 'edit'
 };
 
+export const SORTED_BY = {
+  CODE: 'code'
+};
 
 export const LOCK_ENTITY_TYPE = {
   R: 'R',

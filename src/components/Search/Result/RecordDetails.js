@@ -37,7 +37,7 @@ class RecordDetails extends React.Component<P, {}> {
   }
 
   render() {
-    const { store: { dispatch }, checkDetailsInRow, translate, checkDetailsBibRec, datastore: { marcRecordDetail } } = this.props;
+    const { store: { dispatch }, checkDetailsInRow, translate, checkDetailsBibRec } = this.props;
     const { detail } = this.state;
     dispatch({ type: ActionTypes.SETTINGS, data: { detail } });
     const tags = (detail[0].data.fields.length > 0) ? mapFields(detail[0].data.fields) : [];

@@ -53,6 +53,7 @@ export class MarcRecord extends React.Component<Props, {
     this.handleClose = this.handleClose.bind(this);
     this.callout = React.createRef();
     this.onCreate = this.onCreate.bind(this);
+    this.onUpdate = this.onUpdate.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.saveRecord = this.saveRecord.bind(this);
     this.deleteRecord = this.deleteRecord.bind(this);
@@ -79,17 +80,65 @@ export class MarcRecord extends React.Component<Props, {
     return (!isEditMode) ? emptyRecordTemplate : recordDetail;
   };
 
-  asyncCreateHeading = async (item, heading) => {
-    await post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
-      .then((r) => { return r.json(); }).then((data) => {
-        item.variableField.categoryCode = data.categoryCode;
-        item.variableField.keyNumber = data.keyNumber;
-        item.variableField.displayValue = data.displayValue;
-        showValidationMessage(this.callout, Localize('cataloging.record.tag.create.success'), C.VALIDATION_MESSAGE_TYPE.SUCCESS);
-      }).catch(() => {
-        showValidationMessage(this.callout, Localize('cataloging.record.tag.create.failure'), C.VALIDATION_MESSAGE_TYPE.ERROR);
-      });
+  onCreate = item => {
+    const { store } = this.props;
+    const { variableField: { code, ind1, ind2 } } = item;
+    const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
+    const displayVal: string = replaceAllinverted(item.variableField.displayValue);
+    item.variableField.displayValue = displayVal;
+    ReduxForm.resolve(store, C.REDUX.FORM.EDITABLE_FORM).items[0] = item;
+    const createHeading = { ind1, ind2, displayValue: displayVal, tag: code };
+
+    if (!cretaeHeadingForTag) { this.asyncCreateHeading(item, createHeading); }
   }
+
+  onUpdate = item => {
+    const { store } = this.props;
+    const { variableField: { code, ind1, ind2, categoryCode, keyNumber } } = item;
+    const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
+    const displayVal: string = replaceAllinverted(item.variableField.displayValue);
+    item.variableField.displayValue = displayVal;
+    ReduxForm.resolve(store, C.REDUX.FORM.EDITABLE_FORM).items[0] = item;
+    const editHeading = {
+      ind1: ind1 || C.EMPTY_SPACED_STRING,
+      ind2: ind2 || C.EMPTY_SPACED_STRING,
+      displayValue: displayVal,
+      tag: code,
+      categoryCode,
+      keyNumber
+    };
+
+    if (!cretaeHeadingForTag) { this.asyncUpdateHeading(item, editHeading); }
+  };
+
+  asyncCreateHeading = async (item, heading) => {
+    try {
+      const response = await post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading);
+      const data = await response.json();
+      item.variableField.categoryCode = data.categoryCode;
+      item.variableField.keyNumber = data.keyNumber;
+      item.variableField.displayValue = data.displayValue;
+      showValidationMessage(this.callout, Localize('cataloging.record.tag.create.success'), C.VALIDATION_MESSAGE_TYPE.SUCCESS);
+    } catch (exception) {
+      showValidationMessage(this.callout, Localize('cataloging.record.tag.create.failure'), C.VALIDATION_MESSAGE_TYPE.ERROR);
+    }
+  };
+
+  asyncUpdateHeading = async (item, heading) => {
+    try {
+      const response = await post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading);
+      const data = await response.json();
+      item.variableField.categoryCode = data.categoryCode;
+      item.variableField.displayValue = data.displayValue;
+      showValidationMessage(this.callout, Localize('cataloging.record.tag.update.success'), C.VALIDATION_MESSAGE_TYPE.SUCCESS);
+    } catch (exception) {
+      showValidationMessage(this.callout, Localize('cataloging.record.tag.update.failure'), C.VALIDATION_MESSAGE_TYPE.ERROR);
+    }
+  };
+
+  onDelete = async item => {
+    await this.asyncDeleteHeading(item);
+  };
 
   asyncDeleteHeading = item => {
     const { dispatch } = this.props;
@@ -103,35 +152,6 @@ export class MarcRecord extends React.Component<Props, {
       keyNumber: variableField.keyNumber
     };
     dispatch(MarcAction.deleteHeadingAction(heading));
-  };
-
-  asyncCreateRecord = async (item, heading) => {
-    await post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading)
-      .then((r) => { return r.json(); }).then((data) => {
-        item.variableField.categoryCode = data.categoryCode;
-        item.variableField.keyNumber = data.keyNumber;
-        item.variableField.displayValue = data.displayValue;
-        showValidationMessage(this.callout, Localize('cataloging.record.tag.create.success'), C.VALIDATION_MESSAGE_TYPE.SUCCESS);
-      }).catch(() => {
-        showValidationMessage(this.callout, Localize('cataloging.record.tag.create.failure'), C.VALIDATION_MESSAGE_TYPE.ERROR);
-      });
-  }
-
-
-  onCreate = item => {
-    const { store } = this.props;
-    const { variableField: { code, ind1, ind2, categoryCode, keyNumber } } = item;
-    const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
-    const displayVal: string = replaceAllinverted(item.variableField.displayValue)
-    item.variableField.displayValue = displayVal;
-    ReduxForm.resolve(store, C.REDUX.FORM.EDITABLE_FORM).items[0] = item;
-    const heading = { ind1: ind1 || C.EMPTY_SPACED_STRING, ind2: ind2 || EMPTY_SPACED_STRING, displayValue: displayVal, tag: code, categoryCode, keyNumber };
-
-    if (!cretaeHeadingForTag) { this.asyncCreateHeading(item, heading); }
-  }
-
-  onDelete = async item => {
-    await this.asyncDeleteHeading(item);
   };
 
   saveRecord = () => {
@@ -276,8 +296,9 @@ export class MarcRecord extends React.Component<Props, {
                     >
                       <VariableFields
                         fields={bibliographicRecord.fields.filter(f => f.fixedField === undefined || !f.fixedField)}
-                        onDelete={this.onDelete}
                         onCreate={this.onCreate}
+                        onUpdate={this.onUpdate}
+                        onDelete={this.onDelete}
                         {...this.props}
                       />
                     </Accordion>

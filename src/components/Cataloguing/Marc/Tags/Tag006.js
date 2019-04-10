@@ -4,7 +4,7 @@
  */
 import React from 'react';
 import { connect } from 'react-redux';
-import { isEmpty, first } from 'lodash';
+import { isEmpty } from 'lodash';
 import { Field } from 'redux-form';
 import { Row, Col, Select } from '@folio/stripes/components';
 import { injectCommonProp, Props } from '../../../../core';
@@ -55,6 +55,7 @@ export class Tag006 extends React.Component<Props, {}> {
     }
     const changedFieldLabel = (e.target) ? e.target.name.split('-')[1] : EMPTY_STRING;
     const changedFieldValue = EMPTY_STRING;
+    jsonReq.dateEnteredOnFile = getState().form.bibliographicRecordForm.values[TAGS._006].substring(0, 6);
     jsonReq.categoryCode = 1;
     jsonReq.sequenceNumber = 0;
     jsonReq.headerTypeCode = formData.Tag006;
@@ -68,10 +69,9 @@ export class Tag006 extends React.Component<Props, {}> {
 
   asyncChangeDisplayValue = async (jsonReq) => {
     const { dispatch, change } = this.props;
-    await post(buildUrl(ENDPOINT.CHANGE_DISPLAY_VALUE, ENDPOINT.DEFAULT_LANG_VIEW), jsonReq)
-      .then((r) => { return r.json(); }).then((data) => {
-        dispatch(change(TAGS._006, data.displayValue));
-      });
+    const response = await post(buildUrl(ENDPOINT.CHANGE_DISPLAY_VALUE, ENDPOINT.DEFAULT_LANG_VIEW), jsonReq);
+    const data = await response.json;
+    dispatch(change(TAGS._006, data.displayValue));
   }
 
   render() {

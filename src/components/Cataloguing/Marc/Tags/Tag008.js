@@ -49,9 +49,8 @@ export class Tag008 extends React.Component<Props, {}> {
   };
 
   changeDisplayValue = (e) => {
-    const { record, store: { getState }, tag008ValuesResults } = this.props;
+    const { store: { getState }, tag008ValuesResults } = this.props;
     const { currentHeaderTypeCode, isChangedHeaderType } = this.state;
-    const tag008 = first(record.fields.filter(f => f.code === TAGS._008));
     const formData = getState().form.bibliographicRecordForm.values;
     let { jsonReq } = this.state;
     if (isChangedHeaderType) {
@@ -63,7 +62,7 @@ export class Tag008 extends React.Component<Props, {}> {
       Object.keys(tag008ValuesResults.results).map((key) => tag008ValuesResults.results[key]).map((x) => jsonReq[x.name] = x.defaultValue);
     }
     const changedFieldLabel = (e.target) ? e.target.name.split('-')[1] : '';
-    let changedFieldValue = '';
+    let changedFieldValue = C.EMPTY_STRING;
     jsonReq.dateEnteredOnFile = getState().form.bibliographicRecordForm.values[TAGS._008].substring(0, 6);
     jsonReq.categoryCode = 1;
     jsonReq.sequenceNumber = 0;
@@ -71,7 +70,7 @@ export class Tag008 extends React.Component<Props, {}> {
     jsonReq.code = TAGS._008;
     jsonReq.languageCode = formData['Tag008-languageCode'] || 'ita';
     jsonReq.recordCataloguingSourceCode = formData['Tag008-recordCataloguingSourceCode'] || 'r';
-    jsonReq.displayValue = '';
+    jsonReq.displayValue = C.EMPTY_STRING;
     if (changedFieldLabel === 'dateFirstPublication' || changedFieldLabel === 'dateLastPublication') {
       changedFieldValue = e.target.value.lenght < 4 ? '' : e.target.value;
     } else {
@@ -84,10 +83,9 @@ export class Tag008 extends React.Component<Props, {}> {
 
   asyncChangeDisplayValue = async (jsonReq) => {
     const { dispatch, change } = this.props;
-    await post(buildUrl(C.ENDPOINT.CHANGE_DISPLAY_VALUE, C.ENDPOINT.DEFAULT_LANG_VIEW), jsonReq)
-      .then((r) => { return r.json(); }).then((data) => {
-        dispatch(change(TAGS._008, data.displayValue));
-      });
+    const response = await post(buildUrl(C.ENDPOINT.CHANGE_DISPLAY_VALUE, C.ENDPOINT.DEFAULT_LANG_VIEW), jsonReq);
+    const data = await response.json;
+    dispatch(change(TAGS._008, data.displayValue));
   }
 
   render() {

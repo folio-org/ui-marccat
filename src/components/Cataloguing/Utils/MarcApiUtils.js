@@ -86,11 +86,13 @@ export const handleTagXXXHeaderTypeChange = (props, tag, headerTypeCode) => {
  * @param {*} message - a message validation to display
  * @param {*} type - a type of callout
  */
-export const showValidationMessage = (callout: React.RefObject<Callout>, message: string, type: string) => {
+export const showValidationMessage = (callout: React.RefObject<Callout>, message: string, type: string, value: any) => {
   callout.current.sendCallout({
     type: (type) || 'success',
     message: (
       <span>
+        {value &&
+        <FormattedMessage id={message} values={{ value }} />}
         <FormattedMessage id={message} />
       </span>
     )

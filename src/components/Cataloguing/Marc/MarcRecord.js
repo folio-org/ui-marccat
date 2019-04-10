@@ -19,7 +19,7 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
 import { FormattedMessage } from 'react-intl';
-import { union, sortedUniqBy, merge, includes, first } from 'lodash';
+import { union, sortBy, merge, includes, first } from 'lodash';
 import { Redux, ReduxForm } from '../../../redux/helpers/Redux';
 import {
   TAG_WITH_NO_HEADING_ASSOCIATED,
@@ -132,7 +132,7 @@ export class MarcRecord extends React.Component<Props, {
     };
     bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     bibliographicRecord.fields = union(bibliographicRecord.fields, tagVariableData);
-    bibliographicRecord.fields = sortedUniqBy(bibliographicRecord.fields, SORTED_BY.CODE);
+    bibliographicRecord.fields = sortBy(bibliographicRecord.fields, SORTED_BY.CODE);
     const payload = { bibliographicRecord, recordTemplate };
 
     await post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), payload)

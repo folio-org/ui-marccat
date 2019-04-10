@@ -19,7 +19,7 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
 import { FormattedMessage } from 'react-intl';
-import { union, sortedUniqBy, includes, first } from 'lodash';
+import { union, sortedUniqBy, merge, includes, first } from 'lodash';
 import { Redux, ReduxForm } from '../../../redux/helpers/Redux';
 import {
   TAG_WITH_NO_HEADING_ASSOCIATED,
@@ -37,7 +37,7 @@ import * as MarcAction from '../Actions';
 import { FixedFields, MarcLeader, VariableFields } from '.';
 import { resetStore } from '../../../shared/ActionCreator';
 import style from '../Style/index.css';
-import { RECORD_FIELD_STATUS } from '../Utils/MarcConstant';
+import { RECORD_FIELD_STATUS, SORTED_BY } from '../Utils/MarcConstant';
 
 export class MarcRecord extends React.Component<Props, {
   callout: React.RefObject<Callout>,
@@ -54,7 +54,6 @@ export class MarcRecord extends React.Component<Props, {
     this.handleClose = this.handleClose.bind(this);
     this.callout = React.createRef();
     this.onCreate = this.onCreate.bind(this);
-    this.onUpdate = this.onUpdate.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.saveRecord = this.saveRecord.bind(this);
     this.deleteRecord = this.deleteRecord.bind(this);
@@ -83,34 +82,18 @@ export class MarcRecord extends React.Component<Props, {
 
   onCreate = item => {
     const { store } = this.props;
-    const { variableField: { code, ind1, ind2 } } = item;
+    const { variableField: { code, ind1, ind2, displayValue, keyNumber, categoryCode } } = item;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
-    const displayVal: string = replaceAllinverted(item.variableField.displayValue);
-    item.variableField.displayValue = displayVal;
     ReduxForm.resolve(store, C.REDUX.FORM.EDITABLE_FORM).items[0] = item;
-    const createHeading = { ind1, ind2, displayValue: displayVal, tag: code };
+    const idEditMode = (keyNumber > 0);
+    const heading = { ind1, ind2, displayValue: replaceAllinverted(displayValue), tag: code };
 
-    if (!cretaeHeadingForTag) { this.asyncCreateHeading(item, createHeading); }
+    if (idEditMode) {
+      item.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
+      merge(heading, { keyNumber, categoryCode });
+    }
+    if (!cretaeHeadingForTag) { this.asyncCreateHeading(item, heading); }
   }
-
-  onUpdate = item => {
-    const { store } = this.props;
-    const { variableField: { code, ind1, ind2, categoryCode, keyNumber } } = item;
-    const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
-    const displayVal: string = replaceAllinverted(item.variableField.displayValue);
-    item.variableField.displayValue = displayVal;
-    ReduxForm.resolve(store, C.REDUX.FORM.EDITABLE_FORM).items[0] = item;
-    const editHeading = {
-      ind1: ind1 || C.EMPTY_SPACED_STRING,
-      ind2: ind2 || C.EMPTY_SPACED_STRING,
-      displayValue: displayVal,
-      tag: code,
-      categoryCode,
-      keyNumber
-    };
-
-    if (!cretaeHeadingForTag) { this.asyncUpdateHeading(item, editHeading); }
-  };
 
   asyncCreateHeading = async (item, heading) => {
     try {
@@ -122,18 +105,6 @@ export class MarcRecord extends React.Component<Props, {
       showValidationMessage(this.callout, Localize('cataloging.record.tag.create.success'), C.VALIDATION_MESSAGE_TYPE.SUCCESS);
     } catch (exception) {
       showValidationMessage(this.callout, Localize('cataloging.record.tag.create.failure'), C.VALIDATION_MESSAGE_TYPE.ERROR);
-    }
-  };
-
-  asyncUpdateHeading = async (item, heading) => {
-    try {
-      const response = await post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading);
-      const data = await response.json();
-      item.variableField.categoryCode = data.categoryCode;
-      item.variableField.displayValue = data.displayValue;
-      showValidationMessage(this.callout, Localize('cataloging.record.tag.update.success'), C.VALIDATION_MESSAGE_TYPE.SUCCESS);
-    } catch (exception) {
-      showValidationMessage(this.callout, Localize('cataloging.record.tag.update.failure'), C.VALIDATION_MESSAGE_TYPE.ERROR);
     }
   };
 
@@ -161,7 +132,7 @@ export class MarcRecord extends React.Component<Props, {
     };
     bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     bibliographicRecord.fields = union(bibliographicRecord.fields, tagVariableData);
-    bibliographicRecord.fields = sortedUniqBy(bibliographicRecord.fields, 'code');
+    bibliographicRecord.fields = sortedUniqBy(bibliographicRecord.fields, SORTED_BY.CODE);
     const payload = { bibliographicRecord, recordTemplate };
 
     await post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), payload)
@@ -291,7 +262,6 @@ export class MarcRecord extends React.Component<Props, {
                         fields={bibliographicRecord.fields.filter(f => f.fixedField === undefined || !f.fixedField)}
                         onCreate={this.onCreate}
                         onUpdate={this.onUpdate}
-                        onDelete={this.onDelete}
                         {...this.props}
                       />
                     </Accordion>

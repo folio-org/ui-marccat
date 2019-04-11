@@ -108,9 +108,9 @@ export class MarcRecord extends React.Component<Props, {
       item.variableField.categoryCode = data.categoryCode;
       item.variableField.keyNumber = data.keyNumber;
       item.variableField.displayValue = data.displayValue;
-      showValidationMessage(this.callout, Localize({ 'cataloging.record.tag.create.success': C.EMPTY_STRING }), C.VALIDATION_MESSAGE_TYPE.SUCCESS);
+      showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.create.success', value: C.EMPTY_STRING }), C.VALIDATION_MESSAGE_TYPE.SUCCESS);
     } catch (exception) {
-      showValidationMessage(this.callout, Localize({ 'cataloging.record.tag.create.failure': C.EMPTY_STRING }), C.VALIDATION_MESSAGE_TYPE.ERROR);
+      showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.create.failure', value: C.EMPTY_STRING }), C.VALIDATION_MESSAGE_TYPE.ERROR);
     }
   };
 

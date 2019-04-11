@@ -3,12 +3,10 @@ export const REQUEST_MAKE = '@@ui-marccat/REQUEST_MAKE';
 export const REQUEST_REDUCE = '@@ui-marccat/REQUEST_REDUCE';
 export const REQUEST_RESOLVE = '@@ui-marccat/REQUEST_RESOLVE';
 export const REQUEST_REJECT = '@@ui-marccat/REQUEST_REJECT';
-export const REQUEST_HISTORY = '@@ui-marccat/REQUEST_HISTORY';
 export const REQUEST_CLEAR = '@@ui-marccat/REQUEST_CLEAR';
 
 export const ACTION = {
   BROWSE: '@@ui-marccat/BROWSE',
-  REQUEST_HISTORY: '@@ui-marccat/REQUEST_HISTORY',
   GET: '@@ui-marccat/GET',
   QUERY: '@@ui-marccat/QUERY',
   FIND: '@@ui-marccat/FIND',
@@ -22,5 +20,7 @@ export const ACTION = {
   LOCK: '@@ui-marccat/LOCK',
   UNLOCK: '@@ui-marccat/UNLOCK',
   SETTINGS: '@@ui-marccat/SETTINGS',
-  HISTORY: '@@ui-marccat/HISTORY',
+  HISTORY: '@@ui-marccat/REQUEST_HISTORY',
+  HISTORY_COUNT: '@@ui-marccat/TOTAL_BIB_COUNT',
+  HISTORY_CLEAR: '@@ui-marccat/REQUEST_HISTORY_CLEAR'
 };

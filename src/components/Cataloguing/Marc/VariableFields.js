@@ -3,7 +3,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import React, { Fragment } from 'react';
 import MarcEditableList from './Editable';
 import { Props, injectCommonProp } from '../../../core';
 import { getEmptyVariableField } from '..';
@@ -71,9 +71,9 @@ class VariableFields extends React.Component<Props, {}> {
 
   render() {
     return (
-      <React.Fragment>
+      <Fragment>
         {this.renderList()}
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

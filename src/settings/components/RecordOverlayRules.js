@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-import * as React from 'react';
+import React, { Fragment } from 'react';
 import { Pane, Button, Icon } from '@folio/stripes/components';
 import { Props, injectCommonProp } from '../../core';
 import { ToolbarButtonMenu } from '../../lib';
@@ -55,7 +55,7 @@ class RecordsOverlayRules extends React.Component<P, {}> {
         <div id="data-test-settings-record-overlay-rules" className={style['mb-10']}>
           {translate({ id: 'ui-marccat.settings.record.single.overlay.rules.text' }) }
         </div>
-        <React.Fragment>
+        <Fragment>
           {TAGS.map((t, i) => (
             <Button buttonStyle="dropdownItem" key={i} onClick={this.handleOnClick}>
               <Icon icon={(locked) ? 'eye-closed' : 'eye-open'}>
@@ -63,7 +63,7 @@ class RecordsOverlayRules extends React.Component<P, {}> {
               </Icon>
             </Button>))
           }
-        </React.Fragment>
+        </Fragment>
       </Pane>
     );
   }

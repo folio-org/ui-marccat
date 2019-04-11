@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
 import { Field } from 'redux-form';
@@ -85,7 +85,7 @@ export class Tag007 extends React.Component<Props, {}> {
       this.handleOnChange();
     }
     return (headerTypesResult) ? (
-      <React.Fragment>
+      <Fragment>
         <Row>
           <Col xs={4}>
             <Field
@@ -124,8 +124,8 @@ export class Tag007 extends React.Component<Props, {}> {
               })
           }
         </Row>
-      </React.Fragment>
-    ) : (<React.Fragment />);
+      </Fragment>
+    ) : (<Fragment />);
   }
 }
 

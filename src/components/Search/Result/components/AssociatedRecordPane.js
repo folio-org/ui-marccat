@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import React, { Fragment } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Pane, Icon } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
@@ -20,7 +20,7 @@ class AssociatedRecordPane extends React.Component<Props, {}> {
       renderRightMenuEdit
     } = this.props;
     return (
-      <React.Fragment>
+      <Fragment>
         <Pane
           id="pane-associated-record-details"
           defaultWidth="25%"
@@ -38,7 +38,7 @@ class AssociatedRecordPane extends React.Component<Props, {}> {
               <AssociatedBibDetails {...this.props} /> : null
           }
         </Pane>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

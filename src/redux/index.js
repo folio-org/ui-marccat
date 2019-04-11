@@ -52,6 +52,7 @@ import {
 
 import {
   reducer as data,
+  historyReducer as history,
   epic as dataEpic,
 } from './epic/epic';
 
@@ -80,7 +81,8 @@ export const reducer = combineReducers({
   panels: panelsReducer,
   totalBibRecords: totalBibCountDocReducer,
   totalAuthRecords: totalAuthCountDocReducer,
-  data
+  data,
+  history
 });
 
 export const epics = combineEpics(

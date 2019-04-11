@@ -4,7 +4,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import {
   Pane,
@@ -108,9 +108,9 @@ export class MarcRecord extends React.Component<Props, {
       item.variableField.categoryCode = data.categoryCode;
       item.variableField.keyNumber = data.keyNumber;
       item.variableField.displayValue = data.displayValue;
-      showValidationMessage(this.callout, Localize('cataloging.record.tag.create.success'), C.VALIDATION_MESSAGE_TYPE.SUCCESS);
+      showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.create.success', value: C.EMPTY_STRING }), C.VALIDATION_MESSAGE_TYPE.SUCCESS);
     } catch (exception) {
-      showValidationMessage(this.callout, Localize('cataloging.record.tag.create.failure'), C.VALIDATION_MESSAGE_TYPE.ERROR);
+      showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.create.failure', value: C.EMPTY_STRING }), C.VALIDATION_MESSAGE_TYPE.ERROR);
     }
   };
 
@@ -163,7 +163,7 @@ export class MarcRecord extends React.Component<Props, {
     dispatch(resetStore());
     dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', isChecked: false });
     toggleFilterPane();
-    router.push(`/marccat/search?id=${id}`);
+    router.push(`/marccat/search?savedId=${id}`);
   };
 
   renderDropdownLabels = () => {
@@ -221,7 +221,7 @@ export class MarcRecord extends React.Component<Props, {
     const bibliographicRecord = this.getCurrentRecord();
     return (!bibliographicRecord) ? (<Icon icon="spinner-ellipsis" />)
       : (
-        <React.Fragment>
+        <Fragment>
           <Paneset static>
             <Pane
               defaultWidth="fullWidth"
@@ -278,7 +278,7 @@ export class MarcRecord extends React.Component<Props, {
             </Pane>
           </Paneset>
           <Callout ref={this.callout} />
-        </React.Fragment>
+        </Fragment>
       );
   }
 }

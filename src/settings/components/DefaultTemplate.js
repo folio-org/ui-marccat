@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-import * as React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Icon, Pane, Button } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
@@ -30,13 +30,13 @@ class DefaultTemplate extends React.Component<P, {}> {
     const { translate, label, isLoadingData, defaultTemplateData } = this.props;
     const names = [];
     const getActionMenu = () => (
-      <React.Fragment>
+      <Fragment>
         <Button buttonStyle="dropdownItem" onClick={this.handleSelectTemplate}>
           <Icon icon="document">
             <FormattedMessage id="ui-marccat.template.actionmenu.new" />
           </Icon>
         </Button>
-      </React.Fragment>
+      </Fragment>
     );
     if (defaultTemplateData && defaultTemplateData.length > 0) { defaultTemplateData.forEach(t => names.push(t.name)); }
     const rightMenu = (
@@ -60,7 +60,7 @@ class DefaultTemplate extends React.Component<P, {}> {
       >
         {(defaultTemplateData && defaultTemplateData.length > 0) && (isLoadingData) ?
           <Icon icon="spinner-ellipsis" /> :
-          <React.Fragment>
+          <Fragment>
             <div id="data-test-settings-authority-records" style={{ paddingBottom: '15px' }}>
               {translate({ id: 'ui-marccat.settings.default.record.template.auth.text' }) }
             </div>
@@ -71,7 +71,7 @@ class DefaultTemplate extends React.Component<P, {}> {
             <div id="data-test-settings-authority-records" style={{ paddingBottom: '15px', paddingTop: '15px' }}>
               No authority template found.
             </div>
-          </React.Fragment>
+          </Fragment>
         }
       </Pane>
     );

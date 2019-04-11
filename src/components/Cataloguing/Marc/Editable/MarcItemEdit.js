@@ -4,6 +4,29 @@ import { Field } from 'redux-form';
 import { TextField } from '@folio/stripes/components';
 import css from './EditableList.css';
 
+const testItems = [
+  {
+    value: '100',
+    code: '100',
+  },
+  {
+    value: '110',
+    label: '110',
+  },
+  {
+    value: '120',
+    label: '130',
+  },
+  {
+    value: '160',
+    label: '160',
+  },
+  {
+    value: '170',
+    label: '170',
+  },
+];
+
 const ItemEdit = ({
   rowIndex,
   error,
@@ -17,6 +40,15 @@ const ItemEdit = ({
   autoFocus
 }) => {
   const fields = visibleFields.map((name, fieldIndex) => {
+    // const AutoSuggestion = () => (
+    //   <AutoSuggest
+    //     marginBottom0
+    //     items={testItems}
+    //     renderOption={item => item.value}
+    //     renderValue={item => item.value}
+    //     label=""
+    //   />
+    // );
     if (readOnlyFields.indexOf(name) === -1) {
       let mappedName = name;
       if (Object.hasOwnProperty.call(columnMapping, name)) {
@@ -39,11 +71,14 @@ const ItemEdit = ({
           </div>
         );
       }
+
       return (
         <div key={fieldKey} style={fieldStyle}>
           <Field
             {...fieldProps}
+            // component={(name === 'code') ? AutoSuggestion : TextField}
             component={TextField}
+            items={testItems}
             marginBottom0
             fullWidth
             placeholder={name}

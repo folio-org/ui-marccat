@@ -1,39 +1,60 @@
 import React, { Fragment } from 'react';
-import { Headline, Row, IconButton } from '@folio/stripes/components';
+import { Row, MultiColumnList } from '@folio/stripes/components';
 import { connect } from 'react-redux';
-import { Localize } from '../../../shared/Function';
+import ClearHistory from './ClearHistory';
 import { resetHistoryAction } from '../Actions';
 import style from '../../../lib/Style/Dropdown.css';
 
-const PanelHistory = ({ searchPerformed, recentHistory, totalBib, resetHistory }) => {
+const PanelHistory = ({ ...props }) => {
+  const { searchPerformed, recentHistory, totalBib, withMulticolumn } = props;
+  const resultsFormatter = {
+    index: item => `${item.index.split('"')[0].trim()}`,
+    query: item => `${item.query.split('"')[1].trim()}`,
+    type: item => `${(item).recordType}`,
+    num: () => `${totalBib}`,
+  };
   return (
     <Fragment>
-      <Row>
-        <div className={style.dropdownContainer}>
-          <Headline size="small" margin="medium" tag="h3">
-            {Localize({ key: 'search.history.title', value: searchPerformed })}
-          </Headline>
-        </div>
-        <div className={style.clearHistoryContainer}>
-          <IconButton
-            key="icon-trash-history"
-            icon="trash"
-            badgeCount={searchPerformed}
-            onClick={resetHistory}
-            className={style.clearHistory}
-          />
-        </div>
-      </Row>
-      <Row>
-        <div className={style.dropdownContainer}>
-          {recentHistory.map((h, i) => (
-            <div className={style.dropdownShortcut} key={i}>
-              {`queryBib: ${h.queryBib}`}
-              <span>{`record found: ${totalBib}`}</span>
+      <ClearHistory {...props} />
+      {(withMulticolumn) ?
+        (
+          <Row>
+            <div className={style.dropdownContainer}>
+              {recentHistory.map((h, i) => (
+                <div className={style.dropdownShortcut} key={i}>
+                  {`queryBib: ${h.queryBib}`}
+                  <span>{`record found: ${totalBib}`}</span>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </Row>
+          </Row>
+        ) : (
+          <Row>
+            <MultiColumnList
+              id="bib-associated"
+              defaultWidth="fill"
+              isEmptyMessage={(searchPerformed === 0) ? 'No Search performed' : ''}
+              columnWidths={
+                {
+                  'type': '30%',
+                  'query': '30%',
+                  'index': '20%',
+                  'num': '20%',
+                }
+              }
+              formatter={resultsFormatter}
+              onRowClick={() => {}}
+              rowMetadata={['query', 'found']}
+              contentData={recentHistory}
+              visibleColumns={[
+                'index',
+                'query',
+                'type',
+                'num',
+              ]}
+            />
+          </Row>)
+      }
     </Fragment>
   );
 };

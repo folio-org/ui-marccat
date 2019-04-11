@@ -3,6 +3,11 @@ import { languageFilterMap, formatFilterMap } from '../Filter/FilterMapper';
 import { EMPTY_STRING } from '../../../shared/Constants';
 import { FixedFields, BaseFixedFields } from '../../../models';
 
+/**
+ *
+ * @param {*} languageFilter - filter for language
+ * @return
+ */
 export const getLanguageFilterQuery = (languageFilter) => {
   return languageFilter
     .map(e => {
@@ -30,24 +35,6 @@ export const If = (k) => (k) || undefined;
 export const safeString = str => (str) || EMPTY_STRING;
 export const safeObject = (obj, prop) => ((obj) ? obj[prop] : {});
 export const safefields = (arr:[]) => ((arr.length > 0) ? arr : []);
-
-
-export class RecordFixed {
-   key: string;
-   val: string;
-}
-
-export const getObjectKeys = (obj, prefix = EMPTY_STRING) => {
-  return Object.entries(obj).reduce((collector, [key, val]) => {
-    const newKeys = [...collector, prefix ? `${prefix}.${key}` : key];
-    if (Object.prototype.toString.call(val) === '[object Object]') {
-      const newPrefix = prefix ? `${prefix}.${key}` : key;
-      const otherKeys = getObjectKeys(val, newPrefix);
-      return [...newKeys, ...otherKeys];
-    }
-    return newKeys;
-  }, []);
-};
 
 /**
  *

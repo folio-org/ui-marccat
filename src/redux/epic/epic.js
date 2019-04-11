@@ -107,8 +107,6 @@ export function historyReducer(state = historyState, action) {
       ...state,
       list: [...state.list, action.data]
     };
-  case ACTION.HISTORY_COUNT:
-    return { ...state };
   case ACTION.HISTORY_CLEAR:
     return {
       ...state,

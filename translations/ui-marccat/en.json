@@ -44,7 +44,7 @@
   "search.details.bibliographic": "Bibliographic record",
   "search.details.authority": "Authority record",
   "search.associated.bibliographic": "Associated bibliographic records",
-  "search.history.title": "Total search performed: {value}",
+  "search.history.title": "Recent Searches",
   "browse.results.title": "Access Point",
   "browse.record.create": "Create",
   "browse.actionmenu.export.mrc": "Export as .mrc file (single file, multiple records)",

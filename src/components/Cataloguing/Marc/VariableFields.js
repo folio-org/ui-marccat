@@ -36,7 +36,6 @@ class VariableFields extends React.Component<Props, {}> {
       ind2: item => `${item.variableField.ind2}`,
       displayValue: item => `${replaceAll(item.displayValue)}` || `${replaceAll(item.variableField.displayValue)}`,
     };
-
     return (
       <MarcEditableList
         createButtonLabel={translate({ id: 'ui-marccat.cataloging.variablefield.section.add.newtag' })}

@@ -22,5 +22,5 @@ export const ACTION = {
   SETTINGS: '@@ui-marccat/SETTINGS',
   HISTORY: '@@ui-marccat/REQUEST_HISTORY',
   HISTORY_COUNT: '@@ui-marccat/TOTAL_BIB_COUNT',
-  HISTORY_CLEAR: '@@ui-marccat/REQUEST_HISTORY_CLEAR'
+  HISTORY_CLEAR: '@@ui-marccat/REQUEST_HISTORY_CLEAR',
 };

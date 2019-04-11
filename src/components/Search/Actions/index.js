@@ -69,13 +69,19 @@ export const countRecordAction = (payload) => {
  *
  * @param {*} payload
  */
-export const historySearchAction = (payload) => {
+export const historySearchAction = (data) => {
   return {
-    type: ACTION.REQUEST_HISTORY,
-    moreData: 'N',
-    queryBib: payload.bibQuery,
-    queryAuth: payload.authQuery,
-    from: '1',
-    to: '30'
+    type: ACTION.HISTORY,
+    data
+  };
+};
+
+/**
+ *
+ * @param {*} payload
+ */
+export const resetHistoryAction = () => {
+  return {
+    type: ACTION.HISTORY_CLEAR,
   };
 };

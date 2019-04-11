@@ -4,7 +4,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import React, { Fragment } from 'react';
 import {
   SearchField,
   AccordionSet,
@@ -28,9 +28,9 @@ import { ActionTypes } from '../../../redux/actions/Actions';
 import { findYourQuery } from '../Filter';
 import { remapFilters } from '../../../utils/Mapper';
 import { EMPTY_STRING } from '../../../shared/Constants';
-import * as Action from '../../../shared/Action';
 import styles from '../Style/index.css';
 import { findParam } from '../../../shared/Function';
+import { historySearchAction } from '../Actions';
 
 type P = Props & {
   inputErrorCheck: string,
@@ -55,11 +55,18 @@ class SearchPanel extends React.Component<P, {}> {
     this.handleResetAllButton = this.handleResetAllButton.bind(this);
   }
 
-  handleSearchFromCataloging = () => {
+  componentWillMount() {
+    setTimeout(() => {
+      const id = findParam('savedId');
+      if (id) this.handleSearchFromCataloging();
+    }, 5000);
+  }
+
+  handleSearchFromCataloging = (id) => {
     const { dispatch } = this.props;
     const conditionFilter = 'START';
     const indexForQuery = 'NUMID';
-    let baseQuery = indexForQuery + findParam('id');
+    let baseQuery = indexForQuery + id;
     baseQuery = (conditionFilter === 'MATCH') ? baseQuery + '!' : baseQuery;
     dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: baseQuery, queryAuth: '' });
   };
@@ -129,9 +136,7 @@ class SearchPanel extends React.Component<P, {}> {
           || indexForQuery === 'PP '
           || indexForQuery === 'PW ') {
           dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: bibQuery, queryAuth: EMPTY_STRING, from: '1', to: '30' });
-          this.handleSearchHistory({
-            type: ActionTypes.SEARCH, data: { moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' }
-          });
+          this.handleSearchHistory({ moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
           transitionToParams('q', bibQuery);
           dispatch({ type: ActionTypes.TOTAL_BIB_COUNT, query: bibQuery });
         } else {
@@ -139,9 +144,7 @@ class SearchPanel extends React.Component<P, {}> {
           transitionToParams('q', authQuery);
           dispatch({ type: ActionTypes.TOTAL_BIB_COUNT, query: bibQuery });
           dispatch({ type: ActionTypes.TOTAL_AUTH_COUNT, query: authQuery });
-          this.handleSearchHistory({
-            type: ActionTypes.SEARCH, data: { moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' }
-          });
+          this.handleSearchHistory({ moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30', found: 0 });
         }
       }
     }
@@ -151,7 +154,7 @@ class SearchPanel extends React.Component<P, {}> {
 
   handleSearchHistory = (payload) => {
     const { dispatch } = this.props;
-    dispatch({ type: Action.REQUEST_HISTORY, data: { type: 'history', payload } });
+    dispatch(historySearchAction(payload));
   };
 
   handleAddSearchForm = () => {
@@ -195,7 +198,7 @@ class SearchPanel extends React.Component<P, {}> {
     const { translate, ...rest } = this.props;
     const { filterEnable, leftBracketEnable, rightBracketEnable } = this.state;
     return (
-      <React.Fragment>
+      <Fragment>
         <AccordionSet>
           <Accordion
             {...rest}
@@ -261,7 +264,7 @@ class SearchPanel extends React.Component<P, {}> {
           </Accordion>
           <FiltersContainer {...this.props} filterEnable={!!(filterEnable)} />
         </AccordionSet>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

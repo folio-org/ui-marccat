@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { isEmpty, first } from 'lodash';
 import { Field } from 'redux-form';
@@ -62,7 +62,6 @@ export class Tag008 extends React.Component<Props, {}> {
       Object.keys(tag008ValuesResults.results).map((key) => tag008ValuesResults.results[key]).map((x) => jsonReq[x.name] = x.defaultValue);
     }
     const changedFieldLabel = (e.target) ? e.target.name.split('-')[1] : '';
-    let changedFieldValue = '';
     jsonReq.dateEnteredOnFile = getState().form.bibliographicRecordForm.values[TAGS._008].substring(0, 6);
     jsonReq.categoryCode = 1;
     jsonReq.sequenceNumber = 0;
@@ -72,12 +71,10 @@ export class Tag008 extends React.Component<Props, {}> {
     jsonReq.recordCataloguingSourceCode = formData['Tag008-recordCataloguingSourceCode'] || 'r';
     jsonReq.displayValue = '';
     if (changedFieldLabel === 'dateFirstPublication' || changedFieldLabel === 'dateLastPublication') {
-      changedFieldValue = e.target.value.lenght < 4 ? '' : e.target.value;
+      jsonReq[changedFieldLabel] = e.target.value.lenght < 4 ? '' : e.target.value;
     } else {
-      changedFieldValue = e.target.value;
+      jsonReq[changedFieldLabel] = e.target.value;
     }
-    jsonReq[changedFieldLabel] = changedFieldValue;
-
     this.asyncChangeDisplayValue(jsonReq);
   };
 
@@ -120,7 +117,7 @@ export class Tag008 extends React.Component<Props, {}> {
     }
 
     return (headerTypesResult) ? (
-      <React.Fragment>
+      <Fragment>
         <Row>
           <Col xs={4}>
             <Field
@@ -177,8 +174,8 @@ export class Tag008 extends React.Component<Props, {}> {
             })
           }
         </Row>
-      </React.Fragment>
-    ) : <React.Fragment />;
+      </Fragment>
+    ) : <Fragment />;
   }
 }
 export default (connect(

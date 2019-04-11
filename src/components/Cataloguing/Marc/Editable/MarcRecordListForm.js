@@ -121,6 +121,7 @@ class EditableListForm extends React.Component {
 
   onCancel(fields, index) {
     this.toggleEdit(index);
+    this.props.contentData.splice(index, 1);
   }
 
   onSave(fields, index) {

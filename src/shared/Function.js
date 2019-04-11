@@ -114,10 +114,9 @@ export function safeArray(obj, res, ...prop) {
  *
  * @param  {...any} labels
  */
-export function Localize(...labels: Array<String>): React.JSX.Element {
-  return (labels.length === 1) ?
-    (<FormattedMessage id={META.MODULE_NAME.concat('.').concat(labels[0])} />) :
-    labels.map(l => <FormattedMessage id={META.MODULE_NAME.concat('.').concat(l)} />);
+export function Localize(label): React.JSX.Element {
+  if (label.length) return label.map(l => <FormattedMessage id={META.MODULE_NAME.concat('.').concat(l.key)} values={{ value: l.value }} />);
+  return <FormattedMessage id={META.MODULE_NAME.concat('.').concat(label.key)} values={{ value: label.value }} />;
 }
 /* @flow */
 // eslint-disable-next-line no-unused-vars

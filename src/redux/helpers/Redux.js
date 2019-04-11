@@ -98,12 +98,8 @@ Redux.resolveRequestData = (model, data, payload) => { // metodo statico
  */
 Redux.storeHistoryData = (data) => { // metodo statico
   return {
-    history: {
-      timestamp: new Date(),
-      ...data,
-      meta: data.meta,
-      errors: data.errors
-    }
+    timestamp: new Date(),
+    data
   };
 };
 

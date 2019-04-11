@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Button, Icon } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 import style from '../../Style/Dropdown.css';
@@ -22,7 +22,7 @@ export const ActionMenu = () => {
     'Format'
   ];
   return (
-    <React.Fragment>
+    <Fragment>
       <div className={style.dropdownContainerText}>
         <div><FormattedMessage id="ui-marccat.browse.actionmenu.export.mrc" /></div>
         <div><FormattedMessage id="ui-marccat.browse.actionmenu.export.csv" /></div>
@@ -31,13 +31,13 @@ export const ActionMenu = () => {
         <hr />
         <CheckboxIconButton labels={labels} />
       </div>
-    </React.Fragment>
+    </Fragment>
   );
 };
 
 export const ActionMenuDetail = () => {
   return (
-    <React.Fragment>
+    <Fragment>
       <div className={style.dropdownContainerText}>
         <div><FormattedMessage id="ui-marccat.search.actionmenu.export.mrc" /></div>
         <div><FormattedMessage id="ui-marccat.browse.actionmenu.export.csv" /></div>
@@ -49,27 +49,27 @@ export const ActionMenuDetail = () => {
         <div><FormattedMessage id="ui-marccat.search.actionmenu.instances" /></div>
         <div><FormattedMessage id="ui-marccat.search.actionmenu.authority.records" /></div>
       </div>
-    </React.Fragment>
+    </Fragment>
   );
 };
 export const genericActionMenuDetail = (labels:Array<any>) => {
   return (
-    <React.Fragment>
+    <Fragment>
       <div className={style.dropdownContainerText}>
         {labels.map((l, i) => (
           <div key={i}><FormattedMessage id={l} /></div>
         ))}
       </div>
-    </React.Fragment>
+    </Fragment>
   );
 };
 
 export const getActionMenu = (onClick) => (
-  <React.Fragment>
+  <Fragment>
     <Button buttonStyle="dropdownItem" onClick={onClick()}>
       <Icon icon="document">
         <FormattedMessage id="ui-marccat.template.actionmenu.new" />
       </Icon>
     </Button>
-  </React.Fragment>
+  </Fragment>
 );

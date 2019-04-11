@@ -6,12 +6,12 @@ import {
   REQUEST_MAKE,
   REQUEST_RESOLVE,
   REQUEST_REJECT,
-  REQUEST_HISTORY,
   REQUEST_CLEAR
 } from '../../shared/Action';
 import { ENDPOINT } from '../../shared/Constants';
 
 const initialState = {};
+const historyState = { list: [] };
 
 export const EPIC_MODEL_KEY = {
   EMPTY_RECORD: 'emptyRecord',
@@ -64,15 +64,15 @@ export const rejectEpicRequest = (name, data, error) => ({
  * @param {*} error
  */
 export const resolveHistoryRequest = (data) => ({
-  type: REQUEST_HISTORY,
+  type: ACTION.HISTORY,
   data,
 });
 
 
 /**
- * The main data store reducer simply uses the handlers defined above
- * @param {Object} state - data store state leaf
- * @param {Object} action - redux action being dispatched
+ * The main store reducer
+ * @param {Object} state - initial state
+ * @param {Object} action - redux action dispatched
  */
 export function reducer(state = initialState, action) {
   switch (action.type) {
@@ -85,13 +85,34 @@ export function reducer(state = initialState, action) {
   case REQUEST_REJECT:
     return Object.assign({
     }, state, Redux.rejectRequestData(action.name, action.data, action.error));
-  case REQUEST_HISTORY:
-    return Object.assign({
-    }, state, Redux.storeHistoryData(action.data));
   case REQUEST_CLEAR:
     return {
       ...state,
       ...initialState
+    };
+  default:
+    return state;
+  }
+}
+
+/**
+ * The history reducer
+ * @param {Object} state - initial state
+ * @param {Object} action - redux action dispatched
+ */
+export function historyReducer(state = historyState, action) {
+  switch (action.type) {
+  case ACTION.HISTORY:
+    return {
+      ...state,
+      list: [...state.list, action.data]
+    };
+  case ACTION.HISTORY_COUNT:
+    return { ...state };
+  case ACTION.HISTORY_CLEAR:
+    return {
+      ...state,
+      ...historyState
     };
   default:
     return state;

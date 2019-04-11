@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import React, { Fragment } from 'react';
 import {
   Dropdown,
   DropdownMenu,
@@ -36,7 +36,7 @@ export default function ActionsMenuButton({ ...props }:P) {
   const renderDropdDownMenu = () => {
     const labels = renderDropdownLabels();
     return (
-      <React.Fragment>
+      <Fragment>
         <div className={style.dropdownContainer}>
           {labels.map((l, i) => (
             <div className={style.dropdownShortcut} key={i}>
@@ -45,7 +45,7 @@ export default function ActionsMenuButton({ ...props }:P) {
             </div>
           ))}
         </div>
-      </React.Fragment>
+      </Fragment>
     );
   };
 

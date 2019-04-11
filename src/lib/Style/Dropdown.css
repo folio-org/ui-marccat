@@ -22,3 +22,9 @@
     font-weight: var(--text-weight-basis);
   }
 }
+.clearHistoryContainer {
+  padding-bottom: 5px;
+  width: 40%;
+  float: right;
+  text-align: right;
+}

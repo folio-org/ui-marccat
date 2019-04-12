@@ -21,7 +21,7 @@ type P = Props & {
 }
 
 export default function DropdownButtonMenu({ ...props }:P) {
-  const { onToggle, open, labels, label, noDropdown, disabled } = props;
+  const { onToggle, open, labels, label, noDropdown, disabled, withIcon } = props;
 
   const renderDropdDownMenu = () => {
     return (
@@ -38,7 +38,7 @@ export default function DropdownButtonMenu({ ...props }:P) {
     );
   };
 
-  return (
+  return (withIcon) ? (
     <PaneMenu>
       <Dropdown
         id="AddPermissionDropdown"
@@ -79,6 +79,43 @@ export default function DropdownButtonMenu({ ...props }:P) {
           {renderDropdDownMenu()}
         </DropdownMenu>
       </Dropdown>
-    </PaneMenu>
-  );
+    </PaneMenu>)
+    :
+    (
+      <PaneMenu>
+        <Dropdown
+          id="AddPermissionDropdown"
+          open={open}
+          onToggle={onToggle}
+          disabled={disabled}
+          group
+          pullRight
+        >
+          <Button
+            data-role="toggle"
+            align="end"
+            bottomMargin0
+            aria-haspopup
+            buttonStyle="primary"
+            disabled={disabled}
+          >
+            {label}
+            {!noDropdown &&
+            <Icon
+              icon="caret-down"
+              size="small"
+              iconClassName="myClass"
+            />}
+          </Button>
+          <DropdownMenu
+            data-role="menu"
+            aria-label="available permissions"
+            onToggle={onToggle}
+            disabled={disabled}
+          >
+            {renderDropdDownMenu()}
+          </DropdownMenu>
+        </Dropdown>
+      </PaneMenu>
+    );
 }

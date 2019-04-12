@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { TextField } from '@folio/stripes/components';
-import css from './EditableList.css';
+import style from '../../Style/variableform.css';
 
 const testItems = [
   {
@@ -91,10 +91,10 @@ const ItemEdit = ({
   });
 
   return (
-    <div className={css.editListRow} role="row">
+    <div className={style.editListRow} role="row">
       {fields}
       { error &&
-        <div className={css.editableListError}>
+        <div className={style.editableListError}>
 Error:
           {error}
         </div>

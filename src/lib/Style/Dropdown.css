@@ -23,6 +23,31 @@
   }
 }
 
+.dropdownShortcutVariable {
+  padding-bottom: 5px;
+  color: #222;
+  font-weight: 700;
+
+  & span {
+    float: right;
+    color: var(--color-text);
+    font-weight: 700;
+    opacity: 0.4;
+  }
+
+  & span.bold {
+    font-weight: 700;
+  }
+
+  & span.light {
+    float: right;
+    color: #a7a7a7;
+    font-weight: 700;
+  }
+}
+
+
+
 .clearHistoryContainer {
   padding-bottom: 5px;
   width: 40%;

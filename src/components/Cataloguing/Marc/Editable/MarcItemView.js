@@ -1,11 +1,11 @@
 import React from 'react';
-import css from './EditableList.css';
+import style from '../../Style/variableform.css';
 
 type P = {
   cells: [{}],
 };
 const MarcItemView = ({ cells }:P) => (
-  <div className={css.editListRow} role="row">
+  <div className={style.editListRow} role="row">
     {cells}
   </div>
 );

@@ -15,7 +15,7 @@ import { ToolbarButtonMenu, EmptyMessage, NoResultsMessage } from '../../../lib'
 import { browseFormatter, browseColMapper } from '../../../utils/Formatter';
 import BrowseAssociatedItemDetail from './BrowseAssociatedItemDetail';
 import * as C from '../../../shared/Constants';
-import { genericActionMenuDetail } from '../../../lib/components/ActionMenu/ActionMenu';
+import { generateDropdownMenu } from '../../../lib/components/ActionMenu/ActionMenu';
 
 type S = {
   browseDetailPanelIsVisible: bool;
@@ -76,7 +76,7 @@ export class BrowseResults extends React.Component<Props, S> {
       'ui-marccat.browse.actionmenu.printall',
       'ui-marccat.browse.actionmenu.merge'
     ];
-    return genericActionMenuDetail(labels);
+    return generateDropdownMenu(labels);
   };
 
   renderButtonMenu = () => {

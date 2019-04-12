@@ -5,4 +5,6 @@
   --font-size-xxx-large: 24px;
   --margin-top-xxl: 16px;
   --tag-highlight-color: #ff0;
+  --float-left: left;
+  --float-right: right;
 }

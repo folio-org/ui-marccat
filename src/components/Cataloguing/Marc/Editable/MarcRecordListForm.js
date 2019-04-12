@@ -14,9 +14,10 @@ import {
   Row
 } from '@folio/stripes/components';
 import MarcEditableItem from './MarcEditableItem';
-import css from './EditableList.css';
 import { getEmptyVariableField } from '../../Utils/MarcApiUtils';
 import { SORTED_BY } from '../../Utils/MarcConstant';
+import ActionsMenuButton from '../ActionsMenu';
+import style from '../../Style/variableform.css';
 
 const propTypes = {
   actionProps: PropTypes.object,
@@ -76,11 +77,11 @@ class EditableListForm extends React.Component {
     this.getReadOnlyColumns = this.getReadOnlyColumns.bind(this);
 
     if (this.props.id) {
-      this.marcTagrowTestingId = this.props.id;
+      this.marcTagRowTestingId = this.props.id;
     } else if (this.props.label) {
-      this.marcTagrowTestingId = this.props.label.replace(/\s/, '\u001f').toLowerCase();
+      this.marcTagRowTestingId = this.props.label.replace(/\s/, '\u001f').toLowerCase();
     } else {
-      this.marcTagrowTestingId = uniqueId();
+      this.marcTagRowTestingId = uniqueId();
     }
   }
 
@@ -264,7 +265,7 @@ class EditableListForm extends React.Component {
           <Button
             disabled={pristine || submitting || invalid}
             marginBottom0
-            id={`clickable-save-${this.marcTagrowTestingId}-${item.rowIndex}`}
+            id={`clickable-save-${this.marcTagRowTestingId}-${item.rowIndex}`}
             onClick={() => this.onSave(fields, item.rowIndex)}
             {...(typeof actionProps.save === 'function' ? actionProps.save(item) : {})}
           >
@@ -272,7 +273,7 @@ class EditableListForm extends React.Component {
           </Button>
           <Button
             marginBottom0
-            id={`clickable-cancel-${this.marcTagrowTestingId}-${item.rowIndex}`}
+            id={`clickable-cancel-${this.marcTagRowTestingId}-${item.rowIndex}`}
             onClick={() => this.onCancel(fields, item.rowIndex)}
             {...(typeof actionProps.cancel === 'function' ? actionProps.cancel(item) : {})}
           >
@@ -289,7 +290,7 @@ class EditableListForm extends React.Component {
               <IconButton
                 icon="edit"
                 size="small"
-                id={`clickable-edit-${this.marcTagrowTestingId}-${item.rowIndex}`}
+                id={`clickable-edit-${this.marcTagRowTestingId}-${item.rowIndex}`}
                 aria-label={ariaLabel}
                 onClick={() => this.onEdit(item.rowIndex)}
                 {...(typeof actionProps.edit === 'function' ? actionProps.edit(item) : {})}
@@ -303,7 +304,7 @@ class EditableListForm extends React.Component {
               <IconButton
                 icon="trash"
                 size="small"
-                id={`clickable-delete-${this.marcTagrowTestingId}-${item.rowIndex}`}
+                id={`clickable-delete-${this.marcTagRowTestingId}-${item.rowIndex}`}
                 aria-label={ariaLabel}
                 onClick={() => this.onDelete(fields, item.rowIndex)}
                 {...(typeof actionProps.delete === 'function' ? actionProps.delete(item) : {})}
@@ -319,13 +320,19 @@ class EditableListForm extends React.Component {
     const cellFormatters = Object.assign({}, this.props.formatter, { actions: item => this.getActions(fields, item) });
     return (
       <div>
-        <Row between="xs" className={css.editableListFormHeader}>
+        <Row between="xs" className={style.editableListFormHeader}>
           <Col xs>
             <Headline size="medium" margin="none">{this.props.label}</Headline>
           </Col>
           <Col xs>
-            <Row end="xs">
+            <Row end="xs" className={style.fr}>
               <Col xs>
+                <ActionsMenuButton
+                  onClick={this.props.onToggle}
+                  onAdd={() => this.onAdd(fields)}
+                  marginBottom0
+                  id={`clickable-add-${this.marcTagRowTestingId}`}
+                />
                 <Button onClick={() => this.onAdd(fields)} marginBottom0 id={`clickable-add-${this.marcTagrowTestingId}`}>
                   {this.props.createButtonLabel}
                 </Button>
@@ -344,8 +351,8 @@ class EditableListForm extends React.Component {
               formatter={cellFormatters}
               columnWidths={this.getColumnWidths()}
               isEmptyMessage={this.props.isEmptyMessage}
-              headerRowClass={css.editListHeaders}
-              id={`editList-${this.marcTagrowTestingId}`}
+              headerRowClass={style.editListHeaders}
+              id={`editList-${this.marcTagRowTestingId}`}
             />
           </Col>
         </Row>

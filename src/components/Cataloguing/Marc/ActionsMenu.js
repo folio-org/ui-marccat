@@ -1,4 +1,3 @@
-/* eslint-disable no-alert */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /**
@@ -59,20 +58,20 @@ export default class ActionsMenu extends React.Component<P, {}> {
     this.props.onAdd(item);
   }
 
-  addFieldAbove() { alert('addFieldAbove'); }
-  copy() { alert('copy'); }
-  paste() { alert('paste'); }
-  cut() { alert('cut'); }
-  moveFieldsUp() { alert('moveFieldsUp'); }
-  moveFieldsDown() { alert('moveFieldsDown'); }
-  clearFields() { alert('clearFields'); }
-  deleteFields() { alert('deleteFields'); }
-  duplicatFields() { alert('duplicatFields'); }
-  redo() { alert('redo'); }
-  undo() { alert('undo'); }
-  lookup() { alert('lookup'); }
-  viewMarkDocs() { alert('viewMarkDocs'); }
-  sortByTgNumber() { alert('sortByTgNumber'); }
+  addFieldAbove() { }
+  copy() { }
+  paste() { }
+  cut() { }
+  moveFieldsUp() { }
+  moveFieldsDown() { }
+  clearFields() { }
+  deleteFields() { }
+  duplicatFields() { }
+  redo() {}
+  undo() { }
+  lookup() { }
+  viewMarkDocs() { }
+  sortByTgNumber() { }
 
   renderDropdownLabels = () => {
     return [{

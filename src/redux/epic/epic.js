@@ -9,6 +9,7 @@ import {
   REQUEST_CLEAR
 } from '../../shared/Action';
 import { ENDPOINT } from '../../shared/Constants';
+import { ActionTypes } from '../actions/Actions';
 
 const initialState = {};
 const historyState = { list: [] };
@@ -107,6 +108,9 @@ export function historyReducer(state = historyState, action) {
       ...state,
       list: [...state.list, action.data]
     };
+  case ActionTypes.TOTAL_BIB_COUNT_SUCCESS:
+    state.list[state.list.length - 1].found = action.payload;
+    return state;
   case ACTION.HISTORY_CLEAR:
     return {
       ...state,

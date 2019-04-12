@@ -81,16 +81,16 @@ export class MarcRecord extends React.Component<Props, {
   };
 
   onCreate = item => {
-    const { store } = this.props;
+    const { store, router } = this.props;
     const { variableField: { code, ind1, ind2, displayValue, keyNumber, categoryCode } } = item;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const isNotRepetble = includes(TAG_NOT_REPEATABLE, item.code);
     const tagVariableItems: [] = ReduxForm.resolve(store, C.REDUX.FORM.EDITABLE_FORM).items;
     ReduxForm.resolve(store, C.REDUX.FORM.EDITABLE_FORM).items[0] = item;
-    const idEditMode = (keyNumber > 0);
+    const isEditMode = router.location.search.split('&')[1] === 'mode=edit';
     const heading = { ind1, ind2, displayValue: replaceAllinverted(displayValue), tag: code };
 
-    if (idEditMode) {
+    if (isEditMode) {
       item.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
       merge(heading, { keyNumber, categoryCode });
     }
@@ -98,7 +98,9 @@ export class MarcRecord extends React.Component<Props, {
     if (tagLenght.length > 1 && isNotRepetble) {
       showValidationMessage(this.callout, 'ui-marccat.cataloging.record.tag.duplicate.error', 'error');
       tagVariableItems.splice(0, 1);
-    } else if (!cretaeHeadingForTag) { this.asyncCreateHeading(item, heading); }
+    } else if (!cretaeHeadingForTag) {
+      this.asyncCreateHeading(item, heading);
+    }
   }
 
   asyncCreateHeading = async (item, heading) => {
@@ -126,6 +128,14 @@ export class MarcRecord extends React.Component<Props, {
     const { data, datastore: { emptyRecord }, store: { getState } } = this.props;
     const formData = getState().form.bibliographicRecordForm.values;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
+
+    tagVariableData.map(tag => {
+      if (tag.variableField.displayValue.startsWith('$')) {
+        const replacedValue = replaceAllinverted(tag.variableField.displayValue);
+        tag.variableField.displayValue = replacedValue;
+      }
+      return tagVariableData;
+    });
 
     const bibliographicRecord = this.getCurrentRecord();
     bibliographicRecord.leader.value = formData.leader;

@@ -80,8 +80,6 @@ export class Tag006 extends React.Component<Props, {}> {
     if (tag006ValuesResults) {
       const result = Object.keys(tag006ValuesResults.results).map((key) => tag006ValuesResults.results[key]);
       remappedValues.push(result);
-    } else {
-      this.handleOnChange();
     }
     return (headerTypesResult) ? (
       <div>

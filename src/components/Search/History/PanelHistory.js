@@ -10,8 +10,7 @@ const PanelHistory = ({ ...props }) => {
   const resultsFormatter = {
     index: item => `${item.index.split('"')[0].trim()}`,
     query: item => `${item.query.split('"')[1].trim()}`,
-    type: item => `${(item).recordType}`,
-    num: () => `${totalBib}`,
+    num: (item) => `${item.found}`,
   };
   return (
     <Fragment>
@@ -31,14 +30,13 @@ const PanelHistory = ({ ...props }) => {
         ) : (
           <Row>
             <MultiColumnList
-              id="bib-associated"
+              id="hostory-recent-search"
               defaultWidth="fill"
               isEmptyMessage={(searchPerformed === 0) ? 'No Search performed' : ''}
               columnWidths={
                 {
-                  'type': '30%',
-                  'query': '30%',
-                  'index': '20%',
+                  'query': '40%',
+                  'index': '30%',
                   'num': '20%',
                 }
               }
@@ -49,7 +47,6 @@ const PanelHistory = ({ ...props }) => {
               visibleColumns={[
                 'index',
                 'query',
-                'type',
                 'num',
               ]}
             />

@@ -230,12 +230,14 @@ export class SearchResults extends React.Component<P, {}> {
         labels={this.renderDropdownLabels()}
         onToggle={this.handleCreateRecord}
         disabled={!emptyRecord}
+        withIcon
         noDropdown
       />) : (<CreateButtonMenu
         {...this.props}
         label={translate({ id: 'ui-marccat.search.record.new' })}
         labels={this.renderDropdownLabels()}
         disabled={!emptyRecord}
+        withIcon
         onToggle={() => this.setState({
           openDropDownMenu: !openDropDownMenu
         })}

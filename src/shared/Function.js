@@ -5,7 +5,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import queryString from 'querystring';
-import { META, ENDPOINT, EMPTY_SPACED_STRING } from './Constants';
+import { META, ENDPOINT, EMPTY_SPACED_STRING, EMPTY_STRING } from './Constants';
 
 /**
  *
@@ -116,7 +116,7 @@ export function safeArray(obj, res, ...prop) {
  */
 export function Localize(label): React.JSX.Element {
   if (label.length) return label.map(l => <FormattedMessage id={META.MODULE_NAME.concat('.').concat(l.key)} values={{ value: l.value }} />);
-  return <FormattedMessage id={META.MODULE_NAME.concat('.').concat(label.key)} values={{ value: label.value }} />;
+  return <FormattedMessage id={META.MODULE_NAME.concat('.').concat(label.key)} values={{ value: label.value || EMPTY_STRING }} />;
 }
 /* @flow */
 // eslint-disable-next-line no-unused-vars

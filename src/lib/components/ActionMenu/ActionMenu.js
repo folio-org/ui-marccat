@@ -52,14 +52,27 @@ export const ActionMenuDetail = () => {
     </Fragment>
   );
 };
-export const genericActionMenuDetail = (labels:Array<any>) => {
+export const generateDropdownMenu = (labels, withButton) => {
   return (
     <Fragment>
-      <div className={style.dropdownContainerText}>
-        {labels.map((l, i) => (
-          <div key={i}><FormattedMessage id={l} /></div>
-        ))}
-      </div>
+      {!withButton ?
+        (
+          <div className={style.dropdownContainerText}>
+            {labels.map((l, i) => (
+              <div key={i}><FormattedMessage id={l} /></div>
+            ))}
+          </div>)
+        :
+        (
+          <Button buttonStyle="dropdownItem" onClick={() => {}}>
+            <div className={style.dropdownContainerText}>
+              {labels.map((l, i) => (
+                <div key={i}><FormattedMessage id={l} /></div>
+              ))}
+            </div>
+          </Button>
+        )
+      }
     </Fragment>
   );
 };

@@ -136,7 +136,7 @@ class SearchPanel extends React.Component<P, {}> {
           || indexForQuery === 'PP '
           || indexForQuery === 'PW ') {
           dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: bibQuery, queryAuth: EMPTY_STRING, from: '1', to: '30' });
-          this.handleSearchHistory({ moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
+          this.handleSearchHistory({ recordType: 'biblio', query: bibQuery, index: indexForQuery, found: 0 });
           transitionToParams('q', bibQuery);
           dispatch({ type: ActionTypes.TOTAL_BIB_COUNT, query: bibQuery });
         } else {
@@ -144,7 +144,7 @@ class SearchPanel extends React.Component<P, {}> {
           transitionToParams('q', authQuery);
           dispatch({ type: ActionTypes.TOTAL_BIB_COUNT, query: bibQuery });
           dispatch({ type: ActionTypes.TOTAL_AUTH_COUNT, query: authQuery });
-          this.handleSearchHistory({ moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30', found: 0 });
+          this.handleSearchHistory({ recordType: 'all', query: bibQuery, index: indexForQuery, found: 0, record: {} });
         }
       }
     }

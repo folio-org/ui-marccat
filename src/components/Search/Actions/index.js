@@ -1,8 +1,6 @@
 import { ACTION } from '../../../shared/Action';
 import { ENDPOINT } from '../../../shared/Constants';
 
-// Search API action creator
-
 /**
  *
  * @param {*} payload

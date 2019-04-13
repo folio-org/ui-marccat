@@ -19,6 +19,20 @@ export const headerTypeAction = (code) => {
   };
 };
 
+/**
+ *
+ * @param {*} payload
+ */
+export const autosuggestionAction = (payload) => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.HEADING_BY_TAG,
+      type: `headings-by-tag-${payload.code}`,
+      params: `tag=${payload.code}&ind1=${payload.ind1}&ind2=${payload.ind2}&displayValue=${payload.displayValue}&view=1&mainLibrary=170&pageSize=30&lang=ita`,
+    },
+  };
+};
 
 /**
  *

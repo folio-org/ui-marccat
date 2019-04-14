@@ -29,7 +29,6 @@ import { findYourQuery } from '../Filter';
 import { remapFilters } from '../../../utils/Mapper';
 import { EMPTY_STRING } from '../../../shared/Constants';
 import styles from '../Style/index.css';
-import { findParam } from '../../../shared/Function';
 import { historySearchAction } from '../Actions';
 
 type P = Props & {
@@ -53,13 +52,6 @@ class SearchPanel extends React.Component<P, {}> {
     this.handleRemoveSearchForm = this.handleRemoveSearchForm.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleResetAllButton = this.handleResetAllButton.bind(this);
-  }
-
-  componentWillMount() {
-    setTimeout(() => {
-      const id = findParam('savedId');
-      if (id) this.handleSearchFromCataloging();
-    }, 5000);
   }
 
   handleSearchFromCataloging = (id) => {

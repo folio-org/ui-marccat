@@ -24,6 +24,7 @@ module.exports = {
     "spaced-comment": ["error", "always", { "markers": ["/"] }],
     "arrow-parens": "off",
     "no-return-assign":"off",
+    "no-alert":"off",
     "guard-for-in": "off",
     "jsx-a11y/no-noninteractive-element-interactions":"off",
     "no-undef": "warn",

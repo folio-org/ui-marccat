@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
-/* eslint-disable react/destructuring-assignment */
 import React from 'react';
-import { cloneDeep, isEqual, uniqueId, sortBy } from 'lodash';
+import { cloneDeep, isEqual, sortBy, uniqueId } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { reduxForm, FieldArray } from 'redux-form';
 import PropTypes from 'prop-types';
@@ -10,13 +9,13 @@ import {
   Col,
   Headline,
   IconButton,
+  HotKeys,
   MultiColumnList,
   Row
 } from '@folio/stripes/components';
 import MarcEditableItem from './MarcEditableItem';
 import { getEmptyVariableField } from '../../Utils/MarcApiUtils';
-import { SORTED_BY } from '../../Utils/MarcConstant';
-import ActionsMenuButton from '../ActionsMenu';
+import ActionsMenuButton from '../Menu/ActionsMenu';
 import style from '../../Style/variableform.css';
 
 const propTypes = {
@@ -37,6 +36,8 @@ const propTypes = {
   label: PropTypes.node,
   onCreate: PropTypes.func,
   onDelete: PropTypes.func,
+  onDuplicate: PropTypes.func,
+  onSortBy: PropTypes.func,
   onUpdate: PropTypes.func,
   pristine: PropTypes.bool,
   readOnlyFields: PropTypes.arrayOf(PropTypes.string),
@@ -49,10 +50,10 @@ const propTypes = {
 const defaultProps = {
   actionProps: {},
   actionSuppression: { delete: () => false, edit: () => false },
-  createButtonLabel: '+ Add new',
+  createButtonLabel: 'Actions',
   fieldComponents: {},
   itemTemplate: {},
-  uniqueField: 'code',
+  uniqueField: 'id',
 };
 
 class EditableListForm extends React.Component {
@@ -67,7 +68,9 @@ class EditableListForm extends React.Component {
     this.state = {
       status,
       lastAction: {},
+      currentIndex: 0,
     };
+
 
     this.RenderItems = this.RenderItems.bind(this);
     this.setError = this.setError.bind(this);
@@ -75,37 +78,80 @@ class EditableListForm extends React.Component {
     this.getColumnWidths = this.getColumnWidths.bind(this);
     this.getVisibleColumns = this.getVisibleColumns.bind(this);
     this.getReadOnlyColumns = this.getReadOnlyColumns.bind(this);
+    this.onAdd = this.onAdd.bind(this);
 
-    if (this.props.id) {
-      this.marcTagRowTestingId = this.props.id;
-    } else if (this.props.label) {
-      this.marcTagRowTestingId = this.props.label.replace(/\s/, '\u001f').toLowerCase();
+    this.keys = {
+      'add' : ['enter'],
+      'cleanField' : ['delete'],
+      'cleanAll' : ['backspace'],
+      'duplicate' : ['ctrl+d'],
+      'copy' : ['ctrl+C'],
+      'cut' : ['ctrl+X'],
+      'paste' : ['ctrl+V'],
+      'undo' : ['ctrl+Z'],
+      'redo' : ['ctrl+shift+Z']
+    };
+
+    this.handlers = {
+      'add' : this.onAdd,
+      'cleanField' : this.onCancel,
+      'cleanAll' : props.reset('marcEditableListForm'),
+      'duplicate' : this.onDuplicate,
+      'copy' : () => {},
+      'cut' : () => {},
+      'paste' : () => {},
+      'undo' :() => {},
+    };
+
+    if (props.id) {
+      this.marcTagRowTestingId = props.id;
+    } else if (props.label) {
+      this.marcTagRowTestingId = props.label.replace(/\s/, '\u001f').toLowerCase();
     } else {
       this.marcTagRowTestingId = uniqueId();
     }
   }
 
   componentWillReceiveProps(nextProps) { // eslint-disable-line react/no-deprecated
-    if (!isEqual(this.props.initialValues, nextProps.initialValues)) {
+    const { initialValues } = this.props;
+    if (!isEqual(initialValues, nextProps.initialValues)) {
       this.setState({
         status: this.buildStatusArray(nextProps.initialValues.items),
       });
     }
   }
 
+  /**
+   *
+   * @param {*} items
+   */
   buildStatusArray(items) {
     return items.map(() => ({ editing: false, error: false }));
   }
 
+  /**
+   *
+   * @param {*} items
+   * @param {*} editing
+   */
   buildStatusArrayWithParam(items, editing) {
     return items.map(() => ({ editing, error: false }));
   }
 
+  /**
+   *
+   * @param {*} fields
+   * @param {*} index
+   */
   normalizeField(fields: Array<*>, index: number): Object {
     const item = fields.get(index);
     return (item.variableField.keyNumber > 0) ? getEmptyVariableField(true, item) : getEmptyVariableField(false, item);
   }
 
+  /**
+   *
+   * @param {*} fields
+   */
   onAdd(fields) {
     const { itemTemplate } = this.props;
     const item = { ...itemTemplate };
@@ -120,14 +166,44 @@ class EditableListForm extends React.Component {
     });
   }
 
+  /**
+   *
+   * @param {*} fields
+   * @param {*} index
+   */
   onCancel(fields, index) {
+    const { contentData } = this.props;
     this.toggleEdit(index);
-    this.props.contentData.splice(index, 1);
+    contentData.splice(index, 1);
   }
 
+  /**
+   *
+   * @param {*} fields
+   * @param {*} index
+   */
+  onDuplicate(fields, index) {
+    const item = fields.get(index);
+    fields.unshift(item);
+    this.setState((curState) => {
+      const newState = cloneDeep(curState);
+      if (newState.status.length === 0 && fields.length > 0) {
+        newState.status = this.buildStatusArray();
+      }
+      newState.status.unshift({ editing: true, error: false });
+      return newState;
+    });
+  }
+
+  /**
+   *
+   * @param {*} fields
+   * @param {*} index
+   */
   onSave(fields, index) {
+    const { onCreate } = this.props;
     const item = this.normalizeField(fields, index);
-    const callback = this.props.onCreate;
+    const callback = onCreate;
     const res = callback(item);
     Promise.resolve(res).then(
       () => {
@@ -137,15 +213,24 @@ class EditableListForm extends React.Component {
     );
   }
 
+  /**
+   *
+   * @param {*} index
+   */
   onEdit(index) {
     this.toggleEdit(index);
   }
 
+  /**
+   *
+   * @param {*} fields
+   * @param {*} index
+   */
   onDelete(fields, index) {
+    const { contentData, onDelete } = this.props;
     const item = fields.get(index);
-    sortBy(this.props.contentData, SORTED_BY.CODE);
-    this.props.contentData.splice(index, 1);
-    const res = this.props.onDelete(item);
+    contentData.splice(index, 1);
+    const res = onDelete(item);
     Promise.resolve(res).then(
       () => {
         fields.remove(index);
@@ -159,6 +244,19 @@ class EditableListForm extends React.Component {
     );
   }
 
+  onSortBy(fields) {
+    const { contentData } = this.props;
+    const sorted = sortBy(fields, 'code');
+    const sorted2 = sortBy(contentData, 'code');
+    fields = sorted;
+    return sorted2;
+  }
+
+  /**
+   *
+   * @param {*} index
+   * @param {*} errorMsg
+   */
   setError(index, errorMsg) {
     this.setState((curState) => {
       const newState = cloneDeep(curState);
@@ -169,7 +267,8 @@ class EditableListForm extends React.Component {
   }
 
   getColumnWidths() {
-    if (!this.props.columnWidths) {
+    const { columnWidths } = this.props;
+    if (!columnWidths) {
       const visibleColumns = this.getVisibleColumns();
       const totalColumns = visibleColumns.length - 1;
       const staticWidth = 80 / totalColumns;
@@ -182,23 +281,26 @@ class EditableListForm extends React.Component {
       widthsObject.actions = '20%';
       return widthsObject;
     }
-    return this.props.columnWidths;
+    return columnWidths;
   }
 
   getVisibleColumns() {
-    return this.props.visibleFields.concat(['actions']);
+    const { visibleFields } = this.props;
+    return visibleFields.concat(['actions']);
   }
 
   getReadOnlyColumns() {
+    const { readOnlyFields } = this.props;
     const actionsArray = ['actions'];
-    if (this.props.readOnlyFields) {
-      return this.props.readOnlyFields.concat(actionsArray);
+    if (readOnlyFields) {
+      return readOnlyFields.concat(actionsArray);
     }
     return actionsArray;
   }
 
   toggleEdit(index) {
-    if (this.state.status.length === 0) {
+    const { status } = this.state;
+    if (status.length === 0) {
       this.buildStatusArray();
     }
     this.setState((curState) => {
@@ -207,6 +309,7 @@ class EditableListForm extends React.Component {
         newState.status = this.buildStatusArray();
       }
       newState.status[index].editing = !newState.status[index].editing;
+      newState.currentIndex = index;
       newState.lastAction = new Date().getTime();
       return newState;
     });
@@ -220,46 +323,54 @@ class EditableListForm extends React.Component {
     columnWidths,
     rowProps,
   }) => {
+    const { status } = this.state;
+    const { columnMapping, actionSuppression, actionProps, additionalFields, fieldComponents } = this.props;
     let isEditing;
     let hasError;
-    if (this.state.status.length > 0) {
-      isEditing = this.state.status[rowIndex].editing;
-      hasError = this.state.status[rowIndex].error;
+    if (status.length > 0) {
+      isEditing = status[rowIndex].editing;
+      hasError = status[rowIndex].error;
     } else {
       isEditing = false;
       hasError = false;
     }
 
     return (
-      <MarcEditableItem
-        editing={isEditing}
-        error={hasError}
-        key={rowIndex}
-        field="items"
-        item={rowData}
-        rowIndex={rowIndex}
-        columnMapping={this.props.columnMapping}
-        actionSuppression={this.props.actionSuppression}
-        actionProps={this.props.actionProps}
-        visibleFields={this.getVisibleColumns()}
-        onCancel={() => this.onCancel(fields, rowIndex)}
-        onSave={() => this.onSave(fields, rowIndex)}
-        onEdit={() => this.onEdit(rowIndex)}
-        onDelete={() => this.onDelete(fields, rowIndex)}
-        additionalFields={this.props.additionalFields}
-        readOnlyFields={this.getReadOnlyColumns()}
-        fieldComponents={this.props.fieldComponents}
-        widths={columnWidths}
-        cells={cells}
-        {...rowProps}
-      />
+      <React.Fragment>
+        {/* <SingleCheckboxIconButton labels={['']} /> */}
+        <MarcEditableItem
+          editing={isEditing}
+          error={hasError}
+          key={rowIndex}
+          field="items"
+          item={rowData}
+          rowIndex={rowIndex}
+          columnMapping={columnMapping}
+          actionSuppression={actionSuppression}
+          actionProps={actionProps}
+          visibleFields={this.getVisibleColumns()}
+          onCancel={() => this.onCancel(fields, rowIndex)}
+          onSave={() => this.onSave(fields, rowIndex)}
+          onEdit={() => this.onEdit(rowIndex)}
+          onDelete={() => this.onDelete(fields, rowIndex)}
+          onDuplicate={() => this.onDuplicate(fields, rowIndex)}
+          onSortBy={() => this.onSortBy()}
+          additionalFields={additionalFields}
+          readOnlyFields={this.getReadOnlyColumns()}
+          fieldComponents={fieldComponents}
+          widths={columnWidths}
+          cells={cells}
+          {...rowProps}
+        />
+      </React.Fragment>
     );
   }
 
   getActions = (fields, item) => {
     const { actionProps, actionSuppression, pristine, submitting, invalid } = this.props;
+    const { status } = this.state;
 
-    if (this.state.status[item.rowIndex].editing) {
+    if (status[item.rowIndex].editing) {
       return (
         <div style={{ display: 'flex' }}>
           <Button
@@ -317,25 +428,36 @@ class EditableListForm extends React.Component {
   };
 
   RenderItems({ fields }) {
-    const cellFormatters = Object.assign({}, this.props.formatter, { actions: item => this.getActions(fields, item) });
+    const { currentIndex } = this.state;
+    const { formatter, label, isEmptyMessage, onToggle } = this.props;
+
+    const cellFormatters = Object.assign({}, formatter, { actions: item => this.getActions(fields, item) });
     return (
-      <div>
+      <HotKeys
+        keyMap={this.keys}
+        handlers={{ 'add': () => this.onAdd(fields) }}
+      >
         <Row between="xs" className={style.editableListFormHeader}>
           <Col xs>
-            <Headline size="medium" margin="none">{this.props.label}</Headline>
+            <Headline size="medium" margin="none">{label}</Headline>
           </Col>
           <Col xs>
             <Row end="xs" className={style.fr}>
               <Col xs>
                 <ActionsMenuButton
-                  onClick={this.props.onToggle}
+                  {...this.props}
+                  onClick={onToggle}
                   onAdd={() => this.onAdd(fields)}
+                  onDuplicate={() => this.onDuplicate(fields, currentIndex)}
+                  onCancel={() => this.onCancel(fields, currentIndex)}
+                  onSave={() => this.onSave(fields, currentIndex)}
+                  onEdit={() => this.onEdit(currentIndex)}
+                  onDelete={() => this.onDelete(fields, currentIndex)}
+                  onSortBy={() => this.onSortBy(fields)}
                   marginBottom0
+                  fields={fields}
                   id={`clickable-add-${this.marcTagRowTestingId}`}
                 />
-                <Button onClick={() => this.onAdd(fields)} marginBottom0 id={`clickable-add-${this.marcTagrowTestingId}`}>
-                  {this.props.createButtonLabel}
-                </Button>
               </Col>
             </Row>
           </Col>
@@ -350,20 +472,21 @@ class EditableListForm extends React.Component {
               rowProps={{ fields }}
               formatter={cellFormatters}
               columnWidths={this.getColumnWidths()}
-              isEmptyMessage={this.props.isEmptyMessage}
+              isEmptyMessage={isEmptyMessage}
               headerRowClass={style.editListHeaders}
-              id={`editList-${this.marcTagRowTestingId}`}
+              id={`marcTagEditList-${this.marcTagRowTestingId}`}
             />
           </Col>
         </Row>
-      </div>
+      </HotKeys>
     );
   }
 
   render() {
+    const { lastAction } = this.state;
     return (
       <form>
-        <FieldArray name="items" component={this.RenderItems} toUpdate={this.state.lastAction} />
+        <FieldArray name="items" component={this.RenderItems} toUpdate={lastAction} />
       </form>
     );
   }

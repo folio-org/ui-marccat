@@ -44,17 +44,17 @@ export default class MarcField extends React.Component<P, {}> {
         <div className={style.marcFieldIconCaret}>
           <IconButton
             icon="caret-down"
-            size="large"
+            size="medium"
             onClick={onClick}
           />
           <IconButton
             icon="plus-sign"
-            size="large"
+            size="medium"
             onClick={onAdd}
           />
           <IconButton
             icon="trash"
-            size="large"
+            size="medium"
             onClick={onDelete}
           />
         </div>

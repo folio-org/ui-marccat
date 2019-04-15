@@ -75,7 +75,7 @@ export default class MarcField extends React.Component<P, {}> {
         <div className={style.marcFieldIconCaret}>
           <IconButton
             icon="caret-down"
-            size="large"
+            size="medium"
             onClick={onClick}
           />
         </div>

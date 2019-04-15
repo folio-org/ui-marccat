@@ -45,10 +45,11 @@ export class MarcRecord extends React.Component<Props, {
   constructor(props) {
     super(props);
     this.state = {
-      isEditMode: false,
-      isDuplicateMode: false,
+      isCreationMode: (findParam('mode') === RECORD_ACTION.CREATION_MODE),
+      isEditMode:  (findParam('mode') === RECORD_ACTION.EDIT_MODE),
+      isDuplicateMode:  (findParam('mode') === RECORD_ACTION.DUPLICATE_MODE),
       mode: findParam('mode'),
-      id: findParam('id'),
+      id: findParam('id')
     };
     this.renderDropdownLabels = this.renderDropdownLabels.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -64,26 +65,18 @@ export class MarcRecord extends React.Component<Props, {
     const { dispatch, datastore: { emptyRecord } } = this.props;
     const { leader } = emptyRecord.results;
 
-    const { mode } = this.state;
-    if (mode === RECORD_ACTION.EDIT_MODE) {
-      this.setState({ isEditMode: true });
-    } else if (mode === RECORD_ACTION.DUPLICATE_MODE) {
-      this.setState({ isDuplicateMode: true });
-    }
     dispatch({ type: ActionTypes.LEADER_VALUES_FROM_TAG, leader: leader.value, code: leader.code, typeCode: '15' });
     dispatch(MarcAction.settingsAction({ fromCataloging: true }));
   }
 
-  getCurrentRecord = () => {
-    const { datastore: { emptyRecord, recordDuplicate: { bibliographicRecord } }, recordDetail } = this.props;
-    const { isEditMode, isDuplicateMode } = this.state;
+  getCurrentRecord = (): Object => {
+    const { datastore: { emptyRecord, recordDuplicate }, recordDetail } = this.props;
 
-    const emptyRecordTemplate = Object.assign({}, emptyRecord.results);
-    let record;
-    if (isEditMode) record = recordDetail;
-    else if (!isEditMode && !isDuplicateMode) record = emptyRecordTemplate;
-    else record = bibliographicRecord.results;
-    return record;
+    const { mode } = this.state;
+
+    if (mode === RECORD_ACTION.CREATION_MODE) return Object.assign({}, emptyRecord.results);
+    else if (mode === RECORD_ACTION.EDIT_MODE) return Object.assign({}, recordDetail);
+    else return Object.assign({}, recordDuplicate.results.bibliographicRecord);
   };
 
   onCreate = item => {
@@ -152,11 +145,12 @@ export class MarcRecord extends React.Component<Props, {
     const bibliographicRecord = this.getCurrentRecord();
     bibliographicRecord.leader.value = formData.leader;
 
+    const fieldsTemplate = Object.assign({}, emptyRecord.results.fields);
     const recordTemplate = {
       id: first(data.template.records).id,
       name: first(data.template.records).name,
       type: 'B',
-      fields: filterMandatoryFields(emptyRecord.results.fields)
+      fields: filterMandatoryFields(fieldsTemplate)
     };
     bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     bibliographicRecord.fields = union(bibliographicRecord.fields, tagVariableData);

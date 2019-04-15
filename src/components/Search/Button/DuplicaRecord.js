@@ -39,14 +39,16 @@ class DuplicaRecord extends React.Component<Props, {
 
   onHide = () => {
     const { id } = this.state;
-    const { router, toggleFilterPane } = this.props;
-    this.setState({
-      confirming: false,
-      sending: false,
-      id: 0,
-    });
-    toggleFilterPane();
-    router.push(`/marccat/cataloging?id=${id}&mode=duplicate`);
+    const { router, toggleFilterPane, duplicateRecord } = this.props;
+    if (duplicateRecord) {
+      this.setState({
+        confirming: false,
+        sending: false,
+        id: 0,
+      });
+      toggleFilterPane();
+      router.push(`/marccat/cataloging?id=${id}&mode=duplicate`);
+    }
   }
 
   handleOnChange = e => {
@@ -61,6 +63,10 @@ class DuplicaRecord extends React.Component<Props, {
     const { duplicaRecord } = this.props;
     duplicaRecord(id);
     this.setState({ sending: true });
+    setTimeout(() => {
+      this.onHide();
+      this.setState({ sending: true, confirming: false });
+    }, 3000);
   };
 
   getFooter({ ...props }) {
@@ -89,7 +95,6 @@ class DuplicaRecord extends React.Component<Props, {
 
   render() {
     const { testId, confirming, sending } = this.state;
-    const { duplicateRecord } = this.props;
     return (
       <React.Fragment>
         <Button
@@ -102,7 +107,6 @@ class DuplicaRecord extends React.Component<Props, {
         >
           {Localize({ key: 'cataloging.record.duplicate' })}
         </Button>
-        {!duplicateRecord &&
         <Modal
           dismissible
           contentClass={styleMedia.test}
@@ -126,7 +130,7 @@ class DuplicaRecord extends React.Component<Props, {
               required="true"
             />
           </form>
-        </Modal>}
+        </Modal>
       </React.Fragment>
     );
   }

@@ -8,6 +8,10 @@
   width: 100%;
 }
 
+header {
+  z-index: 2 !important;
+}
+
 .padding8 {
   padding-bottom: 8px;
 }
@@ -20,10 +24,19 @@
   margin-bottom: 10px;
 }
 
+.mr-8 {
+  margin-right: 8px;
+}
+
 .fl {
   float: left;
 }
 
 .fr {
   float: right;
+}
+
+.rightPosition {
+  margin-right: '10px';
+  float: 'right';
 }

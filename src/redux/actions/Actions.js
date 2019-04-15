@@ -5,7 +5,6 @@ export const ActionTypes = {
   SCAN: '@@ui-marccat/SCAN',
   DETAILS: '@@ui-marccat/DETAILS',
   DETAILS_BY_TITLE: '@@ui-marccat/DETAILS_BY_TITLE',
-  GET: '@@ui-marccat/GET',
   SETTINGS: '@@ui-marccat/SETTINGS',
   HISTORY: '@@ui-marccat/HISTORY',
   ASSOCIATED_BIB_REC: '@@ui-marccat/ASSOCIATED_BIBS_REC',

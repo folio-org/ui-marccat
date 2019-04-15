@@ -30,8 +30,8 @@
 
 .withSeparator {
   & span {
-  margin-left: 10px;
-  padding-left: 6px;
-  border-left: 1px solid #fff;
+    margin-left: 10px;
+    padding-left: 6px;
+    border-left: 1px solid #fff;
   }
 }

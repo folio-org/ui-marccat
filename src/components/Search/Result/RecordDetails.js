@@ -5,7 +5,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { AccordionSet, Col, Row, FilterAccordionHeader, Accordion } from '@folio/stripes/components';
-import InventoryPluggableBtn from '../Button/Inventory';
+import InventoryPluggableButton from '../Button/Inventory';
 import type { Props } from '../../../core';
 import AssociatedBib from './AssociatedBib';
 import { ActionTypes } from '../../../redux/actions/Actions';
@@ -74,7 +74,7 @@ class RecordDetails extends React.Component<P, {}> {
               </Row>
             </React.Fragment>
           ))}
-          <InventoryPluggableBtn {...this.props} className={style.inventoryButton} buttonLabel={translate({ id: 'ui-marccat.search.goto.inventory' })} />
+          <InventoryPluggableButton {...this.props} className={style.inventoryButton} buttonLabel={translate({ id: 'ui-marccat.search.goto.inventory' })} />
         </Accordion>
         {checkDetailsBibRec === checkDetailsInRow &&
           <AssociatedBib {...this.props} />}

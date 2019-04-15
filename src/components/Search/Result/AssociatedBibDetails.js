@@ -5,7 +5,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, KeyValue, AccordionSet, FilterAccordionHeader, Accordion } from '@folio/stripes/components';
-import InventoryPluggableBtn from '../Button/Inventory';
+import InventoryPluggableButton from '../Button/Inventory';
 import type { Props } from '../../../core';
 import { getTag245, getTitle245 } from '../../../utils/Mapper';
 
@@ -46,7 +46,7 @@ function AssociatedBibDetails({ translate, ...props }: P) {
                 </Col>
               </Row>
             ))}
-            <InventoryPluggableBtn
+            <InventoryPluggableButton
               {...props}
               buttonLabel={translate({ id: 'ui-marccat.search.goto.inventory' })}
               withLine

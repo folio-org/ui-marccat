@@ -236,7 +236,6 @@ class SearchPanel extends React.Component<P, {}> {
                           name="searchTextArea"
                           fullWidth
                           component={SearchField}
-                          onBlur={() => 'tttt'}
                           placeholder="Search..."
                         />
                       </div>

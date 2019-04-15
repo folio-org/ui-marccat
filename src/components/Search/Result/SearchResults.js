@@ -6,10 +6,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Paneset, HotKeys, PaneMenu, Icon, Button } from '@folio/stripes/components';
+import { Paneset, HotKeys, PaneMenu } from '@folio/stripes/components';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
-import { ToolbarButtonMenu, DropdownButtonMenu as CreateButtonMenu, NoResultsMessage } from '../../../lib';
+import { NoResultsMessage } from '../../../lib';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
 import { isAuthorityRecord, transitionToParams } from '../Utils/SearchUtils';
 import { injectCommonProp } from '../../../core';
@@ -18,10 +18,10 @@ import {
   RecordDetailPane,
   AssociatedRecordPane,
 } from './components';
+import { CreateRecordButton, EditRecordButton, DuplicaRecordButton } from '..';
 import { emptyRecordAction } from '../../Cataloguing/Actions';
 import { searchDetailAction } from '../Actions';
 import * as C from '../../../shared/Constants';
-
 
 type P = Props & {
   headings: Array<any>,
@@ -53,35 +53,7 @@ export class SearchResults extends React.Component<P, {}> {
 
     this.handleDetails = this.handleDetails.bind(this);
     this.handleCreateRecord = this.handleCreateRecord.bind(this);
-    this.renderRightMenuEdit = this.renderRightMenuEdit.bind(this);
     this.renderLastMenu = this.renderLastMenu.bind(this);
-    this.handleClickEdit = this.handleClickEdit.bind(this);
-    this.keys = {
-      'new': ['backspace'],
-    };
-    this.handlers = {
-      'new': this.handleCreateRecord,
-    };
-  }
-
-  componentDidMount() {
-    const { store: { getState } } = this.props;
-    // const editRecord = findParam('edited');
-    if (getState().marccat.settings && getState().marccat.settings.fromCataloginge) {
-      // this.openDetailFromCataloguing();
-      const formValues = getState().form.searchForm.values;
-      const searchFieldValue = formValues.searchTextArea;
-      document.getElementsByName('searchTextArea')[0].value = searchFieldValue;
-      // dispatch(change('searchTextArea', searchFieldValue));
-    }
-  }
-
-  handleClickEdit = () => {
-    const { router, toggleFilterPane } = this.props;
-    const { detailPaneMeta } = this.state;
-    const id = detailPaneMeta.meta['001'];
-    toggleFilterPane();
-    router.push(`/marccat/cataloging?id=${id}&mode=edit`);
   }
 
   handleCreateRecord = () => {
@@ -170,21 +142,6 @@ export class SearchResults extends React.Component<P, {}> {
     router.push(`/marccat/search?id=${id}`);
   };
 
-  renderRightMenuEdit = props => {
-    return (
-      <PaneMenu>
-        <ToolbarButtonMenu
-          create
-          {...props}
-          onClick={this.handleClickEdit}
-          label={<FormattedMessage id="ui-marccat.search.record.edit" />}
-        />
-        <Icon icon="bookmark" />
-        <Icon icon="tag" />
-      </PaneMenu>
-    );
-  };
-
   renderDropdownLabels = () => {
     const { translate } = this.props;
     return [{
@@ -199,63 +156,43 @@ export class SearchResults extends React.Component<P, {}> {
     }];
   };
 
-  renderRightMenuEdit = () => {
-    const rightButton = {
-      marginRight: '10px',
-      float: 'right',
-    };
-    return (
-      <PaneMenu>
-        <Button
-          {...this.props}
-          style={rightButton}
-          buttonStyle="primary"
-          type="button"
-          marginBottom0
-          onClick={this.handleClickEdit}
-        >
-          <FormattedMessage id="ui-marccat.cataloging.record.edit" />
-        </Button>
-      </PaneMenu>
-    );
-  };
-
   renderLastMenu = () => {
     const { openDropDownMenu } = this.state;
-    const { translate, activeFilterName, activeFilterChecked, data: { data: { emptyRecord } } } = this.props;
+    const { activeFilterName, activeFilterChecked, data: { data: { emptyRecord } } } = this.props;
     return (activeFilterName === 'recordType.Bibliographic records' && activeFilterChecked) ?
-      (<CreateButtonMenu
-        {...this.props}
-        label={translate({ id: 'ui-marccat.search.record.new.from.template' })}
-        labels={this.renderDropdownLabels()}
-        onToggle={this.handleCreateRecord}
-        disabled={!emptyRecord}
-        withIcon
-        noDropdown
-      />) : (<CreateButtonMenu
-        {...this.props}
-        label={translate({ id: 'ui-marccat.search.record.new' })}
-        labels={this.renderDropdownLabels()}
-        disabled={!emptyRecord}
-        withIcon
-        onToggle={() => this.setState({
-          openDropDownMenu: !openDropDownMenu
-        })}
-        open={openDropDownMenu}
-      />);
-  };
-
-  renderCreateRecordButton = () => {
-    const { translate } = this.props;
-    return (
-      <CreateButtonMenu
-        data-test-clickable-new-record
-        {...this.props}
-        label={translate({ id: 'ui-marccat.template.record.create' })}
-        labels={this.renderDropdownLabels()}
-        onToggle={this.handleCreateRecord}
-        noDropdown
-      />);
+      (
+        <PaneMenu>
+          <CreateRecordButton
+            {...this.props}
+            data-test-clickable-new-record
+            label="search.record.new"
+            labels={this.renderDropdownLabels()}
+            onToggle={this.handleCreateRecord}
+            disabled={!emptyRecord}
+            withIcon
+            noDropdown
+          />
+          <DuplicaRecordButton {...this.props} data-test-clickable-duplicate-record />
+        </PaneMenu>
+      ) :
+      (
+        <PaneMenu>
+          <CreateRecordButton
+            style={{ marginRight: '5px' }}
+            {...this.props}
+            data-test-clickable-new-record
+            label="search.record.new"
+            labels={this.renderDropdownLabels()}
+            disabled={!emptyRecord}
+            withIcon
+            onToggle={() => this.setState({
+              openDropDownMenu: !openDropDownMenu
+            })}
+            open={openDropDownMenu}
+          />
+          <DuplicaRecordButton {...this.props} data-test-clickable-duplicate-record />
+        </PaneMenu>
+      );
   };
 
   render() {
@@ -376,7 +313,8 @@ export class SearchResults extends React.Component<P, {}> {
               isFetchingDetail={isFetchingDetail}
               isReadyDetail={isReadyDetail}
               onClose={() => this.setState({ detailPanelIsVisible: false })}
-              rightMenuEdit={this.renderRightMenuEdit()}
+              rightMenuEdit={<EditRecordButton {...this.props} />
+              }
             />
           }
           {isPanelBibAssOpen && !noResults &&
@@ -387,7 +325,7 @@ export class SearchResults extends React.Component<P, {}> {
               }}
               isLoadingAssociatedRecord={isLoadingAssociatedRecord}
               isReadyAssociatedRecord={isReadyAssociatedRecord}
-              renderRightMenuEdit={this.renderRightMenuEdit}
+              renderRightMenuEdit={<EditRecordButton {...this.props} />}
             />
           }
         </Paneset>

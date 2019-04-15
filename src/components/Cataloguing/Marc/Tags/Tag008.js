@@ -76,6 +76,8 @@ export class Tag008 extends React.Component<Props, {}> {
       jsonReq[changedFieldLabel] = e.target.value;
     }
     this.asyncChangeDisplayValue(jsonReq);
+    this.state.jsonReq = jsonReq;
+    this.state.isChangedHeaderType = false;
   };
 
   asyncChangeDisplayValue = async (jsonReq) => {
@@ -96,8 +98,6 @@ export class Tag008 extends React.Component<Props, {}> {
     let result = newValuesFromChangedLeader || tag008ValuesResults;
     result = (result) ? Object.keys(result.results).map((key) => result.results[key]) : [];
     remappedValues.push(result);
-
-    if (result && result.headerTypeCode) this.changeDisplayValue();
 
     const formData = getState().form.bibliographicRecordForm.values;
     if (newValuesFromChangedLeader && newValuesFromChangedLeader.headerTypeCode !== currentHeaderTypeCode) {

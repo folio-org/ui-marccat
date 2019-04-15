@@ -47,7 +47,8 @@ export class MarcRecord extends React.Component<Props, {
       isEditMode:  (findParam('mode') === RECORD_ACTION.EDIT_MODE),
       isDuplicateMode:  (findParam('mode') === RECORD_ACTION.DUPLICATE_MODE),
       mode: findParam('mode'),
-      id: findParam('id')
+      id: findParam('id'),
+      editatedTagArray: []
     };
     this.renderDropdownLabels = this.renderDropdownLabels.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -97,20 +98,20 @@ export class MarcRecord extends React.Component<Props, {
   onUpdate = item => {
     const { store } = this.props;
     const { variableField: { code, ind1, ind2, displayValue, categoryCode, keyNumber } } = item;
-    const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
-    const isNotRepetble = includes(TAG_NOT_REPEATABLE, item.code);
+    // const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
+    // const isNotRepetble = includes(TAG_NOT_REPEATABLE, item.code);
     let tagVariableItems: [] = Object.assign([], ReduxForm.resolve(store, C.REDUX.FORM.EDITABLE_FORM).items);
     tagVariableItems = tagVariableItems.filter(t => t.code !== item.code);
     tagVariableItems.push(item);
     const heading = { ind1, ind2, displayValue: replaceAllinverted(displayValue), tag: code, categoryCode, keyNumber };
-
-    const tagLength = tagVariableItems.filter(t => t.code === code);
-    if (tagLength.length > 1 && isNotRepetble) {
-      showValidationMessage(this.callout, 'ui-marccat.cataloging.record.tag.duplicate.error', 'error');
-      tagVariableItems.splice(0, 1);
-    } else if (!cretaeHeadingForTag) {
-      this.asyncCreateHeading(item, heading);
-    }
+    // const tagLength = tagVariableItems.filter(t => t.code === code);
+    // if (tagLength.length > 1 && isNotRepetble) {
+    //   showValidationMessage(this.callout, 'ui-marccat.cataloging.record.tag.duplicate.error', 'error');
+    //   tagVariableItems.splice(0, 1);
+    // } else if (!cretaeHeadingForTag) {
+    this.asyncCreateHeading(item, heading);
+    this.state.editatedTagArray = tagVariableItems;
+    // }
   };
 
   asyncCreateHeading = async (item, heading) => {
@@ -134,7 +135,13 @@ export class MarcRecord extends React.Component<Props, {
     const { data, datastore: { emptyRecord }, store: { getState } } = this.props;
     const formData = getState().form.bibliographicRecordForm.values;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
-
+    tagVariableData.map(tag => {
+      if (tag.variableField.displayValue.startsWith('$')) {
+        const replacedValue = replaceAllinverted(tag.variableField.displayValue);
+        tag.variableField.displayValue = replacedValue;
+      }
+      return tagVariableData;
+    });
     const bibliographicRecord = this.getCurrentRecord();
     bibliographicRecord.leader.value = formData.leader;
 

@@ -64,6 +64,8 @@ export class Tag006 extends React.Component<Props, {}> {
     jsonReq[changedFieldLabel] = changedFieldValue;
 
     this.asyncChangeDisplayValue(jsonReq);
+    this.state.jsonReq = jsonReq;
+    this.state.isChangedHeaderType = false;
   };
 
   asyncChangeDisplayValue = async (jsonReq) => {

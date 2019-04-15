@@ -95,7 +95,7 @@ const ItemEdit = ({
       {fields}
       { error &&
         <div className={style.editableListError}>
-Error:
+                  Error:
           {error}
         </div>
       }

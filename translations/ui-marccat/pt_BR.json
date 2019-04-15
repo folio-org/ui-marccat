@@ -76,7 +76,7 @@
     "cataloging.accordion.variablefield.label": "Campos variáveis",
     "cataloging.accordion.checkbox.label": "Ocultar",
     "cataloging.checkbox.label": "Ocultar na ferramenta de descoberta",
-    "cataloging.record.actions": "Ações",
+    "cataloging.actions": "Ações",
     "cataloging.record.edit": "Editar registro",
     "cataloging.record.create": "Criar registro",
     "cataloging.record.delete": "Excluir registro"

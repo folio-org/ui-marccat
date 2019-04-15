@@ -129,8 +129,9 @@ class FixedFields extends React.Component<P, {}> {
   renderTagxxx = (tags) => {
     return (
       <div>
-        {tags.map(tag => <Tag00X
+        {tags.map((tag, idx) => <Tag00X
           {...this.props}
+          key={idx}
           readOnly
           tag={tag}
           label={tag.fixedField.code}
@@ -158,7 +159,7 @@ class FixedFields extends React.Component<P, {}> {
         />
         {
           (headerTypes006IsLoading) ?
-            <div /> :
+            <Fragment /> :
             <div className={(expand006) ? style.leaderResultsActive : style.leaderResults}>
               <Tag006
                 {...this.props}
@@ -186,7 +187,7 @@ class FixedFields extends React.Component<P, {}> {
         />
         {
           (headerTypes007IsLoading) ?
-            <div /> :
+            <Fragment /> :
             <div className={(expand007) ? style.leaderResultsActive : style.leaderResults}>
               <Tag007
                 {...this.props}

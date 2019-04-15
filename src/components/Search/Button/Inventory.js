@@ -6,7 +6,7 @@ import React from 'react';
 import { Button } from '@folio/stripes/components';
 import type { Props } from '../../../core';
 
-const InventoryPluggableBtn = ({ buttonLabel, ...props }:Props) => {
+const InventoryPluggableButton = ({ buttonLabel, ...props }:Props) => {
   const { buttonTarget, className, withLine } = props;
   return (
     <div>
@@ -27,4 +27,4 @@ const InventoryPluggableBtn = ({ buttonLabel, ...props }:Props) => {
   );
 };
 
-export default InventoryPluggableBtn;
+export default InventoryPluggableButton;

@@ -17,6 +17,8 @@ import MarcEditableItem from './MarcEditableItem';
 import { getEmptyVariableField } from '../../Utils/MarcApiUtils';
 import ActionsMenuButton from '../Menu/ActionsMenu';
 import style from '../../Style/variableform.css';
+import { findParam } from '../../../../redux';
+import { RECORD_ACTION } from '../..';
 
 const propTypes = {
   actionProps: PropTypes.object,
@@ -145,7 +147,8 @@ class EditableListForm extends React.Component {
    */
   normalizeField(fields: Array<*>, index: number): Object {
     const item = fields.get(index);
-    return (item.variableField.keyNumber > 0) ? getEmptyVariableField(true, item) : getEmptyVariableField(false, item);
+    const mode = findParam('mode');
+    return (mode === RECORD_ACTION.EDIT_MOD || RECORD_ACTION.DUPLICATE_MODE) ? getEmptyVariableField(true, item) : getEmptyVariableField(false, item);
   }
 
   /**
@@ -201,9 +204,10 @@ class EditableListForm extends React.Component {
    * @param {*} index
    */
   onSave(fields, index) {
-    const { onCreate } = this.props;
+    const { onCreate, onUpdate } = this.props;
     const item = this.normalizeField(fields, index);
-    const callback = onCreate;
+    const mode = findParam('mode');
+    const callback = (mode === RECORD_ACTION.EDIT_MODE || RECORD_ACTION.DUPLICATE_MODE) ? onUpdate : onCreate;
     const res = callback(item);
     Promise.resolve(res).then(
       () => {

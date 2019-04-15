@@ -9,7 +9,8 @@ import { FormattedMessage } from 'react-intl';
 import { Paneset, HotKeys, PaneMenu, Icon, Button } from '@folio/stripes/components';
 import { ActionTypes } from '../../../redux/actions';
 import type { Props } from '../../../core';
-import { ToolbarButtonMenu, DropdownButtonMenu as CreateButtonMenu, NoResultsMessage } from '../../../lib';
+import { ToolbarButtonMenu, NoResultsMessage } from '../../../lib';
+import CreateRecordButton from '../Button/CreateRecord';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
 import { isAuthorityRecord, transitionToParams } from '../Utils/SearchUtils';
 import { injectCommonProp } from '../../../core';
@@ -18,10 +19,13 @@ import {
   RecordDetailPane,
   AssociatedRecordPane,
 } from './components';
+import DuplicaRecord from '../Button/DuplicaRecord';
 import { emptyRecordAction } from '../../Cataloguing/Actions';
 import { searchDetailAction } from '../Actions';
 import * as C from '../../../shared/Constants';
 
+import style from '../Style/index.css';
+import { Localize } from '../../../shared/Function';
 
 type P = Props & {
   headings: Array<any>,
@@ -56,25 +60,8 @@ export class SearchResults extends React.Component<P, {}> {
     this.renderRightMenuEdit = this.renderRightMenuEdit.bind(this);
     this.renderLastMenu = this.renderLastMenu.bind(this);
     this.handleClickEdit = this.handleClickEdit.bind(this);
-    this.keys = {
-      'new': ['backspace'],
-    };
-    this.handlers = {
-      'new': this.handleCreateRecord,
-    };
   }
 
-  componentDidMount() {
-    const { store: { getState } } = this.props;
-    // const editRecord = findParam('edited');
-    if (getState().marccat.settings && getState().marccat.settings.fromCataloginge) {
-      // this.openDetailFromCataloguing();
-      const formValues = getState().form.searchForm.values;
-      const searchFieldValue = formValues.searchTextArea;
-      document.getElementsByName('searchTextArea')[0].value = searchFieldValue;
-      // dispatch(change('searchTextArea', searchFieldValue));
-    }
-  }
 
   handleClickEdit = () => {
     const { router, toggleFilterPane } = this.props;
@@ -200,21 +187,17 @@ export class SearchResults extends React.Component<P, {}> {
   };
 
   renderRightMenuEdit = () => {
-    const rightButton = {
-      marginRight: '10px',
-      float: 'right',
-    };
     return (
       <PaneMenu>
         <Button
           {...this.props}
-          style={rightButton}
+          buttonClass={style.rightPosition}
           buttonStyle="primary"
           type="button"
           marginBottom0
           onClick={this.handleClickEdit}
         >
-          <FormattedMessage id="ui-marccat.cataloging.record.edit" />
+          {Localize({ key: 'cataloging.record.edit' })}
         </Button>
       </PaneMenu>
     );
@@ -222,40 +205,41 @@ export class SearchResults extends React.Component<P, {}> {
 
   renderLastMenu = () => {
     const { openDropDownMenu } = this.state;
-    const { translate, activeFilterName, activeFilterChecked, data: { data: { emptyRecord } } } = this.props;
+    const { activeFilterName, activeFilterChecked, data: { data: { emptyRecord } } } = this.props;
     return (activeFilterName === 'recordType.Bibliographic records' && activeFilterChecked) ?
-      (<CreateButtonMenu
-        {...this.props}
-        label={translate({ id: 'ui-marccat.search.record.new.from.template' })}
-        labels={this.renderDropdownLabels()}
-        onToggle={this.handleCreateRecord}
-        disabled={!emptyRecord}
-        withIcon
-        noDropdown
-      />) : (<CreateButtonMenu
-        {...this.props}
-        label={translate({ id: 'ui-marccat.search.record.new' })}
-        labels={this.renderDropdownLabels()}
-        disabled={!emptyRecord}
-        withIcon
-        onToggle={() => this.setState({
-          openDropDownMenu: !openDropDownMenu
-        })}
-        open={openDropDownMenu}
-      />);
-  };
-
-  renderCreateRecordButton = () => {
-    const { translate } = this.props;
-    return (
-      <CreateButtonMenu
-        data-test-clickable-new-record
-        {...this.props}
-        label={translate({ id: 'ui-marccat.template.record.create' })}
-        labels={this.renderDropdownLabels()}
-        onToggle={this.handleCreateRecord}
-        noDropdown
-      />);
+      (
+        <PaneMenu>
+          <CreateRecordButton
+            {...this.props}
+            data-test-clickable-new-record
+            label="search.record.new"
+            labels={this.renderDropdownLabels()}
+            onToggle={this.handleCreateRecord}
+            disabled={!emptyRecord}
+            withIcon
+            noDropdown
+          />
+          <DuplicaRecord {...this.props} data-test-clickable-duplicate-record />
+        </PaneMenu>
+      ) :
+      (
+        <PaneMenu>
+          <CreateRecordButton
+            style={{ marginRight: '5px' }}
+            {...this.props}
+            data-test-clickable-new-record
+            label="search.record.new"
+            labels={this.renderDropdownLabels()}
+            disabled={!emptyRecord}
+            withIcon
+            onToggle={() => this.setState({
+              openDropDownMenu: !openDropDownMenu
+            })}
+            open={openDropDownMenu}
+          />
+          <DuplicaRecord {...this.props} data-test-clickable-duplicate-record />
+        </PaneMenu>
+      );
   };
 
   render() {

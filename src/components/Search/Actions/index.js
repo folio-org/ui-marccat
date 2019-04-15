@@ -48,20 +48,24 @@ export const searchDetailAction = (id) => {
     }
   };
 };
+
+
 /**
  *
  * @param {*} payload
  */
-export const countRecordAction = (payload) => {
+export const duplicaRecordAction = (id) => {
   return {
     type: ACTION.QUERY,
     data: {
-      path: ENDPOINT.TOTAL_COUNT_SEARCH_URL,
-      type: `record${(payload.view === 1) ? 'Bib' : 'Auth'}Count`,
-      params: `lang=ita&view=${payload.view}&ml=170&q=${payload.query}`,
+      path: ENDPOINT.DUPLICATE_RECORD_URL,
+      type: 'recordDuplicate',
+      params: `id=${id}`.concat('&').concat(ENDPOINT.DEFAULT_LANG_VIEW),
+      id
     }
   };
 };
+
 
 /**
  *

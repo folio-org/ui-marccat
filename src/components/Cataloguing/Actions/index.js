@@ -70,22 +70,6 @@ export const createHeadingAction = (id, payload) => {
  *
  * @param {*} payload
  */
-export const deleteHeadingAction = (payload) => {
-  return {
-    type: ACTION.DELETE,
-    data: {
-      path: ENDPOINT.DELETE_HEADING_URL,
-      type: `deleteHeading-${payload.tag}`,
-      params: ENDPOINT.DEFAULT_LANG_VIEW,
-    },
-    payload
-  };
-};
-
-/**
- *
- * @param {*} payload
- */
 export const changeDisplayValueAction = (tag, payload) => {
   return {
     type: ACTION.CREATE,

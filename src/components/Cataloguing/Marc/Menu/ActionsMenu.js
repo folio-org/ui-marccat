@@ -12,7 +12,6 @@ import {
 import type { Props } from '../../../../core';
 import ActionLabels from './ActionLabels';
 import { Localize } from '../../../../shared/Function';
-import style from '../../Style/variableform.css';
 
 type P = Props & {
   onToggle(): void,

@@ -145,12 +145,11 @@ export class MarcRecord extends React.Component<Props, {
     const bibliographicRecord = this.getCurrentRecord();
     bibliographicRecord.leader.value = formData.leader;
 
-    const fieldsTemplate = Object.assign({}, emptyRecord.results.fields);
     const recordTemplate = {
       id: first(data.template.records).id,
       name: first(data.template.records).name,
       type: 'B',
-      fields: filterMandatoryFields(fieldsTemplate)
+      fields: filterMandatoryFields(emptyRecord.results.fields)
     };
     bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     bibliographicRecord.fields = union(bibliographicRecord.fields, tagVariableData);

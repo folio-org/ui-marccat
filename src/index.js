@@ -13,6 +13,7 @@ import { REDUX } from './shared/Constants';
 import { TAGS } from './components/Cataloguing';
 
 import './styles/common.css';
+// import { autosuggestionTag } from './components';
 
 
 type RoutingProps = {

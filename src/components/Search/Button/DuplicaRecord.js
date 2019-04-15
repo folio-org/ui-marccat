@@ -65,7 +65,7 @@ class DuplicaRecord extends React.Component<Props, {
     this.setState({ sending: true });
     setTimeout(() => {
       this.onHide();
-      this.setState({ sending: true, confirming: false });
+      this.setState({ sending: false, confirming: false });
     }, 3000);
   };
 

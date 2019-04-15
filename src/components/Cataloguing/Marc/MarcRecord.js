@@ -1,5 +1,4 @@
 /* eslint-disable react/no-unused-state */
-/* eslint-disable quotes */
 /**
  * @format
  * @flow
@@ -35,7 +34,6 @@ import { injectCommonProp, Props } from '../../../core';
 import { filterMandatoryFields, showValidationMessage } from '../Utils/MarcApiUtils';
 import * as MarcAction from '../Actions';
 import { FixedFields, MarcLeader, VariableFields } from '.';
-import { resetStore } from '../../../shared/ActionCreator';
 import style from '../Style/index.css';
 import { RECORD_FIELD_STATUS, SORTED_BY, TAG_NOT_REPEATABLE } from '../Utils/MarcConstant';
 
@@ -128,12 +126,8 @@ export class MarcRecord extends React.Component<Props, {
     }
   };
 
-  asyncDeleteTag = (item) => {
+  onDelete = item => {
     item.fieldStatus = RECORD_FIELD_STATUS.DELETED;
-  };
-
-  onDelete = async item => {
-    await this.asyncDeleteTag(item);
   };
 
   saveRecord = async () => {
@@ -173,9 +167,10 @@ export class MarcRecord extends React.Component<Props, {
 
   handleClose = () => {
     const { id } = this.state;
-    const { dispatch, router, toggleFilterPane } = this.props;
+    const { dispatch, reset, router, toggleFilterPane } = this.props;
     dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', isChecked: false });
     toggleFilterPane();
+    dispatch(reset());
     router.push(`/marccat/search?savedId=${id}`);
   };
 

@@ -35,7 +35,7 @@ export class Tag008 extends React.Component<Props, {}> {
     if (currentHeaderTypeCode !== headerTypeCode) {
       this.state.isChangedHeaderType = true;
     }
-    dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: headerTypeCode || 31 });
+    dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: headerTypeCode });
     first(record.fields.filter(f => f.code === TAGS._008)).fieldStatus = RECORD_FIELD_STATUS.CHANGED;
   }
 
@@ -88,15 +88,17 @@ export class Tag008 extends React.Component<Props, {}> {
 
   render() {
     const { headerTypesResult, store: { getState }, tag008ValuesResults, leaderValue, newValuesFromChangedLeader, dispatch, change } = this.props;
-    const { isChangedHeaderType, currentHeaderTypeCode, jsonReq } = this.state;
+    const { currentHeaderTypeCode, jsonReq } = this.state;
     if (!tag008ValuesResults) {
       this.populateFirstAccess();
     }
     const remappedValues = [];
-    if (tag008ValuesResults || isChangedHeaderType) {
-      const result = Object.keys(tag008ValuesResults.results).map((key) => tag008ValuesResults.results[key]);
-      remappedValues.push(result);
-    }
+    let result = newValuesFromChangedLeader || tag008ValuesResults;
+    result = (result) ? Object.keys(result.results).map((key) => result.results[key]) : [];
+    remappedValues.push(result);
+
+    if (result && result.headerTypeCode) this.changeDisplayValue();
+
     const formData = getState().form.bibliographicRecordForm.values;
     if (newValuesFromChangedLeader && newValuesFromChangedLeader.headerTypeCode !== currentHeaderTypeCode) {
       dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: newValuesFromChangedLeader.headerTypeCode });

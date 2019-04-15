@@ -206,3 +206,17 @@ export const typeCodeAction = (type, code) => {
     code,
   };
 };
+/**
+ *
+ * @return {*} payload
+ */
+export const autosuggestionTag = () => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.AUTOSUGGESTION_TAG_URL,
+      type: 'tags',
+      params: 'lang=ita',
+    },
+  };
+};

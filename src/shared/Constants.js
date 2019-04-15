@@ -36,6 +36,7 @@ export const ENDPOINT = {
   VIEW_TEMPLATE_URL_BY_ID: '/record-template/',
   FIXED_FIELD_BY_LEADER_URL:'/fixed-fields-code-groups-by-leader',
   EMPTY_RECORD_URL: '/bibliographic-record/from-template/',
+  DUPLICATE_RECORD_URL: '/bibliographic-record/duplicate',
   TEMPLATE_TAG_URL: '/fixed-fields-code-groups',
   HEADER_TYPES_URL: '/header-types',
   CREATE_HEADING_URL: '/create-heading',

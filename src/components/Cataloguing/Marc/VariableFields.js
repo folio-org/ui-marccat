@@ -16,18 +16,6 @@ class VariableFields extends React.Component<Props, {}> {
     this.handlers = { 'new': this.handleAdd };
   }
 
-  handleAdd = () => {
-    this.setState(({ fields }) => ({
-      fields: fields.concat(getEmptyVariableField(false, {})),
-    }));
-  }
-
-  handleRemove = (index) => {
-    this.setState(({ fields }) => ({
-      fields: [...fields.slice(0, index), ...fields.slice(index + 1)]
-    }));
-  }
-
   renderList() {
     const { fields, translate, onUpdate, onSave, onDelete, onCreate } = this.props;
     const resultsFormatter = {
@@ -37,34 +25,36 @@ class VariableFields extends React.Component<Props, {}> {
       displayValue: item => `${replaceAll(item.displayValue)}` || `${replaceAll(item.variableField.displayValue)}`,
     };
     return (
-      <MarcEditableList
-        createButtonLabel={translate({ id: 'ui-marccat.cataloging.variablefield.section.add.newtag' })}
-        contentData={fields}
-        itemTemplate={getEmptyVariableField(false, {})}
-        visibleFields={[
-          'code',
-          'ind1',
-          'ind2',
-          'displayValue'
-        ]}
-        columnMapping={{
-          code: 'code',
-          ind1: 'ind1',
-          ind2: 'ind2',
-          displayValue: 'displayValue',
-        }}
-        columnWidths={{
-          code: '10%',
-          ind1: '10%',
-          ind2: '10%',
-          displayValue: '50%',
-        }}
-        formatter={resultsFormatter}
-        onUpdate={onUpdate}
-        onSave={onSave}
-        onDelete={onDelete}
-        onCreate={onCreate}
-      />
+      <Fragment>
+        <MarcEditableList
+          createButtonLabel={translate({ id: 'ui-marccat.cataloging.actions' })}
+          contentData={fields}
+          itemTemplate={getEmptyVariableField(false, {})}
+          visibleFields={[
+            'code',
+            'ind1',
+            'ind2',
+            'displayValue'
+          ]}
+          columnMapping={{
+            code: 'code',
+            ind1: 'ind1',
+            ind2: 'ind2',
+            displayValue: 'displayValue',
+          }}
+          columnWidths={{
+            code: '10%',
+            ind1: '10%',
+            ind2: '10%',
+            displayValue: '50%',
+          }}
+          formatter={resultsFormatter}
+          onUpdate={onUpdate}
+          onSave={onSave}
+          onDelete={onDelete}
+          onCreate={onCreate}
+        />
+      </Fragment>
     );
   }
 

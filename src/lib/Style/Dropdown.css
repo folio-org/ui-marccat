@@ -7,7 +7,14 @@
 }
 
 .dropdownContainer {
-  padding: 5px;
+  padding: 8px;
+  color: var(--primary);
+  font-weight: var(--text-weight-headline-basis);
+  cursor: pointer;
+}
+
+.dropdownContainerMenuItem {
+  padding: 3px;
   color: var(--primary);
   font-weight: var(--text-weight-headline-basis);
   cursor: pointer;

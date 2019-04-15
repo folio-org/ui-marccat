@@ -76,7 +76,7 @@
     "cataloging.accordion.variablefield.label": "Variable Fields",
     "cataloging.accordion.checkbox.label": "Suppress",
     "cataloging.checkbox.label": "Suppress From Discovery",
-    "cataloging.record.actions": "Actions",
+    "cataloging.actions": "Actions",
     "cataloging.record.edit": "Edit Record",
     "cataloging.record.create": "Create Record",
     "cataloging.record.delete": "Delete Record"

@@ -19,7 +19,7 @@ import {
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
 import { FormattedMessage } from 'react-intl';
-import { union, sortBy, merge, includes, first } from 'lodash';
+import { union, sortBy, includes, first } from 'lodash';
 import { Redux, ReduxForm } from '../../../redux/helpers/Redux';
 import {
   TAG_WITH_NO_HEADING_ASSOCIATED,
@@ -45,15 +45,17 @@ export class MarcRecord extends React.Component<Props, {
   constructor(props) {
     super(props);
     this.state = {
-      // record: props.bibliographicRecord.data, (this is the right way)
-      isEditMode: false,
+      isCreationMode: (findParam('mode') === RECORD_ACTION.CREATION_MODE),
+      isEditMode:  (findParam('mode') === RECORD_ACTION.EDIT_MODE),
+      isDuplicateMode:  (findParam('mode') === RECORD_ACTION.DUPLICATE_MODE),
       mode: findParam('mode'),
-      id: findParam('id'),
+      id: findParam('id')
     };
     this.renderDropdownLabels = this.renderDropdownLabels.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.callout = React.createRef();
     this.onCreate = this.onCreate.bind(this);
+    this.onUpdate = this.onUpdate.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.saveRecord = this.saveRecord.bind(this);
     this.deleteRecord = this.deleteRecord.bind(this);
@@ -63,37 +65,29 @@ export class MarcRecord extends React.Component<Props, {
     const { dispatch, datastore: { emptyRecord } } = this.props;
     const { leader } = emptyRecord.results;
 
-    const { mode } = this.state;
-    if (mode === RECORD_ACTION.EDIT_MODE) { this.setState({ isEditMode: true }); }
-
     dispatch({ type: ActionTypes.LEADER_VALUES_FROM_TAG, leader: leader.value, code: leader.code, typeCode: '15' });
-    const payload = { value: leader.value, code: leader.code, typeCode: 15 };
-    dispatch(MarcAction.leaderAction(payload));
     dispatch(MarcAction.settingsAction({ fromCataloging: true }));
   }
 
-  getCurrentRecord = () => {
-    const { datastore: { emptyRecord }, recordDetail } = this.props;
-    const { isEditMode } = this.state;
+  getCurrentRecord = (): Object => {
+    const { datastore: { emptyRecord, recordDuplicate }, recordDetail } = this.props;
 
-    const emptyRecordTemplate = Object.assign({}, emptyRecord.results);
-    return (!isEditMode) ? emptyRecordTemplate : recordDetail;
+    const { mode } = this.state;
+
+    if (mode === RECORD_ACTION.CREATION_MODE) return Object.assign({}, emptyRecord.results);
+    else if (mode === RECORD_ACTION.EDIT_MODE) return Object.assign({}, recordDetail);
+    else return Object.assign({}, recordDuplicate.results.bibliographicRecord);
   };
 
   onCreate = item => {
-    const { store, router } = this.props;
-    const { variableField: { code, ind1, ind2, displayValue, keyNumber, categoryCode } } = item;
+    const { store } = this.props;
+    const { variableField: { code, ind1, ind2, displayValue } } = item;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const isNotRepetble = includes(TAG_NOT_REPEATABLE, item.code);
     const tagVariableItems: [] = ReduxForm.resolve(store, C.REDUX.FORM.EDITABLE_FORM).items;
     ReduxForm.resolve(store, C.REDUX.FORM.EDITABLE_FORM).items[0] = item;
-    const isEditMode = router.location.search.split('&')[1] === 'mode=edit';
     const heading = { ind1, ind2, displayValue: replaceAllinverted(displayValue), tag: code };
 
-    if (isEditMode) {
-      item.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
-      merge(heading, { keyNumber, categoryCode });
-    }
     const tagLenght = tagVariableItems.filter(t => t.code === code);
     if (tagLenght.length > 1 && isNotRepetble) {
       showValidationMessage(this.callout, 'ui-marccat.cataloging.record.tag.duplicate.error', 'error');
@@ -102,6 +96,25 @@ export class MarcRecord extends React.Component<Props, {
       this.asyncCreateHeading(item, heading);
     }
   }
+
+  onUpdate = item => {
+    const { store } = this.props;
+    const { variableField: { code, ind1, ind2, displayValue, categoryCode, keyNumber } } = item;
+    const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
+    const isNotRepetble = includes(TAG_NOT_REPEATABLE, item.code);
+    let tagVariableItems: [] = Object.assign([], ReduxForm.resolve(store, C.REDUX.FORM.EDITABLE_FORM).items);
+    tagVariableItems = tagVariableItems.filter(t => t.code !== item.code);
+    tagVariableItems.push(item);
+    const heading = { ind1, ind2, displayValue: replaceAllinverted(displayValue), tag: code, categoryCode, keyNumber };
+
+    const tagLength = tagVariableItems.filter(t => t.code === code);
+    if (tagLength.length > 1 && isNotRepetble) {
+      showValidationMessage(this.callout, 'ui-marccat.cataloging.record.tag.duplicate.error', 'error');
+      tagVariableItems.splice(0, 1);
+    } else if (!cretaeHeadingForTag) {
+      this.asyncCreateHeading(item, heading);
+    }
+  };
 
   asyncCreateHeading = async (item, heading) => {
     try {
@@ -129,22 +142,15 @@ export class MarcRecord extends React.Component<Props, {
     const formData = getState().form.bibliographicRecordForm.values;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
 
-    tagVariableData.map(tag => {
-      if (tag.variableField.displayValue.startsWith('$')) {
-        const replacedValue = replaceAllinverted(tag.variableField.displayValue);
-        tag.variableField.displayValue = replacedValue;
-      }
-      return tagVariableData;
-    });
-
     const bibliographicRecord = this.getCurrentRecord();
     bibliographicRecord.leader.value = formData.leader;
 
+    const fieldsTemplate = Object.assign({}, emptyRecord.results.fields);
     const recordTemplate = {
       id: first(data.template.records).id,
       name: first(data.template.records).name,
       type: 'B',
-      fields: filterMandatoryFields(emptyRecord.results.fields)
+      fields: filterMandatoryFields(fieldsTemplate)
     };
     bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
     bibliographicRecord.fields = union(bibliographicRecord.fields, tagVariableData);

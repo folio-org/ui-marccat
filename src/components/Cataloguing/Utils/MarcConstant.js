@@ -81,7 +81,8 @@ export const TAG007_DISPLAY_VALUE_DEFAULT = 'cu uuu---uuuuu';
 
 export const RECORD_ACTION = {
   CREATION_MODE: 'new',
-  EDIT_MODE: 'edit'
+  EDIT_MODE: 'edit',
+  DUPLICATE_MODE: 'duplicate'
 };
 
 export const SORTED_BY = {

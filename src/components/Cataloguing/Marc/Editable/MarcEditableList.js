@@ -17,13 +17,13 @@ const defaultProps = {
   nameKey: 'code',
 };
 
-const EditableList = (props) => {
+const MarcEditableList = (props) => {
   const { contentData, nameKey } = props;
   const items = sortBy(contentData, [t => t[nameKey] && t[nameKey].toLowerCase()]);
   return (<MarcRecordListForm initialValues={{ items }} {...props} />);
 };
 
-EditableList.propTypes = propTypes;
-EditableList.defaultProps = defaultProps;
+MarcEditableList.propTypes = propTypes;
+MarcEditableList.defaultProps = defaultProps;
 
-export default EditableList;
+export default MarcEditableList;

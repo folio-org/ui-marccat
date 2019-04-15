@@ -71,7 +71,6 @@ export class MarcRecord extends React.Component<Props, {
 
   getCurrentRecord = (): Object => {
     const { datastore: { emptyRecord, recordDuplicate }, recordDetail } = this.props;
-
     const { mode } = this.state;
 
     if (mode === RECORD_ACTION.CREATION_MODE) return Object.assign({}, emptyRecord.results);
@@ -175,7 +174,6 @@ export class MarcRecord extends React.Component<Props, {
   handleClose = () => {
     const { id } = this.state;
     const { dispatch, router, toggleFilterPane } = this.props;
-    dispatch(resetStore());
     dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', isChecked: false });
     toggleFilterPane();
     router.push(`/marccat/search?savedId=${id}`);

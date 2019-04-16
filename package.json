@@ -15,6 +15,7 @@
     "start": "stripes serve --lint config/stripesclirc.config",
     "build": "stripes build --no-minify --okapi http://folio-q4.aws.indexdata.com:9130 --output dist/",
     "test": "stripes test karma --coverage",
+    "test:folioci": "yarn test --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage",
     "lint": "eslint ./src --fix && stylelint \"src/**/*.css\" --fix",
     "eslint": "eslint ./ --fix",
     "stylelint": "stylelint \"src/**/*.css\"",

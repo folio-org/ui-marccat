@@ -24,18 +24,18 @@ import {
   TAG_WITH_NO_HEADING_ASSOCIATED,
   replaceAllinverted,
   RECORD_ACTION,
+  FixedFields, MarcLeader, VariableFields
 } from '..';
-import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../../lib';
+import { ActionMenuTemplate, SingleCheckboxIconButton, injectCommonProp, post } from '../../../shared';
 import { ActionTypes } from '../../../redux/actions/Actions';
-import { post } from '../../../core/api/HttpService';
-import * as C from '../../../shared/Constants';
-import { buildUrl, findParam, Localize } from '../../../shared/Function';
-import { injectCommonProp, Props } from '../../../core';
-import { filterMandatoryFields, showValidationMessage } from '../Utils/MarcApiUtils';
+import { buildUrl, findParam, Localize } from '../../../utils/Function';
+import { filterMandatoryFields, showValidationMessage, filterFixedFieldForSaveRecord } from '../Utils/MarcApiUtils';
+import { RECORD_FIELD_STATUS, SORTED_BY, TAG_NOT_REPEATABLE, TAG_WIDH_CAT_7, TAG_WIDH_CAT_8 } from '../Utils/MarcConstant';
+import * as C from '../../../config/constants';
 import * as MarcAction from '../Actions';
-import { FixedFields, MarcLeader, VariableFields } from '.';
+import type { Props } from '../../../shared';
+
 import style from '../Style/index.css';
-import { RECORD_FIELD_STATUS, SORTED_BY, TAG_NOT_REPEATABLE } from '../Utils/MarcConstant';
 
 export class MarcRecord extends React.Component<Props, {
   callout: React.RefObject<Callout>,
@@ -47,7 +47,7 @@ export class MarcRecord extends React.Component<Props, {
       isEditMode:  (findParam('mode') === RECORD_ACTION.EDIT_MODE),
       isDuplicateMode:  (findParam('mode') === RECORD_ACTION.DUPLICATE_MODE),
       mode: findParam('mode'),
-      id: findParam('id')
+      id: findParam('id'),
     };
     this.renderDropdownLabels = this.renderDropdownLabels.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -91,6 +91,8 @@ export class MarcRecord extends React.Component<Props, {
       tagVariableItems.splice(0, 1);
     } else if (!cretaeHeadingForTag) {
       this.asyncCreateHeading(item, heading);
+    } else {
+      this.setupComonProperties(item, heading);
     }
   }
 
@@ -99,19 +101,20 @@ export class MarcRecord extends React.Component<Props, {
     const { variableField: { code, ind1, ind2, displayValue, categoryCode, keyNumber } } = item;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const isNotRepetble = includes(TAG_NOT_REPEATABLE, item.code);
-    let tagVariableItems: [] = Object.assign([], ReduxForm.resolve(store, C.REDUX.FORM.EDITABLE_FORM).items);
-    tagVariableItems = tagVariableItems.filter(t => t.code !== item.code);
-    tagVariableItems.push(item);
     const heading = { ind1, ind2, displayValue: replaceAllinverted(displayValue), tag: code, categoryCode, keyNumber };
 
-    const tagLength = tagVariableItems.filter(t => t.code === code);
+    const variableTagForm = store.getState().form.marcEditableListForm.values.items;
+    variableTagForm[0] = item;
+    const tagLength = variableTagForm.filter(t => t.code === code);
     if (tagLength.length > 1 && isNotRepetble) {
       showValidationMessage(this.callout, 'ui-marccat.cataloging.record.tag.duplicate.error', 'error');
-      tagVariableItems.splice(0, 1);
+      variableTagForm.splice(0, 1);
     } else if (!cretaeHeadingForTag) {
       this.asyncCreateHeading(item, heading);
+    } else {
+      this.setupComonProperties(item, heading);
     }
-  };
+  }
 
   asyncCreateHeading = async (item, heading) => {
     try {
@@ -124,6 +127,14 @@ export class MarcRecord extends React.Component<Props, {
     } catch (exception) {
       showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.create.failure', value: C.EMPTY_STRING }), C.VALIDATION_MESSAGE_TYPE.ERROR);
     }
+  };
+
+  setupComonProperties = (item, heading) => {
+    const categorySeven = includes(TAG_WIDH_CAT_7, item.code);
+    const categoryEight = includes(TAG_WIDH_CAT_8, item.code);
+    if (categorySeven) item.variableField.categoryCode = categorySeven;
+    if (categoryEight) item.variableField.categoryCode = categoryEight;
+    item.variableField.displayValue = heading.displayValue;
   };
 
   onDelete = item => {
@@ -144,8 +155,8 @@ export class MarcRecord extends React.Component<Props, {
       type: 'B',
       fields: filterMandatoryFields(emptyRecord.results.fields)
     };
-    bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
-    bibliographicRecord.fields = union(bibliographicRecord.fields, tagVariableData);
+
+    bibliographicRecord.fields = union(filterFixedFieldForSaveRecord(bibliographicRecord.fields), tagVariableData);
     bibliographicRecord.fields = sortBy(bibliographicRecord.fields, SORTED_BY.CODE);
     const payload = { bibliographicRecord, recordTemplate };
 

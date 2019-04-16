@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field } from 'redux-form';
 import { IconButton } from '@folio/stripes/components';
-import type { Props } from '../../../core';
+import type { Props } from '../../../shared';
 import style from '../Style/index.css';
 
 type P = Props & {

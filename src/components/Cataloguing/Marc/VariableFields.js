@@ -4,18 +4,12 @@
  * @flow
  */
 import React, { Fragment } from 'react';
-import MarcEditableList from './Editable';
-import { Props, injectCommonProp } from '../../../core';
-import { getEmptyVariableField } from '..';
+import { MarcEditableList, getEmptyVariableField } from '..';
+import type { Props } from '../../../shared';
+import { injectCommonProp } from '../../../shared';
 import { replaceAll } from '../Utils/MarcApiUtils';
 
 class VariableFields extends React.Component<Props, {}> {
-  constructor(props: Props) {
-    super(props);
-    this.keys = { 'new': ['enter'] };
-    this.handlers = { 'new': this.handleAdd };
-  }
-
   renderList() {
     const { fields, translate, onUpdate, onSave, onDelete, onCreate } = this.props;
     const resultsFormatter = {

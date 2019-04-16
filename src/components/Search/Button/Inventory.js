@@ -4,7 +4,7 @@
  */
 import React from 'react';
 import { Button } from '@folio/stripes/components';
-import type { Props } from '../../../core';
+import type { Props } from '../../../shared';
 
 const InventoryPluggableButton = ({ buttonLabel, ...props }:Props) => {
   const { buttonTarget, className, withLine } = props;

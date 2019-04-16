@@ -5,9 +5,10 @@
  */
 import React from 'react';
 import { Button, PaneMenu } from '@folio/stripes/components';
-import { Localize, findParam } from '../../../shared/Function';
+import { connect } from 'react-redux';
+import { Localize, findParam } from '../../../utils/Function';
 
-export default ({ ...props }) => {
+const EditRecordButton = ({ ...props }) => {
   const handleClickEdit = () => {
     const { router, toggleFilterPane } = props;
     const id = findParam('id');
@@ -15,6 +16,7 @@ export default ({ ...props }) => {
     router.push(`/marccat/cataloging?id=${id}&mode=edit`);
   };
 
+  const { detail } = props;
   return (
     <PaneMenu>
       <Button
@@ -22,6 +24,7 @@ export default ({ ...props }) => {
         buttonStyle="primary"
         type="button"
         marginBottom0
+        disabled={!detail}
         onClick={() => handleClickEdit()}
       >
         {Localize({ key: 'cataloging.record.edit' })}
@@ -29,3 +32,7 @@ export default ({ ...props }) => {
     </PaneMenu>
   );
 };
+
+export default (connect((state) => ({
+  detail: state.marccat.data.marcRecordDetail
+}))(EditRecordButton));

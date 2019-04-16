@@ -9,9 +9,9 @@ import {
   Button,
   Icon
 } from '@folio/stripes/components';
-import type { Props } from '../../../../core';
+import type { Props } from '../../../../shared';
 import ActionLabels from './ActionLabels';
-import { Localize } from '../../../../shared/Function';
+import { Localize } from '../../../../utils/Function';
 
 type P = Props & {
   onToggle(): void,

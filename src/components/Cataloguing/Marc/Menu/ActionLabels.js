@@ -2,8 +2,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import { MenuItem } from '@folio/stripes/components';
-import { Localize } from '../../../../shared/Function';
-import style from '../../../../lib/Style/Dropdown.css';
+import { Localize } from '../../../../utils/Function';
+import style from '../../../../shared/lib/Style/Dropdown.css';
 
 export default ({ ...props }) => {
   const getLabels = () => {

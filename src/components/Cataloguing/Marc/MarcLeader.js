@@ -5,12 +5,12 @@
 import React from 'react';
 import { Field } from 'redux-form';
 import { Row, Col, Select } from '@folio/stripes/components';
-import type { Props } from '../../../core';
+import type { Props } from '../../../shared';
 import MarcField from './MarcField';
-import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../shared/Constants';
+import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../config/constants';
 import { ActionTypes } from '../../../redux/actions/Actions';
 import style from '../Style/index.css';
-import { decamelizify } from '../../../shared/Function';
+import { decamelizify } from '../../../utils/Function';
 
 type P = {
   readOnly: boolean,

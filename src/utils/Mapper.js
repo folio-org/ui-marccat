@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../shared/Constants';
+import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../config/constants';
 
 /**
  * concatenate all subfield text data of a tag

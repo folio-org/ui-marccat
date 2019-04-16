@@ -5,8 +5,8 @@
 import * as React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { Search, Browse, Cataloging } from './components';
-import { ToolbarMenu } from './lib';
-import type { Props } from './core';
+import { ToolbarMenu } from './shared';
+import type { Props } from './shared';
 
 type P = Props & {
     toggleFilterPane: () => void;

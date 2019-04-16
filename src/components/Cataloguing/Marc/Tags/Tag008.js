@@ -7,13 +7,12 @@ import { connect } from 'react-redux';
 import { isEmpty, first } from 'lodash';
 import { Field } from 'redux-form';
 import { Row, Col, Select, TextField } from '@folio/stripes/components';
-import { injectCommonProp, Props } from '../../../../core';
+import { injectCommonProp, Props, post } from '../../../../shared';
 import { ActionTypes } from '../../../../redux/actions';
-import { decamelizify } from '../../../../shared/Function';
+import { decamelizify } from '../../../../utils/Function';
 import { RECORD_FIELD_STATUS, TAGS, TAGS_NAME } from '../../Utils/MarcConstant';
-import * as C from '../../../../shared/Constants';
+import * as C from '../../../../config/constants';
 import { buildUrl } from '../../../../redux';
-import { post } from '../../../../core/api/HttpService';
 
 
 export class Tag008 extends React.Component<Props, {}> {
@@ -76,6 +75,8 @@ export class Tag008 extends React.Component<Props, {}> {
       jsonReq[changedFieldLabel] = e.target.value;
     }
     this.asyncChangeDisplayValue(jsonReq);
+    this.state.jsonReq = jsonReq;
+    this.state.isChangedHeaderType = false;
   };
 
   asyncChangeDisplayValue = async (jsonReq) => {
@@ -96,8 +97,6 @@ export class Tag008 extends React.Component<Props, {}> {
     let result = newValuesFromChangedLeader || tag008ValuesResults;
     result = (result) ? Object.keys(result.results).map((key) => result.results[key]) : [];
     remappedValues.push(result);
-
-    if (result && result.headerTypeCode) this.changeDisplayValue();
 
     const formData = getState().form.bibliographicRecordForm.values;
     if (newValuesFromChangedLeader && newValuesFromChangedLeader.headerTypeCode !== currentHeaderTypeCode) {

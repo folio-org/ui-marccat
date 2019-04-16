@@ -10,7 +10,7 @@ describe('Application', () => {
   setupApplication();
 
   beforeEach(function () {
-    this.visit('/');
+    this.visit('/marccat');
   });
 
   it('renders', () => {

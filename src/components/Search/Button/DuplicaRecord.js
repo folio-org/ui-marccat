@@ -8,8 +8,8 @@ import { Button, ModalFooter, Modal, TextField } from '@folio/stripes/components
 import { Field, reduxForm } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import type { Props } from '../../../core';
-import { Localize } from '../../../shared/Function';
+import type { Props } from '../../../shared';
+import { Localize } from '../../../utils/Function';
 import { duplicaRecordAction } from '../Actions';
 
 class DuplicaRecord extends React.Component<Props, {

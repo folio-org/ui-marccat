@@ -10,7 +10,7 @@ import {
   TAG_MANDATORY,
   TAGS
 } from './MarcConstant';
-import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../shared/Constants';
+import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../config/constants';
 
 /**
  *
@@ -54,6 +54,15 @@ export const filterFixedFields = (obj) => {
  *
  * @param {*} obj
  */
+export const filterFixedFieldForSaveRecord = (obj) => {
+  return obj.filter(f => f.fixedField !== undefined || f.fixedField);
+};
+
+/**
+ * @description
+ *
+ * @param {*} obj
+ */
 export const filterMandatoryFields = (obj) => {
   return dedupe(obj).filter(f => includes(TAG_MANDATORY, f.code));
 };
@@ -63,8 +72,10 @@ export const filterMandatoryFields = (obj) => {
  *
  * @param {*} obj
  */
-export const filterVariableFields = (obj) => {
-  return obj.filter(f => f.fixedField === undefined || !f.fixedField);
+export const filterVariableFields = (obj:Array<any>) => {
+  return obj
+    .filter(v => v.variableField.code === '040' && v.fieldStatus !== 'unchanged')
+    .filter(f => (f.fixedField === undefined || !f.fixedField) && f.ariableField.code === '040');
 };
 
 /**
@@ -125,17 +136,17 @@ export const replaceAllinverted = (s: string): string => ((s) ? s.replace(/\$/g,
  */
 export const getFixedField = (tag: Object, typeCode): Object => {
   return {
-    'code': tag.code,
-    'mandatory': false,
-    'fieldStatus': STATUS.NEW,
-    'fixedField': {
-      'categoryCode': 1,
-      'headerTypeCode': typeCode,
-      'code': tag.code,
-      'displayValue': tag.default,
-      'sequenceNumber': 0
+    code: tag.code,
+    mandatory: false,
+    fieldStatus: STATUS.NEW,
+    fixedField: {
+      categoryCode: 1,
+      headerTypeCode: typeCode,
+      code: tag.code,
+      displayValue: tag.default,
+      sequenceNumber: 0
     },
-    'added': false
+    added: false
   };
 };
 
@@ -143,39 +154,36 @@ export const getFixedField = (tag: Object, typeCode): Object => {
  *
  * @param {*} tag
  */
-export const getEmptyVariableField = (editMode: boolean, tag?: Object): Object => {
+export const getEmptyVariableField = (editMode: boolean, tag: Object): Object => {
   return (!editMode) ? {
     code: tag.code || EMPTY_STRING,
     mandatory: false,
     fieldStatus: STATUS.NEW,
     variableField: {
-      keyNumber: tag.keyNumber || 0,
+      categoryCode: tag.categoryCode || 0,
       code: tag.code || EMPTY_STRING,
       ind1: tag.ind1 || EMPTY_SPACED_STRING,
       ind2: tag.ind2 || EMPTY_SPACED_STRING,
-      headingNumber: tag.headingNumber || 0,
       displayValue: tag.displayValue || EMPTY_STRING,
-      subfields: [],
       sequenceNumber: 0,
-      skipInFiling: 0
+      skipInFiling: 0,
+      subfields: [],
     },
     added: true
   } : {
     code: tag.code,
-    mandatory: false,
+    mandatory: tag.mandatory || false,
     fieldStatus: STATUS.CHANGED,
     variableField: {
-      keyNumber: tag.variableField.keyNumber,
       categoryCode: tag.variableField.categoryCode,
-      code: tag.code,
+      code: tag.variableField.code,
+      displayValue: tag.displayValue,
       ind1: tag.ind1 || EMPTY_SPACED_STRING,
       ind2: tag.ind2 || EMPTY_SPACED_STRING,
-      headingNumber: tag.headingNumber || 0,
-      displayValue: tag.displayValue,
-      subfields: [],
       sequenceNumber: 0,
-      skipInFiling: 0
+      skipInFiling: 0,
+      subfields: [],
     },
-    added: true
+    added: tag.added
   };
 };

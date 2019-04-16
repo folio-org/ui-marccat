@@ -1,7 +1,7 @@
 import React from 'react';
 import { Headline, Row, IconButton } from '@folio/stripes/components';
-import { Localize } from '../../../shared/Function';
-import style from '../../../lib/Style/Dropdown.css';
+import { Localize } from '../../../utils/Function';
+import style from '../../../shared/lib/Style/Dropdown.css';
 
 export default ({ ...props }) => {
   const { searchPerformed, resetHistory } = props;

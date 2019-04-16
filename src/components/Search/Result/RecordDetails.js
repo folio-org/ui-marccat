@@ -6,13 +6,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { AccordionSet, Col, Row, FilterAccordionHeader, Accordion } from '@folio/stripes/components';
 import InventoryPluggableButton from '../Button/Inventory';
-import type { Props } from '../../../core';
+import type { Props } from '../../../shared';
 import AssociatedBib from './AssociatedBib';
 import { ActionTypes } from '../../../redux/actions/Actions';
 
 import style from '../Style/index.css';
 import { mapFields } from '../Utils/SearchUtils';
-import { FixedFields } from '../../../models/model';
+import { FixedFields } from '../../Cataloguing/Models/model';
 import { SUBFIELD_CHARACTER } from '../../Cataloguing/Utils/MarcConstant';
 
 type P = Props & {

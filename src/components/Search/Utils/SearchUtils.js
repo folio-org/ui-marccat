@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { languageFilterMap, formatFilterMap } from '../Filter/FilterMapper';
-import { EMPTY_STRING } from '../../../shared/Constants';
-import { FixedFields, BaseFixedFields } from '../../../models';
+import { EMPTY_STRING } from '../../../config/constants';
+import { FixedFields, BaseFixedFields } from '../../Cataloguing/Models';
 
 /**
  *

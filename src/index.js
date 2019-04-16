@@ -3,17 +3,16 @@
  * @flow
  */
 import * as React from 'react';
-import { MarcatSettings as Settings } from './settings';
+import { MarcatSettings as Settings } from './components';
 import { Router } from './router';
 import { reducer, epics } from './redux';
-import { injectCommonProp } from './core';
+import { injectCommonProp } from './shared';
 import MARCcat from './MARCcat';
 import { ActionTypes } from './redux/actions';
-import { REDUX } from './shared/Constants';
 import { TAGS } from './components/Cataloguing';
+import { REDUX } from './config/constants';
 
-import './styles/common.css';
-// import { autosuggestionTag } from './components';
+import './shared/styles/common.css';
 
 
 type RoutingProps = {

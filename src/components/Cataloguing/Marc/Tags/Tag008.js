@@ -7,13 +7,12 @@ import { connect } from 'react-redux';
 import { isEmpty, first } from 'lodash';
 import { Field } from 'redux-form';
 import { Row, Col, Select, TextField } from '@folio/stripes/components';
-import { injectCommonProp, Props } from '../../../../core';
+import { injectCommonProp, Props, post } from '../../../../shared';
 import { ActionTypes } from '../../../../redux/actions';
-import { decamelizify } from '../../../../shared/Function';
+import { decamelizify } from '../../../../utils/Function';
 import { RECORD_FIELD_STATUS, TAGS, TAGS_NAME } from '../../Utils/MarcConstant';
-import * as C from '../../../../shared/Constants';
+import * as C from '../../../../config/constants';
 import { buildUrl } from '../../../../redux';
-import { post } from '../../../../core/api/HttpService';
 
 
 export class Tag008 extends React.Component<Props, {}> {

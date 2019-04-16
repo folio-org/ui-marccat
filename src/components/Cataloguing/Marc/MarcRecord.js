@@ -24,18 +24,18 @@ import {
   TAG_WITH_NO_HEADING_ASSOCIATED,
   replaceAllinverted,
   RECORD_ACTION,
+  FixedFields, MarcLeader, VariableFields
 } from '..';
-import { ActionMenuTemplate, SingleCheckboxIconButton } from '../../../lib';
+import { ActionMenuTemplate, SingleCheckboxIconButton, injectCommonProp, post } from '../../../shared';
 import { ActionTypes } from '../../../redux/actions/Actions';
-import { post } from '../../../core/api/HttpService';
-import * as C from '../../../shared/Constants';
-import { buildUrl, findParam, Localize } from '../../../shared/Function';
-import { injectCommonProp, Props } from '../../../core';
-import { filterMandatoryFields, showValidationMessage, filterVariableFields, filterFixedFieldForSaveRecord } from '../Utils/MarcApiUtils';
-import * as MarcAction from '../Actions';
-import { FixedFields, MarcLeader, VariableFields } from '.';
-import style from '../Style/index.css';
+import { buildUrl, findParam, Localize } from '../../../utils/Function';
+import { filterMandatoryFields, showValidationMessage, filterFixedFieldForSaveRecord } from '../Utils/MarcApiUtils';
 import { RECORD_FIELD_STATUS, SORTED_BY, TAG_NOT_REPEATABLE, TAG_WIDH_CAT_7, TAG_WIDH_CAT_8 } from '../Utils/MarcConstant';
+import * as C from '../../../config/constants';
+import * as MarcAction from '../Actions';
+import type { Props } from '../../../shared';
+
+import style from '../Style/index.css';
 
 export class MarcRecord extends React.Component<Props, {
   callout: React.RefObject<Callout>,

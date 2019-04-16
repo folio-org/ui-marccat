@@ -7,8 +7,8 @@ import {
   REQUEST_RESOLVE,
   REQUEST_REJECT,
   REQUEST_CLEAR
-} from '../../shared/Action';
-import { ENDPOINT } from '../../shared/Constants';
+} from '../../shared';
+import { ENDPOINT } from '../../config/constants';
 import { ActionTypes } from '../actions/Actions';
 
 const initialState = {};

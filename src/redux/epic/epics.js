@@ -7,10 +7,10 @@ import { map } from 'rxjs/operators/map';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import { ActionTypes } from '../actions/Actions';
 import * as marccatActions from '../actions';
-import { ENDPOINT } from '../../shared/Constants';
+import { ENDPOINT } from '../../config/constants';
 import { fetchFailure } from '../actions/ActionCreator';
 import { Redux } from '..';
-import { buildUrl } from '../../shared/Function';
+import { buildUrl } from '../../utils/Function';
 import { TAGS } from '../../components/Cataloguing';
 
 export const searchEpic = (action$, store) => action$.ofType(ActionTypes.SEARCH)

@@ -6,10 +6,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, KeyValue, AccordionSet, FilterAccordionHeader, Accordion } from '@folio/stripes/components';
 import InventoryPluggableButton from '../Button/Inventory';
-import type { Props } from '../../../core';
+import type { Props } from '../../../shared';
 import { getTag245, getTitle245 } from '../../../utils/Mapper';
 
-import style from '../../../styles/common.css';
+import style from '../../../shared/styles/common.css';
 
 type P = Props & {
   items: Array<any>,

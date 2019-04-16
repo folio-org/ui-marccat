@@ -10,7 +10,7 @@ import {
   TAG_MANDATORY,
   TAGS
 } from './MarcConstant';
-import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../shared/Constants';
+import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../config/constants';
 
 /**
  *

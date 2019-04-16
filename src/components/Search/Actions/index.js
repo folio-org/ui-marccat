@@ -1,5 +1,5 @@
-import { ACTION } from '../../../shared/Action';
-import { ENDPOINT } from '../../../shared/Constants';
+import { ACTION } from '../../../shared';
+import { ENDPOINT } from '../../../config/constants';
 
 /**
  *

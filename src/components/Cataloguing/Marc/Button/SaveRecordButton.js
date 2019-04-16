@@ -5,7 +5,7 @@ import {
 } from '@folio/stripes/components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Localize } from '../../../../shared/Function';
+import { Localize } from '../../../../utils/Function';
 
 import style from '../../Style/index.css';
 import { saveRecordAction } from '../../Actions';

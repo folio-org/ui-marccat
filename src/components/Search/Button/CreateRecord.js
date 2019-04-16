@@ -4,9 +4,9 @@
  */
 import React from 'react';
 import { Button, Dropdown, DropdownMenu, Icon } from '@folio/stripes/components';
-import type { Props } from '../../../core';
-import { Localize } from '../../../shared/Function';
-import renderDropdDownMenu from '../../../lib/components/Message/DropdownLabels';
+import type { Props } from '../../../shared';
+import { Localize } from '../../../utils/Function';
+import renderDropdDownMenu from '../../../shared/lib/components/Message/DropdownLabels';
 
 import style from '../Style/index.css';
 

@@ -5,11 +5,11 @@
 import React from 'react';
 import FilterGroups, { initialFilterState } from '@folio/stripes-components/lib/FilterGroups';
 import { ActionTypes } from '../../../redux/actions';
-import { Props } from '../../../core';
+import { EMPTY_STRING } from '../../../config/constants';
+import type { Props } from '../../../shared';
 
 import styles from './FiltersContainer.css';
-import { filterAction } from '../../../shared/ActionCreator';
-import { EMPTY_STRING } from '../../../shared/Constants';
+import { filterAction } from '../../../shared/action/ActionCreator';
 
 export default class FiltersContainer extends React.Component<Props, {}> {
   constructor(props) {

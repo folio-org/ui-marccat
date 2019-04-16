@@ -7,9 +7,9 @@ import { FormattedMessage } from 'react-intl';
 import { Pane, Icon } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
 import AssociatedBibDetails from '../AssociatedBibDetails';
-import { Props, injectCommonProp } from '../../../../core';
-import { ActionMenu } from '../../../../lib';
-import * as C from '../../../../shared/Constants';
+import { injectCommonProp, ActionMenu } from '../../../../shared';
+import type { Props } from '../../../../shared';
+import * as C from '../../../../config/constants';
 
 class AssociatedRecordPane extends React.Component<Props, {}> {
   render() {

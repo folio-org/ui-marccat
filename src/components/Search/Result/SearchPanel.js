@@ -15,7 +15,7 @@ import {
 import { reduxForm, Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import ResetButton from '../Filter/ResetButton';
-import { Props } from '../../../core';
+import type { Props } from '../../../shared';
 import {
   SearchIndexes,
   SearchConditions,
@@ -27,7 +27,7 @@ import {
 import { ActionTypes } from '../../../redux/actions/Actions';
 import { findYourQuery } from '../Filter';
 import { remapFilters } from '../../../utils/Mapper';
-import { EMPTY_STRING } from '../../../shared/Constants';
+import { EMPTY_STRING } from '../../../config/constants';
 import styles from '../Style/index.css';
 import { historySearchAction } from '../Actions';
 

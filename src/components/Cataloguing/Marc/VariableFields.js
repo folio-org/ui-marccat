@@ -4,9 +4,9 @@
  * @flow
  */
 import React, { Fragment } from 'react';
-import MarcEditableList from './Editable';
-import { Props, injectCommonProp } from '../../../core';
-import { getEmptyVariableField } from '..';
+import { MarcEditableList, getEmptyVariableField } from '..';
+import type { Props } from '../../../shared';
+import { injectCommonProp } from '../../../shared';
 import { replaceAll } from '../Utils/MarcApiUtils';
 
 class VariableFields extends React.Component<Props, {}> {

@@ -8,11 +8,10 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Paneset, HotKeys, PaneMenu } from '@folio/stripes/components';
 import { ActionTypes } from '../../../redux/actions';
-import type { Props } from '../../../core';
-import { NoResultsMessage } from '../../../lib';
+import type { Props } from '../../../shared';
+import { injectCommonProp, NoResultsMessage } from '../../../shared';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
 import { isAuthorityRecord, transitionToParams } from '../Utils/SearchUtils';
-import { injectCommonProp } from '../../../core';
 import {
   SearchResultPane,
   RecordDetailPane,
@@ -21,7 +20,7 @@ import {
 import { CreateRecordButton, EditRecordButton, DuplicaRecordButton } from '..';
 import { emptyRecordAction } from '../../Cataloguing/Actions';
 import { searchDetailAction } from '../Actions';
-import * as C from '../../../shared/Constants';
+import * as C from '../../../config/constants';
 
 type P = Props & {
   headings: Array<any>,

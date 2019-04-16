@@ -5,11 +5,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Accordion, FilterAccordionHeader, MultiColumnList } from '@folio/stripes/components';
-import type { Props } from '../../../core';
+import type { Props } from '../../../shared';
 import { ActionTypes } from '../../../redux/actions';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
 import { resultsFormatterForAssociated, columnMapperForAssociated } from '../../../utils/Formatter';
-import { EMPTY_STRING } from '../../../shared/Constants';
+import { EMPTY_STRING } from '../../../config/constants';
 
 type P = Props & {
     checkRecordType: Array<any>,

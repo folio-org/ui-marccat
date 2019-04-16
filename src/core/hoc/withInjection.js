@@ -18,16 +18,20 @@ export default function injectCommonProp<Props: {
     const { history, root: { store }, intl: { formatMessage } } = props;
     const state = store.getState();
     const data = state.marccat;
+    const form = safeObj(state, 'form');
     const dataStore = safeObj(state.marccat, 'data');
     const settings = safeObj(state.marccat, 'settings');
+    const searchHistory = safeObj(state.marccat, 'history');
     return (
       <Component
         {...props}
-        store={store}
         data={data}
-        datastore={dataStore}
-        settings={settings}
+        forms={form}
+        store={store}
         router={history}
+        settings={settings}
+        datastore={dataStore}
+        searchHistory={searchHistory}
         translate={formatMessage}
       />
     );

@@ -138,6 +138,11 @@ class EditableListForm extends React.Component {
     return items.map(() => ({ editing, error: false }));
   }
 
+
+  checkEditMode = item => {
+    return (item.variableField.categoryCode > 0 || item.variableField.itemTypeCode > 0);
+  };
+
   /**
    *
    * @param {*} fields
@@ -145,7 +150,9 @@ class EditableListForm extends React.Component {
    */
   normalizeField(fields: Array<*>, index: number): Object {
     const item = fields.get(index);
-    return (item.variableField.keyNumber > 0) ? getEmptyVariableField(true, item) : getEmptyVariableField(false, item);
+    return (this.checkEditMode(item)) ?
+      getEmptyVariableField(true, item) :
+      getEmptyVariableField(false, item);
   }
 
   /**
@@ -203,7 +210,7 @@ class EditableListForm extends React.Component {
   onSave(fields, index) {
     const { onCreate, onUpdate } = this.props;
     const item = this.normalizeField(fields, index);
-    const callback = (item.variableField.keyNumber > 0) ? onUpdate : onCreate;
+    const callback = (this.checkEditMode(item)) ? onUpdate : onCreate;
     const res = callback(item);
     Promise.resolve(res).then(
       () => {
@@ -336,33 +343,30 @@ class EditableListForm extends React.Component {
     }
 
     return (
-      <React.Fragment>
-        {/* <SingleCheckboxIconButton labels={['']} /> */}
-        <MarcEditableItem
-          editing={isEditing}
-          error={hasError}
-          key={rowIndex}
-          field="items"
-          item={rowData}
-          rowIndex={rowIndex}
-          columnMapping={columnMapping}
-          actionSuppression={actionSuppression}
-          actionProps={actionProps}
-          visibleFields={this.getVisibleColumns()}
-          onCancel={() => this.onCancel(fields, rowIndex)}
-          onSave={() => this.onSave(fields, rowIndex)}
-          onEdit={() => this.onEdit(rowIndex)}
-          onDelete={() => this.onDelete(fields, rowIndex)}
-          onDuplicate={() => this.onDuplicate(fields, rowIndex)}
-          onSortBy={() => this.onSortBy()}
-          additionalFields={additionalFields}
-          readOnlyFields={this.getReadOnlyColumns()}
-          fieldComponents={fieldComponents}
-          widths={columnWidths}
-          cells={cells}
-          {...rowProps}
-        />
-      </React.Fragment>
+      <MarcEditableItem
+        editing={isEditing}
+        error={hasError}
+        key={rowIndex}
+        field="items"
+        item={rowData}
+        rowIndex={rowIndex}
+        columnMapping={columnMapping}
+        actionSuppression={actionSuppression}
+        actionProps={actionProps}
+        visibleFields={this.getVisibleColumns()}
+        onCancel={() => this.onCancel(fields, rowIndex)}
+        onSave={() => this.onSave(fields, rowIndex)}
+        onEdit={() => this.onEdit(rowIndex)}
+        onDelete={() => this.onDelete(fields, rowIndex)}
+        onDuplicate={() => this.onDuplicate(fields, rowIndex)}
+        onSortBy={() => this.onSortBy()}
+        additionalFields={additionalFields}
+        readOnlyFields={this.getReadOnlyColumns()}
+        fieldComponents={fieldComponents}
+        widths={columnWidths}
+        cells={cells}
+        {...rowProps}
+      />
     );
   }
 

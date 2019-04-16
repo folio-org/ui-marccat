@@ -152,16 +152,15 @@ export const createRecordAction = (id, payload) => {
  * @param {*} id
  * @param {*} payload
  */
-export const deleteRecordAction = (payload) => {
+export const deleteRecordAction = (id) => {
   return {
     type: ACTION.DELETE,
     data: {
-      path: ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + payload.id,
-      type: `deleteRecord-${payload.id}-` + Date.now(),
+      path: ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id,
+      type: `deleteRecord-${id}-` + Date.now(),
       params: 'view=1',
-      id: payload.id,
+      id,
     },
-    payload
   };
 };
 

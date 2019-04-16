@@ -31,11 +31,11 @@ import { post } from '../../../core/api/HttpService';
 import * as C from '../../../shared/Constants';
 import { buildUrl, findParam, Localize } from '../../../shared/Function';
 import { injectCommonProp, Props } from '../../../core';
-import { filterMandatoryFields, showValidationMessage } from '../Utils/MarcApiUtils';
+import { filterMandatoryFields, showValidationMessage, filterVariableFields, filterFixedFieldForSaveRecord } from '../Utils/MarcApiUtils';
 import * as MarcAction from '../Actions';
 import { FixedFields, MarcLeader, VariableFields } from '.';
 import style from '../Style/index.css';
-import { RECORD_FIELD_STATUS, SORTED_BY, TAG_NOT_REPEATABLE } from '../Utils/MarcConstant';
+import { RECORD_FIELD_STATUS, SORTED_BY, TAG_NOT_REPEATABLE, TAG_WIDH_CAT_7, TAG_WIDH_CAT_8 } from '../Utils/MarcConstant';
 
 export class MarcRecord extends React.Component<Props, {
   callout: React.RefObject<Callout>,
@@ -48,7 +48,6 @@ export class MarcRecord extends React.Component<Props, {
       isDuplicateMode:  (findParam('mode') === RECORD_ACTION.DUPLICATE_MODE),
       mode: findParam('mode'),
       id: findParam('id'),
-      editatedTagArray: []
     };
     this.renderDropdownLabels = this.renderDropdownLabels.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -92,27 +91,30 @@ export class MarcRecord extends React.Component<Props, {
       tagVariableItems.splice(0, 1);
     } else if (!cretaeHeadingForTag) {
       this.asyncCreateHeading(item, heading);
+    } else {
+      this.setupComonProperties(item, heading);
     }
   }
 
   onUpdate = item => {
     const { store } = this.props;
     const { variableField: { code, ind1, ind2, displayValue, categoryCode, keyNumber } } = item;
-    // const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
-    // const isNotRepetble = includes(TAG_NOT_REPEATABLE, item.code);
-    let tagVariableItems: [] = Object.assign([], ReduxForm.resolve(store, C.REDUX.FORM.EDITABLE_FORM).items);
-    tagVariableItems = tagVariableItems.filter(t => t.code !== item.code);
-    tagVariableItems.push(item);
+    const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
+    const isNotRepetble = includes(TAG_NOT_REPEATABLE, item.code);
     const heading = { ind1, ind2, displayValue: replaceAllinverted(displayValue), tag: code, categoryCode, keyNumber };
-    // const tagLength = tagVariableItems.filter(t => t.code === code);
-    // if (tagLength.length > 1 && isNotRepetble) {
-    //   showValidationMessage(this.callout, 'ui-marccat.cataloging.record.tag.duplicate.error', 'error');
-    //   tagVariableItems.splice(0, 1);
-    // } else if (!cretaeHeadingForTag) {
-    this.asyncCreateHeading(item, heading);
-    this.state.editatedTagArray = tagVariableItems;
-    // }
-  };
+
+    const variableTagForm = store.getState().form.marcEditableListForm.values.items;
+    variableTagForm[0] = item;
+    const tagLength = variableTagForm.filter(t => t.code === code);
+    if (tagLength.length > 1 && isNotRepetble) {
+      showValidationMessage(this.callout, 'ui-marccat.cataloging.record.tag.duplicate.error', 'error');
+      variableTagForm.splice(0, 1);
+    } else if (!cretaeHeadingForTag) {
+      this.asyncCreateHeading(item, heading);
+    } else {
+      this.setupComonProperties(item, heading);
+    }
+  }
 
   asyncCreateHeading = async (item, heading) => {
     try {
@@ -127,6 +129,14 @@ export class MarcRecord extends React.Component<Props, {
     }
   };
 
+  setupComonProperties = (item, heading) => {
+    const categorySeven = includes(TAG_WIDH_CAT_7, item.code);
+    const categoryEight = includes(TAG_WIDH_CAT_8, item.code);
+    if (categorySeven) item.variableField.categoryCode = categorySeven;
+    if (categoryEight) item.variableField.categoryCode = categoryEight;
+    item.variableField.displayValue = heading.displayValue;
+  };
+
   onDelete = item => {
     item.fieldStatus = RECORD_FIELD_STATUS.DELETED;
   };
@@ -135,13 +145,7 @@ export class MarcRecord extends React.Component<Props, {
     const { data, datastore: { emptyRecord }, store: { getState } } = this.props;
     const formData = getState().form.bibliographicRecordForm.values;
     const tagVariableData = getState().form.marcEditableListForm.values.items;
-    tagVariableData.map(tag => {
-      if (tag.variableField.displayValue.startsWith('$')) {
-        const replacedValue = replaceAllinverted(tag.variableField.displayValue);
-        tag.variableField.displayValue = replacedValue;
-      }
-      return tagVariableData;
-    });
+
     const bibliographicRecord = this.getCurrentRecord();
     bibliographicRecord.leader.value = formData.leader;
 
@@ -151,8 +155,8 @@ export class MarcRecord extends React.Component<Props, {
       type: 'B',
       fields: filterMandatoryFields(emptyRecord.results.fields)
     };
-    bibliographicRecord.fields = Object.values(bibliographicRecord.fields.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
-    bibliographicRecord.fields = union(bibliographicRecord.fields, tagVariableData);
+
+    bibliographicRecord.fields = union(filterFixedFieldForSaveRecord(bibliographicRecord.fields), tagVariableData);
     bibliographicRecord.fields = sortBy(bibliographicRecord.fields, SORTED_BY.CODE);
     const payload = { bibliographicRecord, recordTemplate };
 

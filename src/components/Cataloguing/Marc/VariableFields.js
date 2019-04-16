@@ -10,12 +10,6 @@ import { getEmptyVariableField } from '..';
 import { replaceAll } from '../Utils/MarcApiUtils';
 
 class VariableFields extends React.Component<Props, {}> {
-  constructor(props: Props) {
-    super(props);
-    this.keys = { 'new': ['enter'] };
-    this.handlers = { 'new': this.handleAdd };
-  }
-
   renderList() {
     const { fields, translate, onUpdate, onSave, onDelete, onCreate } = this.props;
     const resultsFormatter = {

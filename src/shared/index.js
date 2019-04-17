@@ -19,4 +19,3 @@ export {
   REQUEST_REJECT,
   REQUEST_CLEAR
 } from './action/Action';
-export * as ActionType from './action/ActionCreator';

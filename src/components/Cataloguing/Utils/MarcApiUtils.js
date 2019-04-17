@@ -8,7 +8,7 @@ import {
   SUBFIELD_DELIMITER,
   TAG_NOT_REPEATABLE,
   TAG_MANDATORY,
-  TAGS
+  TAGS,
 } from './MarcConstant';
 import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../config/constants';
 
@@ -151,7 +151,9 @@ export const getFixedField = (tag: Object, typeCode): Object => {
 };
 
 /**
+/**
  *
+ * @param {*} editMode
  * @param {*} tag
  */
 export const getEmptyVariableField = (editMode: boolean, tag: Object): Object => {
@@ -185,5 +187,30 @@ export const getEmptyVariableField = (editMode: boolean, tag: Object): Object =>
       subfields: [],
     },
     added: tag.added
+  };
+};
+
+/**
+ *
+ * @param {*} editMode
+ * @param {*} tag
+ */
+export const normalizeVariableField = (editMode: boolean, tag: Object): Object => {
+  return {
+    code: tag.code,
+    mandatory: false,
+    fieldStatus: (editMode) ? STATUS.CHANGED : STATUS.NEW,
+    variableField: {
+      categoryCode: tag.categoryCode || tag.variableField.categoryCode || 0,
+      keyNumber: tag.keyNumber || tag.variableField.keyNumber,
+      ind1: tag.ind1 || tag.variableField.ind1,
+      ind2: tag.ind2 || tag.variableField.ind2,
+      code: tag.code || tag.variableField.code,
+      displayValue: tag.displayValue || tag.variableField.displayValue,
+      subfields: [],
+      sequenceNumber: 0,
+      skipInFiling: 4
+    },
+    added: false
   };
 };

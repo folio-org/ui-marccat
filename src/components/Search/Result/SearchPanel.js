@@ -29,7 +29,8 @@ import { findYourQuery } from '../Filter';
 import { remapFilters } from '../../../utils/Mapper';
 import { EMPTY_STRING } from '../../../config/constants';
 import styles from '../Style/index.css';
-import { historySearchAction } from '../Actions';
+import { historySearchAction, searchDetailAction } from '../Actions';
+import { findParam } from '../../../utils/Function';
 
 type P = Props & {
   inputErrorCheck: string,
@@ -54,13 +55,16 @@ class SearchPanel extends React.Component<P, {}> {
     this.handleResetAllButton = this.handleResetAllButton.bind(this);
   }
 
+
+  componentDidMount() {
+    const id = findParam('id') || findParam('savedId');
+    if (id) this.handleSearchFromCataloging(id);
+  }
+
   handleSearchFromCataloging = (id) => {
     const { dispatch } = this.props;
-    const conditionFilter = 'START';
-    const indexForQuery = 'NUMID';
-    let baseQuery = indexForQuery + id;
-    baseQuery = (conditionFilter === 'MATCH') ? baseQuery + '!' : baseQuery;
-    dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: baseQuery, queryAuth: '' });
+    dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: `AN "${id}"`, queryAuth: '', from: '1', to: '30' });
+    dispatch(searchDetailAction(id));
   };
 
   handleKeyDown(e) {

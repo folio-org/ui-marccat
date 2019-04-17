@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
 import React from 'react';
 import { cloneDeep, isEqual, sortBy, uniqueId } from 'lodash';
@@ -14,7 +15,6 @@ import {
   Row
 } from '@folio/stripes/components';
 import MarcEditableItem from './MarcEditableItem';
-import { getEmptyVariableField } from '../../Utils/MarcApiUtils';
 import ActionsMenuButton from '../Menu/ActionsMenu';
 import style from '../../Style/variableform.css';
 
@@ -36,8 +36,6 @@ const propTypes = {
   label: PropTypes.node,
   onCreate: PropTypes.func,
   onDelete: PropTypes.func,
-  onDuplicate: PropTypes.func,
-  onSortBy: PropTypes.func,
   onUpdate: PropTypes.func,
   pristine: PropTypes.bool,
   readOnlyFields: PropTypes.arrayOf(PropTypes.string),
@@ -52,7 +50,6 @@ const defaultProps = {
   actionSuppression: { delete: () => false, edit: () => false },
   createButtonLabel: 'Actions',
   fieldComponents: {},
-  itemTemplate: {},
   uniqueField: 'id',
 };
 
@@ -79,28 +76,43 @@ class EditableListForm extends React.Component {
     this.getVisibleColumns = this.getVisibleColumns.bind(this);
     this.getReadOnlyColumns = this.getReadOnlyColumns.bind(this);
     this.onAdd = this.onAdd.bind(this);
+    this.onCancel = this.onCancel.bind(this);
+    this.onResetAll = this.onResetAll.bind(this);
+    this.onCopy = this.onCopy.bind(this);
+    this.onSortBy = this.onSortBy.bind(this);
+    this.onPaste = this.onPaste.bind(this);
+    this.onCut = this.onCut.bind(this);
+    this.onUndo = this.onUndo.bind(this);
+    this.onRedo = this.onRedo.bind(this);
+    this.onViewMarkDocs = this.onViewMarkDocs.bind(this);
+    this.onLookup = this.onLookup.bind(this);
 
     this.keys = {
       'add' : ['enter'],
       'cleanField' : ['delete'],
       'cleanAll' : ['backspace'],
-      'duplicate' : ['ctrl+d'],
-      'copy' : ['ctrl+C'],
-      'cut' : ['ctrl+X'],
-      'paste' : ['ctrl+V'],
-      'undo' : ['ctrl+Z'],
-      'redo' : ['ctrl+shift+Z']
+      'duplicate' : ['CTRL+D'],
+      'copy' : ['CTRL+C'],
+      'cut' : ['CTRL+X'],
+      'paste' : ['CTRL+V'],
+      'undo' : ['CTRL+Z'],
+      'redo' : ['CTRL+SHIFT+Z'],
+      'lookup' : ['CTRL+SHIFT+L'],
+      'onViewMarkDocs': ['CTRL+SHIFT+W']
     };
 
     this.handlers = {
       'add' : this.onAdd,
       'cleanField' : this.onCancel,
-      'cleanAll' : props.reset('marcEditableListForm'),
+      'cleanAll' : this.onResetAll,
       'duplicate' : this.onDuplicate,
-      'copy' : () => {},
-      'cut' : () => {},
-      'paste' : () => {},
-      'undo' :() => {},
+      'copy' : this.onCopy,
+      'cut' : this.onCut,
+      'paste' : this.onPaste,
+      'undo' : this.onUndo,
+      'redo' : this.onRedo,
+      'lookup' : this.onLookup,
+      'onViewMarkDocs': this.onViewMarkDocs
     };
 
     if (props.id) {
@@ -138,23 +150,6 @@ class EditableListForm extends React.Component {
     return items.map(() => ({ editing, error: false }));
   }
 
-
-  checkEditMode = item => {
-    return (item.variableField.categoryCode > 0 || item.variableField.itemTypeCode > 0);
-  };
-
-  /**
-   *
-   * @param {*} fields
-   * @param {*} index
-   */
-  normalizeField(fields: Array<*>, index: number): Object {
-    const item = fields.get(index);
-    return (this.checkEditMode(item)) ?
-      getEmptyVariableField(true, item) :
-      getEmptyVariableField(false, item);
-  }
-
   /**
    *
    * @param {*} fields
@@ -189,6 +184,53 @@ class EditableListForm extends React.Component {
    * @param {*} fields
    * @param {*} index
    */
+  onCopy(fields, index) {}
+
+  /**
+   *
+   * @param {*} fields
+   * @param {*} index
+   */
+  onCut(fields, index) {}
+
+  /**
+   *
+   * @param {*} fields
+   * @param {*} index
+   */
+  onPaste(fields, index) {}
+
+  /**
+   *
+   * @param {*} fields
+   * @param {*} index
+   */
+  onUndo(fields, index) {}
+
+  /**
+   *
+   * @param {*} fields
+   * @param {*} index
+   */
+  onRedo(fields, index) {}
+
+  /**
+   *
+   * @param {*} fields
+   * @param {*} index
+   */
+  onLookup(fields, index) {}
+  /**
+   *
+   * @param {*} fields
+   * @param {*} index
+   */
+  onViewMarkDocs(fields, index) {}
+  /**
+   *
+   * @param {*} fields
+   * @param {*} index
+   */
   onDuplicate(fields, index) {
     const item = fields.get(index);
     fields.unshift(item);
@@ -208,9 +250,10 @@ class EditableListForm extends React.Component {
    * @param {*} index
    */
   onSave(fields, index) {
-    const { onCreate, onUpdate } = this.props;
-    const item = this.normalizeField(fields, index);
-    const callback = (this.checkEditMode(item)) ? onUpdate : onCreate;
+    const { onCreate } = this.props;
+    const item = fields.get(index);
+    item.code = item.variableField.code;
+    const callback = onCreate;
     const res = callback(item);
     Promise.resolve(res).then(
       () => {
@@ -252,11 +295,12 @@ class EditableListForm extends React.Component {
   }
 
   onSortBy(fields) {
-    const { contentData } = this.props;
-    const sorted = sortBy(fields, 'code');
-    const sorted2 = sortBy(contentData, 'code');
-    fields = sorted;
-    return sorted2;
+    return sortBy(fields.getAll());
+  }
+
+  onResetAll() {
+    const { reset } = this.props;
+    reset();
   }
 
   /**
@@ -454,6 +498,12 @@ class EditableListForm extends React.Component {
                   onAdd={() => this.onAdd(fields)}
                   onDuplicate={() => this.onDuplicate(fields, currentIndex)}
                   onCancel={() => this.onCancel(fields, currentIndex)}
+                  onCopy={() => this.onCopy(fields, currentIndex)}
+                  onCut={() => this.onCut(fields, currentIndex)}
+                  onPaste={() => this.onPaste(fields, currentIndex)}
+                  onUndo={() => this.onUndo(fields, currentIndex)}
+                  onRedo={() => this.onRedo(fields, currentIndex)}
+                  onResetAll={() => this.onResetAll()}
                   onSave={() => this.onSave(fields, currentIndex)}
                   onEdit={() => this.onEdit(currentIndex)}
                   onDelete={() => this.onDelete(fields, currentIndex)}
@@ -503,5 +553,5 @@ export default reduxForm({
   form: 'marcEditableListForm',
   navigationCheck: true,
   enableReinitialize: true,
-  destroyOnUnmount: false,
+  destroyOnUnmount: true,
 })(EditableListForm);

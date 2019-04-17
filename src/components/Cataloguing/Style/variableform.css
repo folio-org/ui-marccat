@@ -1,4 +1,4 @@
-@import '../../../styles/common';
+@import '../../../shared/styles/common.css';
 
 .editableListFormHeader {
   display: flex;

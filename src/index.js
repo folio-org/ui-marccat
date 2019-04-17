@@ -41,6 +41,7 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
     props.root.addEpic(REDUX.EPIC, epics);
 
     this.toggleFilterPane = this.toggleFilterPane.bind(this);
+
   }
 
   componentDidMount() {

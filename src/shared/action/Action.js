@@ -3,7 +3,7 @@ export const REQUEST_MAKE = '@@ui-marccat/REQUEST_MAKE';
 export const REQUEST_REDUCE = '@@ui-marccat/REQUEST_REDUCE';
 export const REQUEST_RESOLVE = '@@ui-marccat/REQUEST_RESOLVE';
 export const REQUEST_REJECT = '@@ui-marccat/REQUEST_REJECT';
-export const REQUEST_CLEAR = '@@ui-marccat/REQUEST_CLEAR';
+export const REQUEST_CLEAR = 'RESET_STORE';
 
 export const ACTION = {
   BROWSE: '@@ui-marccat/BROWSE',

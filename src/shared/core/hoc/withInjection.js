@@ -12,7 +12,7 @@ import { safeObj } from '../../../utils/Function';
  * HOC
  * @param {WrappedComponent} a Component to inject props
  */
-export default function injectCommonProp<Props: {
+export default function withInjection<Props: {
 }>(Component: React.ComponentType<Props>): React.ComponentType<Props> {
   function WrapperComponent(props: Props) {
     const { history, root: { store }, intl: { formatMessage } } = props;

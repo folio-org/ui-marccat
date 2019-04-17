@@ -6,7 +6,6 @@ import {
   REQUEST_MAKE,
   REQUEST_RESOLVE,
   REQUEST_REJECT,
-  REQUEST_CLEAR
 } from '../../shared';
 import { ENDPOINT } from '../../config/constants';
 import { ActionTypes } from '../actions/Actions';
@@ -86,11 +85,6 @@ export function reducer(state = initialState, action) {
   case REQUEST_REJECT:
     return Object.assign({
     }, state, Redux.rejectRequestData(action.name, action.data, action.error));
-  case REQUEST_CLEAR:
-    return {
-      ...state,
-      ...initialState
-    };
   default:
     return state;
   }

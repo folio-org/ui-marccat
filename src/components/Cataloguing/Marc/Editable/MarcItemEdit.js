@@ -1,40 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { TextField, AutoSuggest } from '@folio/stripes/components';
+import { TextField } from '@folio/stripes/components';
 import style from '../../Style/variableform.css';
-
-const items = [
-  {
-    value: 'book',
-    label: 'Book',
-  },
-  {
-    value: 'cd',
-    label: 'CD',
-  },
-  {
-    value: 'ebook',
-    label: 'eBook',
-  },
-  {
-    value: 'vinyl',
-    label: 'Vinyl',
-  },
-  {
-    value: 'audiobook',
-    label: 'Audiobook',
-  },
-];
-
-const AutoSuggestion = () => (
-  <AutoSuggest
-    items={items}
-    renderOption={item => item.label}
-    renderValue={item => item.label}
-    label=""
-  />
-);
 
 
 const ItemEdit = ({
@@ -77,7 +45,7 @@ const ItemEdit = ({
         <div key={fieldKey} style={fieldStyle}>
           <Field
             {...fieldProps}
-            component={(mappedName === 'code') ? AutoSuggestion : TextField}
+            component={TextField}
             marginBottom0
             fullWidth
             autoFocus={autoFocus && fieldIndex === 0}

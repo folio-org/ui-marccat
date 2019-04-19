@@ -4,6 +4,7 @@ import { Field } from 'redux-form';
 import { TextField } from '@folio/stripes/components';
 import style from '../../Style/variableform.css';
 
+
 const ItemEdit = ({
   rowIndex,
   error,
@@ -47,7 +48,6 @@ const ItemEdit = ({
             component={TextField}
             marginBottom0
             fullWidth
-            placeholder={name}
             autoFocus={autoFocus && fieldIndex === 0}
           />
         </div>

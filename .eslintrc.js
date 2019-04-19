@@ -20,7 +20,9 @@ module.exports = {
   "rules": {		
 		"indent": ["error", 2],
     "react/jsx-indent": ["error", 2],
-		"react/forbid-prop-types":"off",
+    "react/forbid-prop-types":"off",
+    "padded-blocks": "off",
+    "no-console": "off",
     "spaced-comment": ["error", "always", { "markers": ["/"] }],
     "arrow-parens": "off",
     "no-return-assign":"off",

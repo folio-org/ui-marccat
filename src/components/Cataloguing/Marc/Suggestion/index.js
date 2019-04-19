@@ -1,7 +1,6 @@
 import React from 'react';
-import { range } from 'lodash';
 import { AutoSuggest } from '@folio/stripes/components';
-
+import tags from './mock';
 
 export default function AutoSuggestion() {
   const onChange = () => {
@@ -9,13 +8,12 @@ export default function AutoSuggestion() {
   //  dispatach(autosuggestionAction())
   };
 
-  const tags = range(900, 1000, 1);
   return (
     <AutoSuggest
       items={tags}
       onChange={() => onChange()}
-      renderOption={item => item}
-      renderValue={item => item}
-      label="Enter type"
+      renderOption={item => item.label}
+      renderValue={item => item.label}
+      label=""
     />);
 }

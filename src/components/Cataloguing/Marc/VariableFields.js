@@ -4,43 +4,70 @@
  * @flow
  */
 import React, { Fragment } from 'react';
-import { MarcEditableList, getEmptyVariableField } from '..';
+import { MarcEditableList } from '..';
 import type { Props } from '../../../shared';
 import { injectCommonProp } from '../../../shared';
 import { replaceAll } from '../Utils/MarcApiUtils';
+import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../config/constants';
 
 class VariableFields extends React.Component<Props, {}> {
+
   renderList() {
     const { fields, translate, onUpdate, onSave, onDelete, onCreate } = this.props;
     const resultsFormatter = {
-      code: item => `${item.code}`,
-      ind1: item => `${item.variableField.ind1}`,
-      ind2: item => `${item.variableField.ind2}`,
-      displayValue: item => `${replaceAll(item.displayValue)}` || `${replaceAll(item.variableField.displayValue)}`,
+      'categoryCode': item => `${item.variableField.code}`,
+      'code': item => `${item.variableField.code}`,
+      'variableField.code': item => `${item.variableField.code}`,
+      'variableField.ind1': item => `${item.variableField.ind1}`,
+      'variableField.ind2': item => `${item.variableField.ind2}`,
+      'variableField.displayValue': item => `${item.variableField.displayValue = replaceAll(item.variableField.displayValue)}`,
     };
+
+    const emptyfield = {
+      code: EMPTY_STRING,
+      mandatory: false,
+      fieldStatus: 'new',
+      variableField: {
+        categoryCode: 0,
+        code: EMPTY_STRING,
+        ind1: EMPTY_SPACED_STRING,
+        ind2: EMPTY_SPACED_STRING,
+        displayValue: EMPTY_STRING,
+        headingTypeCode: 0,
+        itemTypeCode: 0,
+        functionCode: 0,
+        sequenceNumber: 0,
+        skipInFiling: 0,
+        subfields: [],
+      },
+      added: true
+    };
+
     return (
       <Fragment>
         <MarcEditableList
           createButtonLabel={translate({ id: 'ui-marccat.cataloging.actions' })}
           contentData={fields}
-          itemTemplate={getEmptyVariableField(false, {})}
+          itemTemplate={emptyfield}
           visibleFields={[
-            'code',
-            'ind1',
-            'ind2',
-            'displayValue'
+            'variableField.code',
+            'variableField.ind1',
+            'variableField.ind2',
+            'variableField.displayValue'
           ]}
-          columnMapping={{
-            code: 'code',
-            ind1: 'ind1',
-            ind2: 'ind2',
-            displayValue: 'displayValue',
-          }}
+          columnMapping={
+            {
+              'variableField.code': 'code',
+              'variableField.ind1': 'ind1',
+              'variableField.ind2': 'ind2',
+              'variableField.displayValue': 'displayValue',
+            }
+          }
           columnWidths={{
-            code: '10%',
-            ind1: '10%',
-            ind2: '10%',
-            displayValue: '50%',
+            'variableField.code': '10%',
+            'variableField.ind1': '10%',
+            'variableField.ind2': '10%',
+            'variableField.displayValue': '50%',
           }}
           formatter={resultsFormatter}
           onUpdate={onUpdate}

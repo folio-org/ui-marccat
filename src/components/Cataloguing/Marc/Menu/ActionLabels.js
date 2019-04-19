@@ -20,27 +20,27 @@ export default ({ ...props }) => {
     {
       label: Localize({ key: 'cataloging.actions.copy' }),
       shortcut: Localize({ key: 'cataloging.actions.copy.shortcut' }),
-      onClick: () => {},
+      onClick: props.onCopy,
     },
     {
       label: Localize({ key: 'cataloging.actions.paste' }),
       shortcut: Localize({ key: 'cataloging.actions.paste.shortcut' }),
-      onClick: () => {},
+      onClick: props.onPaste,
     },
     {
       label: Localize({ key: 'cataloging.actions.cut' }),
       shortcut: Localize({ key: 'cataloging.actions.cut.shortcut' }),
-      onClick: () => {},
+      onClick: props.onCut,
     },
     {
       label: Localize({ key: 'cataloging.actions.move.fields.up' }),
       shortcut: Localize({ key: 'cataloging.actions.move.fields.up.shortcut' }),
-      onClick: () => {},
+      onClick: () => {}
     },
     {
       label: Localize({ key: 'cataloging.actions.move.fields.down' }),
       shortcut: Localize({ key: 'cataloging.actions.move.fields.down.shortcut' }),
-      onClick: () => {},
+      onClick:() => {}
     },
     {
       label: Localize({ key: 'cataloging.actions.sort.by.tag.number' }),
@@ -65,22 +65,22 @@ export default ({ ...props }) => {
     {
       label: Localize({ key: 'cataloging.actions.undo' }),
       shortcut: Localize({ key: 'cataloging.actions.undo.shortcut' }),
-      onClick: () => {},
+      onClick: props.onUndo,
     },
     {
       label: Localize({ key: 'cataloging.actions.redo' }),
       shortcut: Localize({ key: 'cataloging.actions.redo.shortcut' }),
-      onClick: () => {},
+      onClick:props.onRedo,
     },
     {
       label: Localize({ key: 'cataloging.actions.lookup' }),
       shortcut: Localize({ key: 'cataloging.actions.lookup.shortcut' }),
-      onClick: () => {},
+      onClick: props.onLookup,
     },
     {
       label: Localize({ key: 'cataloging.actions.view.marc.docs' }),
       shortcut: Localize({ key: 'cataloging.actions.view.marc.docs.shortcut' }),
-      onClick: () => {},
+      onClick: props.onViewMarkDocs,
     }
     ];
   };

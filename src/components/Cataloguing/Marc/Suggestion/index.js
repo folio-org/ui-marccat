@@ -2,12 +2,12 @@ import React from 'react';
 import { AutoSuggest } from '@folio/stripes/components';
 import tags from './mock';
 
-export default function AutoSuggestion({ ...props }) {
+export default function AutoSuggestion() {
   const onChange = () => {
   //  const { dispatach } = props;
   //  dispatach(autosuggestionAction())
   };
-  
+
   return (
     <AutoSuggest
       items={tags}

@@ -50,7 +50,6 @@ import type { Props } from '../../../shared';
 import style from '../Style/index.css';
 import { TAG_WIDH_CAT_7, TAG_WIDH_CAT_8 } from '../Utils/MarcConstant';
 import { Redux } from '../../../redux';
-import { resetStore } from '../../../shared/action/ActionCreator';
 
 export class MarcRecord extends React.Component<Props, {
   callout: React.RefObject<Callout>,

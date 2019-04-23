@@ -6,7 +6,6 @@ export const REQUEST_REJECT = '@@ui-marccat/REQUEST_REJECT';
 export const REQUEST_CLEAR = 'RESET_STORE';
 
 export const ACTION = {
-  BROWSE: '@@ui-marccat/BROWSE',
   GET: '@@ui-marccat/GET',
   QUERY: '@@ui-marccat/QUERY',
   FIND: '@@ui-marccat/FIND',
@@ -21,6 +20,5 @@ export const ACTION = {
   UNLOCK: '@@ui-marccat/UNLOCK',
   SETTINGS: '@@ui-marccat/SETTINGS',
   HISTORY: '@@ui-marccat/REQUEST_HISTORY',
-  HISTORY_COUNT: '@@ui-marccat/TOTAL_BIB_COUNT',
   HISTORY_CLEAR: '@@ui-marccat/REQUEST_HISTORY_CLEAR',
 };

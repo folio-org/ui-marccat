@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unused-state */
 /**
  * @format
  * @flow
@@ -28,7 +27,8 @@ import {
   MarcLeader,
   VariableFields,
   RECORD_FIELD_STATUS,
-  SORTED_BY
+  SORTED_BY,
+  SUBFIELD_DELIMITER
 } from '..';
 import {
   ActionMenuTemplate,
@@ -48,7 +48,6 @@ import * as MarcAction from '../Actions';
 import type { Props } from '../../../shared';
 
 import style from '../Style/index.css';
-import { TAG_WIDH_CAT_7, TAG_WIDH_CAT_8 } from '../Utils/MarcConstant';
 import { Redux } from '../../../redux';
 
 export class MarcRecord extends React.Component<Props, {
@@ -91,15 +90,17 @@ export class MarcRecord extends React.Component<Props, {
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const heading = { ind1, ind2, displayValue: replaceAllinverted(displayValue), tag: code };
     item.fieldStatus = (item.variableField.keyNumber > 0 || item.mandatory) ? RECORD_FIELD_STATUS.CHANGED : RECORD_FIELD_STATUS.NEW;
+    item.variableField.displayValue = heading.displayValue;
     return (!cretaeHeadingForTag) ? this.asyncCreateHeading(item, heading) : this.setupComonProperties(item, heading);
   }
 
   asyncCreateHeading = async (item, heading) => {
+    const { isEditMode } = this.state;
     try {
       const response = await post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading);
       const data = await response.json();
       item.variableField.categoryCode = data.categoryCode;
-      item.variableField.keyNumber = data.keyNumber;
+      item.variableField.keyNumber = (item.code === '245' && isEditMode) ? item.variableField.keyNumber : data.keyNumber;
       item.variableField.displayValue = data.displayValue;
       showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.create.success', value: item.code }), C.VALIDATION_MESSAGE_TYPE.SUCCESS);
     } catch (exception) {
@@ -108,12 +109,6 @@ export class MarcRecord extends React.Component<Props, {
   };
 
   setupComonProperties = (item, heading) => {
-    if (item.variableField.categoryCode === 0) {
-      const categorySeven = includes(TAG_WIDH_CAT_7, item.code);
-      const categoryEight = includes(TAG_WIDH_CAT_8, item.code);
-      if (categorySeven) item.variableField.categoryCode = 7;
-      if (categoryEight) item.variableField.categoryCode = 8;
-    }
     item.variableField.displayValue = heading.displayValue;
   };
 
@@ -130,6 +125,9 @@ export class MarcRecord extends React.Component<Props, {
     const formData = getState().form.bibliographicRecordForm.values;
     const initialValues = getState().form.marcEditableListForm.initial.items;
     let variableFormData = getState().form.marcEditableListForm.values.items;
+
+    // to remove
+    variableFormData.map(k => k.variableField.displayValue = k.variableField.displayValue.replace(/\$/g, SUBFIELD_DELIMITER));
 
     if (deletedTag) variableFormData = union(variableFormData, initialValues);
 

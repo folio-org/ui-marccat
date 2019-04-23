@@ -63,8 +63,12 @@ class SearchPanel extends React.Component<P, {}> {
 
   handleSearchFromCataloging = (id) => {
     const { dispatch } = this.props;
-    dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: `AN "${id}"`, queryAuth: '', from: '1', to: '30' });
+    dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: `AN "${id}"`, queryAuth: `AN "${id}"`, from: '1', to: '30' });
     dispatch(searchDetailAction(id));
+    // this.handleSearchHistory({ recordType: 'all', query: `AN "${id}"`, index: 'AN', found: 1, num:1 });
+    // const inputValue = '"' + e.target.form[2].defaultValue + '"';
+    // indexFilter = form.values.selectIndexes;
+    // conditionFilter = form.values.selectCondition;
   };
 
   handleKeyDown(e) {

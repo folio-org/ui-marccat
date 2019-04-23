@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 /**
  * @format
  * @flow
@@ -37,9 +36,9 @@ class DuplicaRecord extends React.Component<Props, {
     });
   }
 
-  onHide = () => {
+  onHide({ ...props }) {
     const { id } = this.state;
-    const { router, toggleFilterPane, duplicateRecord } = this.props;
+    const { router, toggleFilterPane, duplicateRecord } = props;
     if (duplicateRecord) {
       this.setState({
         confirming: false,
@@ -58,16 +57,16 @@ class DuplicaRecord extends React.Component<Props, {
     }
   }
 
-  duplicateRecord = () => {
-    const { id } = this.state;
-    const { duplicaRecord } = this.props;
+  duplicateRecord({ ...props }) {
+    const { store: { getState: { form: { duplicaRecordForm } } }, duplicaRecord } = props;
+    const id = duplicaRecordForm.values.recordid;
+    this.setState({ sending: true, id });
     duplicaRecord(id);
-    this.setState({ sending: true });
     setTimeout(() => {
       this.onHide();
       this.setState({ sending: false, confirming: false });
     }, 3000);
-  };
+  }
 
   getFooter({ ...props }) {
     const { testId } = this.state;
@@ -114,10 +113,11 @@ class DuplicaRecord extends React.Component<Props, {
           open={confirming}
           onClose={this.onHide}
           label="Duplicate Record from existing one"
-          footer={this.getFooter()}
+          footer={this.getFooter}
         >
           <form name="duplicaRecordForm">
-            <label htmlFor="recordid">Insert the redcor id to duplicate:</label>
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+            <label htmlFor="recordid">Insert the record id to duplicate:</label>
             <Field
               id={testId}
               name="recordid"

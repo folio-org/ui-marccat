@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 /**
  * @format
  * @flow
@@ -37,7 +36,7 @@ class DuplicaRecord extends React.Component<Props, {
     });
   }
 
-  onHide = props => {
+  onHide({ ...props }) {
     const { id } = this.state;
     const { router, toggleFilterPane, duplicateRecord } = props;
     if (duplicateRecord) {
@@ -58,7 +57,7 @@ class DuplicaRecord extends React.Component<Props, {
     }
   }
 
-  duplicateRecord = props => {
+  duplicateRecord({ ...props }) {
     const { store: { getState: { form: { duplicaRecordForm } } }, duplicaRecord } = props;
     const id = duplicaRecordForm.values.recordid;
     this.setState({ sending: true, id });
@@ -67,9 +66,9 @@ class DuplicaRecord extends React.Component<Props, {
       this.onHide();
       this.setState({ sending: false, confirming: false });
     }, 3000);
-  };
+  }
 
-  getFooter = props => {
+  getFooter({ ...props }) {
     const { testId } = this.state;
     return (
       <ModalFooter>
@@ -114,9 +113,10 @@ class DuplicaRecord extends React.Component<Props, {
           open={confirming}
           onClose={this.onHide}
           label="Duplicate Record from existing one"
-          footer={this.getFooter()}
+          footer={this.getFooter}
         >
           <form name="duplicaRecordForm">
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label htmlFor="recordid">Insert the record id to duplicate:</label>
             <Field
               id={testId}

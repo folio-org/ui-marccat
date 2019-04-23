@@ -10,7 +10,7 @@ const PanelHistory = ({ ...props }) => {
   const resultsFormatter = {
     index: item => `${item.index.split('"')[0].trim()}`,
     query: item => `${item.query.split('"')[1].trim()}`,
-    num: (item) => `${item.found}`,
+    num: () => `${totalBib || 1}`,
   };
   return (
     <Fragment>

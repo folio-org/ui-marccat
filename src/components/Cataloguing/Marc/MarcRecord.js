@@ -95,12 +95,11 @@ export class MarcRecord extends React.Component<Props, {
   }
 
   asyncCreateHeading = async (item, heading) => {
-    const { isEditMode } = this.state;
     try {
       const response = await post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading);
       const data = await response.json();
       item.variableField.categoryCode = data.categoryCode;
-      item.variableField.keyNumber = (item.code === '245' && isEditMode) ? item.variableField.keyNumber : data.keyNumber;
+      item.variableField.keyNumber = data.keyNumber;
       item.variableField.displayValue = data.displayValue;
       showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.create.success', value: item.code }), C.VALIDATION_MESSAGE_TYPE.SUCCESS);
     } catch (exception) {
@@ -222,7 +221,6 @@ export class MarcRecord extends React.Component<Props, {
   render() {
     const { leaderData } = this.props;
     const { isEditMode, id } = this.state;
-    // to do fix this, we must use the record state var
     const bibliographicRecord = this.getCurrentRecord();
     return (!bibliographicRecord) ? (<Icon icon="spinner-ellipsis" />)
       : (
@@ -231,7 +229,7 @@ export class MarcRecord extends React.Component<Props, {
             <Pane
               defaultWidth="fullWidth"
               paneTitle={(bibliographicRecord && isEditMode) ? 'Edit Record' : 'New Monograph'}
-              paneSub={(bibliographicRecord && isEditMode) ? 'id. ' + bibliographicRecord.id : 'id. ' + id}
+              paneSub={'id. ' + bibliographicRecord.id || id}
               appIcon={<AppIcon app={C.META.ICON_TITLE} />}
               actionMenu={ActionMenuTemplate}
               dismissible

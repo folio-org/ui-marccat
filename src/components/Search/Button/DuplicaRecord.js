@@ -37,9 +37,9 @@ class DuplicaRecord extends React.Component<Props, {
     });
   }
 
-  onHide = () => {
+  onHide = props => {
     const { id } = this.state;
-    const { router, toggleFilterPane, duplicateRecord } = this.props;
+    const { router, toggleFilterPane, duplicateRecord } = props;
     if (duplicateRecord) {
       this.setState({
         confirming: false,
@@ -58,18 +58,18 @@ class DuplicaRecord extends React.Component<Props, {
     }
   }
 
-  duplicateRecord = () => {
-    const { id } = this.state;
-    const { duplicaRecord } = this.props;
+  duplicateRecord = props => {
+    const { store: { getState: { form: { duplicaRecordForm } } }, duplicaRecord } = props;
+    const id = duplicaRecordForm.values.recordid;
+    this.setState({ sending: true, id });
     duplicaRecord(id);
-    this.setState({ sending: true });
     setTimeout(() => {
       this.onHide();
       this.setState({ sending: false, confirming: false });
     }, 3000);
   };
 
-  getFooter({ ...props }) {
+  getFooter = props => {
     const { testId } = this.state;
     return (
       <ModalFooter>
@@ -117,7 +117,7 @@ class DuplicaRecord extends React.Component<Props, {
           footer={this.getFooter()}
         >
           <form name="duplicaRecordForm">
-            <label htmlFor="recordid">Insert the redcor id to duplicate:</label>
+            <label htmlFor="recordid">Insert the record id to duplicate:</label>
             <Field
               id={testId}
               name="recordid"

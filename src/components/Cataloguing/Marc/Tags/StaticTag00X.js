@@ -2,7 +2,7 @@ import React from 'react';
 import MarcField from '../MarcField';
 import style from '../../Style/index.css';
 
-export default class Tag00X extends React.Component {
+export default class StaticTag00X extends React.Component {
   render() {
     const { tag, readOnly } = this.props;
     return (

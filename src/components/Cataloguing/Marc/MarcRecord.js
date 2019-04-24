@@ -23,7 +23,6 @@ import {
   TAG_WITH_NO_HEADING_ASSOCIATED,
   replaceAllinverted,
   RECORD_ACTION,
-  FixedFields,
   MarcLeader,
   VariableFields,
   RECORD_FIELD_STATUS,
@@ -49,6 +48,8 @@ import type { Props } from '../../../shared';
 
 import style from '../Style/index.css';
 import { Redux } from '../../../redux';
+import StaticFixedFields from './StaticFixedFields';
+import DynamicFixedFields from './DynamicFixedFields';
 
 export class MarcRecord extends React.Component<Props, {
   callout: React.RefObject<Callout>,
@@ -222,6 +223,12 @@ export class MarcRecord extends React.Component<Props, {
     const { leaderData } = this.props;
     const { isEditMode, id } = this.state;
     const bibliographicRecord = this.getCurrentRecord();
+    // const staticFields = data.data.emptyRecord.results.fields.filter(f => f.code < '006');
+    // const dynamicFields = data.data.emptyRecord.results.fields.filter(f => f.code > '005' && f.code < '010');
+    // const variableFields = data.data.emptyRecord.results.fields.filter(f => f.code > '009');
+    // console.log(recordDetail);
+    // console.log(bibliographicRecord);
+
     return (!bibliographicRecord) ? (<Icon icon="spinner-ellipsis" />)
       : (
         <Fragment>
@@ -253,13 +260,23 @@ export class MarcRecord extends React.Component<Props, {
                         />
                       </Accordion>
                       <Accordion
-                        label={<FormattedMessage id="ui-marccat.cataloging.accordion.fixedfield.label" />}
-                        id="control-field-create-record"
+                        label={<FormattedMessage id="ui-marccat.cataloging.accordion.fixedfield.label.static" />}
+                        id="control-field-create-static"
                       >
-                        <FixedFields
+                        <StaticFixedFields
                           {...this.props}
                           record={bibliographicRecord}
-                          fixedFields={bibliographicRecord.fields}
+                          staticFixedFields={bibliographicRecord.fields.filter(f => f.code < '006')}
+                        />
+                      </Accordion>
+                      <Accordion
+                        label={<FormattedMessage id="ui-marccat.cataloging.accordion.fixedfield.label.dynamic" />}
+                        id="control-field-dynamic"
+                      >
+                        <DynamicFixedFields
+                          {...this.props}
+                          record={bibliographicRecord}
+                          dynamicFixedFields={bibliographicRecord.fields.filter(f => f.code > '005' && f.code < '010')}
                         />
                       </Accordion>
                     </form>
@@ -268,7 +285,7 @@ export class MarcRecord extends React.Component<Props, {
                       id="variable-field"
                     >
                       <VariableFields
-                        fields={bibliographicRecord.fields.filter(f => f.fixedField === undefined || !f.fixedField)}
+                        fields={bibliographicRecord.fields.filter(f => f.code > '009')}
                         onCreate={this.onCreate}
                         onDelete={this.onDelete}
                         {...this.props}

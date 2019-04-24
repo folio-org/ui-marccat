@@ -44,9 +44,8 @@ export const unionSortAndDedupe = (sortByProp, ...obj) => {
  * @param {*} obj
  */
 export const filterFixedFields = (obj) => {
-  return dedupe(obj)
-    .filter(f => f.fixedField !== undefined || f.fixedField)
-    .filter(f => f.code !== TAGS._008);
+  return (obj)
+    .filter(f => f.fixedField !== undefined || f.fixedField);
 };
 
 /**

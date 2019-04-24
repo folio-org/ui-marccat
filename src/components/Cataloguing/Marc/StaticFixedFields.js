@@ -4,7 +4,7 @@
  */
 import React, { Fragment } from 'react';
 import { isEmpty, first } from 'lodash';
-import { Tag00X, Tag006, Tag007, Tag008, MarcField } from '..';
+import { MarcField } from '..';
 import type { Props } from '../../../shared';
 import style from '../Style/index.css';
 import { ActionTypes } from '../../../redux/actions/Actions';

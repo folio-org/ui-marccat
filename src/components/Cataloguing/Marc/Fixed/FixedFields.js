@@ -9,7 +9,7 @@ export default ({ ...props }) => {
   const { record, leaderData } = props;
   return (
     <React.Fragment>
-      <Accordion label="Leader" id="leader">
+      <Accordion label="Leader" id="Leader">
         <MarcLeader
           {...props}
           readOnly

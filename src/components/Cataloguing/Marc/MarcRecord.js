@@ -41,7 +41,7 @@ import {
   filterFixedFieldForSaveRecord,
   filterVariableFields
 } from '../Utils/MarcApiUtils';
-import * as C from '../../../config/constants';
+import * as C from '../../../shared/config/constants';
 import * as MarcAction from '../Actions';
 import type { Props } from '../../../shared';
 

@@ -7,7 +7,7 @@ import { Field } from 'redux-form';
 import { Row, Col, Select } from '@folio/stripes/components';
 import type { Props } from '../../../shared';
 import MarcField from './MarcField';
-import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../config/constants';
+import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../shared/config/constants';
 import { ActionTypes } from '../../../redux/actions/Actions';
 import style from '../Style/index.css';
 import { decamelizify } from '../../../utils/Function';

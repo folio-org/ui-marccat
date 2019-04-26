@@ -7,7 +7,7 @@ import { MultiColumnList, Pane, Icon } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 import { EmptyMessage, NoResultsMessage, ToolbarButtonMenu, injectCommonProp } from '../../../shared';
 import { browseFormatter, browseColMapper } from '../../../utils/Formatter';
-import * as C from '../../../config/constants';
+import * as C from '../../../shared/config/constants';
 
 class ResultMainPane extends React.Component<{}, {}> {
     renderButtonMenu = () => {

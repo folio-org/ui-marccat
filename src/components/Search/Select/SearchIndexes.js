@@ -7,7 +7,7 @@ import * as React from 'react';
 import { Field } from 'redux-form';
 import { Select } from '@folio/stripes/components';
 import { ActionTypes } from '../../../redux/actions';
-import { SORT_TYPE, FILTER_NAME } from '../../../config/constants';
+import { SORT_TYPE, FILTER_NAME } from '../../../shared/config/constants';
 
 export default ({ ...props }) => {
   const { rest, name, id } = props;

@@ -1,5 +1,5 @@
-import { ACTION } from '../../../shared/action/Action';
-import { ENDPOINT } from '../../../config/constants';
+import { ACTION } from '../../../shared';
+import { ENDPOINT } from '../../../shared/config/constants';
 
 // MARC action creator utility
 

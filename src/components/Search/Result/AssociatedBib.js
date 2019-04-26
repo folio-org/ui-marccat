@@ -9,7 +9,7 @@ import type { Props } from '../../../shared';
 import { ActionTypes } from '../../../redux/actions';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
 import { resultsFormatterForAssociated, columnMapperForAssociated } from '../../../utils/Formatter';
-import { EMPTY_STRING } from '../../../config/constants';
+import { EMPTY_STRING } from '../../../shared/config/constants';
 
 type P = Props & {
     checkRecordType: Array<any>,

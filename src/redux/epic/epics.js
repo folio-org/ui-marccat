@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators/map';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import { ActionTypes } from '../actions/Actions';
 import * as marccatActions from '../actions';
-import { ENDPOINT } from '../../config/constants';
+import { ENDPOINT } from '../../shared/config/constants';
 import { fetchFailure } from '../actions/ActionCreator';
 import { Redux } from '..';
 import { buildUrl } from '../../utils/Function';

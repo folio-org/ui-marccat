@@ -1,11 +1,10 @@
 // action
-export const REQUEST_MAKE = '@@ui-marccat/REQUEST_MAKE';
-export const REQUEST_REDUCE = '@@ui-marccat/REQUEST_REDUCE';
-export const REQUEST_RESOLVE = '@@ui-marccat/REQUEST_RESOLVE';
-export const REQUEST_REJECT = '@@ui-marccat/REQUEST_REJECT';
-export const REQUEST_CLEAR = 'RESET_STORE';
-
-export const ACTION = {
+export default {
+  REQUEST_MAKE: '@@ui-marccat/REQUEST_MAKE',
+  REQUEST_REDUCE: '@@ui-marccat/REQUEST_REDUCE',
+  REQUEST_RESOLVE: '@@ui-marccat/REQUEST_RESOLVE',
+  REQUEST_REJECT: '@@ui-marccat/REQUEST_REJECT',
+  REQUEST_CLEAR: 'RESET_STORE',
   GET: '@@ui-marccat/GET',
   QUERY: '@@ui-marccat/QUERY',
   FIND: '@@ui-marccat/FIND',
@@ -21,4 +20,5 @@ export const ACTION = {
   SETTINGS: '@@ui-marccat/SETTINGS',
   HISTORY: '@@ui-marccat/REQUEST_HISTORY',
   HISTORY_CLEAR: '@@ui-marccat/REQUEST_HISTORY_CLEAR',
+  EXECUTE_CALLBACK: '@@ui-marccat/EXECUTE_CALLBACK'
 };

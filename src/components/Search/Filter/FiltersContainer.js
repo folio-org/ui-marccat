@@ -5,7 +5,7 @@
 import * as React from 'react';
 import FilterGroups, { initialFilterState } from '@folio/stripes-components/lib/FilterGroups';
 import { ActionTypes } from '../../../redux/actions';
-import { EMPTY_STRING } from '../../../config/constants';
+import { EMPTY_STRING } from '../../../shared/config/constants';
 import type { Props } from '../../../shared';
 
 import styles from './FiltersContainer.css';

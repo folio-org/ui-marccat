@@ -1,4 +1,4 @@
-import { HTTP_METHOD } from '../../../config/constants';
+import { HTTP_METHOD } from '../../config/constants';
 /**
  *
  * @param {*} url - the API endpoint

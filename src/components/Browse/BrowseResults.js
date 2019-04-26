@@ -14,7 +14,7 @@ import { findYourQueryFromBrowse } from '../Search/Filter/FilterMapper';
 import { ToolbarButtonMenu, EmptyMessage, NoResultsMessage } from '../../shared/lib';
 import { browseFormatter, browseColMapper } from '../../utils/Formatter';
 import BrowseAssociatedItemDetail from './BrowseAssociatedItemDetail';
-import * as C from '../../config/constants';
+import * as C from '../../shared/config/constants';
 import { generateDropdownMenu } from '../../shared/lib/components/ActionMenu/ActionMenu';
 
 type S = {

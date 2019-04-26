@@ -1,13 +1,8 @@
 import { from } from 'rxjs/observable/from';
 import { of } from 'rxjs/observable/of';
 import { Redux } from '../helpers/Redux';
-import {
-  ACTION,
-  REQUEST_MAKE,
-  REQUEST_RESOLVE,
-  REQUEST_REJECT,
-} from '../../shared';
-import { ENDPOINT } from '../../config/constants';
+import { ACTION } from '../../shared';
+import { ENDPOINT } from '../../shared/config/constants';
 
 const initialState = {};
 const historyState = { list: [] };
@@ -17,18 +12,6 @@ export const EPIC_MODEL_KEY = {
   RECORD_DETAIL: 'marcRecordDetail',
   LEADER_DATA: 'leaderData'
 };
-/**
- *
- * @param {*} name
- * @param {*} data
- * @param {*} record
- */
-export const createEpicRequest = (name, data, record) => ({
-  type: REQUEST_MAKE,
-  name,
-  data,
-  payload: record,
-});
 
 /**
  *
@@ -37,7 +20,7 @@ export const createEpicRequest = (name, data, record) => ({
  * @param {*} record
  */
 export const resolveEpicRequest = (name, data, record) => ({
-  type: REQUEST_RESOLVE,
+  type: ACTION.REQUEST_RESOLVE,
   name,
   data,
   payload: record,
@@ -50,7 +33,7 @@ export const resolveEpicRequest = (name, data, record) => ({
  * @param {*} error
  */
 export const rejectEpicRequest = (name, data, error) => ({
-  type: REQUEST_REJECT,
+  type: ACTION.REQUEST_REJECT,
   data,
   name,
   error
@@ -67,23 +50,31 @@ export const resolveHistoryRequest = (data) => ({
   data,
 });
 
+/**
+ *
+ * @param {*} name
+ * @param {*} data
+ * @param {*} error
+ */
+export const executeEpicCallback = () => ({
+  type: 'CALLBACK_FIRED!!!!!'
+});
 
 /**
  * The main store reducer
  * @param {Object} state - initial state
  * @param {Object} action - redux action dispatched
  */
-export function reducer(state = initialState, action) {
+export function reducer(state: Object = initialState, action: Object) {
   switch (action.type) {
-  case REQUEST_MAKE:
-    return Object.assign({
-    }, state, Redux.pendingRequestData(action.name, action.data));
-  case REQUEST_RESOLVE:
+  case ACTION.REQUEST_RESOLVE:
     return Object.assign({
     }, state, Redux.resolveRequestData(action.name, action.data, action.payload));
-  case REQUEST_REJECT:
+  case ACTION.REQUEST_REJECT:
     return Object.assign({
     }, state, Redux.rejectRequestData(action.name, action.data, action.error));
+  case 'EXECUTE_CALLBACK':
+    return action.cb;
   default:
     return state;
   }
@@ -116,7 +107,7 @@ export function historyReducer(state = historyState, action) {
  * @param {*} response
  * @returns
  */
-const parseResponseBody = (response) => { // metodo statico
+const parseResponseBody = (response: Object) => { // metodo statico
   return response.text().then((text) => {
     try { return JSON.parse(text); } catch (e) { return text; }
   });
@@ -140,13 +131,11 @@ const getHeaders = () => {
  * @param {Observable} action$ - the observable action
  * @param {Function} store.getState - get's the most recent redux state
  */
-// eslint-disable-next-line no-unused-vars
-export function epic(action$, { getState }) {
+export function epic(action$) {
   const actionMethods = {
     [ACTION.QUERY]: 'GET',
     [ACTION.FIND]: 'GET',
     [ACTION.UPDATE]: 'PUT',
-    [ACTION.SAVE]: 'POST',
     [ACTION.CREATE]: 'POST',
     [ACTION.DELETE]: 'DELETE',
     [ACTION.LOCK]: 'LOCK',
@@ -155,7 +144,7 @@ export function epic(action$, { getState }) {
 
   return action$
     .filter(({ type }) => actionMethods[type])
-    .mergeMap(({ type, data, payload }) => {
+    .mergeMap(({ type, data, payload, cb }) => {
       const method = actionMethods[type];
 
       // let url = `${state.okapi.url}${data.path}`;
@@ -168,7 +157,12 @@ export function epic(action$, { getState }) {
         .then(([ok, body]) => (ok ? body : Promise.reject(body.errors))); // eslint-disable-line no-shadow
 
       return from(promise)
-        .map(response => resolveEpicRequest(data.type, data, response))
-        .catch(errors => of(rejectEpicRequest(errors)));
+        .flatMap(response => {
+          return of(
+            resolveEpicRequest(data.type, data, response),
+            executeEpicCallback((cb) ? cb(response) : () => {}) // for debug purpose
+            // cb(response);
+          );
+        }).catch(errors => of(rejectEpicRequest(errors)));
     });
 }

@@ -10,7 +10,7 @@ import { injectCommonProp } from './shared';
 import MARCcat from './MARCcat';
 import { ActionTypes } from './redux/actions';
 import { TAGS } from './components/Cataloguing';
-import { REDUX } from './config/constants';
+import { REDUX } from './shared/config/constants';
 
 import './shared/styles/common.css';
 

@@ -72,8 +72,7 @@
     "search.record.new": "New",
     "search.record.new.from.template": "New from template (CTRL+N)",
     "cataloging.variablefield.section.add.newtag": "Add new tag",
-    "cataloging.accordion.fixedfield.label.static": "Control fields (001, 003, 005)",
-    "cataloging.accordion.fixedfield.label.dynamic": "Control fields (006, 007, 008)",
+    "cataloging.accordion.fixedfield.label": "Control fields (001, 003, 005, 006, 007, 008)",
     "cataloging.accordion.variablefield.label": "Variable fields",
     "cataloging.accordion.checkbox.label": "Suppress",
     "cataloging.checkbox.label": "Suppress from discovery",
@@ -121,5 +120,6 @@
     "cataloging.actions.lookup.shortcut": "Delete or backspace",
     "cataloging.actions.view.marc.docs": "View MARC docs",
     "cataloging.actions.view.marc.docs.shortcut": "?",
-    "cataloging.record.duplicate": "Duplicate record"
+    "cataloging.record.duplicate": "Duplicate record",
+    "cataloging.fixedfield.section.add.newtag": "Add new {value}"
 }

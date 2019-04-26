@@ -120,5 +120,6 @@
     "cataloging.actions.lookup.shortcut": "Eliminar o retroceso",
     "cataloging.actions.view.marc.docs": "Ver documentos MARC",
     "cataloging.actions.view.marc.docs.shortcut": "?",
-    "cataloging.record.duplicate": "Duplicar registro"
+    "cataloging.record.duplicate": "Duplicar registro",
+    "cataloging.fixedfield.section.add.newtag": "+ Add new {value}"
 }

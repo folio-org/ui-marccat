@@ -120,5 +120,6 @@
     "cataloging.actions.lookup.shortcut": "Delete or backspace",
     "cataloging.actions.view.marc.docs": "View MARC docs",
     "cataloging.actions.view.marc.docs.shortcut": "?",
-    "cataloging.record.duplicate": "Duplicate Record"
+    "cataloging.record.duplicate": "Duplicate Record",
+    "cataloging.fixedfield.section.add.newtag": "+ Add new {value}"
 }

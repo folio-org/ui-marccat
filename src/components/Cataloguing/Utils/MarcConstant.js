@@ -1,5 +1,5 @@
 import { range, union } from 'lodash';
-import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../config/constants';
+import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../shared/config/constants';
 
 export const RECORD_FIELD_STATUS = {
   NEW: 'new',

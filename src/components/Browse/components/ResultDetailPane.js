@@ -6,7 +6,7 @@ import * as React from 'react';
 import { Pane, Icon } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 import { ToolbarButtonMenu, injectCommonProp } from '../../../shared';
-import * as C from '../../../config/constants';
+import * as C from '../../../shared/config/constants';
 import { BrowseItemDetail } from '../BrowseItemDetail';
 
 class ResultDetailPane extends React.Component<{}, {}> {

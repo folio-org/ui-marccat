@@ -17,32 +17,52 @@ import style from '../../Style/index.css';
 
 export default class EditableFixedField extends React.Component<{}, {}> {
 
-  renderTag00X(tags, tagName) {
-    if (tags.length === 0) tags.push(EMPTY_FIXED_FIELD(tagName));
-    return (
-      <React.Fragment>
-        {tags.map((t, idx) => (
-          <Row middle="xs">
-            <Col xs={6}>
-              <div className={style.controlFieldContainer}>
-                <MarcField
-                  {...this.props}
-                  key={idx}
-                  withIcon
-                  label={t.fixedField.code}
-                  name={t.fixedField.code}
-                  value={t.fixedField.displayValue}
-                />
-              </div>
-            </Col>
-            <Col xs={2}>
-              <AddTagButton {...this.props} tagCode={tagName} />
-            </Col>
-          </Row>
-        ))}
-      </React.Fragment>
-    );
-  }
+ state = {
+   fields: []
+ };
+
+
+handleAdd = () => {
+  this.setState(({ fields }) => ({
+    fields: fields.concat({})
+  }));
+}
+
+handleRemove = index => {
+  this.setState(({ fields }) => ({
+    fields: [...fields.slice(0, index), ...fields.slice(index + 1)]
+  }));
+}
+
+renderTag00X(tags, tagName) {
+  // eslint-disable-next-line no-unused-vars
+  let { fields } = this.state;
+  fields = tags;
+  if (tags.length === 0) tags.push(EMPTY_FIXED_FIELD(tagName));
+  return (
+    <React.Fragment>
+      {tags.map((t, idx) => (
+        <Row middle="xs">
+          <Col xs={6}>
+            <div className={style.controlFieldContainer}>
+              <MarcField
+                {...this.props}
+                key={idx}
+                withIcon
+                label={t.fixedField.code}
+                name={t.fixedField.code}
+                value={t.fixedField.displayValue}
+              />
+            </div>
+          </Col>
+          <Col xs={2}>
+            <AddTagButton {...this.props} tagCode={tagName} onClick={() => this.handleAdd()} />
+          </Col>
+        </Row>
+      ))}
+    </React.Fragment>
+  );
+}
 
   renderTag008 = (tag) => {
     const { record } = this.props;

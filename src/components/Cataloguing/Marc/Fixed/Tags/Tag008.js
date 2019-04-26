@@ -11,7 +11,7 @@ import { injectCommonProp, Props, post } from '../../../../../shared';
 import { ActionTypes } from '../../../../../redux/actions';
 import { decamelizify } from '../../../../../utils/Function';
 import { RECORD_FIELD_STATUS, TAGS, TAGS_NAME } from '../../../Utils/MarcConstant';
-import * as C from '../../../../../config/constants';
+import * as C from '../../../../../shared/config/constants';
 import { buildUrl } from '../../../../../redux';
 import { MarcField } from '../../..';
 import style from '../../../Style/index.css';

@@ -20,7 +20,7 @@ import {
 import { CreateRecordButton, EditRecordButton, DuplicaRecordButton } from '..';
 import { emptyRecordAction } from '../../Cataloguing/Actions';
 import { searchDetailAction } from '../Actions';
-import * as C from '../../../config/constants';
+import * as C from '../../../shared/config/constants';
 
 type P = Props & {
   headings: Array<any>,

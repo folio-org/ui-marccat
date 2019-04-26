@@ -1,12 +1,8 @@
-import { reduxForm, ConfigProps } from 'redux-form';
 import { uniqueId } from 'lodash';
 
 const Redux = () => {};
 const ReduxForm = () => {};
 
-ReduxForm.bind = (config: ConfigProps<{}, {}, string>) => {
-  return reduxForm(config);
-};
 
 ReduxForm.resolve = (store, formName) => {
   return (store.getState().form) ? store.getState().form[formName || 0].values : undefined;
@@ -158,25 +154,6 @@ Redux.reduce = (store, id) => (
     isSaving: false,
   }
 );
-
-Redux.observe = (reducerKey: Object, cb: () => void) => {
-  Object.observe(reducerKey, cb);
-};
-
-Redux.deduplicate = (obj, key) => (
-  Object.values(obj.reduce((acc, cur) => Object.assign(acc, { [cur[`${key}`]]: cur }), {}))
-);
-
-Redux.multiDispatch = (...actions: Array<any>) => {
-  return ({ dispatch }) => actions.map((a: Object) => dispatch((a)));
-};
-
-Redux.reset = (store: Object, reducer: Object): void => {
-  const obj = store.getState().marccat[reducer];
-  for (const prop of Object.getOwnPropertyNames(obj)) {
-    delete obj[prop];
-  }
-};
 
 export {
   Redux,

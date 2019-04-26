@@ -27,7 +27,7 @@ import {
 import { ActionTypes } from '../../../redux/actions/Actions';
 import { findYourQuery } from '../Filter';
 import { remapFilters } from '../../../utils/Mapper';
-import { EMPTY_STRING } from '../../../config/constants';
+import { EMPTY_STRING } from '../../../shared/config/constants';
 import styles from '../Style/index.css';
 import { historySearchAction, searchDetailAction } from '../Actions';
 import { findParam } from '../../../utils/Function';

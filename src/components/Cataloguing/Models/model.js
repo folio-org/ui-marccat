@@ -1,4 +1,4 @@
-import { EMPTY_STRING } from '../../../config/constants';
+import { EMPTY_STRING } from '../../../shared/config/constants';
 
 export class BaseFixedFields<K, V> {
     key: K;

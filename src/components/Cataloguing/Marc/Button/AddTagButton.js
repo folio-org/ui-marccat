@@ -6,11 +6,11 @@ import { Localize } from '../../../../utils/Function';
 
 // eslint-disable-next-line no-unused-vars
 export default ({ ...props }) => {
-  const { tagCode } = props;
+  const { tagCode, onClick } = props;
   return (
     <Button
       style={{ marginLeft: -16 + 'px' }}
-      onClick={() => {}}
+      onClick={onClick}
       type="button"
       disabled={false}
     >

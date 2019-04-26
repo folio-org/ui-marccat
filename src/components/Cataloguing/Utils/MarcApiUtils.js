@@ -8,7 +8,7 @@ import {
   TAG_NOT_REPEATABLE,
   TAG_MANDATORY,
 } from './MarcConstant';
-import { EMPTY_STRING } from '../../../config/constants';
+import { EMPTY_STRING } from '../../../shared/config/constants';
 
 /**
  *

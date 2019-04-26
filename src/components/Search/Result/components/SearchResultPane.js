@@ -11,7 +11,7 @@ import type { Props } from '../../../../shared';
 import { resultsFormatter, columnMapper, columnWidthMapper, renderColumn } from '../../../../utils/Formatter';
 import { injectCommonProp, ActionMenu, EmptyMessage, NoResultsMessage } from '../../../../shared';
 import { ActionTypes } from '../../../../redux/actions/Actions';
-import * as C from '../../../../config/constants';
+import * as C from '../../../../shared/config/constants';
 import { ReduxForm } from '../../../../redux/helpers/Redux';
 
 

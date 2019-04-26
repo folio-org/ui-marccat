@@ -1,6 +1,5 @@
-/* eslint-disable import/prefer-default-export */
-import { ACTION, REQUEST_CLEAR } from './Action';
-import { EMPTY_STRING } from '../../config/constants';
+import ACTION from './Action';
+import { EMPTY_STRING } from '../config/constants';
 
 /**
  *
@@ -45,6 +44,6 @@ export const addHistoryData = (data) => {
  */
 export const resetStore = () => {
   return {
-    type: REQUEST_CLEAR,
+    type: ACTION.REQUEST_CLEAR,
   };
 };

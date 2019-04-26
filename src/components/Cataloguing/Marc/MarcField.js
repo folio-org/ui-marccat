@@ -11,6 +11,7 @@ type P = Props & {
 };
 
 export default class MarcField extends React.Component<P, {}> {
+
   render() {
     const {
       dispatch,
@@ -22,13 +23,12 @@ export default class MarcField extends React.Component<P, {}> {
       text,
       onChange,
       readOnly,
-      onAdd,
       onDelete,
       placeholder,
       component,
       withIcon,
     } = this.props;
-    dispatch(change(name, value));
+    dispatch(change(name, value)); // to remove this check and use initialize({ [name]: value })
     return (withIcon) ? (
       <div>
         <label htmlFor={name}>{label}</label>
@@ -42,16 +42,6 @@ export default class MarcField extends React.Component<P, {}> {
           component={component || 'input'}
         />
         <div className={style.marcFieldIconCaret}>
-          <IconButton
-            icon="caret-down"
-            size="medium"
-            onClick={onClick}
-          />
-          <IconButton
-            icon="plus-sign"
-            size="medium"
-            onClick={onAdd}
-          />
           <IconButton
             icon="trash"
             size="medium"
@@ -70,7 +60,6 @@ export default class MarcField extends React.Component<P, {}> {
           component={component || 'input'}
           label={label}
           onChange={onChange}
-          value={value}
         />
         <div className={style.marcFieldIconCaret}>
           <IconButton

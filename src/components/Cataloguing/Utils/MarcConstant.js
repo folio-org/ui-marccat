@@ -1,4 +1,5 @@
 import { range, union } from 'lodash';
+import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../config/constants';
 
 export const RECORD_FIELD_STATUS = {
   NEW: 'new',
@@ -96,3 +97,37 @@ export const LOCK_ENTITY_TYPE = {
 };
 export const SUBFIELD_DELIMITER = '\u001f';
 export const SUBFIELD_CHARACTER = '$';
+
+export const EMPTY_FIXED_FIELD = (code: String): Object => {
+  return {
+    code,
+    mandatory: false,
+    fieldStatus: RECORD_FIELD_STATUS.NEW,
+    fixedField: {
+      headerTypeCode: 0,
+      code,
+      displayValue: EMPTY_STRING,
+      sequenceNumber: 0
+    },
+    added: true
+  };
+};
+
+
+export const EMPTY_VARIABLE_FIELD = {
+  code: EMPTY_STRING,
+  mandatory: false,
+  fieldStatus: RECORD_FIELD_STATUS.NEW,
+  variableField: {
+    keyNumber: 0,
+    code: EMPTY_STRING,
+    ind1: EMPTY_SPACED_STRING,
+    ind2: EMPTY_SPACED_STRING,
+    displayValue: EMPTY_STRING,
+    headingTypeCode: 0,
+    sequenceNumber: 0,
+    skipInFiling: 0,
+    subfields: [],
+  },
+  added: true
+};

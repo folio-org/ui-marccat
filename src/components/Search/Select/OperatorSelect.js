@@ -4,7 +4,7 @@ import { Select } from '@folio/stripes/components';
 
 import style from '../Style/index.css';
 
-export default function ({ ...props }) {
+export default ({ ...props }) => {
   const { rest, name, id } = props;
   const options = [
     { label: 'AND', value: 'AND' },
@@ -25,4 +25,4 @@ export default function ({ ...props }) {
       />
     </div>
   );
-}
+};

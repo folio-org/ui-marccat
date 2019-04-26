@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import { Field } from 'redux-form';
 import { Row, Col, Select } from '@folio/stripes/components';
 import type { Props } from '../../../shared';

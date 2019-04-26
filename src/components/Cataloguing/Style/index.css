@@ -7,7 +7,7 @@
 }
 
 .controlFieldContainer {
-  margin-top: 15px;
+  margin-bottom: 15px;
   border-radius: 10px;
   background-color: #dcdcdc;
   background-position: left top;
@@ -17,15 +17,18 @@
   padding-right: 30px;
   padding-bottom: 20px;
   text-align: left;
-  height: 100%;
   display: grid;
 
+  & .small {
+    width: 60%;
+  }
+
   & label {
-    padding-right: 10px;
+    padding-right: 16px;
   }
 
   & input {
-    width: 60%;
+    width: 80%;
   }
 }
 
@@ -35,9 +38,7 @@
 
 .marcFieldIconCaret {
   float: right;
-  margin-top: 5px;
   cursor: pointer;
-  display: flex;
 }
 
 .pl-10 {

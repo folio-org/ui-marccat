@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import { Button, Dropdown, DropdownMenu, Icon } from '@folio/stripes/components';
 import type { Props } from '../../../shared';
 import { Localize } from '../../../utils/Function';

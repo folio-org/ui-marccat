@@ -4,13 +4,11 @@ import { union, sortBy, first, includes } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Callout } from '@folio/stripes/components';
 import {
-  RECORD_FIELD_STATUS as STATUS,
   SUBFIELD_DELIMITER,
   TAG_NOT_REPEATABLE,
   TAG_MANDATORY,
-  TAGS,
 } from './MarcConstant';
-import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../config/constants';
+import { EMPTY_STRING } from '../../../config/constants';
 
 /**
  *
@@ -44,10 +42,21 @@ export const unionSortAndDedupe = (sortByProp, ...obj) => {
  * @param {*} obj
  */
 export const filterFixedFields = (obj) => {
-  return dedupe(obj)
-    .filter(f => f.fixedField !== undefined || f.fixedField)
-    .filter(f => f.code !== TAGS._008);
+  return (obj)
+    .filter(f => f.fixedField !== undefined || f.fixedField);
 };
+
+/**
+ * @description
+ *
+ * @param {*} obj
+ */
+export const filterFixedFieldsUntil = (obj, cond) => {
+  return (obj)
+    .filter(f => f.fixedField !== undefined || f.fixedField)
+    .filter(f => f.code < cond);
+};
+
 
 /**
  * @description
@@ -72,24 +81,9 @@ export const filterMandatoryFields = (obj) => {
  *
  * @param {*} obj
  */
-export const filterVariableFields = (obj:Array<any>) => {
+export const filterVariableFields = (obj:Array<Object>) => {
   return obj
-    .filter(v => v.variableField.code === '040' && v.fieldStatus !== 'unchanged')
-    .filter(f => (f.fixedField === undefined || !f.fixedField) && f.ariableField.code === '040');
-};
-
-/**
- *
- * @param {*} props
- * @param {*} tag
- * @param {*} headerTypeCode
- */
-export const handleTagXXXHeaderTypeChange = (props, tag, headerTypeCode) => {
-  const { dispatch, change, record, leaderValue } = props;
-  dispatch({ type: tag.action, leader: leaderValue, code: tag.code, typeCode: headerTypeCode });
-  record.fields.push(getFixedField(tag, headerTypeCode));
-  first(record.fields.filter(f => f.code === tag.code)).fieldStatus = STATUS.NEW;
-  dispatch(change(tag.name, headerTypeCode));
+    .filter(f => (f.fixedField === undefined || !f.fixedField) || f.variableField || f.variableField !== undefined);
 };
 
 /**
@@ -128,89 +122,3 @@ export const replaceAll = (s: string): string => ((s) ? s.replace(RegExp(String.
  * @returns s - a string with all SUBFIELD_DELIMITER replaced with SUBFIELD_CHARACTER
  */
 export const replaceAllinverted = (s: string): string => ((s) ? s.replace(/\$/g, SUBFIELD_DELIMITER) : EMPTY_STRING);
-
-/**
- *
- * @param {*} tag
- * @param {*} typeCode
- */
-export const getFixedField = (tag: Object, typeCode): Object => {
-  return {
-    code: tag.code,
-    mandatory: false,
-    fieldStatus: STATUS.NEW,
-    fixedField: {
-      categoryCode: 1,
-      headerTypeCode: typeCode,
-      code: tag.code,
-      displayValue: tag.default,
-      sequenceNumber: 0
-    },
-    added: false
-  };
-};
-
-/**
-/**
- *
- * @param {*} editMode
- * @param {*} tag
- */
-export const getEmptyVariableField = (editMode: boolean, tag: Object): Object => {
-  return (!editMode) ? {
-    code: tag.code || EMPTY_STRING,
-    mandatory: false,
-    fieldStatus: STATUS.NEW,
-    variableField: {
-      categoryCode: tag.categoryCode || 0,
-      code: tag.code || EMPTY_STRING,
-      ind1: tag.ind1 || EMPTY_SPACED_STRING,
-      ind2: tag.ind2 || EMPTY_SPACED_STRING,
-      displayValue: tag.displayValue || EMPTY_STRING,
-      sequenceNumber: 0,
-      skipInFiling: 0,
-      subfields: [],
-    },
-    added: true
-  } : {
-    code: tag.code,
-    mandatory: tag.mandatory || false,
-    fieldStatus: STATUS.CHANGED,
-    variableField: {
-      categoryCode: tag.variableField.categoryCode,
-      code: tag.variableField.code,
-      displayValue: tag.displayValue,
-      ind1: tag.ind1 || EMPTY_SPACED_STRING,
-      ind2: tag.ind2 || EMPTY_SPACED_STRING,
-      sequenceNumber: 0,
-      skipInFiling: 0,
-      subfields: [],
-    },
-    added: tag.added
-  };
-};
-
-/**
- *
- * @param {*} editMode
- * @param {*} tag
- */
-export const normalizeVariableField = (editMode: boolean, tag: Object): Object => {
-  return {
-    code: tag.code,
-    mandatory: false,
-    fieldStatus: (editMode) ? STATUS.CHANGED : STATUS.NEW,
-    variableField: {
-      categoryCode: tag.categoryCode || tag.variableField.categoryCode || 0,
-      keyNumber: tag.keyNumber || tag.variableField.keyNumber,
-      ind1: tag.ind1 || tag.variableField.ind1,
-      ind2: tag.ind2 || tag.variableField.ind2,
-      code: tag.code || tag.variableField.code,
-      displayValue: tag.displayValue || tag.variableField.displayValue,
-      subfields: [],
-      sequenceNumber: 0,
-      skipInFiling: 4
-    },
-    added: false
-  };
-};

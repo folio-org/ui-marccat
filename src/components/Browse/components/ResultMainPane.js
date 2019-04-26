@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import { MultiColumnList, Pane, Icon } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 import { EmptyMessage, NoResultsMessage, ToolbarButtonMenu, injectCommonProp } from '../../../shared';

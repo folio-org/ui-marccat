@@ -120,5 +120,6 @@
     "cataloging.actions.lookup.shortcut": "شيء بعلامة استفهام",
     "cataloging.actions.view.marc.docs": "عرض وثائق مارك",
     "cataloging.actions.view.marc.docs.shortcut": "؟",
-    "cataloging.record.duplicate": "نسخ التسجيلة"
+    "cataloging.record.duplicate": "نسخ التسجيلة",
+    "cataloging.fixedfield.section.add.newtag": "+ إضافة {value} جديدة"
 }

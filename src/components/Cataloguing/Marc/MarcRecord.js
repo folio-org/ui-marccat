@@ -59,6 +59,7 @@ export class MarcRecord extends React.Component<Props, {
       isEditMode:  (findParam('mode') === RECORD_ACTION.EDIT_MODE),
       mode: findParam('mode'),
       id: findParam('id'),
+      submit: false,
       deletedTag: false,
     };
     this.renderDropdownLabels = this.renderDropdownLabels.bind(this);
@@ -143,6 +144,7 @@ export class MarcRecord extends React.Component<Props, {
     bibliographicRecord.fields = union(filterFixedFieldForSaveRecord(bibliographicRecord.fields), variableFormData);
     bibliographicRecord.fields = sortBy(bibliographicRecord.fields, SORTED_BY.CODE);
     const payload = { bibliographicRecord, recordTemplate };
+    this.setState({ submit: true });
 
     await post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), payload)
       .then((r) => { return r.json(); })
@@ -162,12 +164,12 @@ export class MarcRecord extends React.Component<Props, {
   };
 
   handleClose = () => {
-    const { id } = this.state;
+    const { id, submit } = this.state;
     const { dispatch, reset, router, toggleFilterPane } = this.props;
     dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', isChecked: false });
     toggleFilterPane();
     dispatch(reset());
-    router.push(`/marccat/search?savedId=${id}`);
+    return (submit) ? router.push(`/marccat/search?savedId=${id}`) : router.push('/marccat/search');
   };
 
   renderDropdownLabels = () => {

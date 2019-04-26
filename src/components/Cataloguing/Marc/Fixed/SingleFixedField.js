@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import SingleTag00X from './Tags/SingleTag00X';
 
 export default ({ ...props }) => {

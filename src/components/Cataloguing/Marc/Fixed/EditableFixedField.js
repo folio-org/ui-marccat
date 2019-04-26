@@ -2,14 +2,14 @@
  * @format
  * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import { first } from 'lodash';
 import { Row, Col } from '@folio/stripes/components';
 import AddTagButton from '../Button/AddTagButton';
 import {
   TAGS,
+  EMPTY_FIXED_FIELD
 } from '../../Utils/MarcConstant';
-import { EMPTY_STRING } from '../../../../config/constants';
 import Tag008 from './Tags/Tag008';
 import MarcField from '../MarcField';
 
@@ -18,43 +18,31 @@ import style from '../../Style/index.css';
 export default class EditableFixedField extends React.Component<{}, {}> {
 
   renderTag00X(tags, tagName) {
-    return (tags.length > 0) ? (
+    if (tags.length === 0) tags.push(EMPTY_FIXED_FIELD(tagName));
+    return (
       <React.Fragment>
-        {tags.map((tag, idx) => (
-          <div className={style.controlFieldContainer}>
-            <MarcField
-              {...this.props}
-              key={idx}
-              withIcon
-              label={tag.fixedField.code}
-              name={tag.fixedField.code}
-              value={tag.fixedField.displayValue}
-            />
-          </div>
+        {tags.map((t, idx) => (
+          <Row middle="xs">
+            <Col xs={6}>
+              <div className={style.controlFieldContainer}>
+                <MarcField
+                  {...this.props}
+                  key={idx}
+                  withIcon
+                  label={t.fixedField.code}
+                  name={t.fixedField.code}
+                  value={t.fixedField.displayValue}
+                />
+              </div>
+            </Col>
+            <Col xs={2}>
+              <AddTagButton {...this.props} tagCode={tagName} />
+            </Col>
+          </Row>
         ))}
       </React.Fragment>
-    ) :
-      (
-        <Row middle="xs">
-          <Col xs={6}>
-            <div className={style.controlFieldContainer}>
-              <MarcField
-                {...this.props}
-                withIcon
-                tag={{}}
-                label={tagName}
-                name={tagName}
-                value={EMPTY_STRING}
-              />
-            </div>
-          </Col>
-          <Col xs={2}>
-            <AddTagButton {...this.props} tagCode={tagName} />
-          </Col>
-        </Row>
-      );
+    );
   }
-
 
   renderTag008 = (tag) => {
     const { record } = this.props;

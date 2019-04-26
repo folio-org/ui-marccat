@@ -98,6 +98,22 @@ export const LOCK_ENTITY_TYPE = {
 export const SUBFIELD_DELIMITER = '\u001f';
 export const SUBFIELD_CHARACTER = '$';
 
+export const EMPTY_FIXED_FIELD = (code: String): Object => {
+  return {
+    code,
+    mandatory: false,
+    fieldStatus: RECORD_FIELD_STATUS.NEW,
+    fixedField: {
+      headerTypeCode: 0,
+      code,
+      displayValue: EMPTY_STRING,
+      sequenceNumber: 0
+    },
+    added: true
+  };
+};
+
+
 export const EMPTY_VARIABLE_FIELD = {
   code: EMPTY_STRING,
   mandatory: false,

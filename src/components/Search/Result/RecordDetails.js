@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { AccordionSet, Col, Row, FilterAccordionHeader, Accordion } from '@folio/stripes/components';
 import InventoryPluggableButton from '../Button/Inventory';

@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import { Row, Col, SearchField } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 

@@ -19,8 +19,6 @@ export {
   unionSortAndDedupe,
   filterFixedFields,
   filterMandatoryFields,
-  getFixedField,
-  getEmptyVariableField,
   replaceAll,
   replaceAllinverted
 } from './Utils/MarcApiUtils';

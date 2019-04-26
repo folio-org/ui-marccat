@@ -2,8 +2,8 @@
  * @format
  * @flow
  */
-import React from 'react';
-import { Button, ModalFooter, Modal, TextField } from '@folio/stripes/components';
+import * as React from 'react';
+import { Button, Modal, ModalFooter, TextField } from '@folio/stripes/components';
 import { Field, reduxForm } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -36,9 +36,9 @@ class DuplicaRecord extends React.Component<Props, {
     });
   }
 
-  onHide({ ...props }) {
+  onHide = () => {
     const { id } = this.state;
-    const { router, toggleFilterPane, duplicateRecord } = props;
+    const { router, toggleFilterPane, duplicateRecord } = this.props;
     if (duplicateRecord) {
       this.setState({
         confirming: false,
@@ -57,9 +57,9 @@ class DuplicaRecord extends React.Component<Props, {
     }
   }
 
-  duplicateRecord({ ...props }) {
-    const { store: { getState: { form: { duplicaRecordForm } } }, duplicaRecord } = props;
-    const id = duplicaRecordForm.values.recordid;
+  duplicateRecord = () => {
+    const { store: { getState }, duplicaRecord } = this.props;
+    const id = getState().form.duplicaRecordForm.values.recordid;
     this.setState({ sending: true, id });
     duplicaRecord(id);
     setTimeout(() => {
@@ -68,13 +68,14 @@ class DuplicaRecord extends React.Component<Props, {
     }, 3000);
   }
 
-  getFooter({ ...props }) {
+  getFooter = () => {
     const { testId } = this.state;
+    const { buttonStyle, cancelButtonStyle } = this.props;
     return (
       <ModalFooter>
         <Button
           data-test-duplicate-record-modal-confirm-button
-          buttonStyle={props.buttonStyle}
+          buttonStyle={buttonStyle}
           id={`clickable-${testId}-confirm`}
           onClick={this.duplicateRecord}
         >
@@ -82,7 +83,7 @@ class DuplicaRecord extends React.Component<Props, {
         </Button>
         <Button
           data-test-duplicate-record-modal-cancel-button
-          buttonStyle={props.cancelButtonStyle}
+          buttonStyle={cancelButtonStyle}
           id={`clickable-${testId}-cancel`}
           onClick={this.onHide}
         >
@@ -94,6 +95,7 @@ class DuplicaRecord extends React.Component<Props, {
 
   render() {
     const { testId, confirming, sending } = this.state;
+    const footer = (this.getFooter());
     return (
       <React.Fragment>
         <Button
@@ -113,7 +115,7 @@ class DuplicaRecord extends React.Component<Props, {
           open={confirming}
           onClose={this.onHide}
           label="Duplicate Record from existing one"
-          footer={this.getFooter}
+          footer={footer}
         >
           <form name="duplicaRecordForm">
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}

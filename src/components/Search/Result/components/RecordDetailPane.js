@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import { Pane, Icon } from '@folio/stripes/components';
 import RecordDetails from '../RecordDetails';
 import { injectCommonProp, ActionMenuDetail } from '../../../../shared';

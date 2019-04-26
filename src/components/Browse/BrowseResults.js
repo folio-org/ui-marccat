@@ -2,7 +2,7 @@
  * @format
  * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import { MultiColumnList, Pane, Paneset, Icon } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
 import { connect } from 'react-redux';

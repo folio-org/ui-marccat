@@ -2,11 +2,11 @@
  * @format
  * @flow
  */
-import React from 'react';
+import * as React from 'react';
 import { RepeatableField, Row, Col } from '@folio/stripes/components';
 import AddTagButton from '../../Button/AddTagButton';
-import { EMPTY_STRING } from '../../../../../config/constants';
-import SingleTag00X from './SingleTag00X';
+import MarcField from '../../MarcField';
+import style from '../../../Style/index.css';
 
 export default class Tag00X extends React.Component {
 
@@ -29,32 +29,10 @@ export default class Tag00X extends React.Component {
     }));
   }
 
-
-  renderedField = ({ ...props }) => {
-    const { tag, tagName } = props;
-    this.handleAdd(tag);
-    return (
-      <Row middle="xs">
-        <Col xs={6}>
-          <SingleTag00X
-            {...props}
-            withIcon
-            tag={tag || {}}
-            label={tagName}
-            name={tagName}
-            value={EMPTY_STRING}
-          />
-        </Col>
-        <Col xs={2}>
-          <AddTagButton {...this.props} tagCode={tagName} />
-        </Col>
-      </Row>
-    );
-  }
-
   render() {
-    const { fields } = this.state;
-    const { tag, tagName } = this.props;
+    let { fields } = this.state;
+    const { t } = this.props;
+    fields = t;
     return (
       <RepeatableField
         fields={fields}
@@ -63,17 +41,18 @@ export default class Tag00X extends React.Component {
         renderField={() => (
           <Row middle="xs">
             <Col xs={6}>
-              <SingleTag00X
-                {...this.props}
-                withIcon
-                tag={tag || {}}
-                label={tagName}
-                name={tagName}
-                value={EMPTY_STRING}
-              />
+              <div className={style.controlFieldContainer}>
+                <MarcField
+                  {...this.props}
+                  withIcon
+                  label={t.fixedField.code}
+                  name={t.fixedField.code}
+                  value={t.fixedField.displayValue}
+                />
+              </div>
             </Col>
             <Col xs={2}>
-              <AddTagButton {...this.props} tagCode={tagName} />
+              <AddTagButton {...this.props} tagCode={t.code} />
             </Col>
           </Row>)}
       />

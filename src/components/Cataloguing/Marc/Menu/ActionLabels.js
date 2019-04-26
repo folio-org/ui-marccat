@@ -10,7 +10,7 @@ export default ({ ...props }) => {
     return [{
       label: Localize({ key: 'cataloging.actions.add.field.below' }),
       shortcut: Localize({ key: 'cataloging.actions.add.field.below.shortcut' }),
-      onClick: props.onAdd,
+      onClick: props.onAddAbove,
     },
     {
       label: Localize({ key: 'cataloging.actions.add.field.above' }),
@@ -35,12 +35,12 @@ export default ({ ...props }) => {
     {
       label: Localize({ key: 'cataloging.actions.move.fields.up' }),
       shortcut: Localize({ key: 'cataloging.actions.move.fields.up.shortcut' }),
-      onClick: () => {}
+      onClick: props.onMoveUp
     },
     {
       label: Localize({ key: 'cataloging.actions.move.fields.down' }),
       shortcut: Localize({ key: 'cataloging.actions.move.fields.down.shortcut' }),
-      onClick:() => {}
+      onClick: props.onMoveDown
     },
     {
       label: Localize({ key: 'cataloging.actions.sort.by.tag.number' }),

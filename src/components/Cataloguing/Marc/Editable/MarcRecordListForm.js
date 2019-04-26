@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
-import React from 'react';
+import * as React from 'react';
 import { cloneDeep, isEqual, sortBy, uniqueId } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { reduxForm, FieldArray } from 'redux-form';
@@ -76,9 +76,12 @@ class EditableListForm extends React.Component {
     this.getVisibleColumns = this.getVisibleColumns.bind(this);
     this.getReadOnlyColumns = this.getReadOnlyColumns.bind(this);
     this.onAdd = this.onAdd.bind(this);
+    this.onAddAbove = this.onAddAbove.bind(this);
     this.onCancel = this.onCancel.bind(this);
     this.onResetAll = this.onResetAll.bind(this);
     this.onCopy = this.onCopy.bind(this);
+    this.onMoveUp = this.onMoveUp.bind(this);
+    this.onMoveDown = this.onMoveDown.bind(this);
     this.onSortBy = this.onSortBy.bind(this);
     this.onPaste = this.onPaste.bind(this);
     this.onCut = this.onCut.bind(this);
@@ -89,6 +92,7 @@ class EditableListForm extends React.Component {
 
     this.keys = {
       'add' : ['enter'],
+      'addAbove' : ['alt+enter'],
       'cleanField' : ['delete'],
       'cleanAll' : ['backspace'],
       'duplicate' : ['CTRL+D'],
@@ -102,7 +106,8 @@ class EditableListForm extends React.Component {
     };
 
     this.handlers = {
-      'add' : this.onAdd,
+      'add' : this.onAddAbove,
+      'addAbove' : this.onAdd,
       'cleanField' : this.onCancel,
       'cleanAll' : this.onResetAll,
       'duplicate' : this.onDuplicate,
@@ -171,6 +176,24 @@ class EditableListForm extends React.Component {
   /**
    *
    * @param {*} fields
+   */
+  onAddAbove(fields) {
+    const { itemTemplate } = this.props;
+    const item = { ...itemTemplate };
+    fields.push(item);
+    this.setState((curState) => {
+      const newState = cloneDeep(curState);
+      if (newState.status.length === 0 && fields.length > 0) {
+        newState.status = this.buildStatusArray();
+      }
+      newState.status.push({ editing: true, error: false });
+      return newState;
+    });
+  }
+
+  /**
+   *
+   * @param {*} fields
    * @param {*} index
    */
   onCancel(fields, index) {
@@ -185,6 +208,20 @@ class EditableListForm extends React.Component {
    * @param {*} index
    */
   onCopy(fields, index) {}
+
+  /**
+   *
+   * @param {*} fields
+   * @param {*} index
+   */
+  onMoveUp(fields, index) {}
+
+  /**
+   *
+   * @param {*} fields
+   * @param {*} index
+   */
+  onMoveDown(fields, index) {}
 
   /**
    *
@@ -496,9 +533,12 @@ class EditableListForm extends React.Component {
                   {...this.props}
                   onClick={onToggle}
                   onAdd={() => this.onAdd(fields)}
+                  onAddAbove={() => this.onAddAbove(fields)}
                   onDuplicate={() => this.onDuplicate(fields, currentIndex)}
                   onCancel={() => this.onCancel(fields, currentIndex)}
                   onCopy={() => this.onCopy(fields, currentIndex)}
+                  onMoveDown={() => this.onMoveDown(fields, currentIndex)}
+                  onMoveUp={() => this.onMoveUp(fields, currentIndex)}
                   onCut={() => this.onCut(fields, currentIndex)}
                   onPaste={() => this.onPaste(fields, currentIndex)}
                   onUndo={() => this.onUndo(fields, currentIndex)}

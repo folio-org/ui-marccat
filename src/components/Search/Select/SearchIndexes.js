@@ -9,7 +9,7 @@ import { Select } from '@folio/stripes/components';
 import { ActionTypes } from '../../../redux/actions';
 import { SORT_TYPE, FILTER_NAME } from '../../../config/constants';
 
-export default function ({ ...props }) {
+export default ({ ...props }) => {
   const { rest, name, id } = props;
   const options = [
     { label: 'Title', value: 'TITLE', sortBy: SORT_TYPE.TITLE },
@@ -89,4 +89,4 @@ export default function ({ ...props }) {
       {...rest}
     />
   );
-}
+};

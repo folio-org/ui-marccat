@@ -1,0 +1,42 @@
+import React from 'react';
+import { Accordion } from '@folio/stripes/components';
+import { MarcLeader } from '../..';
+import { Localize } from '../../../../utils/Function';
+import SingleFixedField from './SingleFixedField';
+import EditableFixedField from './EditableFixedField';
+
+export default ({ ...props }) => {
+  const { record, leaderData } = props;
+  return (
+    <React.Fragment>
+      <Accordion label="Leader" id="leader">
+        <MarcLeader
+          {...props}
+          readOnly
+          leaderData={leaderData}
+          leaderCode={record.leader.code}
+          leaderValue={record.leader.value}
+        />
+      </Accordion>
+      <Accordion
+        id="control-field-create-static"
+        label={Localize({ key: 'cataloging.accordion.fixedfield.label.static' })}
+      >
+        <SingleFixedField
+          {...props}
+          fixedfields={record.fields.filter(f => f.code < '006')}
+        />
+      </Accordion>
+      <Accordion
+        id="control-field-dynamic"
+        label={Localize({ key: 'cataloging.accordion.fixedfield.label.dynamic' })}
+      >
+        <EditableFixedField
+          {...props}
+          record={record}
+          fixedfields={record.fields.filter(f => f.code > '005' && f.code < '010')}
+        />
+      </Accordion>
+    </React.Fragment>
+  );
+};

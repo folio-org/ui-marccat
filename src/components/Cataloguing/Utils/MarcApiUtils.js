@@ -8,7 +8,6 @@ import {
   SUBFIELD_DELIMITER,
   TAG_NOT_REPEATABLE,
   TAG_MANDATORY,
-  TAGS,
 } from './MarcConstant';
 import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../config/constants';
 
@@ -53,6 +52,18 @@ export const filterFixedFields = (obj) => {
  *
  * @param {*} obj
  */
+export const filterFixedFieldsUntil = (obj, cond) => {
+  return (obj)
+    .filter(f => f.fixedField !== undefined || f.fixedField)
+    .filter(f => f.code < cond);
+};
+
+
+/**
+ * @description
+ *
+ * @param {*} obj
+ */
 export const filterFixedFieldForSaveRecord = (obj) => {
   return obj.filter(f => f.fixedField !== undefined || f.fixedField);
 };
@@ -71,10 +82,9 @@ export const filterMandatoryFields = (obj) => {
  *
  * @param {*} obj
  */
-export const filterVariableFields = (obj:Array<any>) => {
+export const filterVariableFields = (obj:Array<Object>) => {
   return obj
-    .filter(v => v.variableField.code === '040' && v.fieldStatus !== 'unchanged')
-    .filter(f => (f.fixedField === undefined || !f.fixedField) && f.ariableField.code === '040');
+    .filter(f => (f.fixedField === undefined || !f.fixedField) || f.variableField || f.variableField !== undefined);
 };
 
 /**

@@ -57,7 +57,7 @@ class SearchPanel extends React.Component<P, {}> {
 
 
   componentDidMount() {
-    const id = findParam('id') || findParam('savedId');
+    const id = findParam('id') || findParam('savedId') || findParam('recordid');
     if (id) this.handleSearchFromCataloging(id);
   }
 

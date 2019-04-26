@@ -7,7 +7,7 @@ import React from 'react';
 import { Field } from 'redux-form';
 import { Select } from '@folio/stripes/components';
 
-export default function ({ ...props }) {
+export default ({ ...props }) => {
   const { rest, name, id } = props;
   const options = [
     { label: 'Browse', value: 'BROWSE' },
@@ -26,4 +26,4 @@ export default function ({ ...props }) {
       {...rest}
     />
   );
-}
+};

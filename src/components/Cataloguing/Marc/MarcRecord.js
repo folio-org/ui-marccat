@@ -23,8 +23,6 @@ import {
   TAG_WITH_NO_HEADING_ASSOCIATED,
   replaceAllinverted,
   RECORD_ACTION,
-  MarcLeader,
-  VariableFields,
   RECORD_FIELD_STATUS,
   SORTED_BY,
   SUBFIELD_DELIMITER
@@ -40,7 +38,8 @@ import { buildUrl, findParam, Localize } from '../../../utils/Function';
 import {
   filterMandatoryFields,
   showValidationMessage,
-  filterFixedFieldForSaveRecord
+  filterFixedFieldForSaveRecord,
+  filterVariableFields
 } from '../Utils/MarcApiUtils';
 import * as C from '../../../config/constants';
 import * as MarcAction from '../Actions';
@@ -48,8 +47,8 @@ import type { Props } from '../../../shared';
 
 import style from '../Style/index.css';
 import { Redux } from '../../../redux';
-import StaticFixedFields from './StaticFixedFields';
-import DynamicFixedFields from './DynamicFixedFields';
+import VariableFields from './Variable/VariableFields';
+import FixedFields from './Fixed/FixedFields';
 
 export class MarcRecord extends React.Component<Props, {
   callout: React.RefObject<Callout>,
@@ -223,82 +222,53 @@ export class MarcRecord extends React.Component<Props, {
     const { leaderData } = this.props;
     const { isEditMode, id } = this.state;
     const bibliographicRecord = this.getCurrentRecord();
-    // const staticFields = data.data.emptyRecord.results.fields.filter(f => f.code < '006');
-    // const dynamicFields = data.data.emptyRecord.results.fields.filter(f => f.code > '005' && f.code < '010');
-    // const variableFields = data.data.emptyRecord.results.fields.filter(f => f.code > '009');
-    // console.log(recordDetail);
-    // console.log(bibliographicRecord);
 
-    return (!bibliographicRecord) ? (<Icon icon="spinner-ellipsis" />)
-      : (
-        <Fragment>
-          <Paneset static>
-            <Pane
-              defaultWidth="fullWidth"
-              paneTitle={(bibliographicRecord && isEditMode) ? 'Edit Record' : 'New Monograph'}
-              paneSub={'id. ' + bibliographicRecord.id || id}
-              appIcon={<AppIcon app={C.META.ICON_TITLE} />}
-              actionMenu={ActionMenuTemplate}
-              dismissible
-              onClose={() => this.handleClose()}
-              lastMenu={this.renderButtonMenu()}
-            >
-              <Row center="xs">
-                <div className={style.recordContainer}>
-                  <AccordionSet>
-                    <form name="bibliographicRecordForm" onSubmit={this.saveRecord}>
-                      <Accordion label={<FormattedMessage id="ui-marccat.cataloging.accordion.checkbox.label" />} id="suppress" separator={false}>
-                        <SingleCheckboxIconButton labels={[<FormattedMessage id="ui-marccat.cataloging.checkbox.label" />]} pullLeft widthPadding />
-                      </Accordion>
-                      <Accordion label="Leader" id="leader">
-                        <MarcLeader
-                          {...this.props}
-                          readOnly
-                          leaderData={leaderData}
-                          leaderCode={bibliographicRecord.leader.code}
-                          leaderValue={bibliographicRecord.leader.value}
-                        />
-                      </Accordion>
-                      <Accordion
-                        label={<FormattedMessage id="ui-marccat.cataloging.accordion.fixedfield.label.static" />}
-                        id="control-field-create-static"
-                      >
-                        <StaticFixedFields
-                          {...this.props}
-                          record={bibliographicRecord}
-                          staticFixedFields={bibliographicRecord.fields.filter(f => f.code < '006')}
-                        />
-                      </Accordion>
-                      <Accordion
-                        label={<FormattedMessage id="ui-marccat.cataloging.accordion.fixedfield.label.dynamic" />}
-                        id="control-field-dynamic"
-                      >
-                        <DynamicFixedFields
-                          {...this.props}
-                          record={bibliographicRecord}
-                          dynamicFixedFields={bibliographicRecord.fields.filter(f => f.code > '005' && f.code < '010')}
-                        />
-                      </Accordion>
-                    </form>
-                    <Accordion
-                      label={<FormattedMessage id="ui-marccat.cataloging.accordion.variablefield.label" />}
-                      id="variable-field"
-                    >
-                      <VariableFields
-                        fields={bibliographicRecord.fields.filter(f => f.code > '009')}
-                        onCreate={this.onCreate}
-                        onDelete={this.onDelete}
-                        {...this.props}
-                      />
+    return (!leaderData) ? (<Icon icon="spinner-ellipsis" />) : (
+      <Fragment>
+        <Paneset static>
+          <Pane
+            defaultWidth="fullWidth"
+            paneTitle={(bibliographicRecord && isEditMode) ? 'Edit Record' : 'New Monograph'}
+            paneSub={'id. ' + bibliographicRecord.id || id}
+            appIcon={<AppIcon app={C.META.ICON_TITLE} />}
+            actionMenu={ActionMenuTemplate}
+            dismissible
+            onClose={() => this.handleClose()}
+            lastMenu={this.renderButtonMenu()}
+          >
+            <Row center="xs">
+              <div className={style.recordContainer}>
+                <AccordionSet>
+                  <form name="bibliographicRecordForm" onSubmit={this.saveRecord}>
+                    <Accordion label={<FormattedMessage id="ui-marccat.cataloging.accordion.checkbox.label" />} id="suppress" separator={false}>
+                      <SingleCheckboxIconButton labels={[<FormattedMessage id="ui-marccat.cataloging.checkbox.label" />]} pullLeft widthPadding />
                     </Accordion>
-                  </AccordionSet>
-                </div>
-              </Row>
-            </Pane>
-          </Paneset>
-          <Callout ref={this.callout} />
-        </Fragment>
-      );
+                    <FixedFields
+                      {...this.props}
+                      id="fixed-field"
+                      leaderData={leaderData}
+                      record={bibliographicRecord}
+                    />
+                  </form>
+                  <Accordion
+                    label={<FormattedMessage id="ui-marccat.cataloging.accordion.variablefield.label" />}
+                    id="variable-field"
+                  >
+                    <VariableFields
+                      {...this.props}
+                      fields={filterVariableFields(bibliographicRecord.fields)}
+                      onCreate={this.onCreate}
+                      onDelete={this.onDelete}
+                    />
+                  </Accordion>
+                </AccordionSet>
+              </div>
+            </Row>
+          </Pane>
+        </Paneset>
+        <Callout ref={this.callout} />
+      </Fragment>
+    );
   }
 }
 
@@ -306,13 +276,14 @@ export default stripesForm({
   form: C.REDUX.FORM.BIBLIOGRAPHIC_FORM,
   destroyOnUnmount: true,
 })(connect(
-  ({ marccat: { data, settings, leaderData, headerTypes006, headerTypes007, headerTypes008 } }) => ({
+  ({ marccat: { data, settings, leaderData, headerTypes006, headerTypes007, headerTypes008, tag008Values } }) => ({
     emptyRecord: data.results,
     recordDetail: Redux.resolve(data, 'marcRecordDetail').bibliographicRecord,
     bibliographicRecord: first(settings.detail),
     leaderData: leaderData.records,
-    headerTypes006Result: headerTypes006.results,
-    headerTypes007Result: headerTypes007.results,
-    headerTypes008Result: headerTypes008.results,
+    headerTypes006Result: headerTypes006.records,
+    headerTypes007Result: headerTypes007.records,
+    headerTypes008Result: headerTypes008.records,
+    tag008Values: tag008Values.records,
   }),
 )(injectCommonProp(MarcRecord)));

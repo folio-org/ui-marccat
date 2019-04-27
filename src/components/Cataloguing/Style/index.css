@@ -3,7 +3,7 @@
 }
 
 .leaderData {
-  padding-top: 20px;
+  padding-top: 24px;
 }
 
 .controlFieldContainer {
@@ -13,14 +13,13 @@
   background-position: left top;
   background-repeat: repeat;
   padding: 15px;
-  padding-left: 30px;
   padding-right: 30px;
   padding-bottom: 20px;
   text-align: left;
   display: grid;
 
   & .small {
-    width: 60%;
+    width: 75%;
   }
 
   & label {
@@ -89,6 +88,7 @@
 .visible,
 [visible] {
   display: block;
+  padding-top: 24px;
 }
 
 .rightPosition {

@@ -31,8 +31,14 @@ export default class MarcField extends React.Component<P, {}> {
     dispatch(change(name, value)); // to remove this check and use initialize({ [name]: value })
     return (withIcon) ? (
       <div>
+        <IconButton
+          icon="caret-down"
+          size="medium"
+          onClick={onClick}
+        />
         <label htmlFor={name}>{label}</label>
         <Field
+          className={style.small}
           id={name}
           name={name}
           type={'text' || text}

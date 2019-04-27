@@ -118,8 +118,8 @@ export function Localize(label): React.JSX.Element {
   if (label.length) return label.map(l => <FormattedMessage id={META.MODULE_NAME.concat('.').concat(l.key)} values={{ value: l.value }} />);
   return <FormattedMessage id={META.MODULE_NAME.concat('.').concat(label.key)} values={{ value: label.value || EMPTY_STRING }} />;
 }
-/* @flow */
-// eslint-disable-next-line no-unused-vars
-declare function safe<K>(obj: K): string;
-declare function safe<K, K1>(obj: K, s: K1): string;
-declare function safe<K, K1, K2>(obj: K, s: K1, s1: K2): string;
+
+// eslint-disable-next-line no-extend-native
+Array.prototype.insert = (index, item) => {
+  this.splice(index, 0, item);
+};

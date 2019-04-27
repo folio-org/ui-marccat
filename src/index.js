@@ -47,8 +47,6 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
   componentDidMount() {
     const { store: { dispatch } } = this.props;
     dispatch({ type: ActionTypes.VIEW_TEMPLATE });
-    dispatch({ type: ActionTypes.HEADER_TYPES_006, code: TAGS._006 });
-    dispatch({ type: ActionTypes.HEADER_TYPES_007, code: TAGS._007 });
     dispatch({ type: ActionTypes.HEADER_TYPES_008, code: TAGS._008 });
     dispatch({ type: ActionTypes.SETTINGS, data: {} });
   }

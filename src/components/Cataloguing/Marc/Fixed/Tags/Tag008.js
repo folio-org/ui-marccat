@@ -33,17 +33,12 @@ class Tag008 extends React.Component<Props, {}> {
 
   handleOnChange = (e) => {
     const { dispatch, leaderValue, record } = this.props;
-    const { currentHeaderTypeCode, expand008 } = this.state;
+    const { currentHeaderTypeCode } = this.state;
     let headerTypeCode = e.target.value;
     if (currentHeaderTypeCode !== headerTypeCode) {
-      this.setState({
-        isChangedHeaderType: true
-      });
+      this.state.isChangedHeaderType = true;
     } else {
       headerTypeCode = currentHeaderTypeCode;
-      this.setState({
-        expand008: !expand008
-      });
     }
     dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: headerTypeCode });
     first(record.fields.filter(f => f.code === TAGS._008)).fieldStatus = RECORD_FIELD_STATUS.CHANGED;

@@ -58,7 +58,8 @@ export default class MarcLeader extends React.Component<P, {
    */
   replaceAt(string, index, replace) {
     this.setState({
-      leaderVal: string.substring(0, index) + replace + string.substring(index + 1)
+      leaderVal: string.substring(0, index) + replace + string.substring(index + 1),
+      leaderChangedFor008: !!((index === 6 || index === 7)),
     });
   }
 
@@ -67,14 +68,14 @@ export default class MarcLeader extends React.Component<P, {
     const selectedValue = e.target.value;
     const selectedName = e.target.id;
     switch (selectedName) {
-    case 'itemRecordStatusCode': this.replaceAt(leaderVal, 5, selectedValue); this.state.leaderChangedFor008 = false; break;
-    case 'itemRecordTypeCode': this.replaceAt(leaderVal, 6, selectedValue); this.state.leaderChangedFor008 = true; break;
-    case 'itemBibliographicLevelCode': this.replaceAt(leaderVal, 7, selectedValue); this.state.leaderChangedFor008 = true; break;
-    case 'itemControlTypeCode': this.replaceAt(leaderVal, 8, selectedValue); this.state.leaderChangedFor008 = false; break;
-    case 'characterCodingSchemeCode': this.replaceAt(leaderVal, 9, selectedValue); this.state.leaderChangedFor008 = false; break;
-    case 'encodingLevel': this.replaceAt(leaderVal, 17, selectedValue); this.state.leaderChangedFor008 = false; break;
-    case 'descriptiveCataloguingCode': this.replaceAt(leaderVal, 18, selectedValue); this.state.leaderChangedFor008 = false; break;
-    case 'linkedRecordCode': this.replaceAt(leaderVal, 19, selectedValue); this.state.leaderChangedFor008 = false; break;
+    case 'itemRecordStatusCode': this.replaceAt(leaderVal, 5, selectedValue); break;
+    case 'itemRecordTypeCode': this.replaceAt(leaderVal, 6, selectedValue); break;
+    case 'itemBibliographicLevelCode': this.replaceAt(leaderVal, 7, selectedValue); break;
+    case 'itemControlTypeCode': this.replaceAt(leaderVal, 8, selectedValue); break;
+    case 'characterCodingSchemeCode': this.replaceAt(leaderVal, 9, selectedValue); break;
+    case 'encodingLevel': this.replaceAt(leaderVal, 17, selectedValue); break;
+    case 'descriptiveCataloguingCode': this.replaceAt(leaderVal, 18, selectedValue); break;
+    case 'linkedRecordCode': this.replaceAt(leaderVal, 19, selectedValue); break;
     default: break;
     }
   }

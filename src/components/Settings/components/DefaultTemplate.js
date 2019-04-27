@@ -23,7 +23,7 @@ class DefaultTemplate extends React.Component<P, {}> {
 
   handleSelectTemplate = () => {
     const { history } = this.props;
-    history.push(`/marccat/record/template?templateId=${408}`);
+    history.push(`/marccat/record/template?templateId=${42}`);
   }
 
   render() {

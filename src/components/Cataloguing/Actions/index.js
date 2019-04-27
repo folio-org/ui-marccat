@@ -122,7 +122,7 @@ export const emptyRecordAction = () => {
   return {
     type: ACTION.QUERY,
     data: {
-      path: ENDPOINT.EMPTY_RECORD_URL + 408,
+      path: ENDPOINT.EMPTY_RECORD_URL + 42,
       type: 'emptyRecord',
       params: ENDPOINT.DEFAULT_LANG_VIEW,
     },
@@ -164,6 +164,16 @@ export const deleteRecordAction = (id) => {
   };
 };
 
+export const headertypeAction = (tag) => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.HEADER_TYPES_URL,
+      type: `headertype${tag}`,
+      params: `code=${tag}&lang=ita`,
+    },
+  };
+};
 /**
  *
  * @param {*} id

@@ -18,6 +18,7 @@ import {
 import stripesForm from '@folio/stripes/form';
 import { AppIcon } from '@folio/stripes-core';
 import { FormattedMessage } from 'react-intl';
+import { bindActionCreators } from 'redux';
 import { union, sortBy, includes, first } from 'lodash';
 import {
   TAG_WITH_NO_HEADING_ASSOCIATED,
@@ -274,18 +275,22 @@ export class MarcRecord extends React.Component<Props, {
   }
 }
 
+const mapDispatchToProps = dispatch => bindActionCreators({
+  loadHeadertype: (tag:[]) => _ => {
+    tag.forEach(t => dispatch(MarcAction.headertypeAction(t)));
+  }
+}, dispatch);
+
 export default stripesForm({
   form: C.REDUX.FORM.BIBLIOGRAPHIC_FORM,
   destroyOnUnmount: true,
 })(connect(
-  ({ marccat: { data, settings, leaderData, headerTypes006, headerTypes007, headerTypes008, tag008Values } }) => ({
+  ({ marccat: { data, settings, leaderData, headerTypes008, tag008Values } }) => ({
     emptyRecord: data.results,
     recordDetail: Redux.resolve(data, 'marcRecordDetail').bibliographicRecord,
     bibliographicRecord: first(settings.detail),
     leaderData: leaderData.records,
-    headerTypes006Result: headerTypes006.records,
-    headerTypes007Result: headerTypes007.records,
     headerTypes008Result: headerTypes008.records,
     tag008Values: tag008Values.records,
-  }),
+  }), mapDispatchToProps
 )(injectCommonProp(MarcRecord)));

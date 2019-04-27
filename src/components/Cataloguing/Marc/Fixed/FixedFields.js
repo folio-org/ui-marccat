@@ -20,7 +20,7 @@ export default ({ ...props }) => {
       </Accordion>
       <Accordion
         id="control-field-create-static"
-        label={Localize({ key: 'cataloging.accordion.fixedfield.label.static' })}
+        label={Localize({ key: 'cataloging.accordion.fixedfield.label' })}
       >
         <SingleFixedField
           {...props}
@@ -29,7 +29,7 @@ export default ({ ...props }) => {
       </Accordion>
       <Accordion
         id="control-field-dynamic"
-        label={Localize({ key: 'cataloging.accordion.fixedfield.label.dynamic' })}
+        label={Localize({ key: 'cataloging.accordion.fixedfield.editable.label' })}
       >
         <EditableFixedField
           {...props}

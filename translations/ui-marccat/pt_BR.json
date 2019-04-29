@@ -121,5 +121,5 @@
     "cataloging.actions.view.marc.docs": "Visualizar documentação do MARC",
     "cataloging.actions.view.marc.docs.shortcut": "?",
     "cataloging.record.duplicate": "Registro duplicado",
-    "cataloging.fixedfield.section.add.newtag": "+ Add new {value}"
+    "cataloging.fixedfield.section.add.newtag": "+ Adicionar novo {value}"
 }

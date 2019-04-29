@@ -13,6 +13,7 @@ import {
   PaneMenu,
   Button,
   Accordion,
+  Col,
   Icon
 } from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
@@ -240,32 +241,34 @@ export class MarcRecord extends React.Component<Props, {
             lastMenu={this.renderButtonMenu()}
           >
             <Row center="xs">
-              <div className={style.recordContainer}>
-                <AccordionSet>
-                  <form name="bibliographicRecordForm" onSubmit={this.saveRecord}>
-                    <Accordion label={<FormattedMessage id="ui-marccat.cataloging.accordion.checkbox.label" />} id="suppress" separator={false}>
-                      <SingleCheckboxIconButton labels={[<FormattedMessage id="ui-marccat.cataloging.checkbox.label" />]} pullLeft widthPadding />
+              <Col xs={8}>
+                <div className={style.recordContainer}>
+                  <AccordionSet>
+                    <form name="bibliographicRecordForm" onSubmit={this.saveRecord}>
+                      <Accordion label={<FormattedMessage id="ui-marccat.cataloging.accordion.checkbox.label" />} id="suppress" separator={false}>
+                        <SingleCheckboxIconButton labels={[<FormattedMessage id="ui-marccat.cataloging.checkbox.label" />]} pullLeft widthPadding />
+                      </Accordion>
+                      <FixedFields
+                        {...this.props}
+                        id="fixed-field"
+                        leaderData={leaderData}
+                        record={bibliographicRecord}
+                      />
+                    </form>
+                    <Accordion
+                      label={<FormattedMessage id="ui-marccat.cataloging.accordion.variablefield.label" />}
+                      id="variable-field"
+                    >
+                      <VariableFields
+                        {...this.props}
+                        fields={filterVariableFields(bibliographicRecord.fields)}
+                        onCreate={this.onCreate}
+                        onDelete={this.onDelete}
+                      />
                     </Accordion>
-                    <FixedFields
-                      {...this.props}
-                      id="fixed-field"
-                      leaderData={leaderData}
-                      record={bibliographicRecord}
-                    />
-                  </form>
-                  <Accordion
-                    label={<FormattedMessage id="ui-marccat.cataloging.accordion.variablefield.label" />}
-                    id="variable-field"
-                  >
-                    <VariableFields
-                      {...this.props}
-                      fields={filterVariableFields(bibliographicRecord.fields)}
-                      onCreate={this.onCreate}
-                      onDelete={this.onDelete}
-                    />
-                  </Accordion>
-                </AccordionSet>
-              </div>
+                  </AccordionSet>
+                </div>
+              </Col>
             </Row>
           </Pane>
         </Paneset>

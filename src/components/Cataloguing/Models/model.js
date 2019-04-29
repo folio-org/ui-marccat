@@ -58,3 +58,12 @@ export class RecordContainer {
     bibliographicRecord: Record;
     recordTemplate: RecordTemplate;
 }
+
+export type HeadingType = {
+    defaultValue: string,
+    dropdownSelect: Array<{
+      label: string,
+      value: string,
+    }>,
+    name: string,
+}

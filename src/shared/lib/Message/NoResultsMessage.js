@@ -5,7 +5,7 @@
 import * as React from 'react';
 import { Icon } from '@folio/stripes/components';
 import type { Props } from '../../..';
-import css from '../../Style/NoResultsMessage.css';
+import css from '../Style/NoResultsMessage.css';
 
 const NoResultsMessage = ({ ...props }:Props) => {
   const { translate } = props;

@@ -1,17 +1,22 @@
-// @flow
+/**
+ *
+ * @format
+ * @flow
+ */
 import * as React from 'react';
 import { withRoot } from '@folio/stripes-core/src/components/Root/RootContext';
 import { injectIntl } from 'react-intl';
-import { safeObj } from '../../../utils/Function';
+import { safeObj } from '../utils/Function';
 
 type DefaultProps = {};
 type Props = {...DefaultProps};
 /**
  * HOC
- * @param {WrappedComponent} a Component to inject props
+ * @param {Component} a Component to inject props
+ * @returns {React.ComponentType<Props>} a wrapped component that preserve default props
  */
-export default (Component: React.ComponentType<Props>): React.ComponentType<React.ElementConfig<React.Component>> => {
-  const WrapperComponent = (props: Props): React.ComponentType<Props> => {
+export default (Component: React.ComponentType<Props>): React.ComponentType<Props> => {
+  function WrapperComponent(props: Props) {
     const { history, root: { store }, intl: { formatMessage } } = props;
     const state = store.getState();
     const data = state.marccat;
@@ -32,6 +37,6 @@ export default (Component: React.ComponentType<Props>): React.ComponentType<Reac
         translate={formatMessage}
       />
     );
-  };
+  }
   return withRoot(injectIntl(WrapperComponent));
 };

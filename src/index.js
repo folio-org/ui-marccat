@@ -15,18 +15,20 @@ import { REDUX } from './shared/config/constants';
 import './shared/styles/common.css';
 
 
-type RoutingProps = {
+type Props = {
   root: {
-    addReducer: Function;
-    addEpic: Function;
+    addReducer: Function,
+    addEpic: Function,
   },
-  filterPaneIsVisible: boolean;
-  showSettings: boolean;
-  children: React.ReactNode;
+  filterPaneIsVisible: boolean,
+  showSettings: boolean,
+  children?: React.Node,
 };
 
 
-class MARCCatRouting extends React.Component<RoutingProps, {}> {
+class MARCCatRouting extends React.Component<Props, {
+  filterPaneIsVisible: Boolean,
+}> {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -39,14 +41,11 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
      */
     props.root.addReducer(REDUX.REDUCER, reducer);
     props.root.addEpic(REDUX.EPIC, epics);
-
     this.toggleFilterPane = this.toggleFilterPane.bind(this);
-
   }
 
   componentDidMount() {
     const { store: { dispatch } } = this.props;
-    dispatch({ type: ActionTypes.VIEW_TEMPLATE });
     dispatch({ type: ActionTypes.HEADER_TYPES_008, code: TAGS._008 });
     dispatch({ type: ActionTypes.SETTINGS, data: {} });
   }

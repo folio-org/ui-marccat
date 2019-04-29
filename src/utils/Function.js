@@ -97,14 +97,23 @@ export const qs = {
  * @param {*} prop
  */
 export function safeObj(obj, prop) {
-  return (obj) ? obj[prop] : {};
+  return (obj && prop) ? obj[prop] : {};
 }
 
 /**
  *
- * @param {*} obj
+ * @param {Function} fn
+ * @param {Function} prop
+ */
+export function safeFn(fn: () => void): () => void {
+  return (fn) ? fn() : () => {};
+}
+
+/**
+ *
+ * @param {Object} obj
  * @param {*} res
- * @param  {...any} prop
+ * @param {Array<any>} prop
  */
 export function safeArray(obj, res, ...prop) {
   return (obj && obj[prop]) ? obj[prop[0]][prop[1]] : res;
@@ -112,14 +121,10 @@ export function safeArray(obj, res, ...prop) {
 
 /**
  *
- * @param  {...any} labels
+ * @param  {Array<String>} labels
+ * @return {React.JSX.Element} a localized message with value if passed
  */
 export function Localize(label): React.JSX.Element {
   if (label.length) return label.map(l => <FormattedMessage id={META.MODULE_NAME.concat('.').concat(l.key)} values={{ value: l.value }} />);
   return <FormattedMessage id={META.MODULE_NAME.concat('.').concat(label.key)} values={{ value: label.value || EMPTY_STRING }} />;
 }
-
-// eslint-disable-next-line no-extend-native
-Array.prototype.insert = (index, item) => {
-  this.splice(index, 0, item);
-};

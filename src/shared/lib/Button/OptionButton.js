@@ -3,29 +3,16 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
 import type { Props } from '../../..';
-import style from '../../Style/InputField.css';
+
+// eslint-disable-next-line no-unused-vars
+import style from '../Style/InputField.css';
 
 type P = Props & {
   labels: Array<any>,
 };
 
-export function RadioIconButton({ ...props }:P) {
-  const { labels } = props;
-  return (
-    <form>
-      { React.Children.map(labels, (l, i) => (
-        <div key={i}>
-          <input id={`radio-${i}`} className={style['radio-custom']} name={`radio-group-${i}`} type="radio" />
-          <label htmlFor={`radio-${i}`} className={style['radio-custom-label']}>{l}</label>
-        </div>
-      ))
-      }
-    </form>
-  );
-}
 
-
-class CheckboxIconButton extends React.Component<Props, {}> {
+export class CheckboxIconButton extends React.Component<Props, {}> {
   render() {
     const { labels, dispatch, change } = this.props;
     return (
@@ -87,23 +74,6 @@ export function SingleCheckboxIconButton({ ...props }:P) {
     </div>
   );
 }
-
-export const SingleCheckboxIcon = ({ name, idx }:P) => (
-  <div key={idx}>
-    <Field
-      id={`checkbox-${name}-${idx}`}
-      className="checkbox"
-      name={`checkbox-${name}-${idx}`}
-      type="checkbox"
-      component="input"
-    />
-    <label
-      htmlFor={`checkbox-${name}-${idx}`}
-      className="checkbox"
-    />
-  </div>
-);
-
 
 export default reduxForm({
   form: 'checkboxForm',

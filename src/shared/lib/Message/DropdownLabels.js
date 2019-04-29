@@ -5,7 +5,7 @@
  * @flow
  */
 import * as React from 'react';
-import style from '../../Style/Dropdown.css';
+import style from '../Style/Dropdown.css';
 
 const renderDropdDownMenu = (labels) => {
   return (

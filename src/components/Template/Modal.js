@@ -1,29 +1,40 @@
-// @flow
 import * as React from 'react';
 import { Button, Modal, ModalFooter, TextField } from '@folio/stripes/components';
 import { Field, reduxForm } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import type { Props } from '../../../shared';
-import { Localize } from '../../../utils/Function';
-import { duplicaRecordAction } from '../Actions';
+import { Localize } from '../../utils/Function';
+import { createTemplateAction } from './Action';
 
-class DuplicaRecord extends React.Component<Props, {
-  confirming: Boolean;
-}> {
-  constructor(props:Props) {
+type Props = {
+  label: String,
+  formName: String,
+  keyOpenModal: String,
+  fieldLabel: String,
+  buttonStyle: Object,
+  keyConfirm: String,
+  keyCancel: String,
+  cancelButtonStyle: Object,
+  fieldLabel: String,
+  onClick: Function,
+  onHide: Function
+}
+type State = {
+  confirming: boolean,
+  sending: boolean,
+}
+class ReduxModal extends React.Component<Props, State> {
+
+  constructor(props) {
     super(props);
     this.state = {
       confirming: false,
-      testId: 'duplicate-record',
       sending: false,
-      id: 0,
     };
-
     this.onConfirm = this.onConfirm.bind(this);
     this.onHide = this.onHide.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
-    this.duplicateRecord = this.duplicateRecord.bind(this);
+    this.createTemplate = this.createTemplate.bind(this);
     this.getFooter = this.getFooter.bind(this);
   }
 
@@ -54,11 +65,10 @@ class DuplicaRecord extends React.Component<Props, {
     }
   }
 
-  duplicateRecord = () => {
-    const { store: { getState }, duplicaRecord } = this.props;
-    const id = getState().form.duplicaRecordForm.values.recordid;
-    this.setState({ sending: true, id });
-    duplicaRecord(id);
+  createTemplate = () => {
+    const { createTemplate } = this.props;
+    this.setState({ sending: true });
+    createTemplate();
     setTimeout(() => {
       this.onHide();
       this.setState({ sending: false, confirming: false });
@@ -66,32 +76,32 @@ class DuplicaRecord extends React.Component<Props, {
   }
 
   getFooter = () => {
-    const { testId } = this.state;
-    const { buttonStyle, cancelButtonStyle } = this.props;
+    const { buttonStyle, keyConfirm, keyCancel, cancelButtonStyle, fieldLabel, onClick, onHide } = this.props;
     return (
       <ModalFooter>
         <Button
           data-test-duplicate-record-modal-confirm-button
           buttonStyle={buttonStyle}
-          id={`clickable-${testId}-confirm`}
-          onClick={this.duplicateRecord}
+          id={`clickable-${fieldLabel}-confirm`}
+          onClick={onClick}
         >
-          {Localize({ key: 'cataloging.record.duplicate' })}
+          {Localize({ key: keyConfirm })}
         </Button>
         <Button
           data-test-duplicate-record-modal-cancel-button
           buttonStyle={cancelButtonStyle}
-          id={`clickable-${testId}-cancel`}
-          onClick={this.onHide}
+          id={`clickable-${fieldLabel}-cancel`}
+          onClick={onHide}
         >
-          {Localize({ key: 'button.cancel' })}
+          {Localize({ key: keyCancel })}
         </Button>
       </ModalFooter>);
   }
 
 
   render() {
-    const { testId, confirming, sending } = this.state;
+    const { confirming, sending } = this.state;
+    const { label, keyOpenModal, fieldLabel } = this.props;
     const footer = (this.getFooter());
     return (
       <React.Fragment>
@@ -103,7 +113,7 @@ class DuplicaRecord extends React.Component<Props, {
           disabled={sending}
           onClick={() => this.setState({ confirming: true })}
         >
-          {Localize({ key: 'cataloging.record.duplicate' })}
+          {Localize({ key: keyOpenModal })}
         </Button>
         <Modal
           dismissible
@@ -111,23 +121,23 @@ class DuplicaRecord extends React.Component<Props, {
           closeOnBackgroundClick
           open={confirming}
           onClose={this.onHide}
-          label="Duplicate Record from existing one"
+          label={label}
           footer={footer}
         >
-          <form name="duplicaRecordForm">
-            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-            <label htmlFor="recordid">Insert the record id to duplicate:</label>
-            <Field
-              id={testId}
-              name="recordid"
-              type="text"
-              placeholder="Insert id...."
-              onChange={this.handleOnChange}
-              component={TextField}
-              loading={sending}
-              hasClearIcon="true"
-              required="true"
-            />
+          <form name="createTemplateForm">
+            {fieldLabel.map(l => (
+              <Field
+                id={l}
+                name={l}
+                type="text"
+                placeholder={l}
+                onChange={this.handleOnChange}
+                component={TextField}
+                loading={sending}
+                hasClearIcon="true"
+                required="true"
+              />
+            ))}
           </form>
         </Modal>
       </React.Fragment>
@@ -137,18 +147,18 @@ class DuplicaRecord extends React.Component<Props, {
 
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  duplicaRecord: (id) => (_) => {
-    dispatch(duplicaRecordAction(id));
+  createTemplate: (payload) => (_) => {
+    dispatch(createTemplateAction(payload));
   }
 }, dispatch);
 // eslint-disable-next-line no-class-assign
-DuplicaRecord = (connect((state) => ({
-  duplicateRecord: state.marccat.data.recordDuplicate
-}), mapDispatchToProps)(DuplicaRecord));
+ReduxModal = (connect((state) => ({
+  templates: state.marccat.data.template
+}), mapDispatchToProps)(ReduxModal));
 
 export default reduxForm({
-  form: 'duplicaRecordForm',
+  form: 'createTemplateForm',
   navigationCheck: true,
   enableReinitialize: true,
   destroyOnUnmount: false,
-})(DuplicaRecord);
+})(ReduxModal);

@@ -1,15 +1,15 @@
+/* eslint-disable react/no-unused-prop-types */
 /**
  * @format
  * @flow
  */
-/* eslint-disable react/no-unused-prop-types */
 import * as React from 'react';
 import { PaneMenu, IconButton, Button } from '@folio/stripes/components';
 import classNames from 'classnames';
 
 type ToolbarMenuProps = {
-  icon: Array,
-  content: React.node,
+  icon: Array<any>,
+  content: React.Node,
   className?: string,
   style?: Object;
   withPrinter?: bool,

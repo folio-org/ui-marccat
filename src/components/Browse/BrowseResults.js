@@ -7,7 +7,7 @@ import { MultiColumnList, Pane, Paneset, Icon } from '@folio/stripes/components'
 import { AppIcon } from '@folio/stripes-core';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Props, injectCommonProp } from '../../shared';
+import type { Props } from '../../shared';
 import BrowseItemDetail from './BrowseItemDetail';
 import { ActionTypes } from '../../redux/actions/Actions';
 import { findYourQueryFromBrowse } from '../Search/Filter/FilterMapper';
@@ -15,7 +15,7 @@ import { ToolbarButtonMenu, EmptyMessage, NoResultsMessage } from '../../shared/
 import { browseFormatter, browseColMapper } from '../../utils/Formatter';
 import BrowseAssociatedItemDetail from './BrowseAssociatedItemDetail';
 import * as C from '../../shared/config/constants';
-import { generateDropdownMenu } from '../../shared/lib/components/ActionMenu/ActionMenu';
+import { generateDropdownMenu, injectCommonProp } from '../../shared';
 
 type S = {
   browseDetailPanelIsVisible: bool,

@@ -174,6 +174,19 @@ export const headertypeAction = (tag) => {
     },
   };
 };
+
+export const dropDownValuesAction = (payload) => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.TEMPLATE_TAG_URL,
+      type: `headertype${payload.code}values`,
+      params: `leader=${payload.value}&code=${payload.code}&headerTypeCode=${payload.typeCode}&lang=ita`
+    },
+    cb: payload.cb
+  };
+};
+
 /**
  *
  * @param {*} id

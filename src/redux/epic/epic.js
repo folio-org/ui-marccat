@@ -160,7 +160,7 @@ export function epic(action$) {
         .flatMap(response => {
           return of(
             resolveEpicRequest(data.type, data, response),
-            executeEpicCallback((cb) ? cb(response) : () => {}) // for debug purpose
+            executeEpicCallback((cb) ? cb(response) : () => {})
             // cb(response);
           );
         }).catch(errors => of(rejectEpicRequest(errors)));

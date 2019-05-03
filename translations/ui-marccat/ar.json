@@ -121,5 +121,7 @@
     "cataloging.actions.view.marc.docs": "عرض وثائق مارك",
     "cataloging.actions.view.marc.docs.shortcut": "؟",
     "cataloging.record.duplicate": "نسخ التسجيلة",
-    "cataloging.fixedfield.section.add.newtag": "+ إضافة {value} جديدة"
+    "cataloging.fixedfield.section.add.newtag": "+ إضافة {value} جديدة",
+    "search.actionmenu.duplicate.ebook": "نسخ ككتاب إلكتروني",
+    "cataloging.accordion.fixedfield.editable.label": "حقول التحكم (006، 007، 008)"
 }

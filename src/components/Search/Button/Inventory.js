@@ -1,10 +1,7 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import { Button } from '@folio/stripes/components';
-import type { Props } from '../../../shared';
+import type { Props } from '../../../flow/index.js.flow';
 
 const InventoryPluggableButton = ({ buttonLabel, ...props }:Props) => {
   const { buttonTarget, className, withLine } = props;

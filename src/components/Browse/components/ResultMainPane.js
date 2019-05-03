@@ -1,13 +1,9 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import { MultiColumnList, Pane, Icon } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 import { EmptyMessage, NoResultsMessage, ToolbarButtonMenu, injectCommonProp } from '../../../shared';
 import { browseFormatter, browseColMapper } from '../../../utils/Formatter';
-import * as C from '../../../shared/config/constants';
 
 class ResultMainPane extends React.Component<{}, {}> {
     renderButtonMenu = () => {
@@ -55,7 +51,7 @@ class ResultMainPane extends React.Component<{}, {}> {
                   <MultiColumnList
                     contentData={browseRecords}
                     autosize="true"
-                    isEmptyMessage={C.EMPTY_STRING}
+                    isEmptyMessage={<NoResultsMessage {...this.props} />}
                     formatter={browseFormatter}
                     onRowClick={handleBrowseDetails()}
                     rowMetadata={['Access point', 'Authority Records', 'Bibliographic Records']}

@@ -1,7 +1,4 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -35,7 +32,7 @@ import {
   injectCommonProp,
   post
 } from '../../../shared';
-import { ActionTypes } from '../../../redux/actions/Actions';
+import { ACTION } from '../../../redux/actions/Actions';
 import { buildUrl, findParam, Localize } from '../../../utils/Function';
 import {
   filterMandatoryFields,
@@ -43,7 +40,7 @@ import {
   filterFixedFieldForSaveRecord,
   filterVariableFields
 } from '../Utils/MarcApiUtils';
-import * as C from '../../../shared/config/constants';
+import * as C from '../../../config/constants';
 import * as MarcAction from '../Actions';
 import type { Props } from '../../../shared';
 
@@ -76,7 +73,7 @@ export class MarcRecord extends React.Component<Props, {
   componentWillMount() {
     const { dispatch, datastore: { emptyRecord } } = this.props;
     const { leader } = emptyRecord.results;
-    dispatch({ type: ActionTypes.LEADER_VALUES_FROM_TAG, leader: leader.value, code: leader.code, typeCode: '15' });
+    dispatch({ type: ACTION.LEADER_VALUES_FROM_TAG, leader: leader.value, code: leader.code, typeCode: '15' });
   }
 
   getCurrentRecord = (): Object => {
@@ -168,7 +165,7 @@ export class MarcRecord extends React.Component<Props, {
   handleClose = () => {
     const { id, submit } = this.state;
     const { dispatch, reset, router, toggleFilterPane } = this.props;
-    dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', isChecked: false });
+    dispatch({ type: ACTION.FILTERS, payload: {}, filterName: '', isChecked: false });
     toggleFilterPane();
     dispatch(reset());
     return (submit) ? router.push(`/marccat/search?savedId=${id}`) : router.push('/marccat/search');
@@ -241,7 +238,7 @@ export class MarcRecord extends React.Component<Props, {
             lastMenu={this.renderButtonMenu()}
           >
             <Row center="xs">
-              <Col xs={8}>
+              <Col xs={10}>
                 <div className={style.recordContainer}>
                   <AccordionSet>
                     <form name="bibliographicRecordForm" onSubmit={this.saveRecord}>

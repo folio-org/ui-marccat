@@ -1,7 +1,4 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import { connect } from 'react-redux';
 import {
@@ -13,10 +10,10 @@ import {
   Accordion,
   MultiColumnList
 } from '@folio/stripes/components';
-import { ActionTypes } from '../../redux/actions/Actions';
-import type { Props } from '../../shared';
+import { ACTION } from '../../redux/actions/Actions';
+import type { Props } from '../../flow/index.js.flow';
 import { getTag100, getTitle100, remapForAssociatedBibList } from '../../utils/Mapper';
-import { EMPTY_STRING } from '../../shared/config/constants';
+import { EMPTY_STRING } from '../../config/constants';
 import { resultsFormatterForAssociated, columnMapperForAssociated } from '../../utils/Formatter';
 import style from '../../shared/styles/common.css';
 
@@ -98,7 +95,7 @@ export class BrowseItemDetail extends React.Component<P, {
               onRowClick={(e, meta) => {
                 const { dispatch } = this.props;
                 const id = meta['001'];
-                dispatch({ type: ActionTypes.BROWSE_ASSOCIATED_DETAILS, query: id, recordType: meta.recordView, mustOpenPanel: true });
+                dispatch({ type: ACTION.BROWSE_ASSOCIATED_DETAILS, query: id, recordType: meta.recordView, mustOpenPanel: true });
               }}
               visibleColumns={[
                 'resultView',

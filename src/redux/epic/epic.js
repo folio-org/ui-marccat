@@ -1,8 +1,8 @@
 import { from } from 'rxjs/observable/from';
 import { of } from 'rxjs/observable/of';
 import { Redux } from '../helpers/Redux';
-import { ACTION } from '../../shared';
-import { ENDPOINT } from '../../shared/config/constants';
+import { ENDPOINT } from '../../config/constants';
+import { ACTION } from '../actions';
 
 const initialState = {};
 const historyState = { list: [] };

@@ -1,16 +1,12 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import { MarcatSettings as Settings } from './components';
 import { Router } from './router';
 import { reducer, epics } from './redux';
 import { injectCommonProp } from './shared';
 import MARCcat from './MARCcat';
-import { ActionTypes } from './redux/actions';
-import { TAGS } from './components/Cataloguing';
-import { REDUX } from './shared/config/constants';
+import { ACTION } from './redux/actions';
+import { REDUX } from './config/constants';
 
 import './shared/styles/common.css';
 
@@ -25,11 +21,10 @@ type Props = {
   children?: React.Node,
 };
 
-
 class MARCCatRouting extends React.Component<Props, {
   filterPaneIsVisible: Boolean,
 }> {
-  constructor(props, context) {
+  constructor(props:Props, context) {
     super(props, context);
     this.state = {
       filterPaneIsVisible: true,
@@ -46,8 +41,7 @@ class MARCCatRouting extends React.Component<Props, {
 
   componentDidMount() {
     const { store: { dispatch } } = this.props;
-    dispatch({ type: ActionTypes.HEADER_TYPES_008, code: TAGS._008 });
-    dispatch({ type: ActionTypes.SETTINGS, data: {} });
+    dispatch({ type: ACTION.SETTINGS, data: {} });
   }
 
   toggleFilterPane = () => {

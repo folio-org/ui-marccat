@@ -1,10 +1,7 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import { Icon } from '@folio/stripes/components';
-import type { Props } from '../../..';
+import type { Props } from '../../../flow/index.js.flow';
 import css from '../Style/NoResultsMessage.css';
 
 const NoResultsMessage = ({ ...props }:Props) => {

@@ -1,12 +1,9 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Icon, MultiColumnList, Pane } from '@folio/stripes/components';
 import { injectCommonProp, ToolbarButtonMenu } from '../../../shared';
-import type { Props } from '../../../shared';
+import type { Props } from '../../../flow/index.js.flow';
 
 type P = Props & {
   label: string;

@@ -1,7 +1,4 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import SingleTag00X from './Tags/SingleTag00X';
 

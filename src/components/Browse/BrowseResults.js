@@ -1,20 +1,17 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import { MultiColumnList, Pane, Paneset, Icon } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import type { Props } from '../../shared';
+import type { Props } from '../../flow/index.js.flow';
 import BrowseItemDetail from './BrowseItemDetail';
-import { ActionTypes } from '../../redux/actions/Actions';
+import { ACTION } from '../../redux/actions/Actions';
 import { findYourQueryFromBrowse } from '../Search/Filter/FilterMapper';
 import { ToolbarButtonMenu, EmptyMessage, NoResultsMessage } from '../../shared/lib';
 import { browseFormatter, browseColMapper } from '../../utils/Formatter';
 import BrowseAssociatedItemDetail from './BrowseAssociatedItemDetail';
-import * as C from '../../shared/config/constants';
+import * as C from '../../config/constants';
 import { generateDropdownMenu, injectCommonProp } from '../../shared';
 
 type S = {
@@ -56,10 +53,10 @@ export class BrowseResults extends React.Component<Props, S> {
     findYourQueryFromBrowse[indexFilter + '-' + conditionFilter];
     const baseQuery = indexForQuery.concat(id);
     if (containsAuthorities) {
-      dispatch({ type: ActionTypes.AUTH_DETAILS_BROWSE, query: baseQuery, isAuthority: true });
-      dispatch({ type: ActionTypes.DETAILS_BROWSE, query: baseQuery, isAuthority: true });
+      dispatch({ type: ACTION.AUTH_DETAILS_BROWSE, query: baseQuery, isAuthority: true });
+      dispatch({ type: ACTION.DETAILS_BROWSE, query: baseQuery, isAuthority: true });
     } else {
-      dispatch({ type: ActionTypes.DETAILS_BROWSE, query: baseQuery, isAuthority: false });
+      dispatch({ type: ACTION.DETAILS_BROWSE, query: baseQuery, isAuthority: false });
     }
     this.setState({
       browseDetailPanelIsVisible: true,
@@ -176,7 +173,7 @@ export class BrowseResults extends React.Component<Props, S> {
           dismissible
           onClose={() => {
             const { dispatch } = this.props;
-            dispatch({ type: ActionTypes.CLOSE_BROWSE_ASSOCIATED_DETAILS, openPanel: false });
+            dispatch({ type: ACTION.CLOSE_BROWSE_ASSOCIATED_DETAILS, openPanel: false });
           }}
         >
           {(isLoadingAssociated) ?

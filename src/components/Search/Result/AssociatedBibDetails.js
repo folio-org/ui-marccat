@@ -1,12 +1,9 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, KeyValue, AccordionSet, FilterAccordionHeader, Accordion } from '@folio/stripes/components';
 import InventoryPluggableButton from '../Button/Inventory';
-import type { Props } from '../../../shared';
+import type { Props } from '../../../flow/index.js.flow';
 import { getTag245, getTitle245 } from '../../../utils/Mapper';
 
 import style from '../../../shared/styles/common.css';

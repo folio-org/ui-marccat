@@ -2,7 +2,7 @@ import React from 'react';
 import { Accordion } from '@folio/stripes/components';
 import { MarcLeader } from '../..';
 import { Localize } from '../../../../utils/Function';
-import SingleFixedField from './SingleFixedField';
+import FixedField from './FixedField';
 import EditableFixedField from './EditableFixedField';
 
 export default ({ ...props }) => {
@@ -22,7 +22,7 @@ export default ({ ...props }) => {
         id="control-field-create-static"
         label={Localize({ key: 'cataloging.accordion.fixedfield.label' })}
       >
-        <SingleFixedField
+        <FixedField
           {...props}
           fixedfields={record.fields.filter(f => f.code < '006')}
         />

@@ -1,13 +1,10 @@
 
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import { Field } from 'redux-form';
 import { Select } from '@folio/stripes/components';
-import { ActionTypes } from '../../../redux/actions';
-import { SORT_TYPE, FILTER_NAME } from '../../../shared/config/constants';
+import { ACTION } from '../../../redux/actions';
+import { SORT_TYPE, FILTER_NAME } from '../../../config/constants';
 
 export default ({ ...props }) => {
   const { rest, name, id } = props;
@@ -74,7 +71,7 @@ export default ({ ...props }) => {
     const index = event.target.options.selectedIndex - 1;
     const sortType = options[index].sortBy;
     disableSortOnAuthority(sortType);
-    dispatch({ type: ActionTypes.SETTINGS, data: { sortType } });
+    dispatch({ type: ACTION.SETTINGS, data: { sortType } });
   };
 
   return (

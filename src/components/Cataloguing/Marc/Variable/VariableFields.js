@@ -1,7 +1,4 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import { MarcEditableList } from '../..';
 import { replaceAll } from '../../Utils/MarcApiUtils';

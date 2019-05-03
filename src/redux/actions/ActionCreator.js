@@ -1,86 +1,87 @@
-import { ActionTypes } from './Actions';
+import { ACTION } from './Actions';
+import { EMPTY_STRING } from '../../config/constants';
 
 export const isfetchingSearchRequest = (isLoading, moreResult) => ({
-  type: ActionTypes.FETCH_SEARCH_REQUESTED,
+  type: ACTION.FETCH_SEARCH_REQUESTED,
   payload: isLoading,
   moreData: moreResult
 });
 export const isfetchingDetailsRequest = (isLoading) => ({
-  type: ActionTypes.FETCH_DETAILS_REQUESTED,
+  type: ACTION.FETCH_DETAILS_REQUESTED,
   payload: isLoading
 });
 export const isfetchingBrowseRequest = (isLoading) => ({
-  type: ActionTypes.FETCH_DETAILS_BROWSE_REQUESTED,
+  type: ACTION.FETCH_DETAILS_BROWSE_REQUESTED,
   payload: isLoading
 });
 export const isLockedRecordRequest = (isLoading) => ({
-  type: ActionTypes.LOCK_RECORD_REQUESTED,
+  type: ACTION.LOCK_RECORD_REQUESTED,
   payload: isLoading
 });
 export const isRecordDetailRequest = (isLoading) => ({
-  type: ActionTypes.RECORD_DETAIL_REQUESTED,
+  type: ACTION.RECORD_DETAIL_REQUESTED,
   payload: isLoading
 });
 export const isFetchingTemplateByIdRequest = (isLoading) => ({
-  type: ActionTypes.FETCH_TEMPLATE_GET_BY_ID,
+  type: ACTION.FETCH_TEMPLATE_GET_BY_ID,
   payload: isLoading
 });
 export const isfetchingDetailsAssociatedRequest = (isLoading) => ({
-  type: ActionTypes.FETCH_DETAILS_ASSOCIATED_REQUESTED,
+  type: ACTION.FETCH_DETAILS_ASSOCIATED_REQUESTED,
   payload: isLoading
 });
 export const isfetchingBrowseDetailsAssociatedRequest = (isLoading) => ({
-  type: ActionTypes.FETCH_BROWSE_DETAILS_ASSOCIATED_REQUESTED,
+  type: ACTION.FETCH_BROWSE_DETAILS_ASSOCIATED_REQUESTED,
   payload: isLoading
 });
 export const isfetchingAssociatedRequest = (isLoading) => ({
-  type: ActionTypes.FETCH_ASSOCIATED_REQUESTED,
+  type: ACTION.FETCH_ASSOCIATED_REQUESTED,
   payload: isLoading
 });
 export const isfetchingCounterRequest = (isLoading) => ({
-  type: ActionTypes.FETCH_COUNTER_REQUESTED,
+  type: ACTION.FETCH_COUNTER_REQUESTED,
   payload: isLoading
 });
 export const isfetchingScanBrowseRequest = (isLoading) => ({
-  type: ActionTypes.FETCH_BROWSE_FIRST_PAGE,
+  type: ACTION.FETCH_BROWSE_FIRST_PAGE,
   payload: isLoading
 });
 export const fetchAssociatedBibRecords = (records, recordType) => ({
-  type: ActionTypes.ASSOCIATED_BIB_REC_SUCCESS,
+  type: ACTION.ASSOCIATED_BIB_REC_SUCCESS,
   payload: records,
   recType: recordType
 });
 export const fetchScanBrowsingRecords = (records) => ({
-  type: ActionTypes.BROWSE_FIRST_PAGE_SUCCESS,
+  type: ACTION.BROWSE_FIRST_PAGE_SUCCESS,
   payload: records
 });
 export const fetchCountDocRecords = (records) => ({
-  type: ActionTypes.COUNT_DOC_SUCCESS,
+  type: ACTION.COUNT_DOC_SUCCESS,
   payload: records
 });
 export const fetchBrowseAuthorityDetail = (records, isAuthority) => ({
-  type: ActionTypes.AUTH_DETAILS_BROWSE_SUCCESS,
+  type: ACTION.AUTH_DETAILS_BROWSE_SUCCESS,
   payload: records,
   isAuthority
 });
 export const fetchDetailsRecords = (records, recordType) => ({
-  type: ActionTypes.DETAILS_BY_TITLE,
+  type: ACTION.DETAILS_BY_TITLE,
   payload: records,
   recType: recordType
 });
 export const fetchAssociatedBibDetailsRecords = (records, recordType, mustOpenPanel) => ({
-  type: ActionTypes.ASSOCIATED_DETAILS_SUCCESS,
+  type: ACTION.ASSOCIATED_DETAILS_SUCCESS,
   payload: records,
   recType: recordType,
   isDetailBibAssOpen: mustOpenPanel
 });
 export const fetchBrowseDetailAssociatedRecords = (records, mustOpenPanel) => ({
-  type: ActionTypes.BROWSE_ASSOCIATED_DETAILS_SUCCESS,
+  type: ACTION.BROWSE_ASSOCIATED_DETAILS_SUCCESS,
   payload: records,
   mustOpenPanel
 });
 export const fetchSearchEngineRecords = (queryBib, queryAuth, to, moreData, bibliographicResults, bibCounter, authorityResults, authCounter, dataOld, oldBibArray, oldAuthArray) => ({
-  type: ActionTypes.RECORD_SUCCESS,
+  type: ACTION.RECORD_SUCCESS,
   queryBib,
   queryAuth,
   moreData,
@@ -95,125 +96,171 @@ export const fetchSearchEngineRecords = (queryBib, queryAuth, to, moreData, bibl
 });
 
 export const fetchBrowseDetail = (results, counter, isAuthority) => ({
-  type: ActionTypes.DETAILS_BROWSE_SUCCESS,
+  type: ACTION.DETAILS_BROWSE_SUCCESS,
   payload: results,
   count: counter,
   isAuthority
 });
 export const isFetchingLeaderTagRequest = (isLoading) => ({
-  type: ActionTypes.FETCH_LEADER_VALUES_FROM_TAG,
+  type: ACTION.FETCH_LEADER_VALUES_FROM_TAG,
   payload: isLoading
 });
 export const isFetchingHeaderTypes006 = (isLoading) => ({
-  type: ActionTypes.FETCH_HEADER_TYPES_006,
+  type: ACTION.FETCH_HEADER_TYPES_006,
   payload: isLoading
 });
 export const fetchHeaderTypes006 = (records) => ({
-  type: ActionTypes.HEADER_TYPES_006_SUCCESS,
+  type: ACTION.HEADER_TYPES_006_SUCCESS,
   payload: records
 });
 export const isFetchingHeaderTypes007 = (isLoading) => ({
-  type: ActionTypes.FETCH_HEADER_TYPES_007,
+  type: ACTION.FETCH_HEADER_TYPES_007,
   payload: isLoading
 });
 export const fetchHeaderTypes007 = (records) => ({
-  type: ActionTypes.HEADER_TYPES_007_SUCCESS,
+  type: ACTION.HEADER_TYPES_007_SUCCESS,
   payload: records
 });
 export const isFetchingHeaderTypes008 = (isLoading) => ({
-  type: ActionTypes.FETCH_HEADER_TYPES_008,
+  type: ACTION.FETCH_HEADER_TYPES_008,
   payload: isLoading
 });
 export const fetchHeaderTypes008 = (records) => ({
-  type: ActionTypes.HEADER_TYPES_008_SUCCESS,
+  type: ACTION.HEADER_TYPES_008_SUCCESS,
   payload: records
 });
 export const isFetchingTemplateViewRequest = (isLoading) => ({
-  type: ActionTypes.FETCH_VIEW_TEMPLATE,
+  type: ACTION.FETCH_VIEW_TEMPLATE,
   payload: isLoading
 });
 export const fetchTemplateView = (records) => ({
-  type: ActionTypes.VIEW_TEMPLATE_SUCCESS,
+  type: ACTION.VIEW_TEMPLATE_SUCCESS,
   payload: records
 });
 export const fetchTemplateById = (records) => ({
-  type: ActionTypes.TEMPLATE_GET_BY_ID_SUCCESS,
+  type: ACTION.TEMPLATE_GET_BY_ID_SUCCESS,
   payload: records
 });
 export const lockedRecord = (record) => ({
-  type: ActionTypes.LOCK_RECORD_SUCCESS,
+  type: ACTION.LOCK_RECORD_SUCCESS,
   payload: record
 });
 export const recordDetailSuccess = (record) => ({
-  type: ActionTypes.RECORD_DETAIL_SUCCESS,
+  type: ACTION.RECORD_DETAIL_SUCCESS,
   payload: record
 });
 export const fetchLeaderFromTag = (records) => ({
-  type: ActionTypes.LEADER_VALUES_FROM_TAG_SUCCESS,
+  type: ACTION.LEADER_VALUES_FROM_TAG_SUCCESS,
   payload: records
 });
 export const isFetchingTag006Request = (isLoading) => ({
-  type: ActionTypes.FETCH_VALUES_FROM_TAG_006,
+  type: ACTION.FETCH_VALUES_FROM_TAG_006,
   payload: isLoading
 });
 export const fetchValuesFromTag006 = (records) => ({
-  type: ActionTypes.VALUES_FROM_TAG_006_SUCCESS,
+  type: ACTION.VALUES_FROM_TAG_006_SUCCESS,
   payload: records
 });
 export const isFetchingTag007Request = (isLoading) => ({
-  type: ActionTypes.FETCH_VALUES_FROM_TAG_007,
+  type: ACTION.FETCH_VALUES_FROM_TAG_007,
   payload: isLoading
 });
 export const fetchValuesFromTag007 = (records) => ({
-  type: ActionTypes.VALUES_FROM_TAG_007_SUCCESS,
+  type: ACTION.VALUES_FROM_TAG_007_SUCCESS,
   payload: records
 });
 export const isFetchingTag008Request = (isLoading) => ({
-  type: ActionTypes.FETCH_VALUES_FROM_TAG_008,
+  type: ACTION.FETCH_VALUES_FROM_TAG_008,
   payload: isLoading
 });
 export const isFetchingChangeTag008 = (isLoading) => ({
-  type: ActionTypes.CHANGE_LEADER_REQUEST,
+  type: ACTION.CHANGE_LEADER_REQUEST,
   payload: isLoading
 });
 export const isFetchingHeadingByTag = (isLoading) => ({
-  type: ActionTypes.FETCH_HEADING_BY_TAG,
+  type: ACTION.FETCH_HEADING_BY_TAG,
   payload: isLoading
 });
 export const fetchHeadingByTag = (records) => ({
-  type: ActionTypes.FETCH_HEADING_BY_TAG_SUCCESS,
+  type: ACTION.FETCH_HEADING_BY_TAG_SUCCESS,
   payload: records
 });
 export const fetchValuesFromTag008 = (records) => ({
-  type: ActionTypes.VALUES_FROM_TAG_008_SUCCESS,
+  type: ACTION.VALUES_FROM_TAG_008_SUCCESS,
   payload: records
 });
 export const isFetchingTag008ByLeaderRequest = (isLoading) => ({
-  type: ActionTypes.CHANGE_008_BY_LEADER_REQUESTED,
+  type: ACTION.CHANGE_008_BY_LEADER_REQUESTED,
   payload: isLoading
 });
 export const fetchValuesTag008ByLeader = (records) => ({
-  type: ActionTypes.CHANGE_008_BY_LEADER_SUCCESS,
+  type: ACTION.CHANGE_008_BY_LEADER_SUCCESS,
   payload: records
 });
 export const fetchTotalCountBibRecords = (records) => ({
-  type: ActionTypes.TOTAL_BIB_COUNT_SUCCESS,
+  type: ACTION.TOTAL_BIB_COUNT_SUCCESS,
   payload: records
 });
 
 export const fetchTotalCountAuthRecords = (records) => ({
-  type: ActionTypes.TOTAL_AUTH_COUNT_SUCCESS,
+  type: ACTION.TOTAL_AUTH_COUNT_SUCCESS,
   payload: records
 });
 export const isSettingsRequest = () => ({
-  type: ActionTypes.SETTINGS,
+  type: ACTION.SETTINGS,
   payload: {} // generic payload
 });
 export const fetchSuccess = (message) => ({
-  type: ActionTypes.SUCCESS,
+  type: ACTION.SUCCESS,
   payload: message
 });
 export const fetchFailure = (message) => ({
-  type: ActionTypes.REJECT,
+  type: ACTION.REJECT,
   payload: message
 });
+/**
+ *
+ * @param {*} payload
+ */
+export const filterAction = (payload:Object, filterName:string, isChecked:boolean) => {
+  return {
+    type: ACTION.FILTERS,
+    payload,
+    filterName,
+    isChecked
+  };
+};
+/**
+ *
+ * @param {*} payload
+ */
+export const resetFilter = () => {
+  return {
+    type: ACTION.FILTERS,
+    payload: {},
+    filterName: EMPTY_STRING,
+    isChecked: false
+  };
+};
+
+/**
+ *
+ * @param {*} payload
+ */
+export const addHistoryData = (data) => {
+  return {
+    type: ACTION.HISTORY,
+    data,
+  };
+};
+
+
+/**
+ *
+ * @return {*} payload
+ */
+export const resetStore = () => {
+  return {
+    type: ACTION.REQUEST_CLEAR,
+  };
+};

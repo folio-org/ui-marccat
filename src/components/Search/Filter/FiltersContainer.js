@@ -1,15 +1,12 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import FilterGroups, { initialFilterState } from '@folio/stripes-components/lib/FilterGroups';
-import { ActionTypes } from '../../../redux/actions';
-import { EMPTY_STRING } from '../../../shared/config/constants';
-import type { Props } from '../../../shared';
+import { ACTION } from '../../../redux/actions';
+import { EMPTY_STRING } from '../../../config/constants';
+import type { Props } from '../../../flow/index.js.flow';
 
 import styles from './FiltersContainer.css';
-import { filterAction } from '../../../shared/action/ActionCreator';
+import { filterAction } from '../../../redux/actions/ActionCreator';
 
 export default class FiltersContainer extends React.Component<Props, {}> {
   constructor(props) {
@@ -53,7 +50,7 @@ export default class FiltersContainer extends React.Component<Props, {}> {
     this.setState(prevState => {
       const filters = Object.assign({}, prevState.filters);
       filters[name] = checked;
-      dispatch({ type: ActionTypes.FILTERS, payload: filters, filterName: name, isChecked: checked });
+      dispatch({ type: ACTION.FILTERS, payload: filters, filterName: name, isChecked: checked });
       return { filters };
     });
   }

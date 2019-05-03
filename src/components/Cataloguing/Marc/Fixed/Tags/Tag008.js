@@ -1,20 +1,17 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { isEmpty, first, cloneDeep } from 'lodash';
 import { Field } from 'redux-form';
 import { Row, Col, Select, TextField } from '@folio/stripes/components';
 import { injectCommonProp, Props, post } from '../../../../../shared';
-import { ActionTypes } from '../../../../../redux/actions';
 import { decamelizify } from '../../../../../utils/Function';
 import { RECORD_FIELD_STATUS, TAGS, TAGS_NAME } from '../../../Utils/MarcConstant';
-import * as C from '../../../../../shared/config/constants';
+import * as C from '../../../../../config/constants';
 import { buildUrl } from '../../../../../redux';
 import { MarcField } from '../../..';
 import style from '../../../Style/index.css';
+import { ACTION } from '../../../../../redux/actions/Actions';
 
 
 class Tag008 extends React.Component<Props, {}> {
@@ -40,7 +37,7 @@ class Tag008 extends React.Component<Props, {}> {
     } else {
       headerTypeCode = currentHeaderTypeCode;
     }
-    dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: headerTypeCode });
+    dispatch({ type: ACTION.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: headerTypeCode });
     first(record.fields.filter(f => f.code === TAGS._008)).fieldStatus = RECORD_FIELD_STATUS.CHANGED;
   }
 
@@ -49,7 +46,7 @@ class Tag008 extends React.Component<Props, {}> {
     const tag008 = first(record.fields.filter(f => f.code === TAGS._008));
     tag008.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
     this.state.currentHeaderTypeCode = tag008.fixedField.headerTypeCode;
-    dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: tag008.fixedField.headerTypeCode });
+    dispatch({ type: ACTION.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: tag008.fixedField.headerTypeCode });
     dispatch(change(TAGS_NAME._008, tag008.fixedField.headerTypeCode));
   };
 
@@ -117,7 +114,7 @@ class Tag008 extends React.Component<Props, {}> {
     remappedValues.push(result);
 
     if (newValuesFromChangedLeader && newValuesFromChangedLeader.headerTypeCode !== currentHeaderTypeCode) {
-      dispatch({ type: ActionTypes.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: newValuesFromChangedLeader.headerTypeCode });
+      dispatch({ type: ACTION.VALUES_FROM_TAG_008, leader: leaderValue, code: TAGS._008, typeCode: newValuesFromChangedLeader.headerTypeCode });
       dispatch(change(TAGS_NAME._008, newValuesFromChangedLeader.headerTypeCode));
       this.setState({ currentHeaderTypeCode: newValuesFromChangedLeader.headerTypeCode });
       let json = Object.assign({}, jsonReq);

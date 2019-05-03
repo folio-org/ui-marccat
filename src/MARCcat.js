@@ -1,14 +1,11 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import { Paneset, Pane } from '@folio/stripes/components';
 import { injectCommonProp } from './shared';
-import type { Props } from './shared';
+import type { Props } from './flow/index.js.flow';
 import { SearchPanel } from './components/Search';
 import PanelHistory from './components/Search/History/PanelHistory';
-import * as C from './shared/config/constants';
+import * as C from './config/constants';
 
 /**
  * @module MARCcat

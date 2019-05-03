@@ -1,5 +1,5 @@
 export { default as StaticTag00X } from './Marc/Fixed/Tags/SingleTag00X';
-export { default as DynamicTag00X } from './Marc/Fixed/Tags/Tag00X';
+export { default as Tag00X } from './Marc/Fixed/Tags/Tag00X';
 export { default as ActionsMenu } from './Marc/Menu/ActionsMenu';
 export { default as MarcField } from './Marc/MarcField';
 export { default as MarcLeader } from './Marc/MarcLeader';
@@ -11,6 +11,7 @@ export {
   TAG_WITH_NO_HEADING_ASSOCIATED,
   SUBFIELD_DELIMITER,
   SORTED_BY,
+  TAGS_NAME,
   TAGS
 } from './Utils/MarcConstant';
 

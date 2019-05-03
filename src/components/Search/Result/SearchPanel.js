@@ -1,9 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-/**
- * @format
- * @flow
- */
+// @flow
 import React, { Fragment } from 'react';
 import {
   SearchField,
@@ -15,7 +12,7 @@ import {
 import { reduxForm, Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import ResetButton from '../Filter/ResetButton';
-import type { Props } from '../../../shared';
+import type { Props } from '../../../flow/index.js.flow';
 import {
   SearchIndexes,
   SearchConditions,
@@ -24,10 +21,10 @@ import {
   getFormatFilterQuery,
   transitionToParams
 } from '..';
-import { ActionTypes } from '../../../redux/actions/Actions';
+import { ACTION } from '../../../redux/actions/Actions';
 import { findYourQuery } from '../Filter';
 import { remapFilters } from '../../../utils/Mapper';
-import { EMPTY_STRING } from '../../../shared/config/constants';
+import { EMPTY_STRING } from '../../../config/constants';
 import styles from '../Style/index.css';
 import { historySearchAction, searchDetailAction } from '../Actions';
 import { findParam } from '../../../utils/Function';
@@ -63,7 +60,7 @@ class SearchPanel extends React.Component<P, {}> {
 
   handleSearchFromCataloging = (id) => {
     const { dispatch } = this.props;
-    dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: `AN "${id}"`, queryAuth: `AN "${id}"`, from: '1', to: '30' });
+    dispatch({ type: ACTION.SEARCH, moreData: 'N', queryBib: `AN "${id}"`, queryAuth: `AN "${id}"`, from: '1', to: '30' });
     dispatch(searchDetailAction(id));
     // this.handleSearchHistory({ recordType: 'all', query: `AN "${id}"`, index: 'AN', found: 1, num:1 });
     // const inputValue = '"' + e.target.form[2].defaultValue + '"';
@@ -76,8 +73,8 @@ class SearchPanel extends React.Component<P, {}> {
     const { store, store: { getState }, dispatch, router } = this.props;
     if (e.charCode === 13 || e.key === 'Enter') {
       e.preventDefault();
-      store.dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: true });
-      store.dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
+      store.dispatch({ type: ACTION.CLOSE_PANELS, closePanels: true });
+      store.dispatch({ type: ACTION.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
       const inputValue = '"' + e.target.form[2].defaultValue + '"';
       isBrowseRequested = false;
       let baseQuery;
@@ -116,7 +113,7 @@ class SearchPanel extends React.Component<P, {}> {
       }
       if (conditionFilter === 'BROWSE') {
         isBrowseRequested = true;
-        dispatch({ type: ActionTypes.BROWSE_FIRST_PAGE, query: bibQuery, from: '1', to: '30' });
+        dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query: bibQuery, from: '1', to: '30' });
         router.push('/marccat/browse');
         transitionToParams('q', bibQuery);
         this.setState({
@@ -135,15 +132,15 @@ class SearchPanel extends React.Component<P, {}> {
           || indexForQuery === 'CP '
           || indexForQuery === 'PP '
           || indexForQuery === 'PW ') {
-          dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: bibQuery, queryAuth: EMPTY_STRING, from: '1', to: '30' });
+          dispatch({ type: ACTION.SEARCH, moreData: 'N', queryBib: bibQuery, queryAuth: EMPTY_STRING, from: '1', to: '30' });
           this.handleSearchHistory({ recordType: 'biblio', query: bibQuery, index: indexForQuery, found: 0 });
           transitionToParams('q', bibQuery);
-          dispatch({ type: ActionTypes.TOTAL_BIB_COUNT, query: bibQuery });
+          dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
         } else {
-          dispatch({ type: ActionTypes.SEARCH, moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
+          dispatch({ type: ACTION.SEARCH, moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
           transitionToParams('q', authQuery);
-          dispatch({ type: ActionTypes.TOTAL_BIB_COUNT, query: bibQuery });
-          dispatch({ type: ActionTypes.TOTAL_AUTH_COUNT, query: authQuery });
+          dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
+          dispatch({ type: ACTION.TOTAL_AUTH_COUNT, query: authQuery });
           this.handleSearchHistory({ recordType: 'all', query: bibQuery, index: indexForQuery, found: 0, record: {} });
         }
       }
@@ -177,7 +174,7 @@ class SearchPanel extends React.Component<P, {}> {
 
   handleResetAllButton = () => {
     const { dispatch, reset } = this.props;
-    dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', isChecked: false });
+    dispatch({ type: ACTION.FILTERS, payload: {}, filterName: '', isChecked: false });
     dispatch(reset('searchForm'));
     transitionToParams('filter', 'false');
   };

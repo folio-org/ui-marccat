@@ -5,7 +5,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import queryString from 'querystring';
-import { META, ENDPOINT, EMPTY_SPACED_STRING, EMPTY_STRING } from '../shared/config/constants';
+import { META, ENDPOINT, EMPTY_SPACED_STRING, EMPTY_STRING } from '../config/constants';
 
 /**
  *

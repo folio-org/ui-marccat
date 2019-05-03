@@ -1,34 +1,34 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
-import { Select, Row, Col } from '@folio/stripes/components';
+import { Select, Row, Col, TextField } from '@folio/stripes/components';
 import { Field } from 'redux-form';
 import { connect } from 'react-redux';
+import { cloneDeep, first } from 'lodash';
 import AddTagButton from '../../Button/AddTagButton';
 import {
   EMPTY_FIXED_FIELD,
   TAGS,
   TAGS_NAME
 } from '../../../Utils/MarcConstant';
-import type { Props } from '../../../../../shared';
-import type { HeadingType } from '../../../Models/model';
+import type { Props } from '../../../../../flow/index.js.flow';
+import type { HeadingType } from '../../../../Types/cataloging.js.flow';
 import MarcField from '../../MarcField';
-import style from '../../../Style/index.css';
-import { insert } from '../../../../../flow/Arrays';
-import { dropDownValuesAction } from '../../../Actions';
+import { insert } from '../../../../../flow/utils/Arrays';
+import { dropDownValuesAction, changeDisplayValueAction } from '../../../Actions';
 import { decamelizify } from '../../../../../utils/Function';
-import { EMPTY_SPACED_STRING } from '../../../../../shared/config/constants';
+import { ReduxForm } from '../../../../../redux/helpers/Redux';
+import style from '../../../Style/index.css';
+import { EMPTY_SPACED_STRING, REDUX } from '../../../../../config/constants';
+import { DropDown } from '../../FormField';
 
 type P = {
   handleOnChange: () => void,
 } & Props;
 
-
-class Tag00X extends React.Component<P, {
-  fields: Array<any>
-}> {
+type State = {
+  fields: Array<*>,
+}
+class Tag00X extends React.Component<P, State> {
 
   constructor(props: P) {
     super(props);
@@ -36,20 +36,23 @@ class Tag00X extends React.Component<P, {
       fields: props.field,
       expand006: false,
       expand007: false,
-      selected: false,
       dropdown: {
         for006: [],
-        for007: []
+        for007: [],
+        for008: []
       },
+      displayValue: undefined,
+      request: {},
     };
     this.handleAdd = this.handleAdd.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
+    this.handleOnChange = this.handleOnChange.bind(this);
     this.onHandleClick = this.onHandleClick.bind(this);
   }
 
   componentDidMount() {
     const { loadHeadertype } = this.props;
-    loadHeadertype([TAGS._006, TAGS._007]);
+    loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
   }
 
   handleAdd = (code, index) => {
@@ -65,43 +68,83 @@ class Tag00X extends React.Component<P, {
   }
 
   handleOnChange = (e, code) => {
-    const { record: { leader: { value } }, dispatch, change } = this.props;
-    const typeCode = e.target.value;
+    const { record: { leader: { value } }, dispatch } = this.props;
+    const headerTypeCode = e.target.value;
     const payload = {
       value,
       code,
-      typeCode,
+      headerTypeCode,
       cb: (r) => this.prepareResult(r, code)
     };
     dispatch(dropDownValuesAction(payload));
-    dispatch(change(code, typeCode));
   };
 
-  changeDisplayValue = () => { };
+  changeDisplayValue = (code: string): void => {
+    const { store } = this.props;
+    const { values } = ReduxForm.select(store, REDUX.FORM.BIBLIOGRAPHIC_FORM);
+    const payload = this.prepareDataForDisplay(values, code);
+    const cb = (r) => this.performChange(r, code);
+    store.dispatch(changeDisplayValueAction(payload, cb));
+  };
 
-  prepareResult = (data, code) => {
-    const { dropdown } = this.state;
+  prepareDataForDisplay = (values: Object, code: string): Object => {
+    const { dispatch, change, marccat: { data: { headertype006values } } } = this.props;
+    const payload = Object.create({});
+    payload.code = code;
+    payload.categoryCode = 1;
+    switch (code) {
+    case TAGS._006: payload.headerTypeCode = values[TAGS_NAME._006]; break;
+    case TAGS._007: payload.headerTypeCode = values[TAGS_NAME._007]; break;
+    case TAGS._008: payload.headerTypeCode = values[TAGS_NAME._008]; break;
+    default:
+      break;
+    }
+    return payload;
+  };
+
+  performChange = (r: Object, code: string): void => {
+    const { dispatch, change, marccat: { data: { headertype006values } } } = this.props;
+    dispatch(change(code, r.displayValue));
+  }
+
+
+  prepareResult = (data: Object, code: string): State => {
+    const { dropdown, headerTypeCode } = this.state;
     const dropdownValue: Array<HeadingType> = [];
     Object.values(data.results).map(h => dropdownValue.push(h));
-    this.setState({ dropdown: {
-      for006: (code === TAGS._006) ? dropdownValue : dropdown.for006,
-      for007: (code === TAGS._007) ? dropdownValue : dropdown.for007,
-    } });
+    const arr = Object.entries(data.results).map(([k, v]) => arr.push({ k, value: v.defaultValue }));
+    this.setState(prevState => {
+      const newState = cloneDeep(prevState);
+      newState.headerTypeCode = headerTypeCode;
+      newState.dropdown = {
+        for006: (code === TAGS._006) ? dropdownValue : dropdown.for006,
+        for007: (code === TAGS._007) ? dropdownValue : dropdown.for007,
+        for008: (code === TAGS._008) ? dropdownValue : dropdown.for008,
+      };
+      return newState;
+    });
   };
 
+  DropDown = (input, ...props) => (
+    <Select
+      id={`${input.field.name}`}
+      label={decamelizify(input.field.name, EMPTY_SPACED_STRING)}
+      dataOptions={input.field.dropdownSelect}
+      onChange={props.onChange}
+      placeholder={input.field.name}
+      value={input.field.defaultValue}
+    />
+  );
 
-  populateDropwDown = (data) => (
+  populateDropwDown = (data, code) => (
     <Row>
-      {data.map((d, idx) => (
+      {data && data.map((field, idx) => (
         <Col xs={4} key={idx}>
           <Field
-            name={d.name}
-            id={d.name}
-            component={Select}
-            label={decamelizify(d.name, EMPTY_SPACED_STRING)}
-            dataOptions={d.dropdownSelect}
-            onChange={this.changeDisplayValue}
-            placeholder={d.name}
+            name={`${field.name}`}
+            component={DropDown}
+            onChange={this.changeDisplayValue(code, data)}
+            field={field}
           />
         </Col>
       ))}
@@ -118,28 +161,27 @@ class Tag00X extends React.Component<P, {
     }
   }
 
-  renderField006 = (idx) => {
-    const { expand006, dropdown } = this.state;
+  renderField006 = () => {
+    const { expand006, dropdown, headerTypeCode } = this.state;
     const { headertype006 } = this.props;
     return (
       <React.Fragment>
-        {headertype006 && idx === 0 &&
+        {headertype006 &&
         <div className={(expand006) ? style.leaderResultsActive : style.leaderResults}>
           <Col xs={12}>
             <Field
               {...this.props}
-              id={TAGS_NAME._006.concat('-' + idx)}
-              name={TAGS_NAME._006.concat('-' + idx)}
+              id={TAGS_NAME._006}
+              name={TAGS_NAME._006}
+              label={`Header types Tag ${TAGS._006}`}
               onChange={(e) => this.handleOnChange(e, TAGS._006)}
               component={Select}
               dataOptions={headertype006.results.headingTypes}
-              label="Header types"
+              value={headerTypeCode || 0}
             />
-            {dropdown.for006.length > 0 &&
             <div className="dropdownValues006">
-              {this.populateDropwDown(dropdown.for006)}
+              {this.populateDropwDown(dropdown.for006, TAGS._006)}
             </div>
-            }
           </Col>
         </div>
         }
@@ -147,8 +189,8 @@ class Tag00X extends React.Component<P, {
     );
   };
 
-  renderField007 = (idx) => {
-    const { expand007, dropdown } = this.state;
+  renderField007 = () => {
+    const { expand007, dropdown, headerTypeCode } = this.state;
     const { headertype007 } = this.props;
     return (
       <React.Fragment>
@@ -157,16 +199,17 @@ class Tag00X extends React.Component<P, {
           <Col xs={12}>
             <Field
               {...this.props}
-              id={TAGS_NAME._007.concat(idx)}
-              name={TAGS_NAME._007.concat(idx)}
+              id={TAGS_NAME._007}
+              name={TAGS_NAME._007}
+              label={`Header types Tag ${TAGS._007}`}
               onChange={(e) => this.handleOnChange(e, TAGS._007)}
               component={Select}
               dataOptions={headertype007.results.headingTypes}
-              label="Header types"
+              value={headerTypeCode || 0}
             />
             {dropdown.for007.length > 0 &&
             <div className="dropdownValues007">
-              {this.populateDropwDown(dropdown.for007)}
+              {this.populateDropwDown(dropdown.for007, TAGS._007)}
             </div>
             }
           </Col>
@@ -176,18 +219,81 @@ class Tag00X extends React.Component<P, {
     );
   };
 
+  renderField008 = (f) => {
+    const { expand008, dropdown, displayValue, headerTypeCode } = this.state;
+    const { headertype008 } = this.props;
+    return (
+      <React.Fragment>
+        <div className={style.controlFieldContainer}>
+          <MarcField
+            {...this.props}
+            readOnly
+            disblxedIcon={headertype008}
+            label={f.fixedField.code}
+            name={f.fixedField.code}
+            value={displayValue || f.fixedField.displayValue}
+            onClick={() => { this.setState({ expand008: !expand008 }); }}
+          />
+          {headertype008 &&
+          <div className={(expand008) ? style.leaderResultsActive : style.leaderResults}>
+            <Row>
+              <Col xs={4}>
+                <Field
+                  id="Tag008"
+                  name="Tag008"
+                  label={`Header types Tag ${TAGS._008}`}
+                  onChange={(e) => this.handleOnChange(e, TAGS._008)}
+                  component={Select}
+                  placeholder="Select header..."
+                  value={headerTypeCode || 0}
+                  dataOptions={headertype008.results.headingTypes}
+                />
+              </Col>
+            </Row>
+            <hr />
+            <Row xs={12}>
+              <Col xs={4} key="Tag008-dateFirstPublication">
+                <Field
+                  name="Tag008-dateFirstPublication"
+                  id="Tag008-dateFirstPublication"
+                  component={TextField}
+                  label="dateFirstPublication"
+                  onChange={this.changeDisplayValue}
+                />
+              </Col>
+              <Col xs={4} key="Tag008-dateLastPublication">
+                <Field
+                  name="Tag008-dateLastPublication"
+                  id="Tag008-dateLastPublication"
+                  component={TextField}
+                  label="dateLastPublication"
+                  onChange={this.changeDisplayValue}
+                />
+              </Col>
+              {dropdown.for008.length > 0 &&
+              <div className="dropdownValues008">
+                {this.populateDropwDown(dropdown.for008, TAGS._007)}
+              </div>
+              }
+            </Row>
+          </div>}
+        </div>
+      </React.Fragment>
+    );
+  };
+
   render() {
-    // eslint-disable-next-line no-unused-vars
-    const { fields, selected, expand006, expand007, fieldValue, dropdown } = this.state;
+    const { fields, request } = this.state;
     const field006 = fields.filter(f => f.fixedField.code === TAGS._006);
     const field007 = fields.filter(f => f.fixedField.code === TAGS._007);
+    const field008 = first(fields.filter(f => f.fixedField.code === TAGS._008));
     if (field006.length === 0) fields.push(EMPTY_FIXED_FIELD(TAGS._006));
     if (field007.length === 0) fields.push(EMPTY_FIXED_FIELD(TAGS._007));
     return (
       <React.Fragment>
-        {fields.map((f, idx) => (
+        {fields.filter(f => f.fixedField.code !== TAGS._008).map((f, idx) => (
           <Row>
-            <Col xs={10}>
+            <Col xs={10} key={idx}>
               <div className={style.controlFieldContainer} no-padding>
                 <MarcField
                   {...this.props}
@@ -197,15 +303,14 @@ class Tag00X extends React.Component<P, {
                   label={f.fixedField.code}
                   name={f.fixedField.code}
                   value={f.fixedField.displayValue}
-                  onClick={() => this.setState({ selected: !selected })}
+                  onClick={() => this.onHandleClick(f.fixedField.code)}
                 />
-                <div className={(expand007) ? style.leaderResultsActive : style.leaderResults}>
-                  {(f.fixedField.code === TAGS._006) ? this.renderField006(idx) : this.renderField007(idx)}
-                </div>
+                {(f.fixedField.code === TAGS._006) ? this.renderField006(idx) : this.renderField007(idx)}
               </div>
             </Col>
             <Col xs={2}>
               <AddTagButton
+                key={idx}
                 {...this.props}
                 tagCode={f.fixedField.code}
                 onClick={() => this.handleAdd(f.fixedField.code, idx)}
@@ -213,13 +318,16 @@ class Tag00X extends React.Component<P, {
             </Col>
           </Row>
         ))}
+        {this.renderField008(field008)}
+        {console.log(request)}
       </React.Fragment>
     );
   }
 }
 export default (connect(
-  ({ marccat: { data: { headertype006, headertype007 } } }) => ({
+  ({ marccat: { data: { headertype006, headertype007, headertype008 } } }) => ({
     headertype006,
     headertype007,
+    headertype008,
   }),
 )((Tag00X)));

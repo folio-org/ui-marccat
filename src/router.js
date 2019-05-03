@@ -1,12 +1,9 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { Search, Browse, Cataloging } from './components';
 import { ToolbarMenu } from './shared';
-import type { Props } from './shared';
+import type { Props } from './flow/index.js.flow';
 
 type P = Props & {
     toggleFilterPane: () => void;

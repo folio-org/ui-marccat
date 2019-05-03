@@ -4,8 +4,8 @@ const Redux = () => {};
 const ReduxForm = () => {};
 
 
-ReduxForm.resolve = (store, formName) => {
-  return (store.getState().form) ? store.getState().form[formName || 0].values : undefined;
+ReduxForm.select = (store, formName) => {
+  return (store.getState().form) ? store.getState().form[formName] : undefined;
 };
 
 ReduxForm.reset = (store, ...forms) => {

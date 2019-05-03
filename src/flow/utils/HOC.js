@@ -6,7 +6,7 @@
 import * as React from 'react';
 import { withRoot } from '@folio/stripes-core/src/components/Root/RootContext';
 import { injectIntl } from 'react-intl';
-import { safeObj } from '../utils/Function';
+import { safeObj } from '../../utils/Function';
 
 type DefaultProps = {};
 type Props = {...DefaultProps};

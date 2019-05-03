@@ -1,8 +1,5 @@
 /* eslint-disable react/no-unused-prop-types */
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import { PaneMenu, IconButton, Button } from '@folio/stripes/components';
 import classNames from 'classnames';

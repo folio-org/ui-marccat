@@ -1,6 +1,6 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
-import type { Props } from '../../..';
+import type { Props } from '../../../flow/index.js.flow';
 
 function CheckMarkIcon({ ...props }:Props) {
   const { labels, pullLeft, dispatch, change, widthPadding } = props;

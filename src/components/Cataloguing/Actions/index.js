@@ -1,5 +1,5 @@
-import { ACTION } from '../../../shared';
-import { ENDPOINT } from '../../../shared/config/constants';
+import { ENDPOINT } from '../../../config/constants';
+import { ACTION } from '../../../redux/actions/Actions';
 
 // MARC action creator utility
 
@@ -84,16 +84,16 @@ export const createHeadingAction = (id, payload) => {
  *
  * @param {*} payload
  */
-export const changeDisplayValueAction = (tag, payload) => {
+export const changeDisplayValueAction = (payload, cb) => {
   return {
     type: ACTION.CREATE,
     data: {
       path: ENDPOINT.CHANGE_DISPLAY_VALUE,
-      type: `displayvalue-${tag}`,
+      type: `displayvalue-${payload.code}`,
       params: ENDPOINT.DEFAULT_LANG_VIEW,
-      tag,
     },
-    payload
+    payload,
+    cb
   };
 };
 
@@ -181,7 +181,7 @@ export const dropDownValuesAction = (payload) => {
     data: {
       path: ENDPOINT.TEMPLATE_TAG_URL,
       type: `headertype${payload.code}values`,
-      params: `leader=${payload.value}&code=${payload.code}&headerTypeCode=${payload.typeCode}&lang=ita`
+      params: `leader=${payload.value}&code=${payload.code}&headerTypeCode=${payload.headerTypeCode}&lang=ita`
     },
     cb: payload.cb
   };

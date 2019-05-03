@@ -9,6 +9,9 @@ module.exports = {
       experimentalObjectRestSpread: true,
     },
   },
+  "plugins": [
+    "flowtype"
+  ],
   extends: ["@folio/eslint-config-stripes"],
   env: {
     browser: true
@@ -17,7 +20,9 @@ module.exports = {
     process: true,
     Promise: true
   },
-  "rules": {		
+  "rules": {
+    "flowtype/no-weak-types": 0,
+    "no-warning-comments":  [2, { "terms": ["flow-typed signature", "flow-typed version"], "location": "start"}],
 		"indent": ["error", 2],
     "react/jsx-indent": ["error", 2],
     "react/forbid-prop-types":"off",

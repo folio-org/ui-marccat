@@ -1,14 +1,11 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import { Field } from 'redux-form';
 import { Row, Col, Select } from '@folio/stripes/components';
-import type { Props } from '../../../shared';
+import type { Props } from '../../../flow/index.js.flow';
 import MarcField from './MarcField';
-import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../shared/config/constants';
-import { ActionTypes } from '../../../redux/actions/Actions';
+import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../config/constants';
+import { ACTION } from '../../../redux/actions/Actions';
 import style from '../Style/index.css';
 import { decamelizify } from '../../../utils/Function';
 
@@ -40,7 +37,7 @@ export default class MarcLeader extends React.Component<P, {
     const { leaderCss, leaderDataDispatched } = this.state;
     const { dispatch, leaderValue, leaderCode } = this.props;
     if (!leaderDataDispatched) {
-      dispatch({ type: ActionTypes.LEADER_VALUES_FROM_TAG, leader: leaderValue, code: leaderCode, typeCode: '15' });
+      dispatch({ type: ACTION.LEADER_VALUES_FROM_TAG, leader: leaderValue, code: leaderCode, typeCode: '15' });
       this.setState({
         leaderDataDispatched: true
       });
@@ -86,7 +83,7 @@ export default class MarcLeader extends React.Component<P, {
     const { leaderData, leaderValue, dispatch } = this.props;
     const remappedValues = [];
     if (leaderChangedFor008 === true) {
-      dispatch({ type: ActionTypes.CHANGE_008_BY_LEADER, leader: leaderVal });
+      dispatch({ type: ACTION.CHANGE_008_BY_LEADER, leader: leaderVal });
       leaderChangedFor008 = false;
     }
     if (leaderData) {

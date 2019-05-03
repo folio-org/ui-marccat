@@ -8,18 +8,24 @@ import {
   TAG_NOT_REPEATABLE,
   TAG_MANDATORY,
 } from './MarcConstant';
-import { EMPTY_STRING } from '../../../shared/config/constants';
+import { EMPTY_STRING } from '../../../config/constants';
 
 /**
  *
- * @param {*} o - the object to deduplicate
- * @returns the objcet passed as parameter without duplicate code
+ * @param {string} t
+ * @returns true if tha tag code passed
+ */
+export const isTag = t => 'Tag'.concat(t);
+/**
+ *
+ * @param {string} o - the object to deduplicate
+ * @returns the object passed as parameter without duplicate code
  */
 export const dedupe = (o) => Object.values(o.reduce((acc, cur) => Object.assign(acc, { [cur.code]: cur }), {}));
 
 /**
  *
- * @param {*} t - the tag to validate
+ * @param {string} t - the tag to validate
  * @returns true if code of @param t is not repeatble
  */
 export const validate = t => includes(TAG_NOT_REPEATABLE, t.code);
@@ -27,7 +33,7 @@ export const validate = t => includes(TAG_NOT_REPEATABLE, t.code);
 /**
  * @description
  *
- * @param {*} sortByProp
+ * @param {string} sortByProp
  * @param  {...any} obj
  */
 export const unionSortAndDedupe = (sortByProp, ...obj) => {
@@ -39,7 +45,7 @@ export const unionSortAndDedupe = (sortByProp, ...obj) => {
 /**
  * @description
  *
- * @param {*} obj
+ * @param {Object} obj
  */
 export const filterFixedFields = (obj) => {
   return (obj)
@@ -49,7 +55,7 @@ export const filterFixedFields = (obj) => {
 /**
  * @description
  *
- * @param {*} obj
+ * @param {Object} obj
  */
 export const filterFixedFieldsUntil = (obj, cond) => {
   return (obj)
@@ -61,7 +67,7 @@ export const filterFixedFieldsUntil = (obj, cond) => {
 /**
  * @description
  *
- * @param {*} obj
+ * @param {Object} obj
  */
 export const filterFixedFieldForSaveRecord = (obj) => {
   return obj.filter(f => f.fixedField !== undefined || f.fixedField);
@@ -70,7 +76,7 @@ export const filterFixedFieldForSaveRecord = (obj) => {
 /**
  * @description
  *
- * @param {*} obj
+ * @param {Object} obj
  */
 export const filterMandatoryFields = (obj) => {
   return dedupe(obj).filter(f => includes(TAG_MANDATORY, f.code));
@@ -79,7 +85,7 @@ export const filterMandatoryFields = (obj) => {
 /**
  * @description
  *
- * @param {*} obj
+ * @param {Object} obj
  */
 export const filterVariableFields = (obj:Array<Object>) => {
   return obj
@@ -87,9 +93,9 @@ export const filterVariableFields = (obj:Array<Object>) => {
 };
 
 /**
- *
- * @param {*} message - a message validation to display
- * @param {*} type - a type of callout
+ * @param {React.RefObject<Callout>} callout - a message validation to display
+ * @param {string} message - a message validation to display
+ * @param {string} type - a type of callout
  */
 export const showValidationMessage = (callout: React.RefObject<Callout>, message: string, type: string) => {
   callout.current.sendCallout({

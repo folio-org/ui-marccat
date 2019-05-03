@@ -1,33 +1,30 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import { MarcatSettings as Settings } from './components';
 import { Router } from './router';
 import { reducer, epics } from './redux';
 import { injectCommonProp } from './shared';
 import MARCcat from './MARCcat';
-import { ActionTypes } from './redux/actions';
-import { TAGS } from './components/Cataloguing';
-import { REDUX } from './shared/config/constants';
+import { ACTION } from './redux/actions';
+import { REDUX } from './config/constants';
 
 import './shared/styles/common.css';
 
 
-type RoutingProps = {
+type Props = {
   root: {
-    addReducer: Function;
-    addEpic: Function;
+    addReducer: Function,
+    addEpic: Function,
   },
-  filterPaneIsVisible: boolean;
-  showSettings: boolean;
-  children: React.ReactNode;
+  filterPaneIsVisible: boolean,
+  showSettings: boolean,
+  children?: React.Node,
 };
 
-
-class MARCCatRouting extends React.Component<RoutingProps, {}> {
-  constructor(props, context) {
+class MARCCatRouting extends React.Component<Props, {
+  filterPaneIsVisible: Boolean,
+}> {
+  constructor(props:Props, context) {
     super(props, context);
     this.state = {
       filterPaneIsVisible: true,
@@ -39,18 +36,12 @@ class MARCCatRouting extends React.Component<RoutingProps, {}> {
      */
     props.root.addReducer(REDUX.REDUCER, reducer);
     props.root.addEpic(REDUX.EPIC, epics);
-
     this.toggleFilterPane = this.toggleFilterPane.bind(this);
-
   }
 
   componentDidMount() {
     const { store: { dispatch } } = this.props;
-    dispatch({ type: ActionTypes.VIEW_TEMPLATE });
-    dispatch({ type: ActionTypes.HEADER_TYPES_006, code: TAGS._006 });
-    dispatch({ type: ActionTypes.HEADER_TYPES_007, code: TAGS._007 });
-    dispatch({ type: ActionTypes.HEADER_TYPES_008, code: TAGS._008 });
-    dispatch({ type: ActionTypes.SETTINGS, data: {} });
+    dispatch({ type: ACTION.SETTINGS, data: {} });
   }
 
   toggleFilterPane = () => {

@@ -1,14 +1,10 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Icon, Pane, Button } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
-import { injectCommonProp, ToolbarButtonMenu } from '../../../shared';
-import type { Props } from '../../../shared';
-import CheckMarkIcon from '../../../shared/lib/components/Button/CheckMarkIcon';
+import { injectCommonProp, ToolbarButtonMenu, CheckMarkIcon } from '../../../shared';
+import type { Props } from '../../../flow/index.js.flow';
 
 type P = Props & {
   label: string;

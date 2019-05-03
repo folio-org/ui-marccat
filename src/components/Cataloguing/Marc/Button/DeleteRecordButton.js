@@ -34,8 +34,8 @@ function DeleteRecordButton({ ...props }) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  deleteRecord: (id) => (_) => {
+const mapDispatchToProps = dispatch => bindActionCreators({
+  deleteRecord: (id) => _ => {
     dispatch(deleteRecordAction(id));
   }
 }, dispatch);

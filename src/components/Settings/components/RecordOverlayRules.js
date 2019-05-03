@@ -1,11 +1,8 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import React, { Fragment } from 'react';
 import { Pane, Button, Icon } from '@folio/stripes/components';
 import { injectCommonProp, ToolbarButtonMenu } from '../../../shared';
-import type { Props } from '../../../shared';
+import type { Props } from '../../../flow/index.js.flow';
 import TAGS from '../utils/Constant';
 
 import style from '../../../shared/styles/common.css';

@@ -1,15 +1,12 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Accordion, FilterAccordionHeader, MultiColumnList } from '@folio/stripes/components';
-import type { Props } from '../../../shared';
-import { ActionTypes } from '../../../redux/actions';
+import type { Props } from '../../../flow/index.js.flow';
+import { ACTION } from '../../../redux/actions';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
 import { resultsFormatterForAssociated, columnMapperForAssociated } from '../../../utils/Formatter';
-import { EMPTY_STRING } from '../../../shared/config/constants';
+import { EMPTY_STRING } from '../../../config/constants';
 
 type P = Props & {
     checkRecordType: Array<any>,
@@ -46,7 +43,7 @@ function AssociatedBib({ ...props }: P) {
         onRowClick={(e, meta) => {
           const { dispatch } = props;
           const id = meta['001'];
-          dispatch({ type: ActionTypes.ASSOCIATED_DETAILS, query: id, recordType: meta.recordView, mustOpenPanel: true });
+          dispatch({ type: ACTION.ASSOCIATED_DETAILS, query: id, recordType: meta.recordView, mustOpenPanel: true });
         }}
         rowMetadata={['001', 'recordView']}
         contentData={resultRemapped}

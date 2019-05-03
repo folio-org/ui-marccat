@@ -1,5 +1,5 @@
-import { ACTION } from '../../../shared';
-import { ENDPOINT } from '../../../shared/config/constants';
+import { ENDPOINT } from '../../../config/constants';
+import { ACTION } from '../../../redux/actions';
 
 /**
  *
@@ -54,7 +54,7 @@ export const searchDetailAction = (id) => {
  *
  * @param {*} payload
  */
-export const duplicaRecordAction = (id) => {
+export const duplicaRecordAction = (id, cb) => {
   return {
     type: ACTION.QUERY,
     data: {
@@ -62,7 +62,8 @@ export const duplicaRecordAction = (id) => {
       type: 'recordDuplicate',
       params: `id=${id}`.concat('&').concat(ENDPOINT.DEFAULT_LANG_VIEW),
       id
-    }
+    },
+    cb
   };
 };
 

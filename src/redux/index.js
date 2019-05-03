@@ -38,13 +38,6 @@ import {
   browseAuthorityDetailEpic,
   browseDetailAssociatedEpic,
   templateViewEpic,
-  recordDetailEpic,
-  headerTypes006Epic,
-  headerTypes007Epic,
-  headerTypes008Epic,
-  tag006ValuesEpic,
-  tag007ValuesEpic,
-  tag008ValuesEpic,
   tag008ByLeaderEpic,
   totalCountBibEpic,
   totalCountAuthEpic
@@ -96,13 +89,6 @@ export const epics = combineEpics(
   browseAuthorityDetailEpic,
   browseDetailAssociatedEpic,
   templateViewEpic,
-  headerTypes006Epic,
-  headerTypes007Epic,
-  headerTypes008Epic,
-  tag006ValuesEpic,
-  tag007ValuesEpic,
-  tag008ValuesEpic,
-  recordDetailEpic,
   tag008ByLeaderEpic,
   leaderEpic,
   totalCountBibEpic,
@@ -111,3 +97,5 @@ export const epics = combineEpics(
 );
 export { Redux } from './helpers/Redux';
 export { findParam, buildUrl, qs } from '../utils/Function';
+export { ACTION } from './actions/Actions';
+export * from './actions/ActionCreator';

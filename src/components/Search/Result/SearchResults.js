@@ -1,14 +1,11 @@
 /* eslint-disable dot-notation */
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Paneset, HotKeys, PaneMenu } from '@folio/stripes/components';
-import { ActionTypes } from '../../../redux/actions';
-import type { Props } from '../../../shared';
+import { ACTION } from '../../../redux/actions';
+import type { Props } from '../../../flow/index.js.flow';
 import { injectCommonProp, NoResultsMessage } from '../../../shared';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
 import { isAuthorityRecord, transitionToParams } from '../Utils/SearchUtils';
@@ -17,10 +14,10 @@ import {
   RecordDetailPane,
   AssociatedRecordPane,
 } from './components';
-import { CreateRecordButton, EditRecordButton, DuplicaRecordButton } from '..';
+import { CreateRecordButton, EditRecordButton } from '..';
 import { emptyRecordAction } from '../../Cataloguing/Actions';
 import { searchDetailAction } from '../Actions';
-import * as C from '../../../shared/config/constants';
+import * as C from '../../../config/constants';
 
 type P = Props & {
   headings: Array<any>,
@@ -87,14 +84,14 @@ export class SearchResults extends React.Component<P, {}> {
         }
       });
     }
-    dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
+    dispatch({ type: ACTION.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
   };
 
   handleDetails = (e, meta) => {
     const { store: { dispatch }, data, router } = this.props;
     const id = meta['001'];
     dispatch(searchDetailAction(id));
-    dispatch({ type: ActionTypes.CLOSE_PANELS, closePanels: false });
+    dispatch({ type: ACTION.CLOSE_PANELS, closePanels: false });
     let mergedResults;
     let detailSelected;
     if (data.search.dataOld !== undefined) {
@@ -112,9 +109,9 @@ export class SearchResults extends React.Component<P, {}> {
     }
     transitionToParams('id', id);
 
-    dispatch({ type: ActionTypes.DETAILS, query: id, recordType: meta.recordView });
+    dispatch({ type: ACTION.DETAILS, query: id, recordType: meta.recordView });
     if (isAuthorityRecord(meta)) {
-      dispatch({ type: ActionTypes.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView, openPanel: true });
+      dispatch({ type: ACTION.ASSOCIATED_BIB_REC, query: meta.queryForBibs, recordType: meta.recordView, openPanel: true });
       this.setState({
         detail: detailSelected,
         detailPanelIsVisible: true,
@@ -137,7 +134,7 @@ export class SearchResults extends React.Component<P, {}> {
         }
       });
     }
-    dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
+    dispatch({ type: ACTION.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
     router.push(`/marccat/search?id=${id}`);
   };
 
@@ -171,7 +168,6 @@ export class SearchResults extends React.Component<P, {}> {
             withIcon
             noDropdown
           />
-          <DuplicaRecordButton {...this.props} data-test-clickable-duplicate-record />
         </PaneMenu>
       ) :
       (
@@ -189,7 +185,6 @@ export class SearchResults extends React.Component<P, {}> {
             })}
             open={openDropDownMenu}
           />
-          <DuplicaRecordButton {...this.props} data-test-clickable-duplicate-record />
         </PaneMenu>
       );
   };
@@ -307,6 +302,7 @@ export class SearchResults extends React.Component<P, {}> {
           />
           {detailPanelIsVisible && (closePanels === false) &&
             <RecordDetailPane
+              {...this.props}
               detailPaneMeta={detailPaneMeta}
               detail={detail}
               isFetchingDetail={isFetchingDetail}
@@ -320,7 +316,7 @@ export class SearchResults extends React.Component<P, {}> {
             <AssociatedRecordPane
               onClose={() => {
                 const { dispatch } = this.props;
-                dispatch({ type: ActionTypes.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
+                dispatch({ type: ACTION.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
               }}
               isLoadingAssociatedRecord={isLoadingAssociatedRecord}
               isReadyAssociatedRecord={isReadyAssociatedRecord}
@@ -363,5 +359,5 @@ export default (connect(
     totalBib: totalBibRecords.totalBibDoc,
     totalAuth: totalAuthRecords.totalAuthDoc
   }),
-  (dispatcher) => dispatcher(emptyRecordAction())
+  (dispatch) => dispatch(emptyRecordAction())
 )(injectCommonProp(SearchResults)));

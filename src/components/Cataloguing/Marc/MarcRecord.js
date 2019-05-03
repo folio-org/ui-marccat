@@ -1,7 +1,4 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -13,11 +10,13 @@ import {
   PaneMenu,
   Button,
   Accordion,
+  Col,
   Icon
 } from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
 import { AppIcon } from '@folio/stripes-core';
 import { FormattedMessage } from 'react-intl';
+import { bindActionCreators } from 'redux';
 import { union, sortBy, includes, first } from 'lodash';
 import {
   TAG_WITH_NO_HEADING_ASSOCIATED,
@@ -28,12 +27,11 @@ import {
   SUBFIELD_DELIMITER
 } from '..';
 import {
-  ActionMenuTemplate,
   SingleCheckboxIconButton,
   injectCommonProp,
   post
 } from '../../../shared';
-import { ActionTypes } from '../../../redux/actions/Actions';
+import { ACTION } from '../../../redux/actions/Actions';
 import { buildUrl, findParam, Localize } from '../../../utils/Function';
 import {
   filterMandatoryFields,
@@ -41,7 +39,7 @@ import {
   filterFixedFieldForSaveRecord,
   filterVariableFields
 } from '../Utils/MarcApiUtils';
-import * as C from '../../../shared/config/constants';
+import * as C from '../../../config/constants';
 import * as MarcAction from '../Actions';
 import type { Props } from '../../../shared';
 
@@ -74,7 +72,7 @@ export class MarcRecord extends React.Component<Props, {
   componentWillMount() {
     const { dispatch, datastore: { emptyRecord } } = this.props;
     const { leader } = emptyRecord.results;
-    dispatch({ type: ActionTypes.LEADER_VALUES_FROM_TAG, leader: leader.value, code: leader.code, typeCode: '15' });
+    dispatch({ type: ACTION.LEADER_VALUES_FROM_TAG, leader: leader.value, code: leader.code, typeCode: '15' });
   }
 
   getCurrentRecord = (): Object => {
@@ -166,7 +164,7 @@ export class MarcRecord extends React.Component<Props, {
   handleClose = () => {
     const { id, submit } = this.state;
     const { dispatch, reset, router, toggleFilterPane } = this.props;
-    dispatch({ type: ActionTypes.FILTERS, payload: {}, filterName: '', isChecked: false });
+    dispatch({ type: ACTION.FILTERS, payload: {}, filterName: '', isChecked: false });
     toggleFilterPane();
     dispatch(reset());
     return (submit) ? router.push(`/marccat/search?savedId=${id}`) : router.push('/marccat/search');
@@ -233,38 +231,40 @@ export class MarcRecord extends React.Component<Props, {
             paneTitle={(bibliographicRecord && isEditMode) ? 'Edit Record' : 'New Monograph'}
             paneSub={'id. ' + bibliographicRecord.id || id}
             appIcon={<AppIcon app={C.META.ICON_TITLE} />}
-            actionMenu={ActionMenuTemplate}
+            actionMenu={() => {}}
             dismissible
             onClose={() => this.handleClose()}
             lastMenu={this.renderButtonMenu()}
           >
             <Row center="xs">
-              <div className={style.recordContainer}>
-                <AccordionSet>
-                  <form name="bibliographicRecordForm" onSubmit={this.saveRecord}>
-                    <Accordion label={<FormattedMessage id="ui-marccat.cataloging.accordion.checkbox.label" />} id="suppress" separator={false}>
-                      <SingleCheckboxIconButton labels={[<FormattedMessage id="ui-marccat.cataloging.checkbox.label" />]} pullLeft widthPadding />
+              <Col xs={10}>
+                <div className={style.recordContainer}>
+                  <AccordionSet>
+                    <form name="bibliographicRecordForm" onSubmit={this.saveRecord}>
+                      <Accordion label={<FormattedMessage id="ui-marccat.cataloging.accordion.checkbox.label" />} id="suppress" separator={false}>
+                        <SingleCheckboxIconButton labels={[<FormattedMessage id="ui-marccat.cataloging.checkbox.label" />]} pullLeft widthPadding />
+                      </Accordion>
+                      <FixedFields
+                        {...this.props}
+                        id="fixed-field"
+                        leaderData={leaderData}
+                        record={bibliographicRecord}
+                      />
+                    </form>
+                    <Accordion
+                      label={<FormattedMessage id="ui-marccat.cataloging.accordion.variablefield.label" />}
+                      id="variable-field"
+                    >
+                      <VariableFields
+                        {...this.props}
+                        fields={filterVariableFields(bibliographicRecord.fields)}
+                        onCreate={this.onCreate}
+                        onDelete={this.onDelete}
+                      />
                     </Accordion>
-                    <FixedFields
-                      {...this.props}
-                      id="fixed-field"
-                      leaderData={leaderData}
-                      record={bibliographicRecord}
-                    />
-                  </form>
-                  <Accordion
-                    label={<FormattedMessage id="ui-marccat.cataloging.accordion.variablefield.label" />}
-                    id="variable-field"
-                  >
-                    <VariableFields
-                      {...this.props}
-                      fields={filterVariableFields(bibliographicRecord.fields)}
-                      onCreate={this.onCreate}
-                      onDelete={this.onDelete}
-                    />
-                  </Accordion>
-                </AccordionSet>
-              </div>
+                  </AccordionSet>
+                </div>
+              </Col>
             </Row>
           </Pane>
         </Paneset>
@@ -274,18 +274,22 @@ export class MarcRecord extends React.Component<Props, {
   }
 }
 
+const mapDispatchToProps = dispatch => bindActionCreators({
+  loadHeadertype: (tag:[]) => _ => {
+    tag.forEach(t => dispatch(MarcAction.headertypeAction(t)));
+  }
+}, dispatch);
+
 export default stripesForm({
   form: C.REDUX.FORM.BIBLIOGRAPHIC_FORM,
   destroyOnUnmount: true,
 })(connect(
-  ({ marccat: { data, settings, leaderData, headerTypes006, headerTypes007, headerTypes008, tag008Values } }) => ({
+  ({ marccat: { data, settings, leaderData, headerTypes008, tag008Values } }) => ({
     emptyRecord: data.results,
     recordDetail: Redux.resolve(data, 'marcRecordDetail').bibliographicRecord,
     bibliographicRecord: first(settings.detail),
     leaderData: leaderData.records,
-    headerTypes006Result: headerTypes006.records,
-    headerTypes007Result: headerTypes007.records,
     headerTypes008Result: headerTypes008.records,
     tag008Values: tag008Values.records,
-  }),
+  }), mapDispatchToProps
 )(injectCommonProp(MarcRecord)));

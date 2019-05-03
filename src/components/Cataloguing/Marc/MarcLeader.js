@@ -1,14 +1,11 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import { Field } from 'redux-form';
 import { Row, Col, Select } from '@folio/stripes/components';
-import type { Props } from '../../../shared';
+import type { Props } from '../../../flow/index.js.flow';
 import MarcField from './MarcField';
-import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../shared/config/constants';
-import { ActionTypes } from '../../../redux/actions/Actions';
+import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../config/constants';
+import { ACTION } from '../../../redux/actions/Actions';
 import style from '../Style/index.css';
 import { decamelizify } from '../../../utils/Function';
 
@@ -40,7 +37,7 @@ export default class MarcLeader extends React.Component<P, {
     const { leaderCss, leaderDataDispatched } = this.state;
     const { dispatch, leaderValue, leaderCode } = this.props;
     if (!leaderDataDispatched) {
-      dispatch({ type: ActionTypes.LEADER_VALUES_FROM_TAG, leader: leaderValue, code: leaderCode, typeCode: '15' });
+      dispatch({ type: ACTION.LEADER_VALUES_FROM_TAG, leader: leaderValue, code: leaderCode, typeCode: '15' });
       this.setState({
         leaderDataDispatched: true
       });
@@ -58,7 +55,8 @@ export default class MarcLeader extends React.Component<P, {
    */
   replaceAt(string, index, replace) {
     this.setState({
-      leaderVal: string.substring(0, index) + replace + string.substring(index + 1)
+      leaderVal: string.substring(0, index) + replace + string.substring(index + 1),
+      leaderChangedFor008: !!((index === 6 || index === 7)),
     });
   }
 
@@ -67,14 +65,14 @@ export default class MarcLeader extends React.Component<P, {
     const selectedValue = e.target.value;
     const selectedName = e.target.id;
     switch (selectedName) {
-    case 'itemRecordStatusCode': this.replaceAt(leaderVal, 5, selectedValue); this.state.leaderChangedFor008 = false; break;
-    case 'itemRecordTypeCode': this.replaceAt(leaderVal, 6, selectedValue); this.state.leaderChangedFor008 = true; break;
-    case 'itemBibliographicLevelCode': this.replaceAt(leaderVal, 7, selectedValue); this.state.leaderChangedFor008 = true; break;
-    case 'itemControlTypeCode': this.replaceAt(leaderVal, 8, selectedValue); this.state.leaderChangedFor008 = false; break;
-    case 'characterCodingSchemeCode': this.replaceAt(leaderVal, 9, selectedValue); this.state.leaderChangedFor008 = false; break;
-    case 'encodingLevel': this.replaceAt(leaderVal, 17, selectedValue); this.state.leaderChangedFor008 = false; break;
-    case 'descriptiveCataloguingCode': this.replaceAt(leaderVal, 18, selectedValue); this.state.leaderChangedFor008 = false; break;
-    case 'linkedRecordCode': this.replaceAt(leaderVal, 19, selectedValue); this.state.leaderChangedFor008 = false; break;
+    case 'itemRecordStatusCode': this.replaceAt(leaderVal, 5, selectedValue); break;
+    case 'itemRecordTypeCode': this.replaceAt(leaderVal, 6, selectedValue); break;
+    case 'itemBibliographicLevelCode': this.replaceAt(leaderVal, 7, selectedValue); break;
+    case 'itemControlTypeCode': this.replaceAt(leaderVal, 8, selectedValue); break;
+    case 'characterCodingSchemeCode': this.replaceAt(leaderVal, 9, selectedValue); break;
+    case 'encodingLevel': this.replaceAt(leaderVal, 17, selectedValue); break;
+    case 'descriptiveCataloguingCode': this.replaceAt(leaderVal, 18, selectedValue); break;
+    case 'linkedRecordCode': this.replaceAt(leaderVal, 19, selectedValue); break;
     default: break;
     }
   }
@@ -85,7 +83,7 @@ export default class MarcLeader extends React.Component<P, {
     const { leaderData, leaderValue, dispatch } = this.props;
     const remappedValues = [];
     if (leaderChangedFor008 === true) {
-      dispatch({ type: ActionTypes.CHANGE_008_BY_LEADER, leader: leaderVal });
+      dispatch({ type: ACTION.CHANGE_008_BY_LEADER, leader: leaderVal });
       leaderChangedFor008 = false;
     }
     if (leaderData) {

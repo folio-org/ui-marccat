@@ -1,23 +1,23 @@
-import { ActionTypes } from '../actions/Actions';
+import { ACTION } from '../actions/Actions';
 
 const isLoading = false;
 const isReady = false;
 
 export function countDocReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
-  case ActionTypes.COUNT_DOC:
+  case ACTION.COUNT_DOC:
     return {
       ...state,
       isLoading: false,
       query: action.payload
     };
-  case ActionTypes.FETCH_COUNTER_REQUESTED:
+  case ACTION.FETCH_COUNTER_REQUESTED:
     return {
       ...state,
       records: action.payload,
       isLoading: true
     };
-  case ActionTypes.COUNT_DOC_SUCCESS:
+  case ACTION.COUNT_DOC_SUCCESS:
     return {
       ...state,
       records: action.payload,
@@ -30,21 +30,21 @@ export function countDocReducer(state = { isLoading, isReady }, action) {
 
 export function searchEngineReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
-  case ActionTypes.SEARCH:
+  case ACTION.SEARCH:
     return {
       ...state,
       isReady: false,
       isLoading: false,
       moreData: action.moreData
     };
-  case ActionTypes.FETCH_SEARCH_REQUESTED:
+  case ACTION.FETCH_SEARCH_REQUESTED:
     return {
       ...state,
       isReady: false,
       isLoading: action.payload,
       moreData: action.moreData
     };
-  case ActionTypes.RECORD_SUCCESS:
+  case ACTION.RECORD_SUCCESS:
     return {
       ...state,
       queryBib: action.queryBib,
@@ -68,25 +68,25 @@ export function searchEngineReducer(state = { isLoading, isReady }, action) {
 
 export function detailsBrowseSearchReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
-  case ActionTypes.DETAILS_BROWSE:
+  case ACTION.DETAILS_BROWSE:
     return {
       ...state,
       isReady: false,
       isLoading: false
     };
-  case ActionTypes.AUTH_DETAILS_BROWSE:
+  case ACTION.AUTH_DETAILS_BROWSE:
     return {
       ...state,
       isReady: false,
       isLoading: false
     };
-  case ActionTypes.FETCH_DETAILS_BROWSE_REQUESTED:
+  case ACTION.FETCH_DETAILS_BROWSE_REQUESTED:
     return {
       ...state,
       isReady: false,
       isLoading: action.payload,
     };
-  case ActionTypes.DETAILS_BROWSE_SUCCESS:
+  case ACTION.DETAILS_BROWSE_SUCCESS:
     return {
       ...state,
       results: action.payload,
@@ -95,7 +95,7 @@ export function detailsBrowseSearchReducer(state = { isLoading, isReady }, actio
       isReady: true,
       isAuthority: action.isAuthority
     };
-  case ActionTypes.AUTH_DETAILS_BROWSE_SUCCESS:
+  case ACTION.AUTH_DETAILS_BROWSE_SUCCESS:
     return {
       ...state,
       records: action.payload,
@@ -110,19 +110,19 @@ export function detailsBrowseSearchReducer(state = { isLoading, isReady }, actio
 
 export function getDetailsRecord(state = { isLoading, isReady }, action) {
   switch (action.type) {
-  case ActionTypes.DETAILS:
+  case ACTION.DETAILS:
     return {
       ...state,
       isLoading: false,
       isReady: false
     };
-  case ActionTypes.FETCH_DETAILS_REQUESTED:
+  case ACTION.FETCH_DETAILS_REQUESTED:
     return {
       ...state,
       isLoading: action.payload,
       isReady: false
     };
-  case ActionTypes.DETAILS_BY_TITLE:
+  case ACTION.DETAILS_BY_TITLE:
     return {
       ...state,
       records: action.payload,
@@ -137,19 +137,19 @@ export function getDetailsRecord(state = { isLoading, isReady }, action) {
 
 export function detailsAssociatedReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
-  case ActionTypes.ASSOCIATED_DETAILS:
+  case ACTION.ASSOCIATED_DETAILS:
     return {
       ...state,
       isLoading: false,
       isReady: false
     };
-  case ActionTypes.FETCH_DETAILS_ASSOCIATED_REQUESTED:
+  case ACTION.FETCH_DETAILS_ASSOCIATED_REQUESTED:
     return {
       ...state,
       isLoading: action.payload,
       isReady: false
     };
-  case ActionTypes.ASSOCIATED_DETAILS_SUCCESS:
+  case ACTION.ASSOCIATED_DETAILS_SUCCESS:
     return {
       ...state,
       records: action.payload,
@@ -158,7 +158,7 @@ export function detailsAssociatedReducer(state = { isLoading, isReady }, action)
       recordType: action.recType,
       mustOpenPanel: action.isDetailBibAssOpen
     };
-  case ActionTypes.CLOSE_ASSOCIATED_DETAILS:
+  case ACTION.CLOSE_ASSOCIATED_DETAILS:
     return {
       ...state,
       mustOpenPanel: action.openPanel
@@ -170,19 +170,19 @@ export function detailsAssociatedReducer(state = { isLoading, isReady }, action)
 
 export function browseDetailsAssociatedReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
-  case ActionTypes.BROWSE_ASSOCIATED_DETAILS:
+  case ACTION.BROWSE_ASSOCIATED_DETAILS:
     return {
       ...state,
       isLoading: false,
       isReady: false
     };
-  case ActionTypes.FETCH_BROWSE_DETAILS_ASSOCIATED_REQUESTED:
+  case ACTION.FETCH_BROWSE_DETAILS_ASSOCIATED_REQUESTED:
     return {
       ...state,
       isLoading: action.payload,
       isReady: false
     };
-  case ActionTypes.BROWSE_ASSOCIATED_DETAILS_SUCCESS:
+  case ACTION.BROWSE_ASSOCIATED_DETAILS_SUCCESS:
     return {
       ...state,
       records: action.payload,
@@ -190,7 +190,7 @@ export function browseDetailsAssociatedReducer(state = { isLoading, isReady }, a
       isReady: true,
       mustOpenPanel: action.mustOpenPanel
     };
-  case ActionTypes.CLOSE_BROWSE_ASSOCIATED_DETAILS:
+  case ACTION.CLOSE_BROWSE_ASSOCIATED_DETAILS:
     return {
       ...state,
       mustOpenPanel: action.openPanel
@@ -202,19 +202,19 @@ export function browseDetailsAssociatedReducer(state = { isLoading, isReady }, a
 
 export function getAssociatedBibRecord(state = { isLoading, isReady }, action) {
   switch (action.type) {
-  case ActionTypes.ASSOCIATED_BIB_REC:
+  case ACTION.ASSOCIATED_BIB_REC:
     return {
       ...state,
       isLoading: false,
       isReady: false
     };
-  case ActionTypes.FETCH_ASSOCIATED_REQUESTED:
+  case ACTION.FETCH_ASSOCIATED_REQUESTED:
     return {
       ...state,
       isLoading: action.payload,
       isReady: false
     };
-  case ActionTypes.ASSOCIATED_BIB_REC_SUCCESS:
+  case ACTION.ASSOCIATED_BIB_REC_SUCCESS:
     return {
       ...state,
       records: action.payload,
@@ -230,19 +230,19 @@ export function getAssociatedBibRecord(state = { isLoading, isReady }, action) {
 
 export function scanBrowsingReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
-  case ActionTypes.BROWSE_FIRST_PAGE:
+  case ACTION.BROWSE_FIRST_PAGE:
     return {
       ...state,
       isLoading: false,
       isReady: false
     };
-  case ActionTypes.FETCH_BROWSE_FIRST_PAGE:
+  case ACTION.FETCH_BROWSE_FIRST_PAGE:
     return {
       ...state,
       isLoading: action.payload,
       isReady: false
     };
-  case ActionTypes.BROWSE_FIRST_PAGE_SUCCESS:
+  case ACTION.BROWSE_FIRST_PAGE_SUCCESS:
     return {
       ...state,
       records: action.payload,
@@ -256,32 +256,32 @@ export function scanBrowsingReducer(state = { isLoading, isReady }, action) {
 
 export function templateViewReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
-  case ActionTypes.VIEW_TEMPLATE:
+  case ACTION.VIEW_TEMPLATE:
     return {
       ...state,
       isLoading: false,
       isReady: false
     };
-  case ActionTypes.TEMPLATE_GET_BY_ID:
+  case ACTION.TEMPLATE_GET_BY_ID:
     return {
       ...state,
       isLoading: false,
       isReady: false
     };
-  case ActionTypes.FETCH_VIEW_TEMPLATE:
+  case ACTION.FETCH_VIEW_TEMPLATE:
     return {
       ...state,
       isLoading: action.payload,
       isReady: false
     };
-  case ActionTypes.FETCH_TEMPLATE_GET_BY_ID:
+  case ACTION.FETCH_TEMPLATE_GET_BY_ID:
     return {
       ...state,
       isLoading: action.payload,
       default: action.payload.name,
       isReady: false
     };
-  case ActionTypes.VIEW_TEMPLATE_SUCCESS:
+  case ACTION.VIEW_TEMPLATE_SUCCESS:
     return {
       ...state,
       isLoading: false,
@@ -289,7 +289,7 @@ export function templateViewReducer(state = { isLoading, isReady }, action) {
       records: action.payload,
       default: action.payload.name
     };
-  case ActionTypes.TEMPLATE_GET_BY_ID_SUCCESS:
+  case ACTION.TEMPLATE_GET_BY_ID_SUCCESS:
     return {
       ...state,
       isLoading: false,
@@ -303,19 +303,19 @@ export function templateViewReducer(state = { isLoading, isReady }, action) {
 
 export function headerTypes006Reducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
-  case ActionTypes.HEADER_TYPES_006:
+  case ACTION.HEADER_TYPES_006:
     return {
       ...state,
       isLoading: false,
       isReady: false
     };
-  case ActionTypes.FETCH_HEADER_TYPES_006:
+  case ACTION.FETCH_HEADER_TYPES_006:
     return {
       ...state,
       isLoading: action.payload,
       isReady: false
     };
-  case ActionTypes.HEADER_TYPES_006_SUCCESS:
+  case ACTION.HEADER_TYPES_006_SUCCESS:
     return {
       ...state,
       records: action.payload,
@@ -329,19 +329,19 @@ export function headerTypes006Reducer(state = { isLoading, isReady }, action) {
 
 export function headerTypes007Reducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
-  case ActionTypes.HEADER_TYPES_007:
+  case ACTION.HEADER_TYPES_007:
     return {
       ...state,
       isLoading: false,
       isReady: false
     };
-  case ActionTypes.FETCH_HEADER_TYPES_007:
+  case ACTION.FETCH_HEADER_TYPES_007:
     return {
       ...state,
       isLoading: action.payload,
       isReady: false
     };
-  case ActionTypes.HEADER_TYPES_007_SUCCESS:
+  case ACTION.HEADER_TYPES_007_SUCCESS:
     return {
       ...state,
       records: action.payload,
@@ -355,19 +355,19 @@ export function headerTypes007Reducer(state = { isLoading, isReady }, action) {
 
 export function headerTypes008Reducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
-  case ActionTypes.HEADER_TYPES_008:
+  case ACTION.HEADER_TYPES_008:
     return {
       ...state,
       isLoading: false,
       isReady: false
     };
-  case ActionTypes.FETCH_HEADER_TYPES_008:
+  case ACTION.FETCH_HEADER_TYPES_008:
     return {
       ...state,
       isLoading: action.payload,
       isReady: false
     };
-  case ActionTypes.HEADER_TYPES_008_SUCCESS:
+  case ACTION.HEADER_TYPES_008_SUCCESS:
     return {
       ...state,
       records: action.payload,
@@ -381,19 +381,19 @@ export function headerTypes008Reducer(state = { isLoading, isReady }, action) {
 
 export function change008ByLeaderReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
-  case ActionTypes.CHANGE_008_BY_LEADER:
+  case ACTION.CHANGE_008_BY_LEADER:
     return {
       ...state,
       isLoading: false,
       isReady: false
     };
-  case ActionTypes.CHANGE_008_BY_LEADER_REQUESTED:
+  case ACTION.CHANGE_008_BY_LEADER_REQUESTED:
     return {
       ...state,
       isLoading: action.payload,
       isReady: false
     };
-  case ActionTypes.CHANGE_008_BY_LEADER_SUCCESS:
+  case ACTION.CHANGE_008_BY_LEADER_SUCCESS:
     return {
       ...state,
       records: action.payload,
@@ -407,19 +407,19 @@ export function change008ByLeaderReducer(state = { isLoading, isReady }, action)
 
 export function tag006ValuesReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
-  case ActionTypes.VALUES_FROM_TAG_006:
+  case ACTION.VALUES_FROM_TAG_006:
     return {
       ...state,
       isLoading: false,
       isReady: false
     };
-  case ActionTypes.FETCH_VALUES_FROM_TAG_006:
+  case ACTION.FETCH_VALUES_FROM_TAG_006:
     return {
       ...state,
       isLoading: action.payload,
       isReady: false
     };
-  case ActionTypes.VALUES_FROM_TAG_006_SUCCESS:
+  case ACTION.VALUES_FROM_TAG_006_SUCCESS:
     return {
       ...state,
       records: action.payload,
@@ -433,19 +433,19 @@ export function tag006ValuesReducer(state = { isLoading, isReady }, action) {
 
 export function tag007ValuesReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
-  case ActionTypes.VALUES_FROM_TAG_007:
+  case ACTION.VALUES_FROM_TAG_007:
     return {
       ...state,
       isLoading: false,
       isReady: false
     };
-  case ActionTypes.FETCH_VALUES_FROM_TAG_007:
+  case ACTION.FETCH_VALUES_FROM_TAG_007:
     return {
       ...state,
       isLoading: action.payload,
       isReady: false
     };
-  case ActionTypes.VALUES_FROM_TAG_007_SUCCESS:
+  case ACTION.VALUES_FROM_TAG_007_SUCCESS:
     return {
       ...state,
       records: action.payload,
@@ -458,19 +458,19 @@ export function tag007ValuesReducer(state = { isLoading, isReady }, action) {
 }
 export function tag008ValuesReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
-  case ActionTypes.VALUES_FROM_TAG_008:
+  case ACTION.VALUES_FROM_TAG_008:
     return {
       ...state,
       isLoading: false,
       isReady: false
     };
-  case ActionTypes.FETCH_VALUES_FROM_TAG_008:
+  case ACTION.FETCH_VALUES_FROM_TAG_008:
     return {
       ...state,
       isLoading: action.payload,
       isReady: false
     };
-  case ActionTypes.VALUES_FROM_TAG_008_SUCCESS:
+  case ACTION.VALUES_FROM_TAG_008_SUCCESS:
     return {
       ...state,
       records: action.payload,
@@ -484,19 +484,19 @@ export function tag008ValuesReducer(state = { isLoading, isReady }, action) {
 
 export function headingByTagReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
-  case ActionTypes.FETCH_HEADING_BY_TAG:
+  case ACTION.FETCH_HEADING_BY_TAG:
     return {
       ...state,
       isLoading: false,
       isReady: false
     };
-  case ActionTypes.FETCH_HEADING_TAG:
+  case ACTION.FETCH_HEADING_TAG:
     return {
       ...state,
       isLoading: action.payload,
       isReady: false
     };
-  case ActionTypes.FETCH_HEADING_BY_TAG_SUCCESS:
+  case ACTION.FETCH_HEADING_BY_TAG_SUCCESS:
     return {
       ...state,
       records: action.payload,
@@ -510,19 +510,19 @@ export function headingByTagReducer(state = { isLoading, isReady }, action) {
 
 export function recordDeatilReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
-  case ActionTypes.RECORD_DETAIL:
+  case ACTION.RECORD_DETAIL:
     return {
       ...state,
       isLoading: false,
       isReady: false
     };
-  case ActionTypes.RECORD_DETAIL_REQUESTED:
+  case ACTION.RECORD_DETAIL_REQUESTED:
     return {
       ...state,
       isLoading: action.payload,
       isReady: false
     };
-  case ActionTypes.RECORD_DETAIL_SUCCESS:
+  case ACTION.RECORD_DETAIL_SUCCESS:
     return {
       ...state,
       record: action.payload,
@@ -536,19 +536,19 @@ export function recordDeatilReducer(state = { isLoading, isReady }, action) {
 
 export function leaderReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
-  case ActionTypes.LEADER_VALUES_FROM_TAG:
+  case ACTION.LEADER_VALUES_FROM_TAG:
     return {
       ...state,
       isLoading: false,
       isReady: false
     };
-  case ActionTypes.FETCH_LEADER_VALUES_FROM_TAG:
+  case ACTION.FETCH_LEADER_VALUES_FROM_TAG:
     return {
       ...state,
       isLoading: action.payload,
       isReady: false
     };
-  case ActionTypes.LEADER_VALUES_FROM_TAG_SUCCESS:
+  case ACTION.LEADER_VALUES_FROM_TAG_SUCCESS:
     return {
       ...state,
       records: action.payload,
@@ -562,11 +562,11 @@ export function leaderReducer(state = { isLoading, isReady }, action) {
 
 export function totalBibCountDocReducer(state = {}, action) {
   switch (action.type) {
-  case ActionTypes.TOTAL_BIB_COUNT:
+  case ACTION.TOTAL_BIB_COUNT:
     return {
       ...state,
     };
-  case ActionTypes.TOTAL_BIB_COUNT_SUCCESS:
+  case ACTION.TOTAL_BIB_COUNT_SUCCESS:
     return {
       ...state,
       totalBibDoc: action.payload,
@@ -578,11 +578,11 @@ export function totalBibCountDocReducer(state = {}, action) {
 
 export function totalAuthCountDocReducer(state = {}, action) {
   switch (action.type) {
-  case ActionTypes.TOTAL_AUTH_COUNT:
+  case ACTION.TOTAL_AUTH_COUNT:
     return {
       ...state,
     };
-  case ActionTypes.TOTAL_AUTH_COUNT_SUCCESS:
+  case ACTION.TOTAL_AUTH_COUNT_SUCCESS:
     return {
       ...state,
       totalAuthDoc: action.payload,
@@ -594,7 +594,7 @@ export function totalAuthCountDocReducer(state = {}, action) {
 
 export function filterReducer(state = { isLoading }, action) {
   switch (action.type) {
-  case ActionTypes.FILTERS:
+  case ACTION.FILTERS:
     return {
       ...state,
       filters: action.payload,
@@ -608,7 +608,7 @@ export function filterReducer(state = { isLoading }, action) {
 
 export function panelsReducer(state = {}, action) { // TO BE REMOVED
   switch (action.type) {
-  case ActionTypes.CLOSE_PANELS:
+  case ACTION.CLOSE_PANELS:
     return {
       ...state,
       closePanels: action.closePanels
@@ -620,7 +620,7 @@ export function panelsReducer(state = {}, action) { // TO BE REMOVED
 
 export function settingsReducer(state = {}, action) {
   switch (action.type) {
-  case ActionTypes.SETTINGS:
+  case ACTION.SETTINGS:
     return Object.assign(state, state, action.data);
   default:
     return state;

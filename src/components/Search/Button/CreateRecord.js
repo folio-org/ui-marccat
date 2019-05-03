@@ -1,12 +1,9 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import { Button, Dropdown, DropdownMenu, Icon } from '@folio/stripes/components';
-import type { Props } from '../../../shared';
+import type { Props } from '../../../flow/index.js.flow';
 import { Localize } from '../../../utils/Function';
-import renderDropdDownMenu from '../../../shared/lib/components/Message/DropdownLabels';
+import renderDropdDownMenu from '../../../shared/lib/Message/DropdownLabels';
 
 import style from '../Style/index.css';
 

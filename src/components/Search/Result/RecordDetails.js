@@ -1,19 +1,17 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { AccordionSet, Col, Row, FilterAccordionHeader, Accordion } from '@folio/stripes/components';
 import InventoryPluggableButton from '../Button/Inventory';
-import type { Props } from '../../../shared';
+import type { Props } from '../../../flow/index.js.flow';
 import AssociatedBib from './AssociatedBib';
-import { ActionTypes } from '../../../redux/actions/Actions';
+import { ACTION } from '../../../redux/actions';
 
-import style from '../Style/index.css';
 import { mapFields } from '../Utils/SearchUtils';
 import { FixedFields } from '../../Cataloguing/Models/model';
 import { SUBFIELD_CHARACTER } from '../../Cataloguing/Utils/MarcConstant';
+
+import style from '../Style/index.css';
 
 type P = Props & {
   items: Array<any>,
@@ -41,7 +39,7 @@ class RecordDetails extends React.Component<P, {}> {
     // eslint-disable-next-line no-unused-vars
     const { detail } = this.state;
     const currentDatail = detailPaneMeta.detail[0];
-    dispatch({ type: ActionTypes.SETTINGS, data: { currentDatail } });
+    dispatch({ type: ACTION.SETTINGS, data: { currentDatail } });
 
     const tags = (currentDatail) ? mapFields(currentDatail.data.fields) : [];
     return (

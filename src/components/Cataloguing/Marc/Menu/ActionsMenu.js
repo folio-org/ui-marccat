@@ -1,7 +1,4 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import {
   UncontrolledDropdown,
@@ -9,7 +6,7 @@ import {
   Button,
   Icon
 } from '@folio/stripes/components';
-import type { Props } from '../../../../shared';
+import type { Props } from '../../../../flow/index.js.flow';
 import ActionLabels from './ActionLabels';
 import { Localize } from '../../../../utils/Function';
 

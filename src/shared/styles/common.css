@@ -40,3 +40,8 @@ header {
   margin-right: '10px';
   float: 'right';
 }
+
+[data-role="menu"] {
+  width: auto !important;
+  font-weight: 600;
+}

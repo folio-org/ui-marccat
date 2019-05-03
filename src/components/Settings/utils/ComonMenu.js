@@ -1,7 +1,4 @@
-/**
- * @format
- * @flow
- */
+// @flow
 import * as React from 'react';
 import { Icon } from '@folio/stripes/components';
 import { ToolbarButtonMenu } from '../../../shared';

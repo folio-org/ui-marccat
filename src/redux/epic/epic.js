@@ -1,8 +1,8 @@
 import { from } from 'rxjs/observable/from';
 import { of } from 'rxjs/observable/of';
 import { Redux } from '../helpers/Redux';
-import { ACTION } from '../../shared';
-import { ENDPOINT } from '../../shared/config/constants';
+import { ENDPOINT } from '../../config/constants';
+import { ACTION } from '../actions';
 
 const initialState = {};
 const historyState = { list: [] };
@@ -160,7 +160,7 @@ export function epic(action$) {
         .flatMap(response => {
           return of(
             resolveEpicRequest(data.type, data, response),
-            executeEpicCallback((cb) ? cb(response) : () => {}) // for debug purpose
+            executeEpicCallback((cb) ? cb(response) : () => {})
             // cb(response);
           );
         }).catch(errors => of(rejectEpicRequest(errors)));

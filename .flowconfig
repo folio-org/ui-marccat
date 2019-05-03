@@ -1,25 +1,33 @@
-[ignore]
-; We fork some components by platform
-.*/*[.]android.js
-
-; Ignore "BUCK" generated dirs
+[declarations]
 <PROJECT_ROOT>/\.buckd/
+<PROJECT_ROOT>/node_modules/.*
+<PROJECT_ROOT>/Libraries/.*
+<PROJECT_ROOT>/translations/.*
+<PROJECT_ROOT>/lib/.*
+<PROJECT_ROOT>/docs/.*
+<PROJECT_ROOT>/artifact/.*
+<PROJECT_ROOT>/\.decl\.json
 
-; Ignore unexpected extra "@providesModule"
-.*/node_modules/.*/node_modules/fbjs/.*
-
-; Ignore duplicate module providers
-; For RN Apps installed via npm, "Libraries" folder is inside
-; "node_modules/react-native" but in the source repo it is in the root
-.*/Libraries/react-native/React.js
-
-; Ignore polyfills
-.*/Libraries/polyfills/.*
-
-; Ignore metro
-.*/node_modules/metro/.*
 
 [include]
+<PROJECT_ROOT>/config/.*
+<PROJECT_ROOT>/test.*
+
+[ignore]
+<PROJECT_ROOT>/node_modules/.*
+<PROJECT_ROOT>/__tests__/.*
+<PROJECT_ROOT>/\.ignore\.js
+<PROJECT_ROOT>/\.eslintrc\.js
+<PROJECT_ROOT>/\.stylelintrc\.js
+<PROJECT_ROOT>/\karma.conf\.js
+<PROJECT_ROOT>/translations/.*
+
+[untyped]
+.*\.notflow\.js
+
+[lints]
+untyped-type-import=error
+sketchy-null-bool=off
 
 [libs]
 node_modules/react-native/Libraries/react-native/react-native-interface.js
@@ -59,5 +67,4 @@ suppress_comment=\\(.\\|\n\\)*\\$FlowIssue\\((\\(<VERSION>\\)? *\\(site=[a-z,_]*
 suppress_comment=\\(.\\|\n\\)*\\$FlowFixedInNextDeploy
 suppress_comment=\\(.\\|\n\\)*\\$FlowExpectedError
 
-[version]
-^0.78.0
+

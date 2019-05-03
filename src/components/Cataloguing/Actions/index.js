@@ -1,5 +1,5 @@
-import { ACTION } from '../../../shared';
-import { ENDPOINT } from '../../../shared/config/constants';
+import { ENDPOINT } from '../../../config/constants';
+import { ACTION } from '../../../redux/actions/Actions';
 
 // MARC action creator utility
 
@@ -84,16 +84,16 @@ export const createHeadingAction = (id, payload) => {
  *
  * @param {*} payload
  */
-export const changeDisplayValueAction = (tag, payload) => {
+export const changeDisplayValueAction = (payload, cb) => {
   return {
     type: ACTION.CREATE,
     data: {
       path: ENDPOINT.CHANGE_DISPLAY_VALUE,
-      type: `displayvalue-${tag}`,
+      type: `displayvalue-${payload.code}`,
       params: ENDPOINT.DEFAULT_LANG_VIEW,
-      tag,
     },
-    payload
+    payload,
+    cb
   };
 };
 
@@ -161,6 +161,29 @@ export const deleteRecordAction = (id) => {
       params: 'view=1',
       id,
     },
+  };
+};
+
+export const headertypeAction = (tag) => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.HEADER_TYPES_URL,
+      type: `headertype${tag}`,
+      params: `code=${tag}&lang=ita`,
+    },
+  };
+};
+
+export const dropDownValuesAction = (payload) => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.TEMPLATE_TAG_URL,
+      type: `headertype${payload.code}values`,
+      params: `leader=${payload.value}&code=${payload.code}&headerTypeCode=${payload.headerTypeCode}&lang=ita`
+    },
+    cb: payload.cb
   };
 };
 

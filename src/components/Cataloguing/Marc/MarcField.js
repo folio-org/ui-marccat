@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field } from 'redux-form';
 import { IconButton } from '@folio/stripes/components';
-import type { Props } from '../../../shared';
+import type { Props } from '../../../flow/index.js.flow';
 import style from '../Style/index.css';
 
 type P = Props & {
@@ -21,6 +21,7 @@ export default class MarcField extends React.Component<P, {}> {
       value,
       onClick,
       text,
+      disbledIcon,
       onChange,
       readOnly,
       onDelete,
@@ -31,8 +32,15 @@ export default class MarcField extends React.Component<P, {}> {
     dispatch(change(name, value)); // to remove this check and use initialize({ [name]: value })
     return (withIcon) ? (
       <div>
+        <IconButton
+          icon="caret-down"
+          size="medium"
+          disabled={disbledIcon}
+          onClick={onClick}
+        />
         <label htmlFor={name}>{label}</label>
         <Field
+          className={style.small}
           id={name}
           name={name}
           type={'text' || text}
@@ -65,6 +73,7 @@ export default class MarcField extends React.Component<P, {}> {
           <IconButton
             icon="caret-down"
             size="medium"
+            disabled={disbledIcon}
             onClick={onClick}
           />
         </div>

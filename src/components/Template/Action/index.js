@@ -1,5 +1,6 @@
-import { ACTION } from '../../../shared';
-import { ENDPOINT } from '../../../shared/config/constants';
+import { ACTION } from '../../../redux';
+import { ENDPOINT } from '../../../config/constants';
+
 /**
  *
  * @return {*} payload

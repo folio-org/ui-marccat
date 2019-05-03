@@ -19,7 +19,6 @@ import { decamelizify } from '../../../../../utils/Function';
 import { ReduxForm } from '../../../../../redux/helpers/Redux';
 import style from '../../../Style/index.css';
 import { EMPTY_SPACED_STRING, REDUX } from '../../../../../config/constants';
-import { DropDown } from '../../FormField';
 
 type P = {
   handleOnChange: () => void,
@@ -41,8 +40,8 @@ class Tag00X extends React.Component<P, State> {
         for007: [],
         for008: []
       },
+      headerTypeCode: 0,
       displayValue: undefined,
-      request: {},
     };
     this.handleAdd = this.handleAdd.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
@@ -76,6 +75,7 @@ class Tag00X extends React.Component<P, State> {
       headerTypeCode,
       cb: (r) => this.prepareResult(r, code)
     };
+    this.setState({ headerTypeCode });
     dispatch(dropDownValuesAction(payload));
   };
 
@@ -88,10 +88,7 @@ class Tag00X extends React.Component<P, State> {
   };
 
   prepareDataForDisplay = (values: Object, code: string): Object => {
-    const { dispatch, change, marccat: { data: { headertype006values } } } = this.props;
-    const payload = Object.create({});
-    payload.code = code;
-    payload.categoryCode = 1;
+    const payload = {};
     switch (code) {
     case TAGS._006: payload.headerTypeCode = values[TAGS_NAME._006]; break;
     case TAGS._007: payload.headerTypeCode = values[TAGS_NAME._007]; break;
@@ -103,7 +100,7 @@ class Tag00X extends React.Component<P, State> {
   };
 
   performChange = (r: Object, code: string): void => {
-    const { dispatch, change, marccat: { data: { headertype006values } } } = this.props;
+    const { dispatch, change } = this.props;
     dispatch(change(code, r.displayValue));
   }
 
@@ -112,7 +109,12 @@ class Tag00X extends React.Component<P, State> {
     const { dropdown, headerTypeCode } = this.state;
     const dropdownValue: Array<HeadingType> = [];
     Object.values(data.results).map(h => dropdownValue.push(h));
-    const arr = Object.entries(data.results).map(([k, v]) => arr.push({ k, value: v.defaultValue }));
+    const payload = {};
+    Object.entries(data.results).map(([k, v]) => payload[k] = v.defaultValue);
+    payload.code = code;
+    payload.categoryCode = 1;
+    payload.headerTypeCode = headerTypeCode;
+    payload.sequenceNumber = 0;
     this.setState(prevState => {
       const newState = cloneDeep(prevState);
       newState.headerTypeCode = headerTypeCode;
@@ -142,7 +144,7 @@ class Tag00X extends React.Component<P, State> {
         <Col xs={4} key={idx}>
           <Field
             name={`${field.name}`}
-            component={DropDown}
+            component={this.DropDown}
             onChange={this.changeDisplayValue(code, data)}
             field={field}
           />
@@ -283,7 +285,7 @@ class Tag00X extends React.Component<P, State> {
   };
 
   render() {
-    const { fields, request } = this.state;
+    const { fields } = this.state;
     const field006 = fields.filter(f => f.fixedField.code === TAGS._006);
     const field007 = fields.filter(f => f.fixedField.code === TAGS._007);
     const field008 = first(fields.filter(f => f.fixedField.code === TAGS._008));
@@ -319,7 +321,6 @@ class Tag00X extends React.Component<P, State> {
           </Row>
         ))}
         {this.renderField008(field008)}
-        {console.log(request)}
       </React.Fragment>
     );
   }

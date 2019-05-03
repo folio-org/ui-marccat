@@ -14,7 +14,7 @@ import {
   RecordDetailPane,
   AssociatedRecordPane,
 } from './components';
-import { CreateRecordButton, EditRecordButton, DuplicaRecordButton } from '..';
+import { CreateRecordButton, EditRecordButton } from '..';
 import { emptyRecordAction } from '../../Cataloguing/Actions';
 import { searchDetailAction } from '../Actions';
 import * as C from '../../../config/constants';
@@ -168,7 +168,6 @@ export class SearchResults extends React.Component<P, {}> {
             withIcon
             noDropdown
           />
-          <DuplicaRecordButton {...this.props} data-test-clickable-duplicate-record />
         </PaneMenu>
       ) :
       (
@@ -186,7 +185,6 @@ export class SearchResults extends React.Component<P, {}> {
             })}
             open={openDropDownMenu}
           />
-          <DuplicaRecordButton {...this.props} data-test-clickable-duplicate-record />
         </PaneMenu>
       );
   };
@@ -304,6 +302,7 @@ export class SearchResults extends React.Component<P, {}> {
           />
           {detailPanelIsVisible && (closePanels === false) &&
             <RecordDetailPane
+              {...this.props}
               detailPaneMeta={detailPaneMeta}
               detail={detail}
               isFetchingDetail={isFetchingDetail}

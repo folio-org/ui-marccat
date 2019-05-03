@@ -27,7 +27,6 @@ import {
   SUBFIELD_DELIMITER
 } from '..';
 import {
-  ActionMenuTemplate,
   SingleCheckboxIconButton,
   injectCommonProp,
   post
@@ -232,7 +231,7 @@ export class MarcRecord extends React.Component<Props, {
             paneTitle={(bibliographicRecord && isEditMode) ? 'Edit Record' : 'New Monograph'}
             paneSub={'id. ' + bibliographicRecord.id || id}
             appIcon={<AppIcon app={C.META.ICON_TITLE} />}
-            actionMenu={ActionMenuTemplate}
+            actionMenu={() => {}}
             dismissible
             onClose={() => this.handleClose()}
             lastMenu={this.renderButtonMenu()}

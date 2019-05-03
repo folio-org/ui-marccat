@@ -114,3 +114,9 @@
 .inventoryButton {
   margin-top: 1.5rem;
 }
+
+.dropdownContainerText {
+  line-height: 1.8;
+  font-weight: 600;
+  cursor: pointer;
+}

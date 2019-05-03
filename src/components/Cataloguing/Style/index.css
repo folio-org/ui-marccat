@@ -18,9 +18,10 @@
   text-align: left;
   display: grid;
 
-  & [no-padding] { 
-    padding-right: 0; 
+  & [no-padding] {
+    padding-right: 0;
   }
+
   & .small {
     width: 75%;
   }

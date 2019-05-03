@@ -58,6 +58,7 @@
   "search.actionmenu.print": "Print",
   "search.actionmenu.opac": "Reveal in OPAC",
   "search.actionmenu.duplicate": "Duplicate",
+  "search.actionmenu.duplicate.ebook": "Duplicate as e-book",
   "search.actionmenu.holdings": "Holdings",
   "search.actionmenu.instances": "Instances",
   "search.actionmenu.authority.records": "Authority Records",

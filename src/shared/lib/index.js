@@ -1,5 +1,4 @@
 export { EmptyMessage, NoResultsMessage } from './Message';
 export { ToolbarMenu, ToolbarButtonMenu } from './Toolbar/Menu';
-export { ActionMenu, ActionMenuDetail, getActionMenu, generateDropdownMenu } from './ActionMenu/ActionMenu';
-export { default as ActionMenuTemplate } from './ActionMenu/ActionMenuTemplate';
+export { ActionMenu, getActionMenu, generateDropdownMenu } from './ActionMenu/ActionMenu';
 export { CheckboxIconButton, SingleCheckboxIconButton } from './Button';

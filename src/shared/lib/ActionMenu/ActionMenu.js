@@ -2,8 +2,8 @@
 import React, { Fragment } from 'react';
 import { Button, Icon } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
-import style from '../Style/Dropdown.css';
 import CheckboxIconButton from '../Button/OptionButton';
+import style from '../Style/Dropdown.css';
 
 
 export const ActionMenu = () => {
@@ -32,23 +32,6 @@ export const ActionMenu = () => {
   );
 };
 
-export const ActionMenuDetail = () => {
-  return (
-    <Fragment>
-      <div className={style.dropdownContainerText}>
-        <div><FormattedMessage id="ui-marccat.search.actionmenu.export.mrc" /></div>
-        <div><FormattedMessage id="ui-marccat.browse.actionmenu.export.csv" /></div>
-        <div><FormattedMessage id="ui-marccat.browse.actionmenu.export.dat" /></div>
-        <div><FormattedMessage id="ui-marccat.search.actionmenu.print" /></div>
-        <div><FormattedMessage id="ui-marccat.search.actionmenu.opac" /></div>
-        <div><FormattedMessage id="ui-marccat.search.actionmenu.duplicate" /></div>
-        <div><FormattedMessage id="ui-marccat.search.actionmenu.holdings" /></div>
-        <div><FormattedMessage id="ui-marccat.search.actionmenu.instances" /></div>
-        <div><FormattedMessage id="ui-marccat.search.actionmenu.authority.records" /></div>
-      </div>
-    </Fragment>
-  );
-};
 export const generateDropdownMenu = (labels, withButton) => {
   return (
     <Fragment>

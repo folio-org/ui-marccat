@@ -8,5 +8,5 @@ export { default as injectCommonProp } from './core/hoc/withInjection';
 // lib
 export { EmptyMessage, NoResultsMessage } from './lib/Message';
 export { ToolbarMenu, ToolbarButtonMenu } from './lib/Toolbar/Menu';
-export { ActionMenuTemplate, ActionMenu, ActionMenuDetail, getActionMenu, generateDropdownMenu } from './lib';
+export { ActionMenu, getActionMenu, generateDropdownMenu } from './lib';
 export { CheckMarkIcon, CheckboxIconButton, SingleCheckboxIconButton } from './lib/Button';

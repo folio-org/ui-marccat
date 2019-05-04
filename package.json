@@ -1,6 +1,6 @@
 {
   "name": "@folio/marccat",
-  "version": "1.3.0-SNAPSHOT",
+  "version": "1.3.0",
   "description": "FOLIO UI module for Cataloging",
   "repository": "folio-org/ui-marccat",
   "publishConfig": {
@@ -17,14 +17,13 @@
     "build:flow": "yarn run flow --show-all-branches --show-all-errors --ignore-version",
     "test": "stripes test karma",
     "test:coverage": "stripes test karma --coverage",
-    "test:folioci": "yarn test --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage",
+    "test:folioci": "yarn --offline test --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage",
     "lint": "eslint ./src --fix && stylelint \"src/**/*.css\" --fix && eslint **/**/test_* --quiet",
     "eslint": "eslint ./ --fix",
     "precommit": "lint-staged",
     "type:install": "flow-typed install `echo $1`",
     "stylelint": "stylelint \"src/**/*.css\"",
     "deploy": "sh script/deploy.sh",
-    "flow:strip": "yarn flow --show-all-errors",
     "clean": "rm -rf lib/ artifact/"
   },
   "devDependencies": {

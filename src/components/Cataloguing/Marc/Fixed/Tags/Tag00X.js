@@ -10,7 +10,7 @@ import {
   TAGS,
   TAGS_NAME
 } from '../../../Utils/MarcConstant';
-import type { Props } from '../../../../../flow/index.js.flow';
+import type { Props } from '../../../../../flow/types.js.flow';
 import type { HeadingType } from '../../../../Types/cataloging.js.flow';
 import MarcField from '../../MarcField';
 import { insert } from '../../../../../flow/utils/Arrays';

@@ -1,4 +1,5 @@
-import _ from 'lodash';
+// @flow
+import { isArray } from 'lodash';
 import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../config/constants';
 
 /**
@@ -13,7 +14,7 @@ const getTagDisplayValue = tagNode => {
   return result;
 };
 
-const remapForAssociatedBibList = (i:[]) => {
+const remapForAssociatedBibList = (i: []) => {
   const result = [];
   i
     .forEach(el => {
@@ -91,7 +92,7 @@ const remapFilters = (filterObject) => {
     const category = element.split('.')[0];
     const optionCategory = element.split('.')[1];
     if (filterObject[element]) {
-      if (!_.isArray(result[category]) || result[category].length < 1) {
+      if (!isArray(result[category]) || result[category].length < 1) {
         result[category] = [];
       }
       result[category].push({ [optionCategory]: filterObject[element] });

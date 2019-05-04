@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Paneset, HotKeys, PaneMenu } from '@folio/stripes/components';
 import { ACTION } from '../../../redux/actions';
-import type { Props } from '../../../flow/index.js.flow';
+import type { Props } from '../../../flow/types.js.flow';
 import { injectCommonProp, NoResultsMessage } from '../../../shared';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
 import { isAuthorityRecord, transitionToParams } from '../Utils/SearchUtils';
@@ -23,7 +23,7 @@ type P = Props & {
   headings: Array<any>,
   inputValue: string,
   getPreviousPage: () => void,
-  getNextPage:() => void,
+  getNextPage: () => void,
   detail: Object,
   dataLoaded: boolean,
   loading: boolean,

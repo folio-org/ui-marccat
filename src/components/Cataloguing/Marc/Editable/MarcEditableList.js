@@ -1,4 +1,5 @@
-import React from 'react';
+// @flow
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import sortBy from 'lodash/sortBy';
 import MarcRecordListForm from './MarcRecordListForm';

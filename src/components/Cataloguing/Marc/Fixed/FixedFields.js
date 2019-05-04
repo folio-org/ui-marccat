@@ -1,4 +1,6 @@
-import React from 'react';
+// @flow
+// @flow
+import * as React from 'react';
 import { Accordion } from '@folio/stripes/components';
 import { MarcLeader } from '../..';
 import { Localize } from '../../../../utils/Function';

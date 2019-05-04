@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Field } from 'redux-form';
 import { Row, Col, Select } from '@folio/stripes/components';
-import type { Props } from '../../../flow/index.js.flow';
+import type { Props } from '../../../flow/types.js.flow';
 import MarcField from './MarcField';
 import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../config/constants';
 import { ACTION } from '../../../redux/actions/Actions';
@@ -12,20 +12,24 @@ import { decamelizify } from '../../../utils/Function';
 type P = {
   readOnly: boolean,
   leaderData: Object,
-  leaderCode: number,
+  leaderCode: string,
   leaderValue: string,
 } & Props;
 
-export default class MarcLeader extends React.Component<P, {
+type S = {
   leaderDataDispatched: boolean,
   leaderCss: boolean,
-  leader: string,
-}> {
-  constructor(props: Props) {
+  leaderVal: string,
+  leaderChangedFor008: boolean
+};
+
+export default class MarcLeader extends React.Component<P, S> {
+  constructor(props: P) {
     super(props);
     this.state = {
       leaderDataDispatched: false,
       leaderCss: false,
+      leaderCode: undefined,
       leaderVal: props.leaderValue,
       leaderChangedFor008: false,
     };

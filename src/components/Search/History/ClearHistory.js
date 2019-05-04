@@ -1,4 +1,5 @@
-import React from 'react';
+// @flow
+import * as React from 'react';
 import { Headline, Row, IconButton } from '@folio/stripes/components';
 import { Localize } from '../../../utils/Function';
 import style from '../../../shared/lib/Style/Dropdown.css';

@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { AccordionSet, Col, Row, FilterAccordionHeader, Accordion } from '@folio/stripes/components';
 import InventoryPluggableButton from '../Button/Inventory';
-import type { Props } from '../../../flow/index.js.flow';
+import type { Props } from '../../../flow/types.js.flow';
 import AssociatedBib from './AssociatedBib';
 import { ACTION } from '../../../redux/actions';
 
@@ -18,7 +18,7 @@ type P = Props & {
 }
 
 class RecordDetails extends React.Component<P, {}> {
-  constructor(props:P) {
+  constructor(props: P) {
     super(props);
     const id = props.detailPaneMeta.meta['001'];
     let mergedResults;

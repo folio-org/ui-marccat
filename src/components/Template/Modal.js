@@ -1,3 +1,4 @@
+// @flow
 import * as React from 'react';
 import { Button, Modal, ModalFooter, TextField } from '@folio/stripes/components';
 import { Field, reduxForm } from 'redux-form';

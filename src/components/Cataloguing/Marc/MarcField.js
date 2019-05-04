@@ -1,7 +1,8 @@
-import React from 'react';
+// @flow
+import * as React from 'react';
 import { Field } from 'redux-form';
 import { IconButton } from '@folio/stripes/components';
-import type { Props } from '../../../flow/index.js.flow';
+import type { Props } from '../../../flow/types.js.flow';
 import style from '../Style/index.css';
 
 type P = Props & {

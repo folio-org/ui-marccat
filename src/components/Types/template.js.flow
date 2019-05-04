@@ -1,0 +1,9 @@
+// @flow
+export type Type = "A" | "B";
+export type Template<T = Type> = {
+  name: string,
+  type: T,
+  fields: Array<*>,
+}
+
+export type Container<K = Template<Type>> = {};

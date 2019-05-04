@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Accordion, FilterAccordionHeader, MultiColumnList } from '@folio/stripes/components';
-import type { Props } from '../../../flow/index.js.flow';
+import type { Props } from '../../../flow/types.js.flow';
 import { ACTION } from '../../../redux/actions';
 import { remapForAssociatedBibList } from '../../../utils/Mapper';
 import { resultsFormatterForAssociated, columnMapperForAssociated } from '../../../utils/Formatter';

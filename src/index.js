@@ -1,31 +1,21 @@
 // @flow
 import * as React from 'react';
 import { MarcatSettings as Settings } from './components';
-import { Router } from './router';
+import { Router } from './components/Route/Router';
 import { reducer, epics } from './redux';
 import { injectCommonProp } from './shared';
 import MARCcat from './MARCcat';
 import { ACTION } from './redux/actions';
 import { REDUX } from './config/constants';
-
 import './shared/styles/common.css';
 
 
-type Props = {
-  root: {
-    addReducer: Function,
-    addEpic: Function,
-  },
-  filterPaneIsVisible: boolean,
-  showSettings: boolean,
-  children?: React.Node,
-};
 
-class MARCCatRouting extends React.Component<Props, {
+class MARCcat extends React.Component<Props, {
   filterPaneIsVisible: Boolean,
 }> {
-  constructor(props:Props, context) {
-    super(props, context);
+  constructor(...args) {
+    super(...args);
     this.state = {
       filterPaneIsVisible: true,
     };

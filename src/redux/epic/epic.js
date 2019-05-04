@@ -1,3 +1,4 @@
+// @flow
 import { from } from 'rxjs/observable/from';
 import { of } from 'rxjs/observable/of';
 import { Redux } from '../helpers/Redux';

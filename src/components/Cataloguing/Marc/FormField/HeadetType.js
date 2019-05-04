@@ -9,6 +9,7 @@ const HeadetType = ({ name, value, onChange, values, ...rest }) => (
   <React.Fragment>
     <Select
       id={name}
+      id={name}
       label={decamelizify(name, EMPTY_SPACED_STRING)}
       dataOptions={values}
       onChange={onChange}

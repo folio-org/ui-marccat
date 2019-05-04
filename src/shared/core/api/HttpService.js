@@ -1,10 +1,11 @@
+// @flow
 import { HTTP_METHOD } from '../../../config/constants';
 /**
  *
  * @param {*} url - the API endpoint
  * @param {*} store - the data store
  */
-export function get(url:string) {
+export function get(url: string) {
   return fetch(url, {
     method: HTTP_METHOD.GET,
     headers: Object.assign({}, {
@@ -20,7 +21,7 @@ export function get(url:string) {
  * @param {*} data - the body of request
  * @param {*} store - the data store
  */
-export function post(url:string, data: any) {
+export function post(url: string, data: any) {
   return fetch(url, {
     method: HTTP_METHOD.POST,
     headers: Object.assign({}, {
@@ -37,7 +38,7 @@ export function post(url:string, data: any) {
  * @param {*} data - the body of request
  * @param {*} store - the data store
  */
-export function put(url:string, data: any) {
+export function put(url: string, data: any) {
   return fetch(url, {
     method: HTTP_METHOD.PUT,
     headers: Object.assign({}, {
@@ -53,7 +54,7 @@ export function put(url:string, data: any) {
  * @param {*} url - the API endpoint
  * @param {*} store - the data store
  */
-export function remove(url:string, cb?: () => void) {
+export function remove(url: string, cb?: () => void) {
   fetch(url, {
     method: HTTP_METHOD.DELETE,
     headers: Object.assign({}, {

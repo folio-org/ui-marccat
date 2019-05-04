@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Icon, Pane, Button } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 import { injectCommonProp, ToolbarButtonMenu, CheckMarkIcon } from '../../../shared';
-import type { Props } from '../../../flow/index.js.flow';
+import type { Props } from '../../../flow/types.js.flow';
 
 type P = Props & {
   label: string;

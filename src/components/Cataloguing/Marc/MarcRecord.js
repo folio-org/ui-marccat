@@ -30,7 +30,7 @@ import {
   SingleCheckboxIconButton,
   injectCommonProp,
   post
-} from '../../../shared';
+} from 'shared';
 import { ACTION } from '../../../redux/actions/Actions';
 import { buildUrl, findParam, Localize } from '../../../utils/Function';
 import {
@@ -41,8 +41,8 @@ import {
 } from '../Utils/MarcApiUtils';
 import * as C from '../../../config/constants';
 import * as MarcAction from '../Actions';
-import type { Props } from '../../../shared';
-
+import type { Props } from '../../..';
+import type { RecordTemplate, Type } from '../../Types/cataloging.js.flow';
 import style from '../Style/index.css';
 import { Redux } from '../../../redux';
 import VariableFields from './Variable/VariableFields';
@@ -132,7 +132,8 @@ export class MarcRecord extends React.Component<Props, {
     const bibliographicRecord = this.getCurrentRecord();
     bibliographicRecord.leader.value = formData.leader;
 
-    const recordTemplate = {
+    const type: Type = 'B';
+    const recordTemplate: RecordTemplate<Type> = {
       id: first(data.template.records).id,
       name: first(data.template.records).name,
       type: 'B',
@@ -275,7 +276,7 @@ export class MarcRecord extends React.Component<Props, {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  loadHeadertype: (tag:[]) => _ => {
+  loadHeadertype: (tag: []) => _ => {
     tag.forEach(t => dispatch(MarcAction.headertypeAction(t)));
   }
 }, dispatch);

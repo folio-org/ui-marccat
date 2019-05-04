@@ -1,5 +1,6 @@
 /* eslint-disable no-use-before-define */
-import React from 'react';
+// @flow
+import * as React from 'react';
 import { union, sortBy, first, includes } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Callout } from '@folio/stripes/components';
@@ -78,7 +79,7 @@ export const filterFixedFieldForSaveRecord = (obj) => {
  *
  * @param {Object} obj
  */
-export const filterMandatoryFields = (obj) => {
+export const filterMandatoryFields = (obj): string => {
   return dedupe(obj).filter(f => includes(TAG_MANDATORY, f.code));
 };
 
@@ -87,7 +88,7 @@ export const filterMandatoryFields = (obj) => {
  *
  * @param {Object} obj
  */
-export const filterVariableFields = (obj:Array<Object>) => {
+export const filterVariableFields = (obj: Array<Object>) => {
   return obj
     .filter(f => (f.fixedField === undefined || !f.fixedField) || f.variableField || f.variableField !== undefined);
 };

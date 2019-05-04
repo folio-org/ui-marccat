@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Pane, Icon } from '@folio/stripes/components';
 import { injectCommonProp, ToolbarButtonMenu } from '../../../shared';
-import type { Props } from '../../../flow/index.js.flow';
+import type { Props } from '../../../flow/types.js.flow';
 
 type P = Props & {
   label: string;

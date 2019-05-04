@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
+// @flow
+import * as React from 'react';
 import { getFieldPosition, getFormat, getMicroformat } from './Mapper';
 import style from '../components/Search/Style/index.css';
 
-export const columnMapper = (isBibsOnly:?boolean, isAuthOnly:?boolean = true) => {
+export const columnMapper = (isBibsOnly: ?boolean, isAuthOnly: ?boolean = true) => {
   let mapper = {};
   if (isBibsOnly === true) {
     mapper = {
@@ -45,7 +46,7 @@ export const columnMapper = (isBibsOnly:?boolean, isAuthOnly:?boolean = true) =>
   }
   return mapper;
 };
-export const renderColumn = (isBibsOnly:?boolean, isAuthOnly:?boolean = true) => {
+export const renderColumn = (isBibsOnly: ?boolean, isAuthOnly: ?boolean = true) => {
   let visibleCol = [];
   if (isBibsOnly === true) {
     visibleCol = [
@@ -88,7 +89,7 @@ export const renderColumn = (isBibsOnly:?boolean, isAuthOnly:?boolean = true) =>
   return visibleCol;
 };
 
-export const columnWidthMapper = (isBibsOnly:?boolean, isAuthOnly:?boolean = true) => {
+export const columnWidthMapper = (isBibsOnly: ?boolean, isAuthOnly: ?boolean = true) => {
   let widthMapper = {};
   if (isBibsOnly === true) {
     widthMapper = {
@@ -192,7 +193,7 @@ export const resultsFormatterForAssociated = {
   )
 };
 
-export const resultsFormatter = (isBibsOnly:?boolean = true, isAuthOnly:?boolean = true) => {
+export const resultsFormatter = (isBibsOnly: ?boolean = true, isAuthOnly: ?boolean = true) => {
   const all = {
     resultView: x => (
       <span className={x.recordView === 1 ? style.bibliographic : style.authority} />

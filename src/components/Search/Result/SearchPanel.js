@@ -12,7 +12,7 @@ import {
 import { reduxForm, Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import ResetButton from '../Filter/ResetButton';
-import type { Props } from '../../../flow/index.js.flow';
+import type { Props } from '../../../flow/types.js.flow';
 import {
   SearchIndexes,
   SearchConditions,

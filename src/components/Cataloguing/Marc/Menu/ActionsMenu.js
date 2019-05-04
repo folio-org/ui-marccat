@@ -6,7 +6,7 @@ import {
   Button,
   Icon
 } from '@folio/stripes/components';
-import type { Props } from '../../../../flow/index.js.flow';
+import type { Props } from '../../../../flow/types.js.flow';
 import ActionLabels from './ActionLabels';
 import { Localize } from '../../../../utils/Function';
 

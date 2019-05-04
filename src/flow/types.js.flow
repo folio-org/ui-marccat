@@ -1,10 +1,10 @@
 // @flow
-import React from 'react';
+// @flow
+import * as React from 'react';
 import type { Node, ElementType, ElementRef, ComponentType } from 'react'
-import type { Dispatch } from 'redux';
+import type { Dispatch, Reducer, Epic } from 'redux';
 
 export type Action = { +type: string, paylod: Object }
-export type State = { };
 export type GetState = () => State;
 export type PromiseAction = Promise<Action>;
 export type Dispatch = (action: Action | ThunkAction | PromiseAction | Array<Action>) => any;
@@ -20,11 +20,14 @@ export type Props = {
   translate?: (value: Object) => ?any,
   forwardRef?: boolean,
   root: {
-    addReducer<S>: (key: string, reducer:  Reducer<S>) => ?any,
-    addEpic<E>: (key: string, epic:  Epic<E>) => ?any,
+    addReducer(key: string, reducer: Reducer<S>) => ?any,
+    addEpic(key: string, epic: Epic<E>) => ?any,
   },
   filterPaneIsVisible: boolean,
   showSettings: boolean,
   children?: React.Node,
 }
 
+export type State = {
+  filterPaneIsVisible: Boolean,
+};

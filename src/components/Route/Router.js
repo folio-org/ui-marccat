@@ -1,11 +1,10 @@
 // @flow
 import * as React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { Search, Browse, Cataloging } from './components';
-import { ToolbarMenu } from './shared';
-import type { Props } from './flow/index.js.flow';
+import { Search, Browse, Cataloging } from '..';
+import { ToolbarMenu } from '../../shared';
 
-type P = Props & {
+type P = {
     toggleFilterPane: () => void;
 }
 
@@ -13,7 +12,7 @@ export function ComposedRoute({ component: Component, children, ...props }) {
   return (Component) ? (<Route {...props} render={() => (<Component {...props}>{children}</Component>)} />) : (<Route {...props}>{children}</Route>);
 }
 
-export function Router({ ...props }:P) {
+export function Router({ ...props }: P) {
   const { toggleFilterPane, match: { path } } = props;
   const renderSearchIconMenu = () => {
     return (<ToolbarMenu icon={['search']} {...props} onClick={toggleFilterPane} />);

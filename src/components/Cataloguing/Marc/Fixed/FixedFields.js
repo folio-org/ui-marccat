@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { Accordion } from '@folio/stripes/components';
 import { MarcLeader } from '../..';
-import { Localize } from '../../../../utils/Function';
+import { Localize } from '../../../../shared/utils/Function';
 import FixedField from './FixedField';
 import EditableFixedField from './EditableFixedField';
 

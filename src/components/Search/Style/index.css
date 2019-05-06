@@ -120,3 +120,8 @@
   font-weight: 600;
   cursor: pointer;
 }
+
+.align-right {
+  float: right;
+  text-align: right;
+}

@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Icon, Pane, Button } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
-import { injectCommonProp, ToolbarButtonMenu, CheckMarkIcon } from '../../../shared';
+import { injectProps, ToolbarButtonMenu, CheckMarkIcon } from '../../../shared';
 import type { Props } from '../../../flow/types.js.flow';
 
 type P = Props & {
@@ -19,7 +19,7 @@ class DefaultTemplate extends React.Component<P, {}> {
 
   handleSelectTemplate = () => {
     const { history } = this.props;
-    history.push(`/marccat/record/template?templateId=${408}`);
+    history.push(`/marccat/record/template?templateId=${42}`);
   }
 
   render() {
@@ -80,4 +80,4 @@ export default (connect(
     isReadyData: template.isReady,
     isLoadingData: template.isLoading
   }),
-)(injectCommonProp(DefaultTemplate)));
+)(injectProps(DefaultTemplate)));

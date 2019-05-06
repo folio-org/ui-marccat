@@ -1,12 +1,12 @@
 // @flow
 import { isArray } from 'lodash';
-import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../config/constants';
+import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../config/constants';
 
 /**
  * concatenate all subfield text data of a tag
  * @param {*} tagNode
  */
-const getTagDisplayValue = tagNode => {
+export const getTagDisplayValue = tagNode => {
   let result = EMPTY_STRING;
   tagNode.subfields.forEach(el => {
     result += EMPTY_SPACED_STRING.concat(Object.values(el)[0]);
@@ -14,7 +14,11 @@ const getTagDisplayValue = tagNode => {
   return result;
 };
 
-const remapForAssociatedBibList = (i: []) => {
+/**
+ *
+ * @param {*} i
+ */
+export const remapForAssociatedBibList = (i: []) => {
   const result = [];
   i
     .forEach(el => {
@@ -37,7 +41,11 @@ const remapForAssociatedBibList = (i: []) => {
   return result;
 };
 
-const getTag245 = (data) => {
+/**
+ *
+ * @param {*} data
+ */
+export const getTag245 = (data) => {
   let tag245 = EMPTY_STRING;
   data.map(item => {
     if (item.substring(0, 4).trim() === '245') {
@@ -48,7 +56,11 @@ const getTag245 = (data) => {
   return tag245;
 };
 
-const getTag100 = (bigStringArray) => {
+/**
+ *
+ * @param {*} bigStringArray
+ */
+export const getTag100 = (bigStringArray) => {
   let tag100 = EMPTY_STRING;
   bigStringArray.map(item => {
     if (item.substring(0, 3).trim() === '100') {
@@ -59,7 +71,11 @@ const getTag100 = (bigStringArray) => {
   return tag100;
 };
 
-const getTitle245 = (bigStringArray) => {
+/**
+ *
+ * @param {*} bigStringArray
+ */
+export const getTitle245 = (bigStringArray) => {
   let titleTag245 = '';
   bigStringArray.map(item => {
     if (item.substring(0, 3).trim() === '245') {
@@ -70,7 +86,11 @@ const getTitle245 = (bigStringArray) => {
   return titleTag245;
 };
 
-const getTitle100 = (bigStringArray) => {
+/**
+ *
+ * @param {*} bigStringArray
+ */
+export const getTitle100 = (bigStringArray) => {
   let titleTag100 = EMPTY_STRING;
   bigStringArray.map(item => {
     if (item.substring(0, 3).trim() === '100') {
@@ -81,12 +101,21 @@ const getTitle100 = (bigStringArray) => {
   return titleTag100;
 };
 
-
-const getFieldPosition = (controlField, pos1, pos2) => {
+/**
+ *
+ * @param {*} controlField
+ * @param {*} pos1
+ * @param {*} pos2
+ */
+export const getFieldPosition = (controlField, pos1, pos2) => {
   return (!controlField || controlField.length < pos2) ? controlField : controlField.substring(pos1, pos2);
 };
 
-const remapFilters = (filterObject) => {
+/**
+ *
+ * @param {*} filterObject
+ */
+export const remapFilters = (filterObject) => {
   const result = {};
   Object.keys(filterObject).forEach(element => {
     const category = element.split('.')[0];
@@ -101,8 +130,11 @@ const remapFilters = (filterObject) => {
   return result;
 };
 
-
-const getFormat = (leader) => {
+/**
+ *
+ * @param {*} leader
+ */
+export const getFormat = (leader) => {
   const pos6 = leader.substring(6, 7);
   const pos7 = leader.substring(7, 8);
   switch (pos6) {
@@ -124,7 +156,11 @@ const getFormat = (leader) => {
   }
 };
 
-const getMicroformat = (tag007) => {
+/**
+ *
+ * @param {*} tag007
+ */
+export const getMicroformat = (tag007) => {
   if (tag007 === EMPTY_STRING || tag007 === undefined) {
     return EMPTY_STRING;
   } else {
@@ -136,16 +172,4 @@ const getMicroformat = (tag007) => {
     default: return EMPTY_STRING;
     }
   }
-};
-
-export {
-  getFieldPosition,
-  getFormat,
-  getTag245,
-  getTitle245,
-  getTitle100,
-  getTag100,
-  remapFilters,
-  remapForAssociatedBibList,
-  getMicroformat
 };

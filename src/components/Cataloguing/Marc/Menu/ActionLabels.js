@@ -3,7 +3,7 @@
 // @flow
 import * as React from 'react';
 import { MenuItem } from '@folio/stripes/components';
-import { Localize } from '../../../../utils/Function';
+import { Localize } from '../../../../shared/utils/Function';
 import style from '../../../../shared/lib/Style/Dropdown.css';
 
 export default ({ ...props }) => {

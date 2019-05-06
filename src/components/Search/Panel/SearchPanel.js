@@ -23,11 +23,10 @@ import {
 } from '..';
 import { ACTION } from '../../../redux/actions/Actions';
 import { findYourQuery } from '../Filter';
-import { remapFilters } from '../../../utils/Mapper';
+import { remapFilters, findParam } from '../../../shared';
 import { EMPTY_STRING } from '../../../config/constants';
-import styles from '../Style/index.css';
 import { historySearchAction, searchDetailAction } from '../Actions';
-import { findParam } from '../../../utils/Function';
+import styles from '../Style/index.css';
 
 type P = Props & {
   inputErrorCheck: string,
@@ -133,7 +132,7 @@ class SearchPanel extends React.Component<P, {}> {
           || indexForQuery === 'PP '
           || indexForQuery === 'PW ') {
           dispatch({ type: ACTION.SEARCH, moreData: 'N', queryBib: bibQuery, queryAuth: EMPTY_STRING, from: '1', to: '30' });
-          // this.handleSearchHistory({ recordType: 'biblio', query: bibQuery, index: indexForQuery, found: 0 });
+          this.handleSearchHistory({ recordType: 'biblio', query: bibQuery, index: indexForQuery, found: 0 });
           transitionToParams('q', bibQuery);
           dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
         } else {
@@ -141,7 +140,7 @@ class SearchPanel extends React.Component<P, {}> {
           transitionToParams('q', authQuery);
           dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
           dispatch({ type: ACTION.TOTAL_AUTH_COUNT, query: authQuery });
-          // this.handleSearchHistory({ recordType: 'all', query: bibQuery, index: indexForQuery, found: 0, record: {} });
+          this.handleSearchHistory({ recordType: 'all', query: bibQuery, index: indexForQuery, found: 0, record: {} });
         }
       }
     }

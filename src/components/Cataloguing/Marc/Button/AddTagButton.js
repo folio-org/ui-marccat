@@ -1,9 +1,8 @@
-// @flow
 import * as React from 'react';
 import {
   Button
 } from '@folio/stripes/components';
-import { Localize } from '../../../../utils/Function';
+import { Localize } from '../../../../shared/utils/Function';
 
 // eslint-disable-next-line no-unused-vars
 export default ({ ...props }) => {

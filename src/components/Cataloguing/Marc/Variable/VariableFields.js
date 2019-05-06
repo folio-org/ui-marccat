@@ -3,7 +3,7 @@ import * as React from 'react';
 import { MarcEditableList } from '../..';
 import { replaceAll } from '../../Utils/MarcApiUtils';
 import { EMPTY_VARIABLE_FIELD } from '../../Utils/MarcConstant';
-import { Localize } from '../../../../utils/Function';
+import { Localize } from '../../../../shared/utils/Function';
 
 export default ({ ...props }) => {
 

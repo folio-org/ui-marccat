@@ -7,7 +7,7 @@ import MarcField from './MarcField';
 import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../config/constants';
 import { ACTION } from '../../../redux/actions/Actions';
 import style from '../Style/index.css';
-import { decamelizify } from '../../../utils/Function';
+import { decamelizify } from '../../../shared/utils/Function';
 
 type P = {
   readOnly: boolean,
@@ -29,7 +29,6 @@ export default class MarcLeader extends React.Component<P, S> {
     this.state = {
       leaderDataDispatched: false,
       leaderCss: false,
-      leaderCode: undefined,
       leaderVal: props.leaderValue,
       leaderChangedFor008: false,
     };

@@ -9,10 +9,10 @@ import BrowseItemDetail from './BrowseItemDetail';
 import { ACTION } from '../../redux/actions/Actions';
 import { findYourQueryFromBrowse } from '../Search/Filter/FilterMapper';
 import { ToolbarButtonMenu, EmptyMessage, NoResultsMessage } from '../../shared/lib';
-import { browseFormatter, browseColMapper } from '../../utils/Formatter';
+import { browseFormatter, browseColMapper } from '../../shared/utils/Formatter';
 import BrowseAssociatedItemDetail from './BrowseAssociatedItemDetail';
 import * as C from '../../config/constants';
-import { generateDropdownMenu, injectCommonProp } from '../../shared';
+import { generateDropdownMenu, injectProps } from '../../shared';
 
 type S = {
   browseDetailPanelIsVisible: boolean,
@@ -203,4 +203,4 @@ export default (connect(
     items: browseDetailsAssociated.records,
     isPanelOpen: browseDetailsAssociated.mustOpenPanel
   }),
-)(injectCommonProp(BrowseResults)));
+)(injectProps(BrowseResults)));

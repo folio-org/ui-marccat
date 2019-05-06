@@ -6,8 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { Paneset, HotKeys, PaneMenu } from '@folio/stripes/components';
 import { ACTION } from '../../../redux/actions';
 import type { Props } from '../../../flow/types.js.flow';
-import { injectCommonProp, NoResultsMessage } from '../../../shared';
-import { remapForAssociatedBibList } from '../../../utils/Mapper';
+import { NoResultsMessage, injectProps, remapForAssociatedBibList } from '../../../shared';
 import { isAuthorityRecord, transitionToParams } from '../Utils/SearchUtils';
 import {
   SearchResultPane,
@@ -360,4 +359,4 @@ export default (connect(
     totalAuth: totalAuthRecords.totalAuthDoc
   }),
   (dispatch) => dispatch(emptyRecordAction())
-)(injectCommonProp(SearchResults)));
+)(injectProps(SearchResults)));

@@ -28,11 +28,10 @@ import {
 } from '..';
 import {
   SingleCheckboxIconButton,
-  injectCommonProp,
-  post
-} from 'shared';
+  injectProps,
+  buildUrl, findParam, Localize, post
+} from '../../../shared';
 import { ACTION } from '../../../redux/actions/Actions';
-import { buildUrl, findParam, Localize } from '../../../utils/Function';
 import {
   filterMandatoryFields,
   showValidationMessage,
@@ -118,7 +117,7 @@ export class MarcRecord extends React.Component<Props, {
   }
 
   saveRecord = async () => {
-    const { data, datastore: { emptyRecord }, store: { getState } } = this.props;
+    const { datastore: { emptyRecord }, store: { getState } } = this.props;
     const { deletedTag } = this.state;
     const formData = getState().form.bibliographicRecordForm.values;
     const initialValues = getState().form.marcEditableListForm.initial.items;
@@ -132,16 +131,14 @@ export class MarcRecord extends React.Component<Props, {
     const bibliographicRecord = this.getCurrentRecord();
     bibliographicRecord.leader.value = formData.leader;
 
-    const type: Type = 'B';
     const recordTemplate: RecordTemplate<Type> = {
-      id: first(data.template.records).id,
-      name: first(data.template.records).name,
-      type: 'B',
+      id: 42,
       fields: filterMandatoryFields(emptyRecord.results.fields)
     };
 
     bibliographicRecord.fields = union(filterFixedFieldForSaveRecord(bibliographicRecord.fields), variableFormData);
     bibliographicRecord.fields = sortBy(bibliographicRecord.fields, SORTED_BY.CODE);
+    bibliographicRecord.verificationLevel = 1;
     const payload = { bibliographicRecord, recordTemplate };
     this.setState({ submit: true });
 
@@ -293,4 +290,4 @@ export default stripesForm({
     headerTypes008Result: headerTypes008.records,
     tag008Values: tag008Values.records,
   }), mapDispatchToProps
-)(injectCommonProp(MarcRecord)));
+)(injectProps(MarcRecord)));

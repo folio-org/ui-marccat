@@ -7,7 +7,7 @@ import * as React from 'react';
 import { Button } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 import queryString from 'querystring';
-import { META, ENDPOINT, EMPTY_SPACED_STRING, EMPTY_STRING } from '../config/constants';
+import { META, ENDPOINT, EMPTY_SPACED_STRING, EMPTY_STRING, HTTP_METHOD } from '../../config/constants';
 
 /**
  *
@@ -126,11 +126,28 @@ export function safeArray(obj, res, ...prop) {
  * @param  {Array<String> | String} label an array or a string of localized label
  * @return {React.JSX.Element} a localized message with value if passed
  */
-export function Localize(label: Array<any> | String, withContainier: boolean): React.JSX.Element {
+export function Localize(label: Array<any> | String, withContainier?: boolean, _wrapElement?: React<HTMLElement>): React.JSX.Element {
   if (label.length) {
     return (!withContainier) ?
       label.map(l => <FormattedMessage id={META.MODULE_NAME.concat('.').concat(l.key)} values={{ value: l.value }} />) :
       label.map(l => <Button buttonStyle="dropdownItem" onClick={l.action}><FormattedMessage id={META.MODULE_NAME.concat('.').concat(l.key)} values={{ value: l.value }} /></Button>);
   }
   return <FormattedMessage id={META.MODULE_NAME.concat('.').concat(label.key)} values={{ value: label.value || EMPTY_STRING }} />;
+}
+
+/**
+ *
+ * @param {*} url - the API endpoint
+ * @param {*} data - the body of request
+ * @param {*} store - the data store
+ */
+export function post(url: string, data: any) {
+  return fetch(url, {
+    method: HTTP_METHOD.POST,
+    headers: Object.assign({}, {
+      'x-okapi-tenant': 'tnx',
+      'Content-Type': 'application/json'
+    }),
+    body: JSON.stringify(data),
+  });
 }

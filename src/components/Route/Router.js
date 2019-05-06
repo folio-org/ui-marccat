@@ -8,11 +8,11 @@ type P = {
     toggleFilterPane: () => void;
 }
 
-export function ComposedRoute({ component: Component, children, ...props }) {
+function ComposedRoute({ component: Component, children, ...props }) {
   return (Component) ? (<Route {...props} render={() => (<Component {...props}>{children}</Component>)} />) : (<Route {...props}>{children}</Route>);
 }
 
-export function Router({ ...props }: P) {
+export default function Router({ ...props }: P) {
   const { toggleFilterPane, match: { path } } = props;
   const renderSearchIconMenu = () => {
     return (<ToolbarMenu icon={['search']} {...props} onClick={toggleFilterPane} />);

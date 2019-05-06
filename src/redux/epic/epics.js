@@ -10,7 +10,7 @@ import * as marccatActions from '../actions';
 import { ENDPOINT } from '../../config/constants';
 import { fetchFailure } from '../actions/ActionCreator';
 import { Redux } from '..';
-import { buildUrl } from '../../utils/Function';
+import { buildUrl } from '../../shared/utils/Function';
 import { TAGS } from '../../components/Cataloguing';
 
 export const searchEpic = (action$, store) => action$.ofType(ACTION.SEARCH)

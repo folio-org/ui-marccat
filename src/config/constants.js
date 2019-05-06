@@ -25,8 +25,8 @@ export const ENDPOINT = {
     'x-okapi-tenant': 'tnx',
   },
   DEFAULT_LANG_VIEW: 'lang=ita&view=1',
-  BASE_URL: 'http://151.1.165.20:8080/marccat',
-  // BASE_URL: 'http://127.0.0.1:8080/marccat',
+  // BASE_URL: 'http://151.1.165.20:8080/marccat',
+  BASE_URL: 'http://127.0.0.1:8080/marccat',
   MERGED_SEARCH_URL: '/mergedSearch',
   SEARCH_URL: '/searchVertical',
   SEARCH_URL_JSON: '/search',
@@ -92,7 +92,7 @@ export const SPACED_STRING_DOUBLE_QUOTE = " "; // eslint-disable-line quotes
 
 export const SETTINGS = {
   DEFAULT_TEMPLATE: {
-    id: 408,
+    id: 42,
     name: 'New Monograph'
   },
 };

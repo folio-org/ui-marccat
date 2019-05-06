@@ -2,9 +2,8 @@
 import * as React from 'react';
 import { Pane, Icon, MenuSection } from '@folio/stripes/components';
 import RecordDetails from '../RecordDetails';
-import { injectCommonProp } from '../../../../shared';
+import { injectProps, Localize, findParam } from '../../../../shared';
 import { META } from '../../../../config/constants';
-import { Localize, findParam } from '../../../../utils/Function';
 import { duplicaRecordAction } from '../../Actions';
 
 class RecordDetailPane extends React.Component {
@@ -74,4 +73,4 @@ class RecordDetailPane extends React.Component {
     );
   }
 }
-export default (injectCommonProp(RecordDetailPane));
+export default (injectProps(RecordDetailPane));

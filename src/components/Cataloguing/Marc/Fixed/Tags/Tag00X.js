@@ -15,10 +15,11 @@ import type { HeadingType } from '../../../../Types/cataloging.js.flow';
 import MarcField from '../../MarcField';
 import { insert } from '../../../../../flow/utils/Arrays';
 import { dropDownValuesAction, changeDisplayValueAction } from '../../../Actions';
-import { decamelizify } from '../../../../../utils/Function';
+import { decamelizify } from '../../../../../shared/utils/Function';
 import { ReduxForm } from '../../../../../redux/helpers/Redux';
 import style from '../../../Style/index.css';
 import { EMPTY_SPACED_STRING, REDUX } from '../../../../../config/constants';
+import Tag008 from './Tag008';
 
 type P = {
   handleOnChange: () => void,
@@ -288,7 +289,7 @@ class Tag00X extends React.Component<P, State> {
     const { fields } = this.state;
     const field006 = fields.filter(f => f.fixedField.code === TAGS._006);
     const field007 = fields.filter(f => f.fixedField.code === TAGS._007);
-    const field008 = first(fields.filter(f => f.fixedField.code === TAGS._008));
+    const field008 = fields.filter(f => f.fixedField.code === TAGS._008);
     if (field006.length === 0) fields.push(EMPTY_FIXED_FIELD(TAGS._006));
     if (field007.length === 0) fields.push(EMPTY_FIXED_FIELD(TAGS._007));
     return (
@@ -320,7 +321,7 @@ class Tag00X extends React.Component<P, State> {
             </Col>
           </Row>
         ))}
-        {this.renderField008(field008)}
+        <Tag008 {...this.props} tag={first(field008)} />
       </React.Fragment>
     );
   }

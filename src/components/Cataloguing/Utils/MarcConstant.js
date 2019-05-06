@@ -1,3 +1,4 @@
+// @flow
 import { range, union } from 'lodash';
 import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../config/constants';
 

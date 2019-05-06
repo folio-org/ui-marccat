@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Pane, Icon } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
-import { ToolbarButtonMenu, injectCommonProp } from '../../../shared';
+import { ToolbarButtonMenu, injectProps } from '../../../shared';
 import { BrowseItemDetail } from '../BrowseItemDetail';
 import { EMPTY_STRING } from '../../../config/constants';
 
@@ -46,4 +46,4 @@ class ResultDetailPane extends React.Component<{}, {}> {
     );
   }
 }
-export default injectCommonProp(ResultDetailPane);
+export default injectProps(ResultDetailPane);

@@ -1,27 +1,21 @@
 // @flow
 import * as React from 'react';
-import { Paneset, Pane } from '@folio/stripes/components';
-import type { Props } from './flow/types.js.flow';
-import { SearchPanel } from './components/Search';
-import PanelHistory from './components/Search/History/PanelHistory';
-import * as C from './config/constants';
-import { Localize } from '../../utils/Function';
+import Router from './Router';
+import SearchPane from '../Search/Panel/SearchPane';
+import { SearchPanel } from '../Search';
+import { injectProps } from '../../shared';
 
-const Provider = ({ filterPaneIsVisible, toggleFilterPane, children, props }: Props) => {
+const Provider = ({ ...props }) => {
   return (
-    <Paneset static>
-      {filterPaneIsVisible &&
-      <Pane
-        dismissible
-        defaultWidth="24%"
-        actionMenu={this.searchPanelActionMenu}
-        onClose={toggleFilterPane}
-        paneTitle={Localize({ key: 'searchAndFilter' })}
-        paneSub={C.EMPTY_STRING}
-      >
-        <SearchPanel {...props} />
-      </Pane>}
-      {children}
-    </Paneset>
+    <SearchPane
+      {...props}
+      component={<SearchPanel {...props} />}
+    >
+      <Router
+        {...props}
+      />
+    </SearchPane>
   );
 };
+
+export default injectProps(Provider);

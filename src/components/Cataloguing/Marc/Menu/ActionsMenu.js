@@ -8,7 +8,7 @@ import {
 } from '@folio/stripes/components';
 import type { Props } from '../../../../flow/types.js.flow';
 import ActionLabels from './ActionLabels';
-import { Localize } from '../../../../utils/Function';
+import { Localize } from '../../../../shared/utils/Function';
 
 type P = Props & {
   onToggle(): void,

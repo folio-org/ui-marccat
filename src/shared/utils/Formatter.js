@@ -2,7 +2,7 @@
 // @flow
 import * as React from 'react';
 import { getFieldPosition, getFormat, getMicroformat } from './Mapper';
-import style from '../components/Search/Style/index.css';
+import style from '../../components/Search/Style/index.css';
 
 export const columnMapper = (isBibsOnly: ?boolean, isAuthOnly: ?boolean = true) => {
   let mapper = {};

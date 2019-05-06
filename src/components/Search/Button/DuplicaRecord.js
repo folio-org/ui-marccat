@@ -5,7 +5,7 @@ import { Field, reduxForm } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import type { Props } from '../../../flow/types.js.flow';
-import { Localize } from '../../../utils/Function';
+import { Localize } from '../../../shared/utils/Function';
 import { duplicaRecordAction } from '../Actions';
 
 class DuplicaRecord extends React.Component<Props, {

@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { Pane, Icon, MultiColumnList } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
 import type { Props } from '../../../../flow/types.js.flow';
-import { resultsFormatter, columnMapper, columnWidthMapper, renderColumn } from '../../../../utils/Formatter';
-import { injectCommonProp, ActionMenu, EmptyMessage, NoResultsMessage } from '../../../../shared';
+import { resultsFormatter, columnMapper, columnWidthMapper, renderColumn } from '../../../../shared/utils/Formatter';
+import { injectProps, ActionMenu, EmptyMessage, NoResultsMessage } from '../../../../shared';
 import { ACTION } from '../../../../redux/actions/Actions';
 import * as C from '../../../../config/constants';
 import { ReduxForm } from '../../../../redux/helpers/Redux';
@@ -156,4 +156,4 @@ export default (connect(
   ({ marccat: { search } }) => ({
     isLoadMore: search.moreData
   }),
-)(injectCommonProp(SearchResultPane)));
+)(injectProps(SearchResultPane)));

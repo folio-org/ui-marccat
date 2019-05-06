@@ -4,14 +4,13 @@ import { connect } from 'react-redux';
 import { isEmpty, first, cloneDeep } from 'lodash';
 import { Field } from 'redux-form';
 import { Row, Col, Select, TextField } from '@folio/stripes/components';
-import { injectCommonProp, Props, post } from '../../../../../shared';
-import { decamelizify } from '../../../../../utils/Function';
+import { injectProps, Props, decamelizify } from '../../../../../shared';
 import { RECORD_FIELD_STATUS, TAGS, TAGS_NAME } from '../../../Utils/MarcConstant';
 import * as C from '../../../../../config/constants';
-import { buildUrl } from '../../../../../redux';
 import { MarcField } from '../../..';
 import style from '../../../Style/index.css';
 import { ACTION } from '../../../../../redux/actions/Actions';
+import { changeDisplayValueAction } from '../../../Actions';
 
 
 class Tag008 extends React.Component<Props, {}> {
@@ -79,18 +78,22 @@ class Tag008 extends React.Component<Props, {}> {
     this.state.isChangedHeaderType = false;
   };
 
-  asyncChangeDisplayValue = async (jsonReq) => {
-    const { dispatch, change } = this.props;
-    await post(buildUrl(C.ENDPOINT.CHANGE_DISPLAY_VALUE, C.ENDPOINT.DEFAULT_LANG_VIEW), jsonReq)
-      .then((r) => { return r.json(); }).then((data) => {
-        dispatch(change(TAGS._008, data.displayValue));
-        this.setState((prevState) => {
-          const newState = cloneDeep(prevState);
-          newState.displayValue = data.displayValue;
-          return newState;
-        });
-      });
+  asyncChangeDisplayValue = (payload) => {
+    const { dispatch } = this.props;
+    const cb = (r) => this.performChange(r, TAGS._008);
+    dispatch(changeDisplayValueAction(payload, cb));
   }
+
+  performChange = (r: Object, code: string): void => {
+    const { dispatch, change } = this.props;
+    dispatch(change(code, r.displayValue));
+    this.setState((prevState) => {
+      const newState = cloneDeep(prevState);
+      newState.displayValue = r.displayValue;
+      return newState;
+    });
+  }
+
 
   render() {
     const {
@@ -141,63 +144,63 @@ class Tag008 extends React.Component<Props, {}> {
           onClick={() => { this.setState({ expand008: !expand008 }); }}
         />
         {headerTypesResult &&
-          <div className={(expand008) ? style.leaderResultsActive : style.leaderResults}>
-            <Row>
-              <Col xs={4}>
-                <Field
-                  id="Tag008"
-                  name="Tag008"
-                  onChange={this.handleOnChange}
-                  component={Select}
-                  label="Header types"
-                  placeholder="Select header..."
-                  dataOptions={headerTypesResult.headingTypes}
-                />
-              </Col>
-            </Row>
-            <hr />
-            <Row xs={12}>
-              <Col xs={4} key="Tag008-dateFirstPublication">
-                <Field
-                  name="Tag008-dateFirstPublication"
-                  id="Tag008-dateFirstPublication"
-                  component={TextField}
-                  label="dateFirstPublication"
-                  onChange={this.changeDisplayValue}
-                />
-              </Col>
-              <Col xs={4} key="Tag008-dateLastPublication">
-                <Field
-                  name="Tag008-dateLastPublication"
-                  id="Tag008-dateLastPublication"
-                  component={TextField}
-                  label="dateLastPublication"
-                  onChange={this.changeDisplayValue}
-                />
-              </Col>
-              {tag008Values &&
-              remappedValues.map((elem) => {
-                return elem.map((item, idx) => {
-                  let exactDisplayValue = C.EMPTY_STRING;
-                  item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue));
-                  return (
-                    <Col xs={4} key={`Tag008-${idx}`}>
-                      <Field
-                        name={`Tag008-${item.name}`}
-                        id={`Tag008-${item.name}`}
-                        component={Select}
-                        label={decamelizify(`${item.name}`, C.EMPTY_SPACED_STRING)}
-                        dataOptions={item.dropdownSelect}
-                        onChange={this.changeDisplayValue}
-                        placeholder={exactDisplayValue}
-                      />
-                    </Col>
-                  );
-                });
-              })
-              }
-            </Row>
-          </div>
+        <div className={(expand008) ? style.leaderResultsActive : style.leaderResults}>
+          <Row>
+            <Col xs={4}>
+              <Field
+                id="Tag008"
+                name="Tag008"
+                onChange={this.handleOnChange}
+                component={Select}
+                label="Header types"
+                placeholder="Select header..."
+                dataOptions={headerTypesResult.headingTypes}
+              />
+            </Col>
+          </Row>
+          <hr />
+          <Row xs={12}>
+            <Col xs={4} key="Tag008-dateFirstPublication">
+              <Field
+                name="Tag008-dateFirstPublication"
+                id="Tag008-dateFirstPublication"
+                component={TextField}
+                label="dateFirstPublication"
+                onChange={this.changeDisplayValue}
+              />
+            </Col>
+            <Col xs={4} key="Tag008-dateLastPublication">
+              <Field
+                name="Tag008-dateLastPublication"
+                id="Tag008-dateLastPublication"
+                component={TextField}
+                label="dateLastPublication"
+                onChange={this.changeDisplayValue}
+              />
+            </Col>
+            {tag008Values &&
+          remappedValues.map((elem) => {
+            return elem.map((item, idx) => {
+              let exactDisplayValue = C.EMPTY_STRING;
+              item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue));
+              return (
+                <Col xs={4} key={`Tag008-${idx}`}>
+                  <Field
+                    name={`Tag008-${item.name}`}
+                    id={`Tag008-${item.name}`}
+                    component={Select}
+                    label={decamelizify(`${item.name}`, C.EMPTY_SPACED_STRING)}
+                    dataOptions={item.dropdownSelect}
+                    onChange={this.changeDisplayValue}
+                    placeholder={exactDisplayValue}
+                  />
+                </Col>
+              );
+            });
+          })
+            }
+          </Row>
+        </div>
         }
       </div>
     );
@@ -209,4 +212,4 @@ export default (connect(
     tag008ValuesResults: tag008Values.records,
     newValuesFromChangedLeader: change008ByLeader.records
   }),
-)(injectCommonProp(Tag008)));
+)(injectProps(Tag008)));

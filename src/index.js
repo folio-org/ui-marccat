@@ -1,21 +1,20 @@
 // @flow
 import * as React from 'react';
 import { MarcatSettings as Settings } from './components';
-import { Router } from './components/Route/Router';
 import { reducer, epics } from './redux';
-import { injectCommonProp } from './shared';
-import MARCcat from './MARCcat';
+import { injectProps } from './shared';
+import type { Props } from './flow/types.js.flow';
 import { ACTION } from './redux/actions';
 import { REDUX } from './config/constants';
 import './shared/styles/common.css';
+import Provider from './components/Route/Provider';
 
-
-
-class MARCcat extends React.Component<Props, {
-  filterPaneIsVisible: Boolean,
-}> {
-  constructor(...args) {
-    super(...args);
+type S = {
+  filterPaneIsVisible: boolean,
+};
+class MARCcat extends React.Component<Props, S> {
+  constructor(props) {
+    super(props);
     this.state = {
       filterPaneIsVisible: true,
     };
@@ -45,25 +44,20 @@ class MARCcat extends React.Component<Props, {
       return <Settings {...this.props} />;
     }
     return (
-      <MARCcat
+      <Provider
         {...this.props}
         filterPaneIsVisible={filterPaneIsVisible}
         toggleFilterPane={this.toggleFilterPane}
-      >
-        <Router
-          {...this.props}
-          toggleFilterPane={this.toggleFilterPane}
-        />
-      </MARCcat>
+      />
     );
   }
 }
 
 /**
-  * we use the @link {injectCommonProp} wrapper to supply all component a root prop for add a reducer and epic
+  * we use the @link {injectProps} wrapper to supply all component a root prop for add a reducer and epic
   * the root prop is in the props object.
   *
   * @example: this.props.root
   * @example: const { state } = this.props.root;
   */
-export default injectCommonProp(MARCCatRouting);
+export default injectProps(MARCcat);

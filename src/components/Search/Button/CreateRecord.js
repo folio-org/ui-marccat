@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Button, Dropdown, DropdownMenu, Icon } from '@folio/stripes/components';
 import type { Props } from '../../../flow/types.js.flow';
-import { Localize } from '../../../utils/Function';
+import { Localize } from '../../../shared/utils/Function';
 import renderDropdDownMenu from '../../../shared/lib/Message/DropdownLabels';
 
 import style from '../Style/index.css';

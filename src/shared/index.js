@@ -1,13 +1,51 @@
-// @flow
 // type
 export type { Props } from '../flow/types.js.flow';
 
 // core
-export { get, post, put, remove } from './core/api/HttpService';
-export { default as injectCommonProp } from './core/hoc/withInjection';
+export { default as injectProps } from './hoc/injectProps';
 
 // lib
 export { EmptyMessage, NoResultsMessage } from './lib/Message';
 export { ToolbarMenu, ToolbarButtonMenu } from './lib/Toolbar/Menu';
 export { ActionMenu, getActionMenu, generateDropdownMenu } from './lib';
 export { CheckMarkIcon, CheckboxIconButton, SingleCheckboxIconButton } from './lib/Button';
+
+// utils
+export {
+  replaceSeparator,
+  buildUrl,
+  camelizify,
+  decamelizify,
+  firstCharUppercase,
+  uuid,
+  findParam,
+  safeObj,
+  safeFn,
+  safeArray,
+  Localize,
+  qs,
+  post
+} from './utils/Function';
+export {
+  columnMapper,
+  renderColumn,
+  columnWidthMapper,
+  columnMapperForAssociated,
+  browseColMapper,
+  resultsFormatterForAssociated,
+  resultsFormatter,
+  browseFormatter
+} from './utils/Formatter';
+
+export {
+  getTagDisplayValue,
+  getFieldPosition,
+  getFormat,
+  getTag245,
+  getTitle245,
+  getTitle100,
+  getTag100,
+  remapFilters,
+  remapForAssociatedBibList,
+  getMicroformat
+} from './utils/Mapper';

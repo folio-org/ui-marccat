@@ -7,14 +7,14 @@ import type { Props } from './flow/types.js.flow';
 import { ACTION } from './redux/actions';
 import { REDUX } from './config/constants';
 import './shared/styles/common.css';
-import Provider from './components/Route/Provider';
+import Provider from './route/Provider';
 
 type S = {
   filterPaneIsVisible: boolean,
 };
 class MARCcat extends React.Component<Props, S> {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
     this.state = {
       filterPaneIsVisible: true,
     };
@@ -31,6 +31,7 @@ class MARCcat extends React.Component<Props, S> {
   componentDidMount() {
     const { store: { dispatch } } = this.props;
     dispatch({ type: ACTION.SETTINGS, data: {} });
+    dispatch({ type: ACTION.HEADER_TYPES_008, code: '008' });
   }
 
   toggleFilterPane = () => {

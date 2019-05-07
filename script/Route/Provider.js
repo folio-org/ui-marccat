@@ -1,9 +1,9 @@
 // @flow
 import * as React from 'react';
 import Router from './Router';
-import SearchPane from '../Search/Panel/SearchPane';
-import { SearchPanel } from '../Search';
-import { injectProps } from '../../shared';
+import SearchPane from '../components/Search/Panel/SearchPane';
+import { SearchPanel } from '../components/Search';
+import { injectProps } from '../shared';
 
 const Provider = ({ ...props }) => {
   return (
@@ -11,9 +11,7 @@ const Provider = ({ ...props }) => {
       {...props}
       component={<SearchPanel {...props} />}
     >
-      <Router
-        {...props}
-      />
+      <Router {...props} />
     </SearchPane>
   );
 };

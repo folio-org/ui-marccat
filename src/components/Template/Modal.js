@@ -4,7 +4,7 @@ import { Button, Modal, ModalFooter, TextField } from '@folio/stripes/components
 import { Field, reduxForm } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Localize } from '../../utils/Function';
+import { Localize } from '../../shared';
 import { createTemplateAction } from './Action';
 
 type Props = {

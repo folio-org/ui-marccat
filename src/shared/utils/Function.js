@@ -7,6 +7,7 @@ import * as React from 'react';
 import { Button } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 import queryString from 'querystring';
+import { bindActionCreators } from 'redux';
 import { META, ENDPOINT, EMPTY_SPACED_STRING, EMPTY_STRING, HTTP_METHOD } from '../../config/constants';
 
 /**
@@ -151,3 +152,10 @@ export function post(url: string, data: any) {
     body: JSON.stringify(data),
   });
 }
+
+/**
+ *
+ * @param {*} dispatch
+ * @param {*} actions
+ */
+export const dispatcher = (dispatch, actions) => bindActionCreators({ ...actions }, dispatch);

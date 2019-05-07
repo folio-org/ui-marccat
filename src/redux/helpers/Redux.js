@@ -76,6 +76,7 @@ Redux.resolveRequestData = (model, data, payload) => { // metodo statico
       host: window.location.hostname,
       params: data.params,
       id: data.id || payload.id,
+      key: data.key,
       isPending: false,
       isResolved: true,
       isRejected: false,
@@ -125,6 +126,7 @@ Redux.rejectRequestData = (model, data, errors) => { // metodo statico
     }
   };
 };
+
 
 /**
  * Helper for retrieving or creating a record from the resource

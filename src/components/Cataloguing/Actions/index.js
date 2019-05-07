@@ -180,7 +180,9 @@ export const dropDownValuesAction = (payload) => {
     type: ACTION.QUERY,
     data: {
       path: ENDPOINT.TEMPLATE_TAG_URL,
-      type: `headertype${payload.code}values`,
+      type: `headerTypeValues${payload.code}`,
+      key: payload.code,
+      id: payload.code,
       params: `leader=${payload.value}&code=${payload.code}&headerTypeCode=${payload.headerTypeCode}&lang=ita`
     },
     cb: payload.cb

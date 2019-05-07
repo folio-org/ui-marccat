@@ -13,10 +13,10 @@ import { EMPTY_STRING } from '../../../config/constants';
 
 /**
  *
- * @param {string} t
+ * @param {Object} o the object passed as parameter to sort
  * @returns true if tha tag code passed
  */
-export const isTag = t => 'Tag'.concat(t);
+export const sort = (o: Array<*>): Array<*> => o.sort((a, b) => a.code > b.code);
 /**
  *
  * @param {string} o - the object to deduplicate

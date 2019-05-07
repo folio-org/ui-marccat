@@ -8,11 +8,6 @@ import { ACTION } from '../actions';
 const initialState = {};
 const historyState = { list: [] };
 
-export const EPIC_MODEL_KEY = {
-  EMPTY_RECORD: 'emptyRecord',
-  RECORD_DETAIL: 'marcRecordDetail',
-  LEADER_DATA: 'leaderData'
-};
 
 /**
  *
@@ -121,6 +116,7 @@ const parseResponseBody = (response: Object) => { // metodo statico
  */
 const getHeaders = () => {
   const headers = {
+    'Accept': 'application/json',
     'x-okapi-tenant': 'tnx',
     'Content-Type': 'application/json'
   };
@@ -161,8 +157,7 @@ export function epic(action$) {
         .flatMap(response => {
           return of(
             resolveEpicRequest(data.type, data, response),
-            executeEpicCallback((cb) ? cb(response) : () => {})
-            // cb(response);
+            executeEpicCallback((cb) ? cb(response) : () => { })
           );
         }).catch(errors => of(rejectEpicRequest(errors)));
     });

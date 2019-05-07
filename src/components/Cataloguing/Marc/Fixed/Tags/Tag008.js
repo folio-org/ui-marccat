@@ -134,7 +134,7 @@ class Tag008 extends React.Component<Props, {}> {
     }
 
     return (
-      <div className={style.controlFieldContainer}>
+      <div className={style.fieldContainer}>
         <MarcField
           {...this.props}
           readOnly

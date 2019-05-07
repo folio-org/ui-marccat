@@ -3,6 +3,7 @@
 import * as React from 'react';
 import type { Node, ElementType, ElementRef, ComponentType } from 'react'
 import type { Dispatch, Reducer, Epic } from 'redux';
+import type { FieldProps } from 'redux-form';
 
 export type Action = { +type: string, paylod: Object }
 export type GetState = () => State;

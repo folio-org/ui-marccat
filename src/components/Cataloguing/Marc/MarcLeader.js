@@ -94,7 +94,7 @@ export default class MarcLeader extends React.Component<P, S> {
       remappedValues.push(result);
     }
     return (
-      <div className={style.controlFieldContainer}>
+      <div className={style.fieldContainer}>
         <MarcField
           {...this.props}
           readOnly

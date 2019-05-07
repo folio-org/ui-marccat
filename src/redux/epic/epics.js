@@ -130,33 +130,6 @@ export const leaderEpic = (action$, store) => action$.ofType(ACTION.LEADER_VALUE
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
 
-
-export const headerTypes008Epic = (action$, store) => action$.ofType(ACTION.HEADER_TYPES_008)
-  .switchMap((d) => concat$(
-    of$(marccatActions.isFetchingHeaderTypes008(true)),
-    ajax
-      .getJSON(buildUrl(ENDPOINT.HEADER_TYPES_URL, `code=${d.code}&lang=ita`), ENDPOINT.HEADERS)
-      .map(record => marccatActions.fetchHeaderTypes008(record))
-      .catch(e => of$(marccatActions.fetchFailure(e))),
-  ));
-
-export const tag008ValuesEpic = (action$, store) => action$.ofType(ACTION.VALUES_FROM_TAG_008)
-  .switchMap((d) => concat$(
-    of$(marccatActions.isFetchingTag008Request(true)),
-    ajax
-      .getJSON(buildUrl(ENDPOINT.TEMPLATE_TAG_URL, `leader=${d.leader}&code=${d.code}&headerTypeCode=${d.typeCode}&lang=ita`), ENDPOINT.HEADERS)
-      .map(record => marccatActions.fetchValuesFromTag008(record))
-      .catch(e => of$(marccatActions.fetchFailure(e))),
-  ));
-
-export const tag008ByLeaderEpic = (action$, store) => action$.ofType(ACTION.CHANGE_008_BY_LEADER)
-  .switchMap((d) => concat$(
-    of$(marccatActions.isFetchingTag008ByLeaderRequest(true)),
-    ajax
-      .getJSON(buildUrl(ENDPOINT.CHANGE_008_BY_LEADER, `leader=${d.leader}&lang=ita`), ENDPOINT.HEADERS)
-      .map(record => marccatActions.fetchValuesTag008ByLeader(record))
-      .catch(e => of$(marccatActions.fetchFailure(e))),
-  ));
 export const totalCountBibEpic = (action$, store) => action$.ofType(ACTION.TOTAL_BIB_COUNT)
   .switchMap((d) => ajax
     .getJSON(buildUrl(ENDPOINT.TOTAL_COUNT_SEARCH_URL, `lang=ita&view=1&ml=170&q=${d.query}&sortBy=${Redux.get(store, 'settings', 'sortType') || 4}&sortOrder=0`), ENDPOINT.HEADERS)

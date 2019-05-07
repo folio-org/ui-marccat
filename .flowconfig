@@ -66,3 +66,9 @@ suppress_comment=\\(.\\|\n\\)*\\$FlowFixedInNextDeploy
 suppress_comment=\\(.\\|\n\\)*\\$FlowExpectedError
 
 [strict]
+nonstrict-import
+sketchy-null
+unclear-type
+unsafe-getters-setters
+untyped-import
+untyped-type-import

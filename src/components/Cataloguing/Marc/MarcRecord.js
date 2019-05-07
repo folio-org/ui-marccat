@@ -13,7 +13,7 @@ import {
   Col,
   Icon
 } from '@folio/stripes/components';
-import stripesForm from '@folio/stripes/form';
+import { reduxForm } from 'redux-form';
 import { AppIcon } from '@folio/stripes-core';
 import { FormattedMessage } from 'react-intl';
 import { bindActionCreators } from 'redux';
@@ -41,11 +41,12 @@ import {
 import * as C from '../../../config/constants';
 import * as MarcAction from '../Actions';
 import type { Props } from '../../..';
-import type { RecordTemplate, Type } from '../../Types/cataloging.js.flow';
+import type { RecordTemplate, Type } from '../../../flow/cataloging.js.flow';
 import style from '../Style/index.css';
 import { Redux } from '../../../redux';
 import VariableFields from './Variable/VariableFields';
 import FixedFields from './Fixed/FixedFields';
+import { TAGS } from '../Utils/MarcConstant';
 
 export class MarcRecord extends React.Component<Props, {
   callout: React.RefObject<Callout>,
@@ -72,6 +73,11 @@ export class MarcRecord extends React.Component<Props, {
     const { dispatch, datastore: { emptyRecord } } = this.props;
     const { leader } = emptyRecord.results;
     dispatch({ type: ACTION.LEADER_VALUES_FROM_TAG, leader: leader.value, code: leader.code, typeCode: '15' });
+  }
+
+  componentDidMount() {
+    const { loadHeadertype } = this.props;
+    loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
   }
 
   getCurrentRecord = (): Object => {
@@ -235,33 +241,31 @@ export class MarcRecord extends React.Component<Props, {
             lastMenu={this.renderButtonMenu()}
           >
             <Row center="xs">
-              <Col xs={10}>
-                <div className={style.recordContainer}>
-                  <AccordionSet>
-                    <form name="bibliographicRecordForm" onSubmit={this.saveRecord}>
-                      <Accordion label={<FormattedMessage id="ui-marccat.cataloging.accordion.checkbox.label" />} id="suppress" separator={false}>
-                        <SingleCheckboxIconButton labels={[<FormattedMessage id="ui-marccat.cataloging.checkbox.label" />]} pullLeft widthPadding />
-                      </Accordion>
-                      <FixedFields
-                        {...this.props}
-                        id="fixed-field"
-                        leaderData={leaderData}
-                        record={bibliographicRecord}
-                      />
-                    </form>
-                    <Accordion
-                      label={<FormattedMessage id="ui-marccat.cataloging.accordion.variablefield.label" />}
-                      id="variable-field"
-                    >
-                      <VariableFields
-                        {...this.props}
-                        fields={filterVariableFields(bibliographicRecord.fields)}
-                        onCreate={this.onCreate}
-                        onDelete={this.onDelete}
-                      />
+              <Col xs={12} sm={8} md={8} lg={7}>
+                <AccordionSet>
+                  <form name="bibliographicRecordForm" onSubmit={this.saveRecord}>
+                    <Accordion label={<FormattedMessage id="ui-marccat.cataloging.accordion.checkbox.label" />} id="suppress" separator={false}>
+                      <SingleCheckboxIconButton labels={[<FormattedMessage id="ui-marccat.cataloging.checkbox.label" />]} pullLeft widthPadding />
                     </Accordion>
-                  </AccordionSet>
-                </div>
+                    <FixedFields
+                      {...this.props}
+                      id="fixed-field"
+                      leaderData={leaderData}
+                      record={bibliographicRecord}
+                    />
+                  </form>
+                  <Accordion
+                    label={<FormattedMessage id="ui-marccat.cataloging.accordion.variablefield.label" />}
+                    id="variable-field"
+                  >
+                    <VariableFields
+                      {...this.props}
+                      fields={filterVariableFields(bibliographicRecord.fields)}
+                      onCreate={this.onCreate}
+                      onDelete={this.onDelete}
+                    />
+                  </Accordion>
+                </AccordionSet>
               </Col>
             </Row>
           </Pane>
@@ -278,7 +282,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   }
 }, dispatch);
 
-export default stripesForm({
+export default reduxForm({
   form: C.REDUX.FORM.BIBLIOGRAPHIC_FORM,
   destroyOnUnmount: true,
 })(connect(

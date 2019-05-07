@@ -4,12 +4,11 @@ import MarcField from '../../MarcField';
 import style from '../../../Style/index.css';
 
 export default ({ ...props }) => {
-  const { tag, readOnly, withIcon } = props;
+  const { tag, readOnly } = props;
   return (
-    <div className={style.controlFieldContainer}>
+    <div className={style.fieldContainer}>
       <MarcField
         {...props}
-        withIcon={withIcon || false}
         readOnly={readOnly}
         label={tag.fixedField.code}
         name={tag.fixedField.code}

@@ -36,7 +36,7 @@ export default ({ ...props }) => {
         <EditableFixedField
           {...props}
           record={record}
-          fixedfields={record.fields.filter(f => f.code > '005' && f.code < '010')}
+          field={record.fields.filter(f => f.code > '005' && f.code < '010')}
         />
       </Accordion>
     </React.Fragment>

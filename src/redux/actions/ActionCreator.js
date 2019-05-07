@@ -138,6 +138,12 @@ export const fetchHeadingByTag = (records) => ({
   type: ACTION.FETCH_HEADING_BY_TAG_SUCCESS,
   payload: records
 });
+
+export const fetchTotalCountBibRecords = (records) => ({
+  type: ACTION.TOTAL_BIB_COUNT_SUCCESS,
+  payload: records
+});
+
 export const fetchTotalCountAuthRecords = (records) => ({
   type: ACTION.TOTAL_AUTH_COUNT_SUCCESS,
   payload: records

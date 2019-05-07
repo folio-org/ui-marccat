@@ -286,12 +286,10 @@ export default reduxForm({
   form: C.REDUX.FORM.BIBLIOGRAPHIC_FORM,
   destroyOnUnmount: true,
 })(connect(
-  ({ marccat: { data, settings, leaderData, headerTypes008, tag008Values } }) => ({
+  ({ marccat: { data, settings, leaderData } }) => ({
     emptyRecord: data.results,
     recordDetail: Redux.resolve(data, 'marcRecordDetail').bibliographicRecord,
     bibliographicRecord: first(settings.detail),
     leaderData: leaderData.records,
-    headerTypes008Result: headerTypes008.records,
-    tag008Values: tag008Values.records,
   }), mapDispatchToProps
 )(injectProps(MarcRecord)));

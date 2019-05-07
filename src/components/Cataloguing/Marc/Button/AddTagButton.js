@@ -9,7 +9,6 @@ export default ({ ...props }) => {
   const { tagCode, onClick } = props;
   return (
     <Button
-      style={{ marginLeft: -16 + 'px' }}
       onClick={onClick}
       type="button"
       disabled={false}

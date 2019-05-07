@@ -86,7 +86,7 @@ class Tag00X extends React.Component<Props, S> {
       dataOptions={props.headertypes}
       component={Select}
       onChange={(e) => this.onHandleChange(e)}
-      placeholder={'Select Heading types for '.concat(props.name)}
+      placeholder={'Select Heading types for '.concat(element.code)}
       value={headerTypeCode}
     />
   );
@@ -99,7 +99,7 @@ class Tag00X extends React.Component<Props, S> {
         {Object.values(data).map((field, idx) => (
           <Col xs={6} key={idx}>
             <Field
-              id={`Tag${code}-${field.name}`}
+              id={`Tag${code}-${headerTypeCode}-${field.name}`}
               name={`Tag${code}-${headerTypeCode}-${field.name}`}
               label={decamelizify(field.name, EMPTY_SPACED_STRING)}
               component={Select}
@@ -122,8 +122,8 @@ class Tag00X extends React.Component<Props, S> {
         <MarcField
           {...this.props}
           prependIcon
-          label={`${element.fixedField.code}${idx}`}
-          name={`${element.fixedField.code}${idx}`}
+          label={`${element.fixedField.code}`}
+          name={`${element.fixedField.code}`}
           value={element.fixedField.displayValue}
           onClick={() => {
             this.setState({ expand: !expand });

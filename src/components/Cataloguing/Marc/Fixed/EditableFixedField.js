@@ -68,7 +68,7 @@ class EditableFixedField extends React.Component<P, State> {
                 key={idx}
                 {...this.props}
                 tagCode={f.fixedField.code}
-                onClick={() => this.handleAdd(f.fixedField.code, idx)}
+                onClick={() => { }}
               />
             </Col>
           </Row>

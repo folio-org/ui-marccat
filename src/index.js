@@ -31,7 +31,6 @@ class MARCcat extends React.Component<Props, S> {
   componentDidMount() {
     const { store: { dispatch } } = this.props;
     dispatch({ type: ACTION.SETTINGS, data: {} });
-    dispatch({ type: ACTION.HEADER_TYPES_008, code: '008' });
   }
 
   toggleFilterPane = () => {

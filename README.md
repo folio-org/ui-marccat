@@ -1,7 +1,5 @@
 # ui-marccat
 
-[![CircleCI](https://circleci.com/gh/folio-org/ui-marccat.svg?style=svg)](https://circleci.com/gh/folio-org/ui-marccat)
-
 Copyright (C) 2017-2019 The Open Library Foundation
 
 This software is distributed under the terms of the Apache License,

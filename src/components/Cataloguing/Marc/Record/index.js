@@ -120,7 +120,7 @@ class Record extends React.Component<Props, {
   }
 
   saveRecord = async () => {
-    const { datastore: { emptyRecord }, store: { getState }, reset } = this.props;
+    const { datastore: { emptyRecord }, store: { getState } } = this.props;
     const { deletedTag } = this.state;
     const formData = getState().form.dataFieldForm.values;
     const initialValues = getState().form.variableFieldForm.initial.items;

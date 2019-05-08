@@ -1,6 +1,6 @@
 
 .leaderData {
-  padding-top: 24px;
+  padding-top: 4px;
 }
 
 .fieldContainer {
@@ -35,7 +35,7 @@
 .marcFieldIconCaret {
   float: right;
   cursor: pointer;
-  padding-right: 4px;
+  padding-left: 16px;
 }
 
 .pl-10 {
@@ -46,7 +46,7 @@
   padding-top: 20px;
 }
 
-.marcEditableListFormHeader {
+.variableFieldFormHeader {
   display: flex;
   align-items: center;
   margin-bottom: 15px;

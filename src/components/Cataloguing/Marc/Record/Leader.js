@@ -2,12 +2,12 @@
 import * as React from 'react';
 import { Field } from 'redux-form';
 import { Row, Col, Select } from '@folio/stripes/components';
-import type { Props } from '../../../flow/types.js.flow';
-import MarcField from './MarcField';
-import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../config/constants';
-import { ACTION } from '../../../redux/actions/Actions';
-import style from '../Style/index.css';
-import { decamelizify } from '../../../shared/utils/Function';
+import type { Props } from '../../../../flow/types.js.flow';
+import MarcField from '../Form/Components/Field';
+import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../../config/constants';
+import { ACTION } from '../../../../redux/actions/Actions';
+import { decamelizify } from '../../../../shared/utils/Function';
+import style from '../../Style/index.css';
 
 type P = {
   readOnly: boolean,
@@ -23,7 +23,7 @@ type S = {
   leaderChangedFor008: boolean
 };
 
-export default class MarcLeader extends React.Component<P, S> {
+export default class Leader extends React.Component<P, S> {
   constructor(props: P) {
     super(props);
     this.state = {
@@ -83,7 +83,7 @@ export default class MarcLeader extends React.Component<P, S> {
   render() {
     const { leaderCss, leaderVal } = this.state;
     let { leaderChangedFor008 } = this.state;
-    const { leaderData, leaderValue, dispatch } = this.props;
+    const { leaderData, leaderValue, dispatch, change } = this.props;
     const remappedValues = [];
     if (leaderChangedFor008 === true) {
       dispatch({ type: ACTION.CHANGE_008_BY_LEADER, leader: leaderVal });
@@ -92,6 +92,7 @@ export default class MarcLeader extends React.Component<P, S> {
     if (leaderData) {
       const result = Object.keys(leaderData.results).map((key) => leaderData.results[key]);
       remappedValues.push(result);
+      Object.entries(leaderData.results).map(([k, v]) => dispatch(change(k, v.defaultValue)));
     }
     return (
       <div className={style.fieldContainer}>
@@ -100,7 +101,7 @@ export default class MarcLeader extends React.Component<P, S> {
           readOnly
           label="leader"
           name="leader"
-          onClick={this.handleLeader}
+          onClick={() => this.handleLeader()}
           value={(leaderVal) || leaderValue}
         />
         {leaderData &&
@@ -120,7 +121,6 @@ export default class MarcLeader extends React.Component<P, S> {
                             label={decamelizify(`${item.name}`, EMPTY_SPACED_STRING)}
                             component={Select}
                             dataOptions={item.dropdownSelect}
-                            placeholder={exactDisplayValue}
                             onChange={this.handleChange}
                           />
                         </Col>

@@ -2,15 +2,14 @@
 import * as React from 'react';
 import { Row, Col } from '@folio/stripes/components';
 import { connect } from 'react-redux';
-import AddTagButton from '../Button/AddTagButton';
+import AddTagButton from '../../Button/AddTagButton';
 import {
   EMPTY_FIXED_FIELD,
   TAGS,
-} from '../../Utils/MarcConstant';
-import type { Props } from '../../../../flow/types.js.flow';
-import { insert } from '../../../../shared/utils/Arrays';
-import Tag00X from './Tags/Tag00X';
-import { sort } from '../../Utils/MarcApiUtils';
+} from '../../../Utils/MarcConstant';
+import { insert } from '../../../../../shared/utils/Arrays';
+import Tag00X from './Tag00X';
+import { sort } from '../../../Utils/MarcApiUtils';
 
 type P = {
   handleOnChange: () => void,
@@ -19,7 +18,7 @@ type P = {
 type State = {
   fields: Array<*>,
 }
-class EditableFixedField extends React.Component<P, State> {
+class FixedField extends React.Component<P, State> {
 
   constructor(props: P) {
     super(props);
@@ -83,4 +82,4 @@ export default (connect(
     headertype007,
     headertype008,
   }),
-)((EditableFixedField)));
+)((FixedField)));

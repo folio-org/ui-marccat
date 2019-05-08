@@ -9,11 +9,9 @@ import {
   Row,
   PaneMenu,
   Button,
-  Accordion,
   Col,
   Icon
 } from '@folio/stripes/components';
-import { reduxForm } from 'redux-form';
 import { AppIcon } from '@folio/stripes-core';
 import { FormattedMessage } from 'react-intl';
 import { bindActionCreators } from 'redux';
@@ -25,30 +23,29 @@ import {
   RECORD_FIELD_STATUS,
   SORTED_BY,
   SUBFIELD_DELIMITER
-} from '..';
+} from '../..';
 import {
-  SingleCheckboxIconButton,
   injectProps,
   buildUrl, findParam, Localize, post
-} from '../../../shared';
-import { ACTION } from '../../../redux/actions/Actions';
+} from '../../../../shared';
+import { ACTION } from '../../../../redux/actions/Actions';
 import {
   filterMandatoryFields,
   showValidationMessage,
   filterFixedFieldForSaveRecord,
   filterVariableFields
-} from '../Utils/MarcApiUtils';
-import * as C from '../../../config/constants';
-import * as MarcAction from '../Actions';
+} from '../../Utils/MarcApiUtils';
+import * as C from '../../../../config/constants';
+import * as MarcAction from '../../Actions';
 import type { Props } from '../../..';
-import type { RecordTemplate, Type } from '../../../flow/cataloging.js.flow';
-import style from '../Style/index.css';
-import { Redux } from '../../../redux';
-import VariableFields from './Variable/VariableFields';
-import FixedFields from './Fixed/FixedFields';
-import { TAGS } from '../Utils/MarcConstant';
+import type { RecordTemplate, Type } from '../../../../flow/cataloging.js.flow';
+import style from '../../Style/index.css';
+import { Redux } from '../../../../redux';
+import { TAGS } from '../../Utils/MarcConstant';
+import DataFieldForm from '../Form/DataField';
+import VariableFieldForm from '../Form/VariableField';
 
-export class MarcRecord extends React.Component<Props, {
+class Record extends React.Component<Props, {
   callout: React.RefObject<Callout>,
 }> {
   constructor(props) {
@@ -123,11 +120,11 @@ export class MarcRecord extends React.Component<Props, {
   }
 
   saveRecord = async () => {
-    const { datastore: { emptyRecord }, store: { getState } } = this.props;
+    const { datastore: { emptyRecord }, store: { getState }, reset } = this.props;
     const { deletedTag } = this.state;
-    const formData = getState().form.bibliographicRecordForm.values;
-    const initialValues = getState().form.marcEditableListForm.initial.items;
-    let variableFormData = getState().form.marcEditableListForm.values.items;
+    const formData = getState().form.dataFieldForm.values;
+    const initialValues = getState().form.variableFieldForm.initial.items;
+    let variableFormData = getState().form.variableFieldForm.values.items;
 
     // to remove
     variableFormData.map(k => k.variableField.displayValue = k.variableField.displayValue.replace(/\$/g, SUBFIELD_DELIMITER));
@@ -167,7 +164,7 @@ export class MarcRecord extends React.Component<Props, {
 
   handleClose = () => {
     const { id, submit } = this.state;
-    const { dispatch, reset, router, toggleFilterPane } = this.props;
+    const { dispatch, router, toggleFilterPane, reset } = this.props;
     dispatch({ type: ACTION.FILTERS, payload: {}, filterName: '', isChecked: false });
     toggleFilterPane();
     dispatch(reset());
@@ -243,28 +240,17 @@ export class MarcRecord extends React.Component<Props, {
             <Row center="xs">
               <Col xs={12} sm={8} md={8} lg={7}>
                 <AccordionSet>
-                  <form name="bibliographicRecordForm" onSubmit={this.saveRecord}>
-                    <Accordion label={<FormattedMessage id="ui-marccat.cataloging.accordion.checkbox.label" />} id="suppress" separator={false}>
-                      <SingleCheckboxIconButton labels={[<FormattedMessage id="ui-marccat.cataloging.checkbox.label" />]} pullLeft widthPadding />
-                    </Accordion>
-                    <FixedFields
-                      {...this.props}
-                      id="fixed-field"
-                      leaderData={leaderData}
-                      record={bibliographicRecord}
-                    />
-                  </form>
-                  <Accordion
-                    label={<FormattedMessage id="ui-marccat.cataloging.accordion.variablefield.label" />}
-                    id="variable-field"
-                  >
-                    <VariableFields
-                      {...this.props}
-                      fields={filterVariableFields(bibliographicRecord.fields)}
-                      onCreate={this.onCreate}
-                      onDelete={this.onDelete}
-                    />
-                  </Accordion>
+                  <DataFieldForm
+                    {...this.props}
+                    leaderData={leaderData}
+                    record={bibliographicRecord}
+                  />
+                  <VariableFieldForm
+                    {...this.props}
+                    fields={filterVariableFields(bibliographicRecord.fields)}
+                    onCreate={this.onCreate}
+                    onDelete={this.onDelete}
+                  />
                 </AccordionSet>
               </Col>
             </Row>
@@ -282,14 +268,11 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   }
 }, dispatch);
 
-export default reduxForm({
-  form: C.REDUX.FORM.BIBLIOGRAPHIC_FORM,
-  destroyOnUnmount: true,
-})(connect(
+export default (connect(
   ({ marccat: { data, settings, leaderData } }) => ({
     emptyRecord: data.results,
     recordDetail: Redux.resolve(data, 'marcRecordDetail').bibliographicRecord,
     bibliographicRecord: first(settings.detail),
     leaderData: leaderData.records,
   }), mapDispatchToProps
-)(injectProps(MarcRecord)));
+)(injectProps(Record)));

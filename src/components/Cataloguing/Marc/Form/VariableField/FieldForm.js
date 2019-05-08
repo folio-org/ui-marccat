@@ -14,9 +14,10 @@ import {
   MultiColumnList,
   Row
 } from '@folio/stripes/components';
-import MarcEditableItem from './MarcEditableItem';
-import ActionsMenuButton from '../Menu/ActionsMenu';
-import style from '../../Style/variableform.css';
+import EditableItem from './EditableItem';
+import ActionsMenuButton from '../../Menu/ActionsMenu';
+import style from '../../../Style/variableform.css';
+import { REDUX } from '../../../../../config/constants';
 
 const propTypes = {
   actionProps: PropTypes.object,
@@ -53,7 +54,7 @@ const defaultProps = {
   uniqueField: 'id',
 };
 
-class EditableListForm extends React.Component {
+class FieldForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -424,7 +425,7 @@ class EditableListForm extends React.Component {
     }
 
     return (
-      <MarcEditableItem
+      <EditableItem
         editing={isEditing}
         error={hasError}
         key={rowIndex}
@@ -586,12 +587,12 @@ class EditableListForm extends React.Component {
   }
 }
 
-EditableListForm.propTypes = propTypes;
-EditableListForm.defaultProps = defaultProps;
+FieldForm.propTypes = propTypes;
+FieldForm.defaultProps = defaultProps;
 
 export default reduxForm({
-  form: 'marcEditableListForm',
+  form: REDUX.FORM.VARIABLE_FORM,
   navigationCheck: true,
   enableReinitialize: true,
   destroyOnUnmount: true,
-})(EditableListForm);
+})(FieldForm);

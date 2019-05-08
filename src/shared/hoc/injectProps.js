@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react';
 import { withRoot } from '@folio/stripes-core/src/components/Root/RootContext';
+import { change, reset } from 'redux-form';
 import { injectIntl } from 'react-intl';
 import { safeObj, Localize } from '../utils/Function';
 
@@ -14,6 +15,7 @@ export default (Component: React.ComponentType<Props>): React.ComponentType<Reac
   const WrapperComponent = (props: Props): React.ComponentType<Props> => {
     const { history, root: { store }, intl: { formatMessage } } = props;
     const state = store.getState();
+    const { dispatch } = store;
     const data = state.marccat;
     const form = safeObj(state, 'form');
     const dataStore = safeObj(state.marccat, 'data');
@@ -25,8 +27,11 @@ export default (Component: React.ComponentType<Props>): React.ComponentType<Reac
         {...props}
         data={data}
         forms={form}
+        reset={reset}
         store={store}
+        change={change}
         router={history}
+        dispatch={dispatch}
         settings={settings}
         datastore={dataStore}
         translate={formatMessage}

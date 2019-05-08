@@ -7,6 +7,12 @@ const ReduxForm = () => {};
 ReduxForm.select = (store, formName) => {
   return (store.getState().form) ? store.getState().form[formName] : undefined;
 };
+ReduxForm.values = (store, formName) => {
+  return (store.getState().form) ? store.getState().form[formName].values : undefined;
+};
+ReduxForm.get = (store, formName, prop) => {
+  return (store.getState().form) ? store.getState().form[formName].values[prop] : undefined;
+};
 
 ReduxForm.reset = (store, ...forms) => {
   return (dispatch, reset) => forms.map(f => dispatch(reset(f.name)));

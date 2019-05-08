@@ -2,6 +2,7 @@
 // @flow
 import * as React from 'react';
 import { union, sortBy, first, includes } from 'lodash';
+import { change } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { Callout } from '@folio/stripes/components';
 import {
@@ -129,3 +130,11 @@ export const replaceAll = (s: string): string => ((s) ? s.replace(RegExp(String.
  * @returns s - a string with all SUBFIELD_DELIMITER replaced with SUBFIELD_CHARACTER
  */
 export const replaceAllinverted = (s: string): string => ((s) ? s.replace(/\$/g, SUBFIELD_DELIMITER) : EMPTY_STRING);
+
+/**
+ *
+ * @param {*} displayValue
+ */
+export const changeValue = (field: String, displayValue: String, dispatch: Function): void => {
+  dispatch(change(field, displayValue));
+};

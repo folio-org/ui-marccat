@@ -1,12 +1,23 @@
 // @flow
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { TextField } from '@folio/stripes/components';
-import style from '../../Style/variableform.css';
+import style from '../../../Style/variableform.css';
 
+type Props = {
+  autoFocus: boolean,
+  cells: Array<Object>,
+  columnMapping: Array<Object>,
+  error: string | boolean,
+  field: PropTypes.string,
+  fieldComponents: Array<Object>,
+  readOnlyFields: Array<string>,
+  rowIndex: number,
+  visibleFields: Array<string>,
+  widths: Array<Object>,
+}
 
-const ItemEdit = ({
+export default function ItemEdit({
   rowIndex,
   error,
   field,
@@ -17,7 +28,7 @@ const ItemEdit = ({
   widths,
   cells,
   autoFocus
-}) => {
+}: Props) {
   const fields = visibleFields.map((name, fieldIndex) => {
     if (readOnlyFields.indexOf(name) === -1) {
       let mappedName = name;
@@ -68,19 +79,4 @@ const ItemEdit = ({
       }
     </div>
   );
-};
-
-ItemEdit.propTypes = {
-  autoFocus: PropTypes.bool,
-  cells: PropTypes.arrayOf(PropTypes.object),
-  columnMapping: PropTypes.object,
-  error: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  field: PropTypes.string,
-  fieldComponents: PropTypes.object,
-  readOnlyFields: PropTypes.arrayOf(PropTypes.string),
-  rowIndex: PropTypes.number,
-  visibleFields: PropTypes.arrayOf(PropTypes.string),
-  widths: PropTypes.object,
-};
-
-export default ItemEdit;
+}

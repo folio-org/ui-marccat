@@ -97,7 +97,7 @@ export function addFirst<T>(array: Array<T>, val: Array<T> | T): Array<T> {
 /**
  * @example: removeLast<T>(array: Array<T>): Array<T>
  * @param {Array<T>} array
- * @returns a new array removing the first item.
+ * @returns a new array removing the last item.
  */
 export function removeLast<T>(array: Array<T>): Array<T> {
   if (!array.length) return array;

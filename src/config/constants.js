@@ -74,8 +74,8 @@ export const REDUX = {
   EPIC: 'marccat',
   FORM: {
     SEARCH_FORM: 'serchForm',
-    BIBLIOGRAPHIC_FORM: 'bibliographicRecordForm',
-    EDITABLE_FORM: 'marcEditableListForm'
+    DATA_FIELD_FORM: 'dataFieldForm',
+    VARIABLE_FORM: 'variableFieldForm'
   }
 };
 

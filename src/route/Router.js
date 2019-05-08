@@ -3,10 +3,11 @@ import * as React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { Search, Browse, Cataloging } from '../components';
 import { ToolbarMenu } from '../shared';
+import type { Props } from '../flow/types.js.flow';
 
 type P = {
     toggleFilterPane: () => void;
-}
+} & Props
 
 function ComposedRoute({ component: Component, children, ...props }) {
   return (Component) ? (<Route {...props} render={() => (<Component {...props}>{children}</Component>)} />) : (<Route {...props}>{children}</Route>);

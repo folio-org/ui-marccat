@@ -3,9 +3,9 @@ import * as React from 'react';
 import { Field } from 'redux-form';
 import classNames from 'classnames';
 import { IconButton } from '@folio/stripes/components';
-import { sharedInputStylesHelper } from '../../../shared';
-import type { Props } from '../../../flow/types.js.flow';
-import style from '../Style/index.css';
+import { sharedInputStylesHelper } from '../../../../../shared';
+import type { Props } from '../../../../../flow/types.js.flow';
+import style from '../../../Style/index.css';
 
 type P = {
   label?: string,
@@ -26,13 +26,13 @@ export default class MarcField extends React.Component<P, {}> {
     dispatch(change(name, value));
   }
 
-  renderIcon = (props: P): React.Component<P, *> => (
+  renderIcon = ({ onClick, ...props }) => (
     <div className={style.marcFieldIconCaret}>
       <IconButton
-        icon={(props.icon) ? 'icon-trash' : 'caret-down'}
+        icon="caret-down"
         size="medium"
         disabled={props.disbledIcon}
-        onClick={props.onClick}
+        onClick={onClick}
       />
     </div>
   );
@@ -55,22 +55,27 @@ export default class MarcField extends React.Component<P, {}> {
       label,
       onClick,
       onChange,
+      disbledIcon,
       component,
+      value,
       readOnly,
       prependIcon,
     } = this.props;
     return (
       <div className={this.getRootClass()}>
-        {prependIcon && <this.renderIcon {...this.props} />}
+        {prependIcon && <this.renderIcon {...this.props} onClick={onClick} />}
         <label htmlFor={name}>{label}</label>
         <Field
+          {...this.props}
           id={name}
           name={name}
           type="text"
           readOnly={readOnly}
           component={component || 'input'}
           label={label}
+          disabled={disbledIcon}
           onChange={onChange}
+          value={value}
         />
         {!prependIcon && <this.renderIcon {...this.props} onClick={onClick} />}
       </div>

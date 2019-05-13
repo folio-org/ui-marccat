@@ -64,6 +64,12 @@ export const TAG_MANDATORY = ['001', '005', '008', '040'];
 
 export const TAG_WITH_NO_HEADING_ASSOCIATED = union(TAG_WIDH_CAT_7, TAG_WIDH_CAT_8);
 
+export const VISUAL_RUNNING_TIME = 'visualRunningTime';
+export const IMAGE_BIT_DEPTH = 'imageBitDepth';
+export const DATE_FIRST_PUBBLICATION = 'dateFirstPublication';
+export const DATE_LAST_PUBBLICATION = 'dateLastPublication';
+
+
 export const RECORD_ACTION = {
   CREATION_MODE: 'new',
   EDIT_MODE: 'edit',

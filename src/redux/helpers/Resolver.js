@@ -1,44 +1,6 @@
+// @flow strict
 import { uniqueId } from 'lodash';
-
-const Redux = () => {};
-const ReduxForm = () => {};
-
-
-ReduxForm.select = (store, formName) => {
-  return (store.getState().form) ? store.getState().form[formName] : undefined;
-};
-ReduxForm.values = (store, formName) => {
-  return (store.getState().form) ? store.getState().form[formName].values : undefined;
-};
-ReduxForm.get = (store, formName, prop) => {
-  return (store.getState().form) ? store.getState().form[formName].values[prop] : undefined;
-};
-
-ReduxForm.reset = (store, ...forms) => {
-  return (dispatch, reset) => forms.map(f => dispatch(reset(f.name)));
-};
-
-/**
- *
- * @param {*} store
- * @param {*} reducer
- * @param {*} prop
- * @returns
- */
-Redux.get = (store, reducer, prop) => {
-  return store.getState().marccat[reducer][prop];
-};
-
-/**
- *
- * @param {*} data
- * @param {*} model
- * @param {*} jsonApiKey
- * @returns
- */
-Redux.resolve = (data, model) => {
-  return (data[model] && data[model].results) ? data[model].results : {};
-};
+import { selectKey } from './Selector';
 
 /**
  *
@@ -47,7 +9,7 @@ Redux.resolve = (data, model) => {
  * @param {*} payload
  * @returns
  */
-Redux.pendingRequestData = (model, data) => { // metodo statico
+export const pendingRequestData = (model, data) => {
   return {
     [model]: {
       timestamp: new Date(),
@@ -73,7 +35,7 @@ Redux.pendingRequestData = (model, data) => { // metodo statico
  * @param {*} payload
  * @returns
  */
-Redux.resolveRequestData = (model, data, payload) => { // metodo statico
+export const resolveData = (model, data, payload) => {
   return {
     [model]: {
       timestamp: new Date(),
@@ -99,7 +61,7 @@ Redux.resolveRequestData = (model, data, payload) => { // metodo statico
  * @param {*} data
  * @returns
  */
-Redux.storeHistoryData = (data) => { // metodo statico
+export const resolveHistoryData = (data) => {
   return {
     timestamp: new Date(),
     data
@@ -113,7 +75,7 @@ Redux.storeHistoryData = (data) => { // metodo statico
  * @param {*} payload
  * @returns
  */
-Redux.rejectRequestData = (model, data, errors) => { // metodo statico
+export const rejectData = (model, data, errors) => {
   return {
     [model]: {
       timestamp: new Date(),
@@ -133,6 +95,20 @@ Redux.rejectRequestData = (model, data, errors) => { // metodo statico
   };
 };
 
+/**
+ * Helper remove record from the resource
+ * type's state
+ * @param {Object} store - the resource type's
+ * @param {String} id - the record's id
+ */
+export const reduce = (store, id) => (
+  store.getState().records[id] || {
+    id,
+    isLoading: true,
+    isLoaded: false,
+    isSaving: false,
+  }
+);
 
 /**
  * Helper for retrieving or creating a record from the resource
@@ -140,30 +116,6 @@ Redux.rejectRequestData = (model, data, errors) => { // metodo statico
  * @param {Object} store - the resource type's
  * @param {String} id - the record's id
  */
-Redux.getRecord = (store, id) => (
-  store.records[id] || {
-    id,
-    isLoading: true,
-    isLoaded: false,
-    isSaving: false,
-  }
-);
-/**
- * Helper remove record from the resource
- * type's state
- * @param {Object} store - the resource type's
- * @param {String} id - the record's id
- */
-Redux.reduce = (store, id) => (
-  store.records[id] || {
-    id,
-    isLoading: true,
-    isLoaded: false,
-    isSaving: false,
-  }
-);
-
-export {
-  Redux,
-  ReduxForm
+export const getRecord = ({ store: { key } }, id) => {
+  return selectKey(key).results[id];
 };

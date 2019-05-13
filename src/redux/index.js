@@ -10,14 +10,7 @@ import {
   detailsAssociatedReducer,
   detailsBrowseSearchReducer,
   browseDetailsAssociatedReducer,
-  templateViewReducer,
   recordDeatilReducer,
-  leaderReducer,
-  tag006ValuesReducer,
-  tag007ValuesReducer,
-  tag008ValuesReducer,
-  headingByTagReducer,
-  change008ByLeaderReducer,
   settingsReducer,
   panelsReducer,
   totalBibCountDocReducer,
@@ -30,11 +23,9 @@ import {
   searchAssociatedBibRecords,
   associatedBibDetailEpic,
   scanBrowsingRecords,
-  leaderEpic,
   browseDetailEpic,
   browseAuthorityDetailEpic,
   browseDetailAssociatedEpic,
-  templateViewEpic,
   totalCountBibEpic,
   totalCountAuthEpic
 } from './epic/epics';
@@ -55,14 +46,7 @@ export const reducer = combineReducers({
   browse: scanBrowsingReducer,
   browseDetails: detailsBrowseSearchReducer,
   browseDetailsAssociated: browseDetailsAssociatedReducer,
-  template: templateViewReducer,
-  leaderData: leaderReducer,
   recordDetail: recordDeatilReducer,
-  tag006Values: tag006ValuesReducer,
-  tag007Values: tag007ValuesReducer,
-  tag008Values: tag008ValuesReducer,
-  headingByTag: headingByTagReducer,
-  change008ByLeader: change008ByLeaderReducer,
   settings: settingsReducer,
   panels: panelsReducer,
   totalBibRecords: totalBibCountDocReducer,
@@ -81,12 +65,10 @@ export const epics = combineEpics(
   browseDetailEpic,
   browseAuthorityDetailEpic,
   browseDetailAssociatedEpic,
-  templateViewEpic,
-  leaderEpic,
   totalCountBibEpic,
   totalCountAuthEpic,
   dataEpic
 );
-export { Redux } from './helpers/Redux';
 export { ACTION } from './actions/Actions';
 export * from './actions/ActionCreator';
+export * from './helpers/Selector';

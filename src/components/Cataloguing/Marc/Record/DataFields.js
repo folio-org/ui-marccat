@@ -13,7 +13,6 @@ export default ({ ...props }) => {
       <Accordion label="Leader" id="Leader">
         <Leader
           {...props}
-          readOnly
           leaderData={leaderData}
           leaderCode={record.leader.code}
           leaderValue={record.leader.value}

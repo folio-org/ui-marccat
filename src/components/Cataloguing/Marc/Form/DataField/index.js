@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { Accordion } from '@folio/stripes-components';
 import { reduxForm } from 'redux-form';
+// import { compose } from 'redux';
+// import { connect } from 'react-redux';
 import { Localize, SingleCheckboxIconButton } from '../../../../../shared';
 import DataFields from '../../Record/DataFields';
-import { REDUX } from '../../../../../config/constants';
+import { REDUX, EMPTY_STRING } from '../../../../../config/constants';
 
 
 const DataFieldForm = ({ leaderData, record, ...props }) => (
@@ -20,7 +22,16 @@ const DataFieldForm = ({ leaderData, record, ...props }) => (
   </form>
 );
 
-export default reduxForm({
+export default
+reduxForm({
   form: REDUX.FORM.DATA_FIELD_FORM,
   enableReinitialize: true,
-})((DataFieldForm));
+  initialValues: {
+    verificationLevel: 1,
+    recordCataloguingSourceCode: '1',
+    visualRunningTime: '---',
+    imageBitDepth: '|||',
+    dateFirstPublication: EMPTY_STRING,
+    dateLastPublication: EMPTY_STRING,
+  }
+})(DataFieldForm);

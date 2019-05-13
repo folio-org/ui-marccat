@@ -12,6 +12,12 @@ export const HTTP_METHOD = {
   DELETE: 'DELETE'
 };
 
+export const ENV = {
+  DEV: 'dev',
+  PROD: 'prod',
+  TEST:'test'
+};
+
 // API ENDPOINT UTILS
 export const RESOURCE_TYPE = {
   REST: 'REST',
@@ -25,8 +31,8 @@ export const ENDPOINT = {
     'x-okapi-tenant': 'tnx',
   },
   DEFAULT_LANG_VIEW: 'lang=ita&view=1',
-  // BASE_URL: 'http://151.1.165.20:8080/marccat',
-  BASE_URL: 'http://127.0.0.1:8080/marccat',
+  BASE_URL: `http://${process.env.ENV === ENV.PROD ? '151.1.165.20' : '151.1.165.20'}:8080/marccat`,
+  OKAPI_URL:  `http://${process.env.ENV === ENV.PROD ? 'folio-q4.aws.indexdata.com:9130' : 'folio-q4.aws.indexdata.com:9130'}:9130`,
   MERGED_SEARCH_URL: '/mergedSearch',
   SEARCH_URL: '/searchVertical',
   SEARCH_URL_JSON: '/search',
@@ -35,10 +41,9 @@ export const ENDPOINT = {
   BROWSE_FIRST_PAGE_URL: '/browse',
   VIEW_TEMPLATE_URL: '/record-templates',
   VIEW_TEMPLATE_URL_BY_ID: '/record-template/',
-  FIXED_FIELD_BY_LEADER_URL:'/fixed-fields-code-groups-by-leader',
   EMPTY_RECORD_URL: '/bibliographic-record/from-template/',
   DUPLICATE_RECORD_URL: '/bibliographic-record/duplicate',
-  TEMPLATE_TAG_URL: '/fixed-fields-code-groups',
+  FIXED_FIELD_CODE_GROUPS_URL: '/fixed-fields-code-groups',
   HEADER_TYPES_URL: '/header-types',
   CREATE_HEADING_URL: '/create-heading',
   UPDATE_HEADING_URL: '/update-heading',
@@ -46,7 +51,6 @@ export const ENDPOINT = {
   CHANGE_DISPLAY_VALUE: '/bibliographic-record/fixed-field-display-value',
   BIBLIOGRAPHIC_RECORD: '/bibliographic-record',
   HEADING_BY_TAG: '/headings-by-tag',
-  CHANGE_008_BY_LEADER: '/fixed-fields-code-groups-by-leader',
   CHANGE_TAG_DISPLAY_VALUE_FROM_LEADER: '/fixed-fields-code-groups-by-leader',
   LOCK_MARC_RECORD: '/bibliographic-record/lock/',
   UNLOCK_MARC_RECORD: '/bibliographic-record/unlock/',
@@ -85,14 +89,7 @@ export const VALIDATION_MESSAGE_TYPE = {
   WARING: 'warning',
   ERROR: 'error'
 };
-export const SEPARATOR = ';;;';
+export const SEPARATOR = '-';
 export const EMPTY_STRING = '';
 export const EMPTY_SPACED_STRING = ' ';
 export const SPACED_STRING_DOUBLE_QUOTE = " "; // eslint-disable-line quotes
-
-export const SETTINGS = {
-  DEFAULT_TEMPLATE: {
-    id: 42,
-    name: 'New Monograph'
-  },
-};

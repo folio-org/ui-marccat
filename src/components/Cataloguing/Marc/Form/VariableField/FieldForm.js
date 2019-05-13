@@ -404,7 +404,7 @@ class FieldForm extends React.Component {
     });
   }
 
-  TagRowFormatter = ({
+  VariableFieldRowFormatter = ({
     rowIndex,
     rowData,
     cells,
@@ -563,7 +563,7 @@ class FieldForm extends React.Component {
               {...this.props}
               visibleColumns={this.getVisibleColumns()}
               contentData={fields.getAll()}
-              rowFormatter={this.TagRowFormatter}
+              rowFormatter={this.VariableFieldRowFormatter}
               rowProps={{ fields }}
               formatter={cellFormatters}
               columnWidths={this.getColumnWidths()}

@@ -15,7 +15,7 @@ import {
 import { AppIcon } from '@folio/stripes-core';
 import { FormattedMessage } from 'react-intl';
 import { bindActionCreators } from 'redux';
-import { union, sortBy, includes, first } from 'lodash';
+import { union, sortBy, includes } from 'lodash';
 import {
   TAG_WITH_NO_HEADING_ASSOCIATED,
   replaceAllinverted,
@@ -40,7 +40,7 @@ import * as MarcAction from '../../Actions';
 import type { Props } from '../../..';
 import type { RecordTemplate, Type } from '../../../../flow/cataloging.js.flow';
 import style from '../../Style/index.css';
-import { Redux } from '../../../../redux';
+import * as Selector from '../../../../redux/helpers/Selector';
 import { TAGS } from '../../Utils/MarcConstant';
 import DataFieldForm from '../Form/DataField';
 import VariableFieldForm from '../Form/VariableField';
@@ -67,15 +67,12 @@ class Record extends React.Component<Props, {
   }
 
   componentWillMount() {
-    const { dispatch, datastore: { emptyRecord } } = this.props;
+    const { datastore: { emptyRecord }, loadLeader, loadHeadertype } = this.props;
     const { leader } = emptyRecord.results;
-    dispatch({ type: ACTION.LEADER_VALUES_FROM_TAG, leader: leader.value, code: leader.code, typeCode: '15' });
-  }
-
-  componentDidMount() {
-    const { loadHeadertype } = this.props;
+    loadLeader({ value: leader.value, code: leader.code, typeCode: '15' });
     loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
   }
+
 
   getCurrentRecord = (): Object => {
     const { datastore: { emptyRecord, recordDuplicate }, recordDetail } = this.props;
@@ -120,7 +117,7 @@ class Record extends React.Component<Props, {
   }
 
   saveRecord = async () => {
-    const { datastore: { emptyRecord }, store: { getState }, reset } = this.props;
+    const { datastore: { emptyRecord }, store: { getState } } = this.props;
     const { deletedTag } = this.state;
     const formData = getState().form.dataFieldForm.values;
     const initialValues = getState().form.variableFieldForm.initial.items;
@@ -135,7 +132,7 @@ class Record extends React.Component<Props, {
     bibliographicRecord.leader.value = formData.leader;
 
     const recordTemplate: RecordTemplate<Type> = {
-      id: 42,
+      id: 408,
       fields: filterMandatoryFields(emptyRecord.results.fields)
     };
 
@@ -238,7 +235,7 @@ class Record extends React.Component<Props, {
             lastMenu={this.renderButtonMenu()}
           >
             <Row center="xs">
-              <Col xs={12} sm={8} md={8} lg={7}>
+              <Col xs={12} sm={6} md={8} lg={8}>
                 <AccordionSet>
                   <DataFieldForm
                     {...this.props}
@@ -265,14 +262,16 @@ class Record extends React.Component<Props, {
 const mapDispatchToProps = dispatch => bindActionCreators({
   loadHeadertype: (tag: []) => _ => {
     tag.forEach(t => dispatch(MarcAction.headertypeAction(t)));
+  },
+  loadLeader: (payload) => _ => {
+    dispatch(MarcAction.leaderDropdownAction(payload));
   }
 }, dispatch);
 
 export default (connect(
-  ({ marccat: { data, settings, leaderData } }) => ({
+  ({ marccat: { data } }) => ({
     emptyRecord: data.results,
-    recordDetail: Redux.resolve(data, 'marcRecordDetail').bibliographicRecord,
-    bibliographicRecord: first(settings.detail),
-    leaderData: leaderData.records,
+    recordDetail: Selector.resolve(data, 'marcRecordDetail').bibliographicRecord,
+    leaderData: Selector.resolve(data, 'leaderData'),
   }), mapDispatchToProps
 )(injectProps(Record)));

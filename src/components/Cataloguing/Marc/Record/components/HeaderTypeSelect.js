@@ -4,7 +4,7 @@ import { Select } from '@folio/stripes/components';
 import { Field } from 'redux-form';
 import type { Props, State } from '../../../../../flow/types.js.flow';
 
-export default ({ dataOptions, onChange, name, label, element: { code }, ...props }: Props): React.ComponentType<Props, State> => (
+export default ({ dataOptions, onChange, name, label, ...props }: Props): React.ComponentType<Props, State> => (
   <Field
     {...props}
     id={name}
@@ -13,6 +13,6 @@ export default ({ dataOptions, onChange, name, label, element: { code }, ...prop
     dataOptions={dataOptions}
     component={Select}
     onChange={onChange}
-    placeholder={'Select Heading types for '.concat(code)}
+    placeholder={label}
   />
 );

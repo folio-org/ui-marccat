@@ -4,21 +4,16 @@ import { ACTION } from '../../../redux/actions/Actions';
 // MARC action creator utility
 
 
-/**
- *
- * @param {*} payload
- */
-export const headerTypeAction = (code) => {
+export const leaderDropdownAction = (payload) => {
   return {
     type: ACTION.QUERY,
     data: {
-      path: ENDPOINT.HEADER_TYPES_URL,
-      type: `headertype${code}`,
-      params: `code=${code}&lang=ita`,
+      path: ENDPOINT.FIXED_FIELD_CODE_GROUPS_URL,
+      type: 'leaderData',
+      params: `value=${payload.value}&code=${payload.code}&headerTypeCode=${payload.typeCode}&lang=ita`,
     },
   };
 };
-
 /**
  *
  * @param {*} payload
@@ -30,36 +25,6 @@ export const autosuggestionAction = (payload) => {
       path: ENDPOINT.HEADING_BY_TAG,
       type: `headings-by-tag-${payload.code}`,
       params: `tag=${payload.code}&ind1=${payload.ind1}&ind2=${payload.ind2}&displayValue=${payload.displayValue}&view=1&mainLibrary=170&pageSize=30&lang=ita`,
-    },
-  };
-};
-
-/**
- *
- * @param {*} payload
- */
-export const leaderAction = (payload) => {
-  return {
-    type: ACTION.QUERY,
-    data: {
-      path: ENDPOINT.TEMPLATE_TAG_URL,
-      type: 'leaderData',
-      params: `leader=${payload.value}&code=${payload.code}&headerTypeCode=${payload.typeCode}&lang=ita`,
-    },
-  };
-};
-
-/**
- *
- * @param {*} payload
- */
-export const fixedFieldByLeaderAction = (payload) => {
-  return {
-    type: ACTION.QUERY,
-    data: {
-      path: ENDPOINT.FIXED_FIELD_BY_LEADER_URL,
-      type: 'leaderData',
-      params: `leader=${payload.leader}&lang=ita&code=${payload.tag}`,
     },
   };
 };
@@ -89,7 +54,7 @@ export const changeDisplayValueAction = (payload, cb) => {
     type: ACTION.CREATE,
     data: {
       path: ENDPOINT.CHANGE_DISPLAY_VALUE,
-      type: `displayvalue-${payload.code}`,
+      type: `fixedfield${payload.code}`,
       params: ENDPOINT.DEFAULT_LANG_VIEW,
     },
     payload,
@@ -122,7 +87,7 @@ export const emptyRecordAction = () => {
   return {
     type: ACTION.QUERY,
     data: {
-      path: ENDPOINT.EMPTY_RECORD_URL + 42,
+      path: ENDPOINT.EMPTY_RECORD_URL + 408,
       type: 'emptyRecord',
       params: ENDPOINT.DEFAULT_LANG_VIEW,
     },
@@ -179,7 +144,7 @@ export const dropDownValuesAction = (payload) => {
   return {
     type: ACTION.QUERY,
     data: {
-      path: ENDPOINT.TEMPLATE_TAG_URL,
+      path: ENDPOINT.FIXED_FIELD_CODE_GROUPS_URL,
       type: `headerTypeValues${payload.code}`,
       key: payload.code,
       id: payload.code,
@@ -188,6 +153,19 @@ export const dropDownValuesAction = (payload) => {
     cb: payload.cb
   };
 };
+
+export const change008ByLeaderAction = (payload) => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.CHANGE_TAG_DISPLAY_VALUE_FROM_LEADER,
+      leader: payload,
+      type: 'headerTypeValues008',
+      params: `leader=${payload}&lang=ita`
+    },
+  };
+};
+
 
 /**
  *
@@ -244,3 +222,5 @@ export const autosuggestionTag = () => {
     },
   };
 };
+
+export const initialActions = [leaderDropdownAction, headertypeAction];

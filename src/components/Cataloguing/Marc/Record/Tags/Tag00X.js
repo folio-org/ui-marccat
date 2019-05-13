@@ -5,23 +5,23 @@ import { Field } from 'redux-form';
 import { Select, Row, Col } from '@folio/stripes-components';
 import { connect } from 'react-redux';
 import { isEmpty, last } from 'lodash';
-import { EMPTY_SPACED_STRING, EMPTY_STRING, REDUX } from '../../../../../config/constants';
+import { EMPTY_SPACED_STRING, REDUX } from '../../../../../config/constants';
 import { decamelizify } from '../../../../../shared';
 import type { Props, State } from '../../../../../flow/types.js.flow';
 
 import style from '../../../Style/index.css';
 import { dropDownValuesAction, changeDisplayValueAction } from '../../../Actions';
-import { TAGS } from '../../../Utils/MarcConstant';
+import { TAGS, VISUAL_RUNNING_TIME, DATE_FIRST_PUBBLICATION, DATE_LAST_PUBBLICATION, TAGS_NAME, IMAGE_BIT_DEPTH } from '../../../Utils/MarcConstant';
 import { MarcField } from '../..';
 import Tag00XInput from '../components/Tag00XInput';
-import { ReduxForm } from '../../../../../redux/helpers/Redux';
 import HeaderTypeSelect from '../components/HeaderTypeSelect';
+import { formFieldValue } from '../../../../../redux/helpers/Selector';
 
 type S = {
   expand: Boolean,
 } & State
 
-class Tag00X extends React.Component<Props, S> {
+class Tag00X extends React.PureComponent<Props, S> {
 
   constructor(props: Props) {
     super(props);
@@ -36,8 +36,9 @@ class Tag00X extends React.Component<Props, S> {
   }
 
   onHandleChange = evt => {
-    const { record: { leader: { value } }, dispatch, element: { code } } = this.props;
-    const headerTypeCode = evt.target.value;
+    const { record: { leader: { value } }, dispatch, change, element: { code }, headerTypeCodeFromLeader } = this.props;
+    if (headerTypeCodeFromLeader) dispatch(change(TAGS_NAME._008, headerTypeCodeFromLeader));
+    const headerTypeCode = (code === TAGS._008 && headerTypeCodeFromLeader) ? headerTypeCodeFromLeader : evt.target.value;
     const payload = {
       value,
       code,
@@ -54,29 +55,36 @@ class Tag00X extends React.Component<Props, S> {
     const { dispatch, change, element: { code } } = this.props;
     const payload = {};
     const results = data.results || data;
-    this.prepareValue(code, results, payload, headerTypeCode);
     Object.entries(results).map(([k, v]) => payload[k] = v.defaultValue);
     if (!e) Object.entries(results).map(([k, v]) => dispatch(change(`Tag${code}-${headerTypeCode}-${k}`, v.defaultValue)));
     if (e) {
       const selected = last(e.target.name.split('-'));
       payload[selected] = e.target.value;
     }
+    this.prepareValue(code, results, payload, headerTypeCode);
     const cb = (r) => this.execChange(r);
     dispatch(changeDisplayValueAction(payload, cb));
   };
 
-  execChange = (r: Object): void => {
-    const { dispatch, change, element: { code } } = this.props;
-    dispatch(change(code, r.displayValue));
+  execChange = (response: Object): void => {
+    const { dispatch, change, fixedfields, element } = this.props;
+    dispatch(change(element.code, response.displayValue));
+    fixedfields.push(element);
+    fixedfields.filter(f => f.code === element.code).map(f => f.fixedField = response);
   }
 
   prepareValue = (code, data, payload, headerTypeCode) => {
     const { store } = this.props;
-    if (code === TAGS._006) data.visualRunningTime = { name: 'visualRunningTime', defaultValue: EMPTY_SPACED_STRING, dropdownSelect:[] };
+    if (code === TAGS._006) {
+      payload.visualRunningTime = formFieldValue(store, REDUX.FORM.DATA_FIELD_FORM, VISUAL_RUNNING_TIME);
+    }
+    if (code === TAGS._007) {
+      payload.imageBitDepth = formFieldValue(store, REDUX.FORM.DATA_FIELD_FORM, IMAGE_BIT_DEPTH);
+    }
     if (code === TAGS._008) {
-      data.dateFirstPublication = { name: 'dateFirstPublication', defaultValue: EMPTY_STRING.padStart(4, EMPTY_SPACED_STRING), dropdownSelect:[] };
-      data.dateLastPublication = { name: 'dateLastPublication', defaultValue: EMPTY_STRING.padStart(4, EMPTY_SPACED_STRING), dropdownSelect:[] };
-      payload.dateEnteredOnFile = ReduxForm.get(store, REDUX.FORM.DATA_FIELD_FORM, TAGS._008).substring(0, 6);
+      payload.dateFirstPublication = formFieldValue(store, REDUX.FORM.DATA_FIELD_FORM, DATE_FIRST_PUBBLICATION);
+      payload.dateLastPublication = formFieldValue(store, REDUX.FORM.DATA_FIELD_FORM, DATE_LAST_PUBBLICATION);
+      payload.dateEnteredOnFile = formFieldValue(store, REDUX.FORM.DATA_FIELD_FORM, TAGS._008).substring(0, 6);
     }
     payload.code = code;
     payload.categoryCode = 1;
@@ -84,53 +92,64 @@ class Tag00X extends React.Component<Props, S> {
     payload.sequenceNumber = 0;
   };
 
-  RenderSelect = ({ headerTypeCode, element, ...props }): React.Component<Props, *> => (
+  RenderSelect = ({ element, ...props }): React.ComponentType<Props, *> => (
     <Field
+      {...props}
       id={`Tag${element.code}`}
       name={`Tag${element.code}`}
       label={`${element.code}`}
       dataOptions={props.headertypes}
       component={Select}
-      onChange={(e) => this.onHandleChange(e)}
+      onChange={this.onHandleChange}
       placeholder={'Select Heading types for '.concat(element.code)}
-      value={headerTypeCode}
+      value={props.typeCode}
     />
   );
 
   RenderDropwDown = (data) => {
     const { headerTypeCode } = this.state;
     const { element: { code } } = this.props;
+    const sortedData = Object.values(data).sort((x, y) => x.name > y.name);
     return (
       <Row>
         {code === TAGS._006 &&
           <Col xs={6}>
             <Tag00XInput
               {...this.props}
-              name="visualRunningTime"
-              onChange={(e) => this.handleDisplayValue(e, data)}
+              name={VISUAL_RUNNING_TIME}
+              onChange={(e) => this.handleDisplayValue(e, sortedData)}
+            />
+          </Col>
+        }
+        {(code === TAGS._007 && (headerTypeCode === 25 || headerTypeCode === 42)) &&
+          <Col xs={4}>
+            <Tag00XInput
+              {...this.props}
+              name={IMAGE_BIT_DEPTH}
+              onChange={(e) => this.handleDisplayValue(e, sortedData)}
             />
           </Col>
         }
         {code === TAGS._008 &&
           <React.Fragment>
-            <Col xs={6}>
+            <Col xs={4}>
               <Tag00XInput
                 {...this.props}
-                name="dateFirstPublication"
-                onChange={(e) => this.handleDisplayValue(e, data)}
+                name={DATE_FIRST_PUBBLICATION}
+                onChange={(e) => this.handleDisplayValue(e, sortedData)}
               />
             </Col>
-            <Col xs={6}>
+            <Col xs={4}>
               <Tag00XInput
                 {...this.props}
-                name="dateLastPublication"
-                onChange={(e) => this.handleDisplayValue(e, data)}
+                name={DATE_LAST_PUBBLICATION}
+                onChange={(e) => this.handleDisplayValue(e, sortedData)}
               />
             </Col>
           </React.Fragment>
         }
-        {Object.values(data).map((field, idx) => (
-          <Col xs={6} key={idx}>
+        {sortedData.map((field, idx) => (
+          <Col xs={4} key={idx}>
             <HeaderTypeSelect
               {...this.props}
               name={`Tag${code}-${headerTypeCode}-${field.name}`}
@@ -146,7 +165,7 @@ class Tag00X extends React.Component<Props, S> {
 
   render() {
     const { expand, headerTypeCode } = this.state;
-    const { element, headingTypes, values006, values007, values008 } = this.props;
+    const { element, headingTypes, values006, values007, values008, headerTypeCodeFromLeader } = this.props;
     const values = (element.code === TAGS._006) ? values006 : ((element.code === TAGS._007) ? values007 : values008);
     return (
       <div className={style.fieldContainer} no-padding>
@@ -168,7 +187,7 @@ class Tag00X extends React.Component<Props, S> {
                 label={`Tag${element.fixedField.code}`}
                 name={`Tag${element.fixedField.code}`}
                 component={this.RenderSelect}
-                value={headerTypeCode}
+                typeCode={(element.fixedField.code === TAGS._008 && headerTypeCodeFromLeader) ? headerTypeCodeFromLeader : headerTypeCode}
                 headertypes={headingTypes.results.headingTypes}
               />}
             {!isEmpty(values) && this.RenderDropwDown(values.results, element.fixedField.code)}
@@ -178,10 +197,13 @@ class Tag00X extends React.Component<Props, S> {
     );
   }
 }
+
 export default (connect(
-  ({ marccat: { data: { headerTypeValues006, headerTypeValues007, headerTypeValues008 } } }) => ({
+  ({ marccat: { data: { emptyRecord, marcRecordDetail, headerTypeValues006, headerTypeValues007, headerTypeValues008 } } }) => ({
     values006: (headerTypeValues006) ? headerTypeValues006.results : {},
     values007: (headerTypeValues007) ? headerTypeValues007.results : {},
     values008: (headerTypeValues008) ? headerTypeValues008.results : {},
+    headerTypeCodeFromLeader: (headerTypeValues008) ? headerTypeValues008.results.headerTypeCode : undefined,
+    fixedfields: emptyRecord.results.fields || marcRecordDetail.bibliographicRecord.fields,
   }),
 )((Tag00X)));

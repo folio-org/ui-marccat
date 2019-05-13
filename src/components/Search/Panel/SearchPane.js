@@ -4,7 +4,7 @@ import { Paneset, Pane } from '@folio/stripes/components';
 import PanelHistory from '../History/PanelHistory';
 import { EMPTY_STRING } from '../../../config/constants';
 
-export default ({ ...props }) => {
+export default function SearchPane(props) {
   const { component, localized, filterPaneIsVisible, toggleFilterPane, children } = props;
   return (
     <Paneset static>
@@ -22,4 +22,4 @@ export default ({ ...props }) => {
       {children}
     </Paneset>
   );
-};
+}

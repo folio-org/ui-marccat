@@ -20,10 +20,9 @@ export default class MarcField extends React.Component<P, {}> {
     const {
       name,
       value,
-      dispatch,
       change,
     } = this.props;
-    dispatch(change(name, value));
+    change(name, value);
   }
 
   renderIcon = ({ onClick, ...props }) => (

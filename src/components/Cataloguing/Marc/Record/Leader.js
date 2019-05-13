@@ -1,13 +1,15 @@
 // @flow
 import * as React from 'react';
-import { Field } from 'redux-form';
-import { Row, Col, Select } from '@folio/stripes/components';
+import { isEmpty, last } from 'lodash';
+import { connect } from 'react-redux';
+import { Row, Col } from '@folio/stripes/components';
 import type { Props } from '../../../../flow/types.js.flow';
 import MarcField from '../Form/Components/Field';
-import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../../config/constants';
-import { ACTION } from '../../../../redux/actions/Actions';
+import { EMPTY_SPACED_STRING, SEPARATOR } from '../../../../config/constants';
 import { decamelizify } from '../../../../shared/utils/Function';
 import style from '../../Style/index.css';
+import { change008ByLeaderAction } from '../../Actions';
+import HeaderTypeSelect from './components/HeaderTypeSelect';
 
 type P = {
   readOnly: boolean,
@@ -23,24 +25,25 @@ type S = {
   leaderChangedFor008: boolean
 };
 
-export default class Leader extends React.Component<P, S> {
+class Leader extends React.PureComponent<P, S> {
   constructor(props: P) {
     super(props);
     this.state = {
       leaderDataDispatched: false,
       leaderCss: false,
       leaderVal: props.leaderValue,
-      leaderChangedFor008: false,
+      firsAccess: true,
     };
     this.handleLeader = this.handleLeader.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.getNormalizedLeader = this.getNormalizedLeader.bind(this);
   }
 
   handleLeader = () => {
     const { leaderCss, leaderDataDispatched } = this.state;
-    const { dispatch, leaderValue, leaderCode } = this.props;
+    const { leaderValue, leaderCode, loadLeaderValues } = this.props;
     if (!leaderDataDispatched) {
-      dispatch({ type: ACTION.LEADER_VALUES_FROM_TAG, leader: leaderValue, code: leaderCode, typeCode: '15' });
+      loadLeaderValues({ value: leaderValue, code: leaderCode, typeCode: '15' });
       this.setState({
         leaderDataDispatched: true
       });
@@ -56,17 +59,20 @@ export default class Leader extends React.Component<P, S> {
    * @param {*} index - index to replace
    * @param {*} replace - a mutate leader
    */
-  replaceAt(string, index, replace) {
-    this.setState({
-      leaderVal: string.substring(0, index) + replace + string.substring(index + 1),
-      leaderChangedFor008: !!((index === 6 || index === 7)),
-    });
+  replaceAt(string, index, replaceValue) {
+    const { dispatch, change, set008HeaderType } = this.props;
+    const leaderVal = string.substring(0, index) + replaceValue + string.substring(index + 1);
+    dispatch(change('leader', leaderVal));
+    if (index === 6 || index === 7) {
+      set008HeaderType(leaderVal);
+    }
   }
 
-  handleChange = (e) => {
+
+  handleChange = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     const { leaderVal } = this.state;
     const selectedValue = e.target.value;
-    const selectedName = e.target.id;
+    const selectedName = last((e.target.id).split(SEPARATOR));
     switch (selectedName) {
     case 'itemRecordStatusCode': this.replaceAt(leaderVal, 5, selectedValue); break;
     case 'itemRecordTypeCode': this.replaceAt(leaderVal, 6, selectedValue); break;
@@ -80,59 +86,58 @@ export default class Leader extends React.Component<P, S> {
     }
   }
 
+  getNormalizedLeader = ({ ...props }) => {
+    const { leaderData } = props;
+    if (isEmpty(leaderData)) {
+      return false;
+    }
+    return Object.keys(leaderData.results).map((key) => leaderData.results[key]);
+  }
+
   render() {
-    const { leaderCss, leaderVal } = this.state;
-    let { leaderChangedFor008 } = this.state;
-    const { leaderData, leaderValue, dispatch, change } = this.props;
-    const remappedValues = [];
-    if (leaderChangedFor008 === true) {
-      dispatch({ type: ACTION.CHANGE_008_BY_LEADER, leader: leaderVal });
-      leaderChangedFor008 = false;
-    }
-    if (leaderData) {
-      const result = Object.keys(leaderData.results).map((key) => leaderData.results[key]);
-      remappedValues.push(result);
-      Object.entries(leaderData.results).map(([k, v]) => dispatch(change(k, v.defaultValue)));
-    }
+    const { leaderCss, firsAccess } = this.state;
+    const { leaderValue, dispatch, change, leaderData } = this.props;
+    if (firsAccess && !isEmpty(leaderData)) Object.values(leaderData.results).map(k => dispatch(change(`Leader-${k.name}`, k.defaultValue)));
+
     return (
-      <div className={style.fieldContainer}>
+      <div className={style.fieldContainer} no-padding>
         <MarcField
           {...this.props}
           readOnly
           label="leader"
           name="leader"
-          onClick={() => this.handleLeader()}
-          value={(leaderVal) || leaderValue}
+          value={leaderValue}
+          onClick={() => {
+            this.setState({ leaderCss: !leaderCss, firsAccess: false });
+          }}
         />
-        {leaderData &&
+        {!isEmpty(leaderData) &&
           <div className={(leaderCss) ? style.leaderResultsActive : style.leaderResults}>
-            <div className={style.leaderData} id="leaderData">
-              <Row xs={12}>
-                {leaderData &&
-                  remappedValues.map(elem => {
-                    return elem.map((item, i) => {
-                      let exactDisplayValue = EMPTY_STRING;
-                      item.dropdownSelect.filter(x => (x.value === item.defaultValue ? exactDisplayValue = x.label : exactDisplayValue));
-                      return (
-                        <Col xs={4} key={i}>
-                          <Field
-                            id={`${item.name}`}
-                            name={`Leader-${item.name}`}
-                            label={decamelizify(`${item.name}`, EMPTY_SPACED_STRING)}
-                            component={Select}
-                            dataOptions={item.dropdownSelect}
-                            onChange={this.handleChange}
-                          />
-                        </Col>
-                      );
-                    });
-                  })
-                }
-              </Row>
-            </div>
-          </div>
-        }
+            <Row>
+              {Object.values(leaderData.results).map((item, idx) => (
+                <Col xs={4} key={idx}>
+                  <HeaderTypeSelect
+                    {...this.props}
+                    name={`Leader-${item.name}`}
+                    label={decamelizify(`${item.name}`, EMPTY_SPACED_STRING)}
+                    dataOptions={item.dropdownSelect}
+                    onChange={this.handleChange}
+                  />
+                </Col>
+              ))}
+            </Row>
+          </div>}
       </div>
     );
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  set008HeaderType: leader => dispatch(change008ByLeaderAction(leader)),
+});
+
+export default (connect(
+  ({ marccat: { data: { headerTypeValues008 } } }) => ({
+    headerTypeCodeFromLeader: (headerTypeValues008) ? headerTypeValues008.results.headerTypeCode : undefined,
+  }), mapDispatchToProps
+)((Leader)));

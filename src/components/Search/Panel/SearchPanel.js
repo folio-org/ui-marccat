@@ -217,9 +217,9 @@ class SearchPanel extends React.Component<P, {}> {
                     <Col xs={12}>
                       <div>
                         <SearchIndexes
+                          {...this.props}
                           id="selectIndexes"
                           name="selectIndexes"
-                          {...this.props}
                         />
                       </div>
                     </Col>
@@ -227,6 +227,7 @@ class SearchPanel extends React.Component<P, {}> {
                   <Row>
                     <Col xs={12}>
                       <SearchConditions
+                        {...this.props}
                         id="selectCondition"
                         name="selectCondition"
                       />
@@ -236,6 +237,7 @@ class SearchPanel extends React.Component<P, {}> {
                     <Col xs={12}>
                       <div>
                         <Field
+                          {...rest}
                           id="searchTextArea"
                           name="searchTextArea"
                           fullWidth

@@ -6,8 +6,9 @@ import { injectProps } from './shared';
 import type { Props } from './flow/types.js.flow';
 import { ACTION } from './redux/actions';
 import { REDUX } from './config/constants';
-import './shared/styles/common.css';
 import Provider from './route/Provider';
+
+import './shared/styles/common.css';
 
 type S = {
   filterPaneIsVisible: boolean,

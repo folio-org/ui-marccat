@@ -329,7 +329,7 @@ export class SearchResults extends React.Component<P, {}> {
 }
 
 export default (connect(
-  ({ marccat: { search, details, countDoc, filter, totalBibRecords, totalAuthRecords, associatedBibDetails, template, settings, panels } }) => ({
+  ({ marccat: { search, details, countDoc, filter, totalBibRecords, totalAuthRecords, associatedBibDetails, settings, panels } }) => ({
     bibliographicResults: search.bibliographicResults,
     oldDataToIncrement: search.dataOld,
     oldBibToIncrement: search.oldBibArray,
@@ -344,7 +344,6 @@ export default (connect(
     isReady: search.isReady,
     isFetchingDetail: details.isLoading,
     isReadyDetail: details.isReady,
-    defaultTemplate: template.default,
     activeFilter: filter.filters,
     activeFilterName: filter.name,
     activeFilterChecked: filter.checked,
@@ -358,5 +357,5 @@ export default (connect(
     totalBib: totalBibRecords.totalBibDoc,
     totalAuth: totalAuthRecords.totalAuthDoc
   }),
-  (dispatch) => dispatch(emptyRecordAction())
+  (dispatch) => dispatch(emptyRecordAction()),
 )(injectProps(SearchResults)));

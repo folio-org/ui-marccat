@@ -1,7 +1,7 @@
 // @flow
 import { from } from 'rxjs/observable/from';
 import { of } from 'rxjs/observable/of';
-import { Redux } from '../helpers/Redux';
+import * as Resolver from '../helpers/Resolver';
 import { ENDPOINT } from '../../config/constants';
 import { ACTION } from '../actions';
 
@@ -53,7 +53,7 @@ export const resolveHistoryRequest = (data) => ({
  * @param {*} error
  */
 export const executeEpicCallback = () => ({
-  type: 'CALLBACK_FIRED!!!!!'
+  type: ACTION.EXECUTE_CALLBACK_FIRED
 });
 
 /**
@@ -65,11 +65,11 @@ export function reducer(state: Object = initialState, action: Object) {
   switch (action.type) {
   case ACTION.REQUEST_RESOLVE:
     return Object.assign({
-    }, state, Redux.resolveRequestData(action.name, action.data, action.payload));
+    }, state, Resolver.resolveData(action.name, action.data, action.payload));
   case ACTION.REQUEST_REJECT:
     return Object.assign({
-    }, state, Redux.rejectRequestData(action.name, action.data, action.error));
-  case 'EXECUTE_CALLBACK':
+    }, state, Resolver.rejectData(action.name, action.data, action.error));
+  case ACTION.EXECUTE_CALLBACK:
     return action.cb;
   default:
     return state;

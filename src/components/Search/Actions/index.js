@@ -16,6 +16,18 @@ export const loadTemplateAction = () => {
   };
 };
 
+export const countAction = () => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.TOTAL_COUNT_SEARCH_URL,
+      type: 'count',
+      params: ENDPOINT.DEFAULT_LANG_VIEW.concat('&type=B'),
+    }
+  };
+};
+
+
 /**
  *
  * @param {*} payload

@@ -9,7 +9,7 @@ import { resultsFormatter, columnMapper, columnWidthMapper, renderColumn } from 
 import { injectProps, ActionMenu, EmptyMessage, NoResultsMessage } from '../../../../shared';
 import { ACTION } from '../../../../redux/actions/Actions';
 import * as C from '../../../../config/constants';
-import { ReduxForm } from '../../../../redux/helpers/Redux';
+import { selectForm } from '../../../../redux/helpers/Selector';
 
 
 class SearchResultPane extends React.Component<Props, {}> {
@@ -21,7 +21,7 @@ class SearchResultPane extends React.Component<Props, {}> {
 
   renderVisibleColumns = () => {
     const { store } = this.props;
-    const form = ReduxForm.resolve(store, 'checkboxForm');
+    const form = selectForm(store, 'checkboxForm');
     const visibleColumns = [];
     const visibleColumns2 = [
       'resultView',

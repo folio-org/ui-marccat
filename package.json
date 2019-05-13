@@ -12,6 +12,7 @@
     "node": ">=6.0.0"
   },
   "scripts": {
+    "prestart": "sh ./script/setup.sh",
     "start": "stripes serve --lint config/stripesclirc.config",
     "build": "stripes build --no-minify --okapi http://folio-q4.aws.indexdata.com:9130 --output dist/",
     "build:flow": "yarn run flow --show-all-branches --show-all-errors --ignore-version",

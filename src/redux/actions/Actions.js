@@ -76,6 +76,7 @@ export const TOTAL_BIB_COUNT = `${prefix}TOTAL_BIB_COUNT`;
 export const TOTAL_AUTH_COUNT = `${prefix}TOTAL_AUTH_COUNT`;
 export const TOTAL_BIB_COUNT_SUCCESS = `${prefix}TOTAL_BIB_COUNT_SUCCESS`;
 export const TOTAL_AUTH_COUNT_SUCCESS = `${prefix}TOTAL_AUTH_COUNT_SUCCESS`;
+export const DETAILS_FROM_CROSS_REF = `${prefix}DETAILS_FROM_CROSS_REF`;
 
 export const ACTION = {
   REQUEST_MAKE,

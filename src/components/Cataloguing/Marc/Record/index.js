@@ -135,7 +135,7 @@ class Record extends React.Component<Props, {
     bibliographicRecord.leader.value = formData.leader;
 
     const recordTemplate: RecordTemplate<Type> = {
-      id: 42,
+      id: 408,
       fields: filterMandatoryFields(emptyRecord.results.fields)
     };
 

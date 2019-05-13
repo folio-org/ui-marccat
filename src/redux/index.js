@@ -68,7 +68,7 @@ export const reducer = combineReducers({
   totalBibRecords: totalBibCountDocReducer,
   totalAuthRecords: totalAuthCountDocReducer,
   data,
-  history
+  history,
 });
 
 export const epics = combineEpics(

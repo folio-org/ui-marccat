@@ -75,7 +75,7 @@ export const scanBrowsingRecords = (action$, store) => action$.ofType(ACTION.BRO
     of$(marccatActions.isfetchingScanBrowseRequest(true)),
     ajax
       .getJSON(buildUrl(ENDPOINT.BROWSE_FIRST_PAGE_URL, `query=${d.query}&view=1&mainLibrary=170&pageSize=20&lang=eng`), ENDPOINT.HEADERS)
-      .map(record => marccatActions.fetchScanBrowsingRecords(record.headings))
+      .map(record => marccatActions.fetchScanBrowsingRecords(record.headings, d.query, d.triggerDetails))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
 

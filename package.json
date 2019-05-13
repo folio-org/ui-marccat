@@ -18,7 +18,7 @@
     "test": "stripes test karma",
     "test:coverage": "stripes test karma --coverage",
     "test:folioci": "yarn --offline test --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage",
-    "lint": "eslint ./src --fix && stylelint \"src/**/*.css\" --fix && eslint **/**/test_* --quiet",
+    "lint": "eslint ./src --fix && stylelint \"src/**/*.css\" --fix",
     "eslint": "eslint ./ --fix",
     "precommit": "lint-staged",
     "type:install": "flow-typed install `echo $1`",

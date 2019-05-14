@@ -9,19 +9,18 @@ import { duplicaRecordAction } from '../../Actions';
 class RecordDetailPane extends React.Component {
 
   duplicaRecord = (props) => {
-    const id = findParam('id' || 'savedId');
+    const id = findParam('id') || findParam('savedId');
     const { store } = props;
-    const cb = (r) => this.onDuplicate(r, id);
+    const cb = (r) => this.onDuplicate(r);
     store.dispatch(duplicaRecordAction(id, cb));
   }
 
-  onDuplicate = (response, id) => {
+  onDuplicate = (response) => {
     const { router, toggleFilterPane } = this.props;
     setTimeout(() => {
       toggleFilterPane();
-      router.push(`/marccat/cataloging?id=${id}&mode=duplicate`);
+      router.push(`/marccat/cataloging?id=${response.bibliographicRecord.id}&mode=duplicate`);
     }, 3000);
-
   };
 
 

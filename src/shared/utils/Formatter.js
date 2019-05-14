@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 // @flow
 import * as React from 'react';
+import { Button } from '@folio/stripes-components';
 import { getFieldPosition, getFormat, getMicroformat } from './Mapper';
 import style from '../../components/Search/Style/index.css';
 
@@ -301,5 +302,48 @@ export const resultsFormatter = (isBibsOnly: ?boolean = true, isAuthOnly: ?boole
 
 export const browseFormatter = {
   type: x => (
-    <span className={x.countAuthorities === 0 && x.countDocuments === 0 ? style.noRef : x.countAuthorities === 0 ? style.bibliographic : style.authority} />)
+    <span className={x.countAuthorities === 0 && x.countDocuments === 0 ? style.noRef : x.countAuthorities === 0 ? style.bibliographic : style.authority} />
+  ),
+  cr0: item => (
+    <div>
+      {item.crossReferences.length > 0 &&
+        item.crossReferences.map(
+          element => {
+            if (element.refType === 1) {
+              return (
+                <Button
+                  buttonStyle="none"
+                  onClick
+                  style={{ fontWeight: 'bold', marginBottom: 0 }}
+                  aria-label={element.stringText}
+                >
+                  {'See: ' + element.stringText}
+                </Button>
+              );
+            } else return null;
+          }
+        )}
+    </div>
+  ),
+  cr1: item => (
+    <div>
+      {item.crossReferences.length > 0 &&
+        item.crossReferences.map(
+          element => {
+            if (element.refType === 2) {
+              return (
+                <Button
+                  buttonStyle="none"
+                  onClick
+                  style={{ fontWeight: 'bold', marginBottom: 0 }}
+                  aria-label={element.stringText}
+                >
+                  {'Seen From: ' + element.stringText}
+                </Button>
+              );
+            } else return null;
+          }
+        )}
+    </div>
+  )
 };

@@ -7,6 +7,7 @@ import style from '../../../shared/lib/Style/Dropdown.css';
 
 const PanelHistory = ({ ...props }) => {
   const { searchPerformed, recentHistory, totalBib, withMulticolumn } = props;
+  const handleRowClick = () => { };
   const resultsFormatter = {
     index: item => `${item.index.split('"')[0].trim()}`,
     query: item => `${item.query.split('"')[1].trim()}`,
@@ -41,7 +42,7 @@ const PanelHistory = ({ ...props }) => {
                 }
               }
               formatter={resultsFormatter}
-              onRowClick={() => {}}
+              onRowClick={handleRowClick}
               rowMetadata={['query', 'found']}
               contentData={recentHistory}
               visibleColumns={[

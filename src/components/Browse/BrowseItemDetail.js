@@ -11,10 +11,9 @@ import {
   MultiColumnList
 } from '@folio/stripes/components';
 import { ACTION } from '../../redux/actions/Actions';
-import type { Props } from '../../flow/index.js.flow';
-import { getTag100, getTitle100, remapForAssociatedBibList } from '../../utils/Mapper';
+import type { Props } from '../../flow/types.js.flow';
+import { resultsFormatterForAssociated, columnMapperForAssociated, getTag100, getTitle100, remapForAssociatedBibList } from '../../shared';
 import { EMPTY_STRING } from '../../config/constants';
-import { resultsFormatterForAssociated, columnMapperForAssociated } from '../../utils/Formatter';
 import style from '../../shared/styles/common.css';
 
 type P = Props & {

@@ -1,10 +1,5 @@
-/**
- * Reset Button
- *
- * A delayed disapearable button
- */
-
-import React, { Component } from 'react';
+// @flow strict
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import camelCase from 'lodash/camelCase';
 import classnames from 'classnames'; /* eslint-disable-line import/no-extraneous-dependencies */
@@ -12,7 +7,7 @@ import { Transition } from 'react-transition-group'; /* eslint-disable-line impo
 import { Button, Icon } from '@folio/stripes/components';
 import css from './ResetButton.css';
 
-export default class ResetButton extends Component {
+export default class ResetButton extends React.Component {
   static propTypes = {
     className: PropTypes.string,
     id: PropTypes.string,

@@ -9,10 +9,16 @@ module.exports = {
       experimentalObjectRestSpread: true,
     },
   },
-  "plugins": [
+  plugins: [
     "flowtype"
   ],
-  extends: ["@folio/eslint-config-stripes"],
+  extends: [
+    "@folio/eslint-config-stripes",
+    "plugin:flowtype/recommended"
+],
+settings: {
+  "import/resolver": "webpack"
+},
   env: {
     browser: true
   },
@@ -20,9 +26,10 @@ module.exports = {
     process: true,
     Promise: true
   },
-  "rules": {
-    "flowtype/no-weak-types": 0,
-    "no-warning-comments":  [2, { "terms": ["flow-typed signature", "flow-typed version"], "location": "start"}],
+  rules: {
+    "import/extensions": 0,
+    "flowtype/no-types-missing-file-annotation": 0,
+    "no-warning-comments":  [2, { "terms": ["flowtype/no-types-missing-file-annotation", "flow-typed signature", "flow-typed version"], "location": "start"}],
 		"indent": ["error", 2],
     "react/jsx-indent": ["error", 2],
     "react/forbid-prop-types":"off",

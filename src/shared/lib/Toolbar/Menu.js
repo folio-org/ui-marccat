@@ -9,13 +9,13 @@ type ToolbarMenuProps = {
   content: React.Node,
   className?: string,
   style?: Object;
-  withPrinter?: bool,
+  withPrinter?: boolean,
   badgeCount?: string,
   onClick: () => void;
   type?: string;
-  create: bool;
-  disabled?: bool;
-  secondButton?: bool;
+  create: boolean;
+  disabled?: boolean;
+  secondButton?: boolean;
   label?: React.Component<any>;
   stripes: Object;
 };

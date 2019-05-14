@@ -5,9 +5,8 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Paneset, HotKeys, PaneMenu } from '@folio/stripes/components';
 import { ACTION } from '../../../redux/actions';
-import type { Props } from '../../../flow/index.js.flow';
-import { injectCommonProp, NoResultsMessage } from '../../../shared';
-import { remapForAssociatedBibList } from '../../../utils/Mapper';
+import type { Props } from '../../../flow/types.js.flow';
+import { NoResultsMessage, injectProps, remapForAssociatedBibList } from '../../../shared';
 import { isAuthorityRecord, transitionToParams } from '../Utils/SearchUtils';
 import {
   SearchResultPane,
@@ -23,7 +22,7 @@ type P = Props & {
   headings: Array<any>,
   inputValue: string,
   getPreviousPage: () => void,
-  getNextPage:() => void,
+  getNextPage: () => void,
   detail: Object,
   dataLoaded: boolean,
   loading: boolean,
@@ -330,7 +329,7 @@ export class SearchResults extends React.Component<P, {}> {
 }
 
 export default (connect(
-  ({ marccat: { search, details, countDoc, filter, totalBibRecords, totalAuthRecords, associatedBibDetails, template, settings, panels } }) => ({
+  ({ marccat: { search, details, countDoc, filter, totalBibRecords, totalAuthRecords, associatedBibDetails, settings, panels } }) => ({
     bibliographicResults: search.bibliographicResults,
     oldDataToIncrement: search.dataOld,
     oldBibToIncrement: search.oldBibArray,
@@ -345,7 +344,6 @@ export default (connect(
     isReady: search.isReady,
     isFetchingDetail: details.isLoading,
     isReadyDetail: details.isReady,
-    defaultTemplate: template.default,
     activeFilter: filter.filters,
     activeFilterName: filter.name,
     activeFilterChecked: filter.checked,
@@ -359,5 +357,5 @@ export default (connect(
     totalBib: totalBibRecords.totalBibDoc,
     totalAuth: totalAuthRecords.totalAuthDoc
   }),
-  (dispatch) => dispatch(emptyRecordAction())
-)(injectCommonProp(SearchResults)));
+  (dispatch) => dispatch(emptyRecordAction()),
+)(injectProps(SearchResults)));

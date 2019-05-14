@@ -1,4 +1,5 @@
-import { range, union } from 'lodash';
+// @flow
+import { union } from 'lodash';
 import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../config/constants';
 
 export const RECORD_FIELD_STATUS = {
@@ -26,21 +27,6 @@ export const TAGS_NAME = {
   _008: 'Tag008',
   _040: 'Tag040'
 };
-
-/*
- * Create array with all tags code in a range
- * for instance tag from 300 to 399: range(300, 399, 1);
- */
-export const TAG_1XX = range(100, 200, 1);
-export const TAG_2XX = range(200, 300, 1);
-export const TAG_3XX = range(300, 400, 1);
-export const TAG_4XX = range(400, 500, 1);
-export const TAG_5XX = range(500, 600, 1);
-export const TAG_6XX = range(600, 700, 1);
-export const TAG_7XX = range(700, 800, 1);
-export const TAG_8XX = range(800, 900, 1);
-export const TAG_9XX = range(900, 1000, 1);
-
 /*
  * Create array all tags width category 7
  */
@@ -77,8 +63,12 @@ export const TAG_NOT_REPEATABLE = [
 export const TAG_MANDATORY = ['001', '005', '008', '040'];
 
 export const TAG_WITH_NO_HEADING_ASSOCIATED = union(TAG_WIDH_CAT_7, TAG_WIDH_CAT_8);
-export const TAG006_DISPLAY_VALUE_DEFAULT = 'a           000 ua';
-export const TAG007_DISPLAY_VALUE_DEFAULT = 'cu uuu---uuuuu';
+
+export const VISUAL_RUNNING_TIME = 'visualRunningTime';
+export const IMAGE_BIT_DEPTH = 'imageBitDepth';
+export const DATE_FIRST_PUBBLICATION = 'dateFirstPublication';
+export const DATE_LAST_PUBBLICATION = 'dateLastPublication';
+
 
 export const RECORD_ACTION = {
   CREATION_MODE: 'new',
@@ -130,4 +120,12 @@ export const EMPTY_VARIABLE_FIELD = {
     subfields: [],
   },
   added: true
+};
+
+export const COMMON_DISPLAY_VALUE_PROPERTY = {
+  jcategoryCode: 1,
+  sequenceNumber: 0,
+  displayValue: EMPTY_STRING,
+  dateFirstPublication: '    ',
+  dateLastPublication: '    '
 };

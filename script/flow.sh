@@ -19,7 +19,9 @@ if [ ! -d "artifact/" ]; then
     rm -rf artifact/* 
 fi
 
-#print all filw flowedify
-yarn flow ls > artifact/all-file-flowed.js
+#print all file flowyfied
+yarn -s flow ls --json --pretty > artifact/all-file-flowed.js
 #lunch flow type checking
-yarn build:flow > artifact/flow-check.js
+yarn -s flow > artifact/flow-check.js
+#print version, buil
+yarn -s flow version --json --pretty > artifact/flow-version.js

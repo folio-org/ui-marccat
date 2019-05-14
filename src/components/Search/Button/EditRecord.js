@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { Button, PaneMenu } from '@folio/stripes/components';
 import { connect } from 'react-redux';
-import { Localize, findParam } from '../../../utils/Function';
+import { Localize, findParam } from '../../../shared';
 
 const EditRecordButton = ({ ...props }) => {
   const handleClickEdit = () => {

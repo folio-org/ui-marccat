@@ -4,12 +4,12 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Pane, Icon, MultiColumnList } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
-import type { Props } from '../../../../flow/index.js.flow';
-import { resultsFormatter, columnMapper, columnWidthMapper, renderColumn } from '../../../../utils/Formatter';
-import { injectCommonProp, ActionMenu, EmptyMessage, NoResultsMessage } from '../../../../shared';
+import type { Props } from '../../../../flow/types.js.flow';
+import { resultsFormatter, columnMapper, columnWidthMapper, renderColumn } from '../../../../shared/utils/Formatter';
+import { injectProps, ActionMenu, EmptyMessage, NoResultsMessage } from '../../../../shared';
 import { ACTION } from '../../../../redux/actions/Actions';
 import * as C from '../../../../config/constants';
-import { ReduxForm } from '../../../../redux/helpers/Redux';
+import { selectForm } from '../../../../redux/helpers/Selector';
 
 
 class SearchResultPane extends React.Component<Props, {}> {
@@ -21,7 +21,7 @@ class SearchResultPane extends React.Component<Props, {}> {
 
   renderVisibleColumns = () => {
     const { store } = this.props;
-    const form = ReduxForm.resolve(store, 'checkboxForm');
+    const form = selectForm(store, 'checkboxForm');
     const visibleColumns = [];
     const visibleColumns2 = [
       'resultView',
@@ -156,4 +156,4 @@ export default (connect(
   ({ marccat: { search } }) => ({
     isLoadMore: search.moreData
   }),
-)(injectCommonProp(SearchResultPane)));
+)(injectProps(SearchResultPane)));

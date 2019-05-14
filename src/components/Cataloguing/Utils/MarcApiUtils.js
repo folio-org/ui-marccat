@@ -1,6 +1,8 @@
 /* eslint-disable no-use-before-define */
-import React from 'react';
+// @flow
+import * as React from 'react';
 import { union, sortBy, first, includes } from 'lodash';
+import { change } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { Callout } from '@folio/stripes/components';
 import {
@@ -12,10 +14,10 @@ import { EMPTY_STRING } from '../../../config/constants';
 
 /**
  *
- * @param {string} t
+ * @param {Object} o the object passed as parameter to sort
  * @returns true if tha tag code passed
  */
-export const isTag = t => 'Tag'.concat(t);
+export const sort = (o: Array<*>): Array<*> => o.sort((a, b) => a.code > b.code);
 /**
  *
  * @param {string} o - the object to deduplicate
@@ -78,7 +80,7 @@ export const filterFixedFieldForSaveRecord = (obj) => {
  *
  * @param {Object} obj
  */
-export const filterMandatoryFields = (obj) => {
+export const filterMandatoryFields = (obj): string => {
   return dedupe(obj).filter(f => includes(TAG_MANDATORY, f.code));
 };
 
@@ -87,7 +89,7 @@ export const filterMandatoryFields = (obj) => {
  *
  * @param {Object} obj
  */
-export const filterVariableFields = (obj:Array<Object>) => {
+export const filterVariableFields = (obj: Array<Object>) => {
   return obj
     .filter(f => (f.fixedField === undefined || !f.fixedField) || f.variableField || f.variableField !== undefined);
 };
@@ -128,3 +130,11 @@ export const replaceAll = (s: string): string => ((s) ? s.replace(RegExp(String.
  * @returns s - a string with all SUBFIELD_DELIMITER replaced with SUBFIELD_CHARACTER
  */
 export const replaceAllinverted = (s: string): string => ((s) ? s.replace(/\$/g, SUBFIELD_DELIMITER) : EMPTY_STRING);
+
+/**
+ *
+ * @param {*} displayValue
+ */
+export const changeValue = (field: String, displayValue: String, dispatch: Function): void => {
+  dispatch(change(field, displayValue));
+};

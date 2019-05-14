@@ -1,4 +1,5 @@
-import React from 'react';
+// @flow
+import * as React from 'react';
 import { AutoSuggest } from '@folio/stripes/components';
 import tags from './mock';
 

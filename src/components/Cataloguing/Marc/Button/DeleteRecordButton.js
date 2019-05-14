@@ -1,15 +1,15 @@
-import React from 'react';
+// @flow
+import * as React from 'react';
 import {
   Icon,
   Button
 } from '@folio/stripes/components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Localize } from '../../../../utils/Function';
+import { Localize, findParam } from '../../../../shared';
 
 import style from '../../Style/index.css';
 import { deleteRecordAction } from '../../Actions';
-import { findParam } from '../../../../redux';
 import { RECORD_ACTION } from '../..';
 
 function DeleteRecordButton({ ...props }) {

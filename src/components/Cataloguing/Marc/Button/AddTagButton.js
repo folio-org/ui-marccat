@@ -1,15 +1,14 @@
-import React from 'react';
+import * as React from 'react';
 import {
   Button
 } from '@folio/stripes/components';
-import { Localize } from '../../../../utils/Function';
+import { Localize } from '../../../../shared/utils/Function';
 
 // eslint-disable-next-line no-unused-vars
 export default ({ ...props }) => {
   const { tagCode, onClick } = props;
   return (
     <Button
-      style={{ marginLeft: -16 + 'px' }}
       onClick={onClick}
       type="button"
       disabled={false}

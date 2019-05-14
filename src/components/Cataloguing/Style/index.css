@@ -1,29 +1,25 @@
-.recordContainer {
-  width: 100%;
-}
 
 .leaderData {
-  padding-top: 24px;
+  padding-top: 4px;
 }
 
-.controlFieldContainer {
+.fieldContainer {
   margin-bottom: 15px;
-  border-radius: 10px;
+  border-radius: 8px;
   background-color: #dcdcdc;
   background-position: left top;
   background-repeat: repeat;
   padding: 15px;
-  padding-right: 30px;
-  padding-bottom: 20px;
-  text-align: left;
-  display: grid;
+  padding-bottom: 15px;
 
   & [no-padding] {
     padding-right: 0;
   }
 
-  & .small {
-    width: 75%;
+  & .fieldWrapper {
+    display: flex;
+    align-content: center;
+    align-items: center;
   }
 
   & label {
@@ -31,17 +27,19 @@
   }
 
   & input {
-    width: 80%;
+    flex: 1;
+    padding-left: 8px;
   }
-}
-
-.fieldContainer {
-  background-color: #dcdcdc;
 }
 
 .marcFieldIconCaret {
   float: right;
   cursor: pointer;
+  padding-left: 16px;
+  & .prepend {
+    padding-left: 0;
+    padding-right: 8px;
+  }
 }
 
 .pl-10 {
@@ -52,7 +50,7 @@
   padding-top: 20px;
 }
 
-.marcEditableListFormHeader {
+.variableFieldFormHeader {
   display: flex;
   align-items: center;
   margin-bottom: 15px;

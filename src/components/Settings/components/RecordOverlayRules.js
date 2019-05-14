@@ -1,8 +1,8 @@
 // @flow
 import React, { Fragment } from 'react';
 import { Pane, Button, Icon } from '@folio/stripes/components';
-import { injectCommonProp, ToolbarButtonMenu } from '../../../shared';
-import type { Props } from '../../../flow/index.js.flow';
+import { injectProps, ToolbarButtonMenu } from '../../../shared';
+import type { Props } from '../../../flow/types.js.flow';
 import TAGS from '../utils/Constant';
 
 import style from '../../../shared/styles/common.css';
@@ -65,4 +65,4 @@ class RecordsOverlayRules extends React.Component<P, {}> {
     );
   }
 }
-export default injectCommonProp(RecordsOverlayRules);
+export default injectProps(RecordsOverlayRules);

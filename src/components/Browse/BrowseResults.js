@@ -4,21 +4,21 @@ import { MultiColumnList, Pane, Paneset, Icon } from '@folio/stripes/components'
 import { AppIcon } from '@folio/stripes-core';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import type { Props } from '../../flow/index.js.flow';
+import type { Props } from '../../flow/types.js.flow';
 import BrowseItemDetail from './BrowseItemDetail';
 import { ACTION } from '../../redux/actions/Actions';
 import { findYourQueryFromBrowse } from '../Search/Filter/FilterMapper';
 import { ToolbarButtonMenu, EmptyMessage, NoResultsMessage } from '../../shared/lib';
-import { browseFormatter, browseColMapper } from '../../utils/Formatter';
+import { browseFormatter, browseColMapper } from '../../shared/utils/Formatter';
 import BrowseAssociatedItemDetail from './BrowseAssociatedItemDetail';
 import * as C from '../../config/constants';
-import { generateDropdownMenu, injectCommonProp } from '../../shared';
+import { generateDropdownMenu, injectProps } from '../../shared';
 
 type S = {
-  browseDetailPanelIsVisible: bool,
-  rowClicked: bool,
-  noResults: bool,
-  isPadRequired: bool,
+  browseDetailPanelIsVisible: boolean,
+  rowClicked: boolean,
+  noResults: boolean,
+  isPadRequired: boolean,
   detailSubtitle: Object,
 };
 
@@ -43,7 +43,7 @@ export class BrowseResults extends React.Component<Props, S> {
     });
   };
 
-  handleBrowseDetails = (e:any, meta: Object) => {
+  handleBrowseDetails = (e: any, meta: Object) => {
     const { dispatch, store } = this.props;
     const id = meta.headingNumber;
     const containsAuthorities = meta.countAuthorities > 0;
@@ -203,4 +203,4 @@ export default (connect(
     items: browseDetailsAssociated.records,
     isPanelOpen: browseDetailsAssociated.mustOpenPanel
   }),
-)(injectCommonProp(BrowseResults)));
+)(injectProps(BrowseResults)));

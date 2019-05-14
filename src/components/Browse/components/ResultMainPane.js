@@ -2,8 +2,14 @@
 import * as React from 'react';
 import { MultiColumnList, Pane, Icon } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
-import { EmptyMessage, NoResultsMessage, ToolbarButtonMenu, injectCommonProp } from '../../../shared';
-import { browseFormatter, browseColMapper } from '../../../utils/Formatter';
+import {
+  EmptyMessage,
+  NoResultsMessage,
+  ToolbarButtonMenu,
+  injectProps,
+  browseFormatter,
+  browseColMapper
+} from '../../../shared';
 
 class ResultMainPane extends React.Component<{}, {}> {
     renderButtonMenu = () => {
@@ -78,4 +84,4 @@ class ResultMainPane extends React.Component<{}, {}> {
       );
     }
 }
-export default injectCommonProp(ResultMainPane);
+export default injectProps(ResultMainPane);

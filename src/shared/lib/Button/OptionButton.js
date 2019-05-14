@@ -1,8 +1,9 @@
 /* eslint-disable no-lone-blocks */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from 'react';
+// @flow
+import * as React from 'react';
 import { reduxForm, Field } from 'redux-form';
-import type { Props } from '../../../flow/index.js.flow';
+import type { Props } from '../../../flow/types.js.flow';
 
 // eslint-disable-next-line no-unused-vars
 import style from '../Style/InputField.css';
@@ -41,7 +42,7 @@ export class CheckboxIconButton extends React.Component<Props, {}> {
   }
 }
 
-export function SingleCheckboxIconButton({ ...props }:P) {
+export function SingleCheckboxIconButton({ ...props }: P) {
   const { labels, pullLeft, widthPadding } = props;
   return (
     <div>

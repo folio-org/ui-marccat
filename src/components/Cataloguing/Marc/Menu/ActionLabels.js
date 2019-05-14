@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React from 'react';
+// @flow
+import * as React from 'react';
 import { MenuItem } from '@folio/stripes/components';
-import { Localize } from '../../../../utils/Function';
+import { Localize } from '../../../../shared/utils/Function';
 import style from '../../../../shared/lib/Style/Dropdown.css';
 
 export default ({ ...props }) => {

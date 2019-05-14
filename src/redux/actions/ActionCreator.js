@@ -1,3 +1,4 @@
+// @flow
 import { ACTION } from './Actions';
 import { EMPTY_STRING } from '../../config/constants';
 
@@ -105,30 +106,6 @@ export const isFetchingLeaderTagRequest = (isLoading) => ({
   type: ACTION.FETCH_LEADER_VALUES_FROM_TAG,
   payload: isLoading
 });
-export const isFetchingHeaderTypes006 = (isLoading) => ({
-  type: ACTION.FETCH_HEADER_TYPES_006,
-  payload: isLoading
-});
-export const fetchHeaderTypes006 = (records) => ({
-  type: ACTION.HEADER_TYPES_006_SUCCESS,
-  payload: records
-});
-export const isFetchingHeaderTypes007 = (isLoading) => ({
-  type: ACTION.FETCH_HEADER_TYPES_007,
-  payload: isLoading
-});
-export const fetchHeaderTypes007 = (records) => ({
-  type: ACTION.HEADER_TYPES_007_SUCCESS,
-  payload: records
-});
-export const isFetchingHeaderTypes008 = (isLoading) => ({
-  type: ACTION.FETCH_HEADER_TYPES_008,
-  payload: isLoading
-});
-export const fetchHeaderTypes008 = (records) => ({
-  type: ACTION.HEADER_TYPES_008_SUCCESS,
-  payload: records
-});
 export const isFetchingTemplateViewRequest = (isLoading) => ({
   type: ACTION.FETCH_VIEW_TEMPLATE,
   payload: isLoading
@@ -153,30 +130,6 @@ export const fetchLeaderFromTag = (records) => ({
   type: ACTION.LEADER_VALUES_FROM_TAG_SUCCESS,
   payload: records
 });
-export const isFetchingTag006Request = (isLoading) => ({
-  type: ACTION.FETCH_VALUES_FROM_TAG_006,
-  payload: isLoading
-});
-export const fetchValuesFromTag006 = (records) => ({
-  type: ACTION.VALUES_FROM_TAG_006_SUCCESS,
-  payload: records
-});
-export const isFetchingTag007Request = (isLoading) => ({
-  type: ACTION.FETCH_VALUES_FROM_TAG_007,
-  payload: isLoading
-});
-export const fetchValuesFromTag007 = (records) => ({
-  type: ACTION.VALUES_FROM_TAG_007_SUCCESS,
-  payload: records
-});
-export const isFetchingTag008Request = (isLoading) => ({
-  type: ACTION.FETCH_VALUES_FROM_TAG_008,
-  payload: isLoading
-});
-export const isFetchingChangeTag008 = (isLoading) => ({
-  type: ACTION.CHANGE_LEADER_REQUEST,
-  payload: isLoading
-});
 export const isFetchingHeadingByTag = (isLoading) => ({
   type: ACTION.FETCH_HEADING_BY_TAG,
   payload: isLoading
@@ -185,18 +138,7 @@ export const fetchHeadingByTag = (records) => ({
   type: ACTION.FETCH_HEADING_BY_TAG_SUCCESS,
   payload: records
 });
-export const fetchValuesFromTag008 = (records) => ({
-  type: ACTION.VALUES_FROM_TAG_008_SUCCESS,
-  payload: records
-});
-export const isFetchingTag008ByLeaderRequest = (isLoading) => ({
-  type: ACTION.CHANGE_008_BY_LEADER_REQUESTED,
-  payload: isLoading
-});
-export const fetchValuesTag008ByLeader = (records) => ({
-  type: ACTION.CHANGE_008_BY_LEADER_SUCCESS,
-  payload: records
-});
+
 export const fetchTotalCountBibRecords = (records) => ({
   type: ACTION.TOTAL_BIB_COUNT_SUCCESS,
   payload: records
@@ -222,7 +164,7 @@ export const fetchFailure = (message) => ({
  *
  * @param {*} payload
  */
-export const filterAction = (payload:Object, filterName:string, isChecked:boolean) => {
+export const filterAction = (payload: Object, filterName: string, isChecked: boolean) => {
   return {
     type: ACTION.FILTERS,
     payload,

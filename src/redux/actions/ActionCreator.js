@@ -52,9 +52,10 @@ export const fetchAssociatedBibRecords = (records, recordType) => ({
   payload: records,
   recType: recordType
 });
-export const fetchScanBrowsingRecords = (records) => ({
+export const fetchScanBrowsingRecords = (records, query) => ({
   type: ACTION.BROWSE_FIRST_PAGE_SUCCESS,
-  payload: records
+  payload: records,
+  qBib: query,
 });
 export const fetchCountDocRecords = (records) => ({
   type: ACTION.COUNT_DOC_SUCCESS,

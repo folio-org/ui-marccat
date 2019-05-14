@@ -246,6 +246,7 @@ export function scanBrowsingReducer(state = { isLoading, isReady }, action) {
     return {
       ...state,
       records: action.payload,
+      query: action.qBib,
       isLoading: false,
       isReady: true,
     };

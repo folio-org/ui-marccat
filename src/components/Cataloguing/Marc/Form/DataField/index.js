@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { Accordion } from '@folio/stripes-components';
 import { reduxForm } from 'redux-form';
-// import { compose } from 'redux';
-// import { connect } from 'react-redux';
 import { Localize, SingleCheckboxIconButton } from '../../../../../shared';
 import DataFields from '../../Record/DataFields';
 import { REDUX, EMPTY_STRING } from '../../../../../config/constants';
@@ -10,8 +8,8 @@ import { REDUX, EMPTY_STRING } from '../../../../../config/constants';
 
 const DataFieldForm = ({ leaderData, record, ...props }) => (
   <form name="dataFieldForm">
-    <Accordion label={Localize({ id: 'cataloging.accordion.checkbox.label' })} id="suppress" separator={false}>
-      <SingleCheckboxIconButton labels={[Localize({ id: 'cataloging.checkbox.label' })]} pullLeft widthPadding />
+    <Accordion label={Localize({ key: 'cataloging.accordion.checkbox.label' })} id="suppress" separator={false}>
+      <SingleCheckboxIconButton labels={[Localize({ key: 'cataloging.checkbox.label' })]} pullLeft widthPadding />
     </Accordion>
     <DataFields
       {...props}

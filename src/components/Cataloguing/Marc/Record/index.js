@@ -67,9 +67,9 @@ class Record extends React.Component<Props, {
   }
 
   componentWillMount() {
-    const { datastore: { emptyRecord }, loadLeader, loadHeadertype } = this.props;
+    const { datastore: { emptyRecord }, loadLeaderData, loadHeadertype } = this.props;
     const { leader } = emptyRecord.results;
-    loadLeader({ value: leader.value, code: leader.code, typeCode: '15' });
+    loadLeaderData({ value: leader.value, code: leader.code, typeCode: '15' });
     loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
   }
 
@@ -132,13 +132,12 @@ class Record extends React.Component<Props, {
     bibliographicRecord.leader.value = formData.leader;
 
     const recordTemplate: RecordTemplate<Type> = {
-      id: 408,
+      id: 42,
       fields: filterMandatoryFields(emptyRecord.results.fields)
     };
 
     bibliographicRecord.fields = union(filterFixedFieldForSaveRecord(bibliographicRecord.fields), variableFormData);
     bibliographicRecord.fields = sortBy(bibliographicRecord.fields, SORTED_BY.CODE);
-    bibliographicRecord.verificationLevel = 1;
     const payload = { bibliographicRecord, recordTemplate };
     this.setState({ submit: true });
 
@@ -163,8 +162,8 @@ class Record extends React.Component<Props, {
     const { id, submit } = this.state;
     const { dispatch, router, toggleFilterPane, reset } = this.props;
     dispatch({ type: ACTION.FILTERS, payload: {}, filterName: '', isChecked: false });
+    reset('dataFieldForm');
     toggleFilterPane();
-    dispatch(reset());
     return (submit) ? router.push(`/marccat/search?savedId=${id}`) : router.push('/marccat/search');
   };
 
@@ -263,7 +262,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   loadHeadertype: (tag: []) => _ => {
     tag.forEach(t => dispatch(MarcAction.headertypeAction(t)));
   },
-  loadLeader: (payload) => _ => {
+  loadLeaderData: (payload) => _ => {
     dispatch(MarcAction.leaderDropdownAction(payload));
   }
 }, dispatch);

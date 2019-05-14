@@ -21,8 +21,8 @@ export const ENV = {
 // API ENDPOINT UTILS
 export const RESOURCE_TYPE = {
   REST: 'REST',
-  LOCAL: 'local',
-  OKAPI: 'okapi'
+  LOCAL: 'LOCAL',
+  OKAPI: 'OKAPI'
 };
 export const ENDPOINT = {
   HEADERS: {
@@ -31,8 +31,8 @@ export const ENDPOINT = {
     'x-okapi-tenant': 'tnx',
   },
   DEFAULT_LANG_VIEW: 'lang=ita&view=1',
-  BASE_URL: `http://${process.env.ENV === ENV.PROD ? '151.1.165.20' : '151.1.165.20'}:8080/marccat`,
-  OKAPI_URL:  `http://${process.env.ENV === ENV.PROD ? 'folio-q4.aws.indexdata.com:9130' : 'folio-q4.aws.indexdata.com:9130'}:9130`,
+  BASE_URL: `http://${process.env.ENV === ENV.DEV ? '127.0.0.1' : '127.0.0.1'}:8080/marccat`,
+  OKAPI_URL:  `http://${process.env.ENV === ENV.DEV ? 'folio-q4.aws.indexdata.com:9130' : process.env.OKAPI_URL}:9130`,
   MERGED_SEARCH_URL: '/mergedSearch',
   SEARCH_URL: '/searchVertical',
   SEARCH_URL_JSON: '/search',
@@ -40,14 +40,11 @@ export const ENDPOINT = {
   DOC_COUNT_URL: 'document-count-by-id',
   BROWSE_FIRST_PAGE_URL: '/browse',
   VIEW_TEMPLATE_URL: '/record-templates',
-  VIEW_TEMPLATE_URL_BY_ID: '/record-template/',
   EMPTY_RECORD_URL: '/bibliographic-record/from-template/',
   DUPLICATE_RECORD_URL: '/bibliographic-record/duplicate',
   FIXED_FIELD_CODE_GROUPS_URL: '/fixed-fields-code-groups',
   HEADER_TYPES_URL: '/header-types',
   CREATE_HEADING_URL: '/create-heading',
-  UPDATE_HEADING_URL: '/update-heading',
-  DELETE_HEADING_URL: '/delete-heading',
   CHANGE_DISPLAY_VALUE: '/bibliographic-record/fixed-field-display-value',
   BIBLIOGRAPHIC_RECORD: '/bibliographic-record',
   HEADING_BY_TAG: '/headings-by-tag',

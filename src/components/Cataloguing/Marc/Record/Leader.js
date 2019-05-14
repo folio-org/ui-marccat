@@ -29,29 +29,11 @@ class Leader extends React.PureComponent<P, S> {
   constructor(props: P) {
     super(props);
     this.state = {
-      leaderDataDispatched: false,
       leaderCss: false,
       leaderVal: props.leaderValue,
       firsAccess: true,
     };
-    this.handleLeader = this.handleLeader.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.getNormalizedLeader = this.getNormalizedLeader.bind(this);
   }
-
-  handleLeader = () => {
-    const { leaderCss, leaderDataDispatched } = this.state;
-    const { leaderValue, leaderCode, loadLeaderValues } = this.props;
-    if (!leaderDataDispatched) {
-      loadLeaderValues({ value: leaderValue, code: leaderCode, typeCode: '15' });
-      this.setState({
-        leaderDataDispatched: true
-      });
-    }
-    this.setState({
-      leaderCss: !leaderCss
-    });
-  };
 
   /**
    *
@@ -60,8 +42,9 @@ class Leader extends React.PureComponent<P, S> {
    * @param {*} replace - a mutate leader
    */
   replaceAt(string, index, replaceValue) {
-    const { dispatch, change, set008HeaderType } = this.props;
+    const { dispatch, change, set008HeaderType, headerTypeCodeFromLeader } = this.props;
     const leaderVal = string.substring(0, index) + replaceValue + string.substring(index + 1);
+    dispatch(change('Tag008', headerTypeCodeFromLeader || 0));
     dispatch(change('leader', leaderVal));
     if (index === 6 || index === 7) {
       set008HeaderType(leaderVal);

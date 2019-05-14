@@ -25,8 +25,8 @@ export default class MarcField extends React.Component<P, {}> {
     change(name, value);
   }
 
-  renderIcon = ({ onClick, ...props }) => (
-    <div className={style.marcFieldIconCaret}>
+  renderIcon = ({ onClick, prependIcon, ...props }) => (
+    <div className={style.marcFieldIconCaret} style={{ paddingLeft: (prependIcon) ? 0 : 16, paddingRight: (prependIcon) ? 8 : 0 }}>
       <IconButton
         icon="caret-down"
         size="medium"

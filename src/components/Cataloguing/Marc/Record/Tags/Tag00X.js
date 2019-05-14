@@ -11,7 +11,7 @@ import type { Props, State } from '../../../../../flow/types.js.flow';
 
 import style from '../../../Style/index.css';
 import { dropDownValuesAction, changeDisplayValueAction } from '../../../Actions';
-import { TAGS, VISUAL_RUNNING_TIME, DATE_FIRST_PUBBLICATION, DATE_LAST_PUBBLICATION, TAGS_NAME, IMAGE_BIT_DEPTH } from '../../../Utils/MarcConstant';
+import { TAGS, VISUAL_RUNNING_TIME, DATE_FIRST_PUBBLICATION, DATE_LAST_PUBBLICATION, IMAGE_BIT_DEPTH, RECORD_FIELD_STATUS } from '../../../Utils/MarcConstant';
 import { MarcField } from '../..';
 import Tag00XInput from '../components/Tag00XInput';
 import HeaderTypeSelect from '../components/HeaderTypeSelect';
@@ -31,13 +31,11 @@ class Tag00X extends React.PureComponent<Props, S> {
     };
     this.RenderSelect = this.RenderSelect.bind(this);
     this.RenderDropwDown = this.RenderDropwDown.bind(this);
-    this.onHandleChange = this.onHandleChange.bind(this);
     this.handleDisplayValue = this.handleDisplayValue.bind(this);
   }
 
   onHandleChange = evt => {
-    const { record: { leader: { value } }, dispatch, change, element: { code }, headerTypeCodeFromLeader } = this.props;
-    if (headerTypeCodeFromLeader) dispatch(change(TAGS_NAME._008, headerTypeCodeFromLeader));
+    const { record: { leader: { value } }, dispatch, element: { code }, headerTypeCodeFromLeader } = this.props;
     const headerTypeCode = (code === TAGS._008 && headerTypeCodeFromLeader) ? headerTypeCodeFromLeader : evt.target.value;
     const payload = {
       value,
@@ -69,6 +67,7 @@ class Tag00X extends React.PureComponent<Props, S> {
   execChange = (response: Object): void => {
     const { dispatch, change, fixedfields, element } = this.props;
     dispatch(change(element.code, response.displayValue));
+    if (element.code === TAGS._008) element.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
     fixedfields.push(element);
     fixedfields.filter(f => f.code === element.code).map(f => f.fixedField = response);
   }
@@ -94,7 +93,6 @@ class Tag00X extends React.PureComponent<Props, S> {
 
   RenderSelect = ({ element, ...props }): React.ComponentType<Props, *> => (
     <Field
-      {...props}
       id={`Tag${element.code}`}
       name={`Tag${element.code}`}
       label={`${element.code}`}
@@ -113,7 +111,7 @@ class Tag00X extends React.PureComponent<Props, S> {
     return (
       <Row>
         {code === TAGS._006 &&
-          <Col xs={6}>
+          <Col xs={12}>
             <Tag00XInput
               {...this.props}
               name={VISUAL_RUNNING_TIME}
@@ -122,7 +120,7 @@ class Tag00X extends React.PureComponent<Props, S> {
           </Col>
         }
         {(code === TAGS._007 && (headerTypeCode === 25 || headerTypeCode === 42)) &&
-          <Col xs={4}>
+          <Col xs={12}>
             <Tag00XInput
               {...this.props}
               name={IMAGE_BIT_DEPTH}
@@ -132,14 +130,14 @@ class Tag00X extends React.PureComponent<Props, S> {
         }
         {code === TAGS._008 &&
           <React.Fragment>
-            <Col xs={4}>
+            <Col xs={6}>
               <Tag00XInput
                 {...this.props}
                 name={DATE_FIRST_PUBBLICATION}
                 onChange={(e) => this.handleDisplayValue(e, sortedData)}
               />
             </Col>
-            <Col xs={4}>
+            <Col xs={6}>
               <Tag00XInput
                 {...this.props}
                 name={DATE_LAST_PUBBLICATION}

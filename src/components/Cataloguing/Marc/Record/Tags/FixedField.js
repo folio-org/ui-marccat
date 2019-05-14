@@ -40,11 +40,10 @@ class FixedField extends React.PureComponent<P, State> {
     const { fields, inizialized } = this.state;
     const field006 = fields.filter(f => f.fixedField.code === TAGS._006);
     const field007 = fields.filter(f => f.fixedField.code === TAGS._007);
-
     if (!inizialized) {
       if (field006.length === 0) fields.push(EMPTY_FIXED_FIELD(TAGS._006));
       if (field007.length === 0) fields.push(EMPTY_FIXED_FIELD(TAGS._007));
-      this.setState({ inizialized: true });
+      this.setState({ fields, inizialized: true });
     }
   }
 

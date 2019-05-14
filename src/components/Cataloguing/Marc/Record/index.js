@@ -44,6 +44,7 @@ import * as Selector from '../../../../redux/helpers/Selector';
 import { TAGS } from '../../Utils/MarcConstant';
 import DataFieldForm from '../Form/DataField';
 import VariableFieldForm from '../Form/VariableField';
+import { resetStore } from '../../../../redux/actions';
 
 class Record extends React.Component<Props, {
   callout: React.RefObject<Callout>,
@@ -162,7 +163,6 @@ class Record extends React.Component<Props, {
     const { id, submit } = this.state;
     const { dispatch, router, toggleFilterPane, reset } = this.props;
     dispatch({ type: ACTION.FILTERS, payload: {}, filterName: '', isChecked: false });
-    reset('dataFieldForm');
     reset();
     toggleFilterPane();
     return (submit) ? router.push(`/marccat/search?savedId=${id}`) : router.push('/marccat/search');

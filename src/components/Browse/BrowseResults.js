@@ -9,9 +9,10 @@ import BrowseItemDetail from './BrowseItemDetail';
 import { ACTION } from '../../redux/actions/Actions';
 import { findYourQueryFromBrowse, findYourQuery } from '../Search/Filter/FilterMapper';
 import { ToolbarButtonMenu, EmptyMessage, NoResultsMessage } from '../../shared/lib';
-import { browseFormatter, browseColMapper } from '../../shared/utils/Formatter';
+import { browseColMapper } from '../../shared/utils/Formatter';
 import BrowseAssociatedItemDetail from './BrowseAssociatedItemDetail';
 import * as C from '../../config/constants';
+import style from '../Search/Style/index.css';
 import { generateDropdownMenu, injectProps } from '../../shared';
 
 type S = {
@@ -88,88 +89,73 @@ export class BrowseResults extends React.Component<Props, S> {
     );
   };
 
-  anchoredRowFormatter = (
-    {
-      rowClass,
-      rowData,
-      cells,
-      rowProps
-    }
-  ) => {
-    const { store } = this.props;
-    if (rowData.crossReferences.length > 0) {
-      let refType = '';
-      let labelRefType = '';
-      let labelCrossRef = '';
-      rowData.crossReferences.map((el, idx) => {
-        refType = el.refType;
-        labelCrossRef = el.stringText;
-        switch (refType) {
-        case 1:
-          labelRefType = 'See: ';
-          break;
-        case 2:
-          labelRefType = 'Seen From: ';
-          break;
-        case 3:
-          labelRefType = 'See Also: ';
-          break;
-        case 4:
-          labelRefType = 'S. A. From: ';
-          break;
-        case 5:
-          labelRefType = 'Equivalent: ';
-          break;
-        default:
-          labelRefType = '';
-          break;
-        }
-        return rowData['cr' + idx] =
-          <Button
-            buttonStyle="none"
-            onClick={(e) => {
-              e.stopPropagation();
-              const indexFilter = store.getState().form.searchForm.values.selectIndexes;
-              const conditionFilter = store.getState().form.searchForm.values.selectCondition;
-              const indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
-              store.dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query: indexForQuery + e.currentTarget.attributes[1].nodeValue, from: '1', to: '50' });
-              store.dispatch({ type: ACTION.SETTINGS, data: { triggerDetails: 'Y' } });
-            }}
-            style={{ fontWeight: 'bold' }}
-            aria-label={labelCrossRef}
-          >
-            {labelRefType + labelCrossRef}
-          </Button>;
-      });
-      return (
-        <a
-          className={rowClass}
-          {...rowProps}
-          {...this.props}
-        >
-          {cells}
-        </a>
-      );
-    } else {
-      return (
-        <a
-          className={rowClass}
-          {...rowProps}
-          {...this.props}
-        >
-          {cells}
-        </a>
-      );
-    }
-  }
-
   render() {
-    const { isFromCrossReferences, store } = this.props;
+    const { isFromCrossReferences, store, detailSubtitle } = this.props;
     const { browseDetailPanelIsVisible, rowClicked } = this.state;
-    const { translate, isFetchingBrowse, isReadyBrowse, browseRecords, isPanelOpen, isFetchingBrowseDetails, isReadyBrowseDetails, isLoadingAssociated, isReadyAssociated } = this.props;
+    const { translate, isFetchingBrowse, firstMenu, isReadyBrowse, browseRecords, isPanelOpen, isFetchingBrowseDetails, isReadyBrowseDetails, isLoadingAssociated, isReadyAssociated } = this.props;
     let { noResults, isPadRequired } = this.state;
     const messageNoContent = <FormattedMessage id="ui-marccat.search.initial.message" />;
-
+    const browseFormatter = {
+      type: x => (
+        <span className={x.countAuthorities === 0 && x.countDocuments === 0 ? style.noRef : x.countAuthorities === 0 ? style.bibliographic : style.authority} />
+      ),
+      cr0: item => (
+        <div>
+          {item.crossReferences.length > 0 &&
+        item.crossReferences.map(
+          element => {
+            if (element.refType === 1) {
+              return (
+                <Button
+                  buttonStyle="none"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    const indexFilter = store.getState().form.searchForm.values.selectIndexes;
+                    const conditionFilter = store.getState().form.searchForm.values.selectCondition;
+                    const indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
+                    store.dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query: indexForQuery + e.currentTarget.attributes[1].nodeValue, from: '1', to: '50' });
+                    store.dispatch({ type: ACTION.SETTINGS, data: { triggerDetails: 'Y' } });
+                  }}
+                  style={{ fontWeight: 'bold', margin: 0, padding: 0 }}
+                  aria-label={element.stringText}
+                >
+                  {'See: ' + element.stringText}
+                </Button>
+              );
+            } else return null;
+          }
+        )}
+        </div>
+      ),
+      cr1: item => (
+        <div>
+          {item.crossReferences.length > 0 &&
+        item.crossReferences.map(
+          element => {
+            if (element.refType === 2) {
+              return (
+                <Button
+                  buttonStyle="none"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    const indexFilter = store.getState().form.searchForm.values.selectIndexes;
+                    const conditionFilter = store.getState().form.searchForm.values.selectCondition;
+                    const indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
+                    store.dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query: indexForQuery + e.currentTarget.attributes[1].nodeValue, from: '1', to: '50' });
+                    store.dispatch({ type: ACTION.SETTINGS, data: { triggerDetails: 'Y' } });
+                  }}
+                  style={{ fontWeight: 'bold', margin: 0, padding: 0 }}
+                  aria-label={element.stringText}
+                >
+                  {'Seen From: ' + element.stringText}
+                </Button>
+              );
+            } else return null;
+          }
+        )}
+        </div>
+      )
+    };
     if (browseRecords !== undefined && browseRecords.length === 0) {
       noResults = true;
     } else if (browseRecords !== undefined && browseRecords.length > 0) {
@@ -203,8 +189,8 @@ export class BrowseResults extends React.Component<Props, S> {
           actionMenu={this.getActionMenu}
           paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
           paneSub={messageNoContent}
-          // firstMenu={firstMenu}
-          // lastMenu={this.renderButtonMenu}
+          firstMenu={firstMenu}
+          lastMenu={this.renderButtonMenu}
         >
           {
             (isFetchingBrowse) ?
@@ -214,7 +200,6 @@ export class BrowseResults extends React.Component<Props, S> {
                 (isReadyBrowse) ?
                   <MultiColumnList
                     {...this.props}
-                    rowFormatter={this.anchoredRowFormatter}
                     contentData={browseRecords}
                     autosize="true"
                     isEmptyMessage={C.EMPTY_STRING}
@@ -224,13 +209,12 @@ export class BrowseResults extends React.Component<Props, S> {
                     columnMapping={browseColMapper}
                     columnWidths={
                       {
-                        'type': '10%',
-                        'stringText': '20%',
-                        'cr0': '20%',
-                        'cr1': '20%',
-                        'cr2': '20%',
-                        'countAuthorities': '5%',
-                        'countDocuments': '5%',
+                        'type': '8%',
+                        'stringText': '16%',
+                        'cr0': '25%',
+                        'cr1': '25%',
+                        'countAuthorities': '13%',
+                        'countDocuments': '13%',
                       }
                     }
                     visibleColumns={[
@@ -238,7 +222,6 @@ export class BrowseResults extends React.Component<Props, S> {
                       'stringText',
                       'cr0',
                       'cr1',
-                      'cr2',
                       'countAuthorities',
                       'countDocuments'
                     ]}
@@ -247,10 +230,10 @@ export class BrowseResults extends React.Component<Props, S> {
         {browseDetailPanelIsVisible && !rowClicked &&
           <Pane
             dismissible
-            defaultWidth="35%"
+            defaultWidth="30%"
             paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
-            // paneSub={detailSubtitle}
-            // lastMenu={this.renderButtonMenu}
+            paneSub={detailSubtitle}
+            lastMenu={this.renderButtonMenu}
             onClose={this.handleClosePanelDetails}
             actionMenu={this.getActionMenu}
           >
@@ -265,7 +248,7 @@ export class BrowseResults extends React.Component<Props, S> {
         {browseDetailPanelIsVisible && isPanelOpen &&
           <Pane
             id="pane-details"
-            defaultWidth="25%"
+            defaultWidth="20%"
             paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
             paneSub={C.EMPTY_STRING}
             appIcon={<AppIcon app={C.META.ICON_TITLE} />}

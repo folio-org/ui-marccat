@@ -21,7 +21,6 @@ class RecordDetailPane extends React.Component {
       toggleFilterPane();
       router.push(`/marccat/cataloging?id=${id}&mode=duplicate`);
     }, 3000);
-
   };
 
 

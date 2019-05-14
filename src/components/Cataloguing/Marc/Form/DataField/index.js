@@ -27,8 +27,10 @@ reduxForm({
   initialValues: {
     verificationLevel: 1,
     recordCataloguingSourceCode: '1',
-    visualRunningTime: '---',
-    imageBitDepth: '|||',
+    // visualRunningTime: '---',
+    // reductionRatioCode: '   ',
+    // dimensionsCode: '   ',
+    // imageBitDepth: '   ',
     dateFirstPublication: EMPTY_STRING,
     dateLastPublication: EMPTY_STRING,
   }

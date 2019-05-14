@@ -4,14 +4,14 @@ import React from 'react';
 import { Field } from 'redux-form';
 import { Select, Row, Col } from '@folio/stripes-components';
 import { connect } from 'react-redux';
-import { isEmpty, last } from 'lodash';
+import { isEmpty, last, findLastIndex } from 'lodash';
 import { EMPTY_SPACED_STRING, REDUX } from '../../../../../config/constants';
 import { decamelizify } from '../../../../../shared';
 import type { Props, State } from '../../../../../flow/types.js.flow';
 
 import style from '../../../Style/index.css';
 import { dropDownValuesAction, changeDisplayValueAction } from '../../../Actions';
-import { TAGS, VISUAL_RUNNING_TIME, DATE_FIRST_PUBBLICATION, DATE_LAST_PUBBLICATION, IMAGE_BIT_DEPTH, RECORD_FIELD_STATUS } from '../../../Utils/MarcConstant';
+import { TAGS, VISUAL_RUNNING_TIME, DATE_FIRST_PUBBLICATION, DATE_LAST_PUBBLICATION, IMAGE_BIT_DEPTH, RECORD_FIELD_STATUS, REDUCTION_RATIO_CODE } from '../../../Utils/MarcConstant';
 import { MarcField } from '../..';
 import Tag00XInput from '../components/Tag00XInput';
 import HeaderTypeSelect from '../components/HeaderTypeSelect';
@@ -54,7 +54,7 @@ class Tag00X extends React.PureComponent<Props, S> {
     const payload = {};
     const results = data.results || data;
     Object.entries(results).map(([k, v]) => payload[k] = v.defaultValue);
-    if (!e) Object.entries(results).map(([k, v]) => dispatch(change(`Tag${code}-${headerTypeCode}-${k}`, v.defaultValue)));
+    if (!e) Object.entries(results).map(([k, v]) => change(`Tag${code}-${headerTypeCode}-${k}`, v.defaultValue));
     if (e) {
       const selected = last(e.target.name.split('-'));
       payload[selected] = e.target.value;
@@ -65,9 +65,11 @@ class Tag00X extends React.PureComponent<Props, S> {
   };
 
   execChange = (response: Object): void => {
-    const { dispatch, change, fixedfields, element } = this.props;
-    dispatch(change(element.code, response.displayValue));
+    const { change, fixedfields, element } = this.props;
+    change(element.code, response.displayValue);
     if (element.code === TAGS._008) element.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
+    const idx = findLastIndex(fixedfields, (f) => f.code === element.code);
+    fixedfields.splice(idx, 1);
     fixedfields.push(element);
     fixedfields.filter(f => f.code === element.code).map(f => f.fixedField = response);
   }
@@ -79,6 +81,7 @@ class Tag00X extends React.PureComponent<Props, S> {
     }
     if (code === TAGS._007) {
       payload.imageBitDepth = formFieldValue(store, REDUX.FORM.DATA_FIELD_FORM, IMAGE_BIT_DEPTH);
+      payload.reductionRatioCode = formFieldValue(store, REDUX.FORM.DATA_FIELD_FORM, REDUCTION_RATIO_CODE);
     }
     if (code === TAGS._008) {
       payload.dateFirstPublication = formFieldValue(store, REDUX.FORM.DATA_FIELD_FORM, DATE_FIRST_PUBBLICATION);
@@ -108,6 +111,7 @@ class Tag00X extends React.PureComponent<Props, S> {
     const { headerTypeCode } = this.state;
     const { element: { code } } = this.props;
     const sortedData = Object.values(data).sort((x, y) => x.name > y.name);
+    // const _conditionFor007 = (headerTypeCode === '42' || headerTypeCode === '25');
     return (
       <Row>
         {code === TAGS._006 &&
@@ -119,11 +123,20 @@ class Tag00X extends React.PureComponent<Props, S> {
             />
           </Col>
         }
-        {(code === TAGS._007 && (headerTypeCode === 25 || headerTypeCode === 42)) &&
-          <Col xs={12}>
+        {(code === TAGS._007 && headerTypeCode === '42') &&
+          <Col xs={6}>
             <Tag00XInput
               {...this.props}
               name={IMAGE_BIT_DEPTH}
+              onChange={(e) => this.handleDisplayValue(e, sortedData)}
+            />
+          </Col>
+        }
+        {(code === TAGS._007 && headerTypeCode === '25') &&
+          <Col xs={6}>
+            <Tag00XInput
+              {...this.props}
+              name={REDUCTION_RATIO_CODE}
               onChange={(e) => this.handleDisplayValue(e, sortedData)}
             />
           </Col>

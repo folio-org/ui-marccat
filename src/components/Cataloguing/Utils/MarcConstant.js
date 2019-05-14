@@ -66,6 +66,8 @@ export const TAG_WITH_NO_HEADING_ASSOCIATED = union(TAG_WIDH_CAT_7, TAG_WIDH_CAT
 
 export const VISUAL_RUNNING_TIME = 'visualRunningTime';
 export const IMAGE_BIT_DEPTH = 'imageBitDepth';
+export const REDUCTION_RATIO_CODE = 'reductionRatioCode';
+export const DIMENSION_CODE = 'dimensionsCode';
 export const DATE_FIRST_PUBBLICATION = 'dateFirstPublication';
 export const DATE_LAST_PUBBLICATION = 'dateLastPublication';
 

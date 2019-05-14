@@ -163,6 +163,7 @@ class Record extends React.Component<Props, {
     const { dispatch, router, toggleFilterPane, reset } = this.props;
     dispatch({ type: ACTION.FILTERS, payload: {}, filterName: '', isChecked: false });
     reset('dataFieldForm');
+    reset();
     toggleFilterPane();
     return (submit) ? router.push(`/marccat/search?savedId=${id}`) : router.push('/marccat/search');
   };

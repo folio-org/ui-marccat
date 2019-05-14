@@ -36,6 +36,7 @@
   float: right;
   cursor: pointer;
   padding-left: 16px;
+
   & .prepend {
     padding-left: 0;
     padding-right: 8px;

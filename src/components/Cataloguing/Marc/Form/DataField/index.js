@@ -29,7 +29,7 @@ reduxForm({
     recordCataloguingSourceCode: '1',
     visualRunningTime: '---',
     imageBitDepth: '|||',
-    dateFirstPublication: EMPTY_STRING,
-    dateLastPublication: EMPTY_STRING,
+    dateFirstPublication: EMPTY_STRING.padStart(4),
+    dateLastPublication: EMPTY_STRING.padStart(4),
   }
 })(DataFieldForm);

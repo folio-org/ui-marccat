@@ -44,7 +44,6 @@
     "search.actionmenu.print": "Print",
     "search.actionmenu.opac": "Reveal in OPAC",
     "search.actionmenu.duplicate": "Duplicate",
-    "search.actionmenu.duplicate.ebook": "Duplicate as e-book",
     "search.actionmenu.holdings": "Holdings",
     "search.actionmenu.instances": "Instances",
     "search.actionmenu.authority.records": "Authority Records",
@@ -73,7 +72,7 @@
     "search.record.new": "New",
     "search.record.new.from.template": "New from template (CTRL+N)",
     "cataloging.variablefield.section.add.newtag": "+ Add new tag",
-    "cataloging.accordion.fixedfield.label": "Control Fields (001, 003, 005, 006, 007, 008)",
+    "cataloging.accordion.fixedfield.label": "Control Fields (001, 003, 005)",
     "cataloging.accordion.variablefield.label": "Variable Fields",
     "cataloging.accordion.checkbox.label": "Suppress",
     "cataloging.checkbox.label": "Suppress From Discovery",
@@ -122,5 +121,7 @@
     "cataloging.actions.view.marc.docs": "View MARC docs",
     "cataloging.actions.view.marc.docs.shortcut": "?",
     "cataloging.record.duplicate": "Duplicate Record",
-    "cataloging.fixedfield.section.add.newtag": "+ Add new {value}"
+    "cataloging.fixedfield.section.add.newtag": "+ Add new {value}",
+    "search.actionmenu.duplicate.ebook": "Duplicate as e-book",
+    "cataloging.accordion.fixedfield.editable.label": "Control Fields (006, 007, 008)"
 }

@@ -143,6 +143,10 @@ export const columnMapperForAssociated = {
 export const browseColMapper = {
   'type': '',
   'headingNumber': 'Heading #',
+  'cr0': '',
+  'cr1': '',
+  'cr2': '',
+  'cr3': '',
   'stringText': 'Access point',
   'countAuthorities': 'Authority Records',
   'countDocuments': 'Bibliographic Records'
@@ -297,6 +301,5 @@ export const resultsFormatter = (isBibsOnly: ?boolean = true, isAuthOnly: ?boole
 
 export const browseFormatter = {
   type: x => (
-    <span className={x.countAuthorities === 0 ? style.bibliographic : style.authority} />
-  )
+    <span className={x.countAuthorities === 0 && x.countDocuments === 0 ? style.noRef : x.countAuthorities === 0 ? style.bibliographic : style.authority} />)
 };

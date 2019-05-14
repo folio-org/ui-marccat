@@ -12,14 +12,13 @@
     "node": ">=6.0.0"
   },
   "scripts": {
-    "prestart": "sh ./script/setup.sh",
     "start": "stripes serve --lint config/stripesclirc.config",
     "build": "stripes build --no-minify --okapi http://folio-q4.aws.indexdata.com:9130 --output dist/",
     "build:flow": "yarn run flow --show-all-branches --show-all-errors --ignore-version",
     "test": "stripes test karma",
     "test:coverage": "stripes test karma --coverage",
     "test:folioci": "yarn --offline test --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage",
-    "lint": "eslint ./src --fix && stylelint \"src/**/*.css\" --fix && eslint **/**/test_* --quiet",
+    "lint": "eslint ./src --fix && stylelint \"src/**/*.css\" --fix",
     "eslint": "eslint ./ --fix",
     "precommit": "lint-staged",
     "type:install": "flow-typed install `echo $1`",

@@ -4,9 +4,6 @@ import PropTypes from 'prop-types';
 import sortBy from 'lodash/sortBy';
 import FieldForm from './FieldForm';
 
-type DefaultProps = {
-  nameKey: string,
-};
 type Props = {
   columnMapping?: PropTypes.object,
   columnWidths?: PropTypes.object,
@@ -15,7 +12,6 @@ type Props = {
   id: string,
   nameKey?: string,
   readOnlyFields?: Array<String>,
-  ...DefaultProps
 };
 
 export default (props: Props) => {

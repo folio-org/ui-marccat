@@ -119,7 +119,7 @@ class Tag00X extends React.PureComponent<Props, S> {
             />
           </Col>
         }
-        {(code === TAGS._007 && (headerTypeCode === 25 || headerTypeCode === 408)) &&
+        {(code === TAGS._007 && (headerTypeCode === 25 || headerTypeCode === 42)) &&
           <Col xs={12}>
             <Tag00XInput
               {...this.props}

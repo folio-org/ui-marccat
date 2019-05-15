@@ -114,7 +114,7 @@
   "cataloging.record.tag.create.failure": "Save Tag {value} failed!",
   "cataloging.record.tag.update.success": "Tag {value} update succesfully!",
   "cataloging.record.tag.update.failure": "Update tag {value} failed!",
-  "cataloging.record.tag.duplicate.error": "The tag {value} is duplicate!",
+  "cataloging.record.tag.duplicate.error": "The tag {value} is already present! It's not repetable",
   "template.actionmenu.new": "New Template",
   "template.actionmenu.load": "Load template...",
   "template.actionmenu.load.shortcut": "CTRL + L",

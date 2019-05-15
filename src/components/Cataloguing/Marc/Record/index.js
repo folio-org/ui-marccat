@@ -40,11 +40,10 @@ import * as MarcAction from '../../Actions';
 import type { Props } from '../../..';
 import type { RecordTemplate, Type } from '../../../../flow/cataloging.js.flow';
 import style from '../../Style/index.css';
-import * as Selector from '../../../../redux/helpers/Selector';
-import { TAGS } from '../../Utils/MarcConstant';
+import { formFieldValue, resolve } from '../../../../redux/helpers/Selector';
+import { TAGS, TAG_NOT_REPEATABLE } from '../../Utils/MarcConstant';
 import DataFieldForm from '../Form/DataField';
 import VariableFieldForm from '../Form/VariableField';
-import { resetStore } from '../../../../redux/actions';
 
 class Record extends React.Component<Props, {
   callout: React.RefObject<Callout>,
@@ -85,11 +84,21 @@ class Record extends React.Component<Props, {
   };
 
   onCreate = item => {
+    const { store } = this.props;
     const { variableField: { code, ind1, ind2, displayValue } } = item;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
+    const isNotRepetableField = includes(TAG_NOT_REPEATABLE, item.code);
     const heading = { ind1, ind2, displayValue: replaceAllinverted(displayValue), tag: code };
     item.fieldStatus = (item.variableField.keyNumber > 0 || item.mandatory) ? RECORD_FIELD_STATUS.CHANGED : RECORD_FIELD_STATUS.NEW;
     item.variableField.displayValue = heading.displayValue;
+
+    const form: [] = formFieldValue(store, C.REDUX.FORM.VARIABLE_FORM, 'items');
+    const number = form.filter(e => e.code === item.code).length;
+
+    if (number > 1 && isNotRepetableField) {
+      showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.duplicate.error', value: item.code }), C.VALIDATION_MESSAGE_TYPE.ERROR);
+      return form.splice(0, 1);
+    }
     return (!cretaeHeadingForTag) ? this.asyncCreateHeading(item, heading) : this.setupComonProperties(item, heading);
   }
 
@@ -109,6 +118,7 @@ class Record extends React.Component<Props, {
   setupComonProperties = (item, heading) => {
     item.variableField.displayValue = heading.displayValue;
   };
+
 
   onDelete = item => {
     item.fieldStatus = RECORD_FIELD_STATUS.DELETED;
@@ -271,7 +281,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default (connect(
   ({ marccat: { data } }) => ({
     emptyRecord: data.results,
-    recordDetail: Selector.resolve(data, 'marcRecordDetail').bibliographicRecord,
-    leaderData: Selector.resolve(data, 'leaderData'),
+    recordDetail: resolve(data, 'marcRecordDetail').bibliographicRecord,
+    leaderData: resolve(data, 'leaderData'),
   }), mapDispatchToProps
 )(injectProps(Record)));

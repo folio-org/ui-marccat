@@ -132,3 +132,7 @@
   border: 3px solid var(--danger);
   border-radius: 25%;
 }
+
+.countDocs {
+  justify-content: center;
+}

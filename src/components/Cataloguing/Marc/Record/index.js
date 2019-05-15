@@ -93,13 +93,14 @@ class Record extends React.Component<Props, {
     item.variableField.displayValue = heading.displayValue;
 
     const form: [] = formFieldValue(store, C.REDUX.FORM.VARIABLE_FORM, 'items');
-    const number = form.filter(e => e.code === item.code).length;
+    const tag = form.filter(e => e.code === item.code);
+    const length = tag.length;
 
-    if (number > 1 && isNotRepetableField) {
+    if (length > 1 && isNotRepetableField) {
       showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.duplicate.error', value: item.code }), C.VALIDATION_MESSAGE_TYPE.ERROR);
       return form.splice(0, 1);
     }
-    return (!cretaeHeadingForTag) ? this.asyncCreateHeading(item, heading) : this.setupComonProperties(item, heading);
+    return (!cretaeHeadingForTag || length > 1) ? this.asyncCreateHeading(item, heading) : this.setupComonProperties(item, heading);
   }
 
   asyncCreateHeading = async (item, heading) => {

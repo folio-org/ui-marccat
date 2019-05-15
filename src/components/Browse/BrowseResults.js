@@ -27,6 +27,7 @@ export class BrowseResults extends React.Component<Props, S> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      detailSubtitle: {},
       browseDetailPanelIsVisible: false,
       rowClicked: false,
       noResults: false,
@@ -61,6 +62,7 @@ export class BrowseResults extends React.Component<Props, S> {
     this.setState({
       browseDetailPanelIsVisible: true,
       rowClicked: false,
+      detailSubtitle: meta.stringText
     });
   };
 
@@ -90,11 +92,10 @@ export class BrowseResults extends React.Component<Props, S> {
   };
 
   render() {
-    const { isFromCrossReferences, store, detailSubtitle } = this.props;
-    const { browseDetailPanelIsVisible, rowClicked } = this.state;
+    const { isFromCrossReferences, store } = this.props;
+    const { browseDetailPanelIsVisible, rowClicked, detailSubtitle } = this.state;
     const { translate, isFetchingBrowse, firstMenu, isReadyBrowse, browseRecords, isPanelOpen, isFetchingBrowseDetails, isReadyBrowseDetails, isLoadingAssociated, isReadyAssociated } = this.props;
     let { noResults, isPadRequired } = this.state;
-    const messageNoContent = <FormattedMessage id="ui-marccat.search.initial.message" />;
     const browseFormatter = {
       type: x => (
         <span className={x.countAuthorities === 0 && x.countDocuments === 0 ? style.noRef : x.countAuthorities === 0 ? style.bibliographic : style.authority} />
@@ -106,49 +107,57 @@ export class BrowseResults extends React.Component<Props, S> {
           element => {
             if (element.refType === 1) {
               return (
-                <Button
-                  buttonStyle="none"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    const indexFilter = store.getState().form.searchForm.values.selectIndexes;
-                    const conditionFilter = store.getState().form.searchForm.values.selectCondition;
-                    const indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
-                    store.dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query: indexForQuery + e.currentTarget.attributes[1].nodeValue, from: '1', to: '50' });
-                    store.dispatch({ type: ACTION.SETTINGS, data: { triggerDetails: 'Y' } });
-                  }}
-                  style={{ fontWeight: 'bold', margin: 0, padding: 0 }}
-                  aria-label={element.stringText}
-                >
-                  {'See: ' + element.stringText}
-                </Button>
+                <div>
+                  <Button
+                    buttonStyle="none"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const indexFilter = store.getState().form.searchForm.values.selectIndexes;
+                      const conditionFilter = store.getState().form.searchForm.values.selectCondition;
+                      const indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
+                      store.dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query: indexForQuery + e.currentTarget.attributes[1].nodeValue, from: '1', to: '50' });
+                      store.dispatch({ type: ACTION.SETTINGS, data: { triggerDetails: 'Y' } });
+                    }}
+                    style={{ margin: 0, padding: 0 }}
+                    aria-label={element.stringText}
+                  >
+                    <span
+                      id="textSpanRefType1"
+                      style={{ fontWeight: 'bold', margin: 0, padding: 0 }}
+                    >
+                      { 'See: ' }
+                    </span>
+                    { element.stringText}
+                  </Button>
+                  <br />
+                </div>
               );
-            } else return null;
-          }
-        )}
-        </div>
-      ),
-      cr1: item => (
-        <div>
-          {item.crossReferences.length > 0 &&
-        item.crossReferences.map(
-          element => {
-            if (element.refType === 2) {
+            } else if (element.refType === 2) {
               return (
-                <Button
-                  buttonStyle="none"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    const indexFilter = store.getState().form.searchForm.values.selectIndexes;
-                    const conditionFilter = store.getState().form.searchForm.values.selectCondition;
-                    const indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
-                    store.dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query: indexForQuery + e.currentTarget.attributes[1].nodeValue, from: '1', to: '50' });
-                    store.dispatch({ type: ACTION.SETTINGS, data: { triggerDetails: 'Y' } });
-                  }}
-                  style={{ fontWeight: 'bold', margin: 0, padding: 0 }}
-                  aria-label={element.stringText}
-                >
-                  {'Seen From: ' + element.stringText}
-                </Button>
+                <div>
+                  <Button
+                    buttonStyle="none"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const indexFilter = store.getState().form.searchForm.values.selectIndexes;
+                      const conditionFilter = store.getState().form.searchForm.values.selectCondition;
+                      const indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
+                      store.dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query: indexForQuery + e.currentTarget.attributes[1].nodeValue, from: '1', to: '50' });
+                      store.dispatch({ type: ACTION.SETTINGS, data: { triggerDetails: 'Y' } });
+                    }}
+                    style={{ margin: 0, padding: 0 }}
+                    aria-label={element.stringText}
+                  >
+                    <span
+                      id="textSpanRefType2"
+                      style={{ fontWeight: 'bold', margin: 0, padding: 0 }}
+                    >
+                      { 'Seen From: ' }
+                    </span>
+                    { element.stringText}
+                  </Button>
+                  <br />
+                </div>
               );
             } else return null;
           }
@@ -164,6 +173,7 @@ export class BrowseResults extends React.Component<Props, S> {
     if (isFromCrossReferences === 'Y') {
       const containsAuthorities = browseRecords[1].countAuthorities > 0;
       const id = browseRecords[1].headingNumber;
+      const stringText = browseRecords[1].stringText;
       const indexFilter = store.getState().form.searchForm.values.selectIndexes;
       const conditionFilter = store.getState().form.searchForm.values.selectCondition;
       const indexForQuery = findYourQueryFromBrowse[indexFilter + '-' + conditionFilter];
@@ -179,6 +189,7 @@ export class BrowseResults extends React.Component<Props, S> {
       this.setState({
         browseDetailPanelIsVisible: true,
         rowClicked: false,
+        detailSubtitle: stringText
       });
     }
     return (
@@ -188,7 +199,6 @@ export class BrowseResults extends React.Component<Props, S> {
           defaultWidth="fill"
           actionMenu={this.getActionMenu}
           paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
-          paneSub={messageNoContent}
           firstMenu={firstMenu}
           lastMenu={this.renderButtonMenu}
         >
@@ -205,23 +215,21 @@ export class BrowseResults extends React.Component<Props, S> {
                     isEmptyMessage={C.EMPTY_STRING}
                     formatter={browseFormatter}
                     onRowClick={this.handleBrowseDetails}
-                    rowMetadata={['Access point', 'Authority Records', 'Bibliographic Records']}
+                    rowMetadata={['Access point', 'Auths', 'Bibs']}
                     columnMapping={browseColMapper}
                     columnWidths={
                       {
                         'type': '8%',
-                        'stringText': '16%',
-                        'cr0': '25%',
-                        'cr1': '25%',
-                        'countAuthorities': '13%',
-                        'countDocuments': '13%',
+                        'stringText': '20%',
+                        'cr0': '60%',
+                        'countAuthorities':'6%',
+                        'countDocuments': '6%',
                       }
                     }
                     visibleColumns={[
                       'type',
                       'stringText',
                       'cr0',
-                      'cr1',
                       'countAuthorities',
                       'countDocuments'
                     ]}

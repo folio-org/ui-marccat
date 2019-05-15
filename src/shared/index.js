@@ -34,7 +34,6 @@ export {
   browseColMapper,
   resultsFormatterForAssociated,
   resultsFormatter,
-  browseFormatter
 } from './utils/Formatter';
 
 export {

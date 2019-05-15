@@ -97,6 +97,9 @@ export class BrowseResults extends React.Component<Props, S> {
     const { translate, isFetchingBrowse, firstMenu, isReadyBrowse, browseRecords, isPanelOpen, isFetchingBrowseDetails, isReadyBrowseDetails, isLoadingAssociated, isReadyAssociated } = this.props;
     let { noResults, isPadRequired } = this.state;
     const browseFormatter = {
+      countAuthorities: el => (
+        <span className={el.countAuthorities && el.countDocuments !== undefined ? style.countDocs : style.countDocs}>{el.countAuthorities}</span>
+      ),
       type: x => (
         <span className={x.countAuthorities === 0 && x.countDocuments === 0 ? style.noRef : x.countAuthorities === 0 ? style.bibliographic : style.authority} />
       ),
@@ -211,7 +214,6 @@ export class BrowseResults extends React.Component<Props, S> {
                   <MultiColumnList
                     {...this.props}
                     contentData={browseRecords}
-                    autosize="true"
                     isEmptyMessage={C.EMPTY_STRING}
                     formatter={browseFormatter}
                     onRowClick={this.handleBrowseDetails}

@@ -85,7 +85,7 @@
     "cataloging.record.delete.failure": "Excluir registro com id ={value} falhou!",
     "cataloging.record.tag.create.success": "Tag {value} criada com sucesso!",
     "cataloging.record.tag.create.failure": "Erro ao salvar a tag {value}!",
-    "cataloging.record.tag.duplicate.error": "A tag {value} é duplicada!",
+    "cataloging.record.tag.duplicate.error": "A tag {value} já está presente! Não é repetível",
     "search.history.title": "Pesquisas recentes",
     "cataloging.record.tag.update.success": "A Tag {value} foi atualizada com sucesso!",
     "cataloging.record.tag.update.failure": "Erro ao atualizar a tag {value}!",
@@ -121,7 +121,7 @@
     "cataloging.actions.view.marc.docs": "Visualizar documentação do MARC",
     "cataloging.actions.view.marc.docs.shortcut": "?",
     "cataloging.record.duplicate": "Registro duplicado",
-    "cataloging.fixedfield.section.add.newtag": "+ Adicionar novo {value}",
+    "cataloging.fixedfield.section.add.newtag": "+ Adicionar {value}",
     "search.actionmenu.duplicate.ebook": "Duplicar como e-book",
     "cataloging.accordion.fixedfield.editable.label": "Campos de controle (006, 007, 008)"
 }

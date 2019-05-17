@@ -85,7 +85,7 @@
     "cataloging.record.delete.failure": "Delete record with id ={value} failed!",
     "cataloging.record.tag.create.success": "Tag {value} create succesfully!",
     "cataloging.record.tag.create.failure": "Save Tag {value} failed!",
-    "cataloging.record.tag.duplicate.error": "The tag {value} is duplicate!",
+    "cataloging.record.tag.duplicate.error": "The tag {value} is already present! It's not repetable",
     "search.history.title": "Recent Searches",
     "cataloging.record.tag.update.success": "Tag {value} update succesfully!",
     "cataloging.record.tag.update.failure": "Update tag {value} failed!",
@@ -121,7 +121,7 @@
     "cataloging.actions.view.marc.docs": "View MARC docs",
     "cataloging.actions.view.marc.docs.shortcut": "?",
     "cataloging.record.duplicate": "Duplicate Record",
-    "cataloging.fixedfield.section.add.newtag": "+ Add new {value}",
+    "cataloging.fixedfield.section.add.newtag": "+ Add {value}",
     "search.actionmenu.duplicate.ebook": "Duplicate as e-book",
     "cataloging.accordion.fixedfield.editable.label": "Control Fields (006, 007, 008)"
 }

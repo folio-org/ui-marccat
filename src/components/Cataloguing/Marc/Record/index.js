@@ -1,19 +1,11 @@
 // @flow
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
+import { compose, setDisplayName } from 'recompose';
 import {
-  Pane,
-  Paneset,
-  AccordionSet,
   Callout,
-  Row,
-  PaneMenu,
-  Button,
-  Col,
   Icon
 } from '@folio/stripes/components';
-import { AppIcon } from '@folio/stripes-core';
-import { FormattedMessage } from 'react-intl';
 import { bindActionCreators } from 'redux';
 import { union, sortBy, includes } from 'lodash';
 import {
@@ -28,23 +20,28 @@ import {
   injectProps,
   buildUrl, findParam, Localize, post
 } from '../../../../shared';
-import { ACTION } from '../../../../redux/actions/Actions';
 import {
   filterMandatoryFields,
   showValidationMessage,
-  filterFixedFieldForSaveRecord,
-  filterVariableFields
+  filterFixedFields,
 } from '../../Utils/MarcApiUtils';
 import * as C from '../../../../config/constants';
 import * as MarcAction from '../../Actions';
 import type { Props } from '../../..';
 import type { RecordTemplate, Type } from '../../../../flow/cataloging.js.flow';
-import style from '../../Style/index.css';
-import { formFieldValue, resolve } from '../../../../redux/helpers/Selector';
+import { formFieldValue, resolve } from '../../../../redux/helpers/selector';
 import { TAGS, TAG_NOT_REPEATABLE } from '../../Utils/MarcConstant';
-import DataFieldForm from '../Form/DataField';
-import VariableFieldForm from '../Form/VariableField';
+import RecordPane from './Components/RecordPane';
+import { ACTION, destroy } from '../../../../redux/actions';
 
+/**
+ *
+ * @export
+ * @class Record
+ * @extends {React.Component<Props, {
+ *   callout: React.RefObject<Callout>,
+ * }>}
+ */
 class Record extends React.Component<Props, {
   callout: React.RefObject<Callout>,
 }> {
@@ -57,13 +54,10 @@ class Record extends React.Component<Props, {
       submit: false,
       deletedTag: false,
     };
-    this.renderDropdownLabels = this.renderDropdownLabels.bind(this);
-    this.handleClose = this.handleClose.bind(this);
     this.callout = React.createRef();
     this.onCreate = this.onCreate.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.saveRecord = this.saveRecord.bind(this);
-    this.deleteRecord = this.deleteRecord.bind(this);
   }
 
   componentWillMount() {
@@ -73,8 +67,7 @@ class Record extends React.Component<Props, {
     loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
   }
 
-
-  getCurrentRecord = (): Object => {
+  getCurrentRecord = (): {} => {
     const { datastore: { emptyRecord, recordDuplicate }, recordDetail } = this.props;
     const { mode } = this.state;
 
@@ -100,7 +93,7 @@ class Record extends React.Component<Props, {
       showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.duplicate.error', value: item.code }), C.VALIDATION_MESSAGE_TYPE.ERROR);
       return form.splice(0, 1);
     }
-    return (!cretaeHeadingForTag || length > 1) ? this.asyncCreateHeading(item, heading) : this.setupComonProperties(item, heading);
+    return (!cretaeHeadingForTag || item.variableField.keyNumber > 0) ? this.asyncCreateHeading(item, heading) : this.setupComonProperties(item, heading);
   }
 
   asyncCreateHeading = async (item, heading) => {
@@ -131,31 +124,30 @@ class Record extends React.Component<Props, {
   saveRecord = async () => {
     const { datastore: { emptyRecord }, store: { getState } } = this.props;
     const { deletedTag } = this.state;
-    const formData = getState().form.dataFieldForm.values;
+    const formData = getState().form.fixedFieldForm.values;
     const initialValues = getState().form.variableFieldForm.initial.items;
     let variableFormData = getState().form.variableFieldForm.values.items;
 
-    // to remove
     variableFormData.map(k => k.variableField.displayValue = k.variableField.displayValue.replace(/\$/g, SUBFIELD_DELIMITER));
 
     if (deletedTag) variableFormData = union(variableFormData, initialValues);
 
     const bibliographicRecord = this.getCurrentRecord();
-    bibliographicRecord.leader.value = formData.leader;
+    bibliographicRecord.leader.value = formData.Leader;
 
     const recordTemplate: RecordTemplate<Type> = {
       id: 408,
       fields: filterMandatoryFields(emptyRecord.results.fields)
     };
 
-    bibliographicRecord.fields = union(filterFixedFieldForSaveRecord(bibliographicRecord.fields), variableFormData);
+    bibliographicRecord.fields = union(filterFixedFields(bibliographicRecord.fields), variableFormData);
     bibliographicRecord.fields = sortBy(bibliographicRecord.fields, SORTED_BY.CODE);
     const payload = { bibliographicRecord, recordTemplate };
     this.setState({ submit: true });
 
     await post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), payload)
       .then((r) => { return r.json(); })
-      .then(() => {
+      .then((_response) => {
         showValidationMessage(this.callout, 'cataloging.record.update.success', 'success');
         setTimeout(() => {
           this.handleClose();
@@ -165,110 +157,52 @@ class Record extends React.Component<Props, {
       });
   }
 
-  deleteRecord = () => {
-    const { dispatch, recordDetail } = this.props;
-    dispatch(MarcAction.deleteRecordAction(recordDetail));
-  };
-
   handleClose = () => {
-    const { id, submit } = this.state;
-    const { dispatch, router, toggleFilterPane, reset } = this.props;
+    const { id } = this.state;
+    const { dispatch, router, toggleFilterPane, reset, submit } = this.props;
     dispatch({ type: ACTION.FILTERS, payload: {}, filterName: '', isChecked: false });
     reset();
+    dispatch(destroy());
     toggleFilterPane();
     return (submit) ? router.push(`/marccat/search?savedId=${id}`) : router.push('/marccat/search');
   };
 
-  renderDropdownLabels = () => {
-    return [
-      {
-        label: <FormattedMessage id="ui-marccat.button.new.auth" />,
-        shortcut: <FormattedMessage id="ui-marccat.button.new.short.auth" />,
-        onClick: () => { },
-      },
-      {
-        label: <FormattedMessage id="ui-marccat.button.new.bib" />,
-        shortcut: <FormattedMessage id="ui-marccat.button.new.short.bib" />,
-        onClick: () => { },
-      }];
-  };
-
-  renderButtonMenu = () => {
-    const { translate } = this.props;
-    const { isEditMode } = this.state;
-    return (
-      <PaneMenu>
-        <Button
-          buttonStyle="primary"
-          onClick={this.saveRecord}
-          buttonClass={style.rightPosition}
-          type="button"
-          marginBottom0
-        >
-          <Icon icon="plus-sign">
-            {translate({ id: `ui-marccat.cataloging.record.${(isEditMode) ? 'edit' : 'create'}` })}
-          </Icon>
-        </Button>
-        {isEditMode &&
-        <Button
-          buttonStyle="primary"
-          buttonClass={style.rightPosition}
-          onClick={this.deleteRecord}
-          type="button"
-          disabled={false}
-          marginBottom0
-        >
-          <Icon icon="trash">
-            {translate({ id: 'ui-marccat.cataloging.record.delete' })}
-          </Icon>
-        </Button>
-        }
-      </PaneMenu>
-    );
-  };
 
   render() {
-    const { leaderData } = this.props;
-    const { isEditMode, id } = this.state;
-    const bibliographicRecord = this.getCurrentRecord();
+    const { leaderData, recordDetail } = this.props;
+    const { isEditMode, id, submit } = this.state;
+    const record = this.getCurrentRecord();
 
-    return (!leaderData) ? (<Icon icon="spinner-ellipsis" />) : (
-      <Fragment>
-        <Paneset static>
-          <Pane
-            defaultWidth="fullWidth"
-            paneTitle={(bibliographicRecord && isEditMode) ? 'Edit Record' : 'New Monograph'}
-            paneSub={'id. ' + bibliographicRecord.id || id}
-            appIcon={<AppIcon app={C.META.ICON_TITLE} />}
-            actionMenu={() => {}}
-            dismissible
-            onClose={() => this.handleClose()}
-            lastMenu={this.renderButtonMenu()}
-          >
-            <Row center="xs">
-              <Col xs={12} sm={6} md={8} lg={8}>
-                <AccordionSet>
-                  <DataFieldForm
-                    {...this.props}
-                    leaderData={leaderData}
-                    record={bibliographicRecord}
-                  />
-                  <VariableFieldForm
-                    {...this.props}
-                    fields={filterVariableFields(bibliographicRecord.fields)}
-                    onCreate={this.onCreate}
-                    onDelete={this.onDelete}
-                  />
-                </AccordionSet>
-              </Col>
-            </Row>
-          </Pane>
-        </Paneset>
-        <Callout ref={this.callout} />
-      </Fragment>
-    );
+    return (!leaderData) ?
+      (
+        <Icon icon="spinner-ellipsis" />
+      ) :
+      (
+        <Fragment>
+          <RecordPane
+            {...this.props}
+            id={id}
+            record={record}
+            detail={recordDetail}
+            leaderData={leaderData}
+            mode={isEditMode}
+            saveRecord={this.saveRecord}
+            onCreate={this.onCreate}
+            onDelete={this.onDelete}
+            submit={submit}
+          />
+          <Callout ref={this.callout} />
+        </Fragment>
+      );
   }
 }
+
+
+const mapStateToProps = state => ({
+  isEditMode: state.isEditMode,
+  id: state.id,
+  mode: state.mode,
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   loadHeadertype: (tag: []) => _ => {

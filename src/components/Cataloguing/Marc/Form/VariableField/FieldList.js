@@ -1,21 +1,27 @@
-// @flow
+/* @flow strict  */
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import sortBy from 'lodash/sortBy';
+import { sortBy } from 'lodash';
 import FieldForm from './FieldForm';
 
 type Props = {
   columnMapping?: PropTypes.object,
   columnWidths?: PropTypes.object,
-  contentData: Array<Object>,
-  formatter?: Object,
+  contentData: Array<{}>,
+  formatter?: {},
   id: string,
   nameKey?: string,
   readOnlyFields?: Array<String>,
 };
-
-export default (props: Props) => {
+/**
+ *
+ *
+ * @export
+ * @param {Props} props
+ * @returns
+ */
+export default function (props: Props) {
   const { contentData, nameKey = 'code' } = props;
   const items = sortBy(contentData, [t => t[nameKey] && t[nameKey].toLowerCase()]);
   return (<FieldForm initialValues={{ items }} {...props} />);
-};
+}

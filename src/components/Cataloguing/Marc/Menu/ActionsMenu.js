@@ -8,13 +8,19 @@ import {
 } from '@folio/stripes/components';
 import type { Props } from '../../../../flow/types.js.flow';
 import ActionLabels from './ActionLabels';
-import { Localize } from '../../../../shared/utils/Function';
+import { Localize } from '../../../../utils/Function';
 
 type P = Props & {
   onToggle(): void,
   open: boolean
 }
-
+/**
+ *
+ *
+ * @export
+ * @class ActionsMenu
+ * @extends {React.Component<P, {}>}
+ */
 export default class ActionsMenu extends React.Component<P, {}> {
   constructor() {
     super();
@@ -42,7 +48,7 @@ export default class ActionsMenu extends React.Component<P, {}> {
         <Button
           buttonStyle="primary"
           data-role="toggle"
-          aria-haspopup="true"
+          aria-haspopup={true.toString()}
         >
           {Localize({ key: 'cataloging.actions' })}
           <Icon

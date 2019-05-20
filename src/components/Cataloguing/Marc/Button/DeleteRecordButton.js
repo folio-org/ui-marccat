@@ -11,7 +11,12 @@ import { Localize, findParam } from '../../../../shared';
 import style from '../../Style/index.css';
 import { deleteRecordAction } from '../../Actions';
 import { RECORD_ACTION } from '../..';
-
+/**
+ *
+ *
+ * @param {*} { ...props }
+ * @returns
+ */
 function DeleteRecordButton({ ...props }) {
   const { deleteRecord, id } = props;
   return (

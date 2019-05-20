@@ -3,6 +3,7 @@ import * as React from 'react';
 import ClearFormValue from '../Filter/ResetButton';
 import { ACTION } from '../../../redux';
 import style from '../Style/index.css';
+import { Localize } from '../../../shared';
 
 export default function ResetButton(props) {
 
@@ -13,14 +14,13 @@ export default function ResetButton(props) {
   };
 
   const renderResetButton = () => {
-    const { localized } = props;
     return (
       <ClearFormValue
         className={style['mb-5']}
         visible
         onClick={handleResetAllButton}
         id="clickable-reset-all"
-        label={localized({ id: 'button.resetAll' })}
+        label={Localize({ key: 'button.resetAll' })}
       />
     );
   };

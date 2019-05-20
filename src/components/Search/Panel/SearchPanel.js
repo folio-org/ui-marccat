@@ -23,14 +23,13 @@ import {
 } from '..';
 import { ACTION } from '../../../redux/actions/Actions';
 import { findYourQuery } from '../Filter';
-import { remapFilters, findParam } from '../../../shared';
+import { remapFilters, findParam, Localize } from '../../../shared';
 import { EMPTY_STRING } from '../../../config/constants';
 import { historySearchAction, searchDetailAction } from '../Actions';
 import styles from '../Style/index.css';
 
 type P = Props & {
   inputErrorCheck: string,
-  translate: Function,
 }
 
 class SearchPanel extends React.Component<P, {}> {
@@ -192,7 +191,7 @@ class SearchPanel extends React.Component<P, {}> {
   }
 
   render() {
-    const { translate, ...rest } = this.props;
+    const { ...rest } = this.props;
     const { filterEnable, leftBracketEnable, rightBracketEnable } = this.state;
     return (
       <Fragment>
@@ -200,7 +199,7 @@ class SearchPanel extends React.Component<P, {}> {
           <Accordion
             {...rest}
             separator={false}
-            label={translate({ id: 'ui-marccat.navigator.search' })}
+            label={Localize({ key: 'marccat.navigator.search' })}
             header={FilterAccordionHeader}
           >
             <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}>

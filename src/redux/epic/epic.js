@@ -1,7 +1,11 @@
 // @flow
-import { from } from 'rxjs/observable/from';
-import { of } from 'rxjs/observable/of';
-import * as Resolver from '../helpers/Resolver';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/from';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import { identity } from 'lodash';
+import * as Resolver from '../helpers/resolver';
 import { ENDPOINT } from '../../config/constants';
 import { ACTION } from '../actions';
 
@@ -15,11 +19,11 @@ const historyState = { list: [] };
  * @param {*} data
  * @param {*} record
  */
-export const resolveEpicRequest = (name, data, record) => ({
+export const resolveEpicRequest = (data, payload, cb) => ({
   type: ACTION.REQUEST_RESOLVE,
-  name,
   data,
-  payload: record,
+  payload,
+  cb
 });
 
 /**
@@ -28,11 +32,21 @@ export const resolveEpicRequest = (name, data, record) => ({
  * @param {*} data
  * @param {*} error
  */
-export const rejectEpicRequest = (name, data, error) => ({
+export const rejectEpicRequest = (data, error) => ({
   type: ACTION.REQUEST_REJECT,
   data,
-  name,
   error
+});
+
+/**
+ *
+ * @param {*} name
+ * @param {*} data
+ * @param {*} error
+ */
+export const executeEpicCallback = (cb) => ({
+  type: ACTION.EXECUTE_CALLBACK_FIRED,
+  cb
 });
 
 /**
@@ -46,31 +60,28 @@ export const resolveHistoryRequest = (data) => ({
   data,
 });
 
-/**
- *
- * @param {*} name
- * @param {*} data
- * @param {*} error
- */
-export const executeEpicCallback = () => ({
-  type: ACTION.EXECUTE_CALLBACK_FIRED
-});
 
 /**
  * The main store reducer
  * @param {Object} state - initial state
  * @param {Object} action - redux action dispatched
  */
-export function reducer(state: Object = initialState, action: Object) {
+export function reducer(state: {} = initialState, action: {}) {
   switch (action.type) {
   case ACTION.REQUEST_RESOLVE:
     return Object.assign({
-    }, state, Resolver.resolveData(action.name, action.data, action.payload));
+    }, state, Resolver.resolveData(action.data, action.payload, action.cb));
   case ACTION.REQUEST_REJECT:
     return Object.assign({
-    }, state, Resolver.rejectData(action.name, action.data, action.error));
+    }, state, Resolver.rejectData(action.data, action.error));
   case ACTION.EXECUTE_CALLBACK:
     return action.cb;
+  case ACTION.REQUEST_REMOVE:
+    return Object.assign({
+    }, state, Resolver.removeRequestData(state, action.key));
+  case ACTION.REQUEST_DESTROY:
+    return Object.assign({
+    }, state, Resolver.destroyData(state)); // into state there's all data reducer request
   default:
     return state;
   }
@@ -103,7 +114,7 @@ export function historyReducer(state = historyState, action) {
  * @param {*} response
  * @returns
  */
-const parseResponseBody = (response: Object) => { // metodo statico
+const parseResponseBody = (response: {}) => { // metodo statico
   return response.text().then((text) => {
     try { return JSON.parse(text); } catch (e) { return text; }
   });
@@ -128,7 +139,7 @@ const getHeaders = () => {
  * @param {Observable} action$ - the observable action
  * @param {Function} store.getState - get's the most recent redux state
  */
-export function epic(action$) {
+export function epic(action$, { getState }) {
   const actionMethods = {
     [ACTION.QUERY]: 'GET',
     [ACTION.FIND]: 'GET',
@@ -142,7 +153,12 @@ export function epic(action$) {
   return action$
     .filter(({ type }) => actionMethods[type])
     .mergeMap(({ type, data, payload, cb }) => {
+      const state = getState();
       const method = actionMethods[type];
+
+      // the request object created from this action
+      const request = state.marccat.data[data.type];
+      console.log(request);
 
       // let url = `${state.okapi.url}${data.path}`;
       const url = `${ENDPOINT.BASE_URL}${data.path}?${(data.params)}`;
@@ -153,12 +169,16 @@ export function epic(action$) {
         .then(response => Promise.all([response.ok, parseResponseBody(response)]))
         .then(([ok, body]) => (ok ? body : Promise.reject(body.errors))); // eslint-disable-line no-shadow
 
-      return from(promise)
+      const resolve = response => resolveEpicRequest(data, response, (cb) || identity);
+      const callback = response => executeEpicCallback((cb) ? cb(response) : identity);
+      const error = (d, r) => Observable.of(rejectEpicRequest(d, r));
+
+      return Observable.from(promise)
         .flatMap(response => {
-          return of(
-            resolveEpicRequest(data.type, data, response),
-            executeEpicCallback((cb) ? cb(response) : () => { })
-          );
-        }).catch(errors => of(rejectEpicRequest(errors)));
+          return Observable.of(
+            resolve(response),
+            callback(response)
+          ).catch(errors => error(data, errors));
+        });
     });
 }

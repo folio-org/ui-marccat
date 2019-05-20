@@ -9,36 +9,36 @@ import RecordsOverlayRules from './RecordOverlayRules';
 import LocalAuthorityRecords from './LocalAuthorityRecords';
 import type { Props } from '../../../flow/types.js.flow';
 import { loadTemplateAction } from '../../Search/Actions';
+import { Localize } from '../../../shared';
 
 class MARCcatSettings extends React.Component<Props, {}> {
   constructor(props) {
     super(props);
-    const { localized } = this.props;
     this.pages = [
       {
         route: 'general',
-        label: localized({
+        label: Localize({
           key: 'settings.field.groupings',
         }),
         component: FieldGroupings,
       },
       {
         route: 'defaultTemplate',
-        label: localized({
+        label: Localize({
           key: 'settings.default.record.template',
         }),
         component: DefaultTemplate,
       },
       {
         route: 'overlayRules',
-        label: localized({
+        label: Localize({
           key: 'settings.single.record.overlay.rules',
         }),
         component: RecordsOverlayRules,
       },
       {
         route: 'authorityRecords',
-        label: localized({
+        label: Localize({
           key: 'settings.local.authority.records',
         }),
         component: LocalAuthorityRecords,
@@ -53,13 +53,12 @@ class MARCcatSettings extends React.Component<Props, {}> {
   }
 
   render() {
-    const { localized } = this.props;
     return (
       <Settings
         {...this.props}
         navPaneWidth="20%"
         pages={this.pages}
-        paneTitle={localized({
+        paneTitle={Localize({
           key: 'settings.general',
         })}
       />

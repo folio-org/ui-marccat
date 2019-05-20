@@ -19,11 +19,11 @@ import { searchDetailAction } from '../Actions';
 import * as C from '../../../config/constants';
 
 type P = Props & {
-  headings: Array<any>,
+  headings: Array<*>,
   inputValue: string,
   getPreviousPage: () => void,
   getNextPage: () => void,
-  detail: Object,
+  detail: {},
   dataLoaded: boolean,
   loading: boolean,
   isPanelOpen: boolean,

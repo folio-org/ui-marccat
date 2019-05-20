@@ -1,61 +1,35 @@
-// @flow strict
+// @flow
 import { uniqueId } from 'lodash';
-import { selectKey } from './Selector';
+import { selectKey } from './selector';
+import { formatErrors } from './request';
 
 /**
  *
  * @param {*} data
  * @param {*} model
- * @param {*} payload
+ * @param {{}} payload
  * @returns
  */
-export const pendingRequestData = (model, data) => {
+export const resolveData = (data: {}, payload: {}, cb: (r) => void) => {
   return {
-    [model]: {
+    [data.type]: {
       timestamp: new Date(),
       path: data.path,
       resource: data.type,
       host: window.location.hostname,
-      params: data.params,
-      id: data.id || uniqueId(`@@marccat-${model}`),
-      isPending: true,
-      isResolved: false,
-      isRejected: false,
-      records: [],
-      meta: {},
-      errors: []
-    }
-  };
-};
-
-/**
- *
- * @param {*} data
- * @param {*} model
- * @param {*} payload
- * @returns
- */
-export const resolveData = (model, data, payload) => {
-  return {
-    [model]: {
-      timestamp: new Date(),
-      path: data.path,
-      resource: data.type,
-      host: window.location.hostname,
-      params: data.params,
-      id: data.id || payload.id,
-      key: data.key,
+      params: data.params || {},
+      id: data.id || payload.id || -1,
+      key: data.meta || data.key || data.apiKey || {},
       isPending: false,
       isResolved: true,
       isRejected: false,
-      results: payload || [],
-      query: data.query,
-      meta: data.meta,
-      errors: data.errors
+      results: payload.results || payload,
+      meta: data.meta || {},
+      errors: {},
+      callback: cb.toString()
     }
   };
 };
-
 /**
  *
  * @param {*} data
@@ -72,25 +46,24 @@ export const resolveHistoryData = (data) => {
  *
  * @param {*} data
  * @param {*} model
- * @param {*} payload
+ * @param {{}} payload
  * @returns
  */
-export const rejectData = (model, data, errors) => {
+export const rejectData = (data, errors) => {
   return {
-    [model]: {
+    [data.type]: {
       timestamp: new Date(),
-      action: model,
-      path: data.path,
+      action: data.type,
       resource: data.type,
       host: window.location.hostname,
-      params: data.params,
-      id: data.id || uniqueId(`@@marccat-${model}`),
+      params: {},
+      id: uniqueId(`@@marccat-${data.type}-error`),
       isPending: false,
       isResolved: false,
       isRejected: true,
-      results: [],
+      results: data,
       meta: {},
-      errors
+      errors: formatErrors(errors)
     }
   };
 };
@@ -118,4 +91,16 @@ export const reduce = (store, id) => (
  */
 export const getRecord = ({ store: { key } }, id) => {
   return selectKey(key).results[id];
+};
+
+export const removeRequestData = (data, key: String | []) => {
+  if (Array.isArray(key)) {
+    key.forEach(k => delete data[k]);
+  } else {
+    delete data[key];
+  }
+};
+
+export const destroyData = (data: {}) => {
+  Object.keys(data).forEach(k => delete data[k]);
 };

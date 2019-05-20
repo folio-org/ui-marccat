@@ -5,7 +5,7 @@ import FieldEdit from './FieldEdit';
 
 type Prop = {
   editing: boolean,
-  cells: Array<Object>,
+  cells: Array<{}>,
 };
 export default ({ editing, ...props }: Prop): React.Component<Prop> => (
   editing ? <FieldEdit {...props} autoFocus /> : <FieldView {...props} />

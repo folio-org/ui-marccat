@@ -43,6 +43,13 @@
   }
 }
 
+.marcFieldIconCaretPrepend {
+  float: right;
+  cursor: pointer;
+  padding-left: 0;
+  padding-right: 8px;
+}
+
 .pl-10 {
   padding-left: 10px;
 }

@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
+/* @flow strict  */
 import * as React from 'react';
 import { cloneDeep, isEqual, sortBy, uniqueId } from 'lodash';
 import { FormattedMessage } from 'react-intl';
@@ -18,6 +19,7 @@ import EditableItem from './EditableItem';
 import ActionsMenuButton from '../../Menu/ActionsMenu';
 import style from '../../../Style/variableform.css';
 import { REDUX } from '../../../../../config/constants';
+import { CheckBoxLabelField } from '../../../../../shared';
 
 const propTypes = {
   actionProps: PropTypes.object,
@@ -92,33 +94,33 @@ class FieldForm extends React.Component {
     this.onLookup = this.onLookup.bind(this);
 
     this.keys = {
-      'add' : ['enter'],
-      'addAbove' : ['alt+enter'],
-      'cleanField' : ['delete'],
-      'cleanAll' : ['backspace'],
-      'duplicate' : ['CTRL+D'],
-      'copy' : ['CTRL+C'],
-      'cut' : ['CTRL+X'],
-      'paste' : ['CTRL+V'],
-      'undo' : ['CTRL+Z'],
-      'redo' : ['CTRL+SHIFT+Z'],
-      'lookup' : ['CTRL+SHIFT+L'],
-      'onViewMarkDocs': ['CTRL+SHIFT+W']
+      add : ['enter'],
+      addAbove : ['alt+enter'],
+      cleanField : ['delete'],
+      cleanAll : ['backspace'],
+      duplicate : ['CTRL+D'],
+      copy : ['CTRL+C'],
+      cut : ['CTRL+X'],
+      paste : ['CTRL+V'],
+      undo : ['CTRL+Z'],
+      redo : ['CTRL+SHIFT+Z'],
+      lookup : ['CTRL+SHIFT+L'],
+      onViewMarkDocs: ['CTRL+SHIFT+W']
     };
 
     this.handlers = {
-      'add' : this.onAddAbove,
-      'addAbove' : this.onAdd,
-      'cleanField' : this.onCancel,
-      'cleanAll' : this.onResetAll,
-      'duplicate' : this.onDuplicate,
-      'copy' : this.onCopy,
-      'cut' : this.onCut,
-      'paste' : this.onPaste,
-      'undo' : this.onUndo,
-      'redo' : this.onRedo,
-      'lookup' : this.onLookup,
-      'onViewMarkDocs': this.onViewMarkDocs
+      add : this.onAddAbove,
+      addAbove : this.onAdd,
+      cleanField : this.onCancel,
+      cleanAll : this.onResetAll,
+      duplicate : this.onDuplicate,
+      copy : this.onCopy,
+      cut : this.onCut,
+      paste : this.onPaste,
+      undo : this.onUndo,
+      redo : this.onRedo,
+      lookup : this.onLookup,
+      onViewMarkDocs: this.onViewMarkDocs
     };
 
     if (props.id) {

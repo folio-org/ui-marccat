@@ -1,24 +1,44 @@
 import { ENDPOINT } from '../../../config/constants';
 import { ACTION } from '../../../redux/actions/Actions';
+import {
+  TAGS,
+} from '../Utils/MarcConstant';
 
-// MARC action creator utility
+//
+// ─── MARC ACTION CREATOR UTILITY ────────────────────────────────────────────────
+//
 
-
-export const leaderDropdownAction = (payload) => {
+/**
+ *
+ *
+ * @export
+ * @param {{}} payload
+ * @returns
+ */
+export function leaderDropdownAction(payload: {}) {
   return {
     type: ACTION.QUERY,
     data: {
       path: ENDPOINT.FIXED_FIELD_CODE_GROUPS_URL,
       type: 'leaderData',
+      apiKey: 'results',
       params: `value=${payload.value}&code=${payload.code}&headerTypeCode=${payload.typeCode}&lang=ita`,
+      meta: {
+        key: payload.code,
+        apiKey: 'results',
+        param: [{ value: payload.value }, { code : payload.code }, { headerTypeCode : payload.typeCode }],
+      },
     },
   };
-};
+}
 /**
  *
- * @param {*} payload
+ *
+ * @export
+ * @param {{}} payload
+ * @returns
  */
-export const autosuggestionAction = (payload) => {
+export function autosuggestionAction(payload) {
   return {
     type: ACTION.QUERY,
     data: {
@@ -27,13 +47,17 @@ export const autosuggestionAction = (payload) => {
       params: `tag=${payload.code}&ind1=${payload.ind1}&ind2=${payload.ind2}&displayValue=${payload.displayValue}&view=1&mainLibrary=170&pageSize=30&lang=ita`,
     },
   };
-};
+}
 
 /**
  *
- * @param {*} payload
+ *
+ * @export
+ * @param {*} id
+ * @param {{}} payload
+ * @returns
  */
-export const createHeadingAction = (id, payload) => {
+export function createHeadingAction(id, payload) {
   return {
     type: ACTION.CREATE,
     data: {
@@ -43,30 +67,42 @@ export const createHeadingAction = (id, payload) => {
     },
     payload
   };
-};
+}
 
 /**
  *
- * @param {*} payload
+ *
+ * @export
+ * @param {{}} payload
+ * @param {*} cb
+ * @returns
  */
-export const changeDisplayValueAction = (payload, cb) => {
+export function changeDisplayValueAction(payload, cb) {
   return {
     type: ACTION.CREATE,
     data: {
       path: ENDPOINT.CHANGE_DISPLAY_VALUE,
       type: `fixedfield${payload.code}`,
       params: ENDPOINT.DEFAULT_LANG_VIEW,
+      meta: {
+        key: payload.code,
+        apiKey: 'results',
+        time: new Date(),
+      }
     },
     payload,
     cb
   };
-};
+}
 
 /**
  *
- * @param {*} payload
+ *
+ * @export
+ * @param {{}} payload
+ * @returns
  */
-export const saveRecordAction = (payload) => {
+export function saveRecordAction(payload) {
   return {
     type: ACTION.CREATE,
     data: {
@@ -74,32 +110,49 @@ export const saveRecordAction = (payload) => {
       type: `[${payload.bibliographicRecord.id}]-` + new Date(),
       params: ENDPOINT.DEFAULT_LANG_VIEW,
       id: payload.bibliographicRecord.id,
+      meta: {
+        id:payload.bibliographicRecord.id,
+        key: payload.bibliographicRecord.id,
+        apiKey: 'results',
+        time: new Date(),
+      }
     },
     payload
   };
-};
+}
 
 /**
  *
- * @param {*} payload
+ *
+ * @export
+ * @returns
  */
-export const emptyRecordAction = () => {
+export function emptyRecordAction() {
   return {
     type: ACTION.QUERY,
     data: {
       path: ENDPOINT.EMPTY_RECORD_URL + 408,
       type: 'emptyRecord',
       params: ENDPOINT.DEFAULT_LANG_VIEW,
+      id: 408,
+      meta: {
+        id: 408,
+        apiKey: 'results',
+        time: new Date(),
+      }
     },
   };
-};
+}
 
 /**
  *
+ *
+ * @export
  * @param {*} id
- * @param {*} payload
+ * @param {{}} payload
+ * @returns
  */
-export const createRecordAction = (id, payload) => {
+export function createRecordAction(id, payload) {
   return {
     type: ACTION.CREATE,
     data: {
@@ -110,117 +163,115 @@ export const createRecordAction = (id, payload) => {
     },
     payload
   };
-};
+}
+
 
 /**
  *
+ *
+ * @export
  * @param {*} id
- * @param {*} payload
+ * @returns
  */
-export const deleteRecordAction = (id) => {
+export function deleteRecordAction(id) {
   return {
     type: ACTION.DELETE,
     data: {
       path: ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id,
-      type: `deleteRecord-${id}-` + Date.now(),
+      type: `deleteRecord-${id}-`,
       params: 'view=1',
       id,
+      meta: {
+        key: id,
+        apiKey: 'results',
+        time: new Date(),
+      }
     },
   };
-};
-
-export const headertypeAction = (tag) => {
+}
+/**
+ *
+ *
+ * @export
+ * @param {*} code
+ * @returns
+ */
+export function headertypeAction(code) {
   return {
     type: ACTION.QUERY,
     data: {
       path: ENDPOINT.HEADER_TYPES_URL,
-      type: `headertype${tag}`,
-      params: `code=${tag}&lang=ita`,
+      type: `headertype${code}`,
+      params: `code=${code}&lang=ita`,
+      meta: {
+        key: code,
+        apiKey: 'headingTypes',
+        time: new Date(),
+      }
     },
   };
-};
+}
 
-export const dropDownValuesAction = (payload) => {
+/**
+ *
+ *
+ * @export
+ * @param {{}} payload
+ * @param {*} cb
+ * @returns
+ */
+export function dropDownValuesAction(payload, cb) {
   return {
     type: ACTION.QUERY,
     data: {
       path: ENDPOINT.FIXED_FIELD_CODE_GROUPS_URL,
       type: `headerTypeValues${payload.code}`,
-      key: payload.code,
-      id: payload.code,
-      params: `leader=${payload.value}&code=${payload.code}&headerTypeCode=${payload.headerTypeCode}&lang=ita`
+      params: `leader=${payload.value}&code=${payload.code}&headerTypeCode=${payload.headerTypeCode}&lang=ita`,
+      meta: {
+        key: payload.code,
+        apiKey: 'results',
+        time: new Date(),
+      }
     },
-    cb: payload.cb
+    cb
   };
-};
-
-export const change008ByLeaderAction = (payload) => {
+}
+/**
+ *
+ *
+ * @export
+ * @param {{}} payload
+ * @returns
+ */
+export function change008ByLeaderAction(payload) {
   return {
     type: ACTION.QUERY,
     data: {
       path: ENDPOINT.CHANGE_TAG_DISPLAY_VALUE_FROM_LEADER,
       leader: payload,
       type: 'headerTypeValues008',
-      params: `leader=${payload}&lang=ita`
+      params: `leader=${payload}&lang=ita`,
+      meta: {
+        key: TAGS._008,
+        apiKey: 'results',
+        time: new Date(),
+      }
     },
   };
-};
-
+}
 
 /**
  *
- * @param {*} id
- * @param {*} payload
+ *
+ * @export
+ * @param {{}} payload
+ * @returns
  */
-export const settingsAction = (payload) => {
+export function settingsAction(payload) {
   return {
     type: ACTION.SETTINGS,
     data: {
       payload
     }
   };
-};
-
-/**
- *
- * @param {*} action
- * @param {*} leader
- * @param {*} tag
- */
-export const tagValuesAction = (type, leader, tag) => {
-  return {
-    type,
-    leader,
-    code: tag.fixedField.code,
-    typeCode: tag.fixedField.headerTypeCode
-  };
-};
-
-/**
- *
- * @param {*} action
- * @param {*} leader
- * @param {*} tag
- */
-export const typeCodeAction = (type, code) => {
-  return {
-    type,
-    code,
-  };
-};
-/**
- *
- * @return {*} payload
- */
-export const autosuggestionTag = () => {
-  return {
-    type: ACTION.QUERY,
-    data: {
-      path: ENDPOINT.AUTOSUGGESTION_TAG_URL,
-      type: 'tags',
-      params: 'lang=ita',
-    },
-  };
-};
-
-export const initialActions = [leaderDropdownAction, headertypeAction];
+}

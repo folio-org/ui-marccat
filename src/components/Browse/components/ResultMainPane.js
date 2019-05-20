@@ -56,7 +56,7 @@ class ResultMainPane extends React.Component<{}, {}> {
                 (isReadyBrowse) ?
                   <MultiColumnList
                     contentData={browseRecords}
-                    autosize="true"
+                    autosize={true.toString()}
                     isEmptyMessage={<NoResultsMessage {...this.props} />}
                     formatter={browseFormatter}
                     onRowClick={handleBrowseDetails()}

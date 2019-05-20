@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import { Row, Col, KeyValue, AccordionSet, FilterAccordionHeader, Accordion } from '@folio/stripes/components';
 import InventoryPluggableButton from '../Button/Inventory';
 import type { Props } from '../../../flow/types.js.flow';
-import { getTag245, getTitle245 } from '../../../shared/utils/Mapper';
+import { getTag245, getTitle245 } from '../../../utils/Mapper';
 
 import style from '../../../shared/styles/common.css';
 
 type P = Props & {
-  items: Array<any>,
+  items: Array<*>,
 }
 
 function AssociatedBibDetails({ translate, ...props }: P) {

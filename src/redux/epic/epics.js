@@ -1,17 +1,11 @@
-/* eslint-disable no-unused-vars */
-// TO BE IMPROVE ALL FILES
-import { Observable } from 'rxjs';
 import { of as of$ } from 'rxjs/observable/of';
 import { concat as concat$ } from 'rxjs/observable/concat';
-import { map } from 'rxjs/operators/map';
 import { ajax } from 'rxjs/observable/dom/ajax';
 import { ACTION } from '../actions/Actions';
 import * as marccatActions from '../actions';
 import { ENDPOINT } from '../../config/constants';
-import { fetchFailure } from '../actions/ActionCreator';
-import { buildUrl } from '../../shared/utils/Function';
-import { TAGS } from '../../components/Cataloguing';
-import * as Selector from '../helpers/Selector';
+import { buildUrl } from '../../utils/Function';
+import * as Selector from '../helpers/selector';
 
 export const searchEpic = (action$, store) => action$.ofType(ACTION.SEARCH)
   .switchMap((d) => concat$(
@@ -34,7 +28,7 @@ export const searchEpic = (action$, store) => action$.ofType(ACTION.SEARCH)
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
 
-export const searchDetailEpic = (action$, store) => action$.ofType(ACTION.DETAILS)
+export const searchDetailEpic = (action$, _store) => action$.ofType(ACTION.DETAILS)
   .switchMap((d) => concat$(
     of$(marccatActions.isfetchingDetailsRequest(true)),
     ajax
@@ -43,7 +37,7 @@ export const searchDetailEpic = (action$, store) => action$.ofType(ACTION.DETAIL
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
 
-export const associatedBibDetailEpic = (action$, store) => action$.ofType(ACTION.ASSOCIATED_DETAILS)
+export const associatedBibDetailEpic = (action$, _store) => action$.ofType(ACTION.ASSOCIATED_DETAILS)
   .switchMap((d) => concat$(
     of$(marccatActions.isfetchingDetailsAssociatedRequest(true)),
     ajax
@@ -61,7 +55,7 @@ export const searchAssociatedBibRecords = (action$, store) => action$.ofType(ACT
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
 
-export const countDocEpic = (action$, store) => action$.ofType(ACTION.COUNT_DOC)
+export const countDocEpic = (action$, _store) => action$.ofType(ACTION.COUNT_DOC)
   .switchMap((d) => concat$(
     of$(marccatActions.isfetchingCounterRequest(true)),
     ajax
@@ -70,7 +64,7 @@ export const countDocEpic = (action$, store) => action$.ofType(ACTION.COUNT_DOC)
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
 
-export const scanBrowsingRecords = (action$, store) => action$.ofType(ACTION.BROWSE_FIRST_PAGE)
+export const scanBrowsingRecords = (action$, _store) => action$.ofType(ACTION.BROWSE_FIRST_PAGE)
   .switchMap((d) => concat$(
     of$(marccatActions.isfetchingScanBrowseRequest(true)),
     ajax
@@ -79,7 +73,7 @@ export const scanBrowsingRecords = (action$, store) => action$.ofType(ACTION.BRO
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
 
-export const browseDetailEpic = (action$, store) => action$.ofType(ACTION.DETAILS_BROWSE)
+export const browseDetailEpic = (action$, _store) => action$.ofType(ACTION.DETAILS_BROWSE)
   .switchMap((d) => concat$(
     of$(marccatActions.isfetchingBrowseRequest(true)),
     ajax
@@ -88,13 +82,13 @@ export const browseDetailEpic = (action$, store) => action$.ofType(ACTION.DETAIL
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
 
-export const browseAuthorityDetailEpic = (action$, store) => action$.ofType(ACTION.AUTH_DETAILS_BROWSE)
+export const browseAuthorityDetailEpic = (action$, _store) => action$.ofType(ACTION.AUTH_DETAILS_BROWSE)
   .switchMap((d) => ajax
     .getJSON(buildUrl(ENDPOINT.SEARCH_URL, `lang=ita&view=-1&ml=170&q=${d.query}&from=1&to=30&dpo=1`), ENDPOINT.HEADERS)
     .map(record => marccatActions.fetchBrowseAuthorityDetail(record.docs[0].data, d.isAuthority))
     .catch(e => of$(marccatActions.fetchFailure(e))));
 
-export const browseDetailAssociatedEpic = (action$, store) => action$.ofType(ACTION.BROWSE_ASSOCIATED_DETAILS)
+export const browseDetailAssociatedEpic = (action$, _store) => action$.ofType(ACTION.BROWSE_ASSOCIATED_DETAILS)
   .switchMap((d) => concat$(
     of$(marccatActions.isfetchingBrowseDetailsAssociatedRequest(true)),
     ajax

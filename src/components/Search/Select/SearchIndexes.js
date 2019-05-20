@@ -36,7 +36,7 @@ export default ({ ...props }) => {
     { label: 'Subject: Faceted Topical Terms', value: 'SUBFTT', sortBy: SORT_TYPE.SUBJECT },
     { label: 'Subject: Genre/Form', value: 'SUBGF', sortBy: SORT_TYPE.SUBJECT },
     { label: 'Subject: Occupation', value: 'SUBO', sortBy: SORT_TYPE.SUBJECT },
-    { label: 'Subject: Function', value: 'SUBF', sortBy: SORT_TYPE.SUBJECT },
+    { label: 'Subject: () => void', value: 'SUBF', sortBy: SORT_TYPE.SUBJECT },
     { label: 'Subject: Curriculum Objective', value: 'SUBCO', sortBy: SORT_TYPE.SUBJECT },
     { label: 'Subject: Hierarchical Place Name', value: 'SUBHPN', sortBy: SORT_TYPE.SUBJECT },
     { label: 'Subject: Local', value: 'SUBL', sortBy: SORT_TYPE.SUBJECT },

@@ -65,16 +65,6 @@ export const filterFixedFieldsUntil = (obj, cond) => {
     .filter(f => f.code < cond);
 };
 
-
-/**
- * @description
- *
- * @param {Object} obj
- */
-export const filterFixedFieldForSaveRecord = (obj) => {
-  return obj.filter(f => f.fixedField !== undefined || f.fixedField);
-};
-
 /**
  * @description
  *
@@ -89,7 +79,7 @@ export const filterMandatoryFields = (obj): string => {
  *
  * @param {Object} obj
  */
-export const filterVariableFields = (obj: Array<Object>) => {
+export const filterVariableFields = (obj: Array<{}>) => {
   return obj
     .filter(f => (f.fixedField === undefined || !f.fixedField) || f.variableField || f.variableField !== undefined);
 };
@@ -135,6 +125,6 @@ export const replaceAllinverted = (s: string): string => ((s) ? s.replace(/\$/g,
  *
  * @param {*} displayValue
  */
-export const changeValue = (field: String, displayValue: String, dispatch: Function): void => {
+export const changeValue = (field: String, displayValue: String, dispatch: () => void): void => {
   dispatch(change(field, displayValue));
 };

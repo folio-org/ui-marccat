@@ -163,9 +163,9 @@ export const fetchFailure = (message) => ({
 });
 /**
  *
- * @param {*} payload
+ * @param {{}} payload
  */
-export const filterAction = (payload: Object, filterName: string, isChecked: boolean) => {
+export const filterAction = (payload: {}, filterName: string, isChecked: boolean) => {
   return {
     type: ACTION.FILTERS,
     payload,
@@ -175,7 +175,7 @@ export const filterAction = (payload: Object, filterName: string, isChecked: boo
 };
 /**
  *
- * @param {*} payload
+ * @param {{}} payload
  */
 export const resetFilter = () => {
   return {
@@ -188,7 +188,7 @@ export const resetFilter = () => {
 
 /**
  *
- * @param {*} payload
+ * @param {{}} payload
  */
 export const addHistoryData = (data) => {
   return {
@@ -196,6 +196,25 @@ export const addHistoryData = (data) => {
     data,
   };
 };
+
+/**
+ * Action creator for removing remove object from the store
+ * for specific resource type e.g: data: { leaderData <---} leaderData will be removed
+ * @param {String} type - resource type
+ */
+export const removeResponse = (resourceName) => ({
+  type: ACTION.REQUEST_REMOVE,
+  key: resourceName,
+});
+
+/**
+ * Action creator for remove all object from the store
+ * for specific resource type
+ * @param {String} type - resource type
+ */
+export const destroy = () => ({
+  type: ACTION.REQUEST_DESTROY,
+});
 
 
 /**

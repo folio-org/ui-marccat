@@ -16,14 +16,14 @@ RESTART_WAIT_SEC=1
 
 
 ssh_folio_frontside_deploy(){
-  echo "Remove old ui-marccat artifact...."
-  rm r-rf /dist
-  echo "Run yarn build...."
-  yarn build
-  echo "uploading files via ssh on folio.frontside.atcult.it"
-  scp -P ${SSH_PORT} ${SSH_SRC_FILE} ${SSH_USR}@${SSH_HOST}:${SSH_DEST_FOLDER}
-  sleep ${RESTART_WAIT_SEC}
-  echo "uploaded MARCcat artifact succesfully!"
-  echo "folio.frontside.atcult.it is up and running...."
+    echo "Remove old ui-marccat artifact...."
+    rm r-rf /dist
+    echo "Run yarn build...."
+    yarn build
+    echo "uploading files via ssh on folio.frontside.atcult.it"
+    scp -P ${SSH_PORT} ${SSH_SRC_FILE} ${SSH_USR}@${SSH_HOST}:${SSH_DEST_FOLDER}
+    sleep ${RESTART_WAIT_SEC}
+    echo "uploaded MARCcat artifact succesfully!"
+    echo "folio.frontside.atcult.it is up and running...."
 }
 ssh_folio_frontside_deploy

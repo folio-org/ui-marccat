@@ -1,4 +1,4 @@
-// @flow strict
+// @flow
 import { destroy, clearFields } from 'redux-form';
 import { safeObj } from '../../shared';
 
@@ -78,8 +78,8 @@ export const selectorData = (store) => {
   return store.getState().marccat.data;
 };
 
-export const selectKey = (key) => {
-  return selectorData()[key];
+export const selectKey = (store, key) => {
+  return selectorData(store)[key];
 };
 
 export const safeSelectKey = (reducer, key) => {

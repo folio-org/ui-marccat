@@ -8,8 +8,8 @@ import type { Props } from '../../flow/types.js.flow';
 import BrowseItemDetail from './BrowseItemDetail';
 import { ACTION } from '../../redux/actions/Actions';
 import { findYourQueryFromBrowse, findYourQuery } from '../Search/Filter/FilterMapper';
-import { ToolbarButtonMenu, EmptyMessage, NoResultsMessage } from '../../shared/lib';
-import { browseColMapper } from '../../shared/utils/Formatter';
+import { ToolbarButtonMenu, EmptyMessage, NoResultsMessage } from '../../shared/components';
+import { browseColMapper } from '../../utils/Formatter';
 import BrowseAssociatedItemDetail from './BrowseAssociatedItemDetail';
 import * as C from '../../config/constants';
 import style from '../Search/Style/index.css';
@@ -20,7 +20,7 @@ type S = {
   rowClicked: boolean,
   noResults: boolean,
   isPadRequired: boolean,
-  detailSubtitle: Object,
+  detailSubtitle: {},
 };
 
 export class BrowseResults extends React.Component<Props, S> {
@@ -44,7 +44,7 @@ export class BrowseResults extends React.Component<Props, S> {
     });
   };
 
-  handleBrowseDetails = (e: any, meta: Object) => {
+  handleBrowseDetails = (e: any, meta: {}) => {
     const { dispatch, store } = this.props;
     const id = meta.headingNumber;
     const containsAuthorities = meta.countAuthorities > 0;
@@ -201,7 +201,7 @@ export class BrowseResults extends React.Component<Props, S> {
                   <MultiColumnList
                     {...this.props}
                     contentData={browseRecords}
-                    autosize="true"
+                    autosize={true.toString()}
                     isEmptyMessage={C.EMPTY_STRING}
                     formatter={browseFormatter}
                     onRowClick={this.handleBrowseDetails}

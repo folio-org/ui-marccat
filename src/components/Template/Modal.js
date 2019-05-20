@@ -11,14 +11,13 @@ type Props = {
   label: String,
   formName: String,
   keyOpenModal: String,
-  fieldLabel: String,
-  buttonStyle: Object,
+  buttonStyle: {},
   keyConfirm: String,
   keyCancel: String,
-  cancelButtonStyle: Object,
+  cancelButtonStyle: {},
   fieldLabel: String,
-  onClick: Function,
-  onHide: Function
+  onClick: () => void,
+  onHide: () => void
 }
 type State = {
   confirming: boolean,
@@ -135,8 +134,8 @@ class ReduxModal extends React.Component<Props, State> {
                 onChange={this.handleOnChange}
                 component={TextField}
                 loading={sending}
-                hasClearIcon="true"
-                required="true"
+                hasClearIcon={true.toString()}
+                required={true.toString()}
               />
             ))}
           </form>

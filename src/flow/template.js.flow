@@ -6,4 +6,6 @@ export type Template<T = Type> = {
   fields: Array<*>,
 }
 
-export type Container<K = Template<Type>> = {};
+export type Container<K = Template<Type>> = {
+  template: K
+};

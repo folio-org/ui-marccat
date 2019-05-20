@@ -13,14 +13,14 @@
 <PROJECT_ROOT>/test.*
 
 [ignore]
-<PROJECT_ROOT>/node_modules/.*
 <PROJECT_ROOT>/__tests__/.*
 <PROJECT_ROOT>/\.ignore\.js
 <PROJECT_ROOT>/\.eslintrc\.js
 <PROJECT_ROOT>/\.stylelintrc\.js
 <PROJECT_ROOT>/\karma.conf\.js
 <PROJECT_ROOT>/translations/.*
-<PROJECT_ROOT>/node_modules/@folio/.*
+<PROJECT_ROOT>/.*/dist/.*
+
 
 [untyped]
 .*\.notflow\.js
@@ -47,6 +47,8 @@ module.system.haste.paths.blacklist=node_modules/react-native/Libraries/Animated
 module.system.haste.paths.whitelist=node_modules/react-native/Libraries/.*
 munge_underscores=true
 
+module.system.node.resolve_dirname=node_modules
+
 module.name_mapper='^[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> 'RelativeImageStub'
 
 module.file_ext=.js
@@ -66,9 +68,12 @@ suppress_comment=\\(.\\|\n\\)*\\$FlowFixedInNextDeploy
 suppress_comment=\\(.\\|\n\\)*\\$FlowExpectedError
 
 [strict]
-nonstrict-import
+#nonstrict-import
 sketchy-null
 unclear-type
 unsafe-getters-setters
-untyped-import
-untyped-type-import
+#untyped-import
+#untyped-type-import
+
+[version]
+^0.98.0

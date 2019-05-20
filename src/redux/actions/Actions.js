@@ -1,10 +1,12 @@
 // @flow
-export const prefix = '@@ui-marccat/';
 
+export const prefix = '@@ui-marccat/';
 export const REQUEST_MAKE = `${prefix}REQUEST_MAKE`;
 export const REQUEST_REDUCE = `${prefix}REQUEST_REDUCE`;
 export const REQUEST_RESOLVE = `${prefix}REQUEST_RESOLVE`;
+export const REQUEST_REMOVE = `${prefix}REQUEST_REMOVE`;
 export const REQUEST_REJECT = `${prefix}REQUEST_REJECT`;
+export const REQUEST_DESTROY = `${prefix}REQUEST_DESTROY`;
 export const REQUEST_CLEAR = 'RESET_STORE';
 export const GET = `${prefix}GET`;
 export const QUERY = `${prefix}QUERY`;
@@ -23,7 +25,7 @@ export const HISTORY = `${prefix}REQUEST_HISTORY`;
 export const HISTORY_CLEAR = `${prefix}REQUEST_HISTORY_CLEAR`;
 export const EXECUTE_CALLBACK = `${prefix}EXECUTE_CALLBACK`;
 export const EXECUTE_CALLBACK_FIRED = `${prefix}EXECUTE_CALLBACK_FIRED!!!!!`;
-export const SEARCH = `${prefix}SEARCH`;
+export const SEARCH = '@@ui-marccat/SEARCH';
 export const SCAN = `${prefix}SCAN`;
 export const DETAILS = `${prefix}DETAILS`;
 export const DETAILS_BY_TITLE = `${prefix}DETAILS_BY_TITLE`;
@@ -69,6 +71,8 @@ export const ACTION = {
   REQUEST_REDUCE,
   REQUEST_RESOLVE,
   REQUEST_REJECT,
+  REQUEST_REMOVE,
+  REQUEST_DESTROY,
   REQUEST_CLEAR,
   GET,
   QUERY,

@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Icon, Pane, Button } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
-import { ToolbarButtonMenu, CheckMarkIcon
+import { ToolbarButtonMenu, CheckBoxLabelForm
 } from '../../../shared';
 import type { Props } from '../../../flow/types.js.flow';
 
@@ -20,7 +20,7 @@ class DefaultTemplate extends React.Component<P, {}> {
 
   handleSelectTemplate = () => {
     const { history } = this.props;
-    history.push(`/marccat/record/template?templateId=${408}`);
+    history.push(`/marccat/record/template?templateId=${42}`);
   }
 
   render() {
@@ -61,7 +61,7 @@ class DefaultTemplate extends React.Component<P, {}> {
             <div id="data-test-settings-authority-records" style={{ paddingBottom: '15px' }}>
               {translate({ id: 'ui-marccat.settings.default.record.template.auth.text' }) }
             </div>
-            <CheckMarkIcon labels={names.slice(0, 4)} />
+            <CheckBoxLabelForm labels={names.slice(0, 4)} />
             <div id="data-test-settings-authority-records" style={{ paddingBottom: '15px', paddingTop: '15px' }}>
               {translate({ id: 'ui-marccat.settings.default.record.template.bib.text' }) }
             </div>

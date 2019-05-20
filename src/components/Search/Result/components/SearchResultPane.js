@@ -5,11 +5,11 @@ import { connect } from 'react-redux';
 import { Pane, Icon, MultiColumnList } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
 import type { Props } from '../../../../flow/types.js.flow';
-import { resultsFormatter, columnMapper, columnWidthMapper, renderColumn } from '../../../../shared/utils/Formatter';
+import { resultsFormatter, columnMapper, columnWidthMapper, renderColumn } from '../../../../utils/Formatter';
 import { injectProps, ActionMenu, EmptyMessage, NoResultsMessage } from '../../../../shared';
 import { ACTION } from '../../../../redux/actions/Actions';
 import * as C from '../../../../config/constants';
-import { selectForm } from '../../../../redux/helpers/Selector';
+import { selectForm } from '../../../../redux/helpers/selector';
 
 
 class SearchResultPane extends React.Component<Props, {}> {
@@ -21,7 +21,7 @@ class SearchResultPane extends React.Component<Props, {}> {
 
   renderVisibleColumns = () => {
     const { store } = this.props;
-    const form = selectForm(store, 'checkboxForm');
+    const form = selectForm(store, C.REDUX.FORM.CHECKBOX_FORM);
     const visibleColumns = [];
     const visibleColumns2 = [
       'resultView',
@@ -84,7 +84,7 @@ class SearchResultPane extends React.Component<Props, {}> {
       isLoadMore === 'N' || isLoadMore === undefined ?
         <Pane
           padContent={(containerMarcJSONRecords.length > 0) || isFetching}
-          autosize="true"
+          autosize={true.toString()}
           defaultWidth="fill"
           actionMenu={ActionMenu}
           paneTitle={translate({ id: 'ui-marccat.search.record' })}
@@ -121,7 +121,7 @@ class SearchResultPane extends React.Component<Props, {}> {
         </Pane> : (isLoadMore === 'Y') &&
         <Pane
           padContent={(containerMarcJSONRecords.length > 0)}
-          autosize="true"
+          autosize={true.toString()}
           defaultWidth="fill"
           actionMenu={ActionMenu}
           paneTitle={translate({ id: 'ui-marccat.search.record' })}

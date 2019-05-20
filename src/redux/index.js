@@ -71,4 +71,4 @@ export const epics = combineEpics(
 );
 export { ACTION } from './actions/Actions';
 export * from './actions/ActionCreator';
-export * from './helpers/Selector';
+export * from './helpers/selector';

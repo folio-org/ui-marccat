@@ -1,0 +1,37 @@
+// @flow
+
+/**
+ * @author: Christian Chiama
+ * @Team: @Cult
+ * @module: MARCcat
+ *
+ *
+ * 1) Types give additional constraint on a language, marccat was written on the untyped language
+ * as a consequence of this fact
+ *
+ * 2) flow sometimes does not work as expected.
+ *
+ *  So any help and suggestions will be very appreciated.
+ *
+ * -----------------------------------------------------------------------------------
+ * Type definition:
+ * Search Type, Cataloging Type, Browse Type, Template Type, Router Type, Settings Type
+ *
+ * TODO- we need to provide type information
+ * -----------------------------------------------------------------------------------
+ * Type definition for utility function
+ * TODO - we need to provide type information
+ * utils:
+ *
+ */
+
+
+/* ---------------- Private declarations ---------------- */
+declare type UnaryFn<A, R> = (a: A) => R
+
+
+/* ---------------- Public declarations ---------------- */
+export type Component<A> = React$ComponentType<A>
+
+
+export type HOC<Base, Enhanced> = UnaryFn<Component<Base>, Component<Enhanced>>

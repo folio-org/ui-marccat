@@ -10,6 +10,7 @@ export const RECORD_FIELD_STATUS = {
 };
 
 export const TAGS = {
+  _000: '000',
   _001: '001',
   _003: '003',
   _005: '005',
@@ -26,6 +27,10 @@ export const TAGS_NAME = {
   _007: 'Tag007',
   _008: 'Tag008',
   _040: 'Tag040'
+};
+
+export const FIELD_NAME = {
+  LEADER: 'Leader',
 };
 /*
  * Create array all tags width category 7
@@ -64,10 +69,16 @@ export const TAG_MANDATORY = ['001', '005', '008', '040'];
 
 export const TAG_WITH_NO_HEADING_ASSOCIATED = union(TAG_WIDH_CAT_7, TAG_WIDH_CAT_8);
 
+export const VERIFICATION_LEVEL = 'verificationLevel';
 export const VISUAL_RUNNING_TIME = 'visualRunningTime';
 export const IMAGE_BIT_DEPTH = 'imageBitDepth';
 export const DATE_FIRST_PUBBLICATION = 'dateFirstPublication';
 export const DATE_LAST_PUBBLICATION = 'dateLastPublication';
+export const RECORD_CATALOGING_SOURCE_CODE = 'recordCataloguingSourceCode';
+export const FIELDS = 'fields';
+export const FIELD006 = 'fields006';
+export const FIELD007 = 'fields007';
+export const FIELD008 = 'field008';
 
 
 export const RECORD_ACTION = {
@@ -88,7 +99,7 @@ export const LOCK_ENTITY_TYPE = {
 export const SUBFIELD_DELIMITER = '\u001f';
 export const SUBFIELD_CHARACTER = '$';
 
-export const EMPTY_FIXED_FIELD = (code: String): Object => {
+export const EMPTY_FIXED_FIELD = (code: String): {} => {
   return {
     code,
     mandatory: false,

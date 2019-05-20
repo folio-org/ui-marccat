@@ -1,4 +1,4 @@
-// @flow
+/* @flow strict  */
 import * as React from 'react';
 import { Field } from 'redux-form';
 import { TextField } from '@folio/stripes/components';
@@ -6,17 +6,34 @@ import style from '../../../Style/variableform.css';
 
 type Props = {
   autoFocus: boolean,
-  cells: Array<Object>,
-  columnMapping: Array<Object>,
+  cells: Array<{ }>,
+  columnMapping: Array<{ }>,
   error: string | boolean,
-  field: PropTypes.string,
-  fieldComponents: Array<Object>,
+  field: string,
+  fieldComponents: Array<{ }>,
   readOnlyFields: Array<string>,
   rowIndex: number,
   visibleFields: Array<string>,
-  widths: Array<Object>,
+  widths: Array<{ }>,
 }
-
+/**
+ *
+ *
+ * @export
+ * @param {Props} {
+ *   rowIndex,
+ *   error,
+ *   field,
+ *   visibleFields,
+ *   columnMapping,
+ *   fieldComponents,
+ *   readOnlyFields,
+ *   widths,
+ *   cells,
+ *   autoFocus
+ * }
+ * @returns
+ */
 export default function ItemEdit({
   rowIndex,
   error,
@@ -27,7 +44,8 @@ export default function ItemEdit({
   readOnlyFields,
   widths,
   cells,
-  autoFocus
+  autoFocus,
+  ...props
 }: Props) {
   const fields = visibleFields.map((name, fieldIndex) => {
     if (readOnlyFields.indexOf(name) === -1) {
@@ -57,6 +75,7 @@ export default function ItemEdit({
         <div key={fieldKey} style={fieldStyle}>
           <Field
             {...fieldProps}
+            {...props}
             component={TextField}
             marginBottom0
             fullWidth

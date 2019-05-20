@@ -7,7 +7,7 @@ export type Action = {
 }
 
 export type Reducer<S, A = Action> = {
-  state: Object,
+  state: {},
   action: A,
 } & Reducer<S, A>
 

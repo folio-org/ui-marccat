@@ -8,7 +8,7 @@ import { remapForAssociatedBibList, resultsFormatterForAssociated, columnMapperF
 import { EMPTY_STRING } from '../../../config/constants';
 
 type P = Props & {
-    checkRecordType: Array<any>,
+    checkRecordType: Array<*>,
 }
 
 function AssociatedBib({ ...props }: P) {

@@ -3,7 +3,7 @@ import { ACTION } from '../../../redux/actions';
 
 /**
  *
- * @param {*} payload
+ * @param {{}} payload
  */
 export const loadTemplateAction = () => {
   return {
@@ -30,7 +30,7 @@ export const countAction = () => {
 
 /**
  *
- * @param {*} payload
+ * @param {{}} payload
  */
 export const getTemplateByIdAction = (id) => {
   return {
@@ -46,7 +46,7 @@ export const getTemplateByIdAction = (id) => {
 
 /**
  *
- * @param {*} payload
+ * @param {{}} payload
  */
 export const searchDetailAction = (id) => {
   return {
@@ -64,7 +64,7 @@ export const searchDetailAction = (id) => {
 
 /**
  *
- * @param {*} payload
+ * @param {{}} payload
  */
 export const duplicaRecordAction = (id, cb) => {
   return {
@@ -82,7 +82,7 @@ export const duplicaRecordAction = (id, cb) => {
 
 /**
  *
- * @param {*} payload
+ * @param {{}} payload
  */
 export const historySearchAction = (data) => {
   return {
@@ -93,7 +93,7 @@ export const historySearchAction = (data) => {
 
 /**
  *
- * @param {*} payload
+ * @param {{}} payload
  */
 export const resetHistoryAction = () => {
   return {

@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Field } from 'redux-form';
 import { Select } from '@folio/stripes/components';
 
-export default ({ ...props }) => {
+export default ({ ...props }: {}) => {
   const { rest, name, id } = props;
   const options = [
     { label: 'Browse', value: 'BROWSE' },

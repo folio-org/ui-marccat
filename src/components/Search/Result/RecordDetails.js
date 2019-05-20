@@ -14,7 +14,7 @@ import { SUBFIELD_CHARACTER } from '../../Cataloguing/Utils/MarcConstant';
 import style from '../Style/index.css';
 
 type P = Props & {
-  items: Array<any>,
+  items: Array<*>,
 }
 
 class RecordDetails extends React.Component<P, {}> {

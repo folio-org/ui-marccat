@@ -2,17 +2,22 @@
 export type { Props } from '../flow/types.js.flow';
 
 // core
-export { default as injectProps } from './hoc/injectProps';
+export { default as injectProps } from '../hoc/injectProps';
 
 // lib
-export { EmptyMessage, NoResultsMessage } from './lib/Message';
-export { ToolbarMenu, ToolbarButtonMenu } from './lib/Toolbar/Menu';
-export { ActionMenu, getActionMenu, generateDropdownMenu } from './lib';
-export { CheckMarkIcon, CheckboxIconButton, SingleCheckboxIconButton } from './lib/Button';
-export { default as sharedInputStylesHelper } from '@folio/stripes-components/lib/sharedStyles/sharedInputStylesHelper';
+export { ToolbarMenu, ToolbarButtonMenu } from './components/Toolbar/Menu';
+export {
+  ActionMenu,
+  getActionMenu,
+  generateDropdownMenu,
+  CheckBoxLabelForm,
+  CheckBoxLabelField,
+  RenderDropdDownMenu,
+  EmptyMessage,
+  NoResultsMessage
+} from './components';
 // utils
 export {
-  replaceSeparator,
   buildUrl,
   camelizify,
   decamelizify,
@@ -21,11 +26,10 @@ export {
   findParam,
   safeObj,
   safeFn,
-  safeArray,
   Localize,
   qs,
   post
-} from './utils/Function';
+} from '../utils/Function';
 export {
   columnMapper,
   renderColumn,
@@ -35,7 +39,7 @@ export {
   resultsFormatterForAssociated,
   resultsFormatter,
   browseFormatter
-} from './utils/Formatter';
+} from '../utils/Formatter';
 
 export {
   getTagDisplayValue,
@@ -48,4 +52,4 @@ export {
   remapFilters,
   remapForAssociatedBibList,
   getMicroformat
-} from './utils/Mapper';
+} from '../utils/Mapper';

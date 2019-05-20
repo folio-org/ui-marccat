@@ -3,7 +3,7 @@ import { Row, MultiColumnList } from '@folio/stripes/components';
 import { connect } from 'react-redux';
 import ClearHistory from './ClearHistory';
 import { resetHistoryAction } from '../Actions';
-import style from '../../../shared/lib/Style/Dropdown.css';
+import style from '../../../shared/components/Style/Dropdown.css';
 
 const PanelHistory = ({ ...props }) => {
   const { searchPerformed, recentHistory, totalBib, withMulticolumn } = props;

@@ -73,7 +73,7 @@ export class BrowseItemDetail extends React.Component<P, {
           <Accordion
             separator={false}
             header={FilterAccordionHeader}
-            label="List of Records"
+            label="Associated Bibliographic Records"
           >
             <MultiColumnList
               id="bib-associated"

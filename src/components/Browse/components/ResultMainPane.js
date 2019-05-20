@@ -7,7 +7,6 @@ import {
   NoResultsMessage,
   ToolbarButtonMenu,
   injectProps,
-  browseFormatter,
   browseColMapper
 } from '../../../shared';
 
@@ -58,7 +57,7 @@ class ResultMainPane extends React.Component<{}, {}> {
                     contentData={browseRecords}
                     autosize={true.toString()}
                     isEmptyMessage={<NoResultsMessage {...this.props} />}
-                    formatter={browseFormatter}
+                    formatter={() => { }}
                     onRowClick={handleBrowseDetails()}
                     rowMetadata={['Access point', 'Authority Records', 'Bibliographic Records']}
                     columnMapping={browseColMapper}

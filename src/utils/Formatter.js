@@ -143,14 +143,11 @@ export const columnMapperForAssociated = {
 };
 export const browseColMapper = {
   'type': '',
-  'headingNumber': 'Heading #',
   'cr0': '',
   'cr1': '',
-  'cr2': '',
-  'cr3': '',
   'stringText': 'Access point',
-  'countAuthorities': 'Authority Records',
-  'countDocuments': 'Bibliographic Records'
+  'countAuthorities': 'Auths',
+  'countDocuments': 'Bibs'
 };
 export const resultsFormatterForAssociated = {
   resultView: x => (
@@ -298,52 +295,4 @@ export const resultsFormatter = (isBibsOnly: ?boolean = true, isAuthOnly: ?boole
     )
   };
   return (isAuthOnly && isBibsOnly) ? all : isBib;
-};
-
-export const browseFormatter = {
-  type: x => (
-    <span className={x.countAuthorities === 0 && x.countDocuments === 0 ? style.noRef : x.countAuthorities === 0 ? style.bibliographic : style.authority} />
-  ),
-  cr0: item => (
-    <div>
-      {item.crossReferences.length > 0 &&
-        item.crossReferences.map(
-          element => {
-            if (element.refType === 1) {
-              return (
-                <Button
-                  buttonStyle="none"
-                  onClick
-                  style={{ fontWeight: 'bold', marginBottom: 0 }}
-                  aria-label={element.stringText}
-                >
-                  {'See: ' + element.stringText}
-                </Button>
-              );
-            } else return null;
-          }
-        )}
-    </div>
-  ),
-  cr1: item => (
-    <div>
-      {item.crossReferences.length > 0 &&
-        item.crossReferences.map(
-          element => {
-            if (element.refType === 2) {
-              return (
-                <Button
-                  buttonStyle="none"
-                  onClick
-                  style={{ fontWeight: 'bold', marginBottom: 0 }}
-                  aria-label={element.stringText}
-                >
-                  {'Seen From: ' + element.stringText}
-                </Button>
-              );
-            } else return null;
-          }
-        )}
-    </div>
-  )
 };

@@ -37,8 +37,7 @@ export {
   columnMapperForAssociated,
   browseColMapper,
   resultsFormatterForAssociated,
-  resultsFormatter,
-  browseFormatter
+  resultsFormatter
 } from '../utils/Formatter';
 
 export {

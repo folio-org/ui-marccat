@@ -28,7 +28,21 @@ export const autosuggestionAction = (payload) => {
     },
   };
 };
-
+/**
+ *
+ * @param {*} payload
+ */
+export const triggerTagCodeSuggestion = (payload, cb) => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.SUGGEST_TAG_CODE,
+      type: 'tagCodeSuggestion',
+      params: `tagNumber=${payload}`,
+    },
+    cb
+  };
+};
 /**
  *
  * @param {*} payload

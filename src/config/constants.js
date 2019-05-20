@@ -47,6 +47,7 @@ export const ENDPOINT = {
   CREATE_HEADING_URL: '/create-heading',
   CHANGE_DISPLAY_VALUE: '/bibliographic-record/fixed-field-display-value',
   BIBLIOGRAPHIC_RECORD: '/bibliographic-record',
+  SUGGEST_TAG_CODE: '/filteredTagsList',
   HEADING_BY_TAG: '/headings-by-tag',
   CHANGE_TAG_DISPLAY_VALUE_FROM_LEADER: '/fixed-fields-code-groups-by-leader',
   LOCK_MARC_RECORD: '/bibliographic-record/lock/',

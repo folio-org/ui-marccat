@@ -398,6 +398,7 @@ class FieldForm extends React.Component {
         newState.status = this.buildStatusArray();
       }
       newState.status[index].editing = !newState.status[index].editing;
+      newState.status[index].isEditMode = !newState.status[index].isEditMode;
       newState.currentIndex = index;
       newState.lastAction = new Date().getTime();
       return newState;

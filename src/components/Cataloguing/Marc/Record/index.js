@@ -83,7 +83,7 @@ class Record extends React.Component<Props, {
     else return Object.assign({}, recordDuplicate.results.bibliographicRecord);
   };
 
-  onCreate = item => {
+  onCreate = (item, _state) => {
     const { store } = this.props;
     const { variableField: { code, ind1, ind2, displayValue } } = item;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
@@ -100,15 +100,20 @@ class Record extends React.Component<Props, {
       showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.duplicate.error', value: item.code }), C.VALIDATION_MESSAGE_TYPE.ERROR);
       return form.splice(0, 1);
     }
-    return (!cretaeHeadingForTag || length > 1) ? this.asyncCreateHeading(item, heading) : this.setupComonProperties(item, heading);
+    return (!cretaeHeadingForTag) ? this.asyncCreateHeading(item, heading) : this.setupComonProperties(item, heading);
   }
 
+  // TODO FIXME
   asyncCreateHeading = async (item, heading) => {
     try {
       const response = await post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading);
       const data = await response.json();
       item.variableField.categoryCode = data.categoryCode;
-      item.variableField.keyNumber = data.keyNumber;
+      if (item.variableField.keyNumber > 0) {
+        item.variableField.newKeyNumber = data.keyNumber || item.variableField.keyNumber;
+      } else {
+        item.variableField.keyNumber = data.keyNumber || item.variableField.keyNumber;
+      }
       item.variableField.displayValue = data.displayValue;
       showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.create.success', value: item.code }), C.VALIDATION_MESSAGE_TYPE.SUCCESS);
     } catch (exception) {
@@ -116,8 +121,12 @@ class Record extends React.Component<Props, {
     }
   };
 
+
   setupComonProperties = (item, heading) => {
     item.variableField.displayValue = heading.displayValue;
+    if (item.variableField.keyNumber > 0) {
+      this.asyncCreateHeading(item, heading);
+    }
   };
 
 

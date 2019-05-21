@@ -45,6 +45,16 @@ export class BrowseResults extends React.Component<Props, S> {
     });
   };
 
+  handleClickCrossReference = (e) => {
+    const { store } = this.props;
+    e.stopPropagation();
+    const indexFilter = store.getState().form.searchForm.values.selectIndexes;
+    const conditionFilter = store.getState().form.searchForm.values.selectCondition;
+    const indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
+    store.dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query: indexForQuery + e.currentTarget.attributes[1].nodeValue, from: '1', to: '50' });
+    store.dispatch({ type: ACTION.SETTINGS, data: { triggerDetails: 'Y' } });
+  }
+
   handleBrowseDetails = (e: any, meta: Object) => {
     const { dispatch, store } = this.props;
     const id = meta.headingNumber;
@@ -113,24 +123,17 @@ export class BrowseResults extends React.Component<Props, S> {
                 <div>
                   <Button
                     buttonStyle="none"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      const indexFilter = store.getState().form.searchForm.values.selectIndexes;
-                      const conditionFilter = store.getState().form.searchForm.values.selectCondition;
-                      const indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
-                      store.dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query: indexForQuery + e.currentTarget.attributes[1].nodeValue, from: '1', to: '50' });
-                      store.dispatch({ type: ACTION.SETTINGS, data: { triggerDetails: 'Y' } });
-                    }}
+                    onClick={this.handleClickCrossReference}
                     style={{ margin: 0, padding: 0 }}
                     aria-label={element.stringText}
                   >
                     <span
-                      id="textSpanRefType1"
+                      id="refType1"
                       style={{ fontWeight: 'bold', margin: 0, padding: 0 }}
                     >
                       { 'See: ' }
                     </span>
-                    { element.stringText}
+                    { element.stringText }
                   </Button>
                   <br />
                 </div>
@@ -140,14 +143,7 @@ export class BrowseResults extends React.Component<Props, S> {
                 <div>
                   <Button
                     buttonStyle="none"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      const indexFilter = store.getState().form.searchForm.values.selectIndexes;
-                      const conditionFilter = store.getState().form.searchForm.values.selectCondition;
-                      const indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
-                      store.dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query: indexForQuery + e.currentTarget.attributes[1].nodeValue, from: '1', to: '50' });
-                      store.dispatch({ type: ACTION.SETTINGS, data: { triggerDetails: 'Y' } });
-                    }}
+                    onClick={this.handleClickCrossReference}
                     style={{ margin: 0, padding: 0 }}
                     aria-label={element.stringText}
                   >
@@ -157,7 +153,7 @@ export class BrowseResults extends React.Component<Props, S> {
                     >
                       { 'Seen From: ' }
                     </span>
-                    { element.stringText}
+                    { element.stringText }
                   </Button>
                   <br />
                 </div>

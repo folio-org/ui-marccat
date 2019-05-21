@@ -3,13 +3,13 @@
 // @flow
 import React from 'react';
 import { Field } from 'redux-form';
-import { Select, Row, Col } from '@folio/stripes-components';
+import { Row, Col } from '@folio/stripes-components';
 import { connect } from 'react-redux';
 import { isEmpty, last } from 'lodash';
-import { EMPTY_SPACED_STRING, REDUX } from '../../../../../config/constants';
-import { decamelizify } from '../../../../../shared';
-import type { Props, State } from '../../../../../flow/types.js.flow';
-import { dropDownValuesAction, changeDisplayValueAction } from '../../../Actions';
+import { EMPTY_SPACED_STRING, REDUX } from '../../../../config/constants';
+import { decamelizify } from '../../../../shared';
+import type { Props, State } from '../../../../flow/types.js.flow';
+import { dropDownValuesAction, changeDisplayValueAction } from '../../Actions';
 import {
   TAGS,
   VISUAL_RUNNING_TIME,
@@ -17,13 +17,13 @@ import {
   DATE_LAST_PUBBLICATION,
   IMAGE_BIT_DEPTH,
   RECORD_FIELD_STATUS
-} from '../../../Utils/MarcConstant';
-import { MarcField } from '../../Form/FixedField/Field';
-import Tag00XInput from '../Field/InputField';
-import HeaderTypeSelect from '../Field/SelectField';
-import { formFieldValue } from '../../../../../redux/helpers/selector';
+} from '../../Utils/MarcConstant';
+import { Field as FormField } from '../Common/Field';
+import Tag00XInput from '../Common/InputField';
+import HeaderTypeSelect from '../Common/SelectField';
+import { formFieldValue } from '../../../../redux/helpers/selector';
 
-import style from '../../../Style/index.css';
+import style from '../../Style/index.css';
 
 type S = {
   expand: Boolean,
@@ -166,14 +166,14 @@ class Tag00X extends React.PureComponent<Props, S> {
 
   render() {
     const { expand } = this.state;
-    const { name, element, headingTypes, values006, values007, values008 } = this.props;
+    const { label, name, element, headingTypes, values006, values007, values008 } = this.props;
     const values = (element.code === TAGS._006) ? values006 : ((element.code === TAGS._007) ? values007 : values008);
     return (
       <div className={style.fieldContainer} no-padding={true.toString()}>
-        <MarcField
+        <FormField
           {...this.props}
-          label={`${element.code}`}
-          name={name}
+          label={label}
+          name={label}
           prepend="true"
           onClick={() => {
             this.setState({ expand: !expand });
@@ -182,15 +182,16 @@ class Tag00X extends React.PureComponent<Props, S> {
         <div className={(expand) ? style.leaderResultsActive : style.leaderResults}>
           <Col xs={12}>
             {headingTypes &&
-              <Field
-                {...this.props}
-                label={`Tag${element.code}`}
-                component={Select}
-                onChange={this.onHandleChange}
-                placeholder={'Select Heading types for '.concat(element.code)}
-                dataOptions={headingTypes.results.headingTypes}
-              />}
-            {!isEmpty(values) && this.RenderDropwDown(values.results, element.code)}
+            <HeaderTypeSelect
+              {...this.props}
+              label={`Tag ${label}`}
+              name={name}
+              onChange={this.onHandleChange}
+              placeholder={'Select Heading types for '.concat(label)}
+              dataOptions={headingTypes.results.headingTypes}
+            />
+            }
+            {!isEmpty(values) && this.RenderDropwDown(values.results, label)}
           </Col>
         </div>
       </div>

@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Select } from '@folio/stripes/components';
 import { Field } from 'redux-form';
-import type { Props, State } from '../../../../../flow/types.js.flow';
+import type { Props, State } from '../../../../flow/types.js.flow';
 /**
  *
  *

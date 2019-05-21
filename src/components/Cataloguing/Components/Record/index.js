@@ -1,7 +1,6 @@
 // @flow
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import { compose, setDisplayName } from 'recompose';
 import {
   Callout,
   Icon
@@ -31,7 +30,7 @@ import type { Props } from '../../..';
 import type { RecordTemplate, Type } from '../../../../flow/cataloging.js.flow';
 import { formFieldValue, resolve } from '../../../../redux/helpers/selector';
 import { TAGS, TAG_NOT_REPEATABLE } from '../../Utils/MarcConstant';
-import RecordPane from './Components/RecordPane';
+import RecordPane from './RecordPane';
 import { ACTION, destroy } from '../../../../redux/actions';
 
 /**
@@ -51,7 +50,6 @@ class Record extends React.Component<Props, {
       isEditMode:  (findParam('mode') === RECORD_ACTION.EDIT_MODE),
       mode: findParam('mode'),
       id: findParam('id'),
-      submit: false,
       deletedTag: false,
     };
     this.callout = React.createRef();
@@ -77,7 +75,7 @@ class Record extends React.Component<Props, {
   };
 
   onCreate = item => {
-    const { store } = this.props;
+    const { store, dispatch } = this.props;
     const { variableField: { code, ind1, ind2, displayValue } } = item;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const isNotRepetableField = includes(TAG_NOT_REPEATABLE, item.code);
@@ -93,7 +91,8 @@ class Record extends React.Component<Props, {
       showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.duplicate.error', value: item.code }), C.VALIDATION_MESSAGE_TYPE.ERROR);
       return form.splice(0, 1);
     }
-    return (!cretaeHeadingForTag || item.variableField.keyNumber > 0) ? this.asyncCreateHeading(item, heading) : this.setupComonProperties(item, heading);
+    dispatch(MarcAction.createHeadingAction(heading));
+    return (!cretaeHeadingForTag || item.variableField.keyNumber > 0) ? this.asyncCreateHeading(item, heading) : false;
   }
 
   asyncCreateHeading = async (item, heading) => {
@@ -101,16 +100,12 @@ class Record extends React.Component<Props, {
       const response = await post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading);
       const data = await response.json();
       item.variableField.categoryCode = data.categoryCode;
-      item.variableField.keyNumber = data.keyNumber;
+      item.variableField.keyNumber = data.keyNumber || item.variableField.keyNumber;
       item.variableField.displayValue = data.displayValue;
       showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.create.success', value: item.code }), C.VALIDATION_MESSAGE_TYPE.SUCCESS);
     } catch (exception) {
       showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.create.failure', value: item.code }), C.VALIDATION_MESSAGE_TYPE.ERROR);
     }
-  };
-
-  setupComonProperties = (item, heading) => {
-    item.variableField.displayValue = heading.displayValue;
   };
 
 
@@ -136,41 +131,40 @@ class Record extends React.Component<Props, {
     bibliographicRecord.leader.value = formData.Leader;
 
     const recordTemplate: RecordTemplate<Type> = {
-      id: 408,
+      id: 42,
       fields: filterMandatoryFields(emptyRecord.results.fields)
     };
 
     bibliographicRecord.fields = union(filterFixedFields(bibliographicRecord.fields), variableFormData);
     bibliographicRecord.fields = sortBy(bibliographicRecord.fields, SORTED_BY.CODE);
     const payload = { bibliographicRecord, recordTemplate };
-    this.setState({ submit: true });
 
     await post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), payload)
       .then((r) => { return r.json(); })
       .then((_response) => {
         showValidationMessage(this.callout, 'cataloging.record.update.success', 'success');
         setTimeout(() => {
-          this.handleClose();
+          this.handleClose(true);
         }, 2000);
       }).catch(() => {
         showValidationMessage(this.callout, 'cataloging.record.update.error', 'error');
       });
   }
 
-  handleClose = () => {
+  handleClose = (sumbmitting: boolean) => {
     const { id } = this.state;
-    const { dispatch, router, toggleFilterPane, reset, submit } = this.props;
+    const { dispatch, router, toggleFilterPane, reset } = this.props;
     dispatch({ type: ACTION.FILTERS, payload: {}, filterName: '', isChecked: false });
     reset();
     dispatch(destroy());
     toggleFilterPane();
-    return (submit) ? router.push(`/marccat/search?savedId=${id}`) : router.push('/marccat/search');
+    return (sumbmitting) ? router.push(`/marccat/search?savedId=${id}`) : router.push('/marccat/search');
   };
 
 
   render() {
     const { leaderData, recordDetail } = this.props;
-    const { isEditMode, id, submit } = this.state;
+    const { isEditMode, id } = this.state;
     const record = this.getCurrentRecord();
 
     return (!leaderData) ?
@@ -189,7 +183,6 @@ class Record extends React.Component<Props, {
             saveRecord={this.saveRecord}
             onCreate={this.onCreate}
             onDelete={this.onDelete}
-            submit={submit}
           />
           <Callout ref={this.callout} />
         </Fragment>
@@ -215,7 +208,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 export default (connect(
   ({ marccat: { data } }) => ({
-    emptyRecord: data.results,
+    emptyRecord: resolve(data, 'leaderData'),
     recordDetail: resolve(data, 'marcRecordDetail').bibliographicRecord,
     leaderData: resolve(data, 'leaderData'),
   }), mapDispatchToProps

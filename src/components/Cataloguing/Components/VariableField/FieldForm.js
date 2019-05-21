@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
 /* @flow strict  */
+import { FormattedMessage } from 'react-intl';
 import * as React from 'react';
 import { cloneDeep, isEqual, sortBy, uniqueId } from 'lodash';
-import { FormattedMessage } from 'react-intl';
 import { reduxForm, FieldArray } from 'redux-form';
 import PropTypes from 'prop-types';
 import {
@@ -16,10 +16,10 @@ import {
   Row
 } from '@folio/stripes/components';
 import EditableItem from './EditableItem';
-import ActionsMenuButton from '../../Menu/ActionsMenu';
-import style from '../../../Style/variableform.css';
-import { REDUX } from '../../../../../config/constants';
-import { CheckBoxLabelField } from '../../../../../shared';
+import ActionsMenuButton from './Menu/ActionsMenu';
+import style from '../../Style/variableform.css';
+import { REDUX } from '../../../../config/constants';
+import { CheckBoxLabelField } from '../../../../shared';
 
 const propTypes = {
   actionProps: PropTypes.object,

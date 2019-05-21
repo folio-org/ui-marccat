@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Field } from 'redux-form';
 import { TextField } from '@folio/stripes/components';
-import style from '../../../Style/variableform.css';
+import style from '../../Style/variableform.css';
 
 type Props = {
   autoFocus: boolean,

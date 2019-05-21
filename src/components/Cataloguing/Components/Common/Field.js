@@ -1,11 +1,10 @@
 /* eslint-disable consistent-return */
 import * as React from 'react';
-import { Field } from 'redux-form';
-import { compose, withState, withHandlers } from 'recompose';
+import { Field as FormField } from 'redux-form';
 import { IconButton } from '@folio/stripes/components';
 import classNames from 'classnames/bind';
-import style from '../../../Style/index.css';
-import { TAGS } from '../../../Utils/MarcConstant';
+import style from '../../Style/index.css';
+import { TAGS } from '../../Utils/MarcConstant';
 
 const cx = classNames.bind(style);
 
@@ -25,7 +24,8 @@ const getValidityClassName = meta => {
   }
 };
 
-export const MarcInputField = props => {
+
+export const InputField = props => {
   const { input, type, meta, autoFocus, readOnly } = props;
   return (
     <React.Fragment>
@@ -39,26 +39,8 @@ export const MarcInputField = props => {
   );
 };
 
-const withToggle = compose(
-  withState('toggledOn', 'toggle', false),
-  withHandlers({
-    show: ({ toggle }) => (_e) => toggle(true),
-    hide: ({ toggle }) => (_e) => toggle(false),
-    toggle: ({ toggle }) => (_e) => toggle((current) => !current)
-  })
-);
 
-
-// const IconToggle = withToggle(({ _status, _toggledOn, toggle }) => (
-//   <div className={cx('marcFieldIconCaretPrepend')}>
-//     <IconButton
-//       icon="caret-down"
-//       size="medium"
-//       onClick={toggle}
-//     />
-//   </div>));
-
-export const MarcField = ({ name, label, disbledIcon, prepend, onClick, readOnly }: Props) => (
+export const Field = ({ name, label, disbledIcon, prepend, onClick, readOnly }) => (
   <React.Fragment>
     <div className={cx('fieldWrapper')}>
       <div className={cx('marcFieldIconCaretPrepend')} hidden={!prepend}>
@@ -70,10 +52,10 @@ export const MarcField = ({ name, label, disbledIcon, prepend, onClick, readOnly
         />
       </div>
       <label htmlFor={name}>{label}</label>
-      <Field
+      <FormField
         name={name}
         readOnly={readOnly}
-        component={MarcInputField}
+        component={InputField}
         autoFocus={label === TAGS._006}
       />
       <div

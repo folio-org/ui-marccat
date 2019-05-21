@@ -57,15 +57,25 @@ export function autosuggestionAction(payload) {
  * @param {{}} payload
  * @returns
  */
-export function createHeadingAction(id, payload) {
+export function createHeadingAction(payload) {
   return {
     type: ACTION.CREATE,
     data: {
       path: ENDPOINT.CREATE_HEADING_URL,
-      type: `${id}-${payload.tag}`,
+      type: `heading${payload.code}`,
       params: ENDPOINT.DEFAULT_LANG_VIEW,
+      meta: {
+        key: payload.code,
+        code: payload.code,
+        ind1: payload.ind1,
+        ind2:payload.ind2,
+        displayValue: payload.displayValue,
+        keynumber: 0,
+        apiKey: 'results',
+        time: new Date(),
+      }
     },
-    payload
+    payload,
   };
 }
 
@@ -131,15 +141,15 @@ export function emptyRecordAction() {
   return {
     type: ACTION.QUERY,
     data: {
-      path: ENDPOINT.EMPTY_RECORD_URL + 408,
+      path: ENDPOINT.EMPTY_RECORD_URL + 42,
       type: 'emptyRecord',
       params: ENDPOINT.DEFAULT_LANG_VIEW,
-      id: 408,
+      id: 42,
       meta: {
-        id: 408,
+        id: 42,
         apiKey: 'results',
         time: new Date(),
-      }
+      },
     },
   };
 }

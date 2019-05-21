@@ -2,11 +2,12 @@
 import * as React from 'react';
 import { lifecycle } from 'recompose';
 
-const LyfeCyclecomponent = (WrappedComponent) => {
+
+const LyfeCyclecomponent = WrappedComponent => {
   return ({ ...props }) => <WrappedComponent {...props} />;
 };
 
-export default lifecycle<{}, {}, {}>({
+export default lifecycle<P, S, T>({
 
   /**
    * @returns

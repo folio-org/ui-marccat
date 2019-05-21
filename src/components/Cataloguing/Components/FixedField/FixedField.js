@@ -1,13 +1,13 @@
 // @flow
 import * as React from 'react';
-import { MarcField } from '../../Form/FixedField/Field';
-import style from '../../../Style/index.css';
+import { Field as FormField } from '../Common/Field';
+import style from '../../Style/index.css';
 
-const BaseTag00X = ({ fixedfields, ...props }) => (
+const FixedField = ({ fixedfields, ...props }) => (
   <React.Fragment>
     {fixedfields.map(field => (
       <div className={style.fieldContainer}>
-        <MarcField
+        <FormField
           {...props}
           readOnly={true.toString()}
           label={field.fixedField.code}
@@ -18,4 +18,4 @@ const BaseTag00X = ({ fixedfields, ...props }) => (
     }
   </React.Fragment>
 );
-export default (BaseTag00X);
+export default (FixedField);

@@ -6,39 +6,44 @@ import {
 } from '@folio/stripes/components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Localize } from '../../../../shared';
+import { Localize, findParam } from '../../../shared';
 
-import style from '../../Style/index.css';
-import { saveRecordAction } from '../../Actions';
+import style from '../Style/index.css';
+import { deleteRecordAction } from '../Actions';
+import { RECORD_ACTION } from '..';
 /**
  *
  *
  * @param {*} { ...props }
  * @returns
  */
-function SaveRecordButton({ ...props }) {
-  const { saveRecord } = props;
+function DeleteRecordButton({ ...props }) {
+  const { deleteRecord, id } = props;
   return (
     <React.Fragment>
+      {(findParam('mode') === RECORD_ACTION.EDIT_MODE) &&
       <Button
         buttonStyle="primary"
         buttonClass={style.rightPosition}
-        onClick={() => saveRecord()}
+        onClick={deleteRecord(id)}
         type="button"
         disabled={false}
         marginBottom0
       >
-        {'+ ' + Localize({ key: 'cataloging.record.create' })}
+        <Icon icon="trash">
+          {Localize({ key: 'cataloging.record.delete' })}
+        </Icon>
       </Button>
+      }
     </React.Fragment>
   );
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  saveRecord: (payload) => _ => {
-    dispatch(saveRecordAction(payload));
+  deleteRecord: (id) => _ => {
+    dispatch(deleteRecordAction(id));
   }
 }, dispatch);
 
 export default (connect(() => ({
-}))(SaveRecordButton));
+}), mapDispatchToProps)(DeleteRecordButton));

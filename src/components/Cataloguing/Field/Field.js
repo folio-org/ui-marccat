@@ -3,8 +3,8 @@ import * as React from 'react';
 import { Field as FormField } from 'redux-form';
 import { IconButton } from '@folio/stripes/components';
 import classNames from 'classnames/bind';
-import style from '../../Style/index.css';
-import { TAGS } from '../../Utils/MarcConstant';
+import style from '../Style/index.css';
+import { TAGS } from '../Utils/MarcConstant';
 
 const cx = classNames.bind(style);
 

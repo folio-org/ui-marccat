@@ -2,9 +2,9 @@
 import * as React from 'react';
 import { Accordion } from '@folio/stripes/components';
 import FieldList from './FieldList';
-import { Localize, CheckBoxLabelField } from '../../../../shared';
-import { replaceAll } from '../../Utils/MarcApiUtils';
-import { EMPTY_VARIABLE_FIELD } from '../../Utils/MarcConstant';
+import { Localize, CheckBoxLabelField } from '../../../shared';
+import { replaceAll } from '../Utils/MarcApiUtils';
+import { EMPTY_VARIABLE_FIELD } from '../Utils/MarcConstant';
 /**
  *
  *

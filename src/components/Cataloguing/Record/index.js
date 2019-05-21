@@ -14,24 +14,24 @@ import {
   RECORD_FIELD_STATUS,
   SORTED_BY,
   SUBFIELD_DELIMITER
-} from '../..';
+} from '..';
 import {
   injectProps,
   buildUrl, findParam, Localize, post
-} from '../../../../shared';
+} from '../../../shared';
 import {
   filterMandatoryFields,
   showValidationMessage,
   filterFixedFields,
-} from '../../Utils/MarcApiUtils';
-import * as C from '../../../../config/constants';
-import * as MarcAction from '../../Actions';
+} from '../Utils/MarcApiUtils';
+import * as C from '../../../config/constants';
+import * as MarcAction from '../Actions';
 import type { Props } from '../../..';
-import type { RecordTemplate, Type } from '../../../../flow/cataloging.js.flow';
-import { formFieldValue, resolve } from '../../../../redux/helpers/selector';
-import { TAGS, TAG_NOT_REPEATABLE } from '../../Utils/MarcConstant';
+import type { RecordTemplate, Type } from '../../../flow/cataloging.js.flow';
+import { formFieldValue, resolve } from '../../../redux/helpers/selector';
+import { TAGS, TAG_NOT_REPEATABLE } from '../Utils/MarcConstant';
 import RecordPane from './RecordPane';
-import { ACTION, destroy } from '../../../../redux/actions';
+import { ACTION, destroy } from '../../../redux/actions';
 
 /**
  *

@@ -3,8 +3,8 @@
 // @flow
 import * as React from 'react';
 import { MenuItem } from '@folio/stripes/components';
-import { Localize } from '../../../../../utils/Function';
-import style from '../../../../../shared/components/Style/Dropdown.css';
+import { Localize } from '../../../../utils/Function';
+import style from '../../../../shared/components/Style/Dropdown.css';
 
 export default ({ ...props }) => {
   const getLabels = () => {

@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Accordion } from '@folio/stripes-components';
-import { first } from 'lodash';
 import { compose, withProps } from 'recompose';
 import { reduxForm } from 'redux-form';
-import { Localize, CheckBoxLabelField } from '../../../../shared';
-import { REDUX, EMPTY_SPACED_STRING } from '../../../../config/constants';
+import { Localize, CheckBoxLabelField } from '../../../shared';
+import { REDUX } from '../../../config/constants';
 import FixedField from './FixedField';
 import FixedFieldArray from './FixedFieldArray';
 import Leader from '../Record/Leader';
-import * as MARC_CONSTANT from '../../Utils/MarcConstant';
 
 /**
  *

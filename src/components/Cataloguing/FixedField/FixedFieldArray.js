@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Field, FieldArray } from 'redux-form';
+import { Field } from 'redux-form';
 import { RepeatableField } from '@folio/stripes-components';
 import { first } from 'lodash';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import Tag00X from './Tag00X';
-import { TAGS, EMPTY_FIXED_FIELD } from '../../Utils/MarcConstant';
+import { TAGS, EMPTY_FIXED_FIELD } from '../Utils/MarcConstant';
 
 
 function RenderField006(props) {

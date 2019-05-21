@@ -6,10 +6,10 @@ import { Field } from 'redux-form';
 import { Row, Col } from '@folio/stripes-components';
 import { connect } from 'react-redux';
 import { isEmpty, last } from 'lodash';
-import { EMPTY_SPACED_STRING, REDUX } from '../../../../config/constants';
-import { decamelizify } from '../../../../shared';
-import type { Props, State } from '../../../../flow/types.js.flow';
-import { dropDownValuesAction, changeDisplayValueAction } from '../../Actions';
+import { EMPTY_SPACED_STRING, REDUX } from '../../../config/constants';
+import { decamelizify } from '../../../shared';
+import type { Props, State } from '../../../flow/types.js.flow';
+import { dropDownValuesAction, changeDisplayValueAction } from '../Actions';
 import {
   TAGS,
   VISUAL_RUNNING_TIME,
@@ -17,13 +17,13 @@ import {
   DATE_LAST_PUBBLICATION,
   IMAGE_BIT_DEPTH,
   RECORD_FIELD_STATUS
-} from '../../Utils/MarcConstant';
+} from '../Utils/MarcConstant';
 import { Field as FormField } from '../Common/Field';
 import Tag00XInput from '../Common/InputField';
 import HeaderTypeSelect from '../Common/SelectField';
-import { formFieldValue } from '../../../../redux/helpers/selector';
+import { formFieldValue } from '../../../redux/helpers/selector';
 
-import style from '../../Style/index.css';
+import style from '../Style/index.css';
 
 type S = {
   expand: Boolean,

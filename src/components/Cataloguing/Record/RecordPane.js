@@ -10,11 +10,11 @@ import {
 } from '@folio/stripes/components';
 import FixedFieldForm from '../FixedField/FixedFieldForm';
 import VariableFieldForm from '../VariableField';
-import { filterVariableFields } from '../../Utils/MarcApiUtils';
-import { deleteRecordAction } from '../../Actions';
+import { filterVariableFields } from '../Utils/MarcApiUtils';
+import { deleteRecordAction } from '../Actions';
 
-import { ACTION, destroy } from '../../../../redux/actions';
-import { META } from '../../../../config/constants';
+import { ACTION, destroy } from '../../../redux/actions';
+import { META } from '../../../config/constants';
 import DeleteRecordButton from '../Button/DeleteRecordButton';
 import SaveRecordButton from '../Button/SaveRecordButton';
 

@@ -4,12 +4,12 @@ import { isEmpty, last } from 'lodash';
 import { connect } from 'react-redux';
 import { Row, Col } from '@folio/stripes/components';
 import HeaderTypeSelect from '../Common/SelectField';
-import { EMPTY_SPACED_STRING, SEPARATOR } from '../../../../config/constants';
-import style from '../../Style/index.css';
+import { EMPTY_SPACED_STRING, SEPARATOR } from '../../../config/constants';
+import style from '../Style/index.css';
 import { Field as FormField } from '../Common/Field';
-import { decamelizify } from '../../../../shared';
-import { change008ByLeaderAction } from '../../Actions';
-import { FIELD_NAME, TAGS_NAME } from '../../Utils/MarcConstant';
+import { decamelizify } from '../../../shared';
+import { change008ByLeaderAction } from '../Actions';
+import { FIELD_NAME, TAGS_NAME } from '../Utils/MarcConstant';
 
 /**
  *

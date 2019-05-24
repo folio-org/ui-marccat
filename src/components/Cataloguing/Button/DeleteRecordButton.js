@@ -5,7 +5,9 @@ import {
   Button
 } from '@folio/stripes/components';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
+import { onlyUpdateForPropTypes, setPropTypes, compose } from 'recompose';
 import { Localize, findParam } from '../../../shared';
 
 import style from '../Style/index.css';
@@ -45,5 +47,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   }
 }, dispatch);
 
-export default (connect(() => ({
-}), mapDispatchToProps)(DeleteRecordButton));
+export default compose(
+  connect(_state => ({
+  }), mapDispatchToProps),
+  onlyUpdateForPropTypes,
+  setPropTypes({ id: PropTypes.string.isRequired })
+)(DeleteRecordButton);

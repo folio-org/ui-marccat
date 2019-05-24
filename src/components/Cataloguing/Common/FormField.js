@@ -1,6 +1,6 @@
 /* eslint-disable consistent-return */
 import * as React from 'react';
-import { Field as FormField } from 'redux-form';
+import { Field } from 'redux-form';
 import { IconButton } from '@folio/stripes/components';
 import classNames from 'classnames/bind';
 import style from '../Style/index.css';
@@ -40,7 +40,7 @@ export const InputField = props => {
 };
 
 
-export const Field = ({ name, label, disbledIcon, prepend, onClick, readOnly }) => (
+export const FormField = ({ name, label, disbledIcon, prepend, onClick, readOnly }) => (
   <React.Fragment>
     <div className={cx('fieldWrapper')}>
       <div className={cx('marcFieldIconCaretPrepend')} hidden={!prepend}>
@@ -52,11 +52,12 @@ export const Field = ({ name, label, disbledIcon, prepend, onClick, readOnly }) 
         />
       </div>
       <label htmlFor={name}>{label}</label>
-      <FormField
+      <Field
         name={name}
         readOnly={readOnly}
         component={InputField}
         autoFocus={label === TAGS._006}
+        required
       />
       <div
         className={cx('marcFieldIconCaret')}

@@ -70,7 +70,7 @@ export function reducer(state: {} = initialState, action: {}) {
   switch (action.type) {
   case ACTION.REQUEST_RESOLVE:
     return Object.assign({
-    }, state, Resolver.resolveData(action.data, action.payload, action.cb));
+    }, state, Resolver.resolveData(action.data, action.payload, action.cb, state));
   case ACTION.REQUEST_REJECT:
     return Object.assign({
     }, state, Resolver.rejectData(action.data, action.error));

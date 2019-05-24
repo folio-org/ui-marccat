@@ -5,7 +5,7 @@ import { Row, Col, KeyValue, AccordionSet, FilterAccordionHeader, Accordion } fr
 import type { Props } from '../../flow/index.js.flow';
 import { getTag245, getTitle245 } from '../../utils/Mapper';
 
-import style from '../../shared/styles/common.css';
+import style from '../../styles/common.css';
 
 type P = Props & {
   items: Array<*>,

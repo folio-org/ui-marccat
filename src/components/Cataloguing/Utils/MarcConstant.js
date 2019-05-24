@@ -31,6 +31,16 @@ export const TAGS_NAME = {
 
 export const FIELD_NAME = {
   LEADER: 'Leader',
+  VERIFICATION_LEVEL : 'verificationLevel',
+  VISUAL_RUNNING_TIME : 'visualRunningTime',
+  IMAGE_BIT_DEPTH : 'imageBitDepth',
+  DATE_FIRST_PUBBLICATION : 'dateFirstPublication',
+  DATE_LAST_PUBBLICATION : 'dateLastPublication',
+  RECORD_CATALOGING_SOURCE_CODE : 'recordCataloguingSourceCode',
+  FIELDS : 'Fields',
+  FIELDS006 : 'Fields006',
+  FIELDS007 : 'Fields007',
+  FIELDS008 : 'Field008',
 };
 /*
  * Create array all tags width category 7
@@ -75,10 +85,7 @@ export const IMAGE_BIT_DEPTH = 'imageBitDepth';
 export const DATE_FIRST_PUBBLICATION = 'dateFirstPublication';
 export const DATE_LAST_PUBBLICATION = 'dateLastPublication';
 export const RECORD_CATALOGING_SOURCE_CODE = 'recordCataloguingSourceCode';
-export const FIELDS = 'fields';
-export const FIELD006 = 'fields006';
-export const FIELD007 = 'fields007';
-export const FIELD008 = 'field008';
+export const FIELD008 = 'Field008';
 
 
 export const RECORD_ACTION = {

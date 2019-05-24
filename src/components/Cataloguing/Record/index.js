@@ -121,22 +121,25 @@ class Record extends React.Component<Props, {
     const { deletedTag } = this.state;
     const formData = getState().form.fixedFieldForm.values;
     const initialValues = getState().form.variableFieldForm.initial.items;
-    let variableFormData = getState().form.variableFieldForm.values.items;
+    let variableFields = getState().form.variableFieldForm.values.items;
 
-    variableFormData.map(k => k.variableField.displayValue = k.variableField.displayValue.replace(/\$/g, SUBFIELD_DELIMITER));
+    variableFields.map(k => k.variableField.displayValue = k.variableField.displayValue.replace(/\$/g, SUBFIELD_DELIMITER));
 
-    if (deletedTag) variableFormData = union(variableFormData, initialValues);
+    if (deletedTag) variableFields = union(variableFields, initialValues);
 
     const bibliographicRecord = this.getCurrentRecord();
     bibliographicRecord.leader.value = formData.Leader;
+
+    const field006: [] = formData.Fields006;
+    const field007: [] = formData.Fields007;
 
     const recordTemplate: RecordTemplate<Type> = {
       id: 42,
       fields: filterMandatoryFields(emptyRecord.results.fields)
     };
 
-    bibliographicRecord.fields = union(filterFixedFields(bibliographicRecord.fields), variableFormData);
-    bibliographicRecord.fields = sortBy(bibliographicRecord.fields, SORTED_BY.CODE);
+    const fixedFields = union(filterFixedFields(bibliographicRecord.fields), field006, field007);
+    bibliographicRecord.fields = sortBy(union(fixedFields, variableFields), SORTED_BY.CODE);
     const payload = { bibliographicRecord, recordTemplate };
 
     await post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), payload)

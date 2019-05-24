@@ -6,7 +6,7 @@ import { Row, Col } from '@folio/stripes/components';
 import HeaderTypeSelect from '../Common/SelectField';
 import { EMPTY_SPACED_STRING, SEPARATOR } from '../../../config/constants';
 import style from '../Style/index.css';
-import { Field as FormField } from '../Common/Field';
+import { FormField } from '../Common/FormField';
 import { decamelizify } from '../../../shared';
 import { change008ByLeaderAction } from '../Actions';
 import { FIELD_NAME, TAGS_NAME } from '../Utils/MarcConstant';

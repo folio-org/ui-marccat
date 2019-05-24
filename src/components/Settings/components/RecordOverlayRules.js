@@ -5,7 +5,7 @@ import { injectProps, ToolbarButtonMenu } from '../../../shared';
 import type { Props } from '../../../flow/types.js.flow';
 import TAGS from '../utils/Constant';
 
-import style from '../../../shared/styles/common.css';
+import style from '../../../styles/common.css';
 
 type P = Props & {
   label: string;

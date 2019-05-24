@@ -14,7 +14,7 @@ import { ACTION } from '../../redux/actions/Actions';
 import type { Props } from '../../flow/types.js.flow';
 import { resultsFormatterForAssociated, columnMapperForAssociated, getTag100, getTitle100, remapForAssociatedBibList } from '../../shared';
 import { EMPTY_STRING } from '../../config/constants';
-import style from '../../shared/styles/common.css';
+import style from '../../styles/common.css';
 
 type P = Props & {
 }

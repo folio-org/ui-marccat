@@ -3,7 +3,7 @@
 // @flow
 import React from 'react';
 import { Field } from 'redux-form';
-import { Row, Col } from '@folio/stripes-components';
+import { Row, Col, Select } from '@folio/stripes-components';
 import { connect } from 'react-redux';
 import { isEmpty, last } from 'lodash';
 import { EMPTY_SPACED_STRING, REDUX } from '../../../config/constants';
@@ -18,7 +18,7 @@ import {
   IMAGE_BIT_DEPTH,
   RECORD_FIELD_STATUS
 } from '../Utils/MarcConstant';
-import { Field as FormField } from '../Common/Field';
+import { FormField } from '../Common/FormField';
 import Tag00XInput from '../Common/InputField';
 import HeaderTypeSelect from '../Common/SelectField';
 import { formFieldValue } from '../../../redux/helpers/selector';
@@ -41,7 +41,6 @@ class Tag00X extends React.PureComponent<Props, S> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      expand: false,
       headerTypeCode: 0,
     };
     this.onHandleChange = this.onHandleChange.bind(this);
@@ -165,36 +164,21 @@ class Tag00X extends React.PureComponent<Props, S> {
   };
 
   render() {
-    const { expand } = this.state;
-    const { label, name, element, headingTypes, values006, values007, values008 } = this.props;
+    const { label, id, element, headertype, values006, values007, values008 } = this.props;
     const values = (element.code === TAGS._006) ? values006 : ((element.code === TAGS._007) ? values007 : values008);
     return (
-      <div className={style.fieldContainer} no-padding={true.toString()}>
-        <FormField
+      <Col xs={12}>
+        <Field
           {...this.props}
-          label={label}
-          name={label}
-          prepend="true"
-          onClick={() => {
-            this.setState({ expand: !expand });
-          }}
+          label={`Tag ${element.code}`}
+          name={id}
+          onChange={() => alert('reer')}
+          component={Select}
+          placeholder={'Select Heading types for '.concat(element.code)}
+          dataOptions={headertype.results.headingTypes}
         />
-        <div className={(expand) ? style.leaderResultsActive : style.leaderResults}>
-          <Col xs={12}>
-            {headingTypes &&
-            <HeaderTypeSelect
-              {...this.props}
-              label={`Tag ${label}`}
-              name={name}
-              onChange={this.onHandleChange}
-              placeholder={'Select Heading types for '.concat(label)}
-              dataOptions={headingTypes.results.headingTypes}
-            />
-            }
-            {!isEmpty(values) && this.RenderDropwDown(values.results, label)}
-          </Col>
-        </div>
-      </div>
+        {!isEmpty(values) && this.RenderDropwDown(values.results, label)}
+      </Col>
     );
   }
 }

@@ -4,6 +4,7 @@
 }
 
 .fieldContainer {
+  width: 100%;
   margin-bottom: 15px;
   border-radius: 8px;
   background-color: #dcdcdc;

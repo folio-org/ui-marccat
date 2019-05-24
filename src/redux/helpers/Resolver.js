@@ -10,7 +10,7 @@ import { formatErrors } from './request';
  * @param {{}} payload
  * @returns
  */
-export const resolveData = (data: {}, payload: {}, cb: (r) => void) => {
+export const resolveData = (data: {}, payload: {}, cb: (r) => void, state?: {}) => {
   return {
     [data.type]: {
       timestamp: new Date(),
@@ -24,6 +24,7 @@ export const resolveData = (data: {}, payload: {}, cb: (r) => void) => {
       isResolved: true,
       isRejected: false,
       results: payload.results || payload,
+      merged:[state[data.type], payload.results || payload],
       meta: data.meta || {},
       errors: {},
       callback: cb.toString()

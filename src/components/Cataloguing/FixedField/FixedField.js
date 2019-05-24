@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { Field as FormField } from '../Common/Field';
+import { FormField } from '../Common/FormField';
 import style from '../Style/index.css';
 
 const FixedField = ({ fixedfields, ...props }) => (

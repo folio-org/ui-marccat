@@ -3,6 +3,7 @@ import { ACTION } from '../../../redux/actions/Actions';
 import {
   TAGS,
 } from '../Utils/MarcConstant';
+import type { Dispatch } from '../../index.js.flow';
 
 //
 // ─── MARC ACTION CREATOR UTILITY ────────────────────────────────────────────────
@@ -235,10 +236,10 @@ export function dropDownValuesAction(payload, cb) {
     type: ACTION.QUERY,
     data: {
       path: ENDPOINT.FIXED_FIELD_CODE_GROUPS_URL,
-      type: `headerTypeValues${payload.code}`,
+      type: `headerTypeValues${payload.code}_${payload.key}`,
       params: `leader=${payload.value}&code=${payload.code}&headerTypeCode=${payload.headerTypeCode}&lang=ita`,
       meta: {
-        key: payload.code,
+        key: payload.key,
         apiKey: 'results',
         time: new Date(),
       }
@@ -283,5 +284,11 @@ export function settingsAction(payload) {
     data: {
       payload
     }
+  };
+}
+
+export function dispatchAsync(action) {
+  return (dispatch: Dispatch) => {
+    dispatch(action);
   };
 }

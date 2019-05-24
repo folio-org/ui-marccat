@@ -6,7 +6,7 @@ import InventoryPluggableButton from '../Button/Inventory';
 import type { Props } from '../../../flow/types.js.flow';
 import { getTag245, getTitle245 } from '../../../utils/Mapper';
 
-import style from '../../../shared/styles/common.css';
+import style from '../../../styles/common.css';
 
 type P = Props & {
   items: Array<*>,

@@ -10,7 +10,8 @@ module.exports = {
     },
   },
   plugins: [
-    "flowtype"
+    "flowtype",
+    "react-hooks"
   ],
   extends: [
     "@folio/eslint-config-stripes",
@@ -48,5 +49,7 @@ settings: {
     "react/sort-comp": "off",
     "react/prop-types" : "off",
     "react/destructuring-assignment": ["error"],
+    "react-hooks/rules-of-hooks": 'error',
+    "react-hooks/exhaustive-deps": 'warn'
 	}
 }

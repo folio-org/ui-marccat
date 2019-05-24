@@ -8,7 +8,7 @@ import { ACTION } from './redux/actions';
 import { REDUX } from './config/constants';
 import Provider from './route/Provider';
 
-import './shared/styles/common.css';
+import './styles/common.css';
 
 type S = {
   filterPaneIsVisible: boolean,

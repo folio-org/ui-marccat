@@ -1,37 +1,43 @@
 // @flow
 import * as React from 'react';
 import { AutoSuggest } from '@folio/stripes/components';
-import { triggerTagCodeSuggestion } from '../../Actions';
+import { triggerTagIndicatorsSuggestion } from '../../Actions';
 import { injectProps } from '../../../../shared';
 import { REDUX } from '../../../../config/constants';
 
-function AutoSuggestion(props) {
+function AutoSuggestInd2(props) {
   const initialState = {
     tagCodeArray: []
   };
   const [state, setState] = React.useState(initialState);
 
-  const onChange = (code) => {
+  const onFocus = (e) => {
+    e.preventDefault();
     const { tagCodeArray } = state;
-    const { dispatch, change, input } = props;
-    if (code && code !== '') {
-      const cb = (payload) => setState({ tagCodeArray: payload.tags });
-      dispatch(triggerTagCodeSuggestion(code, cb));
-      dispatch(change(REDUX.FORM.VARIABLE_FORM, input.name, code));
+    const { dispatch } = props;
+    if (e.target.form[1].defaultValue.length === 3) {
+      const tagCode = e.target.form[1].defaultValue;
+      const cb = (payload) => setState({ tagCodeArray: payload.ind2 });
+      dispatch(triggerTagIndicatorsSuggestion(tagCode, cb));
     }
     return tagCodeArray;
+  };
+
+  const onChange = (ind2Code) => {
+    const { dispatch, change, input } = props;
+    dispatch(change(REDUX.FORM.VARIABLE_FORM, input.name, ind2Code));
   };
 
   const { tagCodeArray } = state;
   const { input } = props;
   const remappedCodeSuggest = [];
   tagCodeArray.map(elem => remappedCodeSuggest.push(Object.assign({}, { value: elem, label: elem })));
-  console.log(tagCodeArray);
   return (
     <AutoSuggest
       {...props}
       items={remappedCodeSuggest}
       name={input.name}
+      onFocus={onFocus}
       onChange={onChange}
       renderOption={(item) => ((item) ? item.value : '')}
       renderValue={(item) => ((item) ? item.value : '')}
@@ -39,6 +45,5 @@ function AutoSuggestion(props) {
     />
   );
 }
-// <Field component={AutoSuggest} name="testfield" label="autoSuggestTest" items={testItems} />
 
-export default injectProps(AutoSuggestion);
+export default injectProps(AutoSuggestInd2);

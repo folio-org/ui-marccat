@@ -3,7 +3,9 @@ import * as React from 'react';
 import { Field } from 'redux-form';
 import { TextField } from '@folio/stripes/components';
 import style from '../../../Style/variableform.css';
-import AutoSuggestion from '../../Suggestion/AutoSuggestion';
+import AutoSuggestCode from '../../Suggestion/AutoSuggestCode';
+import AutoSuggestInd1 from '../../Suggestion/AutoSuggestInd1';
+import AutoSuggestInd2 from '../../Suggestion/AutoSuggestInd2';
 
 type Props = {
   autoFocus: boolean,
@@ -58,11 +60,15 @@ export default function ItemEdit({
       return (
         <div key={fieldKey} style={fieldStyle}>
           <Field
-            component={(mappedName === 'code') ? AutoSuggestion : TextField}
+            component={
+              (mappedName === 'code') ? AutoSuggestCode
+                : (mappedName === 'ind1') ? AutoSuggestInd1
+                  : (mappedName === 'ind2') ? AutoSuggestInd2
+                    : TextField
+            }
             {...props}
             {...fieldProps}
             fullWidth
-            marginBottom0
             autoFocus={autoFocus && fieldIndex === 0}
           />
         </div>

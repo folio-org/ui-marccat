@@ -47,6 +47,21 @@ export const triggerTagCodeSuggestion = (payload, cb) => {
  *
  * @param {*} payload
  */
+export const triggerTagIndicatorsSuggestion = (payload, cb) => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.SUGGEST_TAG_INDICATORS,
+      type: 'tagIndicatorsSuggestion',
+      params: `tagNumber=${payload}`,
+    },
+    cb
+  };
+};
+/**
+ *
+ * @param {*} payload
+ */
 export const createHeadingAction = (id, payload) => {
   return {
     type: ACTION.CREATE,

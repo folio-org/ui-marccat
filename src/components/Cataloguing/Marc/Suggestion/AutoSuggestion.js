@@ -3,8 +3,9 @@ import * as React from 'react';
 import { AutoSuggest } from '@folio/stripes/components';
 import { triggerTagCodeSuggestion } from '../../Actions';
 import { injectProps } from '../../../../shared';
+import { REDUX } from '../../../../config/constants';
 
-function AutoSuggestion({ ...props }) {
+function AutoSuggestion(props) {
   const initialState = {
     tagCodeArray: []
   };
@@ -12,10 +13,11 @@ function AutoSuggestion({ ...props }) {
 
   const onChange = (code) => {
     const { tagCodeArray } = state;
-    const { store } = props;
+    const { dispatch, change, input } = props;
     if (code && code !== '') {
       const cb = (payload) => setState({ tagCodeArray: payload.tags });
-      store.dispatch(triggerTagCodeSuggestion(code, cb));
+      dispatch(triggerTagCodeSuggestion(code, cb));
+      dispatch(change(REDUX.FORM.VARIABLE_FORM, input.name, code));
     }
     return tagCodeArray;
   };
@@ -24,17 +26,19 @@ function AutoSuggestion({ ...props }) {
   const { input } = props;
   const remappedCodeSuggest = [];
   tagCodeArray.map(elem => remappedCodeSuggest.push(Object.assign({}, { value: elem, label: elem })));
+  console.log(tagCodeArray);
   return (
     <AutoSuggest
       {...props}
       items={remappedCodeSuggest}
       name={input.name}
-      onChange={(code) => onChange(code)}
-      renderOption={item => (item ? item.label : '')}
-      renderValue={item => (item ? item.label : '')}
+      onChange={onChange}
+      renderOption={(item) => ((item) ? item.value : '')}
+      renderValue={(item) => ((item) ? item.value : '')}
       valueKey="value"
     />
   );
 }
+// <Field component={AutoSuggest} name="testfield" label="autoSuggestTest" items={testItems} />
 
 export default injectProps(AutoSuggestion);

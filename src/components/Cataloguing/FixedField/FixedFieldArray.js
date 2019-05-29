@@ -120,7 +120,7 @@ const Collapsible = withControlledCollapsible(({ isCollapsed, collapse, tag, ele
     <div className={style.fieldContainer}>
       <FormField
         {...props}
-        name={(tag) ? `${tag}.fixedField.displayValue` : `${TAGS._008}.fixedField.displayValue`}
+        name={(tag) ? `${tag}.fixedField.displayValue` : TAGS._008}
         prepend="false"
         type="text"
         readOnly="true"
@@ -170,15 +170,15 @@ const RenderCollapsibleField = ({ fields, meta: { error }, headertype, ...props 
  *
  * @param {*} props
  */
-const FixedFieldArray = ({ headertype006, headertype007, headertype008, record, ...rest }) => {
+const FixedFieldArray = ({ headertype006, headertype007, headertype008, record, ...props }) => {
   return (
     <React.Fragment>
-      <FieldArray name={FIELD_NAME.FIELDS006} component={RenderCollapsibleField} {...rest} headertype={headertype006} />
-      <FieldArray name={FIELD_NAME.FIELDS007} component={RenderCollapsibleField} {...rest} headertype={headertype007} />
+      <FieldArray name={FIELD_NAME.FIELDS006} component={RenderCollapsibleField} {...props} headertype={headertype006} />
+      <FieldArray name={FIELD_NAME.FIELDS007} component={RenderCollapsibleField} {...props} headertype={headertype007} />
       <Row xs>
         <Collapsible
-          {...rest}
-          name={`${TAGS._008}`}
+          {...props}
+          name={TAGS._008}
           element={first(record.fields.filter(f => f.code === TAGS._008))}
           headertype={headertype008}
         />

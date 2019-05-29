@@ -77,7 +77,7 @@ export const REDUX = {
   EPIC: 'marccat',
   FORM: {
     SEARCH_FORM: 'serchForm',
-    DATA_FIELD_FORM: 'dataFieldForm',
+    FIXED_FIELD_FORM: 'fixedFieldForm',
     VARIABLE_FORM: 'variableFieldForm'
   }
 };

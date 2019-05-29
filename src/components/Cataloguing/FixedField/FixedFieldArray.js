@@ -30,7 +30,7 @@ const withControlledCollapsible = compose(
 );
 
 
-const onHandleChange = (evt, code, tag, setValue, props) => {
+const onHandleChange = (evt, code, tag, props) => {
   const { dispatch, store } = props;
   const headerTypeCode = evt.target.value;
   const payload = {
@@ -78,7 +78,7 @@ const prepareValue = (code, data, payload, headerTypeCode) => {
 };
 
 
-const RenderDropwDown = ({ data, tag }) => {
+const RenderDropwDown = (data, tag) => {
   const sortedData = Object.values(data).sort((x, y) => x.name > y.name);
   return (
     <Row>
@@ -95,7 +95,7 @@ const RenderDropwDown = ({ data, tag }) => {
     </Row>);
 };
 
-const CollapsibleElement = ({ element, tag, headertype, setValue, ...props }) => {
+const CollapsibleElement = ({ element, tag, headertype, ...props }) => {
   const { store } = props;
   const selected = `headerTypeValues${element.code}_${tag}`;
   const value = selectKey(store, selected);
@@ -106,11 +106,11 @@ const CollapsibleElement = ({ element, tag, headertype, setValue, ...props }) =>
         id={`${tag}.fixedField.headerTypeCode`}
         name={`${tag}.fixedField.headerTypeCode`}
         label={`Tag ${element.code}`}
-        onChange={(e) => onHandleChange(e, element.code, tag, setValue, props)}
+        onChange={(e) => onHandleChange(e, element.code, tag, props)}
         placeholder={'Select Heading types for '.concat(element.code)}
         dataOptions={headertype.results.headingTypes}
       />
-      {!isEmpty(value) && RenderDropwDown}
+      {!isEmpty(value) && RenderDropwDown(value.results, tag)}
     </React.Fragment>
   );
 };

@@ -16,7 +16,7 @@ import {
   SUBFIELD_DELIMITER
 } from '..';
 import {
-  injectProps,
+  withProps,
   buildUrl, findParam, Localize, post
 } from '../../../shared';
 import {
@@ -134,7 +134,7 @@ class Record extends React.Component<Props, {
     const field007: [] = formData.Fields007;
 
     const recordTemplate: RecordTemplate<Type> = {
-      id: 42,
+      id: 408,
       fields: filterMandatoryFields(emptyRecord.results.fields)
     };
 
@@ -193,13 +193,6 @@ class Record extends React.Component<Props, {
   }
 }
 
-
-const mapStateToProps = state => ({
-  isEditMode: state.isEditMode,
-  id: state.id,
-  mode: state.mode,
-});
-
 const mapDispatchToProps = dispatch => bindActionCreators({
   loadHeadertype: (tag: []) => _ => {
     tag.forEach(t => dispatch(MarcAction.headertypeAction(t)));
@@ -215,4 +208,4 @@ export default (connect(
     recordDetail: resolve(data, 'marcRecordDetail').bibliographicRecord,
     leaderData: resolve(data, 'leaderData'),
   }), mapDispatchToProps
-)(injectProps(Record)));
+)(withProps(Record)));

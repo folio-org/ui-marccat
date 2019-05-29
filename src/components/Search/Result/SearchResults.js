@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { Paneset, HotKeys, PaneMenu } from '@folio/stripes/components';
 import { ACTION } from '../../../redux/actions';
 import type { Props } from '../../../flow/types.js.flow';
-import { NoResultsMessage, injectProps, remapForAssociatedBibList } from '../../../shared';
+import { NoResultsMessage, withProps, remapForAssociatedBibList } from '../../../shared';
 import { isAuthorityRecord, transitionToParams } from '../Utils/SearchUtils';
 import {
   SearchResultPane,
@@ -29,7 +29,7 @@ type P = Props & {
   isPanelOpen: boolean,
 }
 
-export class SearchResults extends React.Component<P, {}> {
+class SearchResults extends React.Component<P, {}> {
   constructor(props: P) {
     super(props);
     this.state = {
@@ -358,4 +358,4 @@ export default (connect(
     totalAuth: totalAuthRecords.totalAuthDoc
   }),
   (dispatch) => dispatch(emptyRecordAction()),
-)(injectProps(SearchResults)));
+)(withProps(SearchResults)));

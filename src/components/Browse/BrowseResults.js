@@ -13,7 +13,7 @@ import { browseColMapper } from '../../utils/Formatter';
 import BrowseAssociatedItemDetail from './BrowseAssociatedItemDetail';
 import * as C from '../../config/constants';
 import style from '../Search/Style/index.css';
-import { generateDropdownMenu, injectProps } from '../../shared';
+import { generateDropdownMenu, withProps } from '../../shared';
 
 type S = {
   browseDetailPanelIsVisible: boolean,
@@ -296,4 +296,4 @@ export default (connect(
     items: browseDetailsAssociated.records,
     isPanelOpen: browseDetailsAssociated.mustOpenPanel
   }),
-)(injectProps(BrowseResults)));
+)(withProps(BrowseResults)));

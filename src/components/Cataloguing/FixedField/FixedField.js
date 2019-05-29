@@ -3,13 +3,13 @@ import * as React from 'react';
 import { FormField } from '../Common/FormField';
 import style from '../Style/index.css';
 
-const FixedField = ({ fixedfields, ...props }) => (
+const FixedField = ({ fixedfields, ...rest }) => (
   <React.Fragment>
     {fixedfields.map(field => (
       <div className={style.fieldContainer}>
         <FormField
-          {...props}
-          readOnly={true.toString()}
+          {...rest}
+          readOnly="true"
           label={field.fixedField.code}
           name={field.fixedField.code}
         />

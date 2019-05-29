@@ -1,39 +1,29 @@
-/* @flow strict  */
+// @flow
 import * as React from 'react';
 import { Field } from 'redux-form';
 import { TextField } from '@folio/stripes/components';
+import classNames from 'classnames/bind';
+import AutoSuggestCode from './Suggestion/AutoSuggestCode';
+import AutoSuggestInd1 from './Suggestion/AutoSuggestInd1';
+import AutoSuggestInd2 from './Suggestion/AutoSuggestInd2';
+
 import style from '../Style/variableform.css';
+
+const cx = classNames.bind(style);
 
 type Props = {
   autoFocus: boolean,
-  cells: Array<{ }>,
-  columnMapping: Array<{ }>,
+  cells: Array<Object>,
+  columnMapping: Array<Object>,
   error: string | boolean,
-  field: string,
-  fieldComponents: Array<{ }>,
+  field: PropTypes.string,
+  fieldComponents: Array<Object>,
   readOnlyFields: Array<string>,
   rowIndex: number,
   visibleFields: Array<string>,
-  widths: Array<{ }>,
+  widths: Array<Object>,
 }
-/**
- *
- *
- * @export
- * @param {Props} {
- *   rowIndex,
- *   error,
- *   field,
- *   visibleFields,
- *   columnMapping,
- *   fieldComponents,
- *   readOnlyFields,
- *   widths,
- *   cells,
- *   autoFocus
- * }
- * @returns
- */
+
 export default function ItemEdit({
   rowIndex,
   error,
@@ -47,6 +37,7 @@ export default function ItemEdit({
   autoFocus,
   ...props
 }: Props) {
+
   const fields = visibleFields.map((name, fieldIndex) => {
     if (readOnlyFields.indexOf(name) === -1) {
       let mappedName = name;
@@ -72,12 +63,17 @@ export default function ItemEdit({
       }
 
       return (
-        <div key={fieldKey} style={fieldStyle}>
+        <div key={fieldKey} style={fieldStyle} className={cx('fieldControlMargin')}>
           <Field
-            {...fieldProps}
-            {...props}
-            component={TextField}
             marginBottom0
+            component={
+              (mappedName === 'code') ? AutoSuggestCode
+                : (mappedName === 'ind1') ? AutoSuggestInd1
+                  : (mappedName === 'ind2') ? AutoSuggestInd2
+                    : TextField
+            }
+            {...props}
+            {...fieldProps}
             fullWidth
             autoFocus={autoFocus && fieldIndex === 0}
           />

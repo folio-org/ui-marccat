@@ -142,12 +142,12 @@ export function emptyRecordAction() {
   return {
     type: ACTION.QUERY,
     data: {
-      path: ENDPOINT.EMPTY_RECORD_URL + 42,
+      path: ENDPOINT.EMPTY_RECORD_URL + 408,
       type: 'emptyRecord',
       params: ENDPOINT.DEFAULT_LANG_VIEW,
-      id: 42,
+      id: 408,
       meta: {
-        id: 42,
+        id: 408,
         apiKey: 'results',
         time: new Date(),
       },
@@ -222,6 +222,36 @@ export function headertypeAction(code) {
     },
   };
 }
+/**
+ *
+ * @param {*} payload
+ */
+export const triggerTagCodeSuggestion = (payload, cb) => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.SUGGEST_TAG_CODE,
+      type: 'tagCodeSuggestion',
+      params: `tagNumber=${payload}`,
+    },
+    cb
+  };
+};
+/**
+ *
+ * @param {*} payload
+ */
+export const triggerTagIndicatorsSuggestion = (payload, cb) => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.SUGGEST_TAG_INDICATORS,
+      type: 'tagIndicatorsSuggestion',
+      params: `tagNumber=${payload}`,
+    },
+    cb
+  };
+};
 
 /**
  *

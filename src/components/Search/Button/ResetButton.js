@@ -8,7 +8,7 @@ import { Localize } from '../../../shared';
 export default function ResetButton(props) {
 
   const handleResetAllButton = () => {
-    const { dispatch, reset } = this.props;
+    const { dispatch, reset } = props;
     dispatch({ type: ACTION.FILTERS, payload: {}, filterName: '', isChecked: false });
     dispatch(reset('searchForm'));
   };

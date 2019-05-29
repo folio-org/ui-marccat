@@ -11,7 +11,6 @@ import {
 import FixedFieldForm from '../FixedField/FixedFieldForm';
 import VariableFieldForm from '../VariableField';
 import { filterVariableFields } from '../Utils/MarcApiUtils';
-import { deleteRecordAction } from '../Actions';
 
 import { ACTION, destroy } from '../../../redux/actions';
 import { META } from '../../../config/constants';
@@ -25,17 +24,17 @@ export default function RecordPane({
   id,
   leaderData,
   saveRecord,
-  detail,
+  // detail,
   onCreate,
   onDelete,
   ...props
 }) {
 
 
-  const deleteRecord = _ => {
-    const { dispatch } = props;
-    dispatch(deleteRecordAction(detail));
-  };
+  // const deleteRecord = _ => {
+  //   const { dispatch } = props;
+  //   dispatch(deleteRecordAction(detail));
+  // };
 
   const handleClose = (submit) => {
     const { dispatch, router, toggleFilterPane, reset } = props;

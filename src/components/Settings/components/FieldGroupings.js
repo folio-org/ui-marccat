@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Icon, MultiColumnList, Pane } from '@folio/stripes/components';
-import { injectProps, ToolbarButtonMenu } from '../../../shared';
+import { withProps, ToolbarButtonMenu } from '../../../shared';
 import type { Props } from '../../../flow/types.js.flow';
 
 type P = Props & {
@@ -59,4 +59,4 @@ class FieldGroupings extends React.Component<P, {}> {
     );
   }
 }
-export default injectProps(FieldGroupings);
+export default withProps(FieldGroupings);

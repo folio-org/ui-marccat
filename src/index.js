@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { MarcatSettings as Settings } from './components';
 import { reducer, epics } from './redux';
-import { injectProps } from './shared';
+import { withProps } from './shared';
 import type { Props } from './flow/types.js.flow';
 import { ACTION } from './redux/actions';
 import { REDUX } from './config/constants';
@@ -61,4 +61,4 @@ class MARCcat extends React.Component<Props, S> {
   * @example: this.props.root
   * @example: const { state } = this.props.root;
   */
-export default injectProps(MARCcat);
+export default withProps(MARCcat);

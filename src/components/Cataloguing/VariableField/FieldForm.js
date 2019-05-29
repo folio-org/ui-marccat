@@ -19,7 +19,6 @@ import EditableItem from './EditableItem';
 import ActionsMenuButton from './Menu/ActionsMenu';
 import style from '../Style/variableform.css';
 import { REDUX } from '../../../config/constants';
-import { CheckBoxLabelField } from '../../../shared';
 
 const propTypes = {
   actionProps: PropTypes.object,

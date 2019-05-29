@@ -21,6 +21,7 @@ export default (Component: React.ComponentType<Props>): React.ComponentType<Reac
     const dataStore = safeObj(state.marccat, 'data');
     const settings = safeObj(state.marccat, 'settings');
     const searchHistory = safeObj(state.marccat, 'history');
+    const StoreContext = React.createContext();
     const localizedMessage = (m: Array<*> | String, withContainier?: boolean, _wrapElement?: React<HTMLElement>) => Localize({ key: m }, withContainier, _wrapElement);
     return (
       <Component
@@ -31,6 +32,7 @@ export default (Component: React.ComponentType<Props>): React.ComponentType<Reac
         store={store}
         change={change}
         router={history}
+        context={StoreContext}
         dispatch={dispatch}
         settings={settings}
         datastore={dataStore}
@@ -40,5 +42,5 @@ export default (Component: React.ComponentType<Props>): React.ComponentType<Reac
       />
     );
   };
-  return withRoot(injectIntl(WrapperComponent));
+  return withRoot((injectIntl(WrapperComponent)));
 };

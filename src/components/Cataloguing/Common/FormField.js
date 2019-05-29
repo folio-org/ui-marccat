@@ -4,7 +4,6 @@ import { Field } from 'redux-form';
 import { IconButton } from '@folio/stripes/components';
 import classNames from 'classnames/bind';
 import style from '../Style/index.css';
-import { TAGS } from '../Utils/MarcConstant';
 
 const cx = classNames.bind(style);
 
@@ -56,7 +55,7 @@ export const FormField = ({ name, label, disbledIcon, prepend, onClick, readOnly
         name={name}
         readOnly={readOnly}
         component={InputField}
-        autoFocus={label === TAGS._006}
+        autoFocus={label === name}
         required
       />
       <div

@@ -16,7 +16,7 @@ export default function ({ ...props }) {
 
   const { fields, onUpdate, onSave, onDelete, onCreate } = props;
   const resultsFormatter = {
-    'item': (_) => (<div style={{ paddingLeft: 0 }}><CheckBoxLabelField nolabel={true.toString()} label={_.rowIndex} {...props} /></div>),
+    'selectable': (_) => (<CheckBoxLabelField nolabel={true.toString()} label={_.rowIndex} {...props} />),
     'variableField.code': item => `${item.variableField.code}`,
     'variableField.ind1': item => `${item.variableField.ind1}`,
     'variableField.ind2': item => `${item.variableField.ind2}`,
@@ -33,7 +33,7 @@ export default function ({ ...props }) {
         contentData={fields}
         itemTemplate={EMPTY_VARIABLE_FIELD}
         visibleFields={[
-          'item',
+          'selectable',
           'variableField.code',
           'variableField.ind1',
           'variableField.ind2',
@@ -41,7 +41,7 @@ export default function ({ ...props }) {
         ]}
         columnMapping={
           {
-            'item': '',
+            'selectable': '',
             'variableField.code': 'code',
             'variableField.ind1': 'ind1',
             'variableField.ind2': 'ind2',
@@ -49,10 +49,10 @@ export default function ({ ...props }) {
           }
         }
         columnWidths={{
-          'item': '5%',
+          'selectable': '5%',
           'variableField.code': '10%',
-          'variableField.ind1': '5%',
-          'variableField.ind2': '5%',
+          'variableField.ind1': '10%',
+          'variableField.ind2': '10%',
           'variableField.displayValue': '40%',
         }}
         formatter={resultsFormatter}

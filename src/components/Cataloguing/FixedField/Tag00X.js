@@ -18,12 +18,9 @@ import {
   IMAGE_BIT_DEPTH,
   RECORD_FIELD_STATUS
 } from '../Utils/MarcConstant';
-import { FormField } from '../Common/FormField';
 import Tag00XInput from '../Common/InputField';
 import HeaderTypeSelect from '../Common/SelectField';
 import { formFieldValue } from '../../../redux/helpers/selector';
-
-import style from '../Style/index.css';
 
 type S = {
   expand: Boolean,

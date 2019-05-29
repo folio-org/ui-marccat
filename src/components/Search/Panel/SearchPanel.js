@@ -199,7 +199,7 @@ class SearchPanel extends React.Component<P, {}> {
           <Accordion
             {...rest}
             separator={false}
-            label={Localize({ key: 'marccat.navigator.search' })}
+            label={Localize({ key: 'navigator.search' })}
             header={FilterAccordionHeader}
           >
             <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}>

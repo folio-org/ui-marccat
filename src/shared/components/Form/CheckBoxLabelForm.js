@@ -14,7 +14,7 @@ type P = Props & {
 };
 
 
-function CheckBoxLabelForm({ ...props }: P) {
+function CheckBoxLabelForm(props: P) {
   const { labels } = props;
   return (
     <form name={REDUX.FORM.CHECKBOX_FORM}>

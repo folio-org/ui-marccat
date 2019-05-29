@@ -6,7 +6,7 @@ import {
   EmptyMessage,
   NoResultsMessage,
   ToolbarButtonMenu,
-  injectProps,
+  withProps,
   browseColMapper
 } from '../../../shared';
 
@@ -83,4 +83,4 @@ class ResultMainPane extends React.Component<{}, {}> {
       );
     }
 }
-export default injectProps(ResultMainPane);
+export default withProps(ResultMainPane);

@@ -5,8 +5,6 @@ import {
 } from '@folio/stripes/components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { onlyUpdateForPropTypes, compose, setPropTypes } from 'recompose';
-import PropTypes from 'prop-types';
 import { Localize } from '../../../shared';
 
 import style from '../Style/index.css';
@@ -42,10 +40,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 
-export default compose(
-  (connect(_state => ({
-  }), mapDispatchToProps),
-  onlyUpdateForPropTypes,
-  setPropTypes({ payload: PropTypes.object.isRequired })
-  )(SaveRecordButton)
+export default (connect(_state => ({
+}), mapDispatchToProps),
+(SaveRecordButton)
 );

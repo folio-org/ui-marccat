@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Pane, Icon } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
 import AssociatedBibDetails from '../AssociatedBibDetails';
-import { injectProps, ActionMenu } from '../../../../shared';
+import { withProps, ActionMenu } from '../../../../shared';
 import type { Props } from '../../../../flow/types.js.flow';
 import * as C from '../../../../config/constants';
 
@@ -39,4 +39,4 @@ class AssociatedRecordPane extends React.Component<Props, {}> {
     );
   }
 }
-export default (injectProps(AssociatedRecordPane));
+export default (withProps(AssociatedRecordPane));

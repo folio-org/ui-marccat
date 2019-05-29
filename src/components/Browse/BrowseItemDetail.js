@@ -8,7 +8,8 @@ import {
   AccordionSet,
   FilterAccordionHeader,
   Accordion,
-  MultiColumnList
+  MultiColumnList,
+  Button
 } from '@folio/stripes/components';
 import { ACTION } from '../../redux/actions/Actions';
 import type { Props } from '../../flow/types.js.flow';
@@ -70,10 +71,20 @@ export class BrowseItemDetail extends React.Component<P, {
           </Accordion>
         }
         <div>
+          {
+            (authorityDetails === undefined) || (recordDetailsArray.length === 0) ?
+              <Accordion
+                separator={false}
+                header={FilterAccordionHeader}
+                label="Non associated Authority record"
+                displayWhenOpen={<Button buttonStyle="default">Create Authority Record</Button>}
+              /> : null
+          }
           <Accordion
             separator={false}
             header={FilterAccordionHeader}
-            label="Associated Bibliographic Records"
+            label="Associated Bibliographic records"
+            displayWhenOpen={<Button buttonStyle="default">Options</Button>}
           >
             <MultiColumnList
               id="bib-associated"

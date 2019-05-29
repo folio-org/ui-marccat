@@ -10,10 +10,10 @@ import { EMPTY_SPACED_STRING } from '../../../config/constants';
  * @param {*} { name, onChange, ...props }
  * @returns
  */
-export default function InputField({ name, onChange, ...props }) {
+export default function InputField({ name, onChange, ...rest }) {
   return (
     <Field
-      {...props}
+      {...rest}
       id={name}
       name={name}
       component={TextField}

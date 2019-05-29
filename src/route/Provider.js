@@ -3,7 +3,7 @@ import * as React from 'react';
 import Router from './Router';
 import SearchPane from '../components/Search/Panel/SearchPane';
 import { SearchPanel } from '../components/Search';
-import { injectProps } from '../shared';
+import { withProps } from '../shared';
 
 const Provider = ({ ...props }) => {
   return (
@@ -16,4 +16,4 @@ const Provider = ({ ...props }) => {
   );
 };
 
-export default injectProps(Provider);
+export default withProps(Provider);

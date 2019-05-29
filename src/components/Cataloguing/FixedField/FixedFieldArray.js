@@ -5,10 +5,10 @@ import { FieldArray } from 'redux-form';
 import { connect } from 'react-redux';
 import { compose, withState, withHandlers } from 'recompose';
 import { Row, Col } from '@folio/stripes-components';
-import { first, isEmpty } from 'lodash';
+import { first, isEmpty, last } from 'lodash';
 import { bindActionCreators } from 'redux';
 import { FormField } from '../Common/FormField';
-import { TAGS, EMPTY_FIXED_FIELD, FIELD_NAME } from '../Utils/MarcConstant';
+import { TAGS, EMPTY_FIXED_FIELD, FIELD_NAME, DATE_FIRST_PUBBLICATION, DATE_LAST_PUBBLICATION, IMAGE_BIT_DEPTH, VISUAL_RUNNING_TIME } from '../Utils/MarcConstant';
 import AddTagButton from '../Button/AddTagButton';
 import style from '../Style/index.css';
 import { dropDownValuesAction, changeDisplayValueAction } from '../Actions';
@@ -42,8 +42,43 @@ const onHandleChange = (evt, code, tag, setValue, props) => {
   dispatch(dropDownValuesAction(payload, null));
 };
 
+const handleDisplayValue = (e, data) => {
+  const { headerTypeCode } = this.state;
+  const { dispatch, change, element } = this.props;
+  const payload = {};
+  const results = data.results || data;
+  Object.entries(results).map(([k, v]) => payload[k] = v.defaultValue);
+  if (!e) Object.entries(results).map(([k, v]) => dispatch(change(`Tag${element.code}-${headerTypeCode}-${k}`, v.defaultValue)));
+  if (e) {
+    const selected = last(e.target.name.split('-'));
+    payload[selected] = e.target.value;
+  }
+  prepareValue(element.code, results, payload, headerTypeCode);
+  const cb = (r) => this.execChange(r);
+  dispatch(changeDisplayValueAction(payload, cb));
+};
 
-const RenderDropwDown = (data, tag, _element, props) => {
+const prepareValue = (code, data, payload, headerTypeCode) => {
+  const { store } = this.props;
+  if (code === TAGS._006) {
+    payload.visualRunningTime = formFieldValue(store, REDUX.FORM.FIXED_FIELD_FORM, VISUAL_RUNNING_TIME);
+  }
+  if (code === TAGS._007) {
+    payload.imageBitDepth = formFieldValue(store, REDUX.FORM.FIXED_FIELD_FORM, IMAGE_BIT_DEPTH);
+  }
+  if (code === TAGS._008) {
+    payload.dateFirstPublication = formFieldValue(store, REDUX.FORM.FIXED_FIELD_FORM, DATE_FIRST_PUBBLICATION);
+    payload.dateLastPublication = formFieldValue(store, REDUX.FORM.FIXED_FIELD_FORM, DATE_LAST_PUBBLICATION);
+    payload.dateEnteredOnFile = formFieldValue(store, REDUX.FORM.FIXED_FIELD_FORM, TAGS._008).substring(0, 6);
+  }
+  payload.code = code;
+  payload.categoryCode = 1;
+  payload.headerTypeCode = headerTypeCode;
+  payload.sequenceNumber = 0;
+};
+
+
+const RenderDropwDown = ({ data, tag }) => {
   const sortedData = Object.values(data).sort((x, y) => x.name > y.name);
   return (
     <Row>
@@ -53,13 +88,14 @@ const RenderDropwDown = (data, tag, _element, props) => {
             name={`${tag}.fixedField.${field.name}`}
             label={decamelizify(field.name, EMPTY_SPACED_STRING)}
             dataOptions={field.dropdownSelect}
+            onChange={(e) => handleDisplayValue(e, data)}
           />
         </Col>
       ))}
     </Row>);
 };
 
-const CollapsibleElement = ({ element, tag, headertype, headerTypeCode, setValue, ...props }) => {
+const CollapsibleElement = ({ element, tag, headertype, setValue, ...props }) => {
   const { store } = props;
   const selected = `headerTypeValues${element.code}_${tag}`;
   const value = selectKey(store, selected);
@@ -74,7 +110,7 @@ const CollapsibleElement = ({ element, tag, headertype, headerTypeCode, setValue
         placeholder={'Select Heading types for '.concat(element.code)}
         dataOptions={headertype.results.headingTypes}
       />
-      {!isEmpty(value) && RenderDropwDown(value.results, tag, element, props)}
+      {!isEmpty(value) && RenderDropwDown}
     </React.Fragment>
   );
 };
@@ -84,8 +120,8 @@ const Collapsible = withControlledCollapsible(({ isCollapsed, collapse, tag, ele
     <div className={style.fieldContainer}>
       <FormField
         {...props}
-        name={`${tag}.fixedField.displayValue`}
-        prepend="true"
+        name={(tag) ? `${tag}.fixedField.displayValue` : `${TAGS._008}.fixedField.displayValue`}
+        prepend="false"
         type="text"
         readOnly="true"
         label={element.code || tag}
@@ -134,18 +170,17 @@ const RenderCollapsibleField = ({ fields, meta: { error }, headertype, ...props 
  *
  * @param {*} props
  */
-const FixedFieldArray = ({ headertype006, headertype007, headertype008, record, ...props }) => {
+const FixedFieldArray = ({ headertype006, headertype007, headertype008, record, ...rest }) => {
   return (
     <React.Fragment>
-      <FieldArray name={FIELD_NAME.FIELDS006} component={RenderCollapsibleField} {...props} headertype={headertype006} />
-      <FieldArray name={FIELD_NAME.FIELDS007} component={RenderCollapsibleField} {...props} headertype={headertype007} />
+      <FieldArray name={FIELD_NAME.FIELDS006} component={RenderCollapsibleField} {...rest} headertype={headertype006} />
+      <FieldArray name={FIELD_NAME.FIELDS007} component={RenderCollapsibleField} {...rest} headertype={headertype007} />
       <Row xs>
         <Collapsible
-          {...props}
+          {...rest}
           name={`${TAGS._008}`}
           element={first(record.fields.filter(f => f.code === TAGS._008))}
           headertype={headertype008}
-          tag={TAGS._008}
         />
       </Row>
     </React.Fragment>

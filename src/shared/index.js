@@ -3,13 +3,18 @@
 
 export type { Props } from '../flow/types.js.flow';
 
-// core
-export { default as injectProps } from '../hoc/injectProps';
+/**
+|----------------------------------------------------------------------------------------
+| High Order Components @see Functional Programming in Matematics Theory
+|----------------------------------------------------------------------------------------
+*/
+export { withProps, withCondition, withNull, withEmpty, withLoading } from '../hoc';
+
+export { ActionMenu } from './components/ActionMenu/ActionMenu';
 
 // lib
 export { ToolbarMenu, ToolbarButtonMenu } from './components/Toolbar/Menu';
 export {
-  ActionMenu,
   getActionMenu,
   generateDropdownMenu,
   CheckBoxLabelForm,

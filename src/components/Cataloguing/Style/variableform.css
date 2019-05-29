@@ -29,6 +29,8 @@
 }
 
 .withSeparator {
+  display: block;
+
   & span {
     margin-left: 10px;
     padding-left: 6px;

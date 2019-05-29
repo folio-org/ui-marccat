@@ -9,7 +9,6 @@ import {
   SUBFIELD_DELIMITER,
   TAG_NOT_REPEATABLE,
   TAG_MANDATORY,
-  TAGS,
 } from './MarcConstant';
 import { EMPTY_STRING } from '../../../config/constants';
 

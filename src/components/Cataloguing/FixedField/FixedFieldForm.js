@@ -69,6 +69,7 @@ const withLifecycle = lifecycle({
       [MARC_CONSTANT.TAGS._001]: first(record.fields.filter(f => f.code === MARC_CONSTANT.TAGS._001)).fixedField.displayValue,
       [MARC_CONSTANT.TAGS._003]: (record.fields.filter(f => f.code === MARC_CONSTANT.TAGS._003).length !== 0) ? first(record.fields.filter(f => f.code === MARC_CONSTANT.TAGS._003)).fixedField.displayValue : '',
       [MARC_CONSTANT.TAGS._005]: first(record.fields.filter(f => f.code === MARC_CONSTANT.TAGS._005)).fixedField.displayValue,
+      [MARC_CONSTANT.TAGS._008]: first(record.fields.filter(f => f.code === MARC_CONSTANT.TAGS._008)).fixedField.displayValue,
       [MARC_CONSTANT.FIELD_NAME.LEADER]: record.leader.value,
     };
     initialize(initializeData);

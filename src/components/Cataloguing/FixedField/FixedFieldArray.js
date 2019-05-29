@@ -8,7 +8,7 @@ import { Row, Col } from '@folio/stripes-components';
 import { first, isEmpty, last } from 'lodash';
 import { bindActionCreators } from 'redux';
 import { FormField } from '../Common/FormField';
-import { TAGS, EMPTY_FIXED_FIELD, FIELD_NAME, DATE_FIRST_PUBBLICATION, DATE_LAST_PUBBLICATION, IMAGE_BIT_DEPTH, VISUAL_RUNNING_TIME } from '../Utils/MarcConstant';
+import { TAGS, EMPTY_FIXED_FIELD, FIELD_NAME, DATE_FIRST_PUBBLICATION, DATE_LAST_PUBBLICATION, IMAGE_BIT_DEPTH, VISUAL_RUNNING_TIME, RECORD_FIELD_STATUS } from '../Utils/MarcConstant';
 import AddTagButton from '../Button/AddTagButton';
 import style from '../Style/index.css';
 import { dropDownValuesAction, changeDisplayValueAction } from '../Actions';
@@ -31,7 +31,7 @@ const withControlledCollapsible = compose(
 
 
 const onHandleChange = (evt, code, tag, props) => {
-  const { dispatch, store } = props;
+  const { dispatch, store, setTypeCode } = props;
   const headerTypeCode = evt.target.value;
   const payload = {
     value: formFieldValue(store, REDUX.FORM.FIXED_FIELD_FORM, 'Leader'),
@@ -39,12 +39,13 @@ const onHandleChange = (evt, code, tag, props) => {
     headerTypeCode,
     key:tag
   };
-  dispatch(dropDownValuesAction(payload, null));
+  setTypeCode(evt);
+  const cb = (r) => handleDisplayValue(undefined, r, props);
+  dispatch(dropDownValuesAction(payload, cb));
 };
 
-const handleDisplayValue = (e, data) => {
-  const { headerTypeCode } = this.state;
-  const { dispatch, change, element } = this.props;
+const handleDisplayValue = (e, data, props) => {
+  const { dispatch, headerTypeCode, change, element } = props;
   const payload = {};
   const results = data.results || data;
   Object.entries(results).map(([k, v]) => payload[k] = v.defaultValue);
@@ -54,7 +55,7 @@ const handleDisplayValue = (e, data) => {
     payload[selected] = e.target.value;
   }
   prepareValue(element.code, results, payload, headerTypeCode);
-  const cb = (r) => this.execChange(r);
+  const cb = (r) => execChange(r, props);
   dispatch(changeDisplayValueAction(payload, cb));
 };
 
@@ -77,8 +78,15 @@ const prepareValue = (code, data, payload, headerTypeCode) => {
   payload.sequenceNumber = 0;
 };
 
+const execChange = (response: {}, props): void => {
+  const { dispatch, change, fixedfields, element } = props;
+  dispatch(change(element.code, response.displayValue));
+  if (element.code === TAGS._008) element.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
+  fixedfields.push(element);
+  fixedfields.filter(f => f.code === element.code).map(f => f.fixedField = response);
+};
 
-const RenderDropwDown = (data, tag) => {
+const RenderDropwDown = (data, tag, props) => {
   const sortedData = Object.values(data).sort((x, y) => x.name > y.name);
   return (
     <Row>
@@ -88,7 +96,7 @@ const RenderDropwDown = (data, tag) => {
             name={`${tag}.fixedField.${field.name}`}
             label={decamelizify(field.name, EMPTY_SPACED_STRING)}
             dataOptions={field.dropdownSelect}
-            onChange={(e) => handleDisplayValue(e, data)}
+            onChange={(e) => handleDisplayValue(e, data, props)}
           />
         </Col>
       ))}
@@ -110,7 +118,7 @@ const CollapsibleElement = ({ element, tag, headertype, ...props }) => {
         placeholder={'Select Heading types for '.concat(element.code)}
         dataOptions={headertype.results.headingTypes}
       />
-      {!isEmpty(value) && RenderDropwDown(value.results, tag)}
+      {!isEmpty(value) && RenderDropwDown(value.results, tag, props)}
     </React.Fragment>
   );
 };

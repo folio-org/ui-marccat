@@ -19,11 +19,10 @@ const historyState = { list: [] };
  * @param {*} data
  * @param {*} record
  */
-export const resolveEpicRequest = (data, payload, cb) => ({
+export const resolveEpicRequest = (data, payload) => ({
   type: ACTION.REQUEST_RESOLVE,
   data,
   payload,
-  cb
 });
 
 /**
@@ -70,7 +69,7 @@ export function reducer(state: {} = initialState, action: {}) {
   switch (action.type) {
   case ACTION.REQUEST_RESOLVE:
     return Object.assign({
-    }, state, Resolver.resolveData(action.data, action.payload, action.cb, state));
+    }, state, Resolver.resolveData(action.data, action.payload));
   case ACTION.REQUEST_REJECT:
     return Object.assign({
     }, state, Resolver.rejectData(action.data, action.error));
@@ -169,7 +168,7 @@ export function epic(action$, { getState }) {
         .then(response => Promise.all([response.ok, parseResponseBody(response)]))
         .then(([ok, body]) => (ok ? body : Promise.reject(body.errors))); // eslint-disable-line no-shadow
 
-      const resolve = response => resolveEpicRequest(data, response, (cb) || identity);
+      const resolve = response => resolveEpicRequest(data, response);
       const callback = response => executeEpicCallback((cb) ? cb(response) : identity);
       const error = (d, r) => Observable.of(rejectEpicRequest(d, r));
 

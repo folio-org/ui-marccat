@@ -10,7 +10,7 @@ import { ACTION } from '../../../../redux/actions/Actions';
 import * as C from '../../../../config/constants';
 
 
-function SearchResultPane(props) {
+function SearchResultPane({ ...props }) {
 
   const {
     isFetching,

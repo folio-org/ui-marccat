@@ -16,7 +16,7 @@ export default function ({ ...props }) {
 
   const { fields, onUpdate, onSave, onDelete, onCreate } = props;
   const resultsFormatter = {
-    'selectable': (_) => (<CheckBoxLabelField nolabel={true.toString()} label={_.rowIndex} {...props} />),
+    'selectable': (_) => (<CheckBoxLabelField nolabel={true.toString()} label={`${_.rowIndex}-selected`} {...props} style={{ marginLeft: '-6px' }} data-row={_.rowIndex} />),
     'variableField.code': item => `${item.variableField.code}`,
     'variableField.ind1': item => `${item.variableField.ind1}`,
     'variableField.ind2': item => `${item.variableField.ind2}`,

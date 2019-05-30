@@ -32,6 +32,7 @@
 [type="checkbox"] + label,
 [type="radio"] + label {
   position: relative;
+  padding: 6px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;

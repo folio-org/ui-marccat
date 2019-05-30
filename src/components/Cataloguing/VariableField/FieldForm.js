@@ -19,6 +19,7 @@ import EditableItem from './EditableItem';
 import ActionsMenuButton from './Menu/ActionsMenu';
 import style from '../Style/variableform.css';
 import { REDUX } from '../../../config/constants';
+import { formFieldValue, valuesOf } from '../../../redux';
 
 const propTypes = {
   actionProps: PropTypes.object,
@@ -108,8 +109,8 @@ class FieldForm extends React.Component {
     };
 
     this.handlers = {
-      add : this.onAddAbove,
-      addAbove : this.onAdd,
+      add : this.onAdd,
+      addAbove : this.onAddAbove,
       cleanField : this.onCancel,
       cleanAll : this.onResetAll,
       duplicate : this.onDuplicate,
@@ -180,9 +181,18 @@ class FieldForm extends React.Component {
    * @param {*} fields
    */
   onAddAbove(fields) {
-    const { itemTemplate } = this.props;
+    const { store, itemTemplate } = this.props;
     const item = { ...itemTemplate };
-    fields.push(item);
+    const selected = valuesOf(store, REDUX.FORM.VARIABLE_FORM);
+    for (const key in selected) {
+      const element = selected[key];
+      if (selected[key].split('-')[2] === 'selected') {
+        fields.insert(selected[key].split('-')[2], item);
+      } else {
+        fields.push(item);
+      }
+    }
+
     this.setState((curState) => {
       const newState = cloneDeep(curState);
       if (newState.status.length === 0 && fields.length > 0) {

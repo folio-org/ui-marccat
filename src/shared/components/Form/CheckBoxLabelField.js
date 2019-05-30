@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 import { EMPTY_STRING } from '../../../config/constants';
 
 export default function CheckBoxLabelField(props) {
-  const { label, nolabel, change } = props;
+  const { label, nolabel, change, style } = props;
   let value = true;
   return (
     <React.Fragment>
@@ -16,6 +16,7 @@ export default function CheckBoxLabelField(props) {
         component="input"
       />
       <label
+        style={style || {}}
         htmlFor={`checkbox-${label}`}
         className="checkbox"
         onClick={() => {

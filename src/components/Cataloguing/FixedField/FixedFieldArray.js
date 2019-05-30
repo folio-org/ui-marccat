@@ -30,31 +30,34 @@ const withControlledCollapsible = compose(
 );
 
 
-const onHandleChange = (evt, code, tag, props) => {
+const onHandleChange = (evt, element, tag, props) => {
   const { dispatch, store, setTypeCode } = props;
   const headerTypeCode = evt.target.value;
   const payload = {
     value: formFieldValue(store, REDUX.FORM.FIXED_FIELD_FORM, 'Leader'),
-    code,
+    code:element.code,
     headerTypeCode,
     key:tag
   };
   setTypeCode(evt);
-  const cb = (r) => handleDisplayValue(undefined, r, props);
+  const cb = (r) => handleDisplayValue(undefined, r, props, element);
   dispatch(dropDownValuesAction(payload, cb));
 };
 
-const handleDisplayValue = (e, data, props) => {
-  const { dispatch, headerTypeCode, change, element } = props;
+const handleDisplayValue = (e, data, props, field) => {
+  const { dispatch, headerTypeCode, change } = props;
   const payload = {};
   const results = data.results || data;
   Object.entries(results).map(([k, v]) => payload[k] = v.defaultValue);
-  if (!e) Object.entries(results).map(([k, v]) => dispatch(change(`Tag${element.code}-${headerTypeCode}-${k}`, v.defaultValue)));
+  if (!e) Object.entries(results).map(([k, v]) => dispatch(change(`${field.code}.fixedField.${field.name}`, v.defaultValue)));
   if (e) {
     const selected = last(e.target.name.split('-'));
     payload[selected] = e.target.value;
   }
-  prepareValue(element.code, results, payload, headerTypeCode);
+  payload.code = field.code;
+  payload.categoryCode = 1;
+  payload.headerTypeCode = headerTypeCode;
+  payload.sequenceNumber = 0;
   const cb = (r) => execChange(r, props);
   dispatch(changeDisplayValueAction(payload, cb));
 };
@@ -96,7 +99,7 @@ const RenderDropwDown = (data, tag, props) => {
             name={`${tag}.fixedField.${field.name}`}
             label={decamelizify(field.name, EMPTY_SPACED_STRING)}
             dataOptions={field.dropdownSelect}
-            onChange={(e) => handleDisplayValue(e, data, props)}
+            onChange={(e) => handleDisplayValue(e, data, props, field)}
           />
         </Col>
       ))}
@@ -114,7 +117,7 @@ const CollapsibleElement = ({ element, tag, headertype, ...props }) => {
         id={`${tag}.fixedField.headerTypeCode`}
         name={`${tag}.fixedField.headerTypeCode`}
         label={`Tag ${element.code}`}
-        onChange={(e) => onHandleChange(e, element.code, tag, props)}
+        onChange={(e) => onHandleChange(e, element, tag, props)}
         placeholder={'Select Heading types for '.concat(element.code)}
         dataOptions={headertype.results.headingTypes}
       />

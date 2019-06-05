@@ -1,4 +1,4 @@
-// @flow
+//
 import * as React from 'react';
 import { Field } from 'redux-form';
 import { TextField, HotKeys } from '@folio/stripes/components';
@@ -7,18 +7,6 @@ import AutoSuggestCode from '../../Suggestion/AutoSuggestCode';
 import AutoSuggestInd1 from '../../Suggestion/AutoSuggestInd1';
 import AutoSuggestInd2 from '../../Suggestion/AutoSuggestInd2';
 
-type Props = {
-  autoFocus: boolean,
-  cells: Array<Object>,
-  columnMapping: Array<Object>,
-  error: string | boolean,
-  field: PropTypes.string,
-  fieldComponents: Array<Object>,
-  readOnlyFields: Array<string>,
-  rowIndex: number,
-  visibleFields: Array<string>,
-  widths: Array<Object>,
-}
 
 export default function ItemEdit({
   rowIndex,
@@ -32,7 +20,7 @@ export default function ItemEdit({
   cells,
   autoFocus,
   ...props
-}: Props) {
+}) {
 
   const keys = {
     showHeading: 'ctrl+space'

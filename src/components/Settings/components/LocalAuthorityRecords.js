@@ -1,4 +1,4 @@
-// @flow
+//
 import * as React from 'react';
 import { Pane, Icon } from '@folio/stripes/components';
 import { injectProps, ToolbarButtonMenu } from '../../../shared';

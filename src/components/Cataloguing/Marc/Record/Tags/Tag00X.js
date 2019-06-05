@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-// @flow
+//
 import React from 'react';
 import { Field } from 'redux-form';
 import { Select, Row, Col } from '@folio/stripes-components';
@@ -16,11 +16,8 @@ import Tag00XInput from '../components/Tag00XInput';
 import HeaderTypeSelect from '../components/HeaderTypeSelect';
 import { formFieldValue } from '../../../../../redux/helpers/Selector';
 
-type S = {
-  expand: Boolean,
-} & State
 
-class Tag00X extends React.PureComponent<{}, S> {
+class Tag00X extends React.PureComponent {
 
   constructor(props) {
     super(props);
@@ -63,7 +60,7 @@ class Tag00X extends React.PureComponent<{}, S> {
     dispatch(changeDisplayValueAction(payload, cb));
   };
 
-  execChange = (response: Object): void => {
+  execChange = (response) => {
     const { dispatch, change, fixedfields, element } = this.props;
     dispatch(change(element.code, response.displayValue));
     if (element.code === TAGS._008) element.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
@@ -90,7 +87,7 @@ class Tag00X extends React.PureComponent<{}, S> {
     payload.sequenceNumber = 0;
   };
 
-  RenderSelect = ({ element, ...props }): React.ComponentType<Props, *> => (
+  RenderSelect = ({ element, ...props }) => (
     <Field
       id={`Tag${element.code}`}
       name={`Tag${element.code}`}

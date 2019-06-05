@@ -1,4 +1,4 @@
-// @flow
+//
 import * as React from 'react';
 import FilterGroups, { initialFilterState } from '@folio/stripes-components/lib/FilterGroups';
 import { ACTION } from '../../../redux/actions';

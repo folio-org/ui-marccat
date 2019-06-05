@@ -1,4 +1,4 @@
-// @flow
+//
 import * as React from 'react';
 import { AutoSuggest } from '@folio/stripes/components';
 import { triggerTagCodeSuggestion } from '../../Actions';

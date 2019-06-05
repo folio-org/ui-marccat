@@ -101,8 +101,9 @@ class Record extends React.Component {
 
   // TODO FIXME
   asyncCreateHeading = async (item, heading) => {
+    const { store: { getState } } = this.props;
     try {
-      const response = await post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading);
+      const response = await post(buildUrl(getState(), C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading);
       const data = await response.json();
       item.variableField.categoryCode = data.categoryCode;
       if (item.variableField.keyNumber > 0) {
@@ -158,7 +159,7 @@ class Record extends React.Component {
     const payload = { bibliographicRecord, recordTemplate };
     this.setState({ submit: true });
 
-    await post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), payload)
+    await post(buildUrl(getState(), C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), payload)
       .then((r) => { return r.json(); })
       .then(() => {
         showValidationMessage(this.callout, 'cataloging.record.update.success', 'success');

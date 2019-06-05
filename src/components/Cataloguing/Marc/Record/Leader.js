@@ -3,7 +3,6 @@ import * as React from 'react';
 import { isEmpty, last } from 'lodash';
 import { connect } from 'react-redux';
 import { Row, Col } from '@folio/stripes/components';
-import type { Props } from '../../../../flow/types.js.flow';
 import MarcField from '../Form/Components/Field';
 import { EMPTY_SPACED_STRING, SEPARATOR } from '../../../../config/constants';
 import { decamelizify } from '../../../../shared/utils/Function';
@@ -11,22 +10,9 @@ import style from '../../Style/index.css';
 import { change008ByLeaderAction } from '../../Actions';
 import HeaderTypeSelect from './components/HeaderTypeSelect';
 
-type P = {
-  readOnly: boolean,
-  leaderData: Object,
-  leaderCode: string,
-  leaderValue: string,
-} & Props;
 
-type S = {
-  leaderDataDispatched: boolean,
-  leaderCss: boolean,
-  leaderVal: string,
-  leaderChangedFor008: boolean
-};
-
-class Leader extends React.PureComponent<P, S> {
-  constructor(props: P) {
+class Leader extends React.PureComponent {
+  constructor(props) {
     super(props);
     this.state = {
       leaderCss: false,

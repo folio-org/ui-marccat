@@ -2,12 +2,9 @@
 import * as React from 'react';
 import { Pane, Icon } from '@folio/stripes/components';
 import { injectProps, ToolbarButtonMenu } from '../../../shared';
-import type { Props } from '../../../flow/types.js.flow';
 
-type P = Props & {
-  label: string;
-};
-class LocalAuthorityRecords extends React.Component<P, {}> {
+
+class LocalAuthorityRecords extends React.Component {
   handleOnClick = () => {};
 
   renderRightMenu = () => {

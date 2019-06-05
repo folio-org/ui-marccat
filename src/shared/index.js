@@ -8,7 +8,7 @@ export type { Props } from '../flow/types.js.flow';
 | High Order Components @see Functional Programming in Matematics Theory
 |----------------------------------------------------------------------------------------
 */
-export { withProps, withCondition, withNull, withEmpty, withLoading } from '../hoc';
+export { withProps, withNull, withEmpty, withLoading } from '../hoc';
 
 export { ActionMenu } from './components/ActionMenu/ActionMenu';
 

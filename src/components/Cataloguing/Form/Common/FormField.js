@@ -1,21 +1,34 @@
 /* eslint-disable consistent-return */
 import * as React from 'react';
-import { Field as FormField } from 'redux-form';
+import { Field } from 'redux-form';
 import { IconButton } from '@folio/stripes/components';
 import classNames from 'classnames/bind';
-// eslint-disable-next-line import/no-duplicates
-import style from '../Style/index.css';
-
-// eslint-disable-next-line import/no-duplicates
-import '../Style/index.css';
+import style from '../../Style/index.css';
 
 const cx = classNames.bind(style);
+
+// eslint-disable-next-line no-unused-vars
+const getValidityClassName = meta => {
+  if (meta.asyncValidating) {
+    return 'async-validating';
+  }
+  if (meta.active) {
+    return;
+  }
+  if (meta.touched && meta.invalid) {
+    return 'invalid';
+  }
+  if (meta.touched && meta.valid) {
+    return 'valid';
+  }
+};
+
 
 export const InputField = props => {
   const { input, type, meta, autoFocus, readOnly } = props;
   return (
     <React.Fragment>
-      <input {...input} name={input.name} value={input.value} type={type} autoFocus={autoFocus} readOnly={readOnly} />
+      <input {...input} name={input.name} type={type} autoFocus={autoFocus} readOnly={readOnly} />
       {meta.error &&
         meta.touched &&
         !meta.active && (
@@ -26,7 +39,7 @@ export const InputField = props => {
 };
 
 
-export const Field = ({ name, label, disbledIcon, prepend, onClick, readOnly, ...rest }) => (
+export const FormField = ({ name, label, disbledIcon, prepend, onClick, readOnly }) => (
   <React.Fragment>
     <div className={cx('fieldWrapper')}>
       <div className={cx('marcFieldIconCaretPrepend')} hidden={!prepend}>
@@ -38,12 +51,12 @@ export const Field = ({ name, label, disbledIcon, prepend, onClick, readOnly, ..
         />
       </div>
       <label htmlFor={name}>{label}</label>
-      <FormField
+      <Field
         name={name}
         readOnly={readOnly}
         component={InputField}
         autoFocus={label === name}
-        {...rest}
+        required
       />
       <div
         className={cx('marcFieldIconCaret')}

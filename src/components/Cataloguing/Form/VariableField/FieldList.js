@@ -10,6 +10,7 @@ type Props = {
   contentData: Array<{}>,
   formatter?: {},
   id: string,
+  itemSelected: number,
   nameKey?: string,
   readOnlyFields?: Array<String>,
 };

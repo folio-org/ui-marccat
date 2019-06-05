@@ -1,16 +1,22 @@
 // @flow
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, KeyValue, AccordionSet, FilterAccordionHeader, Accordion } from '@folio/stripes/components';
-import type { Props } from '../../flow/index.js.flow';
+import {
+  Row,
+  Col,
+  KeyValue,
+  AccordionSet,
+  FilterAccordionHeader,
+  Accordion
+} from '@folio/stripes/components';
+import type { Props } from '../../flow/types.js.flow';
 import { getTag245, getTitle245 } from '../../utils/Mapper';
 
 import style from '../../styles/common.css';
 
 type P = Props & {
-  items: Array<*>,
+  items: Array<any>,
 }
-
 
 function BrowseAssociatedItemDetail({ translate, ...props }: P) {
   if (props.items !== undefined) {

@@ -1,9 +1,9 @@
 // @flow
 import * as React from 'react';
 import { AutoSuggest } from '@folio/stripes/components';
-import { triggerTagCodeSuggestion } from '../../Actions';
-import { withProps } from '../../../../shared';
-import { REDUX } from '../../../../config/constants';
+import { triggerTagCodeSuggestion } from '../../../Actions';
+import { withProps } from '../../../../../shared';
+import { REDUX } from '../../../../../config/constants';
 
 function AutoSuggestCode(props) {
   const initialState = {
@@ -28,7 +28,6 @@ function AutoSuggestCode(props) {
   tagCodeArray.map(elem => remappedCodeSuggest.push(Object.assign({}, { value: elem, label: elem })));
   return (
     <AutoSuggest
-      marginBottom0
       {...props}
       items={remappedCodeSuggest}
       name={input.name}

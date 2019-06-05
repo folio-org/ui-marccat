@@ -7,7 +7,7 @@ import AutoSuggestCode from './Suggestion/AutoSuggestCode';
 import AutoSuggestInd1 from './Suggestion/AutoSuggestInd1';
 import AutoSuggestInd2 from './Suggestion/AutoSuggestInd2';
 
-import style from '../Style/variableform.css';
+import style from '../../Style/variableform.css';
 
 const cx = classNames.bind(style);
 

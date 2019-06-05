@@ -17,9 +17,9 @@ import {
 } from '@folio/stripes/components';
 import EditableItem from './EditableItem';
 import ActionsMenuButton from './Menu/ActionsMenu';
-import style from '../Style/variableform.css';
-import { REDUX } from '../../../config/constants';
-import { formFieldValue, valuesOf } from '../../../redux';
+import style from '../../Style/variableform.css';
+import { REDUX } from '../../../../config/constants';
+import { formFieldValue, valuesOf } from '../../../../redux';
 
 const propTypes = {
   actionProps: PropTypes.object,
@@ -110,7 +110,9 @@ class FieldForm extends React.Component {
 
     this.handlers = {
       add : this.onAdd,
-      addAbove : this.onAddAbove,
+      addAbove: this.onAddAbove,
+      onMoveDown : this.onMoveDown,
+      onMoveUp : this.onMoveUp,
       cleanField : this.onCancel,
       cleanAll : this.onResetAll,
       duplicate : this.onDuplicate,
@@ -226,14 +228,24 @@ class FieldForm extends React.Component {
    * @param {*} fields
    * @param {*} index
    */
-  onMoveUp(fields, index) {}
+  onMoveUp(fields, index) {
+    if (fields.length > 1) fields.swap(index, index - 1);
+  }
 
   /**
    *
    * @param {*} fields
    * @param {*} index
    */
-  onMoveDown(fields, index) {}
+  onMoveDown(fields, index) {
+    const { store } = this.props;
+    const checked = valuesOf(store, REDUX.FORM.VARIABLE_FORM);
+    for (const key in checked) {
+      const indeex = checked[key].split('-')[1];
+      alert(indeex);
+    }
+    if (fields.length > 1) fields.swap(index, index + 1);
+  }
 
   /**
    *

@@ -2,10 +2,10 @@
 import * as React from 'react';
 import { AutoSuggest } from '@folio/stripes/components';
 import { first } from 'lodash';
-import { triggerTagIndicatorsSuggestion } from '../../Actions';
-import { withProps } from '../../../../shared';
-import { REDUX } from '../../../../config/constants';
-import { formFieldValue } from '../../../../redux';
+import { triggerTagIndicatorsSuggestion } from '../../../Actions';
+import { withProps } from '../../../../../shared';
+import { REDUX } from '../../../../../config/constants';
+import { formFieldValue } from '../../../../../redux';
 
 function AutoSuggestInd2(props) {
   const initialState = {
@@ -37,7 +37,6 @@ function AutoSuggestInd2(props) {
   return (
     <AutoSuggest
       {...props}
-      marginBottom0
       items={remappedCodeSuggest}
       name={input.name}
       onFocus={onFocus}

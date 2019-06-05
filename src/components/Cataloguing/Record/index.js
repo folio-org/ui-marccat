@@ -1,10 +1,7 @@
 // @flow
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import {
-  Callout,
-  Icon
-} from '@folio/stripes/components';
+import { Callout } from '@folio/stripes/components';
 import { bindActionCreators } from 'redux';
 import { union, sortBy, includes } from 'lodash';
 import {
@@ -17,7 +14,7 @@ import {
 } from '..';
 import {
   withProps,
-  buildUrl, findParam, Localize, post
+  buildUrl, findParam, Localize, post, withLoading
 } from '../../../shared';
 import {
   filterMandatoryFields,
@@ -134,7 +131,7 @@ class Record extends React.Component<Props, {
     const field007: [] = formData.Fields007;
 
     const recordTemplate: RecordTemplate<Type> = {
-      id: 408,
+      id: 42,
       fields: filterMandatoryFields(emptyRecord.results.fields)
     };
 
@@ -170,26 +167,23 @@ class Record extends React.Component<Props, {
     const { isEditMode, id } = this.state;
     const record = this.getCurrentRecord();
 
-    return (!leaderData) ?
-      (
-        <Icon icon="spinner-ellipsis" />
-      ) :
-      (
-        <Fragment>
-          <RecordPane
-            {...this.props}
-            id={id}
-            record={record}
-            detail={recordDetail}
-            leaderData={leaderData}
-            mode={isEditMode}
-            saveRecord={this.saveRecord}
-            onCreate={this.onCreate}
-            onDelete={this.onDelete}
-          />
-          <Callout ref={this.callout} />
-        </Fragment>
-      );
+    return withLoading(
+      <Fragment>
+        <RecordPane
+          {...this.props}
+          id={id}
+          condition={_ => !leaderData}
+          record={record}
+          detail={recordDetail}
+          leaderData={leaderData}
+          mode={isEditMode}
+          saveRecord={this.saveRecord}
+          onCreate={this.onCreate}
+          onDelete={this.onDelete}
+        />
+        <Callout ref={this.callout} />
+      </Fragment>
+    );
   }
 }
 

@@ -8,8 +8,8 @@ import {
   Col,
   AppIcon
 } from '@folio/stripes/components';
-import FixedFieldForm from '../FixedField/FixedFieldForm';
-import VariableFieldForm from '../VariableField';
+import FixedFieldForm from '../Form/FixedField/FixedFieldForm';
+import VariableFieldForm from '../Form/VariableField';
 import { filterVariableFields } from '../Utils/MarcApiUtils';
 
 import { ACTION, destroy } from '../../../redux/actions';

@@ -3,12 +3,12 @@ import { Accordion } from '@folio/stripes-components';
 import { first } from 'lodash';
 import { compose, lifecycle } from 'recompose';
 import { reduxForm } from 'redux-form';
-import { Localize, CheckBoxLabelField } from '../../../shared';
-import { REDUX, EMPTY_SPACED_STRING } from '../../../config/constants';
+import { Localize, CheckBoxLabelField } from '../../../../shared';
+import { REDUX, EMPTY_SPACED_STRING } from '../../../../config/constants';
 import FixedField from './FixedField';
 import FixedFieldArray from './FixedFieldArray';
-import Leader from '../Record/Leader';
-import * as MARC_CONSTANT from '../Utils/MarcConstant';
+import Leader from '../Common/Leader';
+import * as MARC_CONSTANT from '../../Utils/MarcConstant';
 
 /**
  *

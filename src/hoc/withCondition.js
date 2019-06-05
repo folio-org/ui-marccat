@@ -1,6 +1,9 @@
 // @flow
 import * as React from 'react';
 import { compose } from 'recompose';
+import {
+  Icon
+} from '@folio/stripes/components';
 /**
  *
  *
@@ -32,13 +35,16 @@ export const withEmpty = Component => ({ prop, msg, ...rest }) => (
  *
  * @param {*} Component
  */
-export const withLoading = (Component) => ({ condition, msg, ...rest }) => (
+export const Loading = (Component) => ({ condition, ...rest }) => (
   condition
-    ? <span>{msg}</span>
+    ? <Icon icon="spinner-ellipsis" />
     : <Component {...rest} />);
 
-export const withCondition = compose(
-  withLoading,
-  withNull,
-  withEmpty
+export const withLoading = compose(
+  Loading
 );
+
+export const withEither = (conditionalRenderingFn, EitherComponent) => (Component) => (props) => (
+  conditionalRenderingFn(props)
+    ? <EitherComponent />
+    : <Component {...props} />);

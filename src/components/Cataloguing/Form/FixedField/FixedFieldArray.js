@@ -8,14 +8,15 @@ import { Row, Col } from '@folio/stripes-components';
 import { first, isEmpty, last } from 'lodash';
 import { bindActionCreators } from 'redux';
 import { FormField } from '../Common/FormField';
-import { TAGS, EMPTY_FIXED_FIELD, FIELD_NAME, DATE_FIRST_PUBBLICATION, DATE_LAST_PUBBLICATION, IMAGE_BIT_DEPTH, VISUAL_RUNNING_TIME, RECORD_FIELD_STATUS } from '../Utils/MarcConstant';
-import AddTagButton from '../Button/AddTagButton';
-import style from '../Style/index.css';
-import { dropDownValuesAction, changeDisplayValueAction } from '../Actions';
+import { TAGS, EMPTY_FIXED_FIELD, FIELD_NAME, DATE_FIRST_PUBBLICATION, DATE_LAST_PUBBLICATION, IMAGE_BIT_DEPTH, VISUAL_RUNNING_TIME, RECORD_FIELD_STATUS } from '../../Utils/MarcConstant';
+import AddTagButton from '../../Button/AddTagButton';
+import { dropDownValuesAction, changeDisplayValueAction } from '../../Actions';
 import SelectField from '../Common/SelectField';
-import { decamelizify } from '../../../shared';
-import { EMPTY_SPACED_STRING, REDUX } from '../../../config/constants';
-import { selectKey, formFieldValue } from '../../../redux/helpers/selector';
+import { decamelizify } from '../../../../shared';
+import { EMPTY_SPACED_STRING, REDUX } from '../../../../config/constants';
+import { selectKey, formFieldValue } from '../../../../redux/helpers/selector';
+
+import style from '../../Style/index.css';
 
 
 const withControlledCollapsible = compose(
@@ -49,7 +50,7 @@ const handleDisplayValue = (e, data, props, field) => {
   const payload = {};
   const results = data.results || data;
   Object.entries(results).map(([k, v]) => payload[k] = v.defaultValue);
-  if (!e) Object.entries(results).map(([k, v]) => dispatch(change(`${field.code}.fixedField.${field.name}`, v.defaultValue)));
+  if (!e) Object.entries(results).map(([_, v]) => dispatch(change(`${field.code}.fixedField.${field.name}`, v.defaultValue)));
   if (e) {
     const selected = last(e.target.name.split('-'));
     payload[selected] = e.target.value;

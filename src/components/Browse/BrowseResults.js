@@ -8,19 +8,17 @@ import type { Props } from '../../flow/types.js.flow';
 import BrowseItemDetail from './BrowseItemDetail';
 import { ACTION } from '../../redux/actions/Actions';
 import { findYourQueryFromBrowse, findYourQuery } from '../Search/Filter/FilterMapper';
-import { ToolbarButtonMenu, EmptyMessage, NoResultsMessage } from '../../shared/components';
-import { browseColMapper } from '../../utils/Formatter';
+import { ToolbarButtonMenu, EmptyMessage, NoResultsMessage, browseColMapper, generateDropdownMenu, withProps } from '../../shared';
 import BrowseAssociatedItemDetail from './BrowseAssociatedItemDetail';
 import * as C from '../../config/constants';
 import style from '../Search/Style/index.css';
-import { generateDropdownMenu, withProps } from '../../shared';
 
 type S = {
   browseDetailPanelIsVisible: boolean,
   rowClicked: boolean,
   noResults: boolean,
   isPadRequired: boolean,
-  detailSubtitle: {},
+  detailSubtitle: Object,
 };
 
 export class BrowseResults extends React.Component<Props, S> {
@@ -45,7 +43,17 @@ export class BrowseResults extends React.Component<Props, S> {
     });
   };
 
-  handleBrowseDetails = (e: any, meta: {}) => {
+  handleClickCrossReference = (e) => {
+    const { store } = this.props;
+    e.stopPropagation();
+    const indexFilter = store.getState().form.searchForm.values.selectIndexes;
+    const conditionFilter = store.getState().form.searchForm.values.selectCondition;
+    const indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
+    store.dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query: indexForQuery + e.currentTarget.attributes[1].nodeValue, from: '1', to: '50' });
+    store.dispatch({ type: ACTION.SETTINGS, data: { triggerDetails: 'Y' } });
+  }
+
+  handleBrowseDetails = (e: any, meta: Object) => {
     const { dispatch, store } = this.props;
     const id = meta.headingNumber;
     const containsAuthorities = meta.countAuthorities > 0;
@@ -97,6 +105,9 @@ export class BrowseResults extends React.Component<Props, S> {
     const { translate, isFetchingBrowse, firstMenu, isReadyBrowse, browseRecords, isPanelOpen, isFetchingBrowseDetails, isReadyBrowseDetails, isLoadingAssociated, isReadyAssociated } = this.props;
     let { noResults, isPadRequired } = this.state;
     const browseFormatter = {
+      countAuthorities: el => (
+        <span className={el.countAuthorities && el.countDocuments !== undefined ? style.countDocs : style.countDocs}>{el.countAuthorities}</span>
+      ),
       type: x => (
         <span className={x.countAuthorities === 0 && x.countDocuments === 0 ? style.noRef : x.countAuthorities === 0 ? style.bibliographic : style.authority} />
       ),
@@ -110,24 +121,17 @@ export class BrowseResults extends React.Component<Props, S> {
                 <div>
                   <Button
                     buttonStyle="none"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      const indexFilter = store.getState().form.searchForm.values.selectIndexes;
-                      const conditionFilter = store.getState().form.searchForm.values.selectCondition;
-                      const indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
-                      store.dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query: indexForQuery + e.currentTarget.attributes[1].nodeValue, from: '1', to: '50' });
-                      store.dispatch({ type: ACTION.SETTINGS, data: { triggerDetails: 'Y' } });
-                    }}
+                    onClick={this.handleClickCrossReference}
                     style={{ margin: 0, padding: 0 }}
                     aria-label={element.stringText}
                   >
                     <span
-                      id="textSpanRefType1"
+                      id="refType1"
                       style={{ fontWeight: 'bold', margin: 0, padding: 0 }}
                     >
                       { 'See: ' }
                     </span>
-                    { element.stringText}
+                    { element.stringText }
                   </Button>
                   <br />
                 </div>
@@ -137,14 +141,7 @@ export class BrowseResults extends React.Component<Props, S> {
                 <div>
                   <Button
                     buttonStyle="none"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      const indexFilter = store.getState().form.searchForm.values.selectIndexes;
-                      const conditionFilter = store.getState().form.searchForm.values.selectCondition;
-                      const indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
-                      store.dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query: indexForQuery + e.currentTarget.attributes[1].nodeValue, from: '1', to: '50' });
-                      store.dispatch({ type: ACTION.SETTINGS, data: { triggerDetails: 'Y' } });
-                    }}
+                    onClick={this.handleClickCrossReference}
                     style={{ margin: 0, padding: 0 }}
                     aria-label={element.stringText}
                   >
@@ -154,7 +151,7 @@ export class BrowseResults extends React.Component<Props, S> {
                     >
                       { 'Seen From: ' }
                     </span>
-                    { element.stringText}
+                    { element.stringText }
                   </Button>
                   <br />
                 </div>
@@ -211,7 +208,6 @@ export class BrowseResults extends React.Component<Props, S> {
                   <MultiColumnList
                     {...this.props}
                     contentData={browseRecords}
-                    autosize={true.toString()}
                     isEmptyMessage={C.EMPTY_STRING}
                     formatter={browseFormatter}
                     onRowClick={this.handleBrowseDetails}

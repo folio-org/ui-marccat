@@ -158,7 +158,7 @@ class Record extends React.Component {
     const payload = { bibliographicRecord, recordTemplate };
     this.setState({ submit: true });
 
-    await post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), payload)
+    await post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW, false, getState()), payload)
       .then((r) => { return r.json(); })
       .then(() => {
         showValidationMessage(this.callout, 'cataloging.record.update.success', 'success');

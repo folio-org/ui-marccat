@@ -2,7 +2,6 @@
 import { from } from 'rxjs/observable/from';
 import { of } from 'rxjs/observable/of';
 import * as Resolver from '../helpers/Resolver';
-import { ENDPOINT } from '../../config/constants';
 import { ACTION } from '../actions';
 
 const initialState = {};
@@ -128,7 +127,7 @@ const getHeaders = () => {
  * @param {Observable} action$ - the observable action
  * @param {Function} store.getState - get's the most recent redux state
  */
-export function epic(action$) {
+export function epic(action$, { getState }) {
   const actionMethods = {
     [ACTION.QUERY]: 'GET',
     [ACTION.FIND]: 'GET',
@@ -144,8 +143,9 @@ export function epic(action$) {
     .mergeMap(({ type, data, payload, cb }) => {
       const method = actionMethods[type];
 
-      // let url = `${state.okapi.url}${data.path}`;
-      const url = `${ENDPOINT.BASE_URL}${data.path}?${(data.params)}`;
+      const state = getState();
+      const url = `${state.okapi.url}${data.path}?${(data.params)}`;
+
       const headers = getHeaders();
       const body = JSON.stringify(payload);
 

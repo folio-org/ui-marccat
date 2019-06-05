@@ -23,8 +23,8 @@ export const replaceSeparator = (s, sep) => s.replace(sep, '$');
  * @param {*} params
  * @param {*} withslash
  */
-export const buildUrl = (url, params, withslash = false) => {
-  return ENDPOINT.BASE_URL
+export const buildUrl = (url, params, withslash = false, s) => {
+  return ENDPOINT.OKAPI_URL(s)
     .concat((withslash) ? url.concat('/') : url)
     .concat('?')
     .concat(params);

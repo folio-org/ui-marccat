@@ -66,7 +66,6 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "flow-parser": "^0.100.0",
     "flow-remove-types": "^2.100.0",
     "lint-staged": "^4.0.3",
     "prettier": "^1.9.2",

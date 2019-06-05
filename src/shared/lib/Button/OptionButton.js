@@ -3,17 +3,12 @@
 // @flow
 import * as React from 'react';
 import { reduxForm, Field } from 'redux-form';
-import type { Props } from '../../../flow/types.js.flow';
 
 // eslint-disable-next-line no-unused-vars
 import style from '../Style/InputField.css';
 
-type P = Props & {
-  labels: Array<any>,
-};
 
-
-export class CheckboxIconButton extends React.Component<Props, {}> {
+export class CheckboxIconButton extends React.Component {
   render() {
     const { labels, dispatch, change } = this.props;
     return (
@@ -42,7 +37,7 @@ export class CheckboxIconButton extends React.Component<Props, {}> {
   }
 }
 
-export function SingleCheckboxIconButton({ ...props }: P) {
+export function SingleCheckboxIconButton({ ...props }) {
   const { labels, pullLeft, widthPadding } = props;
   return (
     <div>

@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { isEmpty, last } from 'lodash';
 import { EMPTY_SPACED_STRING, REDUX } from '../../../../../config/constants';
 import { decamelizify } from '../../../../../shared';
-import type { Props, State } from '../../../../../flow/types.js.flow';
 
 import style from '../../../Style/index.css';
 import { dropDownValuesAction, changeDisplayValueAction } from '../../../Actions';
@@ -21,9 +20,9 @@ type S = {
   expand: Boolean,
 } & State
 
-class Tag00X extends React.PureComponent<Props, S> {
+class Tag00X extends React.PureComponent<{}, S> {
 
-  constructor(props: Props) {
+  constructor(props) {
     super(props);
     this.state = {
       expand: false,

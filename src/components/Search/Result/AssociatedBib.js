@@ -2,16 +2,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Accordion, FilterAccordionHeader, MultiColumnList } from '@folio/stripes/components';
-import type { Props } from '../../../flow/types.js.flow';
 import { ACTION } from '../../../redux/actions';
 import { remapForAssociatedBibList, resultsFormatterForAssociated, columnMapperForAssociated } from '../../../shared';
 import { EMPTY_STRING } from '../../../config/constants';
 
-type P = Props & {
-    checkRecordType: Array<any>,
-}
-
-function AssociatedBib({ ...props }: P) {
+function AssociatedBib({ ...props }) {
   const { bibRecords, ...rest } = props;
   const associatedBibRecords = bibRecords;
   const resultRemapped = (associatedBibRecords && associatedBibRecords.length > 0)

@@ -12,7 +12,6 @@ import {
 import { reduxForm, Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import ResetButton from '../Filter/ResetButton';
-import type { Props } from '../../../flow/types.js.flow';
 import {
   SearchIndexes,
   SearchConditions,
@@ -28,13 +27,9 @@ import { EMPTY_STRING } from '../../../config/constants';
 import { historySearchAction, searchDetailAction } from '../Actions';
 import styles from '../Style/index.css';
 
-type P = Props & {
-  inputErrorCheck: string,
-  translate: Function,
-}
 
-class SearchPanel extends React.Component<P, {}> {
-  constructor(props: P) {
+class SearchPanel extends React.Component {
+  constructor(props) {
     super(props);
     this.state = {
       isBrowseRequested: false,

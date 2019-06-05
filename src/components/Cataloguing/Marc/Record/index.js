@@ -37,15 +37,13 @@ import {
 } from '../../Utils/MarcApiUtils';
 import * as C from '../../../../config/constants';
 import * as MarcAction from '../../Actions';
-import type { Props } from '../../..';
-import type { RecordTemplate, Type } from '../../../../flow/cataloging.js.flow';
 import style from '../../Style/index.css';
 import { formFieldValue, resolve } from '../../../../redux/helpers/Selector';
 import { TAGS, TAG_NOT_REPEATABLE } from '../../Utils/MarcConstant';
 import DataFieldForm from '../Form/DataField';
 import VariableFieldForm from '../Form/VariableField';
 
-class Record extends React.Component<Props, {
+class Record extends React.Component<{}, {
   callout: React.RefObject<Callout>,
 }> {
   constructor(props) {

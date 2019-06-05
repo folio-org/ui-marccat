@@ -6,7 +6,6 @@ import { ACTION } from '../../../redux/actions';
 import { remapForAssociatedBibList, resultsFormatterForAssociated, columnMapperForAssociated } from '../../../shared';
 import { EMPTY_STRING } from '../../../config/constants';
 
-
 function AssociatedBib({ ...props }) {
   const { bibRecords, ...rest } = props;
   const associatedBibRecords = bibRecords;

@@ -17,7 +17,6 @@ import { emptyRecordAction } from '../../Cataloguing/Actions';
 import { searchDetailAction } from '../Actions';
 import * as C from '../../../config/constants';
 
-
 export class SearchResults extends React.Component {
   constructor(props) {
     super(props);

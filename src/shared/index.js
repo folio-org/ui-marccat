@@ -1,5 +1,4 @@
 
-
 // core
 export { default as injectProps } from './hoc/injectProps';
 

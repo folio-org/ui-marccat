@@ -16,9 +16,7 @@ import Tag00XInput from '../components/Tag00XInput';
 import HeaderTypeSelect from '../components/HeaderTypeSelect';
 import { formFieldValue } from '../../../../../redux/helpers/Selector';
 
-
 class Tag00X extends React.PureComponent {
-
   constructor(props) {
     super(props);
     this.state = {

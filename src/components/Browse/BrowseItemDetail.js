@@ -16,7 +16,6 @@ import { resultsFormatterForAssociated, columnMapperForAssociated, getTag100, ge
 import { EMPTY_STRING } from '../../config/constants';
 import style from '../../shared/styles/common.css';
 
-
 export class BrowseItemDetail extends React.Component {
   constructor(props) {
     super(props);

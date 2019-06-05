@@ -13,7 +13,6 @@ import { Localize } from '../../../../../shared';
 
 
 class FixedField extends React.PureComponent {
-
   constructor(props) {
     super(props);
 

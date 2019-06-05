@@ -15,7 +15,6 @@ import style from '../Search/Style/index.css';
 import { generateDropdownMenu, injectProps } from '../../shared';
 import { continueFetchingBrowse } from '../Cataloguing/Actions';
 
-
 export class BrowseResults extends React.Component {
   constructor(props) {
     super(props);

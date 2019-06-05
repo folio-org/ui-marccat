@@ -6,7 +6,6 @@ import { getTag245, getTitle245 } from '../../shared/utils/Mapper';
 
 import style from '../../shared/styles/common.css';
 
-
 function BrowseAssociatedItemDetail({ translate, ...props }) {
   if (props.items !== undefined) {
     const recordDetails = props.items.replace('LEADER', '000');

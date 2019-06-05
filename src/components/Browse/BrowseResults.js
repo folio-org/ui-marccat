@@ -14,6 +14,7 @@ import BrowseAssociatedItemDetail from './BrowseAssociatedItemDetail';
 import * as C from '../../config/constants';
 import style from '../Search/Style/index.css';
 import { generateDropdownMenu, injectProps } from '../../shared';
+import { continueFetchingBrowse } from '../Cataloguing/Actions';
 
 type S = {
   browseDetailPanelIsVisible: boolean,
@@ -28,6 +29,7 @@ export class BrowseResults extends React.Component<Props, S> {
     super(props);
     this.state = {
       detailSubtitle: {},
+      mergedBrowseRecords: {},
       browseDetailPanelIsVisible: false,
       rowClicked: false,
       noResults: false,
@@ -104,14 +106,15 @@ export class BrowseResults extends React.Component<Props, S> {
   render() {
     const { isFromCrossReferences, store } = this.props;
     const { browseDetailPanelIsVisible, rowClicked, detailSubtitle } = this.state;
-    const { translate, isFetchingBrowse, firstMenu, isReadyBrowse, browseRecords, isPanelOpen, isFetchingBrowseDetails, isReadyBrowseDetails, isLoadingAssociated, isReadyAssociated } = this.props;
+    const { translate, isFetchingBrowse, firstMenu, isReadyBrowse, isPanelOpen, isFetchingBrowseDetails, isReadyBrowseDetails, isLoadingAssociated, isReadyAssociated } = this.props;
     let { noResults, isPadRequired } = this.state;
+    let { browseRecords } = this.props;
     const browseFormatter = {
       countAuthorities: el => (
         <span className={el.countAuthorities && el.countDocuments !== undefined ? style.countDocs : style.countDocs}>{el.countAuthorities}</span>
       ),
       type: x => (
-        <span className={x.countAuthorities === 0 && x.countDocuments === 0 ? style.noRef : x.countAuthorities === 0 ? style.bibliographic : style.authority} />
+        x.countAuthorities === 0 && x.countDocuments === 0 ? <span className={style.noRef} /> : x.countAuthorities === 0 ? <AppIcon size="small" app="marccat" iconKey="marc-bib" /> : <AppIcon size="small" app="marccat" iconKey="marc-authority" />
       ),
       cr0: item => (
         <div>
@@ -191,6 +194,8 @@ export class BrowseResults extends React.Component<Props, S> {
         detailSubtitle: stringText
       });
     }
+    const { mergedBrowseRecords } = this.state;
+    console.log(mergedBrowseRecords);
     return (
       <Paneset static>
         <Pane
@@ -200,6 +205,18 @@ export class BrowseResults extends React.Component<Props, S> {
           paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
           firstMenu={firstMenu}
           lastMenu={this.renderButtonMenu}
+          onScroll={(e) => {
+            const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+            if (bottom) {
+              const cb = (payload) => {
+                this.setState({ mergedBrowseRecords: payload });
+                browseRecords = [...mergedBrowseRecords, ...browseRecords];
+              };
+              const query = store.getState().marccat.browse.query;
+              store.dispatch(continueFetchingBrowse(query, cb));
+            }
+          }
+          }
         >
           {
             (isFetchingBrowse) ?
@@ -242,6 +259,13 @@ export class BrowseResults extends React.Component<Props, S> {
             lastMenu={this.renderButtonMenu}
             onClose={this.handleClosePanelDetails}
             actionMenu={this.getActionMenu}
+            onScroll={(e) => {
+              const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+              if (bottom) {
+                store.dispatch({ type: ACTION.SEARCH, payload: '' });
+              }
+            }
+            }
           >
             {
               (isFetchingBrowseDetails) ?
@@ -260,6 +284,13 @@ export class BrowseResults extends React.Component<Props, S> {
             appIcon={<AppIcon app={C.META.ICON_TITLE} />}
             actionMenu={this.getActionMenu}
             dismissible
+            onScroll={(e) => {
+              const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+              if (bottom) {
+                store.dispatch({ type: ACTION.SEARCH, payload: '' });
+              }
+            }
+            }
             onClose={() => {
               const { dispatch } = this.props;
               dispatch({ type: ACTION.CLOSE_BROWSE_ASSOCIATED_DETAILS, openPanel: false });

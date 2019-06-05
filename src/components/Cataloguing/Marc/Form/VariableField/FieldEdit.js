@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import { Field } from 'redux-form';
-import { TextField } from '@folio/stripes/components';
+import { TextField, HotKeys } from '@folio/stripes/components';
 import style from '../../../Style/variableform.css';
 import AutoSuggestCode from '../../Suggestion/AutoSuggestCode';
 import AutoSuggestInd1 from '../../Suggestion/AutoSuggestInd1';
@@ -33,6 +33,15 @@ export default function ItemEdit({
   autoFocus,
   ...props
 }: Props) {
+
+  const keys = {
+    showHeading: 'ctrl+space'
+  };
+
+  const handlers = {
+    showHeading: (event) => console.log(event)
+  };
+
   const fields = visibleFields.map((name, fieldIndex) => {
     if (readOnlyFields.indexOf(name) === -1) {
       let mappedName = name;
@@ -59,18 +68,23 @@ export default function ItemEdit({
 
       return (
         <div key={fieldKey} style={fieldStyle}>
-          <Field
-            component={
-              (mappedName === 'code') ? AutoSuggestCode
-                : (mappedName === 'ind1') ? AutoSuggestInd1
-                  : (mappedName === 'ind2') ? AutoSuggestInd2
-                    : TextField
-            }
-            {...props}
-            {...fieldProps}
-            fullWidth
-            autoFocus={autoFocus && fieldIndex === 0}
-          />
+          <HotKeys
+            keyMap={keys}
+            handlers={handlers}
+          >
+            <Field
+              component={
+                (mappedName === 'code') ? AutoSuggestCode
+                  : (mappedName === 'ind1') ? AutoSuggestInd1
+                    : (mappedName === 'ind2') ? AutoSuggestInd2
+                      : TextField
+              }
+              {...props}
+              {...fieldProps}
+              fullWidth
+              autoFocus={autoFocus && fieldIndex === 0}
+            />
+          </HotKeys>
         </div>
       );
     }

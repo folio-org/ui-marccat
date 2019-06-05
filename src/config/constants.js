@@ -39,6 +39,7 @@ export const ENDPOINT = {
   TOTAL_COUNT_SEARCH_URL: '/countSearch',
   DOC_COUNT_URL: 'document-count-by-id',
   BROWSE_FIRST_PAGE_URL: '/browse',
+  BROWSE_NEXT_PAGE: '/next-page',
   VIEW_TEMPLATE_URL: '/record-templates',
   EMPTY_RECORD_URL: '/bibliographic-record/from-template/',
   DUPLICATE_RECORD_URL: '/bibliographic-record/duplicate',

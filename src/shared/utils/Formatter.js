@@ -2,6 +2,7 @@
 // @flow
 import * as React from 'react';
 import { Button } from '@folio/stripes-components';
+import { AppIcon } from '@folio/stripes-core';
 import { getFieldPosition, getFormat, getMicroformat } from './Mapper';
 import style from '../../components/Search/Style/index.css';
 
@@ -151,7 +152,7 @@ export const browseColMapper = {
 };
 export const resultsFormatterForAssociated = {
   resultView: x => (
-    <span className={x.recordView === 1 ? style.bibliographic : style.authority} />
+    x.recordView === 1 ? <AppIcon size="small" app="marccat" iconKey="marc-bib" /> : <AppIcon size="small" app="marccat" iconKey="marc-authority" />
   ),
   name: x => (
     <span>
@@ -198,7 +199,7 @@ export const resultsFormatterForAssociated = {
 export const resultsFormatter = (isBibsOnly: ?boolean = true, isAuthOnly: ?boolean = true) => {
   const all = {
     resultView: x => (
-      <span className={x.recordView === 1 ? style.bibliographic : style.authority} />
+      x.recordView === 1 ? <AppIcon size="small" app="marccat" iconKey="marc-bib" /> : <AppIcon size="small" app="marccat" iconKey="marc-authority" />
     ),
     name: x => (
       <span>
@@ -228,7 +229,7 @@ export const resultsFormatter = (isBibsOnly: ?boolean = true, isAuthOnly: ?boole
 
   const isBib = {
     resultView: x => (
-      <span className={x.recordView === 1 ? style.bibliographic : style.authority} />
+      x.recordView === 1 ? <AppIcon size="small" app="marccat" iconKey="marc-bib" /> : <AppIcon size="small" app="marccat" iconKey="marc-authority" />
     ),
     name: x => (
       <span>

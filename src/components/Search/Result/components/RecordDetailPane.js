@@ -1,9 +1,9 @@
 // @flow
 import * as React from 'react';
 import { Pane, Icon, MenuSection } from '@folio/stripes/components';
+import { AppIcon } from '@folio/stripes-core';
 import RecordDetails from '../RecordDetails';
 import { injectProps, Localize, findParam } from '../../../../shared';
-import { META } from '../../../../config/constants';
 import { duplicaRecordAction } from '../../Actions';
 
 class RecordDetailPane extends React.Component {
@@ -57,7 +57,7 @@ class RecordDetailPane extends React.Component {
           defaultWidth="35%"
           paneTitle={detailPaneMeta.title}
           paneSub={detailPaneMeta.subTitle}
-          appIcon={{ app: META.ICON_TITLE }}
+          appIcon={detailPaneMeta.title.startsWith('Bib') ? <AppIcon size="large" app="marccat" iconKey="marc-bib" /> : <AppIcon size="large" app="marccat" iconKey="marc-authority" />}
           actionMenu={() => <this.ActionMenuDetail {...this.props} />}
           dismissible
           onClose={onClose}

@@ -32,6 +32,21 @@ export const autosuggestionAction = (payload) => {
  *
  * @param {*} payload
  */
+export const continueFetchingBrowse = (query, cb) => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.BROWSE_NEXT_PAGE,
+      type: 'browseNextPage',
+      params: `query=${query}&view=1&mainLibrary=170&pageSize=30&lang=eng`,
+    },
+    cb
+  };
+};
+/**
+ *
+ * @param {*} payload
+ */
 export const triggerTagCodeSuggestion = (payload, cb) => {
   return {
     type: ACTION.QUERY,

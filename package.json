@@ -21,7 +21,6 @@
     "lint": "eslint ./src --fix && stylelint \"src/**/*.css\" --fix",
     "eslint": "eslint ./ --fix",
     "precommit": "lint-staged",
-    "type:install": "flow-typed install `echo $1`",
     "stylelint": "stylelint \"src/**/*.css\"",
     "deploy": "sh script/deploy.sh",
     "clean": "rm -rf lib/ artifact/"

@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -43,9 +43,7 @@ import { TAGS, TAG_NOT_REPEATABLE } from '../../Utils/MarcConstant';
 import DataFieldForm from '../Form/DataField';
 import VariableFieldForm from '../Form/VariableField';
 
-class Record extends React.Component<{}, {
-  callout: React.RefObject<Callout>,
-}> {
+class Record extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -72,7 +70,7 @@ class Record extends React.Component<{}, {
   }
 
 
-  getCurrentRecord = (): Object => {
+  getCurrentRecord = () => {
     const { datastore: { emptyRecord, recordDuplicate }, recordDetail } = this.props;
     const { mode } = this.state;
 
@@ -90,7 +88,7 @@ class Record extends React.Component<{}, {
     item.fieldStatus = (item.variableField.keyNumber > 0 || item.mandatory) ? RECORD_FIELD_STATUS.CHANGED : RECORD_FIELD_STATUS.NEW;
     item.variableField.displayValue = heading.displayValue;
 
-    const form: [] = formFieldValue(store, C.REDUX.FORM.VARIABLE_FORM, 'items');
+    const form = formFieldValue(store, C.REDUX.FORM.VARIABLE_FORM, 'items');
     const tag = form.filter(e => e.code === item.code);
     const length = tag.length;
 
@@ -103,8 +101,9 @@ class Record extends React.Component<{}, {
 
   // TODO FIXME
   asyncCreateHeading = async (item, heading) => {
+    const { store: { getState } } = this.props;
     try {
-      const response = await post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading);
+      const response = await post(buildUrl(getState(), C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading);
       const data = await response.json();
       item.variableField.categoryCode = data.categoryCode;
       if (item.variableField.keyNumber > 0) {
@@ -150,7 +149,7 @@ class Record extends React.Component<{}, {
     const bibliographicRecord = this.getCurrentRecord();
     bibliographicRecord.leader.value = formData.leader;
 
-    const recordTemplate: RecordTemplate<Type> = {
+    const recordTemplate = {
       id: 408,
       fields: filterMandatoryFields(emptyRecord.results.fields)
     };
@@ -160,7 +159,7 @@ class Record extends React.Component<{}, {
     const payload = { bibliographicRecord, recordTemplate };
     this.setState({ submit: true });
 
-    await post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), payload)
+    await post(buildUrl(getState(), C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), payload)
       .then((r) => { return r.json(); })
       .then(() => {
         showValidationMessage(this.callout, 'cataloging.record.update.success', 'success');
@@ -278,7 +277,7 @@ class Record extends React.Component<{}, {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  loadHeadertype: (tag: []) => _ => {
+  loadHeadertype: (tag) => _ => {
     tag.forEach(t => dispatch(MarcAction.headertypeAction(t)));
   },
   loadLeaderData: (payload) => _ => {

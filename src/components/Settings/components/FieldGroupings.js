@@ -1,4 +1,4 @@
-// @flow
+//
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Icon, MultiColumnList, Pane } from '@folio/stripes/components';

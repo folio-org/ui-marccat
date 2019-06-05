@@ -1,5 +1,5 @@
 /* eslint-disable dot-notation */
-// @flow
+//
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';

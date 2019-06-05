@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Icon, Pane, Button } from '@folio/stripes/components';

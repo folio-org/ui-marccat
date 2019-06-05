@@ -1,4 +1,4 @@
-// @flow
+//
 import * as React from 'react';
 import { Button, Dropdown, DropdownMenu, Icon } from '@folio/stripes/components';
 import { Localize } from '../../../shared/utils/Function';

@@ -4,7 +4,6 @@ import { MultiColumnList, Pane, Paneset, Icon, Button } from '@folio/stripes/com
 import { AppIcon } from '@folio/stripes-core';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import type { Props } from '../../flow/types.js.flow';
 import BrowseItemDetail from './BrowseItemDetail';
 import { ACTION } from '../../redux/actions/Actions';
 import { findYourQueryFromBrowse, findYourQuery } from '../Search/Filter/FilterMapper';
@@ -24,7 +23,7 @@ type S = {
   detailSubtitle: Object,
 };
 
-export class BrowseResults extends React.Component<Props, S> {
+export class BrowseResults extends React.Component<{}, S> {
   constructor(props: Props) {
     super(props);
     this.state = {

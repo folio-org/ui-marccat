@@ -2,16 +2,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, KeyValue, AccordionSet, FilterAccordionHeader, Accordion } from '@folio/stripes/components';
-import type { Props } from '../../flow/types.js.flow';
 import { getTag245, getTitle245 } from '../../shared/utils/Mapper';
 
 import style from '../../shared/styles/common.css';
 
-type P = Props & {
-  items: Array<any>,
-}
-
-function BrowseAssociatedItemDetail({ translate, ...props }: P) {
+function BrowseAssociatedItemDetail({ translate, ...props }) {
   if (props.items !== undefined) {
     const recordDetails = props.items.replace('LEADER', '000');
     const recordDetailsArray = recordDetails.split('\n');

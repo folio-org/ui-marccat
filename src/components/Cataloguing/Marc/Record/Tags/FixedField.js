@@ -11,16 +11,9 @@ import Tag00X from './Tag00X';
 import { sort } from '../../../Utils/MarcApiUtils';
 import { Localize } from '../../../../../shared';
 
-type P = {
-  handleOnChange: () => void,
-} & Props;
+class FixedField extends React.PureComponent {
 
-type State = {
-  fields: Array<*>,
-}
-class FixedField extends React.PureComponent<P, State> {
-
-  constructor(props: P) {
+  constructor(props) {
     super(props);
 
     this.state = {

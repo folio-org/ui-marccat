@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { Fragment } from 'react';
 import { Button, Icon } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';

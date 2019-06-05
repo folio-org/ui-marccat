@@ -1,5 +1,5 @@
 /* eslint-disable no-sparse-arrays */
-// @flow
+//
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Pane, Icon, MultiColumnList } from '@folio/stripes/components';
@@ -12,7 +12,7 @@ import { selectForm } from '../../../../redux/helpers/Selector';
 
 
 class SearchResultPane extends React.Component {
-  constructor(props: Props) {
+  constructor(props) {
     super(props);
     this.state = {
     };

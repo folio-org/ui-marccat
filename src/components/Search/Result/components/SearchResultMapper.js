@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-// @flow
+//
 import * as React from 'react';
 import {
   getFieldPosition,
@@ -8,7 +8,7 @@ import {
 } from '../../../../shared/utils/Mapper';
 import style from '../../Style/index.css';
 
-export const columnMapper = (isBibsOnly: ?boolean, isAuthOnly: ?boolean = true) => {
+export const columnMapper = (isBibsOnly, isAuthOnly = true) => {
   const isBib = {
     'resultView': '',
     '001': 'Id. Number (001)',
@@ -103,7 +103,7 @@ export const resultsFormatterForAssociated = {
   )
 };
 
-export const resultsFormatter = (isBibsOnly: ?boolean = true, isAuthOnly: ?boolean = true) => {
+export const resultsFormatter = (isBibsOnly = true, isAuthOnly = true) => {
   const all = {
     resultView: x => (
       <span className={x.recordView === 1 ? style.bibliographic : style.authority} />

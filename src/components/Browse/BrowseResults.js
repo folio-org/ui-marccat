@@ -1,4 +1,4 @@
-// @flow
+//
 import * as React from 'react';
 import { MultiColumnList, Pane, Paneset, Icon, Button } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
@@ -15,16 +15,9 @@ import style from '../Search/Style/index.css';
 import { generateDropdownMenu, injectProps } from '../../shared';
 import { continueFetchingBrowse } from '../Cataloguing/Actions';
 
-type S = {
-  browseDetailPanelIsVisible: boolean,
-  rowClicked: boolean,
-  noResults: boolean,
-  isPadRequired: boolean,
-  detailSubtitle: Object,
-};
 
-export class BrowseResults extends React.Component<{}, S> {
-  constructor(props: Props) {
+export class BrowseResults extends React.Component {
+  constructor(props) {
     super(props);
     this.state = {
       detailSubtitle: {},
@@ -56,7 +49,7 @@ export class BrowseResults extends React.Component<{}, S> {
     store.dispatch({ type: ACTION.SETTINGS, data: { triggerDetails: 'Y' } });
   }
 
-  handleBrowseDetails = (e: any, meta: Object) => {
+  handleBrowseDetails = (e, meta) => {
     const { dispatch, store } = this.props;
     const id = meta.headingNumber;
     const containsAuthorities = meta.countAuthorities > 0;

@@ -1,4 +1,4 @@
-// @flow strict
+//  strict
 import * as React from 'react';
 import { Col } from '@folio/stripes/components';
 

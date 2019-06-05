@@ -1,26 +1,11 @@
 /* eslint-disable react/no-unused-prop-types */
-// @flow
+//
 import * as React from 'react';
 import { PaneMenu, IconButton, Button } from '@folio/stripes/components';
 import classNames from 'classnames';
 
-type ToolbarMenuProps = {
-  icon: Array<any>,
-  content: React.Node,
-  className?: string,
-  style?: Object;
-  withPrinter?: boolean,
-  badgeCount?: string,
-  onClick: () => void;
-  type?: string;
-  create: boolean;
-  disabled?: boolean;
-  secondButton?: boolean;
-  label?: React.Component<any>;
-  stripes: Object;
-};
 
-export const ToolbarMenu = (props: ToolbarMenuProps) => {
+export const ToolbarMenu = (props) => {
   const { icon, onClick, className, badgeCount } = props;
   return (
     <PaneMenu>
@@ -48,7 +33,7 @@ export const ToolbarMenu = (props: ToolbarMenuProps) => {
   );
 };
 
-export const ToolbarButtonMenu = (props: ToolbarMenuProps) => {
+export const ToolbarButtonMenu = (props) => {
   const rightButton = {
     marginRight: '10px',
     float: 'right',

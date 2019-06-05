@@ -1,4 +1,4 @@
-// @flow
+//
 import { from } from 'rxjs/observable/from';
 import { of } from 'rxjs/observable/of';
 import * as Resolver from '../helpers/Resolver';
@@ -61,7 +61,7 @@ export const executeEpicCallback = () => ({
  * @param {Object} state - initial state
  * @param {Object} action - redux action dispatched
  */
-export function reducer(state: Object = initialState, action: Object) {
+export function reducer(state = initialState, action) {
   switch (action.type) {
   case ACTION.REQUEST_RESOLVE:
     return Object.assign({
@@ -103,7 +103,7 @@ export function historyReducer(state = historyState, action) {
  * @param {*} response
  * @returns
  */
-const parseResponseBody = (response: Object) => { // metodo statico
+const parseResponseBody = (response) => { // metodo statico
   return response.text().then((text) => {
     try { return JSON.parse(text); } catch (e) { return text; }
   });

@@ -1,9 +1,9 @@
-// @flow
+//
 import * as React from 'react';
 import { Select } from '@folio/stripes/components';
 import { Field } from 'redux-form';
 
-export default ({ dataOptions, onChange, name, label, ...props }: Props): React.ComponentType => (
+export default ({ dataOptions, onChange, name, label, ...props }) => (
   <Field
     {...props}
     id={name}

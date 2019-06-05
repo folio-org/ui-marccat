@@ -1,4 +1,4 @@
-// @flow strict
+//  strict
 import { uniqueId } from 'lodash';
 import { selectKey } from './Selector';
 

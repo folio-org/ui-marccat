@@ -1,4 +1,4 @@
-// @flow
+//
 import * as React from 'react';
 import { isEmpty, last } from 'lodash';
 import { connect } from 'react-redux';
@@ -38,7 +38,7 @@ class Leader extends React.PureComponent {
   }
 
 
-  handleChange = (e: React.SyntheticEvent<HTMLButtonElement>) => {
+  handleChange = (e) => {
     const { leaderVal } = this.state;
     const selectedValue = e.target.value;
     const selectedName = last((e.target.id).split(SEPARATOR));

@@ -1,4 +1,4 @@
-// @flow
+//
 import * as React from 'react';
 import { MarcatSettings as Settings } from './components';
 import { reducer, epics } from './redux';

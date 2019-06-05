@@ -29,7 +29,7 @@ export class BrowseResults extends React.Component<Props, S> {
     super(props);
     this.state = {
       detailSubtitle: {},
-      mergedBrowseRecords: {},
+      moreBrowseRecords: {},
       browseDetailPanelIsVisible: false,
       rowClicked: false,
       noResults: false,
@@ -104,11 +104,13 @@ export class BrowseResults extends React.Component<Props, S> {
   };
 
   render() {
-    const { isFromCrossReferences, store } = this.props;
-    const { browseDetailPanelIsVisible, rowClicked, detailSubtitle } = this.state;
-    const { translate, isFetchingBrowse, firstMenu, isReadyBrowse, isPanelOpen, isFetchingBrowseDetails, isReadyBrowseDetails, isLoadingAssociated, isReadyAssociated } = this.props;
+    const { browseDetailPanelIsVisible, rowClicked, detailSubtitle, moreBrowseRecords } = this.state;
+    const { isFromCrossReferences, store, translate, isFetchingBrowse, firstMenu, isReadyBrowse, isPanelOpen, isFetchingBrowseDetails, isReadyBrowseDetails, isLoadingAssociated, isReadyAssociated } = this.props;
     let { noResults, isPadRequired } = this.state;
     let { browseRecords } = this.props;
+    if (moreBrowseRecords && moreBrowseRecords.length > 0) {
+      browseRecords = [...browseRecords, ...moreBrowseRecords.headings];
+    }
     const browseFormatter = {
       countAuthorities: el => (
         <span className={el.countAuthorities && el.countDocuments !== undefined ? style.countDocs : style.countDocs}>{el.countAuthorities}</span>
@@ -194,8 +196,6 @@ export class BrowseResults extends React.Component<Props, S> {
         detailSubtitle: stringText
       });
     }
-    const { mergedBrowseRecords } = this.state;
-    console.log(mergedBrowseRecords);
     return (
       <Paneset static>
         <Pane
@@ -209,8 +209,7 @@ export class BrowseResults extends React.Component<Props, S> {
             const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
             if (bottom) {
               const cb = (payload) => {
-                this.setState({ mergedBrowseRecords: payload });
-                browseRecords = [...mergedBrowseRecords, ...browseRecords];
+                this.setState({ moreBrowseRecords: payload });
               };
               const query = store.getState().marccat.browse.query;
               store.dispatch(continueFetchingBrowse(query, cb));

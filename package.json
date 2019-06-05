@@ -24,7 +24,7 @@
     "type:install": "flow-typed install `echo $1`",
     "stylelint": "stylelint \"src/**/*.css\"",
     "deploy": "sh script/deploy.sh",
-    "flow:strip": "flow-remove-types --pretty src/ --out-dir dist/",
+    "flow:strip": "flow-remove-types --pretty -m src/ --out-dir lib/",
     "clean": "rm -rf lib/ artifact/"
   },
   "devDependencies": {

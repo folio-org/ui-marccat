@@ -17,7 +17,10 @@ module.exports = {
     "plugin:flowtype/recommended"
 ],
 settings: {
-  "import/resolver": "webpack"
+  "import/resolver": "webpack",
+   "flowtype": {
+      "onlyFilesWithFlowAnnotation": true
+    }
 },
   env: {
     browser: true
@@ -29,6 +32,7 @@ settings: {
   rules: {
     "import/extensions": 0,
     "flowtype/no-types-missing-file-annotation": 0,
+
     "no-warning-comments":  [2, { "terms": ["flowtype/no-types-missing-file-annotation", "flow-typed signature", "flow-typed version"], "location": "start"}],
 		"indent": ["error", 2],
     "react/jsx-indent": ["error", 2],

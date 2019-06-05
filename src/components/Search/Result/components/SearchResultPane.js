@@ -1,10 +1,9 @@
 /* eslint-disable no-sparse-arrays */
-// @flow
+//
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Pane, Icon, MultiColumnList } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
-import type { Props } from '../../../../flow/types.js.flow';
 import { resultsFormatter, columnMapper, columnWidthMapper, renderColumn } from '../../../../shared/utils/Formatter';
 import { injectProps, ActionMenu, EmptyMessage, NoResultsMessage } from '../../../../shared';
 import { ACTION } from '../../../../redux/actions/Actions';
@@ -12,8 +11,8 @@ import * as C from '../../../../config/constants';
 import { selectForm } from '../../../../redux/helpers/Selector';
 
 
-class SearchResultPane extends React.Component<Props, {}> {
-  constructor(props: Props) {
+class SearchResultPane extends React.Component {
+  constructor(props) {
     super(props);
     this.state = {
     };

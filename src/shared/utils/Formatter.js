@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
-// @flow
+//
 import * as React from 'react';
 import { Button } from '@folio/stripes-components';
 import { AppIcon } from '@folio/stripes-core';
 import { getFieldPosition, getFormat, getMicroformat } from './Mapper';
 import style from '../../components/Search/Style/index.css';
 
-export const columnMapper = (isBibsOnly: ?boolean, isAuthOnly: ?boolean = true) => {
+export const columnMapper = (isBibsOnly, isAuthOnly = true) => {
   let mapper = {};
   if (isBibsOnly === true) {
     mapper = {
@@ -48,7 +48,7 @@ export const columnMapper = (isBibsOnly: ?boolean, isAuthOnly: ?boolean = true) 
   }
   return mapper;
 };
-export const renderColumn = (isBibsOnly: ?boolean, isAuthOnly: ?boolean = true) => {
+export const renderColumn = (isBibsOnly, isAuthOnly = true) => {
   let visibleCol = [];
   if (isBibsOnly === true) {
     visibleCol = [
@@ -91,7 +91,7 @@ export const renderColumn = (isBibsOnly: ?boolean, isAuthOnly: ?boolean = true) 
   return visibleCol;
 };
 
-export const columnWidthMapper = (isBibsOnly: ?boolean, isAuthOnly: ?boolean = true) => {
+export const columnWidthMapper = (isBibsOnly, isAuthOnly = true) => {
   let widthMapper = {};
   if (isBibsOnly === true) {
     widthMapper = {
@@ -196,7 +196,7 @@ export const resultsFormatterForAssociated = {
   )
 };
 
-export const resultsFormatter = (isBibsOnly: ?boolean = true, isAuthOnly: ?boolean = true) => {
+export const resultsFormatter = (isBibsOnly = true, isAuthOnly = true) => {
   const all = {
     resultView: x => (
       x.recordView === 1 ? <AppIcon size="small" app="marccat" iconKey="marc-bib" /> : <AppIcon size="small" app="marccat" iconKey="marc-authority" />

@@ -1,4 +1,4 @@
-// @flow
+//
 import * as React from 'react';
 import { connect } from 'react-redux';
 import {
@@ -12,18 +12,13 @@ import {
   Button
 } from '@folio/stripes/components';
 import { ACTION } from '../../redux/actions/Actions';
-import type { Props } from '../../flow/types.js.flow';
 import { resultsFormatterForAssociated, columnMapperForAssociated, getTag100, getTitle100, remapForAssociatedBibList } from '../../shared';
 import { EMPTY_STRING } from '../../config/constants';
 import style from '../../shared/styles/common.css';
 
-type P = Props & {
-}
 
-export class BrowseItemDetail extends React.Component<P, {
-  recordDetailsArray: [],
-}> {
-  constructor(props: P) {
+export class BrowseItemDetail extends React.Component {
+  constructor(props) {
     super(props);
     this.state = {
       recordDetailsArray: []

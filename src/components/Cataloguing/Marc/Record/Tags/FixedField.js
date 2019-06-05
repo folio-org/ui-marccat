@@ -1,4 +1,4 @@
-// @flow
+//
 import * as React from 'react';
 import { Button } from '@folio/stripes/components';
 import { first, isEmpty } from 'lodash';
@@ -11,16 +11,10 @@ import Tag00X from './Tag00X';
 import { sort } from '../../../Utils/MarcApiUtils';
 import { Localize } from '../../../../../shared';
 
-type P = {
-  handleOnChange: () => void,
-} & Props;
 
-type State = {
-  fields: Array<*>,
-}
-class FixedField extends React.PureComponent<P, State> {
+class FixedField extends React.PureComponent {
 
-  constructor(props: P) {
+  constructor(props) {
     super(props);
 
     this.state = {

@@ -1,4 +1,4 @@
-// @flow
+//
 import * as React from 'react';
 import {
   UncontrolledDropdown,
@@ -6,16 +6,11 @@ import {
   Button,
   Icon
 } from '@folio/stripes/components';
-import type { Props } from '../../../../flow/types.js.flow';
 import ActionLabels from './ActionLabels';
 import { Localize } from '../../../../shared/utils/Function';
 
-type P = Props & {
-  onToggle(): void,
-  open: boolean
-}
 
-export default class ActionsMenu extends React.Component<P, {}> {
+export default class ActionsMenu extends React.Component {
   constructor() {
     super();
     this.state = {

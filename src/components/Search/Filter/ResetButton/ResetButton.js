@@ -1,4 +1,4 @@
-// @flow strict
+//  strict
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import camelCase from 'lodash/camelCase';

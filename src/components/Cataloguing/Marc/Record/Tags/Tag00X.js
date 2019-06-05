@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-// @flow
+//
 import React from 'react';
 import { Field } from 'redux-form';
 import { Select, Row, Col } from '@folio/stripes-components';
@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { isEmpty, last } from 'lodash';
 import { EMPTY_SPACED_STRING, REDUX } from '../../../../../config/constants';
 import { decamelizify } from '../../../../../shared';
-import type { Props, State } from '../../../../../flow/types.js.flow';
 
 import style from '../../../Style/index.css';
 import { dropDownValuesAction, changeDisplayValueAction } from '../../../Actions';
@@ -17,13 +16,10 @@ import Tag00XInput from '../components/Tag00XInput';
 import HeaderTypeSelect from '../components/HeaderTypeSelect';
 import { formFieldValue } from '../../../../../redux/helpers/Selector';
 
-type S = {
-  expand: Boolean,
-} & State
 
-class Tag00X extends React.PureComponent<Props, S> {
+class Tag00X extends React.PureComponent {
 
-  constructor(props: Props) {
+  constructor(props) {
     super(props);
     this.state = {
       expand: false,
@@ -64,7 +60,7 @@ class Tag00X extends React.PureComponent<Props, S> {
     dispatch(changeDisplayValueAction(payload, cb));
   };
 
-  execChange = (response: Object): void => {
+  execChange = (response) => {
     const { dispatch, change, fixedfields, element } = this.props;
     dispatch(change(element.code, response.displayValue));
     if (element.code === TAGS._008) element.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
@@ -91,7 +87,7 @@ class Tag00X extends React.PureComponent<Props, S> {
     payload.sequenceNumber = 0;
   };
 
-  RenderSelect = ({ element, ...props }): React.ComponentType<Props, *> => (
+  RenderSelect = ({ element, ...props }) => (
     <Field
       id={`Tag${element.code}`}
       name={`Tag${element.code}`}

@@ -23,6 +23,7 @@ build/
 ## node
 node_modules/
 dist/
+lib/
 ## vim
 *~
 .*.sw?

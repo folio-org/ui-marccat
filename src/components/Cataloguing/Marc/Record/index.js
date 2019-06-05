@@ -1,4 +1,4 @@
-// @flow
+//
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -37,17 +37,13 @@ import {
 } from '../../Utils/MarcApiUtils';
 import * as C from '../../../../config/constants';
 import * as MarcAction from '../../Actions';
-import type { Props } from '../../..';
-import type { RecordTemplate, Type } from '../../../../flow/cataloging.js.flow';
 import style from '../../Style/index.css';
 import { formFieldValue, resolve } from '../../../../redux/helpers/Selector';
 import { TAGS, TAG_NOT_REPEATABLE } from '../../Utils/MarcConstant';
 import DataFieldForm from '../Form/DataField';
 import VariableFieldForm from '../Form/VariableField';
 
-class Record extends React.Component<Props, {
-  callout: React.RefObject<Callout>,
-}> {
+class Record extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -74,7 +70,7 @@ class Record extends React.Component<Props, {
   }
 
 
-  getCurrentRecord = (): Object => {
+  getCurrentRecord = () => {
     const { datastore: { emptyRecord, recordDuplicate }, recordDetail } = this.props;
     const { mode } = this.state;
 
@@ -92,7 +88,7 @@ class Record extends React.Component<Props, {
     item.fieldStatus = (item.variableField.keyNumber > 0 || item.mandatory) ? RECORD_FIELD_STATUS.CHANGED : RECORD_FIELD_STATUS.NEW;
     item.variableField.displayValue = heading.displayValue;
 
-    const form: [] = formFieldValue(store, C.REDUX.FORM.VARIABLE_FORM, 'items');
+    const form = formFieldValue(store, C.REDUX.FORM.VARIABLE_FORM, 'items');
     const tag = form.filter(e => e.code === item.code);
     const length = tag.length;
 
@@ -152,7 +148,7 @@ class Record extends React.Component<Props, {
     const bibliographicRecord = this.getCurrentRecord();
     bibliographicRecord.leader.value = formData.leader;
 
-    const recordTemplate: RecordTemplate<Type> = {
+    const recordTemplate = {
       id: 408,
       fields: filterMandatoryFields(emptyRecord.results.fields)
     };
@@ -280,7 +276,7 @@ class Record extends React.Component<Props, {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  loadHeadertype: (tag: []) => _ => {
+  loadHeadertype: (tag) => _ => {
     tag.forEach(t => dispatch(MarcAction.headertypeAction(t)));
   },
   loadLeaderData: (payload) => _ => {

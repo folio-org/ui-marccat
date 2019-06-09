@@ -71,7 +71,7 @@
     "settings.default.record.template.bib.text": "Bibliografic Records. Organization-wide templates:",
     "search.record.new": "New",
     "search.record.new.from.template": "New from template (CTRL+N)",
-    "cataloging.variablefield.section.add.newtag": "Add new tag",
+    "cataloging.variablefield.section.add.newtag": "Añadir nueva etiqueta",
     "cataloging.accordion.fixedfield.label": "Control Fields (001, 003, 005)",
     "cataloging.accordion.variablefield.label": "Variable Fields",
     "cataloging.accordion.checkbox.label": "Suppress",
@@ -121,7 +121,7 @@
     "cataloging.actions.view.marc.docs": "View MARC docs",
     "cataloging.actions.view.marc.docs.shortcut": "?",
     "cataloging.record.duplicate": "Duplicate Record",
-    "cataloging.fixedfield.section.add.newtag": "Add {value}",
+    "cataloging.fixedfield.section.add.newtag": "Agregar {valor}.",
     "search.actionmenu.duplicate.ebook": "Duplicate as e-book",
     "cataloging.accordion.fixedfield.editable.label": "Control Fields (006, 007, 008)"
 }

@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+import { last } from 'lodash';
 import { MultiColumnList, Pane, Paneset, Icon, Button } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
 import { connect } from 'react-redux';
@@ -104,12 +105,14 @@ export class BrowseResults extends React.Component<Props, S> {
   };
 
   render() {
-    const { browseDetailPanelIsVisible, rowClicked, detailSubtitle, moreBrowseRecords } = this.state;
-    const { isFromCrossReferences, store, translate, isFetchingBrowse, firstMenu, isReadyBrowse, isPanelOpen, isFetchingBrowseDetails, isReadyBrowseDetails, isLoadingAssociated, isReadyAssociated } = this.props;
-    let { noResults, isPadRequired } = this.state;
+    const { browseDetailPanelIsVisible, rowClicked, detailSubtitle } = this.state;
+    const { isFromCrossReferences, isNewSearch, store, translate, isFetchingBrowse, firstMenu, isReadyBrowse, isPanelOpen, isFetchingBrowseDetails, isReadyBrowseDetails, isLoadingAssociated, isReadyAssociated } = this.props;
+    let { noResults, isPadRequired, moreBrowseRecords } = this.state;
     let { browseRecords } = this.props;
-    if (moreBrowseRecords && moreBrowseRecords.length > 0) {
-      browseRecords = [...browseRecords, ...moreBrowseRecords.headings];
+    if (isNewSearch === 'N') {
+      browseRecords = [...browseRecords, ...moreBrowseRecords];
+    } else {
+      moreBrowseRecords = {};
     }
     const browseFormatter = {
       countAuthorities: el => (
@@ -206,12 +209,15 @@ export class BrowseResults extends React.Component<Props, S> {
           firstMenu={firstMenu}
           lastMenu={this.renderButtonMenu}
           onScroll={(e) => {
+            e.preventDefault();
             const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
             if (bottom) {
+              store.dispatch({ type: ACTION.SETTINGS, data: { newBrowse: 'N' } });
               const cb = (payload) => {
-                this.setState({ moreBrowseRecords: payload });
+                this.setState({ moreBrowseRecords: [...payload.headings, ...moreBrowseRecords] });
               };
-              const query = store.getState().marccat.browse.query;
+              const lastRecord = last(browseRecords).stringText;
+              const query = store.getState().marccat.browse.query.split(' ')[0].concat(' ').concat(lastRecord);
               store.dispatch(continueFetchingBrowse(query, cb));
             }
           }
@@ -310,6 +316,7 @@ export default (connect(
   ({ marccat: { browse, browseDetails, browseDetailsAssociated, settings } }) => ({
     searchIndexForCrossRef: browse.query,
     isFromCrossReferences: settings.triggerDetails,
+    isNewSearch: settings.newBrowse,
     browseRecords: browse.records,
     isFetchingBrowse: browse.isLoading,
     isReadyBrowse: browse.isReady,

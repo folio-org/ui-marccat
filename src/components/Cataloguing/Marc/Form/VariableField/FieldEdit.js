@@ -7,7 +7,6 @@ import AutoSuggestCode from '../../Suggestion/AutoSuggestCode';
 import AutoSuggestInd1 from '../../Suggestion/AutoSuggestInd1';
 import AutoSuggestInd2 from '../../Suggestion/AutoSuggestInd2';
 import AutoSuggestHeadings from '../../Suggestion/AutoSuggestHeadings';
-import { injectProps } from '../../../../../shared';
 
 type Props = {
   autoFocus: boolean,
@@ -22,7 +21,7 @@ type Props = {
   widths: Array<Object>,
 }
 
-function ItemEdit({
+export default function ItemEdit({
   rowIndex,
   error,
   field,
@@ -93,5 +92,3 @@ function ItemEdit({
     </div>
   );
 }
-
-export default injectProps(ItemEdit);

@@ -4,8 +4,7 @@ import { Field } from 'redux-form';
 import { TextField } from '@folio/stripes/components';
 import style from '../../../Style/variableform.css';
 import AutoSuggestCode from '../../Suggestion/AutoSuggestCode';
-import AutoSuggestInd1 from '../../Suggestion/AutoSuggestInd1';
-import AutoSuggestInd2 from '../../Suggestion/AutoSuggestInd2';
+import AutoSuggestIndicators from '../../Suggestion/AutoSuggestIndicators';
 import AutoSuggestHeadings from '../../Suggestion/AutoSuggestHeadings';
 
 type Props = {
@@ -64,10 +63,9 @@ export default function ItemEdit({
           <Field
             component={
               (mappedName === 'code') ? AutoSuggestCode
-                : (mappedName === 'ind1') ? AutoSuggestInd1
-                  : (mappedName === 'ind2') ? AutoSuggestInd2
-                    : (mappedName === 'displayValue') ? AutoSuggestHeadings
-                      : TextField
+                : (mappedName === 'ind1' || mappedName === 'ind2') ? AutoSuggestIndicators
+                  : (mappedName === 'displayValue') ? AutoSuggestHeadings
+                    : TextField
             }
             {...props}
             {...fieldProps}

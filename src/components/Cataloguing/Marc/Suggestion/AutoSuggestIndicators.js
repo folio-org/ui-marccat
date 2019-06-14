@@ -5,7 +5,7 @@ import { triggerTagIndicatorsSuggestion } from '../../Actions';
 import { injectProps } from '../../../../shared';
 import { REDUX } from '../../../../config/constants';
 
-function AutoSuggestInd2(props) {
+function AutoSuggestIndicators(props) {
   const initialState = {
     tagCodeArray: []
   };
@@ -14,18 +14,23 @@ function AutoSuggestInd2(props) {
   const onFocus = (e) => {
     e.preventDefault();
     const { tagCodeArray } = state;
-    const { dispatch } = props;
+    const { dispatch, input } = props;
     if (e.target.form[1].defaultValue.length === 3) {
       const tagCode = e.target.form[1].defaultValue;
-      const cb = (payload) => setState({ tagCodeArray: payload.ind2 });
-      dispatch(triggerTagIndicatorsSuggestion(tagCode, cb));
+      if (input.name === 'items[0].variableField.ind1') {
+        const cb = (payload) => setState({ tagCodeArray:  payload.ind1 });
+        dispatch(triggerTagIndicatorsSuggestion(tagCode, cb));
+      } else if (input.name === 'items[0].variableField.ind2') {
+        const cb = (payload) => setState({ tagCodeArray: payload.ind2 });
+        dispatch(triggerTagIndicatorsSuggestion(tagCode, cb));
+      }
     }
     return tagCodeArray;
   };
 
-  const onChange = (ind2Code) => {
+  const onChange = (indicator) => {
     const { dispatch, change, input } = props;
-    dispatch(change(REDUX.FORM.VARIABLE_FORM, input.name, ind2Code));
+    dispatch(change(REDUX.FORM.VARIABLE_FORM, input.name, indicator));
   };
 
   const { tagCodeArray } = state;
@@ -46,4 +51,4 @@ function AutoSuggestInd2(props) {
   );
 }
 
-export default injectProps(AutoSuggestInd2);
+export default injectProps(AutoSuggestIndicators);

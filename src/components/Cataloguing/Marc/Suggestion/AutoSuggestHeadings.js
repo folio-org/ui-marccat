@@ -43,7 +43,7 @@ function AutoSuggestHeadings(props) {
   };
 
   const keys = {
-    'showHeadings' : ['ctrl+space'],
+    'showHeadings' : ['ctrl+alt'],
   };
 
   const handlers = {

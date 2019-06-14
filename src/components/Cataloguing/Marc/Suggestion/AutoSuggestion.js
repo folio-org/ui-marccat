@@ -1,11 +1,11 @@
 // @flow
 import * as React from 'react';
 import { AutoSuggest } from '@folio/stripes/components';
-import { triggerTagIndicatorsSuggestion } from '../../Actions';
+import { triggerTagIndicatorsSuggestion, triggerTagCodeSuggestion } from '../../Actions';
 import { injectProps } from '../../../../shared';
 import { REDUX } from '../../../../config/constants';
 
-function AutoSuggestIndicators(props) {
+function AutoSuggestion(props) {
   const initialState = {
     tagCodeArray: []
   };
@@ -28,9 +28,13 @@ function AutoSuggestIndicators(props) {
     return tagCodeArray;
   };
 
-  const onChange = (indicator) => {
+  const onChange = (digit) => {
     const { dispatch, change, input } = props;
-    dispatch(change(REDUX.FORM.VARIABLE_FORM, input.name, indicator));
+    if (input.name === 'items[0].variableField.code' && digit && digit !== '') {
+      const cb = (payload) => setState({ tagCodeArray: payload.tags });
+      dispatch(triggerTagCodeSuggestion(digit, cb));
+      dispatch(change(REDUX.FORM.VARIABLE_FORM, input.name, digit));
+    } else if (input.name === 'items[0].variableField.ind1' || input.name === 'items[0].variableField.ind2') { dispatch(change(REDUX.FORM.VARIABLE_FORM, input.name, digit)); }
   };
 
   const { tagCodeArray } = state;
@@ -51,4 +55,4 @@ function AutoSuggestIndicators(props) {
   );
 }
 
-export default injectProps(AutoSuggestIndicators);
+export default injectProps(AutoSuggestion);

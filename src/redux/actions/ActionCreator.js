@@ -47,6 +47,10 @@ export const isfetchingScanBrowseRequest = (isLoading) => ({
   type: ACTION.FETCH_BROWSE_FIRST_PAGE,
   payload: isLoading
 });
+export const isfetchingMoreScanBrowseRequest = (isLoading) => ({
+  type: ACTION.FETCH_BROWSE_NEXT_PAGE,
+  payload: isLoading
+});
 export const fetchAssociatedBibRecords = (records, recordType) => ({
   type: ACTION.ASSOCIATED_BIB_REC_SUCCESS,
   payload: records,
@@ -56,6 +60,12 @@ export const fetchScanBrowsingRecords = (records, query) => ({
   type: ACTION.BROWSE_FIRST_PAGE_SUCCESS,
   payload: records,
   qBib: query,
+});
+export const fetchMoreScanBrowsingRecords = (records, query, oldResults) => ({
+  type: ACTION.BROWSE_NEXT_PAGE_SUCCESS,
+  payload: records,
+  qBib: query,
+  oldRecords: oldResults
 });
 export const fetchCountDocRecords = (records) => ({
   type: ACTION.COUNT_DOC_SUCCESS,

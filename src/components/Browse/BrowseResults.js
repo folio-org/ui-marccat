@@ -15,7 +15,6 @@ import BrowseAssociatedItemDetail from './BrowseAssociatedItemDetail';
 import * as C from '../../config/constants';
 import style from '../Search/Style/index.css';
 import { generateDropdownMenu, injectProps } from '../../shared';
-import { continueFetchingBrowse } from '../Cataloguing/Actions';
 
 type S = {
   browseDetailPanelIsVisible: boolean,
@@ -30,7 +29,6 @@ export class BrowseResults extends React.Component<Props, S> {
     super(props);
     this.state = {
       detailSubtitle: {},
-      moreBrowseRecords: {},
       browseDetailPanelIsVisible: false,
       rowClicked: false,
       noResults: false,
@@ -106,13 +104,12 @@ export class BrowseResults extends React.Component<Props, S> {
 
   render() {
     const { browseDetailPanelIsVisible, rowClicked, detailSubtitle } = this.state;
-    const { isFromCrossReferences, isNewSearch, store, translate, isFetchingBrowse, firstMenu, isReadyBrowse, isPanelOpen, isFetchingBrowseDetails, isReadyBrowseDetails, isLoadingAssociated, isReadyAssociated } = this.props;
-    let { noResults, isPadRequired, moreBrowseRecords } = this.state;
+    const { browseRecordsNextPage, oldRecordFromBrowse, isFromCrossReferences, isNewSearch, store, translate, isFetchingBrowse, firstMenu, isReadyBrowse, isPanelOpen, isFetchingBrowseDetails, isReadyBrowseDetails, isLoadingAssociated, isReadyAssociated } = this.props;
+    let { noResults, isPadRequired } = this.state;
     let { browseRecords } = this.props;
-    if (isNewSearch === 'N') {
-      browseRecords = [...browseRecords, ...moreBrowseRecords];
-    } else {
-      moreBrowseRecords = {};
+    console.log(oldRecordFromBrowse, browseRecordsNextPage);
+    if (isNewSearch === 'N' && oldRecordFromBrowse && browseRecordsNextPage) {
+      browseRecords = [...oldRecordFromBrowse, ...browseRecordsNextPage];
     }
     const browseFormatter = {
       countAuthorities: el => (
@@ -213,12 +210,9 @@ export class BrowseResults extends React.Component<Props, S> {
             const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
             if (bottom) {
               store.dispatch({ type: ACTION.SETTINGS, data: { newBrowse: 'N' } });
-              const cb = (payload) => {
-                this.setState({ moreBrowseRecords: [...payload.headings, ...moreBrowseRecords] });
-              };
               const lastRecord = last(browseRecords).stringText;
-              const query = store.getState().marccat.browse.query.split(' ')[0].concat(' ').concat(lastRecord);
-              store.dispatch(continueFetchingBrowse(query, cb));
+              const queryNextPage = store.getState().marccat.browse.query.split(' ')[0].concat(' ').concat(lastRecord);
+              store.dispatch({ type: ACTION.BROWSE_NEXT_PAGE, query: queryNextPage, oldResults: browseRecords });
             }
           }
           }
@@ -313,11 +307,13 @@ export class BrowseResults extends React.Component<Props, S> {
   }
 }
 export default (connect(
-  ({ marccat: { browse, browseDetails, browseDetailsAssociated, settings } }) => ({
+  ({ marccat: { browse, moreResultsBrowse, browseDetails, browseDetailsAssociated, settings } }) => ({
     searchIndexForCrossRef: browse.query,
     isFromCrossReferences: settings.triggerDetails,
     isNewSearch: settings.newBrowse,
     browseRecords: browse.records,
+    browseRecordsNextPage: moreResultsBrowse.records,
+    oldRecordFromBrowse: moreResultsBrowse.oldResults,
     isFetchingBrowse: browse.isLoading,
     isReadyBrowse: browse.isReady,
     browseDetailRecords: browseDetails.results,

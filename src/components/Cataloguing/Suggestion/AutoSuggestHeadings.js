@@ -1,10 +1,10 @@
 // @flow
 import * as React from 'react';
 import { AutoSuggest, HotKeys } from '@folio/stripes/components';
-import { injectProps } from '../../../../shared';
-import { triggerBrowseHeadingSuggestion, triggerTagIndicatorsSuggestion } from '../../Actions';
+import { withProps } from '../../../shared';
+import { triggerBrowseHeadingSuggestion, triggerTagIndicatorsSuggestion } from '../Actions';
 import { REDUX } from '../../../config/constants';
-import { replaceAllWithEmptyString } from '../../Utils/MarcApiUtils';
+import { replaceAllWithEmptyString } from '../Utils/MarcApiUtils';
 
 function AutoSuggestHeadings(props) {
   const initialState = {
@@ -79,4 +79,4 @@ function AutoSuggestHeadings(props) {
   );
 }
 
-export default injectProps(AutoSuggestHeadings);
+export default withProps(AutoSuggestHeadings);

@@ -12,7 +12,7 @@ import FixedFieldForm from '../Form/FixedField/FixedFieldForm';
 import VariableFieldForm from '../Form/VariableField';
 import { filterVariableFields } from '../Utils/MarcApiUtils';
 
-import { ACTION, destroy } from '../../../redux/actions';
+import { ACTION } from '../../../redux/actions';
 import { META } from '../../../config/constants';
 import DeleteRecordButton from '../Button/DeleteRecordButton';
 import SaveRecordButton from '../Button/SaveRecordButton';
@@ -40,7 +40,7 @@ export default function RecordPane({
     const { dispatch, router, toggleFilterPane, reset } = props;
     dispatch({ type: ACTION.FILTERS, payload: {}, filterName: '', isChecked: false });
     reset();
-    dispatch(destroy());
+    // dispatch(destroy());
     toggleFilterPane();
     return (submit) ? router.push(`/marccat/search?savedId=${id}`) : router.push('/marccat/search');
   };

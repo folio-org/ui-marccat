@@ -6,11 +6,10 @@ import {
   Button,
   Icon
 } from '@folio/stripes/components';
-import type { Props } from '../../../../../flow/types.js.flow';
 import ActionLabels from './ActionLabels';
 import { Localize } from '../../../../../utils/Function';
 
-type P = Props & {
+type P = {
   onToggle(): void,
   open: boolean
 }
@@ -22,8 +21,8 @@ type P = Props & {
  * @extends {React.Component<P, {}>}
  */
 export default class ActionsMenu extends React.Component<P, {}> {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       dropdownOpen: false,
     };

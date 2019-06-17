@@ -1,9 +1,9 @@
 // @flow
 import * as React from 'react';
 import { AutoSuggest } from '@folio/stripes/components';
-import { triggerTagIndicatorsSuggestion, triggerTagCodeSuggestion } from '../../Actions';
-import { injectProps } from '../../../../shared';
-import { REDUX } from '../../../../config/constants';
+import { triggerTagIndicatorsSuggestion, triggerTagCodeSuggestion } from '../Actions';
+import { withProps } from '../../../shared';
+import { REDUX } from '../../../config/constants';
 
 function AutoSuggestion(props) {
   const initialState = {
@@ -55,4 +55,4 @@ function AutoSuggestion(props) {
   );
 }
 
-export default injectProps(AutoSuggestion);
+export default withProps(AutoSuggestion);

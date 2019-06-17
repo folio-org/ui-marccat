@@ -1,9 +1,9 @@
+// @flow
 import { ENDPOINT } from '../../../config/constants';
 import { ACTION } from '../../../redux/actions/Actions';
 import {
   TAGS,
 } from '../Utils/MarcConstant';
-import type { Dispatch } from '../../index.js.flow';
 
 //
 // ─── MARC ACTION CREATOR UTILITY ────────────────────────────────────────────────

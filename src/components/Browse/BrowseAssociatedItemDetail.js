@@ -9,12 +9,11 @@ import {
   FilterAccordionHeader,
   Accordion
 } from '@folio/stripes/components';
-import type { Props } from '../../flow/types.js.flow';
 import { getTag245, getTitle245 } from '../../utils/Mapper';
 
 import style from '../../styles/common.css';
 
-type P = Props & {
+type P = {
   items: Array<any>,
 }
 

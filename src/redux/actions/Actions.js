@@ -1,10 +1,9 @@
 // @flow
-
 export const prefix = '@@ui-marccat/';
+
 export const REQUEST_MAKE = `${prefix}REQUEST_MAKE`;
 export const REQUEST_REDUCE = `${prefix}REQUEST_REDUCE`;
 export const REQUEST_RESOLVE = `${prefix}REQUEST_RESOLVE`;
-export const REQUEST_REMOVE = `${prefix}REQUEST_REMOVE`;
 export const REQUEST_REJECT = `${prefix}REQUEST_REJECT`;
 export const REQUEST_DESTROY = `${prefix}REQUEST_DESTROY`;
 export const REQUEST_CLEAR = 'RESET_STORE';
@@ -25,7 +24,7 @@ export const HISTORY = `${prefix}REQUEST_HISTORY`;
 export const HISTORY_CLEAR = `${prefix}REQUEST_HISTORY_CLEAR`;
 export const EXECUTE_CALLBACK = `${prefix}EXECUTE_CALLBACK`;
 export const EXECUTE_CALLBACK_FIRED = `${prefix}EXECUTE_CALLBACK_FIRED!!!!!`;
-export const SEARCH = '@@ui-marccat/SEARCH';
+export const SEARCH = `${prefix}SEARCH`;
 export const SCAN = `${prefix}SCAN`;
 export const DETAILS = `${prefix}DETAILS`;
 export const DETAILS_BY_TITLE = `${prefix}DETAILS_BY_TITLE`;
@@ -45,6 +44,9 @@ export const FETCH_DETAILS_ASSOCIATED_REQUESTED = `${prefix}FETCH_DETAILS_ASSOCI
 export const BROWSE_FIRST_PAGE = `${prefix}BROWSE_FIRST_PAGE`;
 export const FETCH_BROWSE_FIRST_PAGE = `${prefix}FETCH_BROWSE_FIRST_PAGE`;
 export const BROWSE_FIRST_PAGE_SUCCESS = `${prefix}BROWSE_FIRST_PAGE_SUCCESS`;
+export const BROWSE_NEXT_PAGE = `${prefix}BROWSE_NEXT_PAGE`;
+export const FETCH_BROWSE_NEXT_PAGE = `${prefix}FETCH_BROWSE_NEXT_PAGE`;
+export const BROWSE_NEXT_PAGE_SUCCESS = `${prefix}BROWSE_NEXT_PAGE_SUCCESS`;
 export const DETAILS_BROWSE_SUCCESS = `${prefix}DETAILS_BROWSE_SUCCESS`;
 export const FETCH_DETAILS_BROWSE_REQUESTED = `${prefix}FETCH_DETAILS_BROWSE_REQUESTED`;
 export const DETAILS_BROWSE = `${prefix}DETAILS_BROWSE`;
@@ -71,7 +73,6 @@ export const ACTION = {
   REQUEST_REDUCE,
   REQUEST_RESOLVE,
   REQUEST_REJECT,
-  REQUEST_REMOVE,
   REQUEST_DESTROY,
   REQUEST_CLEAR,
   GET,
@@ -111,6 +112,9 @@ export const ACTION = {
   BROWSE_FIRST_PAGE,
   FETCH_BROWSE_FIRST_PAGE,
   BROWSE_FIRST_PAGE_SUCCESS,
+  BROWSE_NEXT_PAGE,
+  FETCH_BROWSE_NEXT_PAGE,
+  BROWSE_NEXT_PAGE_SUCCESS,
   DETAILS_BROWSE_SUCCESS,
   FETCH_DETAILS_BROWSE_REQUESTED,
   DETAILS_BROWSE,

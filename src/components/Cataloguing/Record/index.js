@@ -24,11 +24,10 @@ import {
 import * as C from '../../../config/constants';
 import * as MarcAction from '../Actions';
 import type { Props } from '../../..';
-import type { RecordTemplate, Type } from '../../../flow/cataloging.js.flow';
 import { formFieldValue, resolve } from '../../../redux/helpers/selector';
 import { TAGS, TAG_NOT_REPEATABLE } from '../Utils/MarcConstant';
 import RecordPane from './RecordPane';
-import { ACTION, destroy } from '../../../redux/actions';
+import { ACTION } from '../../../redux/actions';
 
 /**
  *
@@ -130,7 +129,7 @@ class Record extends React.Component<Props, {
     const field006: [] = formData.Fields006;
     const field007: [] = formData.Fields007;
 
-    const recordTemplate: RecordTemplate<Type> = {
+    const recordTemplate = {
       id: 42,
       fields: filterMandatoryFields(emptyRecord.results.fields)
     };
@@ -156,7 +155,7 @@ class Record extends React.Component<Props, {
     const { dispatch, router, toggleFilterPane, reset } = this.props;
     dispatch({ type: ACTION.FILTERS, payload: {}, filterName: '', isChecked: false });
     reset();
-    dispatch(destroy());
+    // dispatch(destroy());
     toggleFilterPane();
     return (sumbmitting) ? router.push(`/marccat/search?savedId=${id}`) : router.push('/marccat/search');
   };

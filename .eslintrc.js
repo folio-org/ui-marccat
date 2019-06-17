@@ -11,14 +11,12 @@ module.exports = {
   },
   plugins: [
     "flowtype",
-    "react-hooks"
   ],
   extends: [
     "@folio/eslint-config-stripes",
     "plugin:flowtype/recommended"
 ],
 settings: {
-  "import/resolver": "webpack"
 },
   env: {
     browser: true
@@ -29,7 +27,6 @@ settings: {
   },
   rules: {
     "import/extensions": 0,
-    "flowtype/no-types-missing-file-annotation": 0,
     "no-warning-comments":  [2, { "terms": ["flowtype/no-types-missing-file-annotation", "flow-typed signature", "flow-typed version"], "location": "start"}],
 		"indent": ["error", 2],
     "react/jsx-indent": ["error", 2],
@@ -49,7 +46,5 @@ settings: {
     "react/sort-comp": "off",
     "react/prop-types" : "off",
     "react/destructuring-assignment": ["error"],
-    "react-hooks/rules-of-hooks": 'error',
-    "react-hooks/exhaustive-deps": 'warn'
 	}
 }

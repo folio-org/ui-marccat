@@ -5,16 +5,14 @@ import { MultiColumnList, Pane, Paneset, Icon, Button } from '@folio/stripes/com
 import { AppIcon } from '@folio/stripes-core';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import type { Props } from '../../flow/types.js.flow';
 import BrowseItemDetail from './BrowseItemDetail';
 import { ACTION } from '../../redux/actions/Actions';
 import { findYourQueryFromBrowse, findYourQuery } from '../Search/Filter/FilterMapper';
-import { ToolbarButtonMenu, EmptyMessage, NoResultsMessage } from '../../shared/lib';
-import { browseColMapper } from '../../shared/utils/Formatter';
+import { ToolbarButtonMenu, EmptyMessage, NoResultsMessage, generateDropdownMenu, withProps } from '../../shared';
+import { browseColMapper } from '../../utils/Formatter';
 import BrowseAssociatedItemDetail from './BrowseAssociatedItemDetail';
 import * as C from '../../config/constants';
 import style from '../Search/Style/index.css';
-import { generateDropdownMenu, injectProps } from '../../shared';
 
 type S = {
   browseDetailPanelIsVisible: boolean,
@@ -23,9 +21,10 @@ type S = {
   isPadRequired: boolean,
   detailSubtitle: Object,
 };
+type P = {}
 
-export class BrowseResults extends React.Component<Props, S> {
-  constructor(props: Props) {
+export class BrowseResults extends React.Component<P, S> {
+  constructor(props: P) {
     super(props);
     this.state = {
       detailSubtitle: {},
@@ -327,4 +326,4 @@ export default (connect(
     items: browseDetailsAssociated.records,
     isPanelOpen: browseDetailsAssociated.mustOpenPanel
   }),
-)(injectProps(BrowseResults)));
+)(withProps(BrowseResults)));

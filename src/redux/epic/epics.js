@@ -73,6 +73,16 @@ export const scanBrowsingRecords = (action$, _store) => action$.ofType(ACTION.BR
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
 
+
+export const scanMoreBrowsingRecords = (action$) => action$.ofType(ACTION.BROWSE_NEXT_PAGE)
+  .switchMap((d) => concat$(
+    of$(marccatActions.isfetchingMoreScanBrowseRequest(true)),
+    ajax
+      .getJSON(buildUrl(ENDPOINT.BROWSE_NEXT_PAGE, `query=${d.query}&view=1&mainLibrary=170&pageSize=30&lang=eng`), ENDPOINT.HEADERS)
+      .map(record => marccatActions.fetchMoreScanBrowsingRecords(record.headings, d.query, d.oldResults))
+      .catch(e => of$(marccatActions.fetchFailure(e))),
+  ));
+
 export const browseDetailEpic = (action$, _store) => action$.ofType(ACTION.DETAILS_BROWSE)
   .switchMap((d) => concat$(
     of$(marccatActions.isfetchingBrowseRequest(true)),

@@ -63,6 +63,7 @@ const handleDisplayValue = (e, data, props, field) => {
   dispatch(changeDisplayValueAction(payload, cb));
 };
 
+// eslint-disable-next-line no-unused-vars
 const prepareValue = (code, data, payload, headerTypeCode) => {
   const { store } = this.props;
   if (code === TAGS._006) {

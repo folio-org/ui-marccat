@@ -12,7 +12,6 @@ import {
   Button
 } from '@folio/stripes/components';
 import { ACTION } from '../../redux/actions/Actions';
-import type { Props } from '../../flow/types.js.flow';
 import {
   resultsFormatterForAssociated,
   columnMapperForAssociated,
@@ -23,7 +22,7 @@ import {
 import { EMPTY_STRING } from '../../config/constants';
 import style from '../../styles/common.css';
 
-type P = Props & {
+type P = {
 }
 
 export class BrowseItemDetail extends React.Component<P, {

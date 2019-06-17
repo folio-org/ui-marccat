@@ -55,7 +55,7 @@ class MARCcat extends React.Component<Props, S> {
 }
 
 /**
-  * we use the @link {injectProps} wrapper to supply all component a root prop for add a reducer and epic
+  * we use the @link {withProps} wrapper to supply all component a root prop for add a reducer and epic
   * the root prop is in the props object.
   *
   * @example: this.props.root

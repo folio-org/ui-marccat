@@ -127,13 +127,28 @@
     "helpPage": "https://wiki.folio.org/pages/",
     "hasSettings": true,
     "okapiInterfaces": {
-      "marccat": "1.2"
+      "marccat": "1.5"
     },
     "icons": [
       {
         "name": "app",
         "alt": "FOLIO UI module for create, view and manage marc record",
         "title": "MARCcat"
+      },
+      {
+        "name": "marc-authority",
+        "alt": "Authority marc record",
+        "title": "AuthRec"
+      },
+      {
+        "name": "marc-bib",
+        "alt": "Bibliographic marc record",
+        "title": "BibRec"
+      },
+      {
+        "name": "marc-holdings",
+        "alt": "FOLIO UI module for marc-holdings",
+        "title": "MARCholdings"
       }
     ],
     "permissionSets": [

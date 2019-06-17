@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+import { last } from 'lodash';
 import { MultiColumnList, Pane, Paneset, Icon, Button } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
 import { connect } from 'react-redux';
@@ -8,10 +9,12 @@ import type { Props } from '../../flow/types.js.flow';
 import BrowseItemDetail from './BrowseItemDetail';
 import { ACTION } from '../../redux/actions/Actions';
 import { findYourQueryFromBrowse, findYourQuery } from '../Search/Filter/FilterMapper';
-import { ToolbarButtonMenu, EmptyMessage, NoResultsMessage, browseColMapper, generateDropdownMenu, withProps } from '../../shared';
+import { ToolbarButtonMenu, EmptyMessage, NoResultsMessage } from '../../shared/lib';
+import { browseColMapper } from '../../shared/utils/Formatter';
 import BrowseAssociatedItemDetail from './BrowseAssociatedItemDetail';
 import * as C from '../../config/constants';
 import style from '../Search/Style/index.css';
+import { generateDropdownMenu, injectProps } from '../../shared';
 
 type S = {
   browseDetailPanelIsVisible: boolean,
@@ -100,16 +103,20 @@ export class BrowseResults extends React.Component<Props, S> {
   };
 
   render() {
-    const { isFromCrossReferences, store } = this.props;
     const { browseDetailPanelIsVisible, rowClicked, detailSubtitle } = this.state;
-    const { translate, isFetchingBrowse, firstMenu, isReadyBrowse, browseRecords, isPanelOpen, isFetchingBrowseDetails, isReadyBrowseDetails, isLoadingAssociated, isReadyAssociated } = this.props;
+    const { browseRecordsNextPage, oldRecordFromBrowse, isFromCrossReferences, isNewSearch, store, translate, isFetchingBrowse, firstMenu, isReadyBrowse, isPanelOpen, isFetchingBrowseDetails, isReadyBrowseDetails, isLoadingAssociated, isReadyAssociated } = this.props;
     let { noResults, isPadRequired } = this.state;
+    let { browseRecords } = this.props;
+    console.log(oldRecordFromBrowse, browseRecordsNextPage);
+    if (isNewSearch === 'N' && oldRecordFromBrowse && browseRecordsNextPage) {
+      browseRecords = [...oldRecordFromBrowse, ...browseRecordsNextPage];
+    }
     const browseFormatter = {
       countAuthorities: el => (
         <span className={el.countAuthorities && el.countDocuments !== undefined ? style.countDocs : style.countDocs}>{el.countAuthorities}</span>
       ),
       type: x => (
-        <span className={x.countAuthorities === 0 && x.countDocuments === 0 ? style.noRef : x.countAuthorities === 0 ? style.bibliographic : style.authority} />
+        x.countAuthorities === 0 && x.countDocuments === 0 ? <span className={style.noRef} /> : x.countAuthorities === 0 ? <AppIcon size="small" app="marccat" iconKey="marc-bib" /> : <AppIcon size="small" app="marccat" iconKey="marc-authority" />
       ),
       cr0: item => (
         <div>
@@ -198,6 +205,17 @@ export class BrowseResults extends React.Component<Props, S> {
           paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
           firstMenu={firstMenu}
           lastMenu={this.renderButtonMenu}
+          onScroll={(e) => {
+            e.preventDefault();
+            const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+            if (bottom) {
+              store.dispatch({ type: ACTION.SETTINGS, data: { newBrowse: 'N' } });
+              const lastRecord = last(browseRecords).stringText;
+              const queryNextPage = store.getState().marccat.browse.query.split(' ')[0].concat(' ').concat(lastRecord);
+              store.dispatch({ type: ACTION.BROWSE_NEXT_PAGE, query: queryNextPage, oldResults: browseRecords });
+            }
+          }
+          }
         >
           {
             (isFetchingBrowse) ?
@@ -240,6 +258,13 @@ export class BrowseResults extends React.Component<Props, S> {
             lastMenu={this.renderButtonMenu}
             onClose={this.handleClosePanelDetails}
             actionMenu={this.getActionMenu}
+            onScroll={(e) => {
+              const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+              if (bottom) {
+                store.dispatch({ type: ACTION.SEARCH, payload: '' });
+              }
+            }
+            }
           >
             {
               (isFetchingBrowseDetails) ?
@@ -258,6 +283,13 @@ export class BrowseResults extends React.Component<Props, S> {
             appIcon={<AppIcon app={C.META.ICON_TITLE} />}
             actionMenu={this.getActionMenu}
             dismissible
+            onScroll={(e) => {
+              const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+              if (bottom) {
+                store.dispatch({ type: ACTION.SEARCH, payload: '' });
+              }
+            }
+            }
             onClose={() => {
               const { dispatch } = this.props;
               dispatch({ type: ACTION.CLOSE_BROWSE_ASSOCIATED_DETAILS, openPanel: false });
@@ -275,10 +307,13 @@ export class BrowseResults extends React.Component<Props, S> {
   }
 }
 export default (connect(
-  ({ marccat: { browse, browseDetails, browseDetailsAssociated, settings } }) => ({
+  ({ marccat: { browse, moreResultsBrowse, browseDetails, browseDetailsAssociated, settings } }) => ({
     searchIndexForCrossRef: browse.query,
     isFromCrossReferences: settings.triggerDetails,
+    isNewSearch: settings.newBrowse,
     browseRecords: browse.records,
+    browseRecordsNextPage: moreResultsBrowse.records,
+    oldRecordFromBrowse: moreResultsBrowse.oldResults,
     isFetchingBrowse: browse.isLoading,
     isReadyBrowse: browse.isReady,
     browseDetailRecords: browseDetails.results,
@@ -292,4 +327,4 @@ export default (connect(
     items: browseDetailsAssociated.records,
     isPanelOpen: browseDetailsAssociated.mustOpenPanel
   }),
-)(withProps(BrowseResults)));
+)(injectProps(BrowseResults)));

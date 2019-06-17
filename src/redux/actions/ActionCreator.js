@@ -47,6 +47,10 @@ export const isfetchingScanBrowseRequest = (isLoading) => ({
   type: ACTION.FETCH_BROWSE_FIRST_PAGE,
   payload: isLoading
 });
+export const isfetchingMoreScanBrowseRequest = (isLoading) => ({
+  type: ACTION.FETCH_BROWSE_NEXT_PAGE,
+  payload: isLoading
+});
 export const fetchAssociatedBibRecords = (records, recordType) => ({
   type: ACTION.ASSOCIATED_BIB_REC_SUCCESS,
   payload: records,
@@ -56,6 +60,12 @@ export const fetchScanBrowsingRecords = (records, query) => ({
   type: ACTION.BROWSE_FIRST_PAGE_SUCCESS,
   payload: records,
   qBib: query,
+});
+export const fetchMoreScanBrowsingRecords = (records, query, oldResults) => ({
+  type: ACTION.BROWSE_NEXT_PAGE_SUCCESS,
+  payload: records,
+  qBib: query,
+  oldRecords: oldResults
 });
 export const fetchCountDocRecords = (records) => ({
   type: ACTION.COUNT_DOC_SUCCESS,
@@ -163,9 +173,9 @@ export const fetchFailure = (message) => ({
 });
 /**
  *
- * @param {{}} payload
+ * @param {*} payload
  */
-export const filterAction = (payload: {}, filterName: string, isChecked: boolean) => {
+export const filterAction = (payload: Object, filterName: string, isChecked: boolean) => {
   return {
     type: ACTION.FILTERS,
     payload,
@@ -175,7 +185,7 @@ export const filterAction = (payload: {}, filterName: string, isChecked: boolean
 };
 /**
  *
- * @param {{}} payload
+ * @param {*} payload
  */
 export const resetFilter = () => {
   return {
@@ -188,7 +198,7 @@ export const resetFilter = () => {
 
 /**
  *
- * @param {{}} payload
+ * @param {*} payload
  */
 export const addHistoryData = (data) => {
   return {
@@ -196,25 +206,6 @@ export const addHistoryData = (data) => {
     data,
   };
 };
-
-/**
- * Action creator for removing remove object from the store
- * for specific resource type e.g: data: { leaderData <---} leaderData will be removed
- * @param {String} type - resource type
- */
-export const removeResponse = (resourceName) => ({
-  type: ACTION.REQUEST_REMOVE,
-  key: resourceName,
-});
-
-/**
- * Action creator for remove all object from the store
- * for specific resource type
- * @param {String} type - resource type
- */
-export const destroy = () => ({
-  type: ACTION.REQUEST_DESTROY,
-});
 
 
 /**

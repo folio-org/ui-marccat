@@ -2,14 +2,9 @@
 import * as React from 'react';
 import { Field } from 'redux-form';
 import { TextField } from '@folio/stripes/components';
-import classNames from 'classnames/bind';
-import AutoSuggestCode from './Suggestion/AutoSuggestCode';
-import AutoSuggestInd1 from './Suggestion/AutoSuggestInd1';
-import AutoSuggestInd2 from './Suggestion/AutoSuggestInd2';
-
-import style from '../../Style/variableform.css';
-
-const cx = classNames.bind(style);
+import style from '../../../Style/variableform.css';
+import AutoSuggestion from '../../Suggestion/AutoSuggestion';
+import AutoSuggestHeadings from '../../Suggestion/AutoSuggestHeadings';
 
 type Props = {
   autoFocus: boolean,
@@ -63,14 +58,13 @@ export default function ItemEdit({
       }
 
       return (
-        <div key={fieldKey} style={fieldStyle} className={cx('fieldControlMargin')}>
+        <div key={fieldKey} style={fieldStyle}>
           <Field
             marginBottom0
             component={
-              (mappedName === 'code') ? AutoSuggestCode
-                : (mappedName === 'ind1') ? AutoSuggestInd1
-                  : (mappedName === 'ind2') ? AutoSuggestInd2
-                    : TextField
+              (mappedName === 'code' || mappedName === 'ind1' || mappedName === 'ind2') ? AutoSuggestion
+                : (mappedName === 'displayValue') ? AutoSuggestHeadings
+                  : TextField
             }
             {...props}
             {...fieldProps}

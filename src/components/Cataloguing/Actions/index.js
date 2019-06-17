@@ -32,14 +32,12 @@ export function leaderDropdownAction(payload: {}) {
     },
   };
 }
+
 /**
  *
- *
- * @export
- * @param {{}} payload
- * @returns
+ * @param {*} payload
  */
-export function autosuggestionAction(payload) {
+export const autosuggestionAction = (payload) => {
   return {
     type: ACTION.QUERY,
     data: {
@@ -48,7 +46,64 @@ export function autosuggestionAction(payload) {
       params: `tag=${payload.code}&ind1=${payload.ind1}&ind2=${payload.ind2}&displayValue=${payload.displayValue}&view=1&mainLibrary=170&pageSize=30&lang=ita`,
     },
   };
-}
+};
+/**
+ *
+ * @param {*} payload
+ */
+export const continueFetchingBrowse = (query, cb) => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.BROWSE_NEXT_PAGE,
+      type: 'browseNextPage',
+      params: `query=${query}&view=1&mainLibrary=170&pageSize=30&lang=eng`,
+    },
+    cb,
+  };
+};
+/**
+ *
+ * @param {*} payload
+ */
+export const triggerTagCodeSuggestion = (payload, cb) => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.SUGGEST_TAG_CODE,
+      type: 'tagCodeSuggestion',
+      params: `tagNumber=${payload}`,
+    },
+    cb
+  };
+};
+
+export const triggerBrowseHeadingSuggestion = (code, ind1, ind2, displayValue, cb) => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.HEADING_BY_TAG,
+      type: 'headingSuggestion',
+      params: `tag=${code}&indicator1=${ind1}&indicator2=${ind2}&stringText=${displayValue}&view=1&mainLibrary=170&pageSize=7&lang=eng`,
+    },
+    cb
+  };
+};
+/**
+ *
+ * @param {*} payload
+ */
+export const triggerTagIndicatorsSuggestion = (payload, cb) => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.SUGGEST_TAG_INDICATORS,
+      type: 'tagIndicatorsSuggestion',
+      params: `tagNumber=${payload}`,
+    },
+    cb
+  };
+};
 
 /**
  *
@@ -222,36 +277,7 @@ export function headertypeAction(code) {
     },
   };
 }
-/**
- *
- * @param {*} payload
- */
-export const triggerTagCodeSuggestion = (payload, cb) => {
-  return {
-    type: ACTION.QUERY,
-    data: {
-      path: ENDPOINT.SUGGEST_TAG_CODE,
-      type: 'tagCodeSuggestion',
-      params: `tagNumber=${payload}`,
-    },
-    cb
-  };
-};
-/**
- *
- * @param {*} payload
- */
-export const triggerTagIndicatorsSuggestion = (payload, cb) => {
-  return {
-    type: ACTION.QUERY,
-    data: {
-      path: ENDPOINT.SUGGEST_TAG_INDICATORS,
-      type: 'tagIndicatorsSuggestion',
-      params: `tagNumber=${payload}`,
-    },
-    cb
-  };
-};
+
 
 /**
  *

@@ -130,7 +130,7 @@ class Record extends React.Component<Props, {
     const field007: [] = formData.Fields007;
 
     const recordTemplate = {
-      id: 42,
+      id: 408,
       fields: filterMandatoryFields(emptyRecord.results.fields)
     };
 

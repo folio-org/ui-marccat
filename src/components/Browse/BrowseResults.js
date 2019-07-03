@@ -105,7 +105,7 @@ export class BrowseResults extends React.Component {
     }
     const browseFormatter = {
       countAuthorities: el => (
-        <span className={el.countAuthorities && el.countDocuments !== undefined ? style.countDocs : style.countDocs}>{el.countAuthorities}</span>
+        <span className={style.countDocs}>{el.countAuthorities}</span>
       ),
       type: x => (
         x.countAuthorities === 0 && x.countDocuments === 0 ? <span className={style.noRef} /> : x.countAuthorities === 0 ? <AppIcon size="small" app="marccat" iconKey="marc-bib" /> : <AppIcon size="small" app="marccat" iconKey="marc-authority" />
@@ -166,7 +166,7 @@ export class BrowseResults extends React.Component {
     } else if (browseRecords !== undefined && browseRecords.length > 0) {
       isPadRequired = true;
     }
-    if (isFromCrossReferences === 'Y') {
+    if (isFromCrossReferences === 'Y' && (browseRecords !== undefined || browseRecords !== null)) {
       const containsAuthorities = browseRecords[1].countAuthorities > 0;
       const id = browseRecords[1].headingNumber;
       const stringText = browseRecords[1].stringText;

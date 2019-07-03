@@ -1,11 +1,10 @@
 //
 import * as React from 'react';
 import { Field } from 'redux-form';
-import { TextField, HotKeys } from '@folio/stripes/components';
+import { TextField } from '@folio/stripes/components';
 import style from '../../../Style/variableform.css';
-import AutoSuggestCode from '../../Suggestion/AutoSuggestCode';
-import AutoSuggestInd1 from '../../Suggestion/AutoSuggestInd1';
-import AutoSuggestInd2 from '../../Suggestion/AutoSuggestInd2';
+import AutoSuggestion from '../../Suggestion/AutoSuggestion';
+import AutoSuggestHeadings from '../../Suggestion/AutoSuggestHeadings';
 
 
 export default function ItemEdit({
@@ -21,14 +20,6 @@ export default function ItemEdit({
   autoFocus,
   ...props
 }) {
-
-  const keys = {
-    showHeading: 'ctrl+space'
-  };
-
-  const handlers = {
-    showHeading: (event) => console.log(event)
-  };
 
   const fields = visibleFields.map((name, fieldIndex) => {
     if (readOnlyFields.indexOf(name) === -1) {
@@ -56,23 +47,17 @@ export default function ItemEdit({
 
       return (
         <div key={fieldKey} style={fieldStyle}>
-          <HotKeys
-            keyMap={keys}
-            handlers={handlers}
-          >
-            <Field
-              component={
-                (mappedName === 'code') ? AutoSuggestCode
-                  : (mappedName === 'ind1') ? AutoSuggestInd1
-                    : (mappedName === 'ind2') ? AutoSuggestInd2
-                      : TextField
-              }
-              {...props}
-              {...fieldProps}
-              fullWidth
-              autoFocus={autoFocus && fieldIndex === 0}
-            />
-          </HotKeys>
+          <Field
+            component={
+              (mappedName === 'code' || mappedName === 'ind1' || mappedName === 'ind2') ? AutoSuggestion
+                : (mappedName === 'displayValue') ? AutoSuggestHeadings
+                  : TextField
+            }
+            {...props}
+            {...fieldProps}
+            fullWidth
+            autoFocus={autoFocus && fieldIndex === 0}
+          />
         </div>
       );
     }

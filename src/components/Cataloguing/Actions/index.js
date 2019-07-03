@@ -40,7 +40,7 @@ export const continueFetchingBrowse = (query, cb) => {
       type: 'browseNextPage',
       params: `query=${query}&view=1&mainLibrary=170&pageSize=30&lang=eng`,
     },
-    cb
+    cb,
   };
 };
 /**
@@ -54,6 +54,18 @@ export const triggerTagCodeSuggestion = (payload, cb) => {
       path: ENDPOINT.SUGGEST_TAG_CODE,
       type: 'tagCodeSuggestion',
       params: `tagNumber=${payload}`,
+    },
+    cb
+  };
+};
+
+export const triggerBrowseHeadingSuggestion = (code, ind1, ind2, displayValue, cb) => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.HEADING_BY_TAG,
+      type: 'headingSuggestion',
+      params: `tag=${code}&indicator1=${ind1}&indicator2=${ind2}&stringText=${displayValue}&view=1&mainLibrary=170&pageSize=7&lang=eng`,
     },
     cb
   };

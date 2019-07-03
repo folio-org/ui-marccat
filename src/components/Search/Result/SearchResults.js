@@ -249,8 +249,8 @@ export class SearchResults extends React.Component {
     }
 
     const containerMarcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForAssociatedBibList(mergedRecord) : [];
-    const messageAuth = (totalAuthCount !== undefined && totalAuth > 0) ? authorityResults.length + ' of ' + totalAuth + ' Authority records ' : ' No Authority records found ';
-    const messageBib = (totalBibCount !== undefined && totalBib > 0) ? bibliographicResults.length + ' of ' + totalBib + ' Bibliographic records ' : ' No Bibliographic records found ';
+    const messageAuth = (totalAuthCount !== undefined && totalAuth > 0 && (authorityResults !== undefined || authorityResults != null)) ? authorityResults.length + ' of ' + totalAuth + ' Authority records ' : ' No Authority records found ';
+    const messageBib = (totalBibCount !== undefined && totalBib > 0 && (bibliographicResults !== undefined || authorityResults != null)) ? bibliographicResults.length + ' of ' + totalBib + ' Bibliographic records ' : ' No Bibliographic records found ';
     let message = C.EMPTY_STRING;
     if (autOnly) {
       message = messageAuth;

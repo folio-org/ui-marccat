@@ -1,9 +1,8 @@
-// @flow
+//
 import * as React from 'react';
 import { reduxForm, Field } from 'redux-form';
-import type { Props } from '../../../flow/types.js.flow';
 
-function CheckMarkIcon({ ...props }: Props) {
+function CheckMarkIcon({ ...props }) {
   const { labels, pullLeft, dispatch, change, widthPadding } = props;
   dispatch(change('checkmark-NEW Template-0', 'checked'));
   return (

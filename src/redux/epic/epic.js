@@ -1,8 +1,7 @@
-// @flow
+//
 import { from } from 'rxjs/observable/from';
 import { of } from 'rxjs/observable/of';
 import * as Resolver from '../helpers/Resolver';
-import { ENDPOINT } from '../../config/constants';
 import { ACTION } from '../actions';
 
 const initialState = {};
@@ -62,7 +61,7 @@ export const executeEpicCallback = (resp) => ({
  * @param {Object} state - initial state
  * @param {Object} action - redux action dispatched
  */
-export function reducer(state: Object = initialState, action: Object) {
+export function reducer(state = initialState, action) {
   switch (action.type) {
   case ACTION.REQUEST_RESOLVE:
     return Object.assign({
@@ -104,7 +103,7 @@ export function historyReducer(state = historyState, action) {
  * @param {*} response
  * @returns
  */
-const parseResponseBody = (response: Object) => { // metodo statico
+const parseResponseBody = (response) => { // metodo statico
   return response.text().then((text) => {
     try { return JSON.parse(text); } catch (e) { return text; }
   });
@@ -129,7 +128,7 @@ const getHeaders = () => {
  * @param {Observable} action$ - the observable action
  * @param {Function} store.getState - get's the most recent redux state
  */
-export function epic(action$) {
+export function epic(action$, { getState }) {
   const actionMethods = {
     [ACTION.QUERY]: 'GET',
     [ACTION.FIND]: 'GET',
@@ -143,10 +142,11 @@ export function epic(action$) {
   return action$
     .filter(({ type }) => actionMethods[type])
     .mergeMap(({ type, data, payload, cb }) => {
+      const state = getState();
       const method = actionMethods[type];
 
-      // let url = `${state.okapi.url}${data.path}`;
-      const url = `${ENDPOINT.BASE_URL}${data.path}?${(data.params)}`;
+      // used for the actual request
+      const url = `${state.okapi.url}${data.path}?${(data.params)}`;
       const headers = getHeaders();
       const body = JSON.stringify(payload);
 

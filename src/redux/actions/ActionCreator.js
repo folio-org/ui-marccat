@@ -1,4 +1,4 @@
-// @flow
+//
 import { ACTION } from './Actions';
 import { EMPTY_STRING } from '../../config/constants';
 
@@ -175,7 +175,7 @@ export const fetchFailure = (message) => ({
  *
  * @param {*} payload
  */
-export const filterAction = (payload: Object, filterName: string, isChecked: boolean) => {
+export const filterAction = (payload, filterName, isChecked) => {
   return {
     type: ACTION.FILTERS,
     payload,

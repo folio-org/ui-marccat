@@ -1,4 +1,4 @@
-// @flow
+//
 export const prefix = '@@ui-marccat/';
 
 export const REQUEST_MAKE = `${prefix}REQUEST_MAKE`;

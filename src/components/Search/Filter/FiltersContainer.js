@@ -1,14 +1,13 @@
-// @flow
+//
 import * as React from 'react';
 import FilterGroups, { initialFilterState } from '@folio/stripes-components/lib/FilterGroups';
 import { ACTION } from '../../../redux/actions';
 import { EMPTY_STRING } from '../../../config/constants';
-import type { Props } from '../../../flow/types.js.flow';
 
 import styles from './FiltersContainer.css';
 import { filterAction } from '../../../redux/actions/ActionCreator';
 
-export default class FiltersContainer extends React.Component<Props, {}> {
+export default class FiltersContainer extends React.Component {
   constructor(props) {
     super(props);
     this.config = [

@@ -1,11 +1,10 @@
 /* eslint-disable dot-notation */
-// @flow
+//
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Paneset, HotKeys, PaneMenu } from '@folio/stripes/components';
 import { ACTION } from '../../../redux/actions';
-import type { Props } from '../../../flow/types.js.flow';
 import { NoResultsMessage, injectProps, remapForAssociatedBibList } from '../../../shared';
 import { isAuthorityRecord, transitionToParams } from '../Utils/SearchUtils';
 import {
@@ -18,19 +17,8 @@ import { emptyRecordAction } from '../../Cataloguing/Actions';
 import { searchDetailAction } from '../Actions';
 import * as C from '../../../config/constants';
 
-type P = Props & {
-  headings: Array<any>,
-  inputValue: string,
-  getPreviousPage: () => void,
-  getNextPage: () => void,
-  detail: Object,
-  dataLoaded: boolean,
-  loading: boolean,
-  isPanelOpen: boolean,
-}
-
-export class SearchResults extends React.Component<P, {}> {
-  constructor(props: P) {
+export class SearchResults extends React.Component {
+  constructor(props) {
     super(props);
     this.state = {
       detailPanelIsVisible: false,

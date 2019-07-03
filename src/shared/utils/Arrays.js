@@ -56,7 +56,7 @@ function doMerge(
       const key = keys[j];
       if (fAddDefaults && out[key] !== undefined) continue;
       let nextVal = obj[key];
-      if (fDeep && isObject(out[key]) && isObject(nextVal)) {
+      if (out !== undefined && out != null && fDeep && isObject(out[key]) && isObject(nextVal)) {
         nextVal = doMerge(fAddDefaults, fDeep, out[key], nextVal);
       }
       if (nextVal === undefined || nextVal === out[key]) continue;

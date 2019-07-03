@@ -72,7 +72,7 @@ class SearchPanel extends React.Component {
       const inputValue = '"' + e.target.form[2].defaultValue + '"';
       isBrowseRequested = false;
       let baseQuery;
-      let indexForQuery;
+      let indexForQuery = '';
       let conditionFilter;
       let indexFilter;
       const form = getState().form.searchForm;

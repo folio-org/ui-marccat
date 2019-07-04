@@ -59,7 +59,7 @@ function doMerge(
       if (out !== undefined && out != null && fDeep && isObject(out[key]) && isObject(nextVal)) {
         nextVal = doMerge(fAddDefaults, fDeep, out[key], nextVal);
       }
-      if (nextVal === undefined || nextVal === out[key]) continue;
+      if (nextVal === undefined || (out !== undefined && out != null && (nextVal === out[key]))) continue;
       if (!fChanged) {
         fChanged = true;
         out = clone(out);

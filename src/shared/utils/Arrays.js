@@ -54,12 +54,12 @@ function doMerge(
     if (!keys.length) continue;
     for (let j = 0; j <= keys.length; j++) {
       const key = keys[j];
-      if (fAddDefaults && out[key] !== undefined) continue;
+      if (out !== undefined && out != null && fAddDefaults && out[key] !== undefined) continue;
       let nextVal = obj[key];
       if (out !== undefined && out != null && fDeep && isObject(out[key]) && isObject(nextVal)) {
         nextVal = doMerge(fAddDefaults, fDeep, out[key], nextVal);
       }
-      if (nextVal === undefined || nextVal === out[key]) continue;
+      if (nextVal === undefined || (out !== undefined && out != null && (nextVal === out[key]))) continue;
       if (!fChanged) {
         fChanged = true;
         out = clone(out);

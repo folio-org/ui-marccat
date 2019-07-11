@@ -71,7 +71,7 @@
     "settings.default.record.template.bib.text": "Bibliografic Records. Organization-wide templates:",
     "search.record.new": "New",
     "search.record.new.from.template": "New from template (CTRL+N)",
-    "cataloging.variablefield.section.add.newtag": "+ Aggiungi un nuovo tag",
+    "cataloging.variablefield.section.add.newtag": "Aggiungi un nuovo tag",
     "cataloging.accordion.fixedfield.label": "Control Fields (001, 003, 005)",
     "cataloging.accordion.variablefield.label": "Variable Fields",
     "cataloging.accordion.checkbox.label": "Suppress",

@@ -1,5 +1,6 @@
 //
 import * as React from 'react';
+import { last } from 'lodash';
 import { MultiColumnList, Pane, Paneset, Icon, Button } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
 import { connect } from 'react-redux';
@@ -13,7 +14,6 @@ import BrowseAssociatedItemDetail from './BrowseAssociatedItemDetail';
 import * as C from '../../config/constants';
 import style from '../Search/Style/index.css';
 import { generateDropdownMenu, injectProps } from '../../shared';
-import { continueFetchingBrowse } from '../Cataloguing/Actions';
 
 
 export class BrowseResults extends React.Component {
@@ -21,7 +21,6 @@ export class BrowseResults extends React.Component {
     super(props);
     this.state = {
       detailSubtitle: {},
-      mergedBrowseRecords: {},
       browseDetailPanelIsVisible: false,
       rowClicked: false,
       noResults: false,
@@ -96,14 +95,17 @@ export class BrowseResults extends React.Component {
   };
 
   render() {
-    const { isFromCrossReferences, store } = this.props;
     const { browseDetailPanelIsVisible, rowClicked, detailSubtitle } = this.state;
-    const { translate, isFetchingBrowse, firstMenu, isReadyBrowse, isPanelOpen, isFetchingBrowseDetails, isReadyBrowseDetails, isLoadingAssociated, isReadyAssociated } = this.props;
+    const { browseRecordsNextPage, oldRecordFromBrowse, isFromCrossReferences, isNewSearch, store, translate, isFetchingBrowse, firstMenu, isReadyBrowse, isPanelOpen, isFetchingBrowseDetails, isReadyBrowseDetails, isLoadingAssociated, isReadyAssociated } = this.props;
     let { noResults, isPadRequired } = this.state;
     let { browseRecords } = this.props;
+    console.log(oldRecordFromBrowse, browseRecordsNextPage);
+    if (isNewSearch === 'N' && oldRecordFromBrowse && browseRecordsNextPage) {
+      browseRecords = [...oldRecordFromBrowse, ...browseRecordsNextPage];
+    }
     const browseFormatter = {
       countAuthorities: el => (
-        <span className={el.countAuthorities && el.countDocuments !== undefined ? style.countDocs : style.countDocs}>{el.countAuthorities}</span>
+        <span className={style.countDocs}>{el.countAuthorities}</span>
       ),
       type: x => (
         x.countAuthorities === 0 && x.countDocuments === 0 ? <span className={style.noRef} /> : x.countAuthorities === 0 ? <AppIcon size="small" app="marccat" iconKey="marc-bib" /> : <AppIcon size="small" app="marccat" iconKey="marc-authority" />
@@ -164,7 +166,7 @@ export class BrowseResults extends React.Component {
     } else if (browseRecords !== undefined && browseRecords.length > 0) {
       isPadRequired = true;
     }
-    if (isFromCrossReferences === 'Y') {
+    if (isFromCrossReferences === 'Y' && !(browseRecords === undefined || browseRecords == null)) {
       const containsAuthorities = browseRecords[1].countAuthorities > 0;
       const id = browseRecords[1].headingNumber;
       const stringText = browseRecords[1].stringText;
@@ -186,8 +188,6 @@ export class BrowseResults extends React.Component {
         detailSubtitle: stringText
       });
     }
-    const { mergedBrowseRecords } = this.state;
-    console.log(mergedBrowseRecords);
     return (
       <Paneset static>
         <Pane
@@ -198,14 +198,13 @@ export class BrowseResults extends React.Component {
           firstMenu={firstMenu}
           lastMenu={this.renderButtonMenu}
           onScroll={(e) => {
+            e.preventDefault();
             const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
             if (bottom) {
-              const cb = (payload) => {
-                this.setState({ mergedBrowseRecords: payload });
-                browseRecords = [...mergedBrowseRecords, ...browseRecords];
-              };
-              const query = store.getState().marccat.browse.query;
-              store.dispatch(continueFetchingBrowse(query, cb));
+              store.dispatch({ type: ACTION.SETTINGS, data: { newBrowse: 'N' } });
+              const lastRecord = last(browseRecords).stringText;
+              const queryNextPage = store.getState().marccat.browse.query.split(' ')[0].concat(' ').concat(lastRecord);
+              store.dispatch({ type: ACTION.BROWSE_NEXT_PAGE, query: queryNextPage, oldResults: browseRecords });
             }
           }
           }
@@ -300,10 +299,13 @@ export class BrowseResults extends React.Component {
   }
 }
 export default (connect(
-  ({ marccat: { browse, browseDetails, browseDetailsAssociated, settings } }) => ({
+  ({ marccat: { browse, moreResultsBrowse, browseDetails, browseDetailsAssociated, settings } }) => ({
     searchIndexForCrossRef: browse.query,
     isFromCrossReferences: settings.triggerDetails,
+    isNewSearch: settings.newBrowse,
     browseRecords: browse.records,
+    browseRecordsNextPage: moreResultsBrowse.records,
+    oldRecordFromBrowse: moreResultsBrowse.oldResults,
     isFetchingBrowse: browse.isLoading,
     isReadyBrowse: browse.isReady,
     browseDetailRecords: browseDetails.results,

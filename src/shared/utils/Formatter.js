@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
-//
+// @flow
 import * as React from 'react';
 import { Button } from '@folio/stripes-components';
 import { AppIcon } from '@folio/stripes-core';
 import { getFieldPosition, getFormat, getMicroformat } from './Mapper';
 import style from '../../components/Search/Style/index.css';
 
-export const columnMapper = (isBibsOnly, isAuthOnly = true) => {
+export const columnMapper = (isBibsOnly: ?boolean, isAuthOnly: ?boolean = true) => {
   let mapper = {};
   if (isBibsOnly === true) {
     mapper = {
@@ -20,7 +20,6 @@ export const columnMapper = (isBibsOnly, isAuthOnly = true) => {
       'date2': 'Date 2',
       'format': 'Format',
       'tagHighlighted': 'Tag',
-      'countDoc': 'Bibs'
     };
   }
   if (isAuthOnly === true) {
@@ -48,7 +47,7 @@ export const columnMapper = (isBibsOnly, isAuthOnly = true) => {
   }
   return mapper;
 };
-export const renderColumn = (isBibsOnly, isAuthOnly = true) => {
+export const renderColumn = (isBibsOnly: ?boolean, isAuthOnly: ?boolean = true) => {
   let visibleCol = [];
   if (isBibsOnly === true) {
     visibleCol = [
@@ -62,7 +61,6 @@ export const renderColumn = (isBibsOnly, isAuthOnly = true) => {
       'date2',
       'format',
       'tagHighlighted',
-      'countDoc'
     ];
   }
   if (isAuthOnly === true) {
@@ -91,12 +89,12 @@ export const renderColumn = (isBibsOnly, isAuthOnly = true) => {
   return visibleCol;
 };
 
-export const columnWidthMapper = (isBibsOnly, isAuthOnly = true) => {
+export const columnWidthMapper = (isBibsOnly: ?boolean, isAuthOnly: ?boolean = true) => {
   let widthMapper = {};
   if (isBibsOnly === true) {
     widthMapper = {
       'resultView': '5%',
-      '001': '10%',
+      '001': '15%',
       '245': '30%',
       'preferredTitle': '10%',
       'name': '10%',
@@ -105,7 +103,6 @@ export const columnWidthMapper = (isBibsOnly, isAuthOnly = true) => {
       'date2': '5%',
       'format': '5%',
       'tagHighlighted': '5%',
-      'countDoc': '5%'
     };
   }
   if (isAuthOnly === true) {
@@ -156,9 +153,9 @@ export const resultsFormatterForAssociated = {
   ),
   name: x => (
     <span>
-      { x['100'] && x['100'] }
-      { x['110'] && x['110'] }
-      { x['111'] && x['111'] }
+      { x['100'] }
+      { x['110'] }
+      { x['111'] }
     </span>
   ),
   format: x => (
@@ -173,46 +170,46 @@ export const resultsFormatterForAssociated = {
   ),
   subject: x => (
     <span>
-      { x['600'] && x['600'] }
-      { x['610'] && x['610'] }
-      { x['611'] && x['611'] }
-      { x['630'] && x['630'] }
-      { x['647'] && x['647'] }
-      { x['648'] && x['648'] }
-      { x['650'] && x['650'] }
-      { x['651'] && x['651'] }
-      { x['653'] && x['653'] }
-      { x['654'] && x['654'] }
-      { x['655'] && x['655'] }
-      { x['651'] && x['651'] }
-      { x['653'] && x['653'] }
-      { x['654'] && x['654'] }
-      { x['655'] && x['655'] }
-      { x['656'] && x['656'] }
-      { x['657'] && x['657'] }
-      { x['658'] && x['658'] }
-      { x['662'] && x['662'] }
+      { x['600'] }
+      { x['610'] }
+      { x['611'] }
+      { x['630'] }
+      { x['647'] }
+      { x['648'] }
+      { x['650'] }
+      { x['651'] }
+      { x['653'] }
+      { x['654'] }
+      { x['655'] }
+      { x['651'] }
+      { x['653'] }
+      { x['654'] }
+      { x['655'] }
+      { x['656'] }
+      { x['657'] }
+      { x['658'] }
+      { x['662'] }
     </span>
   )
 };
 
-export const resultsFormatter = (isBibsOnly = true, isAuthOnly = true) => {
+export const resultsFormatter = (isBibsOnly: ?boolean = true, isAuthOnly: ?boolean = true) => {
   const all = {
     resultView: x => (
       x.recordView === 1 ? <AppIcon size="small" app="marccat" iconKey="marc-bib" /> : <AppIcon size="small" app="marccat" iconKey="marc-authority" />
     ),
     name: x => (
       <span>
-        { x['100'] && x['100'] }
-        { x['110'] && x['110'] }
-        { x['111'] && x['111'] }
-        { (x['130'] && !isBibsOnly) && x['130'] }
+        { x['100'] }
+        { x['110'] }
+        { x['111'] }
+        { x['130'] && !isBibsOnly }
       </span>
     ),
     preferredTitle: x => (
       <span>
-        { (x['130'] && isBibsOnly) && x['130'] }
-        { x['240'] && x['240'] }
+        { x['130'] && isBibsOnly }
+        { x['240'] }
       </span>
     ),
     countDoc: x => (
@@ -233,16 +230,16 @@ export const resultsFormatter = (isBibsOnly = true, isAuthOnly = true) => {
     ),
     name: x => (
       <span>
-        { x['100'] && x['100'] }
-        { x['110'] && x['110'] }
-        { x['111'] && x['111'] }
-        { (x['130'] && !isBibsOnly) && x['130'] }
+        { x['100'] }
+        { x['110'] }
+        { x['111'] }
+        { x['130'] && !isBibsOnly }
       </span>
     ),
     preferredTitle: x => (
       <span>
-        { (x['130'] && isBibsOnly) && x['130'] }
-        { x['240'] && x['240'] }
+        { x['130'] && isBibsOnly }
+        { x['240'] }
       </span>
     ),
     date1: x => (
@@ -261,11 +258,6 @@ export const resultsFormatter = (isBibsOnly = true, isAuthOnly = true) => {
         { x.recordView === 1 && getMicroformat(x['007']) }
       </span>
     ),
-    countDoc: x => (
-      <span>
-        { x.recordView === -1 && x.countDoc}
-      </span>
-    ),
     tagHighlighted: x => (
       <span className={style.tagHighLighted}>
         {x.tagHighlighted}
@@ -273,25 +265,25 @@ export const resultsFormatter = (isBibsOnly = true, isAuthOnly = true) => {
     ),
     subject: x => (
       <span>
-        { x['600'] && x['600'] }
-        { x['610'] && x['610'] }
-        { x['611'] && x['611'] }
-        { x['630'] && x['630'] }
-        { x['647'] && x['647'] }
-        { x['648'] && x['648'] }
-        { x['650'] && x['650'] }
-        { x['651'] && x['651'] }
-        { x['653'] && x['653'] }
-        { x['654'] && x['654'] }
-        { x['655'] && x['655'] }
-        { x['651'] && x['651'] }
-        { x['653'] && x['653'] }
-        { x['654'] && x['654'] }
-        { x['655'] && x['655'] }
-        { x['656'] && x['656'] }
-        { x['657'] && x['657'] }
-        { x['658'] && x['658'] }
-        { x['662'] && x['662'] }
+        { x['600'] }
+        { x['610'] }
+        { x['611'] }
+        { x['630'] }
+        { x['647'] }
+        { x['648'] }
+        { x['650'] }
+        { x['651'] }
+        { x['653'] }
+        { x['654'] }
+        { x['655'] }
+        { x['651'] }
+        { x['653'] }
+        { x['654'] }
+        { x['655'] }
+        { x['656'] }
+        { x['657'] }
+        { x['658'] }
+        { x['662'] }
       </span>
     )
   };

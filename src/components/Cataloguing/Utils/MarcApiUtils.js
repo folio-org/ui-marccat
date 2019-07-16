@@ -136,3 +136,10 @@ export const replaceAllinverted = (s) => ((s) ? s.replace(/\$/g, SUBFIELD_DELIMI
 export const changeValue = (field, displayValue, dispatch) => {
   dispatch(change(field, displayValue));
 };
+
+/**
+ *
+ * @param {*} s - an input string
+ * @returns s - a string with all SUBFIELD_CHARACTER replaced with EMPTY_STRING
+ */
+export const replaceAllWithEmptyString = (s: string): string => ((s) ? s.replace(/\$[a-z]|:/g, EMPTY_STRING) : EMPTY_STRING);

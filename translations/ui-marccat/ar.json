@@ -71,7 +71,7 @@
     "settings.default.record.template.bib.text": "تسجيلات بيبلوغرافية. قوالب على مستوى المؤسسة:",
     "search.record.new": "جديد",
     "search.record.new.from.template": "جديد من قالب (CTRL+N)",
-    "cataloging.variablefield.section.add.newtag": "+ إضافة وسم جديد",
+    "cataloging.variablefield.section.add.newtag": "إضافة وسم جديد",
     "cataloging.accordion.fixedfield.label": "حقول التحكم (001 ، 003 ، 005 ، 006 ، 007 ، 008)",
     "cataloging.accordion.variablefield.label": "حقول متغيرة",
     "cataloging.accordion.checkbox.label": "منع",
@@ -121,7 +121,7 @@
     "cataloging.actions.view.marc.docs": "عرض وثائق مارك",
     "cataloging.actions.view.marc.docs.shortcut": "؟",
     "cataloging.record.duplicate": "نسخ التسجيلة",
-    "cataloging.fixedfield.section.add.newtag": "+ إضافة {value} جديدة",
+    "cataloging.fixedfield.section.add.newtag": "إضافة {value}",
     "search.actionmenu.duplicate.ebook": "نسخ ككتاب إلكتروني",
     "cataloging.accordion.fixedfield.editable.label": "حقول التحكم (006، 007، 008)"
 }

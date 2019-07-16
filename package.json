@@ -147,11 +147,6 @@
         "name": "marc-holdings",
         "alt": "FOLIO UI module for marc-holdings",
         "title": "MARCholdings"
-      },
-      {
-        "name": "marccat",
-        "alt": "FOLIO UI module for create, view and manage marc record",
-        "title": "MARCcat"
       }
     ],
     "permissionSets": [

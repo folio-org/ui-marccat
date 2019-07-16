@@ -1,6 +1,6 @@
 {
   "name": "@folio/marccat",
-  "version": "1.5.0",
+  "version": "1.8.0",
   "description": "FOLIO UI module for Cataloging",
   "repository": "folio-org/ui-marccat",
   "publishConfig": {

@@ -1,6 +1,6 @@
 # Change history for ui-marccat
 
-## [1.5.0] (https://github.com/folio-org/ui-marccat/tree/v1.5.0) (2019-05-06)
+## [1.8.0] (https://github.com/folio-org/ui-marccat/tree/v1.8.0) (2019-15-07)
 * Add actions in Cataloging.
 * Fix variable fields components;
 * Improve data handling with Redux form;

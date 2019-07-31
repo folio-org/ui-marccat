@@ -1,5 +1,12 @@
 # Change history for ui-marccat
 
+## [1.8.5]
+* Added dynamic tenant;
+* Fix for clean database creation patch when enabling tenant;
+* Add more indexes in a search function;
+* Fix search bugs;
+* Browse fix.
+
 ## [1.8.0] (https://github.com/folio-org/ui-marccat/tree/v1.8.0) (2019-15-07)
 * Add actions in Cataloging.
 * Fix variable fields components;

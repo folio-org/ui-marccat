@@ -3,6 +3,7 @@ import { from } from 'rxjs/observable/from';
 import { of } from 'rxjs/observable/of';
 import * as Resolver from '../helpers/Resolver';
 import { ACTION } from '../actions';
+import { ENDPOINT } from '../../config/constants';
 
 const initialState = {};
 const historyState = { list: [] };
@@ -110,20 +111,6 @@ const parseResponseBody = (response) => { // metodo statico
 };
 
 /**
- *
- * @param {*} method - Http method for fetch
- * @returns
- */
-const getHeaders = () => {
-  const headers = {
-    'Accept': 'application/json',
-    'x-okapi-tenant': 'tnx',
-    'Content-Type': 'application/json'
-  };
-  return headers;
-};
-
-/**
  * The epic used to actually make a requests when an action is dispatched
  * @param {Observable} action$ - the observable action
  * @param {Function} store.getState - get's the most recent redux state
@@ -147,7 +134,7 @@ export function epic(action$, { getState }) {
 
       // used for the actual request
       const url = `${state.okapi.url}${data.path}?${(data.params)}`;
-      const headers = getHeaders();
+      const headers = ENDPOINT.HEADERS;
       const body = JSON.stringify(payload);
 
       const promise = fetch(url, { method, headers, body })

@@ -143,7 +143,7 @@ export const emptyRecordAction = () => {
   return {
     type: ACTION.QUERY,
     data: {
-      path: ENDPOINT.EMPTY_RECORD_URL + 408,
+      path: ENDPOINT.EMPTY_RECORD_URL + 1,
       type: 'emptyRecord',
       params: ENDPOINT.DEFAULT_LANG_VIEW,
     },

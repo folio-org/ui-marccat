@@ -143,11 +143,11 @@ export function Localize(label, withContainier, _wrapElement) {
  * @param {*} store - the data store
  */
 export function post(url, data) {
+  const tenant = ENDPOINT.HEADERS
   return fetch(url, {
     method: HTTP_METHOD.POST,
     headers: Object.assign({}, {
-      'x-okapi-tenant': 'tnx',
-      'Content-Type': 'application/json'
+      tenant
     }),
     body: JSON.stringify(data),
   });

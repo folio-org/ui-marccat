@@ -28,7 +28,7 @@ export const ENDPOINT = {
   HEADERS: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-    'x-okapi-tenant': 'tnx',
+    'x-okapi-tenant': `${state.okapi.tenant}`,
   },
   DEFAULT_LANG_VIEW: 'lang=ita&view=1',
   OKAPI_URL:  state => `${state.okapi.url}`,

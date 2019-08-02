@@ -56,6 +56,7 @@ class Record extends React.Component<Props, {
       id: findParam('id'),
       submit: false,
       deletedTag: false,
+      statusCode: ''
     };
     this.renderDropdownLabels = this.renderDropdownLabels.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -105,6 +106,7 @@ class Record extends React.Component<Props, {
 
   // TODO FIXME
   asyncCreateHeading = async (item, heading) => {
+    const { store } = this.props;
     try {
       const response = await post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading);
       const data = await response.json();
@@ -115,7 +117,13 @@ class Record extends React.Component<Props, {
         item.variableField.keyNumber = data.keyNumber || item.variableField.keyNumber;
       }
       item.variableField.displayValue = data.displayValue;
-      showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.create.success', value: item.code }), C.VALIDATION_MESSAGE_TYPE.SUCCESS);
+      if (response.status === 201) {
+        showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.create.success', value: item.code }), C.VALIDATION_MESSAGE_TYPE.SUCCESS);
+      } else {
+        showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.create.failure', value: item.code }), C.VALIDATION_MESSAGE_TYPE.ERROR);
+        const form: [] = formFieldValue(store, C.REDUX.FORM.VARIABLE_FORM, 'items');
+        form.splice(0, 1);
+      }
     } catch (exception) {
       showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.create.failure', value: item.code }), C.VALIDATION_MESSAGE_TYPE.ERROR);
     }
@@ -140,6 +148,7 @@ class Record extends React.Component<Props, {
   saveRecord = async () => {
     const { datastore: { emptyRecord }, store: { getState } } = this.props;
     const { deletedTag } = this.state;
+    let { statusCode } = this.state;
     const formData = getState().form.dataFieldForm.values;
     const initialValues = getState().form.variableFieldForm.initial.items;
     let variableFormData = getState().form.variableFieldForm.values.items;
@@ -153,7 +162,7 @@ class Record extends React.Component<Props, {
     bibliographicRecord.leader.value = formData.leader;
 
     const recordTemplate: RecordTemplate<Type> = {
-      id: 408,
+      id: 1,
       fields: filterMandatoryFields(emptyRecord.results.fields)
     };
 
@@ -163,14 +172,19 @@ class Record extends React.Component<Props, {
     this.setState({ submit: true });
 
     await post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), payload)
-      .then((r) => { return r.json(); })
+      .then((r) => {
+        statusCode = r.status;
+        return r.json();
+      })
       .then(() => {
-        showValidationMessage(this.callout, 'cataloging.record.update.success', 'success');
+        if (statusCode === 201) {
+          showValidationMessage(this.callout, 'cataloging.record.update.success', 'success');
+        } else {
+          showValidationMessage(this.callout, 'cataloging.record.update.error', 'error');
+        }
         setTimeout(() => {
           this.handleClose();
-        }, 2000);
-      }).catch(() => {
-        showValidationMessage(this.callout, 'cataloging.record.update.error', 'error');
+        }, 3000);
       });
   }
 

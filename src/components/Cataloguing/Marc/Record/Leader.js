@@ -10,6 +10,7 @@ import { decamelizify } from '../../../../shared/utils/Function';
 import style from '../../Style/index.css';
 import { change008ByLeaderAction } from '../../Actions';
 import HeaderTypeSelect from './components/HeaderTypeSelect';
+import { ACTION } from '../../../../redux/actions/Actions';
 
 type P = {
   readOnly: boolean,
@@ -47,6 +48,7 @@ class Leader extends React.PureComponent<P, S> {
     dispatch(change('Tag008', headerTypeCodeFromLeader || 0));
     dispatch(change('leader', leaderVal));
     if (index === 6 || index === 7) {
+      dispatch({ type: ACTION.SETTINGS, data: { trigger008FromLeader: 'Y' } });
       set008HeaderType(leaderVal);
     }
   }
@@ -80,7 +82,7 @@ class Leader extends React.PureComponent<P, S> {
   render() {
     const { leaderCss, firsAccess } = this.state;
     const { leaderValue, dispatch, change, leaderData } = this.props;
-    if (firsAccess && !isEmpty(leaderData)) Object.values(leaderData.results).map(k => dispatch(change(`Leader-${k.name}`, k.defaultValue)));
+    if (firsAccess && !isEmpty(leaderData)) Object.values(leaderData.results).map(k => dispatch(change('Leader-'.concat(k.name), k.defaultValue)));
 
     return (
       <div className={style.fieldContainer} no-padding>
@@ -101,8 +103,8 @@ class Leader extends React.PureComponent<P, S> {
                 <Col xs={4} key={idx}>
                   <HeaderTypeSelect
                     {...this.props}
-                    name={`Leader-${item.name}`}
-                    label={decamelizify(`${item.name}`, EMPTY_SPACED_STRING)}
+                    name={'Leader-'.concat(item.name)}
+                    label={decamelizify(item.name, EMPTY_SPACED_STRING)}
                     dataOptions={item.dropdownSelect}
                     onChange={this.handleChange}
                   />

@@ -9,7 +9,6 @@ import { resultsFormatter, columnMapper, columnWidthMapper, renderColumn } from 
 import { injectProps, ActionMenu, EmptyMessage, NoResultsMessage } from '../../../../shared';
 import { ACTION } from '../../../../redux/actions/Actions';
 import * as C from '../../../../config/constants';
-import { selectForm } from '../../../../redux/helpers/Selector';
 
 
 class SearchResultPane extends React.Component<Props, {}> {
@@ -18,44 +17,6 @@ class SearchResultPane extends React.Component<Props, {}> {
     this.state = {
     };
   }
-
-  renderVisibleColumns = () => {
-    const { store } = this.props;
-    const form = selectForm(store, 'checkboxForm');
-    const visibleColumns = [];
-    const visibleColumns2 = [
-      'resultView',
-      '001',
-      '245',
-      'name',
-      'preferredTitle',
-      'tagHighlighted', ,
-      'date1',
-      'date2',
-      'format'
-    ];
-
-    if (form) {
-      Object.keys(form)
-        // eslint-disable-next-line no-unused-vars
-        .forEach((z, i) => {
-          switch (z) {
-          case 'id Number': if (form[z]) visibleColumns[1] = '001'; break;
-          case 'Title': if (form[z]) visibleColumns[2] = '245'; break;
-          case 'Name': if (form[z]) visibleColumns[3] = 'name'; break;
-          case 'Preferred Title': if (form[z]) visibleColumns[4] = 'preferredTitle'; break;
-          case 'Tag': if (form[z]) visibleColumns[5] = 'tagHighlighted'; break;
-          case 'Date 1': if (form[z]) visibleColumns[6] = 'date1'; break;
-          case 'Date 2': if (form[z]) visibleColumns[7] = 'date2'; break;
-          case 'Format': if (form[z]) visibleColumns[8] = 'format'; break;
-          default:
-            break;
-          }
-        });
-    }
-    return (visibleColumns.length > 1) ? visibleColumns : visibleColumns2;
-  };
-
 
   render() {
     const {

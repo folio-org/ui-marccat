@@ -16,6 +16,7 @@ import { MarcField } from '../..';
 import Tag00XInput from '../components/Tag00XInput';
 import HeaderTypeSelect from '../components/HeaderTypeSelect';
 import { formFieldValue } from '../../../../../redux/helpers/Selector';
+import { ACTION } from '../../../../../redux/actions/Actions';
 
 type S = {
   expand: Boolean,
@@ -93,9 +94,9 @@ class Tag00X extends React.PureComponent<Props, S> {
 
   RenderSelect = ({ element, ...props }): React.ComponentType<Props, *> => (
     <Field
-      id={`Tag${element.code}`}
-      name={`Tag${element.code}`}
-      label={`${element.code}`}
+      id={'Tag'.concat(element.code)}
+      name={'Tag'.concat(element.code)}
+      label={'Tag'.concat(element.code)}
       dataOptions={props.headertypes}
       component={Select}
       onChange={this.onHandleChange}
@@ -150,28 +151,34 @@ class Tag00X extends React.PureComponent<Props, S> {
           <Col xs={4} key={idx}>
             <HeaderTypeSelect
               {...this.props}
-              name={`Tag${code}-${headerTypeCode}-${field.name}`}
+              name={'Tag'.concat(code).concat('-').concat(headerTypeCode).concat('-')
+                .concat(field.name)}
               label={decamelizify(field.name, EMPTY_SPACED_STRING)}
               onChange={(e) => this.handleDisplayValue(e, data)}
               dataOptions={field.dropdownSelect}
             />
           </Col>
-        ))}
+        ))
+        }
       </Row>
     );
   };
 
   render() {
     const { expand, headerTypeCode } = this.state;
-    const { element, headingTypes, values006, values007, values008, headerTypeCodeFromLeader } = this.props;
+    const { element, headingTypes, values006, values007, values008, headerTypeCodeFromLeader, triggerFromLeader, store } = this.props;
+    if (triggerFromLeader === 'Y' && headerTypeCodeFromLeader) {
+      store.dispatch({ type: ACTION.SETTINGS, data: { trigger008FromLeader: 'N' } });
+      this.setState({ expand: !expand });
+    }
     const values = (element.code === TAGS._006) ? values006 : ((element.code === TAGS._007) ? values007 : values008);
     return (
       <div className={style.fieldContainer} no-padding>
         <MarcField
           {...this.props}
           prependIcon
-          label={`${element.fixedField.code}`}
-          name={`${element.fixedField.code}`}
+          label={element.fixedField.code}
+          name={element.fixedField.code}
           value={element.fixedField.displayValue}
           onClick={() => {
             this.setState({ expand: !expand });
@@ -182,13 +189,13 @@ class Tag00X extends React.PureComponent<Props, S> {
             {headingTypes &&
               <Field
                 {...this.props}
-                label={`Tag${element.fixedField.code}`}
-                name={`Tag${element.fixedField.code}`}
+                label={'Tag'.concat(element.fixedField.code)}
+                name={'Tag'.concat(element.fixedField.code)}
                 component={this.RenderSelect}
                 typeCode={(element.fixedField.code === TAGS._008 && headerTypeCodeFromLeader) ? headerTypeCodeFromLeader : headerTypeCode}
                 headertypes={headingTypes.results.headingTypes}
               />}
-            {!isEmpty(values) && this.RenderDropwDown(values.results, element.fixedField.code)}
+            {!isEmpty(values.results) && this.RenderDropwDown(values.results, element.fixedField.code)}
           </Col>
         </div>
       </div>
@@ -197,10 +204,11 @@ class Tag00X extends React.PureComponent<Props, S> {
 }
 
 export default (connect(
-  ({ marccat: { data: { emptyRecord, marcRecordDetail, headerTypeValues006, headerTypeValues007, headerTypeValues008 } } }) => ({
+  ({ marccat: { settings, data: { emptyRecord, marcRecordDetail, headerTypeValues006, headerTypeValues007, headerTypeValues008 } } }) => ({
     values006: (headerTypeValues006) ? headerTypeValues006.results : {},
     values007: (headerTypeValues007) ? headerTypeValues007.results : {},
     values008: (headerTypeValues008) ? headerTypeValues008.results : {},
+    triggerFromLeader: settings.trigger008FromLeader,
     headerTypeCodeFromLeader: (headerTypeValues008) ? headerTypeValues008.results.headerTypeCode : undefined,
     fixedfields: emptyRecord.results.fields || marcRecordDetail.bibliographicRecord.fields,
   }),

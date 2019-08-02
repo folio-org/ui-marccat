@@ -171,7 +171,12 @@ class SearchPanel extends React.Component<P, {}> {
     });
   }
 
-  handleOnChange = () => { };
+  handleOnChange = () => {
+    const { searchForm } = this.state;
+    this.setState({
+      searchForm,
+    });
+  };
 
   handleResetAllButton = () => {
     const { dispatch, reset } = this.props;

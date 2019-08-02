@@ -60,6 +60,7 @@ export class BrowseResults extends React.Component<Props, S> {
 
   handleBrowseDetails = (e: any, meta: Object) => {
     const { dispatch, store } = this.props;
+    store.dispatch({ type: ACTION.SETTINGS, data: { newBrowse: 'N' } });
     const id = meta.headingNumber;
     const containsAuthorities = meta.countAuthorities > 0;
     const indexFilter = store.getState().form.searchForm.values.selectIndexes;
@@ -255,7 +256,7 @@ export class BrowseResults extends React.Component<Props, S> {
                     ]}
                   /> : <EmptyMessage {...this.props} />}
         </Pane>
-        {browseDetailPanelIsVisible && !rowClicked &&
+        {isNewSearch === 'N' && browseDetailPanelIsVisible && !rowClicked &&
           <Pane
             dismissible
             defaultWidth="30%"
@@ -264,13 +265,7 @@ export class BrowseResults extends React.Component<Props, S> {
             lastMenu={this.renderButtonMenu}
             onClose={this.handleClosePanelDetails}
             actionMenu={this.getActionMenu}
-            onScroll={(e) => {
-              const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-              if (bottom) {
-                store.dispatch({ type: ACTION.SEARCH, payload: '' });
-              }
-            }
-            }
+            onScroll={() => { }}  // TODO: scroll for more results
           >
             {
               (isFetchingBrowseDetails) ?
@@ -280,7 +275,7 @@ export class BrowseResults extends React.Component<Props, S> {
             }
           </Pane>
         }
-        {browseDetailPanelIsVisible && isPanelOpen &&
+        {isNewSearch === 'N' && browseDetailPanelIsVisible && isPanelOpen &&
           <Pane
             id="pane-details"
             defaultWidth="20%"
@@ -289,13 +284,7 @@ export class BrowseResults extends React.Component<Props, S> {
             appIcon={<AppIcon app={C.META.ICON_TITLE} />}
             actionMenu={this.getActionMenu}
             dismissible
-            onScroll={(e) => {
-              const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-              if (bottom) {
-                store.dispatch({ type: ACTION.SEARCH, payload: '' });
-              }
-            }
-            }
+            onScroll={() => {}}
             onClose={() => {
               const { dispatch } = this.props;
               dispatch({ type: ACTION.CLOSE_BROWSE_ASSOCIATED_DETAILS, openPanel: false });

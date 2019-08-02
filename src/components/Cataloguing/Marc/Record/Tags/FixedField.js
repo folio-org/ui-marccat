@@ -118,7 +118,7 @@ class FixedField extends React.PureComponent<P, State> {
       <div style={{ display: 'flex' }}>
         <Button
           marginBottom0
-          id={`clickable-add-${item.code}`}
+          id={'clickable-add-'.concat(item.code)}
           onClick={this.handleAdd}
         >
           {Localize({ key: 'cataloging.fixedfield.section.add.newtag', value: item.code })}

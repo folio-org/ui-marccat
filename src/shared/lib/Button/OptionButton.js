@@ -4,7 +4,7 @@
 import * as React from 'react';
 import { reduxForm, Field } from 'redux-form';
 import type { Props } from '../../../flow/types.js.flow';
-
+import { ACTION } from '../../../redux/actions/Actions';
 // eslint-disable-next-line no-unused-vars
 import style from '../Style/InputField.css';
 
@@ -14,6 +14,12 @@ type P = Props & {
 
 
 export class CheckboxIconButton extends React.Component<Props, {}> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+    };
+  }
+
   render() {
     const { labels, dispatch, change } = this.props;
     return (
@@ -21,16 +27,17 @@ export class CheckboxIconButton extends React.Component<Props, {}> {
         { labels.map((l, i) => (
           <div key={i}>
             <Field
-              id={`${l}`}
+              id={l}
               className="checkbox"
-              name={`${l}`}
+              name={l}
               type="checkbox"
               component="input"
             />
             <label
-              htmlFor={`${l}`}
+              htmlFor={l}
               className="checkbox"
-              onClick={() => {
+              onClick={(event) => {
+                console.log(event);
                 dispatch(change('checkboxForm', 'checked', true));
               }}
             >

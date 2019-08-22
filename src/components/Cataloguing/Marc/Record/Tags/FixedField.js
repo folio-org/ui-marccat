@@ -1,11 +1,12 @@
 // @flow
 import * as React from 'react';
 import { Button } from '@folio/stripes/components';
-import { first, isEmpty } from 'lodash';
+import { first, isEmpty, sortBy } from 'lodash';
 import { connect } from 'react-redux';
 import {
   EMPTY_FIXED_FIELD,
   TAGS,
+  SORTED_BY,
 } from '../../../Utils/MarcConstant';
 import Tag00X from './Tag00X';
 import { sort } from '../../../Utils/MarcApiUtils';
@@ -80,7 +81,7 @@ class FixedField extends React.PureComponent<P, State> {
     const { headertype006, headertype007, headertype008 } = this.props;
     return (
       <React.Fragment>
-        {sort(fields).map(f => (
+        {sortBy(fields, SORTED_BY.CODE).map(f => (
           (f.code === TAGS._006) ? <Tag00X element={f} headingTypes={headertype006} {...this.props} />
             : (f.code === TAGS._007) ? <Tag00X element={f} headingTypes={headertype007} {...this.props} />
               : <Tag00X element={f} headingTypes={headertype008} {...this.props} />

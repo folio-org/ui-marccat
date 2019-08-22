@@ -24,7 +24,8 @@ export {
   safeArray,
   Localize,
   qs,
-  post
+  post,
+  del
 } from './utils/Function';
 export {
   columnMapper,

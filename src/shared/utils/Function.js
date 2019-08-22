@@ -153,6 +153,17 @@ export function post(url: string, data: any) {
   });
 }
 
+export function del(url: string, data: any) {
+  return fetch(url, {
+    method: HTTP_METHOD.DELETE,
+    headers: Object.assign({}, {
+      'x-okapi-tenant': 'tnx',
+      'Content-Type': 'application/json'
+    }),
+    body: JSON.stringify(data),
+  });
+}
+
 /**
  *
  * @param {*} dispatch

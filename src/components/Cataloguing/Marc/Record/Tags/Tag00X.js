@@ -16,7 +16,6 @@ import { MarcField } from '../..';
 import Tag00XInput from '../components/Tag00XInput';
 import HeaderTypeSelect from '../components/HeaderTypeSelect';
 import { formFieldValue } from '../../../../../redux/helpers/Selector';
-import { ACTION } from '../../../../../redux/actions/Actions';
 
 type S = {
   expand: Boolean,
@@ -166,11 +165,7 @@ class Tag00X extends React.PureComponent<Props, S> {
 
   render() {
     const { expand, headerTypeCode } = this.state;
-    const { element, headingTypes, values006, values007, values008, headerTypeCodeFromLeader, triggerFromLeader, store } = this.props;
-    if (triggerFromLeader === 'Y' && headerTypeCodeFromLeader) {
-      store.dispatch({ type: ACTION.SETTINGS, data: { trigger008FromLeader: 'N' } });
-      this.setState({ expand: !expand });
-    }
+    const { element, headingTypes, values006, values007, values008, headerTypeCodeFromLeader } = this.props;
     const values = (element.code === TAGS._006) ? values006 : ((element.code === TAGS._007) ? values007 : values008);
     return (
       <div className={style.fieldContainer} no-padding>
@@ -204,11 +199,10 @@ class Tag00X extends React.PureComponent<Props, S> {
 }
 
 export default (connect(
-  ({ marccat: { settings, data: { emptyRecord, marcRecordDetail, headerTypeValues006, headerTypeValues007, headerTypeValues008 } } }) => ({
+  ({ marccat: { data: { emptyRecord, marcRecordDetail, headerTypeValues006, headerTypeValues007, headerTypeValues008 } } }) => ({
     values006: (headerTypeValues006) ? headerTypeValues006.results : {},
     values007: (headerTypeValues007) ? headerTypeValues007.results : {},
     values008: (headerTypeValues008) ? headerTypeValues008.results : {},
-    triggerFromLeader: settings.trigger008FromLeader,
     headerTypeCodeFromLeader: (headerTypeValues008) ? headerTypeValues008.results.headerTypeCode : undefined,
     fixedfields: emptyRecord.results.fields || marcRecordDetail.bibliographicRecord.fields,
   }),

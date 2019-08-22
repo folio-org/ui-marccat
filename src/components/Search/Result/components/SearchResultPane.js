@@ -39,8 +39,9 @@ class SearchResultPane extends React.Component<Props, {}> {
       messageNoContent,
       containerMarcJSONRecords,
       store,
-      isLoadMore
+      isLoadMore,
     } = this.props;
+
     return (
       isLoadMore === 'N' || isLoadMore === undefined ?
         <Pane
@@ -111,6 +112,7 @@ class SearchResultPane extends React.Component<Props, {}> {
           />
         </Pane>
     );
+
   }
 }
 export default (connect(

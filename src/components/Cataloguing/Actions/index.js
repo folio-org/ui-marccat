@@ -168,23 +168,6 @@ export const createRecordAction = (id, payload) => {
   };
 };
 
-/**
- *
- * @param {*} id
- * @param {*} payload
- */
-export const deleteRecordAction = (id) => {
-  return {
-    type: ACTION.DELETE,
-    data: {
-      path: ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id,
-      type: `deleteRecord-${id}-` + Date.now(),
-      params: 'view=1',
-      id,
-    },
-  };
-};
-
 export const headertypeAction = (tag) => {
   return {
     type: ACTION.QUERY,

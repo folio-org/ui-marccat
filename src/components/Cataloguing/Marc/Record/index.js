@@ -10,7 +10,8 @@ import {
   PaneMenu,
   Button,
   Col,
-  Icon
+  Icon,
+  EmptyMessage
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
 import { FormattedMessage } from 'react-intl';
@@ -26,7 +27,7 @@ import {
 } from '../..';
 import {
   injectProps,
-  buildUrl, findParam, Localize, post
+  buildUrl, findParam, Localize, post, del
 } from '../../../../shared';
 import { ACTION } from '../../../../redux/actions/Actions';
 import {
@@ -44,6 +45,8 @@ import { formFieldValue, resolve } from '../../../../redux/helpers/Selector';
 import { TAGS, TAG_NOT_REPEATABLE } from '../../Utils/MarcConstant';
 import DataFieldForm from '../Form/DataField';
 import VariableFieldForm from '../Form/VariableField';
+import { SearchResultPane } from '../../../Search/Result/components';
+import { SearchResults } from '../../../Search';
 
 class Record extends React.Component<Props, {
   callout: React.RefObject<Callout>,
@@ -184,13 +187,27 @@ class Record extends React.Component<Props, {
         }
         setTimeout(() => {
           this.handleClose();
-        }, 3000);
+        }, 2000);
       });
   }
 
-  deleteRecord = () => {
-    const { dispatch, recordDetail } = this.props;
-    dispatch(MarcAction.deleteRecordAction(recordDetail));
+  deleteRecord = async () => {
+    let { statusCode } = this.state;
+    const { recordDetail } = this.props;
+    await del(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + recordDetail.id, C.ENDPOINT.DEFAULT_LANG_VIEW), recordDetail.id)
+      .then((r) => {
+        statusCode = r.status;
+      })
+      .then(() => {
+        if (statusCode === 204) {
+          showValidationMessage(this.callout, 'cataloging.record.DELETED.success', 'success');
+        } else {
+          showValidationMessage(this.callout, 'cataloging.record.DELETED.error', 'error');
+        }
+        setTimeout(() => {
+          this.handleClose();
+        }, 2000);
+      });
   };
 
   handleClose = () => {

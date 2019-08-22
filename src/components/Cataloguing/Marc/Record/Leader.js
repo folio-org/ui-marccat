@@ -48,7 +48,6 @@ class Leader extends React.PureComponent<P, S> {
     dispatch(change('Tag008', headerTypeCodeFromLeader || 0));
     dispatch(change('leader', leaderVal));
     if (index === 6 || index === 7) {
-      dispatch({ type: ACTION.SETTINGS, data: { trigger008FromLeader: 'Y' } });
       set008HeaderType(leaderVal);
     }
   }

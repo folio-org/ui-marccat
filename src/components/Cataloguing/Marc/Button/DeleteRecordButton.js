@@ -9,7 +9,6 @@ import { bindActionCreators } from 'redux';
 import { Localize, findParam } from '../../../../shared';
 
 import style from '../../Style/index.css';
-import { deleteRecordAction } from '../../Actions';
 import { RECORD_ACTION } from '../..';
 
 function DeleteRecordButton({ ...props }) {
@@ -36,7 +35,7 @@ function DeleteRecordButton({ ...props }) {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   deleteRecord: (id) => _ => {
-    dispatch(deleteRecordAction(id));
+    // dispatch(deleteRecordAction(id));
   }
 }, dispatch);
 

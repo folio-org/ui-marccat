@@ -5,6 +5,7 @@ import { Field } from 'redux-form';
 import { Select, Row, Col } from '@folio/stripes-components';
 import { connect } from 'react-redux';
 import { isEmpty, last } from 'lodash';
+import { PreviousMap } from 'postcss';
 import { EMPTY_SPACED_STRING, REDUX } from '../../../../../config/constants';
 import { decamelizify } from '../../../../../shared';
 import type { Props, State } from '../../../../../flow/types.js.flow';
@@ -32,6 +33,7 @@ class Tag00X extends React.PureComponent<Props, S> {
     this.RenderSelect = this.RenderSelect.bind(this);
     this.RenderDropwDown = this.RenderDropwDown.bind(this);
     this.handleDisplayValue = this.handleDisplayValue.bind(this);
+    this.onHandleChange = this.onHandleChange.bind(this);
   }
 
   onHandleChange = evt => {
@@ -91,18 +93,30 @@ class Tag00X extends React.PureComponent<Props, S> {
     payload.sequenceNumber = 0;
   };
 
-  RenderSelect = ({ element, ...props }): React.ComponentType<Props, *> => (
-    <Field
-      id={'Tag'.concat(element.code)}
-      name={'Tag'.concat(element.code)}
-      label={'Tag'.concat(element.code)}
-      dataOptions={props.headertypes}
-      component={Select}
-      onChange={this.onHandleChange}
-      placeholder={'Select Heading types for '.concat(element.code)}
-      value={props.typeCode}
-    />
-  );
+  RenderSelect = ({ element, ...props }): React.ComponentType<Props, *> => {
+    const { dispatch, change } = this.props;
+    let selectValue = '';
+    return (
+      <React.Fragment>
+        <Field
+          id={'Tag'.concat(element.code)}
+          name={'Tag'.concat(element.code).concat('-select')}
+          label={'Tag'.concat(element.code)}
+          dataOptions={props.headertypes}
+          component={Select}
+          onChange={this.onHandleChange}
+          placeholder={'Select Heading types for '.concat(element.code)}
+          value={element.code === TAGS._008 && props.headerTypeCodeFromLeader ? props.headertypes.map(k => {
+            if (k.value === props.headerTypeCodeFromLeader) {
+              selectValue = k.label;
+            }
+            console.log(selectValue);
+            dispatch(change('Tag008-select', selectValue));
+            return selectValue;
+          }) : null}
+        />
+      </React.Fragment>);
+  };
 
   RenderDropwDown = (data) => {
     const { headerTypeCode } = this.state;

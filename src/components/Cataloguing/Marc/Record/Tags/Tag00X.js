@@ -93,29 +93,29 @@ class Tag00X extends React.PureComponent<Props, S> {
     payload.sequenceNumber = 0;
   };
 
-  RenderSelect = ({ element, ...props }): React.ComponentType<Props, *> => {
+  RenderSelect = ({ element, ...props }) => {
     const { dispatch, change } = this.props;
     let selectValue = '';
     return (
-      <React.Fragment>
-        <Field
-          id={'Tag'.concat(element.code)}
-          name={'Tag'.concat(element.code).concat('-select')}
-          label={'Tag'.concat(element.code)}
-          dataOptions={props.headertypes}
-          component={Select}
-          onChange={this.onHandleChange}
-          placeholder={'Select Heading types for '.concat(element.code)}
-          value={element.code === TAGS._008 && props.headerTypeCodeFromLeader ? props.headertypes.map(k => {
-            if (k.value === props.headerTypeCodeFromLeader) {
-              selectValue = k.label;
-            }
-            console.log(selectValue);
-            dispatch(change('Tag008-select', selectValue));
-            return selectValue;
-          }) : null}
-        />
-      </React.Fragment>);
+      <Field
+        id={'Tag'.concat(element.code)}
+        name={'Tag'.concat(element.code).concat('-select')}
+        label={'Tag'.concat(element.code)}
+        dataOptions={props.headertypes}
+        component={Select}
+        onChange={this.onHandleChange}
+        placeholder={'Select Heading types for '.concat(element.code)}
+
+        values={element.code === TAGS._008 && props.headerTypeCodeFromLeader ? props.headertypes.map(k => {
+          if (k.value === props.headerTypeCodeFromLeader) {
+            selectValue = k.value;
+          }
+          console.log(selectValue);
+          dispatch(change('Tag008-select', selectValue));
+          this.onHandleChange();
+          return selectValue;
+        }) : null}
+      />);
   };
 
   RenderDropwDown = (data) => {

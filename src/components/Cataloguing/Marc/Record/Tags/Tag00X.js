@@ -94,15 +94,16 @@ class Tag00X extends React.PureComponent<Props, S> {
   };
 
   RenderSelect = ({ element, ...props }) => {
-    const { dispatch, change } = this.props;
+    const { dispatch, change, typeCode } = this.props;
     let selectValue = '';
     return (
       <Field
         id={'Tag'.concat(element.code)}
-        name={'Tag'.concat(element.code).concat('-select')}
+        name={'Tag'.concat(element.code)}
         label={'Tag'.concat(element.code)}
         dataOptions={props.headertypes}
         component={Select}
+        readOnly={element.code === TAGS._008}
         onChange={this.onHandleChange}
         placeholder={'Select Heading types for '.concat(element.code)}
 
@@ -110,11 +111,10 @@ class Tag00X extends React.PureComponent<Props, S> {
           if (k.value === props.headerTypeCodeFromLeader) {
             selectValue = k.value;
           }
-          console.log(selectValue);
-          dispatch(change('Tag008-select', selectValue));
+          dispatch(change('Tag008', selectValue));
           this.onHandleChange();
           return selectValue;
-        }) : null}
+        }) : typeCode}
       />);
   };
 

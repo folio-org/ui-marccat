@@ -32,7 +32,7 @@ export const ENDPOINT = {
   },
   DEFAULT_LANG_VIEW: 'lang=ita&view=1',
   BASE_URL: `http://${process.env.ENV === ENV.DEV ? '127.0.0.1' : '151.1.165.20'}:8082/marccat`,
-  OKAPI_URL:  `http://${process.env.ENV === ENV.DEV ? 'folio-q4.aws.indexdata.com:9130' : process.env.OKAPI_URL}:9130`,
+  OKAPI_URL:  `http://${process.env.ENV === ENV.DEV ? 'http://okapi.atcult.it:9130' : process.env.OKAPI_URL}:9130`,
   MERGED_SEARCH_URL: '/mergedSearch',
   SEARCH_URL: '/searchVertical',
   SEARCH_URL_JSON: '/search',

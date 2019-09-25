@@ -36,12 +36,11 @@ export class CheckboxIconButton extends React.Component<Props, {}> {
             <label
               htmlFor={l}
               className="checkbox"
-              onClick={(event) => {
-                console.log(event);
+              onClick={() => {
                 dispatch(change('checkboxForm', 'checked', true));
               }}
             >
-              {l}
+              {l.split('-')[1]}
             </label>
           </div>))}
       </form>

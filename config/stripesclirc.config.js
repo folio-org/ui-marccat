@@ -2,7 +2,7 @@ const webpack = require('webpack');
 
 const env = process.env.ENV;
 
-const url = (env === 'dev') ? 'http://folio-q4.aws.indexdata.com:9130' : 'http://folio-q4.aws.indexdata.com:9130';
+const url = (env === 'dev') ? 'http://okapi.atcult.it:9130' : 'http://okapi.atcult.it:9130';
 
 function mirage(config, enabled = false) {
   if (enabled) {

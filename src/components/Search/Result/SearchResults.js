@@ -210,9 +210,21 @@ export class SearchResults extends React.Component<P, {}> {
       isReadyAssociatedRecord,
       closePanels,
       totalAuth,
-      totalBib
+      totalBib,
+      store
     } = this.props;
     let { bibliographicResults, authorityResults } = this.props;
+    const customColumn = [];
+    if (store.getState().form.checkboxForm && store.getState().form.checkboxForm.values) {
+      const columns = store.getState().form.checkboxForm.values;
+      Object.keys(columns).map((e) => {
+        if (e !== 'checkboxForm' && columns[e] === true) {
+          customColumn.push(e.split('-')[0]);
+        }
+        return customColumn;
+      });
+    }
+
     if (activeFilter) {
       const filterArray = [];
       Object.keys(activeFilter).forEach((key) => filterArray.push(key + ':' + activeFilter[key]));
@@ -280,6 +292,7 @@ export class SearchResults extends React.Component<P, {}> {
       <HotKeys keyMap={this.keys} handlers={this.handlers} style={{ width: 100 + '%' }}>
         <Paneset static>
           <SearchResultPane
+            customColumn={customColumn}
             containerMarcJSONRecords={containerMarcJSONRecords}
             isFetching={isFetching}
             queryMoreAuth={queryMoreAuth}

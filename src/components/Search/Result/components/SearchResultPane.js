@@ -40,6 +40,7 @@ class SearchResultPane extends React.Component<Props, {}> {
       containerMarcJSONRecords,
       store,
       isLoadMore,
+      customColumn
     } = this.props;
 
     return (
@@ -77,7 +78,7 @@ class SearchResultPane extends React.Component<Props, {}> {
                     contentData={mergedRecord}
                     formatter={resultsFormatter(bibsOnly, autOnly)}
                     columnMapping={columnMapper(bibsOnly, autOnly)}
-                    visibleColumns={renderColumn(bibsOnly, autOnly)}
+                    visibleColumns={customColumn.length > 0 ? customColumn : renderColumn(bibsOnly, autOnly)}
                   /> : <EmptyMessage {...this.props} />
           }
         </Pane> : (isLoadMore === 'Y') &&
@@ -108,7 +109,7 @@ class SearchResultPane extends React.Component<Props, {}> {
             contentData={mergedRecord}
             formatter={resultsFormatter(bibsOnly, autOnly)}
             columnMapping={columnMapper(bibsOnly, autOnly)}
-            visibleColumns={renderColumn(bibsOnly, autOnly)}
+            visibleColumns={customColumn.length > 0 ? customColumn : renderColumn(bibsOnly, autOnly)}
           />
         </Pane>
     );
@@ -117,6 +118,6 @@ class SearchResultPane extends React.Component<Props, {}> {
 }
 export default (connect(
   ({ marccat: { search } }) => ({
-    isLoadMore: search.moreData
+    isLoadMore: search.moreData,
   }),
 )(injectProps(SearchResultPane)));

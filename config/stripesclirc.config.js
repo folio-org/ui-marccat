@@ -1,8 +1,8 @@
 const webpack = require('webpack');
 
-const env = process.env.ENV;
+// const env = process.env.ENV;
 
-const url = (env === 'dev') ? 'https://dev.folio.org' : 'http://folio-q4.aws.indexdata.com:9130';
+// const url = (env === 'dev') ? 'https://dev.folio.org' : 'https://folio-daisy-okapi.aws.indexdata.com';
 
 function mirage(config, enabled = false) {
   if (enabled) {
@@ -36,7 +36,7 @@ const servePlugin = {
   },
 };
 module.exports = {
-  okapi: { url, tenant: 'diku' },
+  okapi: { url: 'https://folio-daisy-okapi.aws.indexdata.com', tenant: 'diku' },
   config: {
     logCategories: 'redux',
     hasAllPerms: true,
@@ -44,11 +44,5 @@ module.exports = {
     plugins: {
       serve: servePlugin
     }
-  },
-  branding: {
-    logo: {
-      src: './icons/app.png',
-      alt: 'MARCcat',
-    }
-  },
+  }
 };

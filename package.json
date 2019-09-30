@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "stripes serve --lint config/stripesclirc.config",
-    "build": "stripes build --no-minify --okapi http://folio-q4.aws.indexdata.com:9130 --output dist/",
+    "build": "stripes build --no-minify --okapi https://folio-daisy-okapi.aws.indexdata.com --output dist/",
     "test": "stripes test karma",
     "test:coverage": "stripes test karma --coverage",
     "test:folioci": "yarn --offline test --karma.singleRun --karma.browsers ChromeDocker --karma.reporters mocha junit --coverage",
@@ -25,13 +25,15 @@
     "clean": "rm -rf lib/ artifact/"
   },
   "devDependencies": {
-    "@bigtest/interactor": "^0.7.2",
+    "@bigtest/interactor": "^0.9.0",
     "@bigtest/mirage": "^0.0.1",
     "@bigtest/mocha": "^0.5.1",
     "@bigtest/react": "^0.1.2",
-    "@folio/eslint-config-stripes": "^4.0.1",
-    "@folio/stripes": "^2.0.0",
-    "@folio/stripes-cli": "^1.7.0",
+    "@folio/eslint-config-stripes": "^4.1.0",
+    "@folio/react-intl-safe-html": "^1.0.1",
+    "@folio/stripes": "^2.7.0",
+    "@folio/stripes-cli": "^1.8.0",
+    "@folio/stripes-components": "^5.0.2",
     "@folio/stripes-core": "^3.0.0",
     "babel-eslint": "^10.0.1",
     "eslint-plugin-flowtype": "^3.4.2",
@@ -64,7 +66,6 @@
     "classnames": "^2.2.5",
     "prop-types": "^15.7.2",
     "prop-types-extra": "^1.1.0",
-    "react-hot-loader": "^4.3.12",
     "react-intl": "^2.4.0",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
@@ -75,7 +76,11 @@
     "prettier-package-json": "^1.4.0"
   },
   "peerDependencies": {
-    "react": "*"
+   "@folio/stripes": "^2.7.0",
+    "react": "*",
+    "react-dom": "*",
+    "react-redux": "*",
+    "redux": "*"
   },
   "resolutions": {
     "**/scheduler": "^0.13.5",
@@ -117,13 +122,12 @@
     }
   },
   "stripes": {
-    "type": "app",
     "displayName": "MARCcat",
     "route": "/marccat",
+    "actsAs": ["app", "settings"],
     "defaultPopoverSize": "400px",
     "defaultPreviewWidth": "40%",
     "helpPage": "https://wiki.folio.org/pages/",
-    "hasSettings": true,
     "okapiInterfaces": {
       "marccat": "1.8"
     },

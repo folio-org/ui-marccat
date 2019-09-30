@@ -82,14 +82,6 @@
     "react-redux": "*",
     "redux": "*"
   },
-  "resolutions": {
-    "**/scheduler": "^0.13.5",
-    "**/ts-invariant": "^0.3.2",
-    "**/warning": "^4.0.3",
-    "**/isarray": "^1.0.0",
-    "**/hoist-non-react-statics": "^2.5.5",
-    "**/react-dom": "^16.6.3"
-  },
   "files": [
     "README.md",
     "CHANGELOG.md",

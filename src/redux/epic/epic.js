@@ -134,7 +134,7 @@ export function epic(action$, { getState }) {
 
       // used for the actual request
       const url = `${state.okapi.url}${data.path}?${(data.params)}`;
-      const headers = ENDPOINT.HEADERS;
+      const headers = ENDPOINT.HEADERS(state);
       const body = JSON.stringify(payload);
 
       const promise = fetch(url, { method, headers, body })

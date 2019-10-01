@@ -1,9 +1,5 @@
 const webpack = require('webpack');
 
-// const env = process.env.ENV;
-
-// const url = (env === 'dev') ? 'https://dev.folio.org' : 'https://folio-daisy-okapi.aws.indexdata.com';
-
 function mirage(config, enabled = false) {
   if (enabled) {
     console.info('Using Mirage Server'); // eslint-disable-line no-console
@@ -36,7 +32,7 @@ const servePlugin = {
   },
 };
 module.exports = {
-  okapi: { url: 'https://folio-daisy-okapi.aws.indexdata.com', tenant: 'diku' },
+  okapi: { url: 'http://platform-core-427-5.aws.indexdata.com:9130', tenant: 'diku' },
   config: {
     logCategories: 'redux',
     hasAllPerms: true,

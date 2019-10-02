@@ -146,7 +146,7 @@ export function epic(action$, { getState }) {
       const method = actionMethods[type];
 
       // used for the actual request
-      const url = `${state.okapi.url}${data.path}?${(data.params)}`;
+      const url = `${state.okapi.url}/marccat${data.path}?${(data.params)}`;
       const headers = getHeaders(state);
       const body = JSON.stringify(payload);
 

@@ -26,7 +26,7 @@ export const RESOURCE_TYPE = {
 };
 export const ENDPOINT = {
   HEADERS: {
-    'X-Okapi-Tenant': state => `${state.okapi.tenant}`,
+    'X-Okapi-Tenant': 'diku',
     'Accept': 'application/json',
     'Content-Type': 'application/json'
   },

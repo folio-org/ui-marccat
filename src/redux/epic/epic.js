@@ -119,8 +119,7 @@ const getHeaders = (state) => {
   const headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-    'X-Okapi-Token': `${state.okapi.token}`,
-    'X-Okapi-Tenant': 'diku',
+    'X-Okapi-Tenant': `${state.okapi.tenant}`,
   };
   return headers;
 };

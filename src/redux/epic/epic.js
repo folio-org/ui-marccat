@@ -3,7 +3,6 @@ import { from } from 'rxjs/observable/from';
 import { of } from 'rxjs/observable/of';
 import * as Resolver from '../helpers/Resolver';
 import { ACTION } from '../actions';
-import { ENDPOINT } from '../../config/constants';
 
 const initialState = {};
 const historyState = { list: [] };
@@ -115,7 +114,7 @@ const parseResponseBody = (response) => { // metodo statico
  * @param {*} method - Http method for fetch
  * @returns
  */
-const getHeaders = (state) => {
+export const getHeaders = (state) => {
   const headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json',

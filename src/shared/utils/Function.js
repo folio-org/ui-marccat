@@ -142,8 +142,8 @@ export function Localize(label, withContainier, _wrapElement) {
  * @param {*} data - the body of request
  * @param {*} store - the data store
  */
-export function post(url, data, state) {
-  const tenant = ENDPOINT.HEADERS(state);
+export function post(url, data) {
+  const tenant = ENDPOINT.HEADERS;
   return fetch(url, {
     method: HTTP_METHOD.POST,
     headers: Object.assign({}, {

@@ -111,6 +111,21 @@ const parseResponseBody = (response) => { // metodo statico
 };
 
 /**
+ *
+ * @param {*} method - Http method for fetch
+ * @returns
+ */
+const getHeaders = (state) => {
+  const headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'X-Okapi-Token': `${state.okapi.token}`,
+    'X-Okapi-Tenant': 'diku',
+  };
+  return headers;
+};
+
+/**
  * The epic used to actually make a requests when an action is dispatched
  * @param {Observable} action$ - the observable action
  * @param {Function} store.getState - get's the most recent redux state
@@ -134,7 +149,7 @@ export function epic(action$, { getState }) {
 
       // used for the actual request
       const url = `${state.okapi.url}${data.path}?${(data.params)}`;
-      const headers = ENDPOINT.HEADERS(state);
+      const headers = getHeaders(state);
       const body = JSON.stringify(payload);
 
       const promise = fetch(url, { method, headers, body })

@@ -26,13 +26,13 @@ export const RESOURCE_TYPE = {
 };
 export const ENDPOINT = {
   HEADERS: {
-    'X-Okapi-Tenant': state => `${state.okapi.tenant}`,
+    'X-Okapi-Tenant': 'diku',
     'X-Okapi-Token': state => `${state.okapi.token}`,
     'Accept': 'application/json',
     'Content-Type': 'application/json'
   },
   DEFAULT_LANG_VIEW: 'lang=ita&view=1',
-  OKAPI_URL:  state => `${state.okapi.url}`,
+  OKAPI_URL:  state => `${state.okapi.url}/marccat`,
   MERGED_SEARCH_URL: '/mergedSearch',
   SEARCH_URL: '/searchVertical',
   SEARCH_URL_JSON: '/search',

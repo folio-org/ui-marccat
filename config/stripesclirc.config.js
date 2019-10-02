@@ -32,7 +32,7 @@ const servePlugin = {
   },
 };
 module.exports = {
-  okapi: { url: 'http://platform-core-427-5.aws.indexdata.com:9130', tenant: 'diku' },
+  okapi: { url: 'http://platform-core-427-8.aws.indexdata.com:9130', tenant: 'diku' },
   config: {
     logCategories: 'redux',
     hasAllPerms: true,

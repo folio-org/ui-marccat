@@ -9,6 +9,7 @@ import { FormattedMessage } from 'react-intl';
 import queryString from 'querystring';
 import { bindActionCreators } from 'redux';
 import { META, ENDPOINT, EMPTY_SPACED_STRING, EMPTY_STRING, HTTP_METHOD } from '../../config/constants';
+import getHeaders from '../../redux/epic/epic';
 
 /**
  *
@@ -142,8 +143,8 @@ export function Localize(label, withContainier, _wrapElement) {
  * @param {*} data - the body of request
  * @param {*} store - the data store
  */
-export function post(url, data) {
-  const tenant = ENDPOINT.HEADERS;
+export function post(url, data, store) {
+  const tenant = getHeaders(store.getState());
   return fetch(url, {
     method: HTTP_METHOD.POST,
     headers: Object.assign({}, {

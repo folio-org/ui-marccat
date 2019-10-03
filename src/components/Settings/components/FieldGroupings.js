@@ -1,9 +1,13 @@
-//
+// @flow
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Icon, MultiColumnList, Pane } from '@folio/stripes/components';
 import { injectProps, ToolbarButtonMenu } from '../../../shared';
+import type { Props } from '../../../flow/types.js.flow';
 
+type P = Props & {
+  label: string;
+};
 const data = [
   { 'Name': 'Title', 'Description': 'Lorem ipsum dolor sit amet', 'Heading Fields': '130, 130, 130, 130', 'Title Fields': 'James Edward' },
   { 'Name': 'Author', 'Description': 'Lorem ipsum dolor sit amet', 'Heading Fields': '130, 130, 130, 130', 'Title Fields': 'James Edward' },
@@ -12,7 +16,7 @@ const data = [
   { 'Name': 'Donor name', 'Description': 'Lorem ipsum dolor sit amet', 'Heading Fields': '130, 130, 130, 130', 'Title Fields': 'James Edward' },
   { 'Name': 'Subject', 'Description': 'Lorem ipsum dolor sit amet', 'Heading Fields': '130, 130, 130, 130', 'Title Fields': 'James Edward' },
 ];
-class FieldGroupings extends React.Component {
+class FieldGroupings extends React.Component<P, {}> {
   render() {
     const { label } = this.props;
     const rightMenu = (

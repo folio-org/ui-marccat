@@ -14,7 +14,8 @@ function AutoSuggestHeadings(props) {
   const [state, setState] = React.useState(initialState);
 
   const onShowHeadings = () => {
-    const { dispatch, store, change } = props;
+    const { suggestArray } = state;
+    const { dispatch, store, input, change } = props;
     const code = store.getState().form.variableFieldForm.values.items[0].variableField.code;
     const ind1 = store.getState().form.variableFieldForm.values.items[0].variableField.ind1;
     const ind2 = store.getState().form.variableFieldForm.values.items[0].variableField.ind2;
@@ -22,20 +23,23 @@ function AutoSuggestHeadings(props) {
     const stringText = replaceAllWithEmptyString(store.getState().form.variableFieldForm.values.items[0].variableField.displayValue);
     const cb = (payload) => setState({ suggestArray: payload.headings });
     dispatch(triggerBrowseHeadingSuggestion(code, ind1, ind2, stringText, cb));
-    dispatch(change(REDUX.FORM.VARIABLE_FORM, props.input.name, displayValue));
-    return state.suggestArray;
+    dispatch(change(REDUX.FORM.VARIABLE_FORM, input.name, displayValue));
+    return suggestArray;
   };
 
   const onChange = (event) => {
-    const { dispatch, store, change } = props;
-    if (event && event === '$') {
-      const cb = (payload) => setState({ suggestArray: payload.subfields });
-      const code = store.getState().form.variableFieldForm.values.items[0].variableField.code;
-      dispatch(triggerTagIndicatorsSuggestion(code, cb));
+    let { suggestArray } = state;
+    const { dispatch, store, change, input } = props;
+    if (event && event !== undefined && event !== '') {
+      if (event === '$') {
+        const cb = (payload) => setState({ suggestArray: payload.subfields });
+        const code = store.getState().form.variableFieldForm.values.items[0].variableField.code;
+        dispatch(triggerTagIndicatorsSuggestion(code, cb));
+      }
+      dispatch(change(REDUX.FORM.VARIABLE_FORM, input.name, event));
+      suggestArray = [];
     }
-    dispatch(change(REDUX.FORM.VARIABLE_FORM, props.input.name, event));
-    state.suggestArray = [];
-    return state.suggestArray;
+    return suggestArray;
   };
 
   const keys = {
@@ -46,13 +50,14 @@ function AutoSuggestHeadings(props) {
     'showHeadings': onShowHeadings
   };
 
+  const { suggestArray } = state;
   const { input } = props;
   const remappedSuggestArray = [];
-  if (state.suggestArray && state.suggestArray.length > 0) {
-    if (state.suggestArray.length > 7) {
-      state.suggestArray.split('').map(elem => remappedSuggestArray.push(Object.assign({}, { value: '$' + elem, label: '$' + elem })));
+  if (suggestArray && suggestArray.length > 0) {
+    if (suggestArray.length > 7) {
+      suggestArray.split('').map(elem => remappedSuggestArray.push(Object.assign({}, { value: '$' + elem, label: '$' + elem })));
     } else {
-      state.suggestArray.map(elem => remappedSuggestArray.push(Object.assign({}, { value: elem.stringText, label: elem.stringText })));
+      suggestArray.map(elem => remappedSuggestArray.push(Object.assign({}, { value: elem.stringText, label: elem.stringText })));
     }
   }
   return (

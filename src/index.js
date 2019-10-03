@@ -1,15 +1,19 @@
-//
+// @flow
 import * as React from 'react';
 import { MarcatSettings as Settings } from './components';
 import { reducer, epics } from './redux';
 import { injectProps } from './shared';
+import type { Props } from './flow/types.js.flow';
 import { ACTION } from './redux/actions';
 import { REDUX } from './config/constants';
 import Provider from './route/Provider';
 
 import './shared/styles/common.css';
 
-class MARCcat extends React.Component {
+type S = {
+  filterPaneIsVisible: boolean,
+};
+class MARCcat extends React.Component<Props, S> {
   constructor(props, context) {
     super(props, context);
     this.state = {

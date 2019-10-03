@@ -1,4 +1,4 @@
-//
+// @flow
 import * as React from 'react';
 import { Button, Modal, ModalFooter, TextField } from '@folio/stripes/components';
 import { Field, reduxForm } from 'redux-form';
@@ -6,8 +6,26 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Localize } from '../..';
 
-class ReduxModal extends React.Component {
+type Props = {
+  label: String,
+  formName: String,
+  keyOpenModal: String,
+  fieldLabel: String,
+  buttonStyle: Object,
+  keyConfirm: String,
+  keyCancel: String,
+  cancelButtonStyle: Object,
+  fieldLabel: String,
+  onClick: Function,
+  onHide: Function
+}
+type State = {
+  confirming: boolean,
+  sending: boolean,
+}
+class ReduxModal extends React.Component<Props, State> {
 
+  static formName: undefined;
 
   constructor(props) {
     super(props);

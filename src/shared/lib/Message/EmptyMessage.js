@@ -1,9 +1,10 @@
-//
+// @flow
 import * as React from 'react';
 import { Icon } from '@folio/stripes/components';
+import type { Props } from '../../../flow/types.js.flow';
 import css from '../Style/EmptyMessage.css';
 
-const EmptyMessage = ({ ...props }) => {
+const EmptyMessage = ({ ...props }: Props) => {
   const { translate } = props;
   return (
     <div className={css.emptyMessage}>

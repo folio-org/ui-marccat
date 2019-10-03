@@ -1,4 +1,4 @@
-//
+// @flow
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -10,7 +10,8 @@ import {
   PaneMenu,
   Button,
   Col,
-  Icon
+  Icon,
+  EmptyMessage
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
 import { FormattedMessage } from 'react-intl';
@@ -26,7 +27,7 @@ import {
 } from '../..';
 import {
   injectProps,
-  buildUrl, findParam, Localize, post
+  buildUrl, findParam, Localize, post, del
 } from '../../../../shared';
 import { ACTION } from '../../../../redux/actions/Actions';
 import {
@@ -37,13 +38,19 @@ import {
 } from '../../Utils/MarcApiUtils';
 import * as C from '../../../../config/constants';
 import * as MarcAction from '../../Actions';
+import type { Props } from '../../..';
+import type { RecordTemplate, Type } from '../../../../flow/cataloging.js.flow';
 import style from '../../Style/index.css';
 import { formFieldValue, resolve } from '../../../../redux/helpers/Selector';
 import { TAGS, TAG_NOT_REPEATABLE } from '../../Utils/MarcConstant';
 import DataFieldForm from '../Form/DataField';
 import VariableFieldForm from '../Form/VariableField';
+import { SearchResultPane } from '../../../Search/Result/components';
+import { SearchResults } from '../../../Search';
 
-class Record extends React.Component {
+class Record extends React.Component<Props, {
+  callout: React.RefObject<Callout>,
+}> {
   constructor(props) {
     super(props);
     this.state = {
@@ -52,6 +59,7 @@ class Record extends React.Component {
       id: findParam('id'),
       submit: false,
       deletedTag: false,
+      statusCode: ''
     };
     this.renderDropdownLabels = this.renderDropdownLabels.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -70,7 +78,7 @@ class Record extends React.Component {
   }
 
 
-  getCurrentRecord = () => {
+  getCurrentRecord = (): Object => {
     const { datastore: { emptyRecord, recordDuplicate }, recordDetail } = this.props;
     const { mode } = this.state;
 
@@ -88,7 +96,7 @@ class Record extends React.Component {
     item.fieldStatus = (item.variableField.keyNumber > 0 || item.mandatory) ? RECORD_FIELD_STATUS.CHANGED : RECORD_FIELD_STATUS.NEW;
     item.variableField.displayValue = heading.displayValue;
 
-    const form = formFieldValue(store, C.REDUX.FORM.VARIABLE_FORM, 'items');
+    const form: [] = formFieldValue(store, C.REDUX.FORM.VARIABLE_FORM, 'items');
     const tag = form.filter(e => e.code === item.code);
     const length = tag.length;
 
@@ -101,9 +109,9 @@ class Record extends React.Component {
 
   // TODO FIXME
   asyncCreateHeading = async (item, heading) => {
-    const { store: { getState } } = this.props;
+    const { store } = this.props;
     try {
-      const response = await post(buildUrl(getState(), C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading);
+      const response = await post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading);
       const data = await response.json();
       item.variableField.categoryCode = data.categoryCode;
       if (item.variableField.keyNumber > 0) {
@@ -112,7 +120,13 @@ class Record extends React.Component {
         item.variableField.keyNumber = data.keyNumber || item.variableField.keyNumber;
       }
       item.variableField.displayValue = data.displayValue;
-      showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.create.success', value: item.code }), C.VALIDATION_MESSAGE_TYPE.SUCCESS);
+      if (response.status === 201) {
+        showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.create.success', value: item.code }), C.VALIDATION_MESSAGE_TYPE.SUCCESS);
+      } else {
+        showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.create.failure', value: item.code }), C.VALIDATION_MESSAGE_TYPE.ERROR);
+        const form: [] = formFieldValue(store, C.REDUX.FORM.VARIABLE_FORM, 'items');
+        form.splice(0, 1);
+      }
     } catch (exception) {
       showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.create.failure', value: item.code }), C.VALIDATION_MESSAGE_TYPE.ERROR);
     }
@@ -137,6 +151,7 @@ class Record extends React.Component {
   saveRecord = async () => {
     const { datastore: { emptyRecord }, store: { getState } } = this.props;
     const { deletedTag } = this.state;
+    let { statusCode } = this.state;
     const formData = getState().form.dataFieldForm.values;
     const initialValues = getState().form.variableFieldForm.initial.items;
     let variableFormData = getState().form.variableFieldForm.values.items;
@@ -149,7 +164,7 @@ class Record extends React.Component {
     const bibliographicRecord = this.getCurrentRecord();
     bibliographicRecord.leader.value = formData.leader;
 
-    const recordTemplate = {
+    const recordTemplate: RecordTemplate<Type> = {
       id: 1,
       fields: filterMandatoryFields(emptyRecord.results.fields)
     };
@@ -159,21 +174,40 @@ class Record extends React.Component {
     const payload = { bibliographicRecord, recordTemplate };
     this.setState({ submit: true });
 
-    await post(buildUrl(getState(), C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), payload)
-      .then((r) => { return r.json(); })
+    await post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), payload)
+      .then((r) => {
+        statusCode = r.status;
+        return r.json();
+      })
       .then(() => {
-        showValidationMessage(this.callout, 'cataloging.record.update.success', 'success');
+        if (statusCode === 201) {
+          showValidationMessage(this.callout, 'cataloging.record.update.success', 'success');
+        } else {
+          showValidationMessage(this.callout, 'cataloging.record.update.error', 'error');
+        }
         setTimeout(() => {
           this.handleClose();
         }, 2000);
-      }).catch(() => {
-        showValidationMessage(this.callout, 'cataloging.record.update.error', 'error');
       });
   }
 
-  deleteRecord = () => {
-    const { dispatch, recordDetail } = this.props;
-    dispatch(MarcAction.deleteRecordAction(recordDetail));
+  deleteRecord = async () => {
+    let { statusCode } = this.state;
+    const { recordDetail } = this.props;
+    await del(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + recordDetail.id, C.ENDPOINT.DEFAULT_LANG_VIEW), recordDetail.id)
+      .then((r) => {
+        statusCode = r.status;
+      })
+      .then(() => {
+        if (statusCode === 204) {
+          showValidationMessage(this.callout, 'cataloging.record.DELETED.success', 'success');
+        } else {
+          showValidationMessage(this.callout, 'cataloging.record.DELETED.error', 'error');
+        }
+        setTimeout(() => {
+          this.handleClose();
+        }, 2000);
+      });
   };
 
   handleClose = () => {
@@ -277,7 +311,7 @@ class Record extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  loadHeadertype: (tag) => _ => {
+  loadHeadertype: (tag: []) => _ => {
     tag.forEach(t => dispatch(MarcAction.headertypeAction(t)));
   },
   loadLeaderData: (payload) => _ => {

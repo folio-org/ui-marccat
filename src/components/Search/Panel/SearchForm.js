@@ -1,6 +1,6 @@
 // /* eslint-disable jsx-a11y/click-events-have-key-events */
 // /* eslint-disable jsx-a11y/no-static-element-interactions */
-// //  strict
+// // @flow strict
 // import * as React from 'react';
 // import {
 //   SearchField,

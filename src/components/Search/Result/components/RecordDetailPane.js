@@ -1,4 +1,4 @@
-//
+// @flow
 import * as React from 'react';
 import { Pane, Icon, MenuSection } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';

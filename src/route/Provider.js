@@ -1,4 +1,4 @@
-//
+// @flow
 import * as React from 'react';
 import Router from './Router';
 import SearchPane from '../components/Search/Panel/SearchPane';

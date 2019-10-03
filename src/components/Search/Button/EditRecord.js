@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-//
+// @flow
 import * as React from 'react';
 import { Button, PaneMenu } from '@folio/stripes/components';
 import { connect } from 'react-redux';

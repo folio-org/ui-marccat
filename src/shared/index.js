@@ -1,3 +1,5 @@
+// type
+export type { Props } from '../flow/types.js.flow';
 
 // core
 export { default as injectProps } from './hoc/injectProps';
@@ -22,7 +24,8 @@ export {
   safeArray,
   Localize,
   qs,
-  post
+  post,
+  del
 } from './utils/Function';
 export {
   columnMapper,

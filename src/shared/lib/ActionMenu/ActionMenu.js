@@ -1,4 +1,4 @@
-//
+// @flow
 import React, { Fragment } from 'react';
 import { Button, Icon } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
@@ -8,15 +8,15 @@ import style from '../Style/Dropdown.css';
 
 export const ActionMenu = () => {
   const labels = [
-    'View',
-    'id Number',
-    'Title',
-    'Name',
-    'Preferred Title',
-    'Tag',
-    'Date 1',
-    'Date 2',
-    'Format'
+    'resultView-View',
+    '001-id Number',
+    '245-Title',
+    'name-Name',
+    'preferredTitle-Preferred Title',
+    'tagHighlighted-Tag',
+    'date1-Date 1',
+    'date2-Date 2',
+    'format-Format',
   ];
   return (
     <Fragment>

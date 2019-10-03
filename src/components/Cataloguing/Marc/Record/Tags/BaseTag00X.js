@@ -1,4 +1,4 @@
-//
+// @flow
 import * as React from 'react';
 import { MarcField } from '../..';
 import style from '../../../Style/index.css';

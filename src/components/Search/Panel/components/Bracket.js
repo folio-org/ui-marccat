@@ -1,4 +1,4 @@
-//  strict
+// @flow strict
 import * as React from 'react';
 import { Col } from '@folio/stripes/components';
 
@@ -13,7 +13,7 @@ export default function Bracket({ htmlElement, position, isEnable, onClick }) {
   return (
     <Col xs={1}>
       <Element
-        className={getClass()}
+        className={getClass(position)}
         onClick={onClick}
       />
     </Col>

@@ -1,24 +1,6 @@
 # Change history for ui-marccat
 
-## [1.8.5]
-* Added dynamic tenant;
-* Fix for clean database creation patch when enabling tenant;
-* Add more indexes in a search function;
-* Fix search bugs;
-* Browse fix.
-
-## [1.8.0] (https://github.com/folio-org/ui-marccat/tree/v1.8.0) (2019-15-07)
-* Add actions in Cataloging.
-* Fix variable fields components;
-* Improve data handling with Redux form;
-* Improvement logic and syntax.
-* Update stripes dependecies
-* Add cross references conponent as buttons in browswe function
-* Add AutoSuggest in variable fields
-* Add more indexes in a search function
-* Add new icons for no-auth and no-bibs references
-* Improve UX accordly UX Folio Team Prototype
-* Improved management of epics
+## 1.3.0 (in progress)
 * CRUD Cataloging.
 * Add component for variable fields;
 * Improve data handling with Redux;
@@ -33,7 +15,8 @@
 * Fix search bugs.
 * Browse fix.
 
-## [1.2.0](https://github.com/folio-org/ui-marccat/tree/v1.2.0) (2018-14-12)
+
+## [1.2.0](https://github.com/folio-org/ui-marccat/tree/v1.1.0) (2018-14-12)
 * improvement search functionality, logic and UX side.
 * Start with cataloguing functionality.
 * Add base component for template management

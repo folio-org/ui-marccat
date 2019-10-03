@@ -1,13 +1,18 @@
-//
+// @flow
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Icon, Pane, Button } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 import { ToolbarButtonMenu, CheckMarkIcon
 } from '../../../shared';
+import type { Props } from '../../../flow/types.js.flow';
+
+type P = Props & {
+  label: string;
+};
 
 
-class DefaultTemplate extends React.Component {
+class DefaultTemplate extends React.Component<P, {}> {
   constructor(props) {
     super(props);
     this.handleSelectTemplate = this.handleSelectTemplate.bind(this);

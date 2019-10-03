@@ -1,4 +1,4 @@
-//
+// @flow
 import * as React from 'react';
 import { Layout, Headline, Col, Row, IconButton } from '@folio/stripes/components';
 import { Localize } from '../../../shared/utils/Function';

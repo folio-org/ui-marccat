@@ -1,5 +1,5 @@
-//
+// @flow
 
-export default function thrown(msg) {
+export default function thrown(msg: string) {
   throw new Error(msg);
 }

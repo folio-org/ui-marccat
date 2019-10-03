@@ -1,4 +1,4 @@
-//  strict
+// @flow strict
 import { destroy, clearFields } from 'redux-form';
 import { safeObj } from '../../shared';
 
@@ -7,7 +7,7 @@ import { safeObj } from '../../shared';
  * @param {*} store
  * @returns
  */
-export const getReducer = (store) => {
+export const getReducer = (store: {}) => {
   return store.getState().marccat || {};
 };
 
@@ -17,7 +17,7 @@ export const getReducer = (store) => {
  * @param {String} formName name of the form
  * @returns - values of redux form
  */
-export const selectForm = (store, formName) => {
+export const selectForm = (store: {}, formName: string) => {
   return (store.getState().form) ? store.getState().form[formName] : undefined;
 };
 /**
@@ -26,7 +26,7 @@ export const selectForm = (store, formName) => {
  * @param {String} formName name of the form
  * @returns - values of redux form
  */
-export const valuesOf = (store, formName) => {
+export const valuesOf = (store: {}, formName: string) => {
   return (selectForm(store, formName)) ? selectForm(store, formName).values : undefined;
 };
 
@@ -37,7 +37,7 @@ export const valuesOf = (store, formName) => {
  * @param {Object} field field to retrieve value
  * @returns  values of form field passed as last args
  */
-export const formFieldValue = (store, formName, field) => {
+export const formFieldValue = (store: {}, formName: string, field: {}) => {
   return (valuesOf(store, formName)) ? valuesOf(store, formName)[field] : undefined;
 };
 

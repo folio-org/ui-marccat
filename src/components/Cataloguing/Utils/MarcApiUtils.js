@@ -1,8 +1,10 @@
 /* eslint-disable no-use-before-define */
+// @flow
 import * as React from 'react';
 import { union, sortBy, first, includes } from 'lodash';
 import { change } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
+import { Callout } from '@folio/stripes/components';
 import {
   SUBFIELD_DELIMITER,
   TAG_NOT_REPEATABLE,
@@ -15,7 +17,7 @@ import { EMPTY_STRING } from '../../../config/constants';
  * @param {Object} o the object passed as parameter to sort
  * @returns true if tha tag code passed
  */
-export const sort = (o) => o.sort((a, b) => a.code > b.code);
+export const sort = (o: Array<*>): Array<*> => o.sort((a, b) => a.code > b.code);
 /**
  *
  * @param {string} o - the object to deduplicate
@@ -78,7 +80,7 @@ export const filterFixedFieldForSaveRecord = (obj) => {
  *
  * @param {Object} obj
  */
-export const filterMandatoryFields = (obj) => {
+export const filterMandatoryFields = (obj): string => {
   return dedupe(obj).filter(f => includes(TAG_MANDATORY, f.code));
 };
 
@@ -87,7 +89,7 @@ export const filterMandatoryFields = (obj) => {
  *
  * @param {Object} obj
  */
-export const filterVariableFields = (obj) => {
+export const filterVariableFields = (obj: Array<Object>) => {
   return obj
     .filter(f => (f.fixedField === undefined || !f.fixedField) || f.variableField || f.variableField !== undefined);
 };
@@ -97,7 +99,7 @@ export const filterVariableFields = (obj) => {
  * @param {string} message - a message validation to display
  * @param {string} type - a type of callout
  */
-export const showValidationMessage = (callout, message, type) => {
+export const showValidationMessage = (callout: React.RefObject<Callout>, message: string, type: string) => {
   callout.current.sendCallout({
     type: (type) || 'success',
     message: (
@@ -113,27 +115,27 @@ export const showValidationMessage = (callout, message, type) => {
  * @param {*} s - an input string
  * @returns s - appen SUBFIELD_DELIMITER to @param s
  */
-export const addSeparator = (s) => SUBFIELD_DELIMITER.concat(s);
+export const addSeparator = (s: string): string => SUBFIELD_DELIMITER.concat(s);
 
 /**
  *
  * @param {*} s - an input string
  * @returns s - a string with all SUBFIELD_CHARACTER replaced with SUBFIELD_DELIMITER
  */
-export const replaceAll = (s) => ((s) ? s.replace(RegExp(String.fromCharCode(31), 'g'), '$') : EMPTY_STRING);
+export const replaceAll = (s: string): string => ((s) ? s.replace(RegExp(String.fromCharCode(31), 'g'), '$') : EMPTY_STRING);
 
 /**
  *
  * @param {*} s - an input string
  * @returns s - a string with all SUBFIELD_DELIMITER replaced with SUBFIELD_CHARACTER
  */
-export const replaceAllinverted = (s) => ((s) ? s.replace(/\$/g, SUBFIELD_DELIMITER) : EMPTY_STRING);
+export const replaceAllinverted = (s: string): string => ((s) ? s.replace(/\$/g, SUBFIELD_DELIMITER) : EMPTY_STRING);
 
 /**
  *
  * @param {*} displayValue
  */
-export const changeValue = (field, displayValue, dispatch) => {
+export const changeValue = (field: String, displayValue: String, dispatch: Function): void => {
   dispatch(change(field, displayValue));
 };
 

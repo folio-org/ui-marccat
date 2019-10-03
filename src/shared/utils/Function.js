@@ -2,21 +2,21 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-mixed-operators */
 /* eslint-disable no-bitwise */
-//
+// @flow
 import * as React from 'react';
 import { Button } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 import queryString from 'querystring';
 import { bindActionCreators } from 'redux';
+import { getHeaders } from '../../redux/epic/epic';
 import { META, ENDPOINT, EMPTY_SPACED_STRING, EMPTY_STRING, HTTP_METHOD } from '../../config/constants';
-import getHeaders from '../../redux/epic/epic';
 
 /**
  *
  * @param {*} s
  * @param {*} sep
  */
-export const replaceSeparator = (s, sep) => s.replace(sep, '$');
+export const replaceSeparator = (s: string, sep: string) => s.replace(sep, '$');
 
 /**
  *
@@ -25,6 +25,7 @@ export const replaceSeparator = (s, sep) => s.replace(sep, '$');
  * @param {*} withslash
  */
 export const buildUrl = (state, url, params, withslash = false) => {
+  // return ENDPOINT.DEV_VM_OKAPI_URL
   return ENDPOINT.OKAPI_URL(state)
     .concat((withslash) ? url.concat('/') : url)
     .concat('?')
@@ -54,7 +55,7 @@ export const firstCharUppercase = s => s.charAt(0).toUpperCase() + s.slice(1);
  * @param {text} string Text to camelize
  * @param {*} string Decamelized text
  */
-export const decamelizify = (str, separator) => {
+export const decamelizify = (str: string, separator: string) => {
   // eslint-disable-next-line no-param-reassign
   separator = typeof separator === 'undefined' ? EMPTY_SPACED_STRING : separator;
 
@@ -109,7 +110,7 @@ export function safeObj(obj, prop) {
  * @param {Function} fn
  * @param {Function} prop
  */
-export function safeFn(fn) {
+export function safeFn(fn: () => void): () => void {
   return (fn) ? fn() : () => {};
 }
 
@@ -128,7 +129,7 @@ export function safeArray(obj, res, ...prop) {
  * @param  {Array<String> | String} label an array or a string of localized label
  * @return {React.JSX.Element} a localized message with value if passed
  */
-export function Localize(label, withContainier, _wrapElement) {
+export function Localize(label: Array<any> | String, withContainier?: boolean, _wrapElement?: React<HTMLElement>): React.JSX.Element {
   if (label.length) {
     return (!withContainier) ?
       label.map(l => <FormattedMessage id={META.MODULE_NAME.concat('.').concat(l.key)} values={{ value: l.value }} />) :
@@ -143,10 +144,21 @@ export function Localize(label, withContainier, _wrapElement) {
  * @param {*} data - the body of request
  * @param {*} store - the data store
  */
-export function post(url, data, store) {
+export function post(url: string, data: any, store: any) {
   const tenant = getHeaders(store.getState());
   return fetch(url, {
     method: HTTP_METHOD.POST,
+    headers: Object.assign({}, {
+      tenant
+    }),
+    body: JSON.stringify(data),
+  });
+}
+
+export function del(url: string, data: any, store: any) {
+  const tenant = getHeaders(store.getState());
+  return fetch(url, {
+    method: HTTP_METHOD.DELETE,
     headers: Object.assign({}, {
       tenant
     }),

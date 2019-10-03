@@ -50,7 +50,7 @@
     "search.initial.message": "Insira os critérios de pesquisa para iniciar a pesquisa",
     "error.noresults.message": "A pesquisa não retornou resultados",
     "template.actionmenu.load": "Carregar modelo ...",
-    "template.actionmenu.load.shortcut": "CTRL+L",
+    "template.actionmenu.load.shortcut": "CTRL + L",
     "template.actionmenu.organization": "Em toda a organização",
     "template.actionmenu.mypersonal": "Meu pessoal uma vez",
     "template.actionmenu.save": "Salvar modelo",
@@ -71,7 +71,7 @@
     "settings.default.record.template.bib.text": "Registros Bibliográficos. Modelos gerais:",
     "search.record.new": "Novo",
     "search.record.new.from.template": "Novo a partir do modelo (CTRL+N)",
-    "cataloging.variablefield.section.add.newtag": "Adicionar nova tag",
+    "cataloging.variablefield.section.add.newtag": "+ Adicionar nova tag",
     "cataloging.accordion.fixedfield.label": "Campos de controle (001, 003, 005)",
     "cataloging.accordion.variablefield.label": "Campos variáveis",
     "cataloging.accordion.checkbox.label": "Ocultar",
@@ -121,7 +121,7 @@
     "cataloging.actions.view.marc.docs": "Visualizar documentação do MARC",
     "cataloging.actions.view.marc.docs.shortcut": "?",
     "cataloging.record.duplicate": "Registro duplicado",
-    "cataloging.fixedfield.section.add.newtag": "Adicionar {value}",
+    "cataloging.fixedfield.section.add.newtag": "+ Adicionar {value}",
     "search.actionmenu.duplicate.ebook": "Duplicar como e-book",
     "cataloging.accordion.fixedfield.editable.label": "Campos de controle (006, 007, 008)"
 }

@@ -1,13 +1,20 @@
-//
+// @flow
 import * as React from 'react';
 import { Field } from 'redux-form';
 import classNames from 'classnames';
 import { IconButton } from '@folio/stripes/components';
 import { sharedInputStylesHelper } from '../../../../../shared';
+import type { Props } from '../../../../../flow/types.js.flow';
 import style from '../../../Style/index.css';
 
+type P = {
+  label?: string,
+  value?: string,
+  onClick?: () => void,
+  onClickPlusSign: () => void,
+} & Props
 
-export default class MarcField extends React.Component {
+export default class MarcField extends React.Component<P, {}> {
 
   componentDidMount() {
     const {

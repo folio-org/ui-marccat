@@ -1,4 +1,4 @@
-//
+// @flow
 import * as React from 'react';
 import { Paneset, Pane } from '@folio/stripes/components';
 import PanelHistory from '../History/PanelHistory';

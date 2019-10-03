@@ -255,34 +255,6 @@ export function scanBrowsingReducer(state = { isLoading, isReady }, action) {
   }
 }
 
-export function scanMoreBrowsingReducer(state = { isLoading, isReady }, action) {
-  switch (action.type) {
-  case ACTION.BROWSE_NEXT_PAGE:
-    return {
-      ...state,
-      isLoading: false,
-      isReady: false
-    };
-  case ACTION.FETCH_BROWSE_NEXT_PAGE:
-    return {
-      ...state,
-      isLoading: action.payload,
-      isReady: false
-    };
-  case ACTION.BROWSE_NEXT_PAGE_SUCCESS:
-    return {
-      ...state,
-      records: action.payload,
-      query: action.qBib,
-      oldResults: action.oldRecords,
-      isLoading: false,
-      isReady: true,
-    };
-  default:
-    return state;
-  }
-}
-
 export function recordDeatilReducer(state = { isLoading, isReady }, action) {
   switch (action.type) {
   case ACTION.RECORD_DETAIL:

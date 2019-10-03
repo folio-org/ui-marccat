@@ -26,12 +26,13 @@ export const RESOURCE_TYPE = {
 };
 export const ENDPOINT = {
   HEADERS: {
-    'X-Okapi-Tenant': 'diku',
     'Accept': 'application/json',
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'x-okapi-tenant': 'diku',
   },
   DEFAULT_LANG_VIEW: 'lang=ita&view=1',
-  OKAPI_URL:  state => `${state.okapi.url}/marccat`,
+  // DEV_VM_OKAPI_URL: 'http://okapi.atcult.it:9130/marccat',
+  OKAPI_URL: state => `${state.okapi.url}/marccat`,
   MERGED_SEARCH_URL: '/mergedSearch',
   SEARCH_URL: '/searchVertical',
   SEARCH_URL_JSON: '/search',

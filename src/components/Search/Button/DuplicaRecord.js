@@ -1,14 +1,17 @@
-//
+// @flow
 import * as React from 'react';
 import { Button, Modal, ModalFooter, TextField } from '@folio/stripes/components';
 import { Field, reduxForm } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import type { Props } from '../../../flow/types.js.flow';
 import { Localize } from '../../../shared/utils/Function';
 import { duplicaRecordAction } from '../Actions';
 
-class DuplicaRecord extends React.Component {
-  constructor(props) {
+class DuplicaRecord extends React.Component<Props, {
+  confirming: Boolean;
+}> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       confirming: false,

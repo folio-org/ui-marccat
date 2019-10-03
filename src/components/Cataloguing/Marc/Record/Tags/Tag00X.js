@@ -1,12 +1,14 @@
 /* eslint-disable no-param-reassign */
-//
+// @flow
 import React from 'react';
 import { Field } from 'redux-form';
 import { Select, Row, Col } from '@folio/stripes-components';
 import { connect } from 'react-redux';
 import { isEmpty, last } from 'lodash';
+import { PreviousMap } from 'postcss';
 import { EMPTY_SPACED_STRING, REDUX } from '../../../../../config/constants';
 import { decamelizify } from '../../../../../shared';
+import type { Props, State } from '../../../../../flow/types.js.flow';
 
 import style from '../../../Style/index.css';
 import { dropDownValuesAction, changeDisplayValueAction } from '../../../Actions';
@@ -16,10 +18,13 @@ import Tag00XInput from '../components/Tag00XInput';
 import HeaderTypeSelect from '../components/HeaderTypeSelect';
 import { formFieldValue } from '../../../../../redux/helpers/Selector';
 
+type S = {
+  expand: Boolean,
+} & State
 
-class Tag00X extends React.PureComponent {
+class Tag00X extends React.PureComponent<Props, S> {
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
     this.state = {
       expand: false,
@@ -28,6 +33,7 @@ class Tag00X extends React.PureComponent {
     this.RenderSelect = this.RenderSelect.bind(this);
     this.RenderDropwDown = this.RenderDropwDown.bind(this);
     this.handleDisplayValue = this.handleDisplayValue.bind(this);
+    this.onHandleChange = this.onHandleChange.bind(this);
   }
 
   onHandleChange = evt => {
@@ -60,7 +66,7 @@ class Tag00X extends React.PureComponent {
     dispatch(changeDisplayValueAction(payload, cb));
   };
 
-  execChange = (response) => {
+  execChange = (response: Object): void => {
     const { dispatch, change, fixedfields, element } = this.props;
     dispatch(change(element.code, response.displayValue));
     if (element.code === TAGS._008) element.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
@@ -87,18 +93,30 @@ class Tag00X extends React.PureComponent {
     payload.sequenceNumber = 0;
   };
 
-  RenderSelect = ({ element, ...props }) => (
-    <Field
-      id={`Tag${element.code}`}
-      name={`Tag${element.code}`}
-      label={`${element.code}`}
-      dataOptions={props.headertypes}
-      component={Select}
-      onChange={this.onHandleChange}
-      placeholder={'Select Heading types for '.concat(element.code)}
-      value={props.typeCode}
-    />
-  );
+  RenderSelect = ({ element, ...props }) => {
+    const { dispatch, change, typeCode } = this.props;
+    let selectValue = '';
+    return (
+      <Field
+        id={'Tag'.concat(element.code)}
+        name={'Tag'.concat(element.code)}
+        label={'Tag'.concat(element.code)}
+        dataOptions={props.headertypes}
+        component={Select}
+        readOnly={element.code === TAGS._008}
+        onChange={this.onHandleChange}
+        placeholder={'Select Heading types for '.concat(element.code)}
+
+        values={element.code === TAGS._008 && props.headerTypeCodeFromLeader ? props.headertypes.map(k => {
+          if (k.value === props.headerTypeCodeFromLeader) {
+            selectValue = k.value;
+          }
+          dispatch(change('Tag008', selectValue));
+          this.onHandleChange();
+          return selectValue;
+        }) : typeCode}
+      />);
+  };
 
   RenderDropwDown = (data) => {
     const { headerTypeCode } = this.state;
@@ -146,13 +164,15 @@ class Tag00X extends React.PureComponent {
           <Col xs={4} key={idx}>
             <HeaderTypeSelect
               {...this.props}
-              name={`Tag${code}-${headerTypeCode}-${field.name}`}
+              name={'Tag'.concat(code).concat('-').concat(headerTypeCode).concat('-')
+                .concat(field.name)}
               label={decamelizify(field.name, EMPTY_SPACED_STRING)}
               onChange={(e) => this.handleDisplayValue(e, data)}
               dataOptions={field.dropdownSelect}
             />
           </Col>
-        ))}
+        ))
+        }
       </Row>
     );
   };
@@ -166,8 +186,8 @@ class Tag00X extends React.PureComponent {
         <MarcField
           {...this.props}
           prependIcon
-          label={`${element.fixedField.code}`}
-          name={`${element.fixedField.code}`}
+          label={element.fixedField.code}
+          name={element.fixedField.code}
           value={element.fixedField.displayValue}
           onClick={() => {
             this.setState({ expand: !expand });
@@ -178,13 +198,13 @@ class Tag00X extends React.PureComponent {
             {headingTypes &&
               <Field
                 {...this.props}
-                label={`Tag${element.fixedField.code}`}
-                name={`Tag${element.fixedField.code}`}
+                label={'Tag'.concat(element.fixedField.code)}
+                name={'Tag'.concat(element.fixedField.code)}
                 component={this.RenderSelect}
                 typeCode={(element.fixedField.code === TAGS._008 && headerTypeCodeFromLeader) ? headerTypeCodeFromLeader : headerTypeCode}
                 headertypes={headingTypes.results.headingTypes}
               />}
-            {!isEmpty(values) && this.RenderDropwDown(values.results, element.fixedField.code)}
+            {!isEmpty(values.results) && this.RenderDropwDown(values.results, element.fixedField.code)}
           </Col>
         </div>
       </div>

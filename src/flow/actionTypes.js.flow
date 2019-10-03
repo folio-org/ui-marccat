@@ -1,0 +1,44 @@
+// @flow
+export type Action = {
+  type: string,
+  data: any,
+  payload?: any,
+  cb?: any
+}
+
+export type Reducer<S, A = Action> = {
+  state: Object,
+  action: A,
+} & Reducer<S, A>
+
+export type HeaderTypeAction = {} & Action
+export type AutoSuggestionAction = {} & Action
+export type LeaderAction = {} & Action
+export type FixedFieldByLeaderAction = {} & Action
+export type CreateHeadingAction = {} & Action
+export type ChangeDisplayValueAction = {} & Action
+export type SaveRecordAction = {} & Action
+export type EmptyRecordAction = {} & Action
+export type CreateRecordAction = {} & Action
+export type DeleteRecordAction = {} & Action
+export type DropDownValuesAction = {} & Action
+export type SettingsAction = {} & Action
+export type TagValuesAction = {} & Action
+export type TypeCodeAction = {} & Action
+
+export type Actions = {
+  headerType: HeaderTypeAction,
+  autoSuggestionAction: AutoSuggestionAction,
+  leaderAction: LeaderAction,
+  fixedFieldByLeaderAction: FixedFieldByLeaderAction,
+  createHeadingAction: CreateHeadingAction,
+  changeDisplayValueAction: ChangeDisplayValueAction,
+  saveRecordAction: SaveRecordAction,
+  emptyRecordAction: EmptyRecordAction,
+  createRecordAction: CreateRecordAction,
+  deleteRecordAction: DeleteRecordAction,
+  dropDownValuesAction: DropDownValuesAction,
+  settingsAction: SettingsAction,
+  tagValuesAction: TagValuesAction,
+  typeCodeAction: TypeCodeAction,
+}

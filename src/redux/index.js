@@ -15,7 +15,6 @@ import {
   panelsReducer,
   totalBibCountDocReducer,
   totalAuthCountDocReducer,
-  scanMoreBrowsingReducer
 } from './reducers/Reducer';
 import {
   searchEpic,
@@ -24,7 +23,6 @@ import {
   searchAssociatedBibRecords,
   associatedBibDetailEpic,
   scanBrowsingRecords,
-  scanMoreBrowsingRecords,
   browseDetailEpic,
   browseAuthorityDetailEpic,
   browseDetailAssociatedEpic,
@@ -46,7 +44,6 @@ export const reducer = combineReducers({
   associatedRecords: getAssociatedBibRecord,
   associatedBibDetails: detailsAssociatedReducer,
   browse: scanBrowsingReducer,
-  moreResultsBrowse: scanMoreBrowsingReducer,
   browseDetails: detailsBrowseSearchReducer,
   browseDetailsAssociated: browseDetailsAssociatedReducer,
   recordDetail: recordDeatilReducer,
@@ -65,7 +62,6 @@ export const epics = combineEpics(
   searchAssociatedBibRecords,
   associatedBibDetailEpic,
   scanBrowsingRecords,
-  scanMoreBrowsingRecords,
   browseDetailEpic,
   browseAuthorityDetailEpic,
   browseDetailAssociatedEpic,

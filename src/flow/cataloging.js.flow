@@ -1,0 +1,18 @@
+// @flow
+
+export interface Record { }
+export type Type = "A" | "B";
+export type RecordTemplate<T = Type> = {
+  name: string,
+  type: T,
+  fields: Array<any>,
+}
+
+export type HeadingType = {
+  defaultValue: string,
+  dropdownSelect: Array<{
+    label:string,
+    value: string,
+  }>,
+  name: string,
+}

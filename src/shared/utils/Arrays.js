@@ -3,16 +3,18 @@
 
 import { isObject } from 'lodash';
 
-//
+// @flow
 
 const INVALID_ARGS = 'INVALID_ARGS';
 
+type ArrayOrObject = Array<any> | Object;
+type Key = number | string;
 
-export function throwStr(msg) {
+export function throwStr(msg: string) {
   throw new Error(msg);
 }
 
-export function getKeysAndSymbols(obj) {
+export function getKeysAndSymbols(obj: Object): Array<any> {
   const keys = Object.keys(obj);
   if (Object.getOwnPropertySymbols) {
     return keys.concat(Object.getOwnPropertySymbols(obj));
@@ -22,10 +24,10 @@ export function getKeysAndSymbols(obj) {
 
 const hasOwnProperty = {}.hasOwnProperty;
 
-export function clone(obj) {
+export function clone<T: ArrayOrObject>(obj: T): T {
   if (Array.isArray(obj)) return obj.slice();
   const keys = getKeysAndSymbols(obj);
-  const out = {};
+  const out: any = {};
   for (let i = 0; i < keys.length; i++) {
     const key = keys[i];
     out[key] = obj[key];
@@ -34,11 +36,11 @@ export function clone(obj) {
 }
 
 function doMerge(
-  fAddDefaults,
-  fDeep,
-  first,
-  ...rest
-) {
+  fAddDefaults: boolean,
+  fDeep: boolean,
+  first: ArrayOrObject,
+  ...rest: any
+): any {
   let out = first;
   !(out != null) &&
     throwStr(
@@ -54,12 +56,12 @@ function doMerge(
     if (!keys.length) continue;
     for (let j = 0; j <= keys.length; j++) {
       const key = keys[j];
-      if (out !== undefined && out != null && fAddDefaults && out[key] !== undefined) continue;
+      if (fAddDefaults && out[key] !== undefined) continue;
       let nextVal = obj[key];
-      if (out !== undefined && out != null && fDeep && isObject(out[key]) && isObject(nextVal)) {
+      if (fDeep && isObject(out[key]) && isObject(nextVal)) {
         nextVal = doMerge(fAddDefaults, fDeep, out[key], nextVal);
       }
-      if (nextVal === undefined || (out !== undefined && out != null && (nextVal === out[key]))) continue;
+      if (nextVal === undefined || nextVal === out[key]) continue;
       if (!fChanged) {
         fChanged = true;
         out = clone(out);
@@ -76,7 +78,7 @@ function doMerge(
  * @param {*} val
  * @returns a new array with an appended item or items.
  */
-export function addLast(array, val) {
+export function addLast<T>(array: Array<T>, val: Array<T> | T): Array<T> {
   if (Array.isArray(val)) return array.concat(val);
   return array.concat([val]);
 }
@@ -87,7 +89,7 @@ export function addLast(array, val) {
  * @param {*} val
  * @returns a new array with a prepended item or items
  */
-export function addFirst(array, val) {
+export function addFirst<T>(array: Array<T>, val: Array<T> | T): Array<T> {
   if (Array.isArray(val)) return val.concat(array);
   return [val].concat(array);
 }
@@ -97,7 +99,7 @@ export function addFirst(array, val) {
  * @param {Array<T>} array
  * @returns a new array removing the last item.
  */
-export function removeLast(array) {
+export function removeLast<T>(array: Array<T>): Array<T> {
   if (!array.length) return array;
   return array.slice(0, array.length - 1);
 }
@@ -107,7 +109,7 @@ export function removeLast(array) {
  * @param {Array<T>} array
  * @returns a new array removing the first item.
  */
-export function removeFirst(array) {
+export function removeFirst<T>(array: Array<T>): Array<T> {
   if (!array.length) return array;
   return array.slice(1);
 }
@@ -119,11 +121,11 @@ export function removeFirst(array) {
  * @param {Array<T> | T} val
  * @returns a new array removing the first item.
  */
-export function insert(
-  array,
-  idx,
-  val
-) {
+export function insert<T>(
+  array: Array<T>,
+  idx: number,
+  val: Array<T> | T
+): Array<T> {
   return array
     .slice(0, idx)
     .concat(Array.isArray(val) ? val : [val])
@@ -149,7 +151,7 @@ export function insert(
  * // true
 *
 */
-export function removeAt(array, idx) {
+export function removeAt<T>(array: Array<T>, idx: number): Array<T> {
   if (idx >= array.length || idx < 0) return array;
   return array.slice(0, idx).concat(array.slice(idx + 1));
 }
@@ -173,11 +175,11 @@ export function removeAt(array, idx) {
 // * replaceAt(arr, 1, 'b') === arr
 // * // true
 // * ```
-export function replaceAt(
-  array,
-  idx,
-  newItem
-) {
+export function replaceAt<T>(
+  array: Array<T>,
+  idx: number,
+  newItem: T
+): Array<T> {
   if (array[idx] === newItem) return array;
   const len = array.length;
   const result = Array(len);
@@ -211,7 +213,7 @@ export function replaceAt(
 // * getIn(obj, ['e', 1])
 // * // 'b'
 // * ```
-export function getIn(obj, path) {
+export function getIn(obj: ?ArrayOrObject, path: Array<Key>): any {
   !Array.isArray(path) &&
     throwStr(
       process.env.NODE_ENV !== 'production'
@@ -219,7 +221,7 @@ export function getIn(obj, path) {
         : INVALID_ARGS
     );
   if (obj == null) return undefined;
-  let ptr = obj;
+  let ptr: any = obj;
   for (let i = 0; i < path.length; i++) {
     const key = path[i];
     ptr = ptr != null ? ptr[key] : undefined;
@@ -246,9 +248,9 @@ export function getIn(obj, path) {
 // * set(obj, 'b', 2) === obj
 // * // true
 // * ```
-export function set(obj, key, val) {
+export function set<T>(obj: ?T, key: Key, val: any): T {
   const fallback = typeof key === 'number' ? [] : {};
-  const finalObj = obj == null ? fallback : obj;
+  const finalObj: any = obj == null ? fallback : obj;
   if (finalObj[key] === val) return finalObj;
   const obj2 = clone(finalObj);
   obj2[key] = val;
@@ -292,14 +294,14 @@ export function set(obj, key, val) {
 // * setIn({ a: 3 }, ['unknown', 0, 'path'], 4)
 // * // { a: 3, unknown: [{ path: 4 }] }
 // * ```
-function doSetIn(
-  obj,
-  path,
-  val,
-  idx
-) {
+function doSetIn<T: ArrayOrObject>(
+  obj: T,
+  path: Array<Key>,
+  val: any,
+  idx: number
+): T {
   let newValue;
-  const key = path[idx];
+  const key: any = path[idx];
   if (idx === path.length - 1) {
     newValue = val;
   } else {
@@ -312,7 +314,7 @@ function doSetIn(
   return set(obj, key, newValue);
 }
 
-export function setIn(obj, path, val) {
+export function setIn<T: ArrayOrObject>(obj: T, path: Array<Key>, val: any): T {
   if (!path.length) return val;
   return doSetIn(obj, path, val, 0);
 }
@@ -337,12 +339,12 @@ export function setIn(obj, path, val) {
 // * update(obj, 'b', (val) => val) === obj
 // * // true
 // * ```
-export function update(
-  obj,
-  key,
-  fnUpdate
-) {
-  const prevVal = obj == null ? undefined : (obj)[key];
+export function update<T: ArrayOrObject>(
+  obj: T,
+  key: Key,
+  fnUpdate: (prevValue: any) => any
+): T {
+  const prevVal = obj == null ? undefined : (obj: any)[key];
   const nextVal = fnUpdate(prevVal);
   return set(obj, key, nextVal);
 }
@@ -369,11 +371,11 @@ export function update(
 // * obj3 === obj
 // * // true
 // * ```
-export function updateIn(
-  obj,
-  path,
-  fnUpdate
-) {
+export function updateIn<T: ArrayOrObject>(
+  obj: T,
+  path: Array<Key>,
+  fnUpdate: (prevValue: any) => any
+): T {
   const prevVal = getIn(obj, path);
   const nextVal = fnUpdate(prevVal);
   return setIn(obj, path, nextVal);
@@ -414,14 +416,14 @@ export function updateIn(
 // * // true
 // * ```
 export function merge(
-  a,
-  b,
-  c,
-  d,
-  e,
-  f,
-  ...rest
-) {
+  a: Object,
+  b: ?Object,
+  c: ?Object,
+  d: ?Object,
+  e: ?Object,
+  f: ?Object,
+  ...rest: Array<?Object>
+): Object {
   return rest.length
     ? doMerge.call(null, false, false, a, b, c, d, e, f, ...rest)
     : doMerge(false, false, a, b, c, d, e, f);
@@ -464,14 +466,14 @@ export function merge(
 // * // true
 // * ```
 export function mergeDeep(
-  a,
-  b,
-  c,
-  d,
-  e,
-  f,
-  ...rest
-) {
+  a: Object,
+  b: ?Object,
+  c: ?Object,
+  d: ?Object,
+  e: ?Object,
+  f: ?Object,
+  ...rest: Array<?Object>
+): Object {
   return rest.length
     ? doMerge.call(null, false, true, a, b, c, d, e, f, ...rest)
     : doMerge(false, true, a, b, c, d, e, f);
@@ -499,16 +501,16 @@ export function mergeDeep(
 // * mergeIn(obj1, ['d', 'b'], { d2: 4 }) === obj1
 // * // true
 // * ```
-export function mergeIn(
-  a,
-  path,
-  b,
-  c,
-  d,
-  e,
-  f,
-  ...rest
-) {
+export function mergeIn<T: ArrayOrObject>(
+  a: T,
+  path: Array<Key>,
+  b: ?Object,
+  c: ?Object,
+  d: ?Object,
+  e: ?Object,
+  f: ?Object,
+  ...rest: Array<?Object>
+): T {
   let prevVal = getIn(a, path);
   if (prevVal == null) prevVal = {};
   let nextVal;
@@ -527,7 +529,7 @@ export function mergeIn(
  * @param {*} attrs
  * @returns Returns an object excluding one or several attributes
  */
-export function omit(obj, attrs) {
+export function omit(obj: Object, attrs: Array<string> | string): Object {
   const omitList = Array.isArray(attrs) ? attrs : [attrs];
   let fDoSomething = false;
   for (let i = 0; i < omitList.length; i++) {

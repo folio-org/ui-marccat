@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-//
+// @flow
 import * as React from 'react';
 import { MenuItem } from '@folio/stripes/components';
 import { Localize } from '../../../../shared/utils/Function';

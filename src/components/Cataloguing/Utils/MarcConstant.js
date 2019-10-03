@@ -1,4 +1,4 @@
-//
+// @flow
 import { union } from 'lodash';
 import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../config/constants';
 
@@ -89,7 +89,7 @@ export const LOCK_ENTITY_TYPE = {
 export const SUBFIELD_DELIMITER = '\u001f';
 export const SUBFIELD_CHARACTER = '$';
 
-export const EMPTY_FIXED_FIELD = (code) => {
+export const EMPTY_FIXED_FIELD = (code: String): Object => {
   return {
     code,
     mandatory: false,

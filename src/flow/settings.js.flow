@@ -1,0 +1,10 @@
+// @flow
+
+export type HeadingType = {
+  defaultValue: string,
+  dropdownSelect: Array<{
+    label:string,
+    value: string,
+  }>,
+  name: string,
+}

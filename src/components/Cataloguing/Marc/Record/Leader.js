@@ -1,18 +1,33 @@
-//
+// @flow
 import * as React from 'react';
 import { isEmpty, last } from 'lodash';
 import { connect } from 'react-redux';
 import { Row, Col } from '@folio/stripes/components';
+import type { Props } from '../../../../flow/types.js.flow';
 import MarcField from '../Form/Components/Field';
 import { EMPTY_SPACED_STRING, SEPARATOR } from '../../../../config/constants';
 import { decamelizify } from '../../../../shared/utils/Function';
 import style from '../../Style/index.css';
 import { change008ByLeaderAction } from '../../Actions';
 import HeaderTypeSelect from './components/HeaderTypeSelect';
+import { ACTION } from '../../../../redux/actions/Actions';
 
+type P = {
+  readOnly: boolean,
+  leaderData: Object,
+  leaderCode: string,
+  leaderValue: string,
+} & Props;
 
-class Leader extends React.PureComponent {
-  constructor(props) {
+type S = {
+  leaderDataDispatched: boolean,
+  leaderCss: boolean,
+  leaderVal: string,
+  leaderChangedFor008: boolean
+};
+
+class Leader extends React.PureComponent<P, S> {
+  constructor(props: P) {
     super(props);
     this.state = {
       leaderCss: false,
@@ -38,7 +53,7 @@ class Leader extends React.PureComponent {
   }
 
 
-  handleChange = (e) => {
+  handleChange = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     const { leaderVal } = this.state;
     const selectedValue = e.target.value;
     const selectedName = last((e.target.id).split(SEPARATOR));
@@ -66,7 +81,7 @@ class Leader extends React.PureComponent {
   render() {
     const { leaderCss, firsAccess } = this.state;
     const { leaderValue, dispatch, change, leaderData } = this.props;
-    if (firsAccess && !isEmpty(leaderData)) Object.values(leaderData.results).map(k => dispatch(change(`Leader-${k.name}`, k.defaultValue)));
+    if (firsAccess && !isEmpty(leaderData)) Object.values(leaderData.results).map(k => dispatch(change('Leader-'.concat(k.name), k.defaultValue)));
 
     return (
       <div className={style.fieldContainer} no-padding>
@@ -87,8 +102,8 @@ class Leader extends React.PureComponent {
                 <Col xs={4} key={idx}>
                   <HeaderTypeSelect
                     {...this.props}
-                    name={`Leader-${item.name}`}
-                    label={decamelizify(`${item.name}`, EMPTY_SPACED_STRING)}
+                    name={'Leader-'.concat(item.name)}
+                    label={decamelizify(item.name, EMPTY_SPACED_STRING)}
                     dataOptions={item.dropdownSelect}
                     onChange={this.handleChange}
                   />

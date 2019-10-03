@@ -1,4 +1,4 @@
-//
+// @flow
 import * as React from 'react';
 import { Settings } from '@folio/stripes/smart-components';
 import { connect } from 'react-redux';
@@ -7,9 +7,10 @@ import FieldGroupings from './FieldGroupings';
 import DefaultTemplate from './DefaultTemplate';
 import RecordsOverlayRules from './RecordOverlayRules';
 import LocalAuthorityRecords from './LocalAuthorityRecords';
+import type { Props } from '../../../flow/types.js.flow';
 import { loadTemplateAction } from '../../Search/Actions';
 
-class MARCcatSettings extends React.Component {
+class MARCcatSettings extends React.Component<Props, {}> {
   constructor(props) {
     super(props);
     const { localized } = this.props;

@@ -1,10 +1,11 @@
 /* eslint-disable dot-notation */
-//
+// @flow
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Paneset, HotKeys, PaneMenu } from '@folio/stripes/components';
 import { ACTION } from '../../../redux/actions';
+import type { Props } from '../../../flow/types.js.flow';
 import { NoResultsMessage, injectProps, remapForAssociatedBibList } from '../../../shared';
 import { isAuthorityRecord, transitionToParams } from '../Utils/SearchUtils';
 import {
@@ -17,8 +18,19 @@ import { emptyRecordAction } from '../../Cataloguing/Actions';
 import { searchDetailAction } from '../Actions';
 import * as C from '../../../config/constants';
 
-export class SearchResults extends React.Component {
-  constructor(props) {
+type P = Props & {
+  headings: Array<any>,
+  inputValue: string,
+  getPreviousPage: () => void,
+  getNextPage: () => void,
+  detail: Object,
+  dataLoaded: boolean,
+  loading: boolean,
+  isPanelOpen: boolean,
+}
+
+export class SearchResults extends React.Component<P, {}> {
+  constructor(props: P) {
     super(props);
     this.state = {
       detailPanelIsVisible: false,
@@ -198,9 +210,21 @@ export class SearchResults extends React.Component {
       isReadyAssociatedRecord,
       closePanels,
       totalAuth,
-      totalBib
+      totalBib,
+      store
     } = this.props;
     let { bibliographicResults, authorityResults } = this.props;
+    const customColumn = [];
+    if (store.getState().form.checkboxForm && store.getState().form.checkboxForm.values) {
+      const columns = store.getState().form.checkboxForm.values;
+      Object.keys(columns).map((e) => {
+        if (e !== 'checkboxForm' && columns[e] === true) {
+          customColumn.push(e.split('-')[0]);
+        }
+        return customColumn;
+      });
+    }
+
     if (activeFilter) {
       const filterArray = [];
       Object.keys(activeFilter).forEach((key) => filterArray.push(key + ':' + activeFilter[key]));
@@ -249,12 +273,6 @@ export class SearchResults extends React.Component {
     }
 
     const containerMarcJSONRecords = (mergedRecord && mergedRecord.length > 0) ? remapForAssociatedBibList(mergedRecord) : [];
-    if (authorityResults === undefined || authorityResults == null) {
-      authorityResults = [];
-    }
-    if (bibliographicResults === undefined || bibliographicResults == null) {
-      bibliographicResults = [];
-    }
     const messageAuth = (totalAuthCount !== undefined && totalAuth > 0) ? authorityResults.length + ' of ' + totalAuth + ' Authority records ' : ' No Authority records found ';
     const messageBib = (totalBibCount !== undefined && totalBib > 0) ? bibliographicResults.length + ' of ' + totalBib + ' Bibliographic records ' : ' No Bibliographic records found ';
     let message = C.EMPTY_STRING;
@@ -274,6 +292,7 @@ export class SearchResults extends React.Component {
       <HotKeys keyMap={this.keys} handlers={this.handlers} style={{ width: 100 + '%' }}>
         <Paneset static>
           <SearchResultPane
+            customColumn={customColumn}
             containerMarcJSONRecords={containerMarcJSONRecords}
             isFetching={isFetching}
             queryMoreAuth={queryMoreAuth}

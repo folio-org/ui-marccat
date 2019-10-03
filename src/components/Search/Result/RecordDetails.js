@@ -1,18 +1,24 @@
+// @flow
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { AccordionSet, Col, Row, FilterAccordionHeader, Accordion } from '@folio/stripes/components';
 import InventoryPluggableButton from '../Button/Inventory';
+import type { Props } from '../../../flow/types.js.flow';
 import AssociatedBib from './AssociatedBib';
 import { ACTION } from '../../../redux/actions';
 
 import { mapFields } from '../Utils/SearchUtils';
+import { FixedFields } from '../../Cataloguing/Models/model';
 import { SUBFIELD_CHARACTER } from '../../Cataloguing/Utils/MarcConstant';
 
 import style from '../Style/index.css';
 
+type P = Props & {
+  items: Array<any>,
+}
 
-class RecordDetails extends React.Component {
-  constructor(props) {
+class RecordDetails extends React.Component<P, {}> {
+  constructor(props: P) {
     super(props);
     const id = props.detailPaneMeta.meta['001'];
     let mergedResults;
@@ -43,7 +49,7 @@ class RecordDetails extends React.Component {
           header={FilterAccordionHeader}
           label={checkDetailsInRow !== checkDetailsBibRec ? translate({ id: 'ui-marccat.search.details.bibliographic' }) : translate({ id: 'ui-marccat.search.details.authority' })}
         >
-          {tags && tags.filter(t => parseInt(t.key, 10) < 10).map((t) => (
+          {tags && tags.filter(t => parseInt(t.key, 10) < 10).map((t: FixedFields<String, String, String, Array>) => (
             <React.Fragment>
               <Row className={style['record-detail-row']}>
                 <Col xs={3} className={style.key}>{t.key}</Col>
@@ -51,7 +57,7 @@ class RecordDetails extends React.Component {
               </Row>
             </React.Fragment>
           ))}
-          {tags && tags.filter(t => t.code).map((t) => (
+          {tags && tags.filter(t => t.code).map((t: FixedFields<String, String, String, Array>) => (
             <React.Fragment>
               <Row className={style['record-detail-row']}>
                 <Col xs={1} className={style.key}>{t.code}</Col>

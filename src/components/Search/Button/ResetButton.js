@@ -1,4 +1,4 @@
-//
+// @flow
 import * as React from 'react';
 import ClearFormValue from '../Filter/ResetButton';
 import { ACTION } from '../../../redux';

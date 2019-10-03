@@ -1,4 +1,4 @@
-//
+// @flow
 import * as React from 'react';
 import { Field } from 'redux-form';
 import { TextField } from '@folio/stripes/components';
@@ -6,6 +6,18 @@ import style from '../../../Style/variableform.css';
 import AutoSuggestion from '../../Suggestion/AutoSuggestion';
 import AutoSuggestHeadings from '../../Suggestion/AutoSuggestHeadings';
 
+type Props = {
+  autoFocus: boolean,
+  cells: Array<Object>,
+  columnMapping: Array<Object>,
+  error: string | boolean,
+  field: PropTypes.string,
+  fieldComponents: Array<Object>,
+  readOnlyFields: Array<string>,
+  rowIndex: number,
+  visibleFields: Array<string>,
+  widths: Array<Object>,
+}
 
 export default function ItemEdit({
   rowIndex,
@@ -19,7 +31,7 @@ export default function ItemEdit({
   cells,
   autoFocus,
   ...props
-}) {
+}: Props) {
 
   const fields = visibleFields.map((name, fieldIndex) => {
     if (readOnlyFields.indexOf(name) === -1) {
@@ -49,9 +61,7 @@ export default function ItemEdit({
         <div key={fieldKey} style={fieldStyle}>
           <Field
             component={
-              (mappedName === 'code' || mappedName === 'ind1' || mappedName === 'ind2') ? AutoSuggestion
-                : (mappedName === 'displayValue') ? AutoSuggestHeadings
-                  : TextField
+              (mappedName === 'code' || mappedName === 'ind1' || mappedName === 'ind2') ? AutoSuggestion : TextField
             }
             {...props}
             {...fieldProps}

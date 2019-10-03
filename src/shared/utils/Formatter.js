@@ -20,6 +20,7 @@ export const columnMapper = (isBibsOnly: ?boolean, isAuthOnly: ?boolean = true) 
       'date2': 'Date 2',
       'format': 'Format',
       'tagHighlighted': 'Tag',
+      'countDoc': 'Bibs'
     };
   }
   if (isAuthOnly === true) {
@@ -61,6 +62,7 @@ export const renderColumn = (isBibsOnly: ?boolean, isAuthOnly: ?boolean = true) 
       'date2',
       'format',
       'tagHighlighted',
+      'countDoc'
     ];
   }
   if (isAuthOnly === true) {
@@ -94,7 +96,7 @@ export const columnWidthMapper = (isBibsOnly: ?boolean, isAuthOnly: ?boolean = t
   if (isBibsOnly === true) {
     widthMapper = {
       'resultView': '5%',
-      '001': '15%',
+      '001': '10%',
       '245': '30%',
       'preferredTitle': '10%',
       'name': '10%',
@@ -103,6 +105,7 @@ export const columnWidthMapper = (isBibsOnly: ?boolean, isAuthOnly: ?boolean = t
       'date2': '5%',
       'format': '5%',
       'tagHighlighted': '5%',
+      'countDoc': '5%'
     };
   }
   if (isAuthOnly === true) {
@@ -203,12 +206,12 @@ export const resultsFormatter = (isBibsOnly: ?boolean = true, isAuthOnly: ?boole
         { x['100'] }
         { x['110'] }
         { x['111'] }
-        { x['130'] && !isBibsOnly }
+        { (x['130'] && !isBibsOnly) }
       </span>
     ),
     preferredTitle: x => (
       <span>
-        { x['130'] && isBibsOnly }
+        { (x['130'] && isBibsOnly) }
         { x['240'] }
       </span>
     ),
@@ -233,13 +236,13 @@ export const resultsFormatter = (isBibsOnly: ?boolean = true, isAuthOnly: ?boole
         { x['100'] }
         { x['110'] }
         { x['111'] }
-        { x['130'] && !isBibsOnly }
+        { (x['130'] && !isBibsOnly)}
       </span>
     ),
     preferredTitle: x => (
       <span>
-        { x['130'] && isBibsOnly }
-        { x['240'] }
+        { (x['130'] && isBibsOnly) }
+        { x['240']}
       </span>
     ),
     date1: x => (
@@ -256,6 +259,11 @@ export const resultsFormatter = (isBibsOnly: ?boolean = true, isAuthOnly: ?boole
       <span>
         { x.recordView === 1 && getFormat(x.leader) }
         { x.recordView === 1 && getMicroformat(x['007']) }
+      </span>
+    ),
+    countDoc: x => (
+      <span>
+        { x.recordView === -1 && x.countDoc}
       </span>
     ),
     tagHighlighted: x => (

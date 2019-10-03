@@ -1,4 +1,4 @@
-//
+// @flow
 import { isArray } from 'lodash';
 import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../config/constants';
 
@@ -18,7 +18,7 @@ export const getTagDisplayValue = tagNode => {
  *
  * @param {*} i
  */
-export const remapForAssociatedBibList = (i) => {
+export const remapForAssociatedBibList = (i: []) => {
   const result = [];
   i
     .forEach(el => {

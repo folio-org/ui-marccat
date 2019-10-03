@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-//
+// @flow
 import React, { Fragment } from 'react';
 import {
   SearchField,
@@ -12,6 +12,7 @@ import {
 import { reduxForm, Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import ResetButton from '../Filter/ResetButton';
+import type { Props } from '../../../flow/types.js.flow';
 import {
   SearchIndexes,
   SearchConditions,
@@ -27,9 +28,13 @@ import { EMPTY_STRING } from '../../../config/constants';
 import { historySearchAction, searchDetailAction } from '../Actions';
 import styles from '../Style/index.css';
 
+type P = Props & {
+  inputErrorCheck: string,
+  translate: Function,
+}
 
-class SearchPanel extends React.Component {
-  constructor(props) {
+class SearchPanel extends React.Component<P, {}> {
+  constructor(props: P) {
     super(props);
     this.state = {
       isBrowseRequested: false,
@@ -74,7 +79,7 @@ class SearchPanel extends React.Component {
       let baseQuery;
       let indexForQuery;
       let conditionFilter;
-      let indexFilter = '';
+      let indexFilter;
       const form = getState().form.searchForm;
       const state = getState();
       if (form.values) {
@@ -166,7 +171,12 @@ class SearchPanel extends React.Component {
     });
   }
 
-  handleOnChange = () => { };
+  handleOnChange = () => {
+    const { searchForm } = this.state;
+    this.setState({
+      searchForm,
+    });
+  };
 
   handleResetAllButton = () => {
     const { dispatch, reset } = this.props;

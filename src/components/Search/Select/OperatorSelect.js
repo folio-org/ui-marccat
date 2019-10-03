@@ -1,4 +1,4 @@
-//
+// @flow
 import * as React from 'react';
 import { Field } from 'redux-form';
 import { Select } from '@folio/stripes/components';

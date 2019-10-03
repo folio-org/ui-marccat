@@ -1,8 +1,9 @@
-//
+// @flow
 import { from } from 'rxjs/observable/from';
 import { of } from 'rxjs/observable/of';
 import * as Resolver from '../helpers/Resolver';
 import { ACTION } from '../actions';
+import { ENDPOINT } from '../../config/constants';
 
 const initialState = {};
 const historyState = { list: [] };
@@ -51,9 +52,8 @@ export const resolveHistoryRequest = (data) => ({
  * @param {*} data
  * @param {*} error
  */
-export const executeEpicCallback = (resp) => ({
-  type: ACTION.EXECUTE_CALLBACK_FIRED,
-  resp
+export const executeEpicCallback = () => ({
+  type: ACTION.EXECUTE_CALLBACK_FIRED
 });
 
 /**
@@ -61,7 +61,7 @@ export const executeEpicCallback = (resp) => ({
  * @param {Object} state - initial state
  * @param {Object} action - redux action dispatched
  */
-export function reducer(state = initialState, action) {
+export function reducer(state: Object = initialState, action: Object) {
   switch (action.type) {
   case ACTION.REQUEST_RESOLVE:
     return Object.assign({
@@ -103,11 +103,12 @@ export function historyReducer(state = historyState, action) {
  * @param {*} response
  * @returns
  */
-const parseResponseBody = (response) => { // metodo statico
+const parseResponseBody = (response: Object) => { // metodo statico
   return response.text().then((text) => {
     try { return JSON.parse(text); } catch (e) { return text; }
   });
 };
+
 
 /**
  *
@@ -119,6 +120,7 @@ export const getHeaders = (state) => {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
     'X-Okapi-Tenant': `${state.okapi.tenant}`,
+    'X-Okapi-Token': `${state.okapi.token}`
   };
   return headers;
 };
@@ -145,7 +147,7 @@ export function epic(action$, { getState }) {
       const state = getState();
       const method = actionMethods[type];
 
-      // used for the actual request
+      // const url = ENDPOINT.BASE_URL.concat(`${data.path}?${(data.params)}`);
       const url = `${state.okapi.url}/marccat${data.path}?${(data.params)}`;
       const headers = getHeaders(state);
       const body = JSON.stringify(payload);

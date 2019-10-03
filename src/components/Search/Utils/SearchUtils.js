@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-//
+// @flow
 import { languageFilterMap, formatFilterMap } from '../Filter/FilterMapper';
 import { EMPTY_STRING } from '../../../config/constants';
 import { FixedFields, BaseFixedFields } from '../../Cataloguing/Models';
@@ -35,15 +35,15 @@ export const transitionToParams = (key, value) => {
 export const If = (k) => (k) || undefined;
 export const safeString = str => (str) || EMPTY_STRING;
 export const safeObject = (obj, prop) => ((obj) ? obj[prop] : {});
-export const safefields = (arr) => ((arr.length > 0) ? arr : []);
+export const safefields = (arr: []) => ((arr.length > 0) ? arr : []);
 
 /**
  *
  * @param {*} fields
  * @returns fixedFields - an array of record tag populated in order
  */
-export const mapFields = (fields) => {
-  const fixedFields = [];
+export const mapFields = (fields: []): FixedFields<String, String, String, Array<any>> => {
+  const fixedFields: FixedFields<String, String, String, Array<any>> = [];
   for (let i = 0; i < fields.length; i++) {
     for (const code in fields[i]) {
       const tag = fields[i][code];

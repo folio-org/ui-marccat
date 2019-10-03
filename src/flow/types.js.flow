@@ -1,0 +1,34 @@
+// @flow
+// @flow
+import * as React from 'react';
+import type { Node, ElementType, ElementRef, ComponentType } from 'react'
+import type { Dispatch, Reducer, Epic } from 'redux';
+import type { FieldProps } from 'redux-form';
+
+export type Action = { +type: string, paylod: Object }
+export type GetState = () => State;
+export type PromiseAction = Promise<Action>;
+export type Dispatch = (action: Action | ThunkAction | PromiseAction | Array<Action>) => any;
+export type ThunkAction = (dispatch: Dispatch, getState: GetState) => any;
+
+export type Props = {
+  name: string,
+  component: ComponentType<*> | ElementType,
+  props?: Object,
+  store?: Object,
+  stripes?: Object,
+  children?: Node,
+  translate?: (value: Object) => ?any,
+  forwardRef?: boolean,
+  root: {
+    addReducer(key: string, reducer: Reducer<S>) => ?any,
+    addEpic(key: string, epic: Epic<E>) => ?any,
+  },
+  filterPaneIsVisible: boolean,
+  showSettings: boolean,
+  children?: React.Node,
+}
+
+export type State = {
+  filterPaneIsVisible: Boolean,
+};

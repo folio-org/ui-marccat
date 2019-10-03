@@ -32,8 +32,7 @@ const servePlugin = {
   },
 };
 module.exports = {
-  okapi: { url: 'http://platform-core-427-15.aws.indexdata.com:9130', tenant: 'diku' },
-  // okapi: { url: 'http://localhost:9130', tenant: 'diku' },
+  okapi: { url: 'http://localhost:9130', tenant: 'diku' },
   config: {
     logCategories: 'redux',
     hasAllPerms: true,

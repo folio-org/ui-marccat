@@ -1,6 +1,6 @@
 {
   "name": "@folio/marccat",
-  "version": "1.8.5",
+  "version": "2.0.0",
   "description": "FOLIO UI module for Cataloging",
   "repository": "folio-org/ui-marccat",
   "publishConfig": {
@@ -122,7 +122,7 @@
     "helpPage": "https://wiki.folio.org/pages/",
     "hasSettings": true,
     "okapiInterfaces": {
-      "marccat": "1.8"
+      "marccat": "2.0"
     },
     "icons": [
       {

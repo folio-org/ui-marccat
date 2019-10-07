@@ -1,7 +1,7 @@
 @import '@folio/stripes-components/lib/variables';
 
-[type="checkbox"],
-[type="radio"] {
+#marccat-module-display [type="checkbox"],
+#marccat-module-display [type="radio"] {
   border: 0 !important;
   clip: rect(1px, 1px, 1px, 1px) !important;
   -webkit-clip-path: inset(50%) !important;
@@ -14,23 +14,23 @@
   white-space: nowrap !important;
 }
 
-[type="checkbox"]:focus + label::before,
-[type="radio"]:focus + label::before {
+#marccat-module-display [type="checkbox"]:focus + label::before,
+#marccat-module-display [type="radio"]:focus + label::before {
   box-shadow: 0 0 0 2px rgba(51, 51, 51, 0.4) !important;
 }
 
-[type="checkbox"]:hover + label::before,
-[type="radio"]:hover + label::before {
+#marccat-module-display [type="checkbox"]:hover + label::before,
+#marccat-module-display [type="radio"]:hover + label::before {
   border-color: #222;
 }
 
-[type="checkbox"]:active + label::before,
-[type="radio"]:active + label::before {
+#marccat-module-display [type="checkbox"]:active + label::before,
+#marccat-module-display [type="radio"]:active + label::before {
   transition-duration: 0;
 }
 
-[type="checkbox"] + label,
-[type="radio"] + label {
+#marccat-module-display [type="checkbox"] + label,
+#marccat-module-display [type="radio"] + label {
   position: relative;
   padding: 6px;
   -webkit-user-select: none;
@@ -39,8 +39,8 @@
   user-select: none;
 }
 
-[type="checkbox"] + label::before,
-[type="radio"] + label::before {
+#marccat-module-display [type="checkbox"] + label::before,
+#marccat-module-display [type="radio"] + label::before {
   background-color: #fff;
   border: 1px solid #222;
   box-sizing: content-box;
@@ -56,8 +56,8 @@
   vertical-align: middle;
 }
 
-[type="checkbox"] + label::after,
-[type="radio"] + label::after {
+#marccat-module-display [type="checkbox"] + label::after,
+#marccat-module-display [type="radio"] + label::after {
   box-sizing: content-box;
   content: '';
   background-color: #444;
@@ -76,27 +76,27 @@
   transition: transform 200ms ease-out, -webkit-transform 200ms ease-out;
 }
 
-[type="checkbox"][disabled] + label::before,
-[type="radio"][disabled] + label::before {
+#marccat-module-display [type="checkbox"][disabled] + label::before,
+#marccat-module-display [type="radio"][disabled] + label::before {
   -webkit-animation: none;
   animation: none;
   box-shadow: none;
   border: 1px solid rgba(128, 128, 128, 0.5);
 }
 
-[type="checkbox"][disabled]:active + label::before,
-[type="checkbox"][disabled]:focus + label::before,
-[type="checkbox"][disabled]:hover + label::before,
-[type="radio"][disabled]:active + label::before,
-[type="radio"][disabled]:focus + label::before,
-[type="radio"][disabled]:hover + label::before {
+#marccat-module-display [type="checkbox"][disabled]:active + label::before,
+#marccat-module-display [type="checkbox"][disabled]:focus + label::before,
+#marccat-module-display [type="checkbox"][disabled]:hover + label::before,
+#marccat-module-display [type="radio"][disabled]:active + label::before,
+#marccat-module-display [type="radio"][disabled]:focus + label::before,
+#marccat-module-display [type="radio"][disabled]:hover + label::before {
   border-color: rgba(128, 128, 128, 0.5);
   -webkit-filter: none;
   filter: none;
   transition: none;
 }
 
-[type="checkbox"] + label::after {
+#marccat-module-display [type="checkbox"] + label::after {
   background-color: transparent;
   top: 50%;
   left: calc(6px + 1px + 24px / 5);
@@ -114,7 +114,7 @@
   transition: none;
 }
 
-[type="checkbox"]:checked + label::after {
+#marccat-module-display [type="checkbox"]:checked + label::after {
   content: '';
   -webkit-transform: rotate(-45deg) scale(1.3);
   transform: rotate(-45deg) scale(1.3);
@@ -123,13 +123,13 @@
   transition: transform 200ms ease-out, -webkit-transform 200ms ease-out;
 }
 
-[type="radio"] + label::before,
-[type="radio"] + label::after {
+#marccat-module-display [type="radio"] + label::before,
+#marccat-module-display [type="radio"] + label::after {
   border-radius: 50%;
 }
 
-[type="radio"]:checked:active + label::before,
-[type="radio"]:checked:focus + label::before {
+#marccat-module-display [type="radio"]:checked:active + label::before,
+#marccat-module-display [type="radio"]:checked:focus + label::before {
   -webkit-animation: none;
   animation: none;
   -webkit-filter: none;
@@ -137,13 +137,13 @@
   transition: none;
 }
 
-[type="radio"]:checked + label::before {
+#marccat-module-display [type="radio"]:checked + label::before {
   -webkit-animation: none;
   animation: none;
   background-color: #fff;
 }
 
-[type="radio"]:checked + label::after {
+#marccat-module-display [type="radio"]:checked + label::after {
   -webkit-transform: scale(1);
   transform: scale(1);
 }

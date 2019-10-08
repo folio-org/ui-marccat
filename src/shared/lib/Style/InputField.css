@@ -185,7 +185,8 @@
   max-height: 9em;
 }
 
-label {
+#duplicaRecordForm label,
+#marccat-module-display label {
   cursor: pointer;
   display: inline-block;
 }

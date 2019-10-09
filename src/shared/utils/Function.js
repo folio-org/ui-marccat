@@ -8,7 +8,6 @@ import { Button } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 import queryString from 'querystring';
 import { bindActionCreators } from 'redux';
-import { getHeaders } from '../../redux/epic/epic';
 import { META, ENDPOINT, EMPTY_SPACED_STRING, EMPTY_STRING, HTTP_METHOD } from '../../config/constants';
 
 /**
@@ -138,6 +137,7 @@ export function Localize(label: Array<any> | String, withContainier?: boolean, _
   return <FormattedMessage id={META.MODULE_NAME.concat('.').concat(label.key)} values={{ value: label.value || EMPTY_STRING }} />;
 }
 
+
 /**
  *
  * @param {*} url - the API endpoint
@@ -145,23 +145,29 @@ export function Localize(label: Array<any> | String, withContainier?: boolean, _
  * @param {*} store - the data store
  */
 export function post(url: string, data: any, store: any) {
-  const tenant = getHeaders(store.getState());
   return fetch(url, {
     method: HTTP_METHOD.POST,
-    headers: Object.assign({}, {
-      tenant
-    }),
+    headers:  {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      // 'X-Okapi-Tenant': 'tnx'
+      'X-Okapi-Tenant': `${store.okapi.tenant}`,
+      'X-Okapi-Token': `${store.okapi.token}`
+    },
     body: JSON.stringify(data),
   });
 }
 
 export function del(url: string, data: any, store: any) {
-  const tenant = getHeaders(store.getState());
   return fetch(url, {
     method: HTTP_METHOD.DELETE,
-    headers: Object.assign({}, {
-      tenant
-    }),
+    headers:   {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      // 'X-Okapi-Tenant': 'tnx'
+      'X-Okapi-Tenant': `${store.okapi.tenant}`,
+      'X-Okapi-Token': `${store.okapi.token}`
+    },
     body: JSON.stringify(data),
   });
 }

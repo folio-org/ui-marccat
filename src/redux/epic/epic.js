@@ -3,7 +3,7 @@ import { from } from 'rxjs/observable/from';
 import { of } from 'rxjs/observable/of';
 import * as Resolver from '../helpers/Resolver';
 import { ACTION } from '../actions';
-import { ENDPOINT } from '../../config/constants';
+// import { ENDPOINT } from '../../config/constants';
 
 const initialState = {};
 const historyState = { list: [] };
@@ -110,15 +110,11 @@ const parseResponseBody = (response: Object) => { // metodo statico
 };
 
 
-/**
- *
- * @param {*} method - Http method for fetch
- * @returns
- */
 export const getHeaders = (state) => {
   const headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
+    // 'X-Okapi-Tenant': 'tnx'
     'X-Okapi-Tenant': `${state.okapi.tenant}`,
     'X-Okapi-Token': `${state.okapi.token}`
   };
@@ -147,7 +143,7 @@ export function epic(action$, { getState }) {
       const state = getState();
       const method = actionMethods[type];
 
-      // const url = ENDPOINT.BASE_URL.concat(`${data.path}?${(data.params)}`);
+      // const url = ENDPOINT.DEV_VM_OKAPI_URL.concat(`${data.path}?${(data.params)}`);
       const url = `${state.okapi.url}/marccat${data.path}?${(data.params)}`;
       const headers = getHeaders(state);
       const body = JSON.stringify(payload);

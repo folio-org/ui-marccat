@@ -32,7 +32,8 @@ const servePlugin = {
   },
 };
 module.exports = {
-  okapi: { url: 'http://localhost:9130', tenant: 'diku' },
+  okapi: { url: 'http://okapi.atcult.it:9130', tenant: 'diku' },
+  // okapi: { url: 'https://folio-daisy.aws.indexdata.com', tenant: 'diku' },
   config: {
     logCategories: 'redux',
     hasAllPerms: true,

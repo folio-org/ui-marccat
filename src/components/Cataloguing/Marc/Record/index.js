@@ -45,8 +45,6 @@ import { formFieldValue, resolve } from '../../../../redux/helpers/Selector';
 import { TAGS, TAG_NOT_REPEATABLE } from '../../Utils/MarcConstant';
 import DataFieldForm from '../Form/DataField';
 import VariableFieldForm from '../Form/VariableField';
-import { SearchResultPane } from '../../../Search/Result/components';
-import { SearchResults } from '../../../Search';
 
 class Record extends React.Component<Props, {
   callout: React.RefObject<Callout>,
@@ -111,7 +109,8 @@ class Record extends React.Component<Props, {
   asyncCreateHeading = async (item, heading) => {
     const { store } = this.props;
     try {
-      const response = await post(buildUrl(C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading);
+      const response = await post(buildUrl(store.getState(), C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading, store.getState());
+      console.log(response);
       const data = await response.json();
       item.variableField.categoryCode = data.categoryCode;
       if (item.variableField.keyNumber > 0) {
@@ -174,7 +173,7 @@ class Record extends React.Component<Props, {
     const payload = { bibliographicRecord, recordTemplate };
     this.setState({ submit: true });
 
-    await post(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), payload)
+    await post(buildUrl(getState(), C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), payload, getState())
       .then((r) => {
         statusCode = r.status;
         return r.json();
@@ -193,8 +192,8 @@ class Record extends React.Component<Props, {
 
   deleteRecord = async () => {
     let { statusCode } = this.state;
-    const { recordDetail } = this.props;
-    await del(buildUrl(C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + recordDetail.id, C.ENDPOINT.DEFAULT_LANG_VIEW), recordDetail.id)
+    const { recordDetail, store } = this.props;
+    await del(buildUrl(store.getState(), C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + recordDetail.id, C.ENDPOINT.DEFAULT_LANG_VIEW), recordDetail.id, store.getState())
       .then((r) => {
         statusCode = r.status;
       })

@@ -27,19 +27,21 @@
     "clean": "rm -rf lib/ artifact/"
   },
   "devDependencies": {
-    "@bigtest/interactor": "^0.7.2",
+    "@bigtest/interactor": "^0.7.0",
     "@bigtest/mirage": "^0.0.1",
     "@bigtest/mocha": "^0.5.1",
     "@bigtest/react": "^0.1.2",
-    "@folio/eslint-config-stripes": "^4.0.1",
-    "@folio/stripes": "^2.6.0",
-    "@folio/stripes-cli": "^1.7.0",
-    "@folio/stripes-core": "^3.0.0",
-    "babel-eslint": "^10.0.1",
+    "@folio/eslint-config-stripes": "^3.2.1",
+    "@folio/stripes": "^2.12.0",
+    "@folio/stripes-cli": "^1.13.0",
+    "@folio/stripes-core": "^3.0.1",
+    "babel-eslint": "^9.0.0",
     "babel-polyfill": "^6.26.0",
+    "chai": "^4.2.0",
+    "eslint": "^5.5.0",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0",
     "babel-preset-flow": "^6.23.0",
-    "chai": "^4.0.2",
-    "eslint": "^5.15.3",
     "eslint-loader": "^2.1.2",
     "eslint-plugin-flowtype": "^3.4.2",
     "eslint-plugin-prettier": "^3.0.1",
@@ -51,8 +53,6 @@
     "mocha": "^5.2.0",
     "moment": "^2.22.2",
     "qs": "^6.5.1",
-    "react": "^16.4.2",
-    "react-dom": "^16.8.5",
     "react-redux": "^5.0.7",
     "redux": "^3.0.0",
     "redux-immutablejs": "^0.0.8",
@@ -79,8 +79,10 @@
     "redux-observable": "^0.15.0"
   },
   "peerDependencies": {
-    "@folio/stripes": "^2.6.0",
-    "react": "*"
+   "@folio/stripes": "^2.9.0",
+    "react": "*",
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1"
   },
   "files": [
     "CHANGELOG.md",

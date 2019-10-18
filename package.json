@@ -83,11 +83,13 @@
     "react": "*"
   },
   "files": [
-    "README.md",
     "CHANGELOG.md",
-    "lib",
+    "README.md",
     "dist",
+    "icons",
+    "lib",
     "src",
+    "translations",
     "*.js.flow"
   ],
   "coverageReporters": [

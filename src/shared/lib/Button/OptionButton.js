@@ -4,9 +4,9 @@
 import * as React from 'react';
 import { reduxForm, Field } from 'redux-form';
 import type { Props } from '../../../flow/types.js.flow';
-import { ACTION } from '../../../redux/actions/Actions';
+// import { ACTION } from '../../../redux/actions/Actions';
 // eslint-disable-next-line no-unused-vars
-import style from '../Style/InputField.css';
+// import style from '../Style/InputField.css';
 
 type P = Props & {
   labels: Array<any>,

@@ -68,7 +68,8 @@ class Record extends React.Component<Props, {
     this.deleteRecord = this.deleteRecord.bind(this);
   }
 
-  componentWillMount() {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillMount() {
     const { datastore: { emptyRecord }, loadLeaderData, loadHeadertype } = this.props;
     const { leader } = emptyRecord.results;
     loadLeaderData({ value: leader.value, code: leader.code, typeCode: '15' });
@@ -110,7 +111,6 @@ class Record extends React.Component<Props, {
     const { store } = this.props;
     try {
       const response = await post(buildUrl(store.getState(), C.ENDPOINT.CREATE_HEADING_URL, C.ENDPOINT.DEFAULT_LANG_VIEW), heading, store.getState());
-      console.log(response);
       const data = await response.json();
       item.variableField.categoryCode = data.categoryCode;
       if (item.variableField.keyNumber > 0) {

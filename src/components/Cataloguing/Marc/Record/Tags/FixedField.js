@@ -37,7 +37,8 @@ class FixedField extends React.PureComponent<P, State> {
     this.RenderField008 = this.RenderField008.bind(this);
   }
 
-  componentWillMount() {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillMount() {
     const { fields, inizialized } = this.state;
     const field006 = fields.filter(f => f.fixedField.code === TAGS._006);
     const field007 = fields.filter(f => f.fixedField.code === TAGS._007);

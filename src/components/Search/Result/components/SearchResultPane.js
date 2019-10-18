@@ -40,14 +40,12 @@ class SearchResultPane extends React.Component<Props, {}> {
       containerMarcJSONRecords,
       store,
       isLoadMore,
-      customColumn
     } = this.props;
 
     return (
       isLoadMore === 'N' || isLoadMore === undefined ?
         <Pane
           padContent={(containerMarcJSONRecords.length > 0) || isFetching}
-          autosize="true"
           defaultWidth="fill"
           actionMenu={ActionMenu}
           paneTitle={translate({ id: 'ui-marccat.search.record' })}
@@ -70,6 +68,7 @@ class SearchResultPane extends React.Component<Props, {}> {
                 <NoResultsMessage {...this.props} /> :
                 (isReady) ?
                   <MultiColumnList
+                    autosize="true"
                     id="data-test-search-results-table"
                     defaultWidth="fill"
                     columnWidths={columnWidthMapper(bibsOnly, autOnly)}
@@ -78,14 +77,12 @@ class SearchResultPane extends React.Component<Props, {}> {
                     contentData={mergedRecord}
                     formatter={resultsFormatter(bibsOnly, autOnly)}
                     columnMapping={columnMapper(bibsOnly, autOnly)}
-                    visibleColumns={customColumn.length > 0 ? customColumn : renderColumn(bibsOnly, autOnly)}
+                    visibleColumns={renderColumn(bibsOnly, autOnly)}
                   /> : <EmptyMessage {...this.props} />
           }
         </Pane> : (isLoadMore === 'Y') &&
         <Pane
           padContent={(containerMarcJSONRecords.length > 0)}
-          autosize="true"
-          defaultWidth="fill"
           actionMenu={ActionMenu}
           paneTitle={translate({ id: 'ui-marccat.search.record' })}
           paneSub={message}
@@ -102,6 +99,7 @@ class SearchResultPane extends React.Component<Props, {}> {
         >
           <MultiColumnList
             id="data-test-search-results-table"
+            autosize="true"
             defaultWidth="fill"
             columnWidths={columnWidthMapper(bibsOnly, autOnly)}
             rowMetadata={['001', 'recordView']}
@@ -109,7 +107,7 @@ class SearchResultPane extends React.Component<Props, {}> {
             contentData={mergedRecord}
             formatter={resultsFormatter(bibsOnly, autOnly)}
             columnMapping={columnMapper(bibsOnly, autOnly)}
-            visibleColumns={customColumn.length > 0 ? customColumn : renderColumn(bibsOnly, autOnly)}
+            visibleColumns={renderColumn(bibsOnly, autOnly)}
           />
         </Pane>
     );

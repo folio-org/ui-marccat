@@ -1,10 +1,8 @@
 /* eslint-disable no-unused-vars */
 // TO BE IMPROVE ALL FILES
-import { Observable } from 'rxjs';
-import { of as of$ } from 'rxjs/observable/of';
-import { concat as concat$ } from 'rxjs/observable/concat';
-import { map } from 'rxjs/operators/map';
-import { ajax } from 'rxjs/observable/dom/ajax';
+import { Observable, of as of$, concat as concat$ } from 'rxjs';
+import { map, catchError, mergeMap } from 'rxjs/operators';
+import { ajax } from 'rxjs/ajax';
 import { ACTION } from '../actions/Actions';
 import * as marccatActions from '../actions';
 import { ENDPOINT } from '../../config/constants';
@@ -14,12 +12,13 @@ import { TAGS } from '../../components/Cataloguing';
 import { getHeaders } from './epic';
 import * as Selector from '../helpers/Selector';
 
+
 export const searchEpic = (action$, store) => action$.ofType(ACTION.SEARCH)
   .switchMap((d) => concat$(
     of$(marccatActions.isfetchingSearchRequest(true, d.moreData)),
     ajax
       .getJSON(buildUrl(store.getState(), ENDPOINT.MERGED_SEARCH_URL, `lang=ita&ml=170&qbib=${d.queryBib}&qauth=${d.queryAuth}&from=${d.from}&to=${d.to}&dpo=1&sortBy=${Selector.get(store, 'settings', 'sortType') || 4}&sortOrder=0`), getHeaders(store.getState()))
-      .map(record => marccatActions.fetchSearchEngineRecords(
+      .pipe(map(record => marccatActions.fetchSearchEngineRecords(
         d.queryBib,
         d.queryAuth,
         d.to,
@@ -31,8 +30,9 @@ export const searchEpic = (action$, store) => action$.ofType(ACTION.SEARCH)
         d.dataOld,
         d.oldBibArray,
         d.oldAuthArray
-      ))
-      .catch(e => of$(marccatActions.fetchFailure(e))),
+      )), catchError(error => {
+        return of$(error);
+      }))
   ));
 
 export const searchDetailEpic = (action$, store) => action$.ofType(ACTION.DETAILS)
@@ -67,8 +67,10 @@ export const countDocEpic = (action$, store) => action$.ofType(ACTION.COUNT_DOC)
     of$(marccatActions.isfetchingCounterRequest(true)),
     ajax
       .getJSON(buildUrl(store.getState(), ENDPOINT.DOC_COUNT_URL, `view=1&id=${d.query}`), getHeaders(store.getState()))
-      .map(record => marccatActions.fetchCountDocRecords(record.docs[0].data))
-      .catch(e => of$(marccatActions.fetchFailure(e))),
+      .pipe(map(record => marccatActions.fetchCountDocRecords(record.docs[0].data))),
+    catchError(error => {
+      return of$(error);
+    })
   ));
 
 export const scanBrowsingRecords = (action$, store) => action$.ofType(ACTION.BROWSE_FIRST_PAGE)
@@ -107,11 +109,14 @@ export const browseDetailAssociatedEpic = (action$, store) => action$.ofType(ACT
 export const totalCountBibEpic = (action$, store) => action$.ofType(ACTION.TOTAL_BIB_COUNT)
   .switchMap((d) => ajax
     .getJSON(buildUrl(store.getState(), ENDPOINT.TOTAL_COUNT_SEARCH_URL, `lang=ita&view=1&ml=170&q=${d.query}&sortBy=${Selector.get(store, 'settings', 'sortType') || 4}&sortOrder=0`), getHeaders(store.getState()))
-    .map(record => marccatActions.fetchTotalCountBibRecords(record))
-    .catch(e => of$(marccatActions.fetchFailure(e))));
-
+    .pipe(map(record => marccatActions.fetchTotalCountBibRecords(record))),
+  catchError(error => {
+    return of$(error);
+  }));
 export const totalCountAuthEpic = (action$, store) => action$.ofType(ACTION.TOTAL_AUTH_COUNT)
   .switchMap((d) => ajax
     .getJSON(buildUrl(store.getState(), ENDPOINT.TOTAL_COUNT_SEARCH_URL, `lang=ita&view=-1&ml=170&q=${d.query}&sortBy=${Selector.get(store, 'settings', 'sortType') || 4}&sortOrder=0`), getHeaders(store.getState()))
-    .map(record => marccatActions.fetchTotalCountAuthRecords(record))
-    .catch(e => of$(marccatActions.fetchFailure(e))));
+    .pipe(map(record => marccatActions.fetchTotalCountBibRecords(record))),
+  catchError(error => {
+    return of$(error);
+  }));

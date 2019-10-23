@@ -150,7 +150,7 @@ export function post(url: string, data: any, store: any) {
     headers:  {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      // 'X-Okapi-Tenant': 'tnx'
+      // 'X-Okapi-Tenant': 'tnx',
       'X-Okapi-Tenant': `${store.okapi.tenant}`,
       'X-Okapi-Token': `${store.okapi.token}`
     },
@@ -164,7 +164,7 @@ export function del(url: string, data: any, store: any) {
     headers:   {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      // 'X-Okapi-Tenant': 'tnx'
+      // 'X-Okapi-Tenant': 'tnx',
       'X-Okapi-Tenant': `${store.okapi.tenant}`,
       'X-Okapi-Token': `${store.okapi.token}`
     },

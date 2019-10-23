@@ -28,10 +28,11 @@ export const ENDPOINT = {
   HEADERS: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-    'x-okapi-tenant': 'diku',
+    // 'x-okapi-tenant': 'tnx',
+    'x-okapi-tenant': 'diku'
   },
   DEFAULT_LANG_VIEW: 'lang=ita&view=1',
-  // DEV_VM_OKAPI_URL: 'http://151.1.165.20:8080/marccat',
+  // DEV_VM_OKAPI_URL: 'http://localhost:8080/marccat',
   OKAPI_URL: state => `${state.okapi.url}/marccat`,
   MERGED_SEARCH_URL: '/mergedSearch',
   SEARCH_URL: '/searchVertical',

@@ -1,9 +1,10 @@
 // @flow
 import { from } from 'rxjs/observable/from';
 import { of } from 'rxjs/observable/of';
+import { mergeMap, map } from 'rxjs/operators';
 import * as Resolver from '../helpers/Resolver';
 import { ACTION } from '../actions';
-// import { ENDPOINT } from '../../config/constants';
+import { ENDPOINT } from '../../config/constants';
 
 const initialState = {};
 const historyState = { list: [] };
@@ -153,11 +154,11 @@ export function epic(action$, { getState }) {
         .then(([ok, body]) => (ok ? body : Promise.reject(body.errors))); // eslint-disable-line no-shadow
 
       return from(promise)
-        .flatMap(response => {
+        .pipe(mergeMap(response => {
           return of(
             resolveEpicRequest(data.type, data, response),
             executeEpicCallback((cb) ? cb(response) : () => { })
           );
-        }).catch(errors => of(rejectEpicRequest(errors)));
+        }));
     });
 }

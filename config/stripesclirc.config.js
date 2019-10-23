@@ -33,6 +33,7 @@ const servePlugin = {
 };
 module.exports = {
   okapi: { url: 'http://localhost:9130', tenant: 'diku' },
+  // okapi: { url: 'http://okapi.atcult.it:9130', tenant: 'diku' },
   config: {
     logCategories: 'redux',
     hasAllPerms: true,

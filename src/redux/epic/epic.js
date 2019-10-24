@@ -1,7 +1,7 @@
 // @flow
 import { from } from 'rxjs/observable/from';
 import { of } from 'rxjs/observable/of';
-import { mergeMap, map } from 'rxjs/operators';
+import { mergeMap } from 'rxjs/operators';
 import * as Resolver from '../helpers/Resolver';
 import { ACTION } from '../actions';
 import { ENDPOINT } from '../../config/constants';

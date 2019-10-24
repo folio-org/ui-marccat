@@ -68,7 +68,7 @@ class SearchResultPane extends React.Component<Props, {}> {
                 <NoResultsMessage {...this.props} /> :
                 (isReady) ?
                   <MultiColumnList
-                    autosize="true"
+                    autosize
                     id="data-test-search-results-table"
                     defaultWidth="fill"
                     columnWidths={columnWidthMapper(bibsOnly, autOnly)}
@@ -84,6 +84,7 @@ class SearchResultPane extends React.Component<Props, {}> {
         <Pane
           padContent={(containerMarcJSONRecords.length > 0)}
           actionMenu={ActionMenu}
+          defaultWidth="fill"
           paneTitle={translate({ id: 'ui-marccat.search.record' })}
           paneSub={message}
           appIcon={<AppIcon app={C.META.ICON_TITLE} />}
@@ -99,7 +100,7 @@ class SearchResultPane extends React.Component<Props, {}> {
         >
           <MultiColumnList
             id="data-test-search-results-table"
-            autosize="true"
+            autosize
             defaultWidth="fill"
             columnWidths={columnWidthMapper(bibsOnly, autOnly)}
             rowMetadata={['001', 'recordView']}

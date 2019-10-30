@@ -20,7 +20,7 @@ export default ({ ...props }) => {
 
   return (
     <Accordion
-      label={Localize({ id:'cataloging.accordion.variablefield.label' })}
+      label={Localize({ key:'cataloging.accordion.variablefield.label' })}
       id="variable-field"
     >
       <FieldList

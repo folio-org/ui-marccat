@@ -356,21 +356,25 @@ class FieldForm extends React.Component {
   }
 
   getColumnWidths() {
-    const { columnWidths } = this.props;
-    if (!columnWidths) {
-      const visibleColumns = this.getVisibleColumns();
-      const totalColumns = visibleColumns.length - 1;
-      const staticWidth = 80 / totalColumns;
-      const widthsObject = {};
-      visibleColumns.forEach((f) => {
-        if (f !== 'actions') {
-          widthsObject[f] = `${staticWidth}%`;
+    const visibleColumns = this.getVisibleColumns();
+    const totalColumns = visibleColumns.length - 1;
+    const staticWidth = 80 / totalColumns;
+    const widthsObject = {};
+    visibleColumns.forEach((f) => {
+      if (f !== 'actions') {
+        if (f === 'variableField.code') {
+          widthsObject[f] = '10%';
+        } else if (f === 'variableField.ind1') {
+          widthsObject[f] = '15%';
+        } else if (f === 'variableField.ind2') {
+          widthsObject[f] = '15%';
+        } else if (f === 'variableField.displayValue') {
+          widthsObject[f] = '40%';
         }
-      });
-      widthsObject.actions = '20%';
-      return widthsObject;
-    }
-    return columnWidths;
+      }
+    });
+    widthsObject.actions = '20%';
+    return widthsObject;
   }
 
   getVisibleColumns() {

@@ -65,7 +65,6 @@ export default function ItemEdit({
             }
             {...props}
             {...fieldProps}
-            fullWidth
             autoFocus={autoFocus && fieldIndex === 0}
           />
         </div>

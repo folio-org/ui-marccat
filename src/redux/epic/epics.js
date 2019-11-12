@@ -36,27 +36,28 @@ export const searchEpic = (action$, store) => action$.ofType(ACTION.SEARCH)
   .switchMap((d) => concat$(
     of$(marccatActions.isfetchingSearchRequest(true, d.moreData)),
     getJSON(buildUrl(store.getState(), ENDPOINT.MERGED_SEARCH_URL, `lang=ita&ml=170&qbib=${d.queryBib}&qauth=${d.queryAuth}&from=${d.from}&to=${d.to}&dpo=1&sortBy=${Selector.get(store, 'settings', 'sortType') || 4}&sortOrder=0`), getHeaders(store.getState()))
-      .map(record => marccatActions.fetchSearchEngineRecords(
-        d.queryBib,
-        d.queryAuth,
-        d.to,
-        d.moreData,
-        record[1].docs,
-        record[1].numFound,
-        record[0].docs,
-        record[0].numFound,
-        d.dataOld,
-        d.oldBibArray,
-        d.oldAuthArray
-      ))
-      .catch(e => of$(marccatActions.fetchFailure(e))),
+      .map(record => (
+        marccatActions.fetchSearchEngineRecords(
+          d.queryBib,
+          d.queryAuth,
+          d.to,
+          d.moreData,
+          record.response[1].docs,
+          record.response[1].numFound,
+          record.response[0].docs,
+          record.response[0].numFound,
+          d.dataOld,
+          d.oldBibArray,
+          d.oldAuthArray
+        )
+      )).catch(e => of$(marccatActions.fetchFailure(e)))
   ));
 
 export const searchDetailEpic = (action$, store) => action$.ofType(ACTION.DETAILS)
   .switchMap((d) => concat$(
     of$(marccatActions.isfetchingDetailsRequest(true)),
     getJSON(buildUrl(store.getState(), ENDPOINT.SEARCH_URL, `lang=ita&view=${d.recordType}&ml=170&q=an%20${d.query}&from=1&to=1&dpo=1`), getHeaders(store.getState()))
-      .map(record => marccatActions.fetchDetailsRecords(record.docs[0].data, d.recordType))
+      .map(record => marccatActions.fetchDetailsRecords(record.response.docs[0].data, d.recordType))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
 
@@ -64,7 +65,7 @@ export const associatedBibDetailEpic = (action$, store) => action$.ofType(ACTION
   .switchMap((d) => concat$(
     of$(marccatActions.isfetchingDetailsAssociatedRequest(true)),
     getJSON(buildUrl(store.getState(), ENDPOINT.SEARCH_URL, `lang=ita&view=${d.recordType}&ml=170&q=an%20${d.query}&from=1&to=1&dpo=1`), getHeaders(store.getState()))
-      .map(record => marccatActions.fetchAssociatedBibDetailsRecords(record.docs[0].data, d.recordType, d.mustOpenPanel))
+      .map(record => marccatActions.fetchAssociatedBibDetailsRecords(record.response.docs[0].data, d.recordType, d.mustOpenPanel))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
 
@@ -88,7 +89,7 @@ export const scanBrowsingRecords = (action$, store) => action$.ofType(ACTION.BRO
   .switchMap((d) => concat$(
     of$(marccatActions.isfetchingScanBrowseRequest(true)),
     getJSON(buildUrl(store.getState(), ENDPOINT.BROWSE_FIRST_PAGE_URL, `query=${d.query}&view=1&mainLibrary=170&pageSize=30&lang=eng`), getHeaders(store.getState()))
-      .map(record => marccatActions.fetchScanBrowsingRecords(record.headings, d.query))
+      .map(record => marccatActions.fetchScanBrowsingRecords(record.response.headings, d.query))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
 
@@ -96,29 +97,29 @@ export const browseDetailEpic = (action$, store) => action$.ofType(ACTION.DETAIL
   .switchMap((d) => concat$(
     of$(marccatActions.isfetchingBrowseRequest(true)),
     getJSON(buildUrl(store.getState(), ENDPOINT.SEARCH_URL_JSON, `lang=ita&ml=170&q=${d.query}&from=1&to=30&dpo=1`), getHeaders(store.getState()))
-      .map(record => marccatActions.fetchBrowseDetail(record.docs, record.numFound, d.isAuthority))
+      .map(record => marccatActions.fetchBrowseDetail(record.response.docs, record.response.numFound, d.isAuthority))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
 
 export const browseAuthorityDetailEpic = (action$, store) => action$.ofType(ACTION.AUTH_DETAILS_BROWSE)
   .switchMap((d) => getJSON(buildUrl(store.getState(), ENDPOINT.SEARCH_URL, `lang=ita&view=-1&ml=170&q=${d.query}&from=1&to=30&dpo=1`), getHeaders(store.getState()))
-    .map(record => marccatActions.fetchBrowseAuthorityDetail(record.docs[0].data, d.isAuthority))
+    .map(record => marccatActions.fetchBrowseAuthorityDetail(record.response.docs[0].data, d.isAuthority))
     .catch(e => of$(marccatActions.fetchFailure(e))));
 
 export const browseDetailAssociatedEpic = (action$, store) => action$.ofType(ACTION.BROWSE_ASSOCIATED_DETAILS)
   .switchMap((d) => concat$(
     of$(marccatActions.isfetchingBrowseDetailsAssociatedRequest(true)),
     getJSON(buildUrl(store.getState(), ENDPOINT.SEARCH_URL, `lang=ita&view=1&ml=170&q=an%20${d.query}&from=1&to=1&dpo=1`), getHeaders(store.getState()))
-      .map(record => marccatActions.fetchBrowseDetailAssociatedRecords(record.docs[0].data, d.mustOpenPanel))
+      .map(record => marccatActions.fetchBrowseDetailAssociatedRecords(record.responsedocs[0].data, d.mustOpenPanel))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
 
 export const totalCountBibEpic = (action$, store) => action$.ofType(ACTION.TOTAL_BIB_COUNT)
   .switchMap((d) => getJSON(buildUrl(store.getState(), ENDPOINT.TOTAL_COUNT_SEARCH_URL, `lang=ita&view=1&ml=170&q=${d.query}&sortBy=${Selector.get(store, 'settings', 'sortType') || 4}&sortOrder=0`), getHeaders(store.getState()))
-    .map(record => marccatActions.fetchTotalCountBibRecords(record))
+    .map(record => marccatActions.fetchTotalCountBibRecords(record.response))
     .catch(e => of$(marccatActions.fetchFailure(e))));
 
 export const totalCountAuthEpic = (action$, store) => action$.ofType(ACTION.TOTAL_AUTH_COUNT)
   .switchMap((d) => getJSON(buildUrl(store.getState(), ENDPOINT.TOTAL_COUNT_SEARCH_URL, `lang=ita&view=-1&ml=170&q=${d.query}&sortBy=${Selector.get(store, 'settings', 'sortType') || 4}&sortOrder=0`), getHeaders(store.getState()))
-    .map(record => marccatActions.fetchTotalCountAuthRecords(record))
+    .map(record => marccatActions.fetchTotalCountAuthRecords(record.response))
     .catch(e => of$(marccatActions.fetchFailure(e))));

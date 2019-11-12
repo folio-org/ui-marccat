@@ -19,7 +19,7 @@ type Props = {
   widths: Array<Object>,
 }
 
-export default function ItemEdit({
+const FieldEdit = ({
   rowIndex,
   error,
   field,
@@ -31,7 +31,7 @@ export default function ItemEdit({
   cells,
   autoFocus,
   ...props
-}: Props) {
+}: Props) => {
 
   const fields = visibleFields.map((name, fieldIndex) => {
     if (readOnlyFields.indexOf(name) === -1) {
@@ -84,4 +84,6 @@ export default function ItemEdit({
       }
     </div>
   );
-}
+};
+
+export default FieldEdit;

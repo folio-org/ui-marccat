@@ -7,6 +7,8 @@ type Prop = {
   editing: boolean,
   cells: Array<Object>,
 };
-export default ({ editing, ...props }: Prop): React.Component<Prop> => (
+const EditableItem = ({ editing, ...props }: Prop): React.Component<Prop> => (
   editing ? <FieldEdit {...props} autoFocus /> : <FieldView {...props} />
 );
+
+export default EditableItem;

@@ -14,8 +14,10 @@ type Props = {
   readOnlyFields?: Array<String>,
 };
 
-export default (props: Props) => {
+const FieldList = (props: Props) => {
   const { contentData, nameKey = 'code' } = props;
   const items = sortBy(contentData, [t => t[nameKey] && t[nameKey].toLowerCase()]);
   return (<FieldForm initialValues={{ items }} {...props} />);
 };
+
+export default FieldList;

@@ -79,7 +79,7 @@
     "redux-observable": "^0.15.0"
   },
   "peerDependencies": {
-   "@folio/stripes": "^2.9.0",
+    "@folio/stripes": "^2.9.0",
     "react": "*",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1"

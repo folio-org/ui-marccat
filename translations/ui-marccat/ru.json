@@ -69,7 +69,7 @@
     "template.actionmenu.new": "Новый шаблон",
     "settings.default.record.template.auth.text": "Authority Records. Organization-wide templates:",
     "settings.default.record.template.bib.text": "Bibliografic Records. Organization-wide templates:",
-    "search.record.new": "New",
+    "search.record.new": "Новый",
     "search.record.new.from.template": "New from template (CTRL+N)",
     "cataloging.variablefield.section.add.newtag": "Добавить новый тег",
     "cataloging.accordion.fixedfield.label": "Контрольные поля (001, 003, 005)",

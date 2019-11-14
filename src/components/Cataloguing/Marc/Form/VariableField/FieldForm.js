@@ -567,7 +567,7 @@ class FieldForm extends React.Component {
             <MultiColumnList
               {...this.props}
               visibleColumns={this.getVisibleColumns()}
-              contentData={fields.getAll()}
+              contentData={JSON.parse(JSON.stringify(fields.getAll()))}
               rowFormatter={this.VariableFieldRowFormatter}
               rowProps={{ fields }}
               formatter={cellFormatters}

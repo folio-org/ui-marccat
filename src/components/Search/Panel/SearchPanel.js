@@ -22,7 +22,7 @@ import {
   transitionToParams
 } from '..';
 import { ACTION } from '../../../redux/actions/Actions';
-import { findYourQuery } from '../Filter';
+import { findYourQuery, findYourQueryFromBrowse } from '../Filter';
 import { remapFilters, findParam } from '../../../shared';
 import { EMPTY_STRING } from '../../../config/constants';
 import { historySearchAction, searchDetailAction } from '../Actions';
@@ -112,8 +112,10 @@ class SearchPanel extends React.Component<P, {}> {
       }
       if (conditionFilter === 'BROWSE') {
         isBrowseRequested = true;
+        indexForQuery = findYourQueryFromBrowse[indexFilter.concat('-').concat(conditionFilter)];
+        const browseQuery = indexForQuery + inputValue;
         store.dispatch({ type: ACTION.SETTINGS, data: { newBrowse: 'Y' } });
-        store.dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query: bibQuery });
+        store.dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query: browseQuery });
         router.push('/marccat/browse');
         store.dispatch({ type: ACTION.SETTINGS, data: { triggerDetails: 'N' } });
         transitionToParams('q', bibQuery);

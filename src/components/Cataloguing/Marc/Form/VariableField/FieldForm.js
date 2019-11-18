@@ -524,10 +524,11 @@ class FieldForm extends React.Component {
 
     const cellFormatters = Object.assign({}, formatter, { actions: item => this.getActions(fields, item) });
     return (
-      <HotKeys
-        keyMap={this.keys}
-        handlers={{ 'add': () => this.onAdd(fields) }}
-      >
+      // <HotKeys
+      //   keyMap={this.keys}
+      //   handlers={{ 'add': () => this.onAdd(fields) }}
+      // >
+      <div>
         <Row between="xs" className={style.editableListFormHeader}>
           <Col xs>
             <Headline size="medium" margin="none">{label}</Headline>
@@ -578,7 +579,8 @@ class FieldForm extends React.Component {
             />
           </Col>
         </Row>
-      </HotKeys>
+        {/* </HotKeys> */}
+      </div>
     );
   }
 

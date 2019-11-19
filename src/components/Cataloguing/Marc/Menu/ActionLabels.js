@@ -9,13 +9,13 @@ import style from '../../../../shared/lib/Style/Dropdown.css';
 export default ({ ...props }) => {
   const getLabels = () => {
     return [{
-      label: Localize({ key: 'cataloging.actions.add.field.below' }),
-      shortcut: Localize({ key: 'cataloging.actions.add.field.below.shortcut' }),
+      label: Localize({ key: 'cataloging.actions.add.field.above' }),
+      shortcut: Localize({ key: 'cataloging.actions.add.field.above.shortcut' }),
       onClick: props.onAddAbove,
     },
     {
-      label: Localize({ key: 'cataloging.actions.add.field.above' }),
-      shortcut: Localize({ key: 'cataloging.actions.add.field.above.shortcut' }),
+      label: Localize({ key: 'cataloging.actions.add.field.below' }),
+      shortcut: Localize({ key: 'cataloging.actions.add.field.below.shortcut' }),
       onClick: props.onAdd,
     },
     {

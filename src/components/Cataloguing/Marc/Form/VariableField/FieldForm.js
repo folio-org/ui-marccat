@@ -91,7 +91,7 @@ class FieldForm extends React.Component {
     this.onLookup = this.onLookup.bind(this);
 
     this.keys = {
-      addAbove: ['enter'],
+      addAbove: ['ctrl+enter'],
       add: ['alt+enter'],
       cleanField: ['delete'],
       cleanAll: ['backspace'],
@@ -131,9 +131,8 @@ class FieldForm extends React.Component {
     }
   }
 
-  // eslint-disable-next-line camelcase
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    // eslint-disable-line react/no-deprecated
+  // eslint-disable-next-line react/no-deprecated
+  componentWillReceiveProps(nextProps) {
     const { initialValues } = this.props;
     if (!isEqual(initialValues, nextProps.initialValues)) {
       this.setState({

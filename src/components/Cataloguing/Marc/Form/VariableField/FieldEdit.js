@@ -61,7 +61,7 @@ const FieldEdit = ({
         <div key={fieldKey} style={fieldStyle}>
           <Field
             component={
-              (mappedName === 'code' || mappedName === 'ind1' || mappedName === 'ind2') ? AutoSuggestion : TextField
+              (mappedName === 'code' || mappedName === 'ind1' || mappedName === 'ind2') ? AutoSuggestion : mappedName === 'displayValue' ? AutoSuggestHeadings : TextField
             }
             {...props}
             {...fieldProps}

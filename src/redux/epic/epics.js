@@ -110,7 +110,7 @@ export const browseDetailAssociatedEpic = (action$, store) => action$.ofType(ACT
   .switchMap((d) => concat$(
     of$(marccatActions.isfetchingBrowseDetailsAssociatedRequest(true)),
     getJSON(buildUrl(store.getState(), ENDPOINT.SEARCH_URL, `lang=ita&view=1&ml=170&q=an%20${d.query}&from=1&to=1&dpo=1`), getHeaders(store.getState()))
-      .map(record => marccatActions.fetchBrowseDetailAssociatedRecords(record.responsedocs[0].data, d.mustOpenPanel))
+      .map(record => marccatActions.fetchBrowseDetailAssociatedRecords(record.response.docs[0].data, d.mustOpenPanel))
       .catch(e => of$(marccatActions.fetchFailure(e))),
   ));
 

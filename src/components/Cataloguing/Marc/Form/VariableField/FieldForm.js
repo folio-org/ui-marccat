@@ -90,36 +90,6 @@ class FieldForm extends React.Component {
     this.onViewMarkDocs = this.onViewMarkDocs.bind(this);
     this.onLookup = this.onLookup.bind(this);
 
-    this.keys = {
-      addAbove: ['ctrl+enter'],
-      add: ['alt+enter'],
-      cleanField: ['delete'],
-      cleanAll: ['backspace'],
-      duplicate: ['CTRL+D'],
-      copy: ['CTRL+C'],
-      cut: ['CTRL+X'],
-      paste: ['CTRL+V'],
-      undo: ['CTRL+Z'],
-      redo: ['CTRL+SHIFT+Z'],
-      lookup: ['CTRL+SHIFT+L'],
-      onViewMarkDocs: ['CTRL+SHIFT+W'],
-    };
-
-    this.handlers = {
-      add: this.onAdd,
-      addAbove: this.onAddAbove,
-      cleanField: this.onCancel,
-      cleanAll: this.onResetAll,
-      duplicate: this.onDuplicate,
-      copy: this.onCopy,
-      cut: this.onCut,
-      paste: this.onPaste,
-      undo: this.onUndo,
-      redo: this.onRedo,
-      lookup: this.onLookup,
-      onViewMarkDocs: this.onViewMarkDocs,
-    };
-
     if (props.id) {
       this.marcTagRowTestingId = props.id;
     } else if (props.label) {
@@ -543,10 +513,41 @@ class FieldForm extends React.Component {
     const cellFormatters = Object.assign({}, formatter, {
       actions: item => this.getActions(fields, item),
     });
+
+    const keys = {
+      addAbove: ['ctrl+enter'],
+      add: ['alt+enter'],
+      cleanField: ['delete'],
+      cleanAll: ['backspace'],
+      duplicate: ['CTRL+D'],
+      copy: ['CTRL+C'],
+      cut: ['CTRL+X'],
+      paste: ['CTRL+V'],
+      undo: ['CTRL+Z'],
+      redo: ['CTRL+SHIFT+Z'],
+      lookup: ['CTRL+SHIFT+L'],
+      onViewMarkDocs: ['CTRL+SHIFT+W'],
+    };
+
+    const handlers = {
+      addAbove: () => this.onAddAbove(fields),
+      add: () => this.onAdd(fields),
+      cleanField: () => this.onCancel(fields, currentIndex),
+      cleanAll: () => this.onResetAll(),
+      duplicate: () => this.onDuplicate(fields, currentIndex),
+      copy: () => this.onCopy(fields, currentIndex),
+      cut: () => this.onCut(fields, currentIndex),
+      paste: () => this.onPaste(fields, currentIndex),
+      undo: () => this.onUndo(fields, currentIndex),
+      redo: () => this.onRedo(fields, currentIndex),
+      lookup: () => this.onLookup(fields, currentIndex),
+      onViewMarkDocs: () => this.onViewMarkDocs(fields, currentIndex)
+    };
+
     return (
       <HotKeys
-        keyMap={this.keys}
-        handlers={{ addAbove: () => this.onAddAbove(fields) }}
+        keyMap={keys}
+        handlers={handlers}
       >
         <Row between="xs" className={style.editableListFormHeader}>
           <Col xs>

@@ -1,12 +1,13 @@
 // @flow
 import * as React from 'react';
 import { last } from 'lodash';
-import { MultiColumnList, Pane, Paneset, Icon, Button } from '@folio/stripes/components';
+import { MultiColumnList, Pane, Paneset, Icon, Button, PaneMenu } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import type { Props } from '../../flow/types.js.flow';
 import BrowseItemDetail from './BrowseItemDetail';
+import { CreateRecordButton } from '../Search';
 import { ACTION } from '../../redux/actions/Actions';
 import { findYourQueryFromBrowse, findYourQuery } from '../Search/Filter/FilterMapper';
 import { ToolbarButtonMenu, EmptyMessage, NoResultsMessage } from '../../shared/lib';
@@ -39,7 +40,33 @@ export class BrowseResults extends React.Component<Props, S> {
     this.handleClosePanelDetails = this.handleClosePanelDetails.bind(this);
     this.handleBrowseDetails = this.handleBrowseDetails.bind(this);
     this.getActionMenu = this.getActionMenu.bind(this);
+    this.handleCreateRecord = this.handleCreateRecord.bind(this);
+    this.renderLastMenu = this.renderLastMenu.bind(this);
   }
+
+  handleCreateRecord = () => {
+    const { router, toggleFilterPane, datastore: { emptyRecord } } = this.props;
+    toggleFilterPane();
+    router.push(`/marccat/cataloging?id=${emptyRecord.results.id}&mode=new`);
+  };
+
+  handleOnToggle = () => {
+    this.setState(prevState => ({ openDropDownMenu: !prevState.openDropDownMenu }));
+  }
+
+  renderDropdownLabels = () => {
+    const { translate } = this.props;
+    return [{
+      label: translate({ id: 'ui-marccat.button.new.auth' }),
+      shortcut: translate({ id: 'ui-marccat.button.new.short.auth' }),
+      onClick: this.handleCreateRecord,
+    },
+    {
+      label: translate({ id: 'ui-marccat.button.new.bib' }),
+      shortcut: translate({ id: 'ui-marccat.button.new.short.bib' }),
+      onClick: this.handleCreateRecord,
+    }];
+  };
 
   handleClosePanelDetails = () => {
     this.setState({
@@ -91,19 +118,56 @@ export class BrowseResults extends React.Component<Props, S> {
     return generateDropdownMenu(labels);
   };
 
-  renderButtonMenu = () => {
-    return (
-      <ToolbarButtonMenu
-        create
-        {...this.props}
-        label={
-          <Icon icon="plus-sign">
-            <FormattedMessage id="ui-marccat.browse.record.create" />
-          </Icon>
-        }
-      />
-    );
+  renderLastMenu = () => {
+    const { openDropDownMenu } = this.state;
+    const { activeFilterName, activeFilterChecked, data: { data: { emptyRecord } } } = this.props;
+    return (activeFilterName === 'recordType.Bibliographic records' && activeFilterChecked) ?
+      (
+        <PaneMenu>
+          <CreateRecordButton
+            {...this.props}
+            data-test-clickable-new-record
+            label="search.record.new"
+            labels={this.renderDropdownLabels()}
+            onToggle={this.handleCreateRecord}
+            disabled={!emptyRecord}
+            withIcon
+            noDropdown
+          />
+        </PaneMenu>
+      ) :
+      (
+        <PaneMenu>
+          <CreateRecordButton
+            style={{ marginRight: '5px' }}
+            {...this.props}
+            data-test-clickable-new-record
+            label="search.record.new"
+            labels={this.renderDropdownLabels()}
+            disabled={!emptyRecord}
+            withIcon
+            onToggle={() => this.setState({
+              openDropDownMenu: !openDropDownMenu
+            })}
+            open={openDropDownMenu}
+          />
+        </PaneMenu>
+      );
   };
+
+  // renderButtonMenu = () => {
+  //   return (
+  //     <ToolbarButtonMenu
+  //       create
+  //       {...this.props}
+  //       label={
+  //         <Icon icon="plus-sign">
+  //           <FormattedMessage id="ui-marccat.browse.record.create" />
+  //         </Icon>
+  //       }
+  //     />
+  //   );
+  // };
 
   render() {
     const { browseDetailPanelIsVisible, rowClicked, detailSubtitle } = this.state;
@@ -208,7 +272,7 @@ export class BrowseResults extends React.Component<Props, S> {
           actionMenu={this.getActionMenu}
           paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
           firstMenu={firstMenu}
-          lastMenu={this.renderButtonMenu}
+          lastMenu={this.renderLastMenu()}
           onScroll={(e) => {
             e.preventDefault();
             const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
@@ -262,7 +326,6 @@ export class BrowseResults extends React.Component<Props, S> {
             defaultWidth="30%"
             paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
             paneSub={detailSubtitle}
-            lastMenu={this.renderButtonMenu}
             onClose={this.handleClosePanelDetails}
             actionMenu={this.getActionMenu}
             onScroll={() => { }}  // TODO: scroll for more results
@@ -282,6 +345,7 @@ export class BrowseResults extends React.Component<Props, S> {
             paneTitle={<FormattedMessage id="ui-marccat.search.record.preview" />}
             paneSub={C.EMPTY_STRING}
             appIcon={<AppIcon app={C.META.ICON_TITLE} />}
+            lastMenu={this.renderLastMenu()}
             actionMenu={this.getActionMenu}
             dismissible
             onScroll={() => {}}

@@ -13,11 +13,11 @@ export default ({ ...props }) => {
       shortcut: Localize({ key: 'cataloging.actions.add.field.above.shortcut' }),
       onClick: props.onAddAbove,
     },
-    {
-      label: Localize({ key: 'cataloging.actions.add.field.below' }),
-      shortcut: Localize({ key: 'cataloging.actions.add.field.below.shortcut' }),
-      onClick: props.onAdd,
-    },
+    // {
+    //   label: Localize({ key: 'cataloging.actions.add.field.below' }),
+    //   shortcut: Localize({ key: 'cataloging.actions.add.field.below.shortcut' }),
+    //   onClick: props.onAdd,
+    // },
     {
       label: Localize({ key: 'cataloging.actions.copy' }),
       shortcut: Localize({ key: 'cataloging.actions.copy.shortcut' }),

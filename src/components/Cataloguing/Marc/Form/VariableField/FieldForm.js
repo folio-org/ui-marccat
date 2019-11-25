@@ -75,7 +75,7 @@ class FieldForm extends React.Component {
     this.getColumnWidths = this.getColumnWidths.bind(this);
     this.getVisibleColumns = this.getVisibleColumns.bind(this);
     this.getReadOnlyColumns = this.getReadOnlyColumns.bind(this);
-    this.onAdd = this.onAdd.bind(this);
+    // this.onAdd = this.onAdd.bind(this);
     this.onAddAbove = this.onAddAbove.bind(this);
     this.onCancel = this.onCancel.bind(this);
     this.onResetAll = this.onResetAll.bind(this);
@@ -132,17 +132,17 @@ class FieldForm extends React.Component {
    *
    * @param {*} fields
    */
-  onAdd(fields) {
-    const { itemTemplate } = this.props;
-    const { status } = this.state;
-    const newStatus = [...status];
-    newStatus.push({ editing: true, error: false });
-    this.setState({
-      status: newStatus,
-    });
-    const item = { ...itemTemplate };
-    fields.push(item);
-  }
+  // onAdd(fields) {
+  //   const { itemTemplate } = this.props;
+  //   const { status } = this.state;
+  //   const newStatus = [...status];
+  //   newStatus.push({ editing: true, error: false });
+  //   this.setState({
+  //     status: newStatus,
+  //   });
+  //   const item = { ...itemTemplate };
+  //   fields.push(item);
+  // }
 
   /**
    *
@@ -516,9 +516,9 @@ class FieldForm extends React.Component {
 
     const keys = {
       addAbove: ['ctrl+enter'],
-      add: ['alt+enter'],
-      cleanField: ['delete'],
-      cleanAll: ['backspace'],
+      // add: ['alt+enter'],
+      cleanField: ['shift+backspace'],
+      cleanAll: ['shift+delete'],
       duplicate: ['CTRL+D'],
       copy: ['CTRL+C'],
       cut: ['CTRL+X'],
@@ -531,7 +531,7 @@ class FieldForm extends React.Component {
 
     const handlers = {
       addAbove: () => this.onAddAbove(fields),
-      add: () => this.onAdd(fields),
+      // add: () => this.onAdd(fields),
       cleanField: () => this.onCancel(fields, currentIndex),
       cleanAll: () => this.onResetAll(),
       duplicate: () => this.onDuplicate(fields, currentIndex),
@@ -561,7 +561,7 @@ class FieldForm extends React.Component {
                 <ActionsMenuButton
                   {...this.props}
                   onClick={onToggle}
-                  onAdd={() => this.onAdd(fields)}
+                  // onAdd={() => this.onAdd(fields)}
                   onAddAbove={() => this.onAddAbove(fields)}
                   onDuplicate={() => this.onDuplicate(fields, currentIndex)}
                   onCancel={() => this.onCancel(fields, currentIndex)}

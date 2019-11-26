@@ -25,12 +25,7 @@ export const RESOURCE_TYPE = {
   OKAPI: 'OKAPI'
 };
 export const ENDPOINT = {
-  HEADERS: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    // 'x-okapi-tenant': 'tnx',
-    'x-okapi-tenant': 'diku'
-  },
+
   DEFAULT_LANG_VIEW: 'lang=ita&view=1',
   // DEV_VM_OKAPI_URL: 'http://localhost:8080/marccat',
   OKAPI_URL: state => `${state.okapi.url}/marccat`,

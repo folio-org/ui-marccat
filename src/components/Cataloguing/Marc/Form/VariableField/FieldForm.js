@@ -519,14 +519,14 @@ class FieldForm extends React.Component {
       // add: ['alt+enter'],
       cleanField: ['shift+backspace'],
       cleanAll: ['shift+delete'],
-      duplicate: ['CTRL+D'],
-      copy: ['CTRL+C'],
-      cut: ['CTRL+X'],
-      paste: ['CTRL+V'],
-      undo: ['CTRL+Z'],
-      redo: ['CTRL+SHIFT+Z'],
-      lookup: ['CTRL+SHIFT+L'],
-      onViewMarkDocs: ['CTRL+SHIFT+W'],
+      duplicate: ['ctrl+d'],
+      copy: ['ctrl+c'],
+      cut: ['ctrl+x'],
+      paste: ['ctrl+v'],
+      undo: ['ctrl+z'],
+      redo: ['ctrl+shift+z'],
+      lookup: ['ctrl+shift+l'],
+      onViewMarkDocs: ['ctrl+shift+w'],
     };
 
     const handlers = {

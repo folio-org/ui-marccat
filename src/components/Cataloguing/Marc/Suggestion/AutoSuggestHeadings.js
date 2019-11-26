@@ -65,17 +65,17 @@ function AutoSuggestHeadings(props) {
   input.value = replaceAll(input.value);
   const remappedSuggestArray = [];
   if (suggestArray && suggestArray.length > 0 && fromShowHeadings === false) {
-      suggestArray
-        .split('')
-        .map(elem => remappedSuggestArray.push(
-          Object.assign({}, { value: '$' + elem, label: '$' + elem })
-        ));
-    } else if (suggestArray && suggestArray.length > 0 && fromShowHeadings === true) {
-      suggestArray.map(elem => remappedSuggestArray.push(
-        Object.assign({}, { value: elem.stringText, label: elem.stringText })
+    suggestArray
+      .split('')
+      .map(elem => remappedSuggestArray.push(
+        Object.assign({}, { value: '$' + elem, label: '$' + elem })
       ));
-    }
-  
+  } else if (suggestArray && suggestArray.length > 0 && fromShowHeadings === true) {
+    suggestArray.map(elem => remappedSuggestArray.push(
+      Object.assign({}, { value: elem.stringText, label: elem.stringText })
+    ));
+  }
+
   return (
     <HotKeys keyMap={keys} handlers={handlers}>
       <AutoSuggest

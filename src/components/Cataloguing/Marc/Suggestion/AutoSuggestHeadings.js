@@ -12,6 +12,7 @@ import { replaceAllinverted, replaceAll } from '../../Utils/MarcApiUtils';
 function AutoSuggestHeadings(props) {
   const initialState = {
     suggestArray: [],
+    fromShowHeadings: false
   };
 
   const [state, setState] = React.useState(initialState);
@@ -31,7 +32,7 @@ function AutoSuggestHeadings(props) {
       store.getState().form.variableFieldForm.values.items[0].variableField
         .displayValue
     );
-    const cb = payload => setState({ suggestArray: payload.headings });
+    const cb = payload => setState({ suggestArray: payload.headings, fromShowHeadings: true });
     dispatch(triggerBrowseHeadingSuggestion(code, ind1, ind2, stringText, cb));
     dispatch(change(REDUX.FORM.VARIABLE_FORM, input.name, displayValue));
     return suggestArray;
@@ -43,7 +44,7 @@ function AutoSuggestHeadings(props) {
     if (event && event !== undefined && event !== '') {
       const code = store.getState().form.variableFieldForm.values.items[0].variableField.code;
       if (event === '$' && code.length === 3) {
-        const cb = payload => setState({ suggestArray: payload.subfields });
+        const cb = payload => setState({ suggestArray: payload.subfields, fromShowHeadings: false });
         dispatch(triggerTagIndicatorsSuggestion(code, cb));
       }
       dispatch(change(REDUX.FORM.VARIABLE_FORM, input.name, event));
@@ -59,17 +60,22 @@ function AutoSuggestHeadings(props) {
     showHeadings: onShowHeadings,
   };
 
-  const { suggestArray } = state;
+  const { suggestArray, fromShowHeadings } = state;
   const { input } = props;
   input.value = replaceAll(input.value);
   const remappedSuggestArray = [];
-  if (suggestArray && suggestArray.length > 0) {
-    suggestArray
-      .split('')
-      .map(elem => remappedSuggestArray.push(
-        Object.assign({}, { value: '$' + elem, label: '$' + elem })
+  if (suggestArray && suggestArray.length > 0 && fromShowHeadings === false) {
+      suggestArray
+        .split('')
+        .map(elem => remappedSuggestArray.push(
+          Object.assign({}, { value: '$' + elem, label: '$' + elem })
+        ));
+    } else if (suggestArray && suggestArray.length > 0 && fromShowHeadings === true) {
+      suggestArray.map(elem => remappedSuggestArray.push(
+        Object.assign({}, { value: elem.stringText, label: elem.stringText })
       ));
-  }
+    }
+  
   return (
     <HotKeys keyMap={keys} handlers={handlers}>
       <AutoSuggest

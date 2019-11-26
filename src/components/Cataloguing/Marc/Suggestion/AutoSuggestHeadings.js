@@ -7,7 +7,7 @@ import {
   triggerTagIndicatorsSuggestion,
 } from '../../Actions';
 import { REDUX } from '../../../../config/constants';
-import { replaceAllinverted } from '../../Utils/MarcApiUtils';
+import { replaceAllinverted, replaceAll } from '../../Utils/MarcApiUtils';
 
 function AutoSuggestHeadings(props) {
   const initialState = {
@@ -38,17 +38,15 @@ function AutoSuggestHeadings(props) {
   };
 
   const onChange = event => {
-    let { suggestArray } = state;
+    const { suggestArray } = state;
     const { dispatch, store, change, input } = props;
     if (event && event !== undefined && event !== '') {
-      if (event === '$') {
+      const code = store.getState().form.variableFieldForm.values.items[0].variableField.code;
+      if (event === '$' && code.length === 3) {
         const cb = payload => setState({ suggestArray: payload.subfields });
-        const code = store.getState().form.variableFieldForm.values.items[0]
-          .variableField.code;
         dispatch(triggerTagIndicatorsSuggestion(code, cb));
       }
       dispatch(change(REDUX.FORM.VARIABLE_FORM, input.name, event));
-      suggestArray = [];
     }
     return suggestArray;
   };
@@ -63,19 +61,14 @@ function AutoSuggestHeadings(props) {
 
   const { suggestArray } = state;
   const { input } = props;
+  input.value = replaceAll(input.value);
   const remappedSuggestArray = [];
   if (suggestArray && suggestArray.length > 0) {
-    if (suggestArray.length > 7) {
-      suggestArray
-        .split('')
-        .map(elem => remappedSuggestArray.push(
-          Object.assign({}, { value: '$' + elem, label: '$' + elem })
-        ));
-    } else {
-      suggestArray.map(elem => remappedSuggestArray.push(
-        Object.assign({}, { value: elem.stringText, label: elem.stringText })
+    suggestArray
+      .split('')
+      .map(elem => remappedSuggestArray.push(
+        Object.assign({}, { value: '$' + elem, label: '$' + elem })
       ));
-    }
   }
   return (
     <HotKeys keyMap={keys} handlers={handlers}>

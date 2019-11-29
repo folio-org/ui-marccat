@@ -1,14 +1,17 @@
-// @flow
-import * as React from 'react';
-import FieldView from './FieldView';
+import React from 'react';
+import PropTypes from 'prop-types';
 import FieldEdit from './FieldEdit';
+import FieldView from './FieldView';
 
-type Prop = {
-  editing: boolean,
-  cells: Array<Object>,
+const EditableItem = ({ editing: isEditing, ...passThroughProps }) => {
+  if (isEditing) {
+    return <FieldEdit {...passThroughProps} autoFocus />;
+  }
+  return <FieldView {...passThroughProps} />;
 };
-const EditableItem = ({ editing, ...props }: Prop): React.Component<Prop> => (
-  editing ? <FieldEdit {...props} autoFocus /> : <FieldView {...props} />
-);
+
+EditableItem.propTypes = {
+  editing: PropTypes.bool.isRequired,
+};
 
 export default EditableItem;

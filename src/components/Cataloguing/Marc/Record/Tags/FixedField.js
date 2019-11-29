@@ -31,10 +31,6 @@ class FixedField extends React.PureComponent<P, State> {
     this.handleAdd = this.handleAdd.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
     this.getActionButton = this.getActionButton.bind(this);
-    this.RenderField = this.RenderField.bind(this);
-    this.RenderField006 = this.RenderField006.bind(this);
-    this.RenderField007 = this.RenderField007.bind(this);
-    this.RenderField008 = this.RenderField008.bind(this);
   }
 
   // eslint-disable-next-line camelcase
@@ -61,22 +57,6 @@ class FixedField extends React.PureComponent<P, State> {
     }));
   }
 
-  RenderField({ element, ...props }) {
-    const { headertype006, headertype007, headertype008 } = props;
-    const headingTypes = headertype006 || headertype007 || headertype008;
-    return (
-      <React.Fragment>
-        {!isEmpty(headingTypes) &&
-          <Tag00X
-            {...props}
-            element={element}
-            headingTypes={headingTypes}
-          />
-        }
-      </React.Fragment>
-    );
-  }
-
   RenderField00X = () => {
     const { fields } = this.state;
     const { headertype006, headertype007, headertype008 } = this.props;
@@ -88,31 +68,6 @@ class FixedField extends React.PureComponent<P, State> {
               : <Tag00X element={f} headingTypes={headertype008} {...this.props} />
         ))}
       </React.Fragment>);
-  }
-
-  RenderField006(props) {
-    const { headertype006 } = props;
-    return (
-      <this.RenderField headingTypes={headertype006 || {}} {...props} />
-    );
-  }
-
-  RenderField007(props) {
-    const { fields } = this.state;
-    const { headertype007 } = props;
-    const field007 = first(fields.filter(f => f.fixedField.code === TAGS._007));
-    return (
-      <this.RenderField element={field007} headingTypes={headertype007 || {}} {...props} />
-    );
-  }
-
-  RenderField008(props) {
-    const { fields } = this.state;
-    const { headertype008 } = props;
-    const field008 = first(fields.filter(f => f.fixedField.code === TAGS._008));
-    return (
-      <this.RenderField element={field008} headingTypes={headertype008 || {}} {...props} />
-    );
   }
 
   getActionButton(item) {

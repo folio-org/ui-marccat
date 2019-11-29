@@ -43,9 +43,8 @@ class Leader extends React.PureComponent<P, S> {
    * @param {*} replace - a mutate leader
    */
   replaceAt(string, index, replaceValue) {
-    const { dispatch, change, set008HeaderType, headerTypeCodeFromLeader } = this.props;
+    const { dispatch, change, set008HeaderType } = this.props;
     const leaderVal = string.substring(0, index) + replaceValue + string.substring(index + 1);
-    dispatch(change('Tag008', headerTypeCodeFromLeader || 0));
     dispatch(change('leader', leaderVal));
     if (index === 6 || index === 7) {
       set008HeaderType(leaderVal);
@@ -80,7 +79,8 @@ class Leader extends React.PureComponent<P, S> {
 
   render() {
     const { leaderCss, firsAccess } = this.state;
-    const { leaderValue, dispatch, change, leaderData } = this.props;
+    const { leaderValue, dispatch, change, leaderData, headerTypeCodeFromLeader } = this.props;
+    dispatch(change('Tag008', headerTypeCodeFromLeader));
     if (firsAccess && !isEmpty(leaderData)) Object.values(leaderData.results).map(k => dispatch(change('Leader-'.concat(k.name), k.defaultValue)));
 
     return (
@@ -116,12 +116,15 @@ class Leader extends React.PureComponent<P, S> {
   }
 }
 
+const mapStateToProps = state => {
+  const { headerTypeValues008 } = state.marccat.data;
+  return {
+    headerTypeCodeFromLeader: (headerTypeValues008) ? headerTypeValues008.results.headerTypeCode : undefined
+  };
+};
+
 const mapDispatchToProps = dispatch => ({
   set008HeaderType: leader => dispatch(change008ByLeaderAction(leader)),
 });
 
-export default (connect(
-  ({ marccat: { data: { headerTypeValues008 } } }) => ({
-    headerTypeCodeFromLeader: (headerTypeValues008) ? headerTypeValues008.results.headerTypeCode : undefined,
-  }), mapDispatchToProps
-)((Leader)));
+export default (connect(mapStateToProps, mapDispatchToProps)((Leader)));

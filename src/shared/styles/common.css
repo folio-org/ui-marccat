@@ -8,9 +8,12 @@
   width: 100%;
 }
 
-header {
+/* Disabled because it got applied globally and
+  caused a bug where the app- and profile-dropdown
+  got rendered behind the content, making it inaccessible.
+/* header {
   z-index: 2 !important;
-}
+} */
 
 .padding8 {
   padding-bottom: 8px;

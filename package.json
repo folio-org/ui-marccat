@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "stripes serve --lint config/stripesclirc.config",
-    "build": "stripes build --no-minify --okapi https://folio-snapshot.aws.indexdata.com:9130 --output dist/",
+    "build": "stripes build --no-minify --okapi http://okapi.atcult.it:9130 --output dist/",
     "build:flow": "yarn run flow --show-all-branches --show-all-errors --ignore-version",
     "test": "stripes test karma",
     "test:coverage": "stripes test karma --coverage",

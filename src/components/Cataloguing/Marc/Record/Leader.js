@@ -49,6 +49,7 @@ class Leader extends React.PureComponent<P, S> {
     if (index === 6 || index === 7) {
       set008HeaderType(leaderVal);
     }
+    this.setState({ leaderVal });
   }
 
 

@@ -57,6 +57,7 @@ class Record extends React.Component<Props, {
       id: findParam('id'),
       submit: false,
       deletedTag: false,
+      statusCode: ''
     };
     this.renderDropdownLabels = this.renderDropdownLabels.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -118,7 +119,7 @@ class Record extends React.Component<Props, {
         item.variableField.keyNumber = data.keyNumber || item.variableField.keyNumber;
       }
       item.variableField.displayValue = data.displayValue;
-      if (response.statusCode === 'OK') {
+      if (response.status === 201) {
         showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.create.success', value: item.code }), C.VALIDATION_MESSAGE_TYPE.SUCCESS);
       } else {
         showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.create.failure', value: item.code }), C.VALIDATION_MESSAGE_TYPE.ERROR);
@@ -189,14 +190,15 @@ class Record extends React.Component<Props, {
   }
 
   deleteRecord = async () => {
+    let { statusCode } = this.state;
     const { recordDetail, store, router, reset } = this.props;
     await del(buildUrl(store.getState(), C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + recordDetail.id, C.ENDPOINT.DEFAULT_LANG_VIEW), recordDetail.id, store.getState())
       .then((r) => {
-        return r.json();
+        statusCode = r.status;
       })
-      .then((r) => {
-        if (r.statusCode === 'OK') {
-          showValidationMessage(this.callout, 'Record successfully deleted!', 'success');
+      .then(() => {
+        if (statusCode === 204) {
+          showValidationMessage(this.callout, 'Record successfully deleted', 'success');
         } else {
           showValidationMessage(this.callout, 'Failed: something went wrong', 'error');
         }

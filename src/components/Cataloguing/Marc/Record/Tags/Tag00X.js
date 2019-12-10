@@ -82,9 +82,7 @@ class Tag00X extends React.PureComponent<Props, S> {
     if (fromStore.marccat.data.fixedfield008 === undefined || !e) {
       results = data.results || data;
       Object.entries(results).map(([k, v]) => (payload[k] = v.defaultValue));
-      Object.entries(results).map(([k, v]) =>
-        dispatch(change(`Tag${code}-${headerTypeCode}-${k}`, v.defaultValue))
-      );
+      Object.entries(results).map(([k, v]) => dispatch(change(`Tag${code}-${headerTypeCode}-${k}`, v.defaultValue)));
     } else {
       results = fromStore.marccat.data.fixedfield008.results;
       Object.entries(results).map(([k, v]) => {
@@ -174,11 +172,9 @@ class Tag00X extends React.PureComponent<Props, S> {
         placeholder={'Select Heading types for '.concat(element.code)}
         value={
           element.code === TAGS._008 && props.headerTypeCodeFromLeader
-            ? props.headertypes.map(k =>
-                k.value === props.headerTypeCodeFromLeader
-                  ? this.onHandleChange()
-                  : typeCode
-              )
+            ? props.headertypes.map(k => (k.value === props.headerTypeCodeFromLeader
+              ? this.onHandleChange()
+              : typeCode))
             : typeCode
         }
       />
@@ -204,14 +200,14 @@ class Tag00X extends React.PureComponent<Props, S> {
         )}
         {code === TAGS._007 &&
           (headerTypeCode === 25 || headerTypeCode === 42) && (
-            <Col xs={12}>
-              <Tag00XInput
-                {...this.props}
-                name={IMAGE_BIT_DEPTH}
-                onChange={e => this.handleDisplayValue(e, sortedData)}
-              />
-            </Col>
-          )}
+          <Col xs={12}>
+            <Tag00XInput
+              {...this.props}
+              name={IMAGE_BIT_DEPTH}
+              onChange={e => this.handleDisplayValue(e, sortedData)}
+            />
+          </Col>
+        )}
         {code === TAGS._008 && (
           <React.Fragment>
             <Col xs={6}>
@@ -264,8 +260,8 @@ class Tag00X extends React.PureComponent<Props, S> {
       element.code === TAGS._006
         ? values006
         : element.code === TAGS._007
-        ? values007
-        : values008;
+          ? values007
+          : values008;
     return (
       <div className={style.fieldContainer} no-padding>
         <MarcField

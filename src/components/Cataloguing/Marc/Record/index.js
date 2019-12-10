@@ -57,7 +57,6 @@ class Record extends React.Component<Props, {
       id: findParam('id'),
       submit: false,
       deletedTag: false,
-      statusCode: ''
     };
     this.renderDropdownLabels = this.renderDropdownLabels.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -119,7 +118,7 @@ class Record extends React.Component<Props, {
         item.variableField.keyNumber = data.keyNumber || item.variableField.keyNumber;
       }
       item.variableField.displayValue = data.displayValue;
-      if (response.status === 201) {
+      if (response.statusCode === 'OK') {
         showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.create.success', value: item.code }), C.VALIDATION_MESSAGE_TYPE.SUCCESS);
       } else {
         showValidationMessage(this.callout, Localize({ key: 'cataloging.record.tag.create.failure', value: item.code }), C.VALIDATION_MESSAGE_TYPE.ERROR);
@@ -150,7 +149,6 @@ class Record extends React.Component<Props, {
   saveRecord = async () => {
     const { datastore: { emptyRecord }, store: { getState } } = this.props;
     const { deletedTag } = this.state;
-    let { statusCode } = this.state;
     const formData = getState().form.dataFieldForm.values;
     const initialValues = getState().form.variableFieldForm.initial.items;
     let variableFormData = getState().form.variableFieldForm.values.items;
@@ -175,47 +173,51 @@ class Record extends React.Component<Props, {
 
     await post(buildUrl(getState(), C.ENDPOINT.BIBLIOGRAPHIC_RECORD, C.ENDPOINT.DEFAULT_LANG_VIEW), payload, getState())
       .then((r) => {
-        statusCode = r.status;
         return r.json();
       })
-      .then(() => {
-        if (statusCode === 201) {
-          showValidationMessage(this.callout, 'cataloging.record.update.success', 'success');
+      .then((r) => {
+        const checkCodeForSearch = r.statusCode;
+        if (r.statusCode === 'OK') {
+          showValidationMessage(this.callout, 'Record saved correctly!', 'success');
         } else {
-          showValidationMessage(this.callout, 'cataloging.record.update.error', 'error');
+          showValidationMessage(this.callout, 'Failed: something went wrong', 'error');
         }
         setTimeout(() => {
-          this.handleClose();
+          this.handleClose(checkCodeForSearch);
         }, 2000);
       });
   }
 
   deleteRecord = async () => {
-    let { statusCode } = this.state;
-    const { recordDetail, store } = this.props;
+    const { recordDetail, store, router, reset } = this.props;
     await del(buildUrl(store.getState(), C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + recordDetail.id, C.ENDPOINT.DEFAULT_LANG_VIEW), recordDetail.id, store.getState())
       .then((r) => {
-        statusCode = r.status;
+        return r.json();
       })
-      .then(() => {
-        if (statusCode === 204) {
-          showValidationMessage(this.callout, 'cataloging.record.DELETED.success', 'success');
+      .then((r) => {
+        if (r.statusCode === 'OK') {
+          showValidationMessage(this.callout, 'Record successfully deleted!', 'success');
         } else {
-          showValidationMessage(this.callout, 'cataloging.record.DELETED.error', 'error');
+          showValidationMessage(this.callout, 'Failed: something went wrong', 'error');
         }
         setTimeout(() => {
-          this.handleClose();
+          reset();
+          return router.push('/marccat/search');
         }, 2000);
       });
   };
 
-  handleClose = () => {
+  handleClose = (checkCodeForSearch) => {
     const { id, submit } = this.state;
     const { dispatch, router, toggleFilterPane, reset } = this.props;
-    dispatch({ type: ACTION.FILTERS, payload: {}, filterName: '', isChecked: false });
+    if (checkCodeForSearch === 'OK') {
+      dispatch({ type: ACTION.FILTERS, payload: {}, filterName: '', isChecked: false });
+      reset();
+      toggleFilterPane();
+      return (submit) ? router.push(`/marccat/search?savedId=${id}`) : router.push('/marccat/search');
+    }
     reset();
-    toggleFilterPane();
-    return (submit) ? router.push(`/marccat/search?savedId=${id}`) : router.push('/marccat/search');
+    return router.push('/marccat/search');
   };
 
   renderDropdownLabels = () => {

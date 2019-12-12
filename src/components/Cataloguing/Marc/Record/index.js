@@ -217,9 +217,13 @@ class Record extends React.Component<Props, {
       reset();
       toggleFilterPane();
       return (submit) ? router.push(`/marccat/search?savedId=${id}`) : router.push('/marccat/search');
+    } else if (checkCodeForSearch === undefined) {
+      dispatch({ type: ACTION.FILTERS, payload: {}, filterName: '', isChecked: false });
+      reset();
+      toggleFilterPane();
+      return router.push('/marccat/search');
     }
-    reset();
-    return router.push('/marccat/search');
+    return reset();
   };
 
   renderDropdownLabels = () => {

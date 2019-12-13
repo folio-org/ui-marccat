@@ -92,7 +92,11 @@ class Tag00X extends React.PureComponent<Props, S> {
         return payload;
       });
       const selected = last(e.target.name.split('-'));
-      payload[selected] = e.target.value;
+      if ((selected === 'dateFirstPublication' || selected === 'dateLastPublication')) {
+        payload[selected] = e.target.value.trim();
+      } else {
+        payload[selected] = e.target.value;
+      }
     }
     this.prepareValue(code, results, payload, headerTypeCode);
     const cb = r => this.execChange(r);
@@ -127,22 +131,10 @@ class Tag00X extends React.PureComponent<Props, S> {
     }
     if (code === TAGS._008) {
       if (payload.dateFirstPublication === undefined) {
-        payload.dateFirstPublication = formFieldValue(
-          store,
-          REDUX.FORM.DATA_FIELD_FORM,
-          DATE_FIRST_PUBBLICATION
-        );
-      } else {
-        payload.dateFirstPublication.trim();
+        payload.dateFirstPublication = '    ';
       }
       if (payload.dateLastPublication === undefined) {
-        payload.dateLastPublication = formFieldValue(
-          store,
-          REDUX.FORM.DATA_FIELD_FORM,
-          DATE_LAST_PUBBLICATION
-        );
-      } else {
-        payload.dateLastPublication.trim();
+        payload.dateLastPublication = '    ';
       }
       payload.dateEnteredOnFile = formFieldValue(
         store,

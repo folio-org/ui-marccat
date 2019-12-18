@@ -42,6 +42,17 @@ class SearchResultPane extends React.Component<Props, {}> {
       isLoadMore,
     } = this.props;
 
+    const customColumns = [];
+    if (store.getState().form.checkboxForm && store.getState().form.checkboxForm.values) {
+      const columns = store.getState().form.checkboxForm.values;
+      Object.keys(columns).map((e) => {
+        if (e !== 'checkboxForm' && columns[e] === true) {
+          customColumns.push(e.split('-')[0]);
+        }
+        return customColumns;
+      });
+    }
+    console.log(customColumns);
     return (
       isLoadMore === 'N' || isLoadMore === undefined ?
         <Pane
@@ -77,7 +88,7 @@ class SearchResultPane extends React.Component<Props, {}> {
                     contentData={mergedRecord}
                     formatter={resultsFormatter(bibsOnly, autOnly)}
                     columnMapping={columnMapper(bibsOnly, autOnly)}
-                    visibleColumns={renderColumn(bibsOnly, autOnly)}
+                    visibleColumns={renderColumn(bibsOnly, autOnly, customColumns)}
                   /> : <EmptyMessage {...this.props} />
           }
         </Pane> : (isLoadMore === 'Y') &&
@@ -108,7 +119,7 @@ class SearchResultPane extends React.Component<Props, {}> {
             contentData={mergedRecord}
             formatter={resultsFormatter(bibsOnly, autOnly)}
             columnMapping={columnMapper(bibsOnly, autOnly)}
-            visibleColumns={renderColumn(bibsOnly, autOnly)}
+            visibleColumns={renderColumn(bibsOnly, autOnly, customColumns)}
           />
         </Pane>
     );
@@ -116,7 +127,8 @@ class SearchResultPane extends React.Component<Props, {}> {
   }
 }
 export default (connect(
-  ({ marccat: { search } }) => ({
+  ({ marccat: { search, customColumn } }) => ({
     isLoadMore: search.moreData,
+    customCol: customColumn
   }),
 )(injectProps(SearchResultPane)));

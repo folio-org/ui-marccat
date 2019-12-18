@@ -15,6 +15,7 @@ import {
   panelsReducer,
   totalBibCountDocReducer,
   totalAuthCountDocReducer,
+  customColumnReducer
 } from './reducers/Reducer';
 import {
   searchEpic,
@@ -51,6 +52,7 @@ export const reducer = combineReducers({
   panels: panelsReducer,
   totalBibRecords: totalBibCountDocReducer,
   totalAuthRecords: totalAuthCountDocReducer,
+  customColumn: customColumnReducer,
   data,
   history
 });

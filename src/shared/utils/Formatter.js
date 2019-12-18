@@ -48,8 +48,12 @@ export const columnMapper = (isBibsOnly: ?boolean, isAuthOnly: ?boolean = true) 
   }
   return mapper;
 };
-export const renderColumn = (isBibsOnly: ?boolean, isAuthOnly: ?boolean = true) => {
+export const renderColumn = (isBibsOnly: ?boolean, isAuthOnly: ?boolean = true, customColumns: Array) => {
   let visibleCol = [];
+  if (customColumns.length > 0) {
+    visibleCol = customColumns;
+    return visibleCol;
+  }
   if (isBibsOnly === true) {
     visibleCol = [
       'resultView',

@@ -3,8 +3,9 @@
 // @flow
 import * as React from 'react';
 import { reduxForm, Field } from 'redux-form';
+import { Checkbox } from '@folio/stripes-components';
 import type { Props } from '../../../flow/types.js.flow';
-// import { ACTION } from '../../../redux/actions/Actions';
+import { ACTION } from '../../../redux/actions/Actions';
 // eslint-disable-next-line no-unused-vars
 // import style from '../Style/InputField.css';
 
@@ -31,14 +32,15 @@ export class CheckboxIconButton extends React.Component<Props, {}> {
               className="checkbox"
               name={l}
               type="checkbox"
-              component="input"
+              component={Checkbox}
+              onClick={() => {
+                dispatch(change('checkboxForm', 'checked', true));
+                dispatch({ type: ACTION.CUSTOM_COLUMN_VIEW });
+              }}
             />
             <label
               htmlFor={l}
               className="checkbox"
-              onClick={() => {
-                dispatch(change('checkboxForm', 'checked', true));
-              }}
             >
               {l.split('-')[1]}
             </label>

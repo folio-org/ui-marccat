@@ -8,11 +8,11 @@ import style from '../Style/Dropdown.css';
 
 export const ActionMenu = () => {
   const labels = [
-    'resultView-View',
+    'resultView-Record Type',
     '001-id Number',
-    '245-Title',
-    'name-Name',
-    'preferredTitle-Preferred Title',
+    // '245-Title',
+    // 'name-Name',
+    'preferredTitle-Uniform Title',
     'tagHighlighted-Tag',
     'date1-Date 1',
     'date2-Date 2',

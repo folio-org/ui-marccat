@@ -339,6 +339,19 @@ export function panelsReducer(state = {}, action) { // TO BE REMOVED
   }
 }
 
+
+export function customColumnReducer(state = {}, action) {
+  switch (action.type) {
+  case ACTION.CUSTOM_COLUMN_VIEW:
+    return {
+      ...state,
+    };
+  default:
+    return state;
+  }
+}
+
+
 export function settingsReducer(state = {}, action) {
   switch (action.type) {
   case ACTION.SETTINGS:

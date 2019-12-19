@@ -65,7 +65,7 @@
     "settings.single.record.overlay.rules": "Single record overlay rules",
     "settings.local.authority.records": "Local Authority Records",
     "settings.record.single.overlay.rules.text": "When importing single Marc record, do not override these locked fields:",
-    "settings.local.authority.text": "Allow the creation of Local Authority Records",
+    "settings.local.authority.text": "Allow the creation of local authority records",
     "template.actionmenu.new": "New Template",
     "settings.default.record.template.auth.text": "Authority Records. Organization-wide templates:",
     "settings.default.record.template.bib.text": "Bibliografic Records. Organization-wide templates:",

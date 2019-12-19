@@ -51,7 +51,8 @@ export const columnMapper = (isBibsOnly: ?boolean, isAuthOnly: ?boolean = true) 
 export const renderColumn = (isBibsOnly: ?boolean, isAuthOnly: ?boolean = true, customColumns: Array) => {
   let visibleCol = [];
   if (customColumns.length > 0) {
-    visibleCol = customColumns;
+    visibleCol = ['245', 'name'];
+    visibleCol = [...customColumns, ...visibleCol];
     return visibleCol;
   }
   if (isBibsOnly === true) {

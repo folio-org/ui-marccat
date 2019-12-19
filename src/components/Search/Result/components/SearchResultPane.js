@@ -52,7 +52,6 @@ class SearchResultPane extends React.Component<Props, {}> {
         return customColumns;
       });
     }
-    console.log(customColumns);
     return (
       isLoadMore === 'N' || isLoadMore === undefined ?
         <Pane

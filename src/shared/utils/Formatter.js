@@ -52,7 +52,14 @@ export const renderColumn = (isBibsOnly: ?boolean, isAuthOnly: ?boolean = true, 
   let visibleCol = [];
   if (customColumns.length > 0) {
     visibleCol = ['245', 'name'];
-    visibleCol = [...customColumns, ...visibleCol];
+    customColumns.map(el => {
+      if (el === 'resultView') {
+        visibleCol.unshift('resultView');
+        customColumns.splice(customColumns.indexOf(el), 1);
+      }
+      return visibleCol;
+    });
+    visibleCol = [...visibleCol, ...customColumns];
     return visibleCol;
   }
   if (isBibsOnly === true) {

@@ -75,7 +75,7 @@ class Record extends React.Component<Props, {
     const { leader } = emptyRecord.results;
     loadLeaderData({ value: leader.value, code: leader.code, typeCode: '15' });
     loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
-    dispatch(MarcAction.change008ByLeaderAction(leader));
+    dispatch(MarcAction.change008ByLeaderAction(leader.value));
   }
 
 

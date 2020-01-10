@@ -11,7 +11,7 @@ export const loadTemplatesAction = () => {
     data: {
       path: ENDPOINT.AUTOSUGGESTION_TAG_URL,
       type: 'tags',
-      params: 'lang=ita',
+      params: 'lang=eng',
     },
   };
 };
@@ -26,7 +26,7 @@ export const createTemplateAction = () => {
     data: {
       path: ENDPOINT.VIEW_TEMPLATE_URL,
       type: 'template',
-      params: 'lang=ita&type=B',
+      params: 'lang=eng&type=B',
     },
   };
 };

@@ -10,7 +10,7 @@ export const leaderDropdownAction = (payload) => {
     data: {
       path: ENDPOINT.FIXED_FIELD_CODE_GROUPS_URL,
       type: 'leaderData',
-      params: `value=${payload.value}&code=${payload.code}&headerTypeCode=${payload.typeCode}&lang=ita`,
+      params: `value=${payload.value}&code=${payload.code}&headerTypeCode=${payload.typeCode}&lang=eng`,
     },
   };
 };
@@ -24,7 +24,7 @@ export const autosuggestionAction = (payload) => {
     data: {
       path: ENDPOINT.HEADING_BY_TAG,
       type: `headings-by-tag-${payload.code}`,
-      params: `tag=${payload.code}&ind1=${payload.ind1}&ind2=${payload.ind2}&displayValue=${payload.displayValue}&view=1&mainLibrary=170&pageSize=30&lang=ita`,
+      params: `tag=${payload.code}&ind1=${payload.ind1}&ind2=${payload.ind2}&displayValue=${payload.displayValue}&view=1&mainLibrary=170&pageSize=30&lang=eng`,
     },
   };
 };
@@ -174,7 +174,7 @@ export const headertypeAction = (tag) => {
     data: {
       path: ENDPOINT.HEADER_TYPES_URL,
       type: `headertype${tag}`,
-      params: `code=${tag}&lang=ita`,
+      params: `code=${tag}&lang=eng`,
     },
   };
 };
@@ -187,7 +187,7 @@ export const dropDownValuesAction = (payload) => {
       type: `headerTypeValues${payload.code}`,
       key: payload.code,
       id: payload.code,
-      params: `leader=${payload.value}&code=${payload.code}&headerTypeCode=${payload.headerTypeCode}&lang=ita`
+      params: `leader=${payload.value}&code=${payload.code}&headerTypeCode=${payload.headerTypeCode}&lang=eng`
     },
     cb: payload.cb
   };
@@ -200,7 +200,7 @@ export const change008ByLeaderAction = (payload) => {
       path: ENDPOINT.CHANGE_TAG_DISPLAY_VALUE_FROM_LEADER,
       leader: payload,
       type: 'headerTypeValues008',
-      params: `leader=${payload}&lang=ita`
+      params: `leader=${payload}&lang=eng`
     },
   };
 };
@@ -257,7 +257,7 @@ export const autosuggestionTag = () => {
     data: {
       path: ENDPOINT.AUTOSUGGESTION_TAG_URL,
       type: 'tags',
-      params: 'lang=ita',
+      params: 'lang=eng',
     },
   };
 };

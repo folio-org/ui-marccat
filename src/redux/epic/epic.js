@@ -3,6 +3,7 @@ import { from } from 'rxjs/observable/from';
 import { of } from 'rxjs/observable/of';
 import * as Resolver from '../helpers/Resolver';
 import { ACTION } from '../actions';
+import { ENDPOINT } from '../../config/constants';
 // import { ENDPOINT } from '../../config/constants';
 
 const initialState = {};
@@ -114,7 +115,7 @@ export const getHeaders = (state) => {
   const headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-    // 'X-Okapi-Tenant': 'tnx'
+    // 'X-Okapi-Tenant': 'tny',
     'X-Okapi-Tenant': `${state.okapi.tenant}`,
     'X-Okapi-Token': `${state.okapi.token}`
   };

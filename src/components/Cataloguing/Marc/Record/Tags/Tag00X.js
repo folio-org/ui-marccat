@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { isEmpty, last } from 'lodash';
 import { PreviousMap } from 'postcss';
 import { EMPTY_SPACED_STRING, REDUX } from '../../../../../config/constants';
-import { decamelizify } from '../../../../../shared';
+import { decamelizify, findParam } from '../../../../../shared';
 import type { Props, State } from '../../../../../flow/types.js.flow';
 
 import style from '../../../Style/index.css';
@@ -22,6 +22,7 @@ import {
   DATE_LAST_PUBBLICATION,
   IMAGE_BIT_DEPTH,
   RECORD_FIELD_STATUS,
+  RECORD_ACTION,
 } from '../../../Utils/MarcConstant';
 import { MarcField } from '../..';
 import Tag00XInput from '../components/Tag00XInput';
@@ -36,6 +37,7 @@ class Tag00X extends React.PureComponent<Props, S> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      isEditMode:  (findParam('mode') === RECORD_ACTION.EDIT_MODE),
       expand: false,
       headerTypeCode: 0,
     };
@@ -69,7 +71,7 @@ class Tag00X extends React.PureComponent<Props, S> {
   };
 
   handleDisplayValue = (e, data) => {
-    const { headerTypeCode } = this.state;
+    const { headerTypeCode, isEditMode } = this.state;
     const {
       store,
       dispatch,
@@ -98,9 +100,13 @@ class Tag00X extends React.PureComponent<Props, S> {
         payload[selected] = e.target.value;
       }
     }
-    this.prepareValue(code, results, payload, headerTypeCode);
-    const cb = r => this.execChange(r);
-    dispatch(changeDisplayValueAction(payload, cb));
+    if (isEditMode) {
+      // TODO: implementare per microservizio che da display value mi torna i valori di default di quell esatto display value
+    } else {
+      this.prepareValue(code, results, payload, headerTypeCode);
+      const cb = r => this.execChange(r);
+      dispatch(changeDisplayValueAction(payload, cb));
+    }
   };
 
   execChange = (response: Object): void => {

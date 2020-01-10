@@ -75,7 +75,7 @@
     "cataloging.accordion.fixedfield.label": "حقول التحكم (001 ، 003 ، 005 ، 006 ، 007 ، 008)",
     "cataloging.accordion.variablefield.label": "حقول متغيرة",
     "cataloging.accordion.checkbox.label": "حجب",
-    "cataloging.checkbox.label": "حجب من الاكتشاف",
+    "cataloging.checkbox.label": "حجب عن الاكتشاف",
     "cataloging.record.edit": "تحرير التسجيلة",
     "cataloging.record.create": "إنشاء تسجيلة",
     "cataloging.record.delete": "حذف التسجيلة",

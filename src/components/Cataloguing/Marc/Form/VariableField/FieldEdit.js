@@ -11,7 +11,7 @@ type Props = {
   cells: Array<Object>,
   columnMapping: Array<Object>,
   error: string | boolean,
-  field: PropTypes.string,
+  field: string,
   fieldComponents: Array<Object>,
   readOnlyFields: Array<string>,
   rowIndex: number,

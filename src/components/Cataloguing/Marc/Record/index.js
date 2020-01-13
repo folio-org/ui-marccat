@@ -75,20 +75,20 @@ class Record extends React.Component<Props, {callout: React.RefObject<Callout>}>
   UNSAFE_componentWillMount() {
     const { datastore: { emptyRecord }, loadLeaderData, loadHeadertype, dispatch } = this.props;
     const { mode } = this.state;
-    if (mode === RECORD_ACTION.EDIT_MODE) {
-      const { recordDetail } = this.props;
-      const leaderEdit = recordDetail.leader;
-      loadLeaderData({ value: leaderEdit.value, code: leaderEdit.code, typeCode: this.checkLeaderForEditMode(recordDetail.leader.value) });
-      loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
-      dispatch(MarcAction.change008ByLeaderAction(leaderEdit.value));
-      // this.checkLeaderForEditMode(leaderEdit.value);
-    } else {
-      const { leader } = emptyRecord.results;
-      loadLeaderData({ value: leader.value, code: leader.code, typeCode: '15' });
-      loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
-      dispatch(MarcAction.change008ByLeaderAction(leader.value));
-    }
+    // if (mode === RECORD_ACTION.EDIT_MODE) {
+    //   const { recordDetail } = this.props;
+    //   const leaderEdit = recordDetail.leader;
+    //   loadLeaderData({ value: leaderEdit.value, code: leaderEdit.code, typeCode: recordDetail.leader.value });
+    //   loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
+    //   dispatch(MarcAction.change008ByLeaderAction(leaderEdit.value));
+    //   // this.checkLeaderForEditMode(leaderEdit.value);
+    // } else {
+    const { leader } = emptyRecord.results;
+    loadLeaderData({ value: leader.value, code: leader.code, typeCode: '15' });
+    loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
+    dispatch(MarcAction.change008ByLeaderAction(leader.value));
   }
+  // }
 
   getCurrentRecord = (): Object => {
     const { datastore: { emptyRecord, recordDuplicate }, recordDetail } = this.props;

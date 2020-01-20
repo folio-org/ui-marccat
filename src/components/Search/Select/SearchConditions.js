@@ -12,18 +12,30 @@ export default ({ ...props }) => {
     { label: 'Contains', value: 'CONTAINS' },
     { label: 'Exact match', value: 'MATCH' }
   ];
+  const optionsAllPubKey = [
+    { label: 'Contains', value: 'CONTAINS' },
+    { label: 'Exact match', value: 'MATCH' }
+  ];
 
   const remappedOptions = [];
   if (store.getState().form.searchForm && store.getState().form.searchForm.values) {
     const selectedIndex = store.getState().form.searchForm.values.selectIndexes;
     if (selectedIndex === 'PW' || selectedIndex === 'ALL') {
-      options.map(x => (x.value === 'START' ? x.disabled = true : null));
-      remappedOptions.push(options);
-    } else if (!(selectedIndex === 'TITLE' || selectedIndex === 'NAME' || selectedIndex === 'SUB')) {
-      options.map(x => (x.value === 'CONTAINS' ? x.disabled = true : null));
+      remappedOptions.push(optionsAllPubKey);
+    } else if (
+      !(selectedIndex === 'TITLE' ||
+        selectedIndex === 'NAME' ||
+        selectedIndex === 'SUB' ||
+        selectedIndex === 'PP' ||
+        selectedIndex === 'PU' ||
+        selectedIndex === 'NAMEC' ||
+        selectedIndex === 'NAMEM' ||
+        selectedIndex === 'NAMEP')) {
+      options.map(x => (x.value === 'BROWSE' ? options.splice(x, 1) : null));
       remappedOptions.push(options);
     }
   }
+
 
   return (
     <Field

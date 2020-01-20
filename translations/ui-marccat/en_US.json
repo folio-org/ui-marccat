@@ -119,7 +119,7 @@
     "cataloging.actions.lookup": "Lookup",
     "cataloging.actions.lookup.shortcut": "CTRL+SHIFT+L",
     "cataloging.actions.view.marc.docs": "View MARC docs",
-    "cataloging.actions.view.marc.docs.shortcut": "?",
+    "cataloging.actions.view.marc.docs.shortcut": "CTRL+G",
     "cataloging.record.duplicate": "Duplicate record",
     "cataloging.fixedfield.section.add.newtag": "Add {value}",
     "search.actionmenu.duplicate.ebook": "Duplicate as e-book",

@@ -44,11 +44,6 @@ export default ({ ...props }) => {
       onClick: props.onMoveDown
     },
     {
-      label: Localize({ key: 'cataloging.actions.sort.by.tag.number' }),
-      shortcut: Localize({ key: 'cataloging.actions.sort.by.tag.number.shortcut' }),
-      onClick: props.onSortBy,
-    },
-    {
       label: Localize({ key: 'cataloging.actions.clear.fields' }),
       shortcut: Localize({ key: 'cataloging.actions.clear.fields.shortcut' }),
       onClick: props.onCancel,

@@ -89,6 +89,9 @@ export function historyReducer(state = historyState, action) {
       ...state,
       list: [...state.list, action.data]
     };
+  case ACTION.TOTAL_BIB_COUNT_SUCCESS:
+    state.list[state.list.length - 1].found = action.payload;
+    return state;
   case ACTION.HISTORY_CLEAR:
     return {
       ...state,

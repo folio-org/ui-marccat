@@ -40,7 +40,7 @@ export default ({ ...props }) => {
     { label: 'Subject: Curriculum Objective', value: 'SUBCO', sortBy: SORT_TYPE.SUBJECT },
     { label: 'Subject: Hierarchical Place Name', value: 'SUBHPN', sortBy: SORT_TYPE.SUBJECT },
     { label: 'Subject: Local', value: 'SUBL', sortBy: SORT_TYPE.SUBJECT },
-    { label: 'Publisher Name', value: 'PU' },
+    { label: 'Publisher Name', value: 'PN' },
     { label: 'Publisher Place', value: 'PP' },
     { label: 'Publisher Keyword', value: 'PW' },
     { label: 'Other Class. (Canada)', value: 'CC' },

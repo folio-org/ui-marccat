@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import ClearHistory from './ClearHistory';
 import { resetHistoryAction } from '../Actions';
 import style from '../../../shared/lib/Style/Dropdown.css';
+import { ACTION } from '../../../redux/actions';
 
 const PanelHistory = ({ ...props }) => {
   const { searchPerformed, recentHistory, totalBib, withMulticolumn } = props;
@@ -31,10 +32,15 @@ const PanelHistory = ({ ...props }) => {
           <Row>
             <MultiColumnList
               id="hostory-recent-search"
-              defaultWidth="fill"
               isEmptyMessage={(searchPerformed === 0) ? 'No Search performed' : ''}
               formatter={resultsFormatter}
-              onRowClick={() => {}}
+              onRowClick={(meta) => {
+                const { dispatch, data } = props;
+                const query = data.history.list[meta._dispatchInstances.key.split('-')[1]].query;
+                dispatch({ type: ACTION.SEARCH, moreData: 'N', queryBib: query, queryAuth: query, from: '1', to: '30' });
+                // dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
+                // dispatch({ type: ACTION.TOTAL_AUTH_COUNT, query: authQuery });
+              }}
               rowMetadata={['query', 'found']}
               contentData={recentHistory}
               visibleColumns={[

@@ -34,14 +34,15 @@ const PanelHistory = ({ ...props }) => {
               id="hostory-recent-search"
               isEmptyMessage={(searchPerformed === 0) ? 'No Search performed' : ''}
               formatter={resultsFormatter}
-              onRowClick={(meta) => {
-                const { dispatch, data } = props;
-                const query = data.history.list[meta._dispatchInstances.key.split('-')[1]].query;
+              onRowClick={(e, meta) => {
+                const { dispatch } = props;
+                const query = meta['query'];
+                const numFound = meta['found'];
                 dispatch({ type: ACTION.SEARCH, moreData: 'N', queryBib: query, queryAuth: query, from: '1', to: '30' });
                 // dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
                 // dispatch({ type: ACTION.TOTAL_AUTH_COUNT, query: authQuery });
               }}
-              rowMetadata={['query', 'found']}
+              rowMetadata={['index', 'query']}
               contentData={recentHistory}
               visibleColumns={[
                 'index',

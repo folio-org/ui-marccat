@@ -12,6 +12,7 @@ const PanelHistory = ({ ...props }) => {
     index: item => `${item.index.split('"')[0].trim()}`,
     query: item => `${item.query.split('"')[1].trim()}`,
     num: (item) => `${item.found}`,
+    recType: (item) => `${item.recordType}`,
   };
   return (
     <Fragment>
@@ -35,18 +36,24 @@ const PanelHistory = ({ ...props }) => {
               isEmptyMessage={(searchPerformed === 0) ? 'No Search performed' : ''}
               formatter={resultsFormatter}
               onRowClick={(e, meta) => {
-                const { dispatch } = props;
-                const query = meta['query'];
-                const numFound = meta['found'];
-                dispatch({ type: ACTION.SEARCH, moreData: 'N', queryBib: query, queryAuth: query, from: '1', to: '30' });
-                // dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
-                // dispatch({ type: ACTION.TOTAL_AUTH_COUNT, query: authQuery });
+                const { dispatch, router } = props;
+                const query = meta.query;
+                const index = meta.index;
+                const numFound = meta.found;
+                if (index.split(' ')[1] === 'BROWSE') {
+                  dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query });
+                  router.push('/marccat/browse');
+                } else {
+                  dispatch({ type: ACTION.SEARCH, moreData: 'N', queryBib: query, queryAuth: query, from: '1', to: '30' });
+                  router.push('/marccat/search');
+                }
               }}
               rowMetadata={['index', 'query']}
               contentData={recentHistory}
               visibleColumns={[
                 'index',
                 'query',
+                'recType',
                 'num',
               ]}
             />

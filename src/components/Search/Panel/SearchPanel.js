@@ -114,8 +114,8 @@ class SearchPanel extends React.Component<P, {}> {
         isBrowseRequested = true;
         store.dispatch({ type: ACTION.SETTINGS, data: { newBrowse: 'Y' } });
         store.dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query: bibQuery });
+        this.handleSearchHistory({ recordType: 'browse', query: bibQuery, index: indexForQuery + conditionFilter, found: 0 });
         router.push('/marccat/browse');
-        store.dispatch({ type: ACTION.SETTINGS, data: { triggerDetails: 'N' } });
         transitionToParams('q', bibQuery);
         this.setState({
           filterEnable: false

@@ -5,6 +5,7 @@ import ClearHistory from './ClearHistory';
 import { resetHistoryAction } from '../Actions';
 import style from '../../../shared/lib/Style/Dropdown.css';
 import { ACTION } from '../../../redux/actions';
+import { SORT_TYPE } from '../../../config/constants';
 
 const PanelHistory = ({ ...props }) => {
   const { searchPerformed, recentHistory, totalBib, withMulticolumn } = props;
@@ -14,6 +15,14 @@ const PanelHistory = ({ ...props }) => {
     num: (item) => `${item.found}`,
     recType: (item) => `${item.recordType}`,
   };
+
+  const disableSortOnAuthority = (sortType) => {
+    const { store: { getState } } = props;
+    const filter = getState().marccat.filter.filters;
+    const sortAuth = (sortType === SORT_TYPE.UNIFORM_TITLE || sortType === SORT_TYPE.DATA1 || sortType === SORT_TYPE.DATE2);
+    if (sortAuth) filter[FILTER_NAME.AUTHORITY] = false;
+  };
+
   return (
     <Fragment>
       <ClearHistory {...props} />
@@ -40,6 +49,9 @@ const PanelHistory = ({ ...props }) => {
                 const query = meta.query;
                 const index = meta.index;
                 const numFound = meta.found;
+                const sortType = meta.sortStrategy;
+                disableSortOnAuthority(sortType);
+                dispatch({ type: ACTION.SETTINGS, data: { sortType } });
                 if (index.split(' ')[1] === 'BROWSE') {
                   dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query });
                   router.push('/marccat/browse');

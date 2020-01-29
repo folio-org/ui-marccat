@@ -37,7 +37,7 @@ class Tag00X extends React.PureComponent<Props, S> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      isEditMode:  (findParam('mode') === RECORD_ACTION.EDIT_MODE),
+      isEditMode: findParam('mode') === RECORD_ACTION.EDIT_MODE,
       expand: false,
       headerTypeCode: 0,
     };
@@ -81,32 +81,65 @@ class Tag00X extends React.PureComponent<Props, S> {
     const payload = {};
     const fromStore = store.getState();
     let results;
-    if (fromStore.marccat.data.fixedfield008 === undefined || !e) {
-      results = data.results || data;
-      Object.entries(results).map(([k, v]) => (payload[k] = v.defaultValue));
-      Object.entries(results).map(([k, v]) => dispatch(change(`Tag${code}-${headerTypeCode}-${k}`, v.defaultValue)));
-    } else {
-      results = fromStore.marccat.data.fixedfield008.results;
-      Object.entries(results).map(([k, v]) => {
-        if (k !== 'attributes' || k !== 'displayValue') {
-          payload[k] = v;
-        }
-        return payload;
-      });
-      const selected = last(e.target.name.split('-'));
-      if ((selected === 'dateFirstPublication' || selected === 'dateLastPublication')) {
-        payload[selected] = e.target.value.trim();
+    if (code === '006') {
+      if (fromStore.marccat.data.fixedfield006 === undefined || !e) {
+        results = data.results || data;
+        Object.entries(results).map(([k, v]) => (payload[k] = v.defaultValue));
+        Object.entries(results).map(([k, v]) => dispatch(change(`Tag${code}-${headerTypeCode}-${k}`, v.defaultValue)));
       } else {
+        results = fromStore.marccat.data.fixedfield006.results;
+        Object.entries(results).map(([k, v]) => {
+          if (k !== 'attributes' || k !== 'displayValue') {
+            payload[k] = v;
+          }
+          return payload;
+        });
+        const selected = last(e.target.name.split('-'));
         payload[selected] = e.target.value;
       }
+    } else if (code === '007') {
+      if (fromStore.marccat.data.fixedfield007 === undefined || !e) {
+        results = data.results || data;
+        Object.entries(results).map(([k, v]) => (payload[k] = v.defaultValue));
+        Object.entries(results).map(([k, v]) => dispatch(change(`Tag${code}-${headerTypeCode}-${k}`, v.defaultValue)));
+      } else {
+        results = fromStore.marccat.data.fixedfield007.results;
+        Object.entries(results).map(([k, v]) => {
+          if (k !== 'attributes' || k !== 'displayValue') {
+            payload[k] = v;
+          }
+          return payload;
+        });
+        const selected = last(e.target.name.split('-'));
+        payload[selected] = e.target.value;
+      }
+    } else if (code === '008') {
+      if (fromStore.marccat.data.fixedfield008 === undefined || !e) {
+        results = data.results || data;
+        Object.entries(results).map(([k, v]) => (payload[k] = v.defaultValue));
+        Object.entries(results).map(([k, v]) => dispatch(change(`Tag${code}-${headerTypeCode}-${k}`, v.defaultValue)));
+      } else {
+        results = fromStore.marccat.data.fixedfield008.results;
+        Object.entries(results).map(([k, v]) => {
+          if (k !== 'attributes' || k !== 'displayValue') {
+            payload[k] = v;
+          }
+          return payload;
+        });
+        const selected = last(e.target.name.split('-'));
+        if (
+          selected === 'dateFirstPublication' ||
+          selected === 'dateLastPublication'
+        ) {
+          payload[selected] = e.target.value.trim();
+        } else {
+          payload[selected] = e.target.value;
+        }
+      }
     }
-    if (isEditMode) {
-      // TODO: implementare per microservizio che da display value mi torna i valori di default di quell esatto display value
-    } else {
-      this.prepareValue(code, results, payload, headerTypeCode);
-      const cb = r => this.execChange(r);
-      dispatch(changeDisplayValueAction(payload, cb));
-    }
+    this.prepareValue(code, results, payload, headerTypeCode);
+    const cb = r => this.execChange(r);
+    dispatch(changeDisplayValueAction(payload, cb));
   };
 
   execChange = (response: Object): void => {
@@ -136,6 +169,15 @@ class Tag00X extends React.PureComponent<Props, S> {
       );
     }
     if (code === TAGS._008) {
+      if (headerTypeCode === 37 && payload.visualRunningTime === undefined){
+        payload.visualRunningTime = '000';
+      }else{
+        payload.visualRunningTime = formFieldValue(
+          store,
+          REDUX.FORM.DATA_FIELD_FORM,
+          VISUAL_RUNNING_TIME
+        );
+      }
       if (payload.dateFirstPublication === undefined) {
         payload.dateFirstPublication = '    ';
       }
@@ -187,8 +229,8 @@ class Tag00X extends React.PureComponent<Props, S> {
     const sortedData = Object.values(data).sort((x, y) => x.name > y.name);
     return (
       <Row>
-        {code === TAGS._006 && (
-          <Col xs={12}>
+        {code === TAGS._006 && (headerTypeCode === '22') && (
+          <Col xs={4}>
             <Tag00XInput
               {...this.props}
               name={VISUAL_RUNNING_TIME}
@@ -196,9 +238,8 @@ class Tag00X extends React.PureComponent<Props, S> {
             />
           </Col>
         )}
-        {code === TAGS._007 &&
-          (headerTypeCode === 25 || headerTypeCode === 42) && (
-          <Col xs={12}>
+        {code === TAGS._007 && (headerTypeCode === '25' || headerTypeCode === '42') && (
+          <Col xs={4}>
             <Tag00XInput
               {...this.props}
               name={IMAGE_BIT_DEPTH}
@@ -208,14 +249,23 @@ class Tag00X extends React.PureComponent<Props, S> {
         )}
         {code === TAGS._008 && (
           <React.Fragment>
-            <Col xs={6}>
+            {headerTypeCode === 37 && (
+              <Col xs={4}>
+                <Tag00XInput
+                  {...this.props}
+                  name={VISUAL_RUNNING_TIME}
+                  onChange={e => this.handleDisplayValue(e, sortedData)}
+                />
+              </Col>
+            )}
+            <Col xs={4}>
               <Tag00XInput
                 {...this.props}
                 name={DATE_FIRST_PUBBLICATION}
                 onChange={e => this.handleDisplayValue(e, sortedData)}
               />
             </Col>
-            <Col xs={6}>
+            <Col xs={4}>
               <Tag00XInput
                 {...this.props}
                 name={DATE_LAST_PUBBLICATION}
@@ -234,6 +284,7 @@ class Tag00X extends React.PureComponent<Props, S> {
                 .concat(headerTypeCode)
                 .concat('-')
                 .concat(field.name)}
+              readOnly={field.name === 'categoryOfMaterial'}
               label={decamelizify(field.name, EMPTY_SPACED_STRING)}
               onChange={e => this.handleDisplayValue(e, data)}
               dataOptions={field.dropdownSelect}

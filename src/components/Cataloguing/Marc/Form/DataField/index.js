@@ -3,7 +3,7 @@ import { Accordion } from '@folio/stripes-components';
 import { reduxForm } from 'redux-form';
 import { Localize, SingleCheckboxIconButton } from '../../../../../shared';
 import DataFields from '../../Record/DataFields';
-import { REDUX, EMPTY_SPACED_STRING } from '../../../../../config/constants';
+import { REDUX, EMPTY_SPACED_STRING, EMPTY_STRING } from '../../../../../config/constants';
 
 
 const DataFieldForm = ({ leaderData, record, ...props }) => (
@@ -27,9 +27,9 @@ reduxForm({
   initialValues: {
     verificationLevel: 1,
     recordCataloguingSourceCode: '1',
-    visualRunningTime: '---',
+    visualRunningTime: '000',
     imageBitDepth: '|||',
-    dateFirstPublication: EMPTY_SPACED_STRING,
-    dateLastPublication: EMPTY_SPACED_STRING
+    dateFirstPublication: EMPTY_STRING,
+    dateLastPublication: EMPTY_STRING
   }
 })(DataFieldForm);

@@ -48,8 +48,8 @@ function AutoSuggestion(props) {
       name={input.name}
       onFocus={onFocus}
       onChange={onChange}
-      renderOption={(item) => ((item) ? item.value : ' ')}
-      renderValue={(item) => ((item) ? item.value : ' ')}
+      renderOption={(item) => ((item) ? item.value : '')}
+      renderValue={(item) => ((item) ? item.value : '')}
       valueKey="value"
     />
   );

@@ -104,7 +104,7 @@ class Record extends React.Component<Props, {callout: React.RefObject<Callout>}>
     const { variableField: { code, ind1, ind2, displayValue } } = item;
     const cretaeHeadingForTag = includes(TAG_WITH_NO_HEADING_ASSOCIATED, item.code);
     const isNotRepetableField = includes(TAG_NOT_REPEATABLE, item.code);
-    const heading = { ind1: ind1.length > 1 ? ind1.trim() : ind1, ind2: ind2.length > 1 ? ind2.trim() : ind2, displayValue: replaceAllinverted(displayValue), tag: code };
+    const heading = { ind1, ind2, displayValue: replaceAllinverted(displayValue), tag: code };
     item.fieldStatus = (item.variableField.keyNumber > 0 || item.mandatory) ? RECORD_FIELD_STATUS.CHANGED : RECORD_FIELD_STATUS.NEW;
     item.variableField.displayValue = heading.displayValue;
 

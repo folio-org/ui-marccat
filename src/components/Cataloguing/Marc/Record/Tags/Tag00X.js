@@ -169,9 +169,9 @@ class Tag00X extends React.PureComponent<Props, S> {
       );
     }
     if (code === TAGS._008) {
-      if (headerTypeCode === 37 && payload.visualRunningTime === undefined){
+      if (headerTypeCode === 37 && payload.visualRunningTime === undefined) {
         payload.visualRunningTime = '000';
-      }else{
+      } else {
         payload.visualRunningTime = formFieldValue(
           store,
           REDUX.FORM.DATA_FIELD_FORM,

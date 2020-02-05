@@ -5,7 +5,7 @@ import ClearHistory from './ClearHistory';
 import { resetHistoryAction } from '../Actions';
 import style from '../../../shared/lib/Style/Dropdown.css';
 import { ACTION } from '../../../redux/actions';
-import { SORT_TYPE } from '../../../config/constants';
+import { SORT_TYPE, EMPTY_STRING } from '../../../config/constants';
 
 const PanelHistory = ({ ...props }) => {
   const { searchPerformed, recentHistory, totalBib, withMulticolumn } = props;
@@ -48,15 +48,16 @@ const PanelHistory = ({ ...props }) => {
                 const { dispatch, router } = props;
                 const query = meta.query;
                 const index = meta.index;
-                const numFound = meta.found;
+                const recType = meta.recordType;
                 const sortType = meta.sortStrategy;
                 disableSortOnAuthority(sortType);
                 dispatch({ type: ACTION.SETTINGS, data: { sortType } });
+
                 if (index.split(' ')[1] === 'BROWSE') {
                   dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query });
                   router.push('/marccat/browse');
                 } else {
-                  dispatch({ type: ACTION.SEARCH, moreData: 'N', queryBib: query, queryAuth: query, from: '1', to: '30' });
+                  dispatch({ type: ACTION.SEARCH, moreData: 'N', queryBib: query, queryAuth: (recType === 'biblio') ? EMPTY_STRING : query, from: '1', to: '30' });
                   router.push('/marccat/search');
                 }
               }}
@@ -65,7 +66,6 @@ const PanelHistory = ({ ...props }) => {
               visibleColumns={[
                 'index',
                 'query',
-                'recType',
                 'num',
               ]}
             />

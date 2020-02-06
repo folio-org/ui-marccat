@@ -97,7 +97,7 @@ export class SearchResults extends React.Component<P, {}> {
       mergedResults = [
         ...data.search.bibliographicResults,
         ...data.search.oldBibArray,
-        ...data.search.authorityResults,
+        ...data.search.authorityResults !== null,
         ...data.search.oldAuthArray];
       detailSelected = mergedResults.filter(item => id === item.data.fields[0]['001']);
     } else {

@@ -34,7 +34,7 @@ function AutoSuggestion(props) {
       const cb = (payload) => setState({ tagCodeArray: payload.tags });
       dispatch(triggerTagCodeSuggestion(digit, cb));
       dispatch(change(REDUX.FORM.VARIABLE_FORM, input.name, digit));
-    } else if (input.name === 'items[0].variableField.ind1' || input.name === 'items[0].variableField.ind2') { dispatch(change(REDUX.FORM.VARIABLE_FORM, input.name, (digit && digit.length > 1)  ? digit.trim() : digit)); }
+    } else if (input.name === 'items[0].variableField.ind1' || input.name === 'items[0].variableField.ind2') { dispatch(change(REDUX.FORM.VARIABLE_FORM, input.name, (digit && digit.length > 1) ? digit.trim() : digit)); }
   };
 
   const { tagCodeArray } = state;

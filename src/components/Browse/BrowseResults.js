@@ -174,37 +174,36 @@ export class BrowseResults extends React.Component<Props, S> {
     } = this.props;
     return activeFilterName === 'recordType.Bibliographic records' &&
       activeFilterChecked ? (
-      <PaneMenu>
-        <CreateRecordButton
-          {...this.props}
-          data-test-clickable-new-record
-          label="search.record.new"
-          labels={this.renderDropdownLabels()}
-          onToggle={this.handleCreateRecord}
-          disabled={!emptyRecord}
-          withIcon
-          noDropdown
-        />
-      </PaneMenu>
-    ) : (
-      <PaneMenu>
-        <CreateRecordButton
-          style={{ marginRight: '5px' }}
-          {...this.props}
-          data-test-clickable-new-record
-          label="search.record.new"
-          labels={this.renderDropdownLabels()}
-          disabled={!emptyRecord}
-          withIcon
-          onToggle={() =>
-            this.setState({
+        <PaneMenu>
+          <CreateRecordButton
+            {...this.props}
+            data-test-clickable-new-record
+            label="search.record.new"
+            labels={this.renderDropdownLabels()}
+            onToggle={this.handleCreateRecord}
+            disabled={!emptyRecord}
+            withIcon
+            noDropdown
+          />
+        </PaneMenu>
+      ) : (
+        <PaneMenu>
+          <CreateRecordButton
+            style={{ marginRight: '5px' }}
+            {...this.props}
+            data-test-clickable-new-record
+            label="search.record.new"
+            labels={this.renderDropdownLabels()}
+            disabled={!emptyRecord}
+            withIcon
+            onToggle={() => this.setState({
               openDropDownMenu: !openDropDownMenu,
             })
-          }
-          open={openDropDownMenu}
-        />
-      </PaneMenu>
-    );
+            }
+            open={openDropDownMenu}
+          />
+        </PaneMenu>
+      );
   };
 
   // renderButtonMenu = () => {
@@ -264,14 +263,13 @@ export class BrowseResults extends React.Component<Props, S> {
           {el.countAuthorities}
         </span>
       ),
-      type: x =>
-        x.countAuthorities === 0 && x.countDocuments === 0 ? (
-          <span className={style.noRef} />
-        ) : x.countAuthorities === 0 ? (
-          <AppIcon size="small" app="marccat" iconKey="marc-bib" />
-        ) : (
-          <AppIcon size="small" app="marccat" iconKey="marc-authority" />
-        ),
+      type: x => (x.countAuthorities === 0 && x.countDocuments === 0 ? (
+        <span className={style.noRef} />
+      ) : x.countAuthorities === 0 ? (
+        <AppIcon size="small" app="marccat" iconKey="marc-bib" />
+      ) : (
+        <AppIcon size="small" app="marccat" iconKey="marc-authority" />
+      )),
       cr0: item => (
         <div>
           {item.crossReferences.length > 0 &&

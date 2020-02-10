@@ -27,6 +27,12 @@
     "clean": "rm -rf lib/ artifact/"
   },
   "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "@babel/preset-env": "^7.1.6",
+    "@babel/preset-flow": "^7.0.0",
+    "babel-eslint": "^10.0.2",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.4",
     "@bigtest/interactor": "^0.7.0",
     "@bigtest/mirage": "^0.0.1",
     "@bigtest/mocha": "^0.5.1",
@@ -35,13 +41,10 @@
     "@folio/stripes": "^2.12.0",
     "@folio/stripes-cli": "^1.13.0",
     "@folio/stripes-core": "^3.0.1",
-    "babel-eslint": "^9.0.0",
-    "babel-polyfill": "^6.26.0",
     "chai": "^4.2.0",
     "eslint": "^5.5.0",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
-    "babel-preset-flow": "^6.23.0",
     "eslint-loader": "^2.1.2",
     "eslint-plugin-flowtype": "^3.4.2",
     "eslint-plugin-prettier": "^3.0.1",
@@ -63,6 +66,7 @@
     "webpack": "^4.0.0"
   },
   "dependencies": {
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "classnames": "^2.2.5",
     "final-form": "^4.18.2",
     "lint-staged": "^4.0.3",

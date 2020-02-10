@@ -94,11 +94,18 @@ export class SearchResults extends React.Component<P, {}> {
     let mergedResults;
     let detailSelected;
     if (data.search.dataOld !== undefined) {
-      mergedResults = [
-        ...data.search.bibliographicResults,
-        ...data.search.oldBibArray,
-        ...data.search.authorityResults !== null,
-        ...data.search.oldAuthArray];
+      if (data.search.bibliographicResults && data.search.bibliographicResults.length > 0) {
+        mergedResults = [...data.search.bibliographicResults];
+      }
+      if (data.search.oldBibArray && data.search.oldBibArray.length > 0) {
+        mergedResults = [...data.search.oldBibArray];
+      }
+      if (data.search.authorityResults && data.search.authorityResults.length > 0) {
+        mergedResults = [...data.search.authorityResults];
+      }
+      if (data.search.oldAuthArray && data.search.oldAuthArray.length > 0) {
+        mergedResults = [...data.search.oldAuthArray];
+      }
       detailSelected = mergedResults.filter(item => id === item.data.fields[0]['001']);
     } else {
       detailSelected = data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001']);
@@ -299,10 +306,10 @@ export class SearchResults extends React.Component<P, {}> {
             queryMoreBib={queryMoreBib}
             countMoreData={countMoreData}
             firstMenu={firstMenu}
-            lastMenu={this.renderLastMenu()}
             mergedRecord={containerMarcJSONRecords}
             message={message}
             noResults={noResults}
+            lastMenu={this.renderLastMenu()}
             bibliographicResults={bibliographicResults}
             authorityResults={authorityResults}
             handleDetails={this.handleDetails}

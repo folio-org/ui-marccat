@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import {
-  UncontrolledDropdown,
+  Dropdown,
   DropdownMenu,
   Button,
   Icon
@@ -35,7 +35,7 @@ export default class ActionsMenu extends React.Component<P, {}> {
   render() {
     const { dropdownOpen } = this.state;
     return (
-      <UncontrolledDropdown
+      <Dropdown
         open={this.state ? dropdownOpen : false}
         onToggle={this.onToggle}
       >
@@ -59,7 +59,7 @@ export default class ActionsMenu extends React.Component<P, {}> {
             {...this.props}
           />
         </DropdownMenu>
-      </UncontrolledDropdown>
+      </Dropdown>
     );
   }
 }

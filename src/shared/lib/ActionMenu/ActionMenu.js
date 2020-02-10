@@ -26,7 +26,7 @@ export const ActionMenu = () => {
         <div><FormattedMessage id="ui-marccat.browse.actionmenu.export.dat" /></div>
         <div><FormattedMessage id="ui-marccat.browse.actionmenu.printall" /></div>
         <hr />
-        <CheckboxIconButton labels={labels} />
+        {/* <CheckboxIconButton labels={labels} /> */}
       </div>
     </Fragment>
   );

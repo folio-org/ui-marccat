@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react';
 import { reduxForm, Field } from 'redux-form';
+import ActionLabels from '../../../components/Cataloguing/Marc/Menu/ActionLabels';
 import type { Props } from '../../../flow/types.js.flow';
 
 function CheckMarkIcon({ ...props }: Props) {
@@ -25,7 +26,7 @@ function CheckMarkIcon({ ...props }: Props) {
             type="checkbox"
             component="input"
           />
-          <label
+          <ActionLabels
             htmlFor={`checkmark-${l}-${i}`}
             className="checkbox-noborder"
             onClick={() => {
@@ -33,7 +34,7 @@ function CheckMarkIcon({ ...props }: Props) {
             }}
           >
             {l}
-          </label>
+          </ActionLabels>
         </div>
       ))
       }

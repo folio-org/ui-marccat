@@ -3,8 +3,7 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Icon, Pane, Button } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
-import { ToolbarButtonMenu, CheckMarkIcon
-} from '../../../shared';
+import { ToolbarButtonMenu, CheckMarkIcon } from '../../../shared';
 import type { Props } from '../../../flow/types.js.flow';
 
 type P = Props & {

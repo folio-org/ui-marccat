@@ -53,7 +53,7 @@ class Tag00X extends React.PureComponent<Props, S> {
       element: { code },
       headerTypeCodeFromLeader,
     } = this.props;
-    let { record: { leader: { value }}} = this.props;
+    let { record: { leader: { value } } } = this.props;
     const headerTypeCode =
       code === TAGS._008 && headerTypeCodeFromLeader
         ? headerTypeCodeFromLeader

@@ -42,7 +42,7 @@
     "@folio/stripes-cli": "^1.13.0",
     "@folio/stripes-core": "^3.0.1",
     "chai": "^4.2.0",
-    "eslint": "^5.5.0",
+    "eslint": "^6.2.1",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
     "eslint-loader": "^2.1.2",

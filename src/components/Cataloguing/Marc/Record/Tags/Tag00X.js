@@ -49,17 +49,16 @@ class Tag00X extends React.PureComponent<Props, S> {
 
   onHandleChange = evt => {
     const {
-      record: {
-        leader: { value },
-      },
       dispatch,
       element: { code },
       headerTypeCodeFromLeader,
     } = this.props;
+    let { record: { leader: { value }}} = this.props;
     const headerTypeCode =
       code === TAGS._008 && headerTypeCodeFromLeader
         ? headerTypeCodeFromLeader
         : evt.target.value;
+    value = code === TAGS._008 && headerTypeCodeFromLeader ? leader.value : value;
     const payload = {
       value,
       code,

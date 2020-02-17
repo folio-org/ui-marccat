@@ -1,75 +1,87 @@
 // @flow
-import * as React from 'react';
-import { Pane, Icon, MenuSection } from '@folio/stripes/components';
+import React, { Fragment } from 'react';
+import {
+  Button,
+  Icon,
+  Checkbox,
+  RadioButton,
+  MenuSection,
+  PaneHeader,
+  Pane,
+} from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
 import RecordDetails from '../RecordDetails';
 import { injectProps, Localize, findParam } from '../../../../shared';
 import { duplicaRecordAction } from '../../Actions';
+import { EditRecordButton } from '../..';
 
 class RecordDetailPane extends React.Component {
 
-  duplicaRecord = (props) => {
+  duplicaRecord = props => {
     const id = findParam('id') || findParam('savedId');
     const { store } = props;
-    const cb = (r) => this.onDuplicate(r);
+    const cb = r => this.onDuplicate(r);
     store.dispatch(duplicaRecordAction(id, cb));
-  }
+  };
 
-  onDuplicate = (response) => {
+  onDuplicate = response => {
     const { router, toggleFilterPane } = this.props;
     setTimeout(() => {
       toggleFilterPane();
-      router.push(`/marccat/cataloging?id=${response.bibliographicRecord.id}&mode=duplicate`);
+      router.push(
+        `/marccat/cataloging?id=${response.bibliographicRecord.id}&mode=duplicate`
+      );
     }, 3000);
   };
 
-
-  ActionMenuDetail = ({ ...props }) => {
-    return (
-      <React.Fragment>
-        <MenuSection label="Actions" style={{ fontWeight: '600' }}>
-          {Localize([
-            { key: 'search.actionmenu.export.mrc' },
-            { key: 'search.actionmenu.export.csv' },
-            { key: 'search.actionmenu.export.dat' },
-            { key: 'search.actionmenu.print' },
-            { key: 'search.actionmenu.opac' },
-            { key: 'search.actionmenu.duplicate', action: () => this.duplicaRecord(props) },
-            { key: 'search.actionmenu.duplicate.ebook' }], true)}
-        </MenuSection>
-        <MenuSection label="View related...." style={{ paddingLeft: '15px', fontWeight: '600' }}>
-          {Localize([
-            { key: 'search.actionmenu.holdings' },
-            { key: 'search.actionmenu.instances' },
-            { key: 'search.actionmenu.authority.records' }
-          ], true)}
-        </MenuSection>
-      </React.Fragment>
-    );
-  };
+  // A simple action menu
+  getActionMenu = ({ onToggle } = this.props) => (
+    <Fragment>
+      <EditRecordButton {...this.props} />
+      <hr />
+      <Button buttonStyle="dropdownItem">
+        <Icon icon="duplicate">
+          {Localize({
+            key: 'search.actionmenu.duplicate',
+            action: () => this.duplicaRecord(props),
+          })}
+        </Icon>
+      </Button>
+    </Fragment>
+  );
 
   render() {
-    const { detailPaneMeta, detail, onClose, rightMenuEdit } = this.props;
+    const { detailPaneMeta, detail, onClose } = this.props;
     return (
-      <React.Fragment>
-        <Pane
-          id="pane-details"
-          defaultWidth="35%"
-          paneTitle={detailPaneMeta.title}
-          paneSub={detailPaneMeta.subTitle}
-          appIcon={detailPaneMeta.title.startsWith('Bib') ? <AppIcon size="large" app="marccat" iconKey="marc-bib" /> : <AppIcon size="large" app="marccat" iconKey="marc-authority" />}
-          actionMenu={() => <this.ActionMenuDetail {...this.props} />}
-          dismissible
-          onClose={onClose}
-          lastMenu={rightMenuEdit}
-        >
-          {(!detail) ?
-            <Icon icon="spinner-ellipsis" /> :
-            <RecordDetails {...this.props} detail={detail} />
-          }
-        </Pane>
-      </React.Fragment>
+      <Pane
+        id="pane-details"
+        defaultWidth="35%"
+        renderHeader={renderProps => (
+          <PaneHeader
+            {...this.props}
+            {...renderProps}
+            actionMenu={this.getActionMenu}
+            paneTitle={detailPaneMeta.title}
+            paneSub={detailPaneMeta.subTitle}
+            appIcon={
+              detailPaneMeta.title.startsWith('Bib') ? (
+                <AppIcon size="large" app="marccat" iconKey="marc-bib" />
+              ) : (
+                <AppIcon size="large" app="marccat" iconKey="marc-authority" />
+              )
+            }
+            dismissible
+            onClose={onClose}
+          />
+        )}
+      >
+        {!detail ? (
+          <Icon icon="spinner-ellipsis" />
+        ) : (
+          <RecordDetails {...this.props} detail={detail} />
+        )}
+      </Pane>
     );
   }
 }
-export default (injectProps(RecordDetailPane));
+export default injectProps(RecordDetailPane);

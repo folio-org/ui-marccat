@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 // @flow
 import * as React from 'react';
-import { Button, PaneMenu } from '@folio/stripes/components';
+import { Button, PaneMenu, Icon } from '@folio/stripes/components';
 import { connect } from 'react-redux';
 import { Localize, findParam } from '../../../shared';
 
@@ -15,21 +15,17 @@ const EditRecordButton = ({ ...props }) => {
 
   const { detail } = props;
   return (
-    <PaneMenu>
-      <Button
-        {...props}
-        buttonStyle="primary"
-        type="button"
-        marginBottom0
-        disabled={!detail}
-        onClick={() => handleClickEdit()}
-      >
-        {Localize({ key: 'cataloging.record.edit' })}
-      </Button>
-    </PaneMenu>
+    <Button
+      {...props}
+      buttonStyle="dropdownItem"
+      disabled={!detail}
+      onClick={() => handleClickEdit()}
+    >
+      <Icon icon="edit">{Localize({ key: 'cataloging.record.edit' })}</Icon>
+    </Button>
   );
 };
 
-export default (connect((state) => ({
-  detail: state.marccat.data.marcRecordDetail
-}))(EditRecordButton));
+export default connect(state => ({
+  detail: state.marccat.data.marcRecordDetail,
+}))(EditRecordButton);

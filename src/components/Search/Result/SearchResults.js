@@ -102,6 +102,7 @@ export class SearchResults extends React.Component<P, {}> {
   };
 
   handleDetails = (e, meta) => {
+    e.stopPropagation();
     const {
       store: { dispatch },
       data,

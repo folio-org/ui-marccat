@@ -248,12 +248,12 @@ export const resultsFormatter = (isBibsOnly: ?boolean = true, isAuthOnly: ?boole
         { x['100'] }
         { x['110'] }
         { x['111'] }
-        { (x['130'] && !isBibsOnly)}
+        { !isBibsOnly && x['130'] }
       </span>
     ),
     preferredTitle: x => (
       <span>
-        { (x['130'] && isBibsOnly) }
+        { isBibsOnly && x['130'] }
         { x['240']}
       </span>
     ),

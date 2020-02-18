@@ -51,14 +51,13 @@ import { TAGS, TAG_NOT_REPEATABLE } from '../../Utils/MarcConstant';
 import DataFieldForm from '../Form/DataField';
 import VariableFieldForm from '../Form/VariableField';
 
-class Record extends React.Component<
-  Props,
-  { callout: React.RefObject<Callout> }
-> {
+class Record extends React.Component<Props, { callout: React.RefObject<Callout> }> {
   constructor(props) {
     super(props);
     this.state = {
-      isEditMode: findParam('mode') === RECORD_ACTION.EDIT_MODE,
+      // isCreationMode: (findParam('mode') === RECORD_ACTION.CREATION_MODE),
+      isEditMode:  (findParam('mode') === RECORD_ACTION.EDIT_MODE),
+      isDuplicateMode:  (findParam('mode') === RECORD_ACTION.DUPLICATE_MODE),
       mode: findParam('mode'),
       id: findParam('id'),
       submit: false,
@@ -115,6 +114,7 @@ class Record extends React.Component<
 
   onCreate = (item, _state) => {
     const { store } = this.props;
+    const { isDuplicateMode } = this.state;
     const {
       variableField: { code, ind1, ind2, displayValue },
     } = item;
@@ -129,12 +129,15 @@ class Record extends React.Component<
       displayValue: replaceAllinverted(displayValue),
       tag: code,
     };
-    item.fieldStatus =
+    if (isDuplicateMode) {
+      item.fieldStatus = RECORD_FIELD_STATUS.NEW;
+    } else {
+      item.fieldStatus =
       item.variableField.keyNumber > 0 || item.mandatory
         ? RECORD_FIELD_STATUS.CHANGED
         : RECORD_FIELD_STATUS.NEW;
+    }
     item.variableField.displayValue = heading.displayValue;
-
     const form: [] = formFieldValue(store, C.REDUX.FORM.VARIABLE_FORM, 'items');
     const tag = form.filter(e => e.code === item.code);
     const length = tag.length;
@@ -296,7 +299,7 @@ class Record extends React.Component<
           );
         }
         setTimeout(() => {
-          this.handleClose(checkCodeForSearch);
+          this.handleClose(checkCodeForSearch, bibliographicRecord.id);
         }, 2000);
       });
   };
@@ -337,7 +340,7 @@ class Record extends React.Component<
       });
   };
 
-  handleClose = checkCodeForSearch => {
+  handleClose = (checkCodeForSearch, idFromBibRecord) => {
     const { id, submit } = this.state;
     const { dispatch, router, toggleFilterPane, reset } = this.props;
     if (checkCodeForSearch === 'OK') {
@@ -350,7 +353,7 @@ class Record extends React.Component<
       reset();
       toggleFilterPane();
       return submit
-        ? router.push(`/marccat/search?savedId=${id}`)
+        ? router.push(`/marccat/search?savedId=${idFromBibRecord}`)
         : router.push('/marccat/search');
     } else if (checkCodeForSearch === undefined) {
       dispatch({

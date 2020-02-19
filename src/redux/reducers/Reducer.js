@@ -35,6 +35,7 @@ export function searchEngineReducer(state = { isLoading, isReady }, action) {
       ...state,
       isReady: false,
       isLoading: false,
+      isFromCat: action.isFromCat,
       moreData: action.moreData
     };
   case ACTION.FETCH_SEARCH_REQUESTED:
@@ -42,6 +43,7 @@ export function searchEngineReducer(state = { isLoading, isReady }, action) {
       ...state,
       isReady: false,
       isLoading: action.payload,
+      isFromCat: action.isFromCat,
       moreData: action.moreData
     };
   case ACTION.RECORD_SUCCESS:
@@ -58,6 +60,7 @@ export function searchEngineReducer(state = { isLoading, isReady }, action) {
       oldBibArray:action.oldBibArray,
       oldAuthArray: action.oldAuthArray,
       isLoading: false,
+      isFromCat: 'N',
       moreData: action.moreData,
       isReady: true,
     };

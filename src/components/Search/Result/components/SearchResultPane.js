@@ -87,6 +87,7 @@ class SearchResultPane extends React.Component<Props, {}> {
           if (bottom) {
             store.dispatch({
               type: ACTION.SEARCH,
+              isFromCat: 'N',
               queryBib: queryMoreBib,
               queryAuth: queryMoreAuth,
               moreData: 'Y',
@@ -143,6 +144,7 @@ class SearchResultPane extends React.Component<Props, {}> {
             if (bottom) {
               store.dispatch({
                 type: ACTION.SEARCH,
+                isFromCat: 'N',
                 queryBib: queryMoreBib,
                 queryAuth: queryMoreAuth,
                 moreData: 'Y',

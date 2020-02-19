@@ -161,6 +161,7 @@ class Record extends React.Component<Props, { callout: React.RefObject<Callout> 
   // TODO FIXME
   asyncCreateHeading = async (item, heading) => {
     const { store } = this.props;
+    const { isDuplicateMode } = this.state;
     try {
       const response = await post(
         buildUrl(
@@ -173,7 +174,7 @@ class Record extends React.Component<Props, { callout: React.RefObject<Callout> 
       );
       const data = await response.json();
       item.variableField.categoryCode = data.categoryCode;
-      if (item.variableField.keyNumber > 0) {
+      if (item.variableField.keyNumber > 0 && !isDuplicateMode) {
         item.variableField.newKeyNumber =
           data.keyNumber || item.variableField.keyNumber;
       } else {

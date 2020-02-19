@@ -2,10 +2,11 @@
 import { ACTION } from './Actions';
 import { EMPTY_STRING } from '../../config/constants';
 
-export const isfetchingSearchRequest = (isLoading, moreResult) => ({
+export const isfetchingSearchRequest = (isLoading, moreResult, isFromCat) => ({
   type: ACTION.FETCH_SEARCH_REQUESTED,
   payload: isLoading,
-  moreData: moreResult
+  moreData: moreResult,
+  isFromCat
 });
 export const isfetchingDetailsRequest = (isLoading) => ({
   type: ACTION.FETCH_DETAILS_REQUESTED,
@@ -82,11 +83,12 @@ export const fetchBrowseDetailAssociatedRecords = (records, mustOpenPanel) => ({
   payload: records,
   mustOpenPanel
 });
-export const fetchSearchEngineRecords = (queryBib, queryAuth, to, moreData, bibliographicResults, bibCounter, authorityResults, authCounter, dataOld, oldBibArray, oldAuthArray) => ({
+export const fetchSearchEngineRecords = (queryBib, queryAuth, to, isFromCat, moreData, bibliographicResults, bibCounter, authorityResults, authCounter, dataOld, oldBibArray, oldAuthArray) => ({
   type: ACTION.RECORD_SUCCESS,
   queryBib,
   queryAuth,
   to,
+  isFromCat,
   moreData,
   bibliographicResults,
   bibCounter,

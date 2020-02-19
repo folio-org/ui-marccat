@@ -57,7 +57,7 @@ const PanelHistory = ({ ...props }) => {
                   dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query });
                   router.push('/marccat/browse');
                 } else {
-                  dispatch({ type: ACTION.SEARCH, moreData: 'N', queryBib: query, queryAuth: (recType === 'biblio') ? EMPTY_STRING : query, from: '1', to: '30' });
+                  dispatch({ type: ACTION.SEARCH, isFromCat: 'N', moreData: 'N', queryBib: query, queryAuth: (recType === 'biblio') ? EMPTY_STRING : query, from: '1', to: '30' });
                   router.push('/marccat/search');
                 }
               }}

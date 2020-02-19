@@ -6,7 +6,7 @@ export const isfetchingSearchRequest = (isLoading, moreResult, isFromCat) => ({
   type: ACTION.FETCH_SEARCH_REQUESTED,
   payload: isLoading,
   moreData: moreResult,
-  isFromCat: isFromCat
+  isFromCat
 });
 export const isfetchingDetailsRequest = (isLoading) => ({
   type: ACTION.FETCH_DETAILS_REQUESTED,

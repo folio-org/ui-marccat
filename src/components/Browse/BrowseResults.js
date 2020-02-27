@@ -1,5 +1,5 @@
 // @flow
-import * as React from 'react';
+import React, { Fragment } from 'react';
 import { last } from 'lodash';
 import {
   MultiColumnList,
@@ -8,20 +8,19 @@ import {
   Icon,
   Button,
   PaneMenu,
+  MenuSection,
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import type { Props } from '../../flow/types.js.flow';
 import BrowseItemDetail from './BrowseItemDetail';
-import { CreateRecordButton } from '../Search';
 import { ACTION } from '../../redux/actions/Actions';
 import {
   findYourQueryFromBrowse,
   findYourQuery,
 } from '../Search/Filter/FilterMapper';
 import {
-  ToolbarButtonMenu,
   EmptyMessage,
   NoResultsMessage,
 } from '../../shared/lib';
@@ -29,8 +28,10 @@ import { browseColMapper } from '../../shared/utils/Formatter';
 import BrowseAssociatedItemDetail from './BrowseAssociatedItemDetail';
 import * as C from '../../config/constants';
 import style from '../Search/Style/index.css';
-import { generateDropdownMenu, injectProps } from '../../shared';
+import { injectProps, Localize } from '../../shared';
 import { continueFetchingBrowse } from '../Cataloguing/Actions';
+import { EditRecordButton } from '../Search';
+import DuplicateRecord from '../Search/Button/DuplicateRecord';
 
 type S = {
   browseDetailPanelIsVisible: boolean,
@@ -53,9 +54,7 @@ export class BrowseResults extends React.Component<Props, S> {
     };
     this.handleClosePanelDetails = this.handleClosePanelDetails.bind(this);
     this.handleBrowseDetails = this.handleBrowseDetails.bind(this);
-    this.getActionMenu = this.getActionMenu.bind(this);
     this.handleCreateRecord = this.handleCreateRecord.bind(this);
-    this.renderLastMenu = this.renderLastMenu.bind(this);
   }
 
   handleCreateRecord = () => {
@@ -68,34 +67,21 @@ export class BrowseResults extends React.Component<Props, S> {
     router.push(`/marccat/cataloging?id=${emptyRecord.results.id}&mode=new`);
   };
 
-  handleOnToggle = () => {
-    this.setState(prevState => ({
-      openDropDownMenu: !prevState.openDropDownMenu,
-    }));
-  };
-
-  renderDropdownLabels = () => {
-    const { translate } = this.props;
-    return [
-      {
-        label: translate({ id: 'ui-marccat.button.new.auth' }),
-        shortcut: translate({ id: 'ui-marccat.button.new.short.auth' }),
-        onClick: this.handleCreateRecord,
-      },
-      {
-        label: translate({ id: 'ui-marccat.button.new.bib' }),
-        shortcut: translate({ id: 'ui-marccat.button.new.short.bib' }),
-        onClick: this.handleCreateRecord,
-      },
-    ];
-  };
-
   handleClosePanelDetails = () => {
     this.setState({
       browseDetailPanelIsVisible: false,
       rowClicked: true,
     });
   };
+
+  getActionMenu = (detail, items, { onToggle } = this.props) => (
+    <Fragment>
+      <MenuSection>
+      <EditRecordButton {...this.props} />
+      <DuplicateRecord {...this.props} />
+      </MenuSection>
+    </Fragment>
+  );
 
   handleClickCrossReference = e => {
     const { store } = this.props;
@@ -152,73 +138,28 @@ export class BrowseResults extends React.Component<Props, S> {
     });
   };
 
-  getActionMenu = () => {
-    const labels = [
-      'ui-marccat.browse.actionmenu.export.mrc',
-      'ui-marccat.browse.actionmenu.export.csv',
-      'ui-marccat.browse.actionmenu.export.dat',
-      'ui-marccat.browse.actionmenu.printall',
-      'ui-marccat.browse.actionmenu.merge',
-    ];
-    return generateDropdownMenu(labels);
-  };
-
-  renderLastMenu = () => {
-    const { openDropDownMenu } = this.state;
-    const {
-      activeFilterName,
-      activeFilterChecked,
+  actionMenu = (
+    { onToggle },
+    {
       data: {
         data: { emptyRecord },
       },
-    } = this.props;
-    return activeFilterName === 'recordType.Bibliographic records' &&
-      activeFilterChecked ? (
-        <PaneMenu>
-          <CreateRecordButton
-            {...this.props}
-            data-test-clickable-new-record
-            label="search.record.new"
-            labels={this.renderDropdownLabels()}
-            onToggle={this.handleCreateRecord}
-            disabled={!emptyRecord}
-            withIcon
-            noDropdown
-          />
-        </PaneMenu>
-      ) : (
-        <PaneMenu>
-          <CreateRecordButton
-            style={{ marginRight: '5px' }}
-            {...this.props}
-            data-test-clickable-new-record
-            label="search.record.new"
-            labels={this.renderDropdownLabels()}
-            disabled={!emptyRecord}
-            withIcon
-            onToggle={() => this.setState({
-              openDropDownMenu: !openDropDownMenu,
-            })
-            }
-            open={openDropDownMenu}
-          />
-        </PaneMenu>
-      );
-  };
-
-  // renderButtonMenu = () => {
-  //   return (
-  //     <ToolbarButtonMenu
-  //       create
-  //       {...this.props}
-  //       label={
-  //         <Icon icon="plus-sign">
-  //           <FormattedMessage id="ui-marccat.browse.record.create" />
-  //         </Icon>
-  //       }
-  //     />
-  //   );
-  // };
+    } = this.props
+  ) => (
+    <Fragment>
+      <MenuSection label="Actions">
+        <Button
+          buttonStyle="primary"
+          disabled={!emptyRecord}
+          onClick={this.handleCreateRecord}
+        >
+          <Icon icon="plus-sign" size="small">
+            {Localize({ key: 'search.record.new' })}
+          </Icon>
+        </Button>
+      </MenuSection>
+    </Fragment>
+  );
 
   render() {
     const {
@@ -371,10 +312,9 @@ export class BrowseResults extends React.Component<Props, S> {
         <Pane
           padContent={isFetchingBrowse || isPadRequired}
           defaultWidth="fill"
-          actionMenu={this.getActionMenu}
+          actionMenu={this.actionMenu}
           paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
           firstMenu={firstMenu}
-          lastMenu={this.renderLastMenu()}
           onScroll={e => {
             e.preventDefault();
             const bottom =
@@ -442,7 +382,7 @@ export class BrowseResults extends React.Component<Props, S> {
             paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
             paneSub={detailSubtitle}
             onClose={this.handleClosePanelDetails}
-            actionMenu={this.getActionMenu}
+            actionMenu={this.actionMenu}
             onScroll={() => {}} // TODO: scroll for more results
           >
             {isFetchingBrowseDetails ? (
@@ -461,8 +401,6 @@ export class BrowseResults extends React.Component<Props, S> {
             }
             paneSub={C.EMPTY_STRING}
             appIcon={<AppIcon app={C.META.ICON_TITLE} />}
-            lastMenu={this.renderLastMenu()}
-            actionMenu={this.getActionMenu}
             dismissible
             onScroll={() => {}}
             onClose={() => {

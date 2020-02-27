@@ -6,7 +6,6 @@ import { FormattedMessage } from 'react-intl';
 import {
   Paneset,
   HotKeys,
-  PaneMenu,
   MenuSection,
   Checkbox,
   Button,
@@ -26,7 +25,7 @@ import {
   RecordDetailPane,
   AssociatedRecordPane,
 } from './components';
-import { CreateRecordButton, EditRecordButton } from '..';
+import { EditRecordButton } from '..';
 import { emptyRecordAction } from '../../Cataloguing/Actions';
 import { searchDetailAction } from '../Actions';
 import * as C from '../../../config/constants';

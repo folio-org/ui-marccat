@@ -13,12 +13,11 @@ const EditRecordButton = ({ ...props }) => {
     router.push(`/marccat/cataloging?id=${id}&mode=edit`);
   };
 
-  const { detail } = props;
+  const { detail, detailFromBrowse } = props;
   return (
     <Button
       {...props}
       buttonStyle="dropdownItem"
-      disabled={!detail}
       onClick={() => handleClickEdit()}
     >
       <Icon icon="edit">{Localize({ key: 'cataloging.record.edit' })}</Icon>

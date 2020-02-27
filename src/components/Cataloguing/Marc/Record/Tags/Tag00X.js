@@ -128,7 +128,8 @@ class Tag00X extends React.PureComponent<Props, S> {
         const selected = last(e.target.name.split('-'));
         if (
           selected === 'dateFirstPublication' ||
-          selected === 'dateLastPublication'
+          selected === 'dateLastPublication' ||
+          selected === 'visualRunningTime'
         ) {
           payload[selected] = e.target.value.trim();
         } else {
@@ -170,12 +171,6 @@ class Tag00X extends React.PureComponent<Props, S> {
     if (code === TAGS._008) {
       if (headerTypeCode === 37 && payload.visualRunningTime === undefined) {
         payload.visualRunningTime = '000';
-      } else {
-        payload.visualRunningTime = formFieldValue(
-          store,
-          REDUX.FORM.DATA_FIELD_FORM,
-          VISUAL_RUNNING_TIME
-        );
       }
       if (payload.dateFirstPublication === undefined) {
         payload.dateFirstPublication = '    ';

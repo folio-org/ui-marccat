@@ -171,7 +171,7 @@ class Tag00X extends React.PureComponent<Props, S> {
     if (code === TAGS._008) {
       if (headerTypeCode === 37 && payload.visualRunningTime === undefined) {
         payload.visualRunningTime = '000';
-      } 
+      }
       if (payload.dateFirstPublication === undefined) {
         payload.dateFirstPublication = '    ';
       }

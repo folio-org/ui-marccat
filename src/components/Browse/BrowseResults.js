@@ -77,8 +77,8 @@ export class BrowseResults extends React.Component<Props, S> {
   getActionMenu = (detail, items, { onToggle } = this.props) => (
     <Fragment>
       <MenuSection>
-      <EditRecordButton {...this.props} />
-      <DuplicateRecord {...this.props} />
+        <EditRecordButton {...this.props} />
+        <DuplicateRecord {...this.props} />
       </MenuSection>
     </Fragment>
   );

@@ -59,7 +59,7 @@ class SearchResultPane extends React.Component<Props, {}> {
         return customColumns;
       });
     }
-    
+
     return isLoadMore === 'N' || isLoadMore === undefined ? (
       <Pane
         padContent={containerMarcJSONRecords.length > 0 || isFetching}

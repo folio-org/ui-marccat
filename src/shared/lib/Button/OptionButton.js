@@ -21,33 +21,46 @@ export class CheckboxIconButton extends React.Component<Props, {}> {
     };
   }
 
-  render() {
-    const { labels, dispatch, change } = this.props;
-    return (
-      <form name="checkboxForm">
-        { labels.map((l, i) => (
-          <div key={i}>
-            <Field
-              id={l}
-              className="checkbox"
-              name={l}
-              type="checkbox"
-              component={Checkbox}
-              onClick={() => {
-                dispatch(change('checkboxForm', 'checked', true));
-                dispatch({ type: ACTION.CUSTOM_COLUMN_VIEW });
-              }}
-            />
-            <label
-              htmlFor={l}
-              className="checkbox"
-            >
-              {l.split('-')[1]}
-            </label>
-          </div>))}
-      </form>
-    );
-  }
+ labels = [
+   'resultView-Record Type',
+   '001-id Number',
+   // '245-Title',
+   // 'name-Name',
+   'preferredTitle-Uniform Title',
+   'tagHighlighted-Tag',
+   'date1-Date 1',
+   'date2-Date 2',
+   'format-Format',
+ ];
+
+ render() {
+   const { dispatch, change } = this.props;
+   return (
+     <form name="checkboxForm">
+       { this.labels.map((l, i) => (
+         <div key={i}>
+           <Field
+             id={l}
+             className="checkbox"
+             name={l}
+             checked
+             type="checkbox"
+             component={Checkbox}
+             onClick={() => {
+               dispatch(change('checkboxForm', 'checked', false));
+               dispatch({ type: ACTION.CUSTOM_COLUMN_VIEW });
+             }}
+           />
+           <label
+             htmlFor={l}
+             className="checkbox"
+           >
+             {l.split('-')[1]}
+           </label>
+         </div>))}
+     </form>
+   );
+ }
 }
 
 export function SingleCheckboxIconButton({ ...props }: P) {

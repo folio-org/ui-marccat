@@ -7,7 +7,7 @@ export { default as injectProps } from './hoc/injectProps';
 // lib
 export { EmptyMessage, NoResultsMessage } from './lib/Message';
 export { ToolbarMenu, ToolbarButtonMenu } from './lib/Toolbar/Menu';
-export { ActionMenu, getActionMenu, generateDropdownMenu } from './lib';
+export { getActionMenu, generateDropdownMenu } from './lib';
 export { CheckMarkIcon, CheckboxIconButton, SingleCheckboxIconButton } from './lib/Button';
 export { default as sharedInputStylesHelper } from '@folio/stripes-components/lib/sharedStyles/sharedInputStylesHelper';
 // utils

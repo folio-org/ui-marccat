@@ -59,7 +59,7 @@ class SearchResultPane extends React.Component<Props, {}> {
         return customColumns;
       });
     }
-    console.log("SONO NEI RISULTATI E QUESTE SONO LE COLONNE:" + checkCustomColumns)
+    
     return isLoadMore === 'N' || isLoadMore === undefined ? (
       <Pane
         padContent={containerMarcJSONRecords.length > 0 || isFetching}

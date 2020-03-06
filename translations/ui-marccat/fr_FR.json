@@ -74,7 +74,7 @@
     "cataloging.variablefield.section.add.newtag": "Ajouter un nouveau mot clé",
     "cataloging.accordion.fixedfield.label": "Champs de contrôle (001, 003, 005)",
     "cataloging.accordion.variablefield.label": "Champs variables",
-    "cataloging.accordion.checkbox.label": "Suppress",
+    "cataloging.accordion.checkbox.label": "Supprimer",
     "cataloging.checkbox.label": "Supprimer de la *recherche*",
     "cataloging.record.edit": "Modifier l'enregistrement",
     "cataloging.record.create": "Créer un enregistrement",

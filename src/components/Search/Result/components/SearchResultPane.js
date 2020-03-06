@@ -13,7 +13,6 @@ import {
 } from '../../../../shared/utils/Formatter';
 import {
   injectProps,
-  ActionMenu,
   EmptyMessage,
   NoResultsMessage,
 } from '../../../../shared';
@@ -48,21 +47,19 @@ class SearchResultPane extends React.Component<Props, {}> {
       containerMarcJSONRecords,
       store,
       isLoadMore,
+      checkCustomColumns
     } = this.props;
 
     const customColumns = [];
-    if (
-      store.getState().form.checkboxForm &&
-      store.getState().form.checkboxForm.values
-    ) {
-      const columns = store.getState().form.checkboxForm.values;
-      Object.keys(columns).map(e => {
-        if (e !== 'checkboxForm' && columns[e] === true) {
-          customColumns.push(e.split('-')[0]);
+    if (checkCustomColumns !== undefined) {
+      checkCustomColumns.map(e => {
+        if (e.isChecked === true) {
+          customColumns.push(e.value.split('-')[0]);
         }
         return customColumns;
       });
     }
+
     return isLoadMore === 'N' || isLoadMore === undefined ? (
       <Pane
         padContent={containerMarcJSONRecords.length > 0 || isFetching}
@@ -79,7 +76,6 @@ class SearchResultPane extends React.Component<Props, {}> {
           />
         )}
         firstMenu={firstMenu}
-        // lastMenu={lastMenu}
         onScroll={e => {
           const bottom =
             e.target.scrollHeight - e.target.scrollTop ===
@@ -136,7 +132,6 @@ class SearchResultPane extends React.Component<Props, {}> {
             />
           )}
           firstMenu={firstMenu}
-          // lastMenu={lastMenu}
           onScroll={e => {
             const bottom =
               e.target.scrollHeight - e.target.scrollTop ===
@@ -174,7 +169,6 @@ class SearchResultPane extends React.Component<Props, {}> {
     );
   }
 }
-export default connect(({ marccat: { search, customColumn } }) => ({
-  isLoadMore: search.moreData,
-  customCol: customColumn,
+export default connect(({ marccat: { search } }) => ({
+  isLoadMore: search.moreData
 }))(injectProps(SearchResultPane));

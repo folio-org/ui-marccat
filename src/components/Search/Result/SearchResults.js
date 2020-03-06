@@ -29,6 +29,7 @@ import { EditRecordButton } from '..';
 import { emptyRecordAction } from '../../Cataloguing/Actions';
 import { searchDetailAction } from '../Actions';
 import * as C from '../../../config/constants';
+import CheckBox from '../../../shared/lib/Button/CheckBox';
 
 type P = Props & {
   headings: Array<any>,
@@ -45,6 +46,17 @@ export class SearchResults extends React.Component<P, {}> {
   constructor(props: P) {
     super(props);
     this.state = {
+      checkGroupLabels: [
+        { id: 1, value: 'resultView-Record Type', isChecked: true },
+        { id: 2, value: '001-id Number', isChecked: true },
+        { id: 3, value: '245-Title', isChecked: true },
+        { id: 4, value: 'name-Name', isChecked: true },
+        { id: 5, value: 'preferredTitle-Uniform Title', isChecked: true },
+        { id: 6, value: 'tagHighlighted-Tag', isChecked: true },
+        { id: 7, value: 'date1-Date 1', isChecked: true },
+        { id: 8, value: 'date2-Date 2', isChecked: true },
+        { id: 9, value: 'format-Format', isChecked: true }
+      ],
       detailPanelIsVisible: false,
       noResults: false,
       bibsOnly: false,
@@ -56,7 +68,6 @@ export class SearchResults extends React.Component<P, {}> {
         subTitle: C.EMPTY_STRING,
       },
     };
-
     this.handleDetails = this.handleDetails.bind(this);
     this.handleCreateRecord = this.handleCreateRecord.bind(this);
     this.actionMenu = this.actionMenu.bind(this);
@@ -180,8 +191,27 @@ export class SearchResults extends React.Component<P, {}> {
     router.push(`/marccat/search?id=${id}`);
   };
 
+handleAllChecked = (event) => {
+  const { dispatch } = this.props;
+  const { checkGroupLabels } = this.state;
+  checkGroupLabels.forEach(check => check.isChecked = event.target.checked);
+  this.setState({ checkGroupLabels });
+  dispatch({ type: ACTION.CUSTOM_COLUMN_VIEW, payload: checkGroupLabels });
+}
+
+  handleCheckChieldElement = (event) => {
+    const { dispatch } = this.props;
+    const { checkGroupLabels } = this.state;
+    checkGroupLabels.forEach(check => {
+      if (check.value === event.target.value) check.isChecked = event.target.checked;
+    });
+    this.setState({ checkGroupLabels });
+    dispatch({ type: ACTION.CUSTOM_COLUMN_VIEW, payload: checkGroupLabels });
+  }
+
   actionMenu = (
     { onToggle },
+    { checkGroupLabels } = this.state,
     {
       data: {
         data: { emptyRecord },
@@ -190,10 +220,17 @@ export class SearchResults extends React.Component<P, {}> {
   ) => (
     <Fragment>
       <MenuSection label="Custom Columns ">
-        <Checkbox label="ID" />
-        <Checkbox label="Name" />
-        <Checkbox label="Title" />
-        <Checkbox label="View" />
+        <input type="checkbox" onClick={this.handleAllChecked} value="checkedall" />
+        {' '}
+Check / Uncheck All
+        <hr />
+        <ul>
+          {
+            checkGroupLabels.map((check) => {
+              return (<CheckBox handleCheckChieldElement={this.handleCheckChieldElement} {...check} />);
+            })
+          }
+        </ul>
       </MenuSection>
       <MenuSection label="Actions">
         <Button
@@ -211,7 +248,7 @@ export class SearchResults extends React.Component<P, {}> {
 
   render() {
     let { bibsOnly, autOnly, detailPanelIsVisible, noResults } = this.state;
-    const { loading, detailPaneMeta, detail } = this.state;
+    const { loading, detailPaneMeta, detail, checkGroupLabels } = this.state;
     const {
       activeFilter,
       totalAuthCount,
@@ -232,22 +269,8 @@ export class SearchResults extends React.Component<P, {}> {
       closePanels,
       totalAuth,
       totalBib,
-      store,
     } = this.props;
     let { bibliographicResults, authorityResults } = this.props;
-    const customColumn = [];
-    if (
-      store.getState().form.checkboxForm &&
-      store.getState().form.checkboxForm.values
-    ) {
-      const columns = store.getState().form.checkboxForm.values;
-      Object.keys(columns).map(e => {
-        if (e !== 'checkboxForm' && columns[e] === true) {
-          customColumn.push(e.split('-')[0]);
-        }
-        return customColumn;
-      });
-    }
 
     if (activeFilter) {
       const filterArray = [];
@@ -366,13 +389,13 @@ export class SearchResults extends React.Component<P, {}> {
       >
         <Paneset static>
           <SearchResultPane
-            customColumn={customColumn}
             containerMarcJSONRecords={containerMarcJSONRecords}
             isFetching={isFetching}
             queryMoreAuth={queryMoreAuth}
             queryMoreBib={queryMoreBib}
             countMoreData={countMoreData}
             firstMenu={firstMenu}
+            checkCustomColumns={checkGroupLabels}
             mergedRecord={containerMarcJSONRecords}
             message={message}
             noResults={noResults}

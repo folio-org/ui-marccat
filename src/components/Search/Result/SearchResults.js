@@ -53,9 +53,11 @@ export class SearchResults extends React.Component<P, {}> {
         { id: 4, value: 'name-Name', isChecked: true },
         { id: 5, value: 'preferredTitle-Uniform Title', isChecked: true },
         { id: 6, value: 'tagHighlighted-Tag', isChecked: true },
-        { id: 7, value: 'date1-Date 1', isChecked: true },
-        { id: 8, value: 'date2-Date 2', isChecked: true },
-        { id: 9, value: 'format-Format', isChecked: true }
+        { id: 7, value: 'countDoc-Bibs', isChecked: true },
+        // { id: 8, value: 'subject-Subject (6xx)', isChecked: true },
+        // { id: 9, value: 'date1-Date 1', isChecked: true },
+        // { id: 10, value: 'date2-Date 2', isChecked: true },
+        // { id: 11, value: 'format-Format', isChecked: true }
       ],
       detailPanelIsVisible: false,
       noResults: false,
@@ -191,15 +193,7 @@ export class SearchResults extends React.Component<P, {}> {
     router.push(`/marccat/search?id=${id}`);
   };
 
-handleAllChecked = (event) => {
-  const { dispatch } = this.props;
-  const { checkGroupLabels } = this.state;
-  checkGroupLabels.forEach(check => check.isChecked = event.target.checked);
-  this.setState({ checkGroupLabels });
-  dispatch({ type: ACTION.CUSTOM_COLUMN_VIEW, payload: checkGroupLabels });
-}
-
-  handleCheckChieldElement = (event) => {
+  handleCheckChieldElement = event => {
     const { dispatch } = this.props;
     const { checkGroupLabels } = this.state;
     checkGroupLabels.forEach(check => {
@@ -207,7 +201,7 @@ handleAllChecked = (event) => {
     });
     this.setState({ checkGroupLabels });
     dispatch({ type: ACTION.CUSTOM_COLUMN_VIEW, payload: checkGroupLabels });
-  }
+  };
 
   actionMenu = (
     { onToggle },
@@ -220,17 +214,14 @@ handleAllChecked = (event) => {
   ) => (
     <Fragment>
       <MenuSection label="Custom Columns ">
-        <input type="checkbox" onClick={this.handleAllChecked} value="checkedall" />
-        {' '}
-Check / Uncheck All
-        <hr />
-        <ul>
-          {
-            checkGroupLabels.map((check) => {
-              return (<CheckBox handleCheckChieldElement={this.handleCheckChieldElement} {...check} />);
-            })
-          }
-        </ul>
+        {checkGroupLabels.map(check => {
+          return (
+            <CheckBox
+              handleCheckChieldElement={this.handleCheckChieldElement}
+              {...check}
+            />
+          );
+        })}
       </MenuSection>
       <MenuSection label="Actions">
         <Button
@@ -319,8 +310,8 @@ Check / Uncheck All
         (bibliographicResults.length === undefined ||
           bibliographicResults.length === 0) &&
         authorityResults &&
-          (authorityResults.length === undefined ||
-            authorityResults.length === 0))
+        (authorityResults.length === undefined ||
+          authorityResults.length === 0))
     ) {
       noResults = true;
       detailPanelIsVisible = false;

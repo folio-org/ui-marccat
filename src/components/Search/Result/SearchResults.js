@@ -54,10 +54,10 @@ export class SearchResults extends React.Component<P, {}> {
         { id: 5, value: 'preferredTitle-Uniform Title', isChecked: true },
         { id: 6, value: 'tagHighlighted-Tag', isChecked: true },
         { id: 7, value: 'countDoc-Bibs', isChecked: true },
-        // { id: 8, value: 'subject-Subject (6xx)', isChecked: true },
-        // { id: 9, value: 'date1-Date 1', isChecked: true },
-        // { id: 10, value: 'date2-Date 2', isChecked: true },
-        // { id: 11, value: 'format-Format', isChecked: true }
+        { id: 8, value: 'subject-Subject (6xx)', isChecked: true },
+        { id: 9, value: 'date1-Date 1', isChecked: true },
+        { id: 10, value: 'date2-Date 2', isChecked: true },
+        { id: 11, value: 'format-Format', isChecked: true }
       ],
       detailPanelIsVisible: false,
       noResults: false,
@@ -121,7 +121,7 @@ export class SearchResults extends React.Component<P, {}> {
       router,
     } = this.props;
     const id = meta['001'];
-    dispatch(searchDetailAction(id));
+    // dispatch(searchDetailAction(id));
     dispatch({ type: ACTION.CLOSE_PANELS, closePanels: false });
     let mergedResults;
     let detailSelected;
@@ -207,22 +207,24 @@ export class SearchResults extends React.Component<P, {}> {
     { onToggle },
     { checkGroupLabels } = this.state,
     {
-      data: {
+      data: { filter: { name, checked },
         data: { emptyRecord },
       },
     } = this.props
   ) => (
     <Fragment>
-      <MenuSection label="Custom Columns ">
-        {checkGroupLabels.map(check => {
-          return (
-            <CheckBox
-              handleCheckChieldElement={this.handleCheckChieldElement}
-              {...check}
-            />
-          );
-        })}
-      </MenuSection>
+      {(name === 'recordType.Bibliographic records' && checked === true) ?
+        <MenuSection label="Custom Columns ">
+          {checkGroupLabels.map(check => {
+            return (
+              <CheckBox
+                handleCheckChieldElement={this.handleCheckChieldElement}
+                {...check}
+              />
+            );
+          })}
+        </MenuSection>
+        : null}
       <MenuSection label="Actions">
         <Button
           buttonStyle="primary"

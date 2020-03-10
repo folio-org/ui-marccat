@@ -129,7 +129,7 @@ export class BrowseResults extends React.Component<Props, S> {
         query: baseQuery,
         isAuthority: false,
       });
-      dispatch({ type: ACTION.BROWSE_ASSOCIATED_DETAILS, mustOpenPanel: false });
+      // dispatch({ type: ACTION.BROWSE_ASSOCIATED_DETAILS, mustOpenPanel: false });
     }
     this.setState({
       browseDetailPanelIsVisible: true,
@@ -320,7 +320,7 @@ export class BrowseResults extends React.Component<Props, S> {
             const bottom =
               e.target.scrollHeight - e.target.scrollTop ===
               e.target.clientHeight;
-            if (bottom) {
+            if (bottom && browseRecords.length > 29) {
               store.dispatch({
                 type: ACTION.SETTINGS,
                 data: { newBrowse: 'N' },

@@ -80,7 +80,7 @@ class SearchResultPane extends React.Component<Props, {}> {
           const bottom =
             e.target.scrollHeight - e.target.scrollTop ===
             e.target.clientHeight;
-          if (bottom) {
+          if (bottom && mergedRecord.length > 29) {
             store.dispatch({
               type: ACTION.SEARCH,
               isFromCat: 'N',
@@ -136,7 +136,7 @@ class SearchResultPane extends React.Component<Props, {}> {
             const bottom =
               e.target.scrollHeight - e.target.scrollTop ===
               e.target.clientHeight;
-            if (bottom) {
+            if (bottom && mergedRecord.length > 29) {
               store.dispatch({
                 type: ACTION.SEARCH,
                 isFromCat: 'N',

@@ -10,7 +10,6 @@ export default function SearchPane(props) {
     <Paneset static>
       {filterPaneIsVisible &&
       <Pane
-        dismissible
         defaultWidth="24%"
         actionMenu={() => <PanelHistory {...props} />}
         onClose={toggleFilterPane}

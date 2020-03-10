@@ -59,20 +59,10 @@ export const renderColumn = (
   customColumns: Array
 ) => {
   let visibleCol = [];
-  // if (customColumns.length > 0) {
-  // //   visibleCol = ['245', 'name'];
-  // //   customColumns.map(el => {
-  // //     if (el === 'resultView') {
-  // //       visibleCol.unshift('resultView');
-  // //       customColumns.splice(customColumns.indexOf(el), 1);
-  // //     }
-  // //     return visibleCol;
-  // //   });
-  //   visibleCol = [...visibleCol, ...customColumns];
-  //   return visibleCol;
-  // }
-  //   else
   if (isBibsOnly === true && isAuthOnly === false) {
+    if (customColumns.length > 0) {
+      return customColumns;
+    }
     visibleCol = [
       'resultView',
       '001',
@@ -103,9 +93,6 @@ export const renderColumn = (
     (isAuthOnly === true && isBibsOnly === true) ||
     (isAuthOnly === false && isBibsOnly === false)
   ) {
-    if (customColumns.length > 0) {
-      return customColumns;
-    }
     visibleCol = [
       'resultView',
       '001',

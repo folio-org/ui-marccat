@@ -105,7 +105,8 @@ export class BrowseItemDetail extends React.Component<P, {
               onRowClick={(e, meta) => {
                 const { dispatch } = this.props;
                 const id = meta['001'];
-                dispatch({ type: ACTION.BROWSE_ASSOCIATED_DETAILS, query: id, recordType: meta.recordView, mustOpenPanel: true });
+                dispatch({ type: ACTION.SETTINGS, data:{ mustOpenPanel: true } });
+                dispatch({ type: ACTION.BROWSE_ASSOCIATED_DETAILS, query: id, recordType: meta.recordView });
               }}
               visibleColumns={[
                 'resultView',

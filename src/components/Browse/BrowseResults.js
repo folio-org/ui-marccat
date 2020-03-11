@@ -46,7 +46,7 @@ export class BrowseResults extends React.Component<Props, S> {
     super(props);
     this.state = {
       detailSubtitle: {},
-      moreBrowseRecords: {},
+      moreBrowseRecords: [],
       browseDetailPanelIsVisible: false,
       rowClicked: false,
       noResults: false,
@@ -74,6 +74,7 @@ export class BrowseResults extends React.Component<Props, S> {
     });
   };
 
+  
   getActionMenu = (detail, items, { onToggle } = this.props) => (
     <Fragment>
       <MenuSection>
@@ -122,14 +123,14 @@ export class BrowseResults extends React.Component<Props, S> {
         query: baseQuery,
         isAuthority: true,
       });
-      dispatch({ type: ACTION.BROWSE_ASSOCIATED_DETAILS, mustOpenPanel: false });
+      dispatch({ type: ACTION.SETTINGS, data:{ mustOpenPanel: false } });
     } else {
       dispatch({
         type: ACTION.DETAILS_BROWSE,
         query: baseQuery,
         isAuthority: false,
       });
-      // dispatch({ type: ACTION.BROWSE_ASSOCIATED_DETAILS, mustOpenPanel: false });
+      dispatch({ type: ACTION.SETTINGS, data:{ mustOpenPanel: false } });
     }
     this.setState({
       browseDetailPanelIsVisible: true,
@@ -184,6 +185,9 @@ export class BrowseResults extends React.Component<Props, S> {
     let { noResults, isPadRequired, moreBrowseRecords } = this.state;
     let { browseRecords } = this.props;
     if (isNewSearch === 'N') {
+      if (moreBrowseRecords) {
+        moreBrowseRecords = Object.values(moreBrowseRecords);
+      }
       if (moreBrowseRecords && moreBrowseRecords.length > 0) {
         browseRecords = [...browseRecords, ...moreBrowseRecords];
       } else {
@@ -327,10 +331,10 @@ export class BrowseResults extends React.Component<Props, S> {
               });
               const cb = payload => {
                 this.setState({
-                  moreBrowseRecords: [
+                  moreBrowseRecords: {
                     ...payload.headings,
-                    ...moreBrowseRecords,
-                  ],
+                    ...moreBrowseRecords
+                  },
                 });
               };
               const lastRecord = last(browseRecords).stringText;
@@ -401,14 +405,10 @@ export class BrowseResults extends React.Component<Props, S> {
             }
             paneSub={C.EMPTY_STRING}
             appIcon={<AppIcon app={C.META.ICON_TITLE} />}
-            dismissible
             onScroll={() => {}}
             onClose={() => {
               const { dispatch } = this.props;
-              dispatch({
-                type: ACTION.CLOSE_BROWSE_ASSOCIATED_DETAILS,
-                openPanel: false,
-              });
+              dispatch({ type: ACTION.SETTINGS, data:{ mustOpenPanel: false } });
             }}
           >
             {(isLoadingAssociated && isPanelOpen) ? (
@@ -429,6 +429,7 @@ export default connect(
     searchIndexForCrossRef: browse.query,
     isFromCrossReferences: settings.triggerDetails,
     isNewSearch: settings.newBrowse,
+    isPanelOpen: settings.mustOpenPanel,
     browseRecords: browse.records,
     isFetchingBrowse: browse.isLoading,
     isReadyBrowse: browse.isReady,
@@ -441,6 +442,6 @@ export default connect(
     isLoadingAssociated: browseDetailsAssociated.isLoading,
     isReadyAssociated: browseDetailsAssociated.isReady,
     items: browseDetailsAssociated.records,
-    isPanelOpen: browseDetailsAssociated.mustOpenPanel,
+    // isPanelOpen: browseDetailsAssociated.mustOpenPanel,
   })
 )(injectProps(BrowseResults));

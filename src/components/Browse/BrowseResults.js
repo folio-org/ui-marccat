@@ -74,7 +74,7 @@ export class BrowseResults extends React.Component<Props, S> {
     });
   };
 
-  
+
   getActionMenu = (detail, items, { onToggle } = this.props) => (
     <Fragment>
       <MenuSection>

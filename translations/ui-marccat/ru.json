@@ -117,7 +117,7 @@
     "cataloging.actions.redo": "Redo",
     "cataloging.actions.redo.shortcut": "CTRL SHIFT Z или CTRL Y",
     "cataloging.actions.lookup": "Поиск",
-    "cataloging.actions.lookup.shortcut": "Delete или Backspace",
+    "cataloging.actions.lookup.shortcut": "Delete + Backspace",
     "cataloging.actions.view.marc.docs": "View MARC docs",
     "cataloging.actions.view.marc.docs.shortcut": "?",
     "cataloging.record.duplicate": "Дублирующая запись",

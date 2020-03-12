@@ -94,38 +94,39 @@ class SearchPanel extends React.Component<P, {}> {
         } else {
           baseQuery = inputValue;
         }
-      } else {
-        baseQuery = inputValue;
-      }
-      let bibQuery = baseQuery;
-      const authQuery = baseQuery;
-      transitionToParams('q', bibQuery);
-
-      if (state.marccat.filter && state.marccat.filter.filters) {
-        const { languageFilter, formatType } = remapFilters(state.marccat.filter.filters);
-        if (languageFilter && languageFilter.length) {
-          bibQuery += ' AND ( ' + getLanguageFilterQuery(languageFilter) + ' ) ';
-        }
-        if (formatType && formatType.length) {
-          bibQuery += ' AND ( ' + getFormatFilterQuery(formatType) + ' ) ';
-        }
-      }
-      if (conditionFilter === 'BROWSE') {
-        isBrowseRequested = true;
-        store.dispatch({ type: ACTION.SETTINGS, data: { newBrowse: 'Y' } });
-        store.dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query: bibQuery });
-        this.handleSearchHistory({ recordType: 'browse', query: bibQuery, index: indexForQuery + conditionFilter, found: 0 });
-        router.push('/marccat/browse');
+        // } else {
+        //   baseQuery = inputValue;
+        //   return null;
+        // }
+        let bibQuery = baseQuery;
+        const authQuery = baseQuery;
         transitionToParams('q', bibQuery);
-        this.setState({
-          filterEnable: false
-        });
-      } else if (!isBrowseRequested) {
-        router.push('/marccat/search');
-        this.setState({
-          filterEnable: true
-        });
-        if (indexForQuery === 'BN '
+
+        if (state.marccat.filter && state.marccat.filter.filters) {
+          const { languageFilter, formatType } = remapFilters(state.marccat.filter.filters);
+          if (languageFilter && languageFilter.length) {
+            bibQuery += ' AND ( ' + getLanguageFilterQuery(languageFilter) + ' ) ';
+          }
+          if (formatType && formatType.length) {
+            bibQuery += ' AND ( ' + getFormatFilterQuery(formatType) + ' ) ';
+          }
+        }
+        if (conditionFilter === 'BROWSE') {
+          isBrowseRequested = true;
+          store.dispatch({ type: ACTION.SETTINGS, data: { newBrowse: 'Y' } });
+          store.dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query: bibQuery });
+          this.handleSearchHistory({ recordType: 'browse', query: bibQuery, index: indexForQuery + conditionFilter, found: 0 });
+          router.push('/marccat/browse');
+          transitionToParams('q', bibQuery);
+          this.setState({
+            filterEnable: false
+          });
+        } else if (!isBrowseRequested) {
+          router.push('/marccat/search');
+          this.setState({
+            filterEnable: true
+          });
+          if (indexForQuery === 'BN '
           || indexForQuery === 'SN '
           || indexForQuery === 'PU '
           || indexForQuery === 'LL '
@@ -133,16 +134,17 @@ class SearchPanel extends React.Component<P, {}> {
           || indexForQuery === 'CP '
           || indexForQuery === 'PP '
           || indexForQuery === 'PW ') {
-          dispatch({ type: ACTION.SEARCH, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: EMPTY_STRING, from: '1', to: '30' });
-          this.handleSearchHistory({ recordType: 'biblio', query: bibQuery, index: indexForQuery, found: 0, sortStrategy: state.marccat.settings.sortType });
-          transitionToParams('q', bibQuery);
-          dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
-        } else {
-          dispatch({ type: ACTION.SEARCH, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
-          transitionToParams('q', authQuery);
-          dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
-          dispatch({ type: ACTION.TOTAL_AUTH_COUNT, query: authQuery });
-          this.handleSearchHistory({ recordType: 'all', query: bibQuery, index: indexForQuery, found: 0, sortStrategy: state.marccat.settings.sortType, record: {} });
+            dispatch({ type: ACTION.SEARCH, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: EMPTY_STRING, from: '1', to: '30' });
+            this.handleSearchHistory({ recordType: 'biblio', query: bibQuery, index: indexForQuery, found: 0, sortStrategy: state.marccat.settings.sortType });
+            transitionToParams('q', bibQuery);
+            dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
+          } else {
+            dispatch({ type: ACTION.SEARCH, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
+            transitionToParams('q', authQuery);
+            dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
+            dispatch({ type: ACTION.TOTAL_AUTH_COUNT, query: authQuery });
+            this.handleSearchHistory({ recordType: 'all', query: bibQuery, index: indexForQuery, found: 0, sortStrategy: state.marccat.settings.sortType, record: {} });
+          }
         }
       }
     }

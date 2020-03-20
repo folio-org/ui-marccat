@@ -14,6 +14,28 @@ export const leaderDropdownAction = (payload) => {
     },
   };
 };
+
+export const editLeaderDropdownAction = (payload) => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.FIXED_FIELD_CODE_GROUPS_URL,
+      type: 'leaderData',
+      params: `leader=${payload.value}&code=${payload.code}&headerTypeCode=${15}&lang=eng&valueField=${payload.value}`,
+    },
+  };
+};
+
+export const edit008DropdownAction = (payload) => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.FIXED_FIELD_CODE_GROUPS_URL,
+      type: 'dropDown008edit',
+      params:  `leader=${payload.leader}&code=${payload.code}&headerTypeCode=${payload.headerTypeCode}&lang=eng&valueField=${payload.valueField}`,
+    },
+  };
+};
 /**
  *
  * @param {*} payload
@@ -176,6 +198,20 @@ export const headertypeAction = (tag) => {
       type: `headertype${tag}`,
       params: `code=${tag}&lang=eng`,
     },
+  };
+};
+
+export const editDropDownValuesAction = (payload) => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.FIXED_FIELD_CODE_GROUPS_URL,
+      type: `headerTypeValues${payload.code}`,
+      key: payload.code,
+      id: payload.code,
+      params: `leader=${payload.value}&code=${payload.code}&headerTypeCode=${payload.headerTypeCode}&lang=eng&valueField=${payload.displayValue}`
+    },
+    cb: payload.cb
   };
 };
 

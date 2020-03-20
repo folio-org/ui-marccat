@@ -72,33 +72,29 @@ class Record extends React.Component<Props, { callout: React.RefObject<Callout> 
     this.deleteRecord = this.deleteRecord.bind(this);
   }
 
-  // checkLeaderForEditMode = (leaderDisplayValue) => {
-  //   return '35';
-  // }
-
   // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
     const {
       datastore: { emptyRecord },
+      editLoadLeaderData,
       loadLeaderData,
       loadHeadertype,
       dispatch,
     } = this.props;
     const { mode } = this.state;
-    // if (mode === RECORD_ACTION.EDIT_MODE) {
-    //   const { recordDetail } = this.props;
-    //   const leaderEdit = recordDetail.leader;
-    //   loadLeaderData({ value: leaderEdit.value, code: leaderEdit.code, typeCode: recordDetail.leader.value });
-    //   loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
-    //   dispatch(MarcAction.change008ByLeaderAction(leaderEdit.value));
-    //   // this.checkLeaderForEditMode(leaderEdit.value);
-    // } else {
-    const { leader } = emptyRecord.results;
-    loadLeaderData({ value: leader.value, code: leader.code, typeCode: '15' });
-    loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
-    dispatch(MarcAction.change008ByLeaderAction(leader.value));
+    if (mode === RECORD_ACTION.EDIT_MODE) {
+      const { recordDetail } = this.props;
+      const leaderEdit = recordDetail.leader;
+      editLoadLeaderData({ value: leaderEdit.value, code: leaderEdit.code, typeCode: '15' });
+      loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
+      dispatch(MarcAction.change008ByLeaderAction(leaderEdit.value));
+    } else {
+      const { leader } = emptyRecord.results;
+      loadLeaderData({ value: leader.value, code: leader.code, typeCode: '15' });
+      loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
+      dispatch(MarcAction.change008ByLeaderAction(leader.value));
+    }
   }
-  // }
 
   getCurrentRecord = (): Object => {
     const {
@@ -464,6 +460,9 @@ const mapDispatchToProps = dispatch => bindActionCreators(
   {
     loadHeadertype: (tag: []) => _ => {
       tag.forEach(t => dispatch(MarcAction.headertypeAction(t)));
+    },
+    editLoadLeaderData: payload => _ => {
+      dispatch(MarcAction.editLeaderDropdownAction(payload));
     },
     loadLeaderData: payload => _ => {
       dispatch(MarcAction.leaderDropdownAction(payload));

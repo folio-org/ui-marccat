@@ -14,6 +14,7 @@ import style from '../../../Style/index.css';
 import {
   dropDownValuesAction,
   changeDisplayValueAction,
+  editDropDownValuesAction,
 } from '../../../Actions';
 import {
   TAGS,
@@ -50,23 +51,49 @@ class Tag00X extends React.PureComponent<Props, S> {
   onHandleChange = evt => {
     const {
       dispatch,
-      element: { code },
+      element: { code, fixedField },
       headerTypeCodeFromLeader,
     } = this.props;
-    let { record: { leader: { value } } } = this.props;
-    const headerTypeCode =
+    let {
+      record: {
+        leader: { value },
+      },
+    } = this.props;
+    const { isEditMode } = this.state;
+    let headerTypeCode;
+    let displayValue;
+    headerTypeCode =
       code === TAGS._008 && headerTypeCodeFromLeader
         ? headerTypeCodeFromLeader
-        : evt.target.value;
-    value = code === TAGS._008 && headerTypeCodeFromLeader ? leader.value : value;
-    const payload = {
-      value,
-      code,
-      headerTypeCode,
-      cb: r => this.handleDisplayValue(undefined, r),
-    };
-    this.setState({ headerTypeCode });
-    dispatch(dropDownValuesAction(payload));
+        : evt
+          ? evt.target.value
+          : fixedField.headerTypeCode;
+    value =
+      code === TAGS._008 && headerTypeCodeFromLeader ? leader.value : value;
+    if (isEditMode && code !== TAGS._008 && evt === undefined) {
+      headerTypeCode = fixedField.headerTypeCode;
+      displayValue = fixedField.displayValue;
+    } else if (isEditMode && code === TAGS._008) {
+      displayValue = fixedField.displayValue;
+      const payload = {
+        value,
+        code,
+        headerTypeCode,
+        displayValue,
+        cb: r => this.handleDisplayValue(undefined, r),
+      };
+      this.setState({ headerTypeCode });
+      dispatch(editDropDownValuesAction(payload));
+    } else {
+      const payload = {
+        value,
+        code,
+        headerTypeCode,
+        cb: r => this.handleDisplayValue(undefined, r),
+      };
+      this.setState({ headerTypeCode });
+      dispatch(dropDownValuesAction(payload));
+    }
   };
 
   handleDisplayValue = (e, data) => {
@@ -192,6 +219,7 @@ class Tag00X extends React.PureComponent<Props, S> {
 
   RenderSelect = ({ element, ...props }) => {
     const { dispatch, change, typeCode } = this.props;
+    const { isEditMode } = this.state;
     return (
       <Field
         // Field props redux-form
@@ -223,7 +251,7 @@ class Tag00X extends React.PureComponent<Props, S> {
     const sortedData = Object.values(data).sort((x, y) => x.name > y.name);
     return (
       <Row>
-        {code === TAGS._006 && (headerTypeCode === '22') && (
+        {code === TAGS._006 && headerTypeCode === '22' && (
           <Col xs={4}>
             <Tag00XInput
               {...this.props}
@@ -232,7 +260,8 @@ class Tag00X extends React.PureComponent<Props, S> {
             />
           </Col>
         )}
-        {code === TAGS._007 && (headerTypeCode === '25' || headerTypeCode === '42') && (
+        {code === TAGS._007 &&
+          (headerTypeCode === '25' || headerTypeCode === '42') && (
           <Col xs={4}>
             <Tag00XInput
               {...this.props}

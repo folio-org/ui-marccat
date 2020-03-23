@@ -22,6 +22,8 @@ import {
   DATE_FIRST_PUBBLICATION,
   DATE_LAST_PUBBLICATION,
   IMAGE_BIT_DEPTH,
+  REDUCTION_CRIT,
+  INSPECTION_DATE,
   RECORD_FIELD_STATUS,
   RECORD_ACTION,
 } from '../../../Utils/MarcConstant';
@@ -189,11 +191,25 @@ class Tag00X extends React.PureComponent<Props, S> {
       );
     }
     if (code === TAGS._007) {
-      payload.imageBitDepth = formFieldValue(
-        store,
-        REDUX.FORM.DATA_FIELD_FORM,
-        IMAGE_BIT_DEPTH
-      );
+      if (headerTypeCode === 42) {
+        payload.imageBitDepth = formFieldValue(
+          store,
+          REDUX.FORM.DATA_FIELD_FORM,
+          IMAGE_BIT_DEPTH
+        );
+      } else if (headerTypeCode === 25) {
+        payload.reductionRatioRangeCode = formFieldValue(
+          store,
+          REDUX.FORM.DATA_FIELD_FORM,
+          REDUCTION_CRIT
+        );
+      } else if (headerTypeCode === 26) {
+        payload.inspectionDate = formFieldValue(
+          store,
+          REDUX.FORM.DATA_FIELD_FORM,
+          INSPECTION_DATE
+        );
+      }
     }
     if (code === TAGS._008) {
       if (headerTypeCode === 37 && payload.visualRunningTime === undefined) {
@@ -260,8 +276,25 @@ class Tag00X extends React.PureComponent<Props, S> {
             />
           </Col>
         )}
-        {code === TAGS._007 &&
-          (headerTypeCode === '25' || headerTypeCode === '42') && (
+        {code === TAGS._007 && headerTypeCode === '25' && (
+          <Col xs={4}>
+            <Tag00XInput
+              {...this.props}
+              name={REDUCTION_CRIT}
+              onChange={e => this.handleDisplayValue(e, sortedData)}
+            />
+          </Col>
+        )}
+        {code === TAGS._007 && headerTypeCode === '26' && (
+          <Col xs={4}>
+            <Tag00XInput
+              {...this.props}
+              name={INSPECTION_DATE}
+              onChange={e => this.handleDisplayValue(e, sortedData)}
+            />
+          </Col>
+        )}
+        {code === TAGS._007 && headerTypeCode === '42' && (
           <Col xs={4}>
             <Tag00XInput
               {...this.props}

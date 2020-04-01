@@ -19,8 +19,6 @@ import {
 import {
   TAGS,
   VISUAL_RUNNING_TIME,
-  DATE_FIRST_PUBBLICATION,
-  DATE_LAST_PUBBLICATION,
   RECORD_FIELD_STATUS,
   RECORD_ACTION,
 } from '../../../Utils/MarcConstant';
@@ -33,13 +31,14 @@ type S = {
   expand: Boolean,
 } & State;
 
-class Tag00X extends React.PureComponent<Props, S> {
+class Tag006 extends React.PureComponent<Props, S> {
   constructor(props: Props) {
     super(props);
     this.state = {
       isEditMode: findParam('mode') === RECORD_ACTION.EDIT_MODE,
       expand: false,
       headerTypeCode: 0,
+      firstAccess: true,
     };
     this.RenderSelect = this.RenderSelect.bind(this);
     this.RenderDropwDown = this.RenderDropwDown.bind(this);
@@ -47,49 +46,57 @@ class Tag00X extends React.PureComponent<Props, S> {
     this.onHandleChange = this.onHandleChange.bind(this);
   }
 
-  onHandleChange = evt => {
+  onHandleChangeFromEdit = () => {
     const {
       dispatch,
+      change,
       element: { code, fixedField },
-      headerTypeCodeFromLeader,
     } = this.props;
-    let {
+    const {
       record: {
         leader: { value },
       },
     } = this.props;
-    const { isEditMode } = this.state;
     let { headerTypeCode } = this.state;
+    headerTypeCode = fixedField.headerTypeCode;
     let displayValue;
-    headerTypeCode =
-      headerTypeCodeFromLeader ||
-      (evt ? evt.target.value : fixedField.headerTypeCode);
-    value = headerTypeCodeFromLeader ? leader.value : value;
-    if (isEditMode) {
-      if (fixedField.displayValue.includes('|')) {
-        displayValue = fixedField.displayValue.replace('|', '%7C');
-      } else {
-        displayValue = fixedField.displayValue;
-      }
-      const payload = {
-        value,
-        code,
-        headerTypeCode,
-        displayValue,
-        cb: r => this.handleDisplayValue(undefined, r),
-      };
-      this.setState({ headerTypeCode });
-      dispatch(editDropDownValuesAction(payload));
+    if (fixedField.displayValue.includes('|')) {
+      displayValue = fixedField.displayValue.replace('|', '%7C');
     } else {
-      const payload = {
-        value,
-        code,
-        headerTypeCode,
-        cb: r => this.handleDisplayValue(undefined, r),
-      };
-      this.setState({ headerTypeCode });
-      dispatch(dropDownValuesAction(payload));
+      displayValue = fixedField.displayValue;
     }
+    const payload = {
+      value,
+      code,
+      headerTypeCode,
+      displayValue,
+      cb: r => this.handleDisplayValue(undefined, r),
+    };
+    this.setState({ firstAccess: false, headerTypeCode });
+    dispatch(change('Tag006', headerTypeCode));
+    dispatch(editDropDownValuesAction(payload));
+  };
+
+  onHandleChange = evt => {
+    const {
+      dispatch,
+      element: { code, fixedField },
+    } = this.props;
+    const {
+      record: {
+        leader: { value },
+      },
+    } = this.props;
+    let { headerTypeCode } = this.state;
+    headerTypeCode = evt ? evt.target.value : fixedField.headerTypeCode;
+    const payload = {
+      value,
+      code,
+      headerTypeCode,
+      cb: r => this.handleDisplayValue(undefined, r),
+    };
+    this.setState({ headerTypeCode });
+    dispatch(dropDownValuesAction(payload));
   };
 
   handleDisplayValue = (e, data) => {
@@ -103,12 +110,12 @@ class Tag00X extends React.PureComponent<Props, S> {
     const payload = {};
     const fromStore = store.getState();
     let results;
-    if (fromStore.marccat.data.fixedfield008 === undefined || !e) {
+    if (fromStore.marccat.data.fixedfield006 === undefined || !e) {
       results = data.results || data;
       Object.entries(results).map(([k, v]) => (payload[k] = v.defaultValue));
       Object.entries(results).map(([k, v]) => dispatch(change(`Tag${code}-${headerTypeCode}-${k}`, v.defaultValue)));
     } else {
-      results = fromStore.marccat.data.fixedfield008.results;
+      results = fromStore.marccat.data.fixedfield006.results;
       Object.entries(results).map(([k, v]) => {
         if (k !== 'attributes' || k !== 'displayValue') {
           payload[k] = v;
@@ -116,11 +123,7 @@ class Tag00X extends React.PureComponent<Props, S> {
         return payload;
       });
       const selected = last(e.target.name.split('-'));
-      if (
-        selected === 'dateFirstPublication' ||
-        selected === 'dateLastPublication' ||
-        selected === 'visualRunningTime'
-      ) {
+      if (selected === 'visualRunningTime') {
         payload[selected] = e.target.value.trim();
       } else {
         payload[selected] = e.target.value;
@@ -133,8 +136,9 @@ class Tag00X extends React.PureComponent<Props, S> {
 
   execChange = (response: Object): void => {
     const { dispatch, change, fixedfields, element } = this.props;
+    const { isEditMode, firstAccess } = this.state;
     dispatch(change(element.code, response.displayValue));
-    element.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
+    if (isEditMode && !firstAccess) element.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
     fixedfields.push(element);
     fixedfields
       .filter(f => f.code === element.code)
@@ -142,21 +146,9 @@ class Tag00X extends React.PureComponent<Props, S> {
   };
 
   prepareValue = (code, data, payload, headerTypeCode) => {
-    const { store } = this.props;
-    if (headerTypeCode === 37 && payload.visualRunningTime === '') {
+    if (payload.visualRunningTime === '') {
       payload.visualRunningTime = '---';
     }
-    if (payload.dateFirstPublication === '') {
-      payload.dateFirstPublication = '    ';
-    }
-    if (payload.dateLastPublication === '') {
-      payload.dateLastPublication = '    ';
-    }
-    payload.dateEnteredOnFile = formFieldValue(
-      store,
-      REDUX.FORM.DATA_FIELD_FORM,
-      TAGS._008
-    ).substring(0, 6);
     payload.code = code;
     payload.categoryCode = 1;
     payload.headerTypeCode = headerTypeCode;
@@ -164,7 +156,7 @@ class Tag00X extends React.PureComponent<Props, S> {
   };
 
   RenderSelect = ({ element, ...props }) => {
-    const { typeCode } = this.props;
+    const { isEditMode, firstAccess, headerTypeCode } = this.state;
     return (
       <Field
         // Field props redux-form
@@ -174,15 +166,12 @@ class Tag00X extends React.PureComponent<Props, S> {
         id={'Tag'.concat(element.code)}
         label={'Tag'.concat(element.code)}
         dataOptions={props.headertypes}
-        readOnly={element.code === TAGS._008}
         onChange={this.onHandleChange}
         placeholder={'Select Heading types for '.concat(element.code)}
         value={
-          element.code === TAGS._008 && props.headerTypeCodeFromLeader
-            ? props.headertypes.map(k => (k.value === props.headerTypeCodeFromLeader
-              ? this.onHandleChange()
-              : typeCode))
-            : typeCode
+          isEditMode && firstAccess && element.fieldStatus === 'unchanged'
+            ? this.onHandleChangeFromEdit()
+            : headerTypeCode
         }
       />
     );
@@ -196,51 +185,44 @@ class Tag00X extends React.PureComponent<Props, S> {
     const sortedData = Object.values(data).sort((x, y) => x.name > y.name);
     return (
       <Row>
-        {sortedData.map((field, idx) => (field.name === DATE_FIRST_PUBBLICATION ||
-          field.name === DATE_LAST_PUBBLICATION ||
-          field.name === VISUAL_RUNNING_TIME ? (
-            <Col xs={4}>
-              <Tag00XInput
-                {...this.props}
-                name={'Tag'
-                  .concat(code)
-                  .concat('-')
-                  .concat(headerTypeCode)
-                  .concat('-')
-                  .concat(field.name)}
-                label={decamelizify(field.name, EMPTY_SPACED_STRING)}
-                onChange={e => this.handleDisplayValue(e, data)}
-              />
-            </Col>
-          ) : (
-            <Col xs={4} key={idx}>
-              <HeaderTypeSelect
-                {...this.props}
-                name={'Tag'
-                  .concat(code)
-                  .concat('-')
-                  .concat(headerTypeCode)
-                  .concat('-')
-                  .concat(field.name)}
-                readOnly={field.name === 'categoryOfMaterial'}
-                label={decamelizify(field.name, EMPTY_SPACED_STRING)}
-                onChange={e => this.handleDisplayValue(e, data)}
-                dataOptions={field.dropdownSelect}
-              />
-            </Col>
-          )))}
+        {sortedData.map((field, idx) => (field.name === VISUAL_RUNNING_TIME ? (
+          <Col xs={4}>
+            <Tag00XInput
+              {...this.props}
+              name={'Tag'
+                .concat(code)
+                .concat('-')
+                .concat(headerTypeCode)
+                .concat('-')
+                .concat(field.name)}
+              label={decamelizify(field.name, EMPTY_SPACED_STRING)}
+              onChange={e => this.handleDisplayValue(e, data)}
+            />
+          </Col>
+        ) : (
+          <Col xs={4} key={idx}>
+            <HeaderTypeSelect
+              {...this.props}
+              name={'Tag'
+                .concat(code)
+                .concat('-')
+                .concat(headerTypeCode)
+                .concat('-')
+                .concat(field.name)}
+              readOnly={field.name === 'categoryOfMaterial'}
+              label={decamelizify(field.name, EMPTY_SPACED_STRING)}
+              onChange={e => this.handleDisplayValue(e, data)}
+              dataOptions={field.dropdownSelect}
+            />
+          </Col>
+        )))}
       </Row>
     );
   };
 
   render() {
     const { expand, headerTypeCode } = this.state;
-    const {
-      element,
-      headingTypes,
-      values008,
-      headerTypeCodeFromLeader,
-    } = this.props;
+    const { element, headingTypes, values006 } = this.props;
     return (
       <div className={style.fieldContainer} no-padding>
         <MarcField
@@ -263,12 +245,12 @@ class Tag00X extends React.PureComponent<Props, S> {
                 label={'Tag'.concat(element.fixedField.code)}
                 name={'Tag'.concat(element.fixedField.code)}
                 component={this.RenderSelect}
-                typeCode={headerTypeCodeFromLeader || headerTypeCode}
+                typeCode={headerTypeCode}
                 headertypes={headingTypes.results.headingTypes}
               />
             )}
-            {!isEmpty(values008.results) &&
-              this.RenderDropwDown(values008.results, element.fixedField.code)}
+            {!isEmpty(values006.results) &&
+              this.RenderDropwDown(values006.results, element.fixedField.code)}
           </Col>
         </div>
       </div>
@@ -279,17 +261,14 @@ class Tag00X extends React.PureComponent<Props, S> {
 const mapStateToProps = state => {
   const {
     marccat: {
-      data: { emptyRecord, marcRecordDetail, headerTypeValues008 },
+      data: { emptyRecord, marcRecordDetail, headerTypeValues006 },
     },
   } = state;
   return {
-    values008: headerTypeValues008 ? headerTypeValues008.results : {},
-    headerTypeCodeFromLeader: headerTypeValues008
-      ? headerTypeValues008.results.headerTypeCode
-      : undefined,
+    values006: headerTypeValues006 ? headerTypeValues006.results : {},
     fixedfields:
       emptyRecord.results.fields || marcRecordDetail.bibliographicRecord.fields,
   };
 };
 
-export default connect(mapStateToProps)(Tag00X);
+export default connect(mapStateToProps)(Tag006);

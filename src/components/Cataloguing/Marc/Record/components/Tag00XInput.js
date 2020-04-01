@@ -4,14 +4,14 @@ import { Field } from 'redux-form';
 import { decamelizify } from '../../../../../shared';
 import { EMPTY_SPACED_STRING } from '../../../../../config/constants';
 
-export default ({ name, onChange, ...props }) => {
+export default ({ name, label, onChange, ...props }) => {
   return (
     <Field
       {...props}
       id={name}
       name={name}
       component={TextField}
-      label={decamelizify(name, EMPTY_SPACED_STRING)}
+      label={label}
       onChange={onChange}
     />
   );

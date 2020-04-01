@@ -17,6 +17,10 @@ export default ({ ...props }) => {
     { label: 'Exact match', value: 'MATCH' }
   ];
 
+  const onlyBrowseOption = [
+    { label: 'Browse', value: 'BROWSE' }
+  ];
+
   const remappedOptions = [];
   if (store.getState().form.searchForm && store.getState().form.searchForm.values) {
     const selectedIndex = store.getState().form.searchForm.values.selectIndexes;
@@ -30,9 +34,14 @@ export default ({ ...props }) => {
         selectedIndex === 'PU' ||
         selectedIndex === 'NAMEC' ||
         selectedIndex === 'NAMEM' ||
+        selectedIndex === 'NAMETN' ||
+        selectedIndex === 'NAMETT' ||
         selectedIndex === 'NAMEP')) {
       options.map(x => (x.value === 'BROWSE' ? options.splice(x, 1) : null));
       remappedOptions.push(options);
+    } else if (selectedIndex === 'NAMETN' ||
+    selectedIndex === 'NAMETT') {
+      remappedOptions.push(onlyBrowseOption);
     }
   }
 

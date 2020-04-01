@@ -209,7 +209,7 @@ export const editDropDownValuesAction = (payload) => {
       type: `headerTypeValues${payload.code}`,
       key: payload.code,
       id: payload.code,
-      params: `leader=${payload.value}&code=${payload.code}&headerTypeCode=${payload.headerTypeCode}&lang=eng&valueField=${payload.displayValue}`
+      params: `leader=${payload.value}&code=${payload.code}&lang=eng&valueField=${payload.displayValue}&headerTypeCode=${payload.headerTypeCode}`
     },
     cb: payload.cb
   };

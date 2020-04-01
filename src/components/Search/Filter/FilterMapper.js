@@ -226,5 +226,7 @@ export const findYourQueryFromBrowse = {
   // FOR START KEY
   'NAME-BROWSE': 'NK ',
   'SUB-BROWSE': 'SK ',
-  'TITLE-BROWSE': 'TK '
+  'TITLE-BROWSE': 'TK ',
+  'NAMETN-BROWSE': 'NTK ',
+  'NAMETT-BROWSE': 'NTK ',
 };

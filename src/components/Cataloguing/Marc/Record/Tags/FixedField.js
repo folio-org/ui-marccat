@@ -11,6 +11,8 @@ import {
 import Tag00X from './Tag00X';
 import { sort } from '../../../Utils/MarcApiUtils';
 import { Localize } from '../../../../../shared';
+import Tag006 from './Tag006';
+import Tag007 from './Tag007';
 
 type P = {
   handleOnChange: () => void,
@@ -18,9 +20,8 @@ type P = {
 
 type State = {
   fields: Array<*>,
-}
+};
 class FixedField extends React.PureComponent<P, State> {
-
   constructor(props: P) {
     super(props);
 
@@ -45,15 +46,15 @@ class FixedField extends React.PureComponent<P, State> {
     }
   }
 
-  handleAdd = (code) => {
+  handleAdd = code => {
     this.setState(({ fields }) => ({
-      fields: fields.concat(EMPTY_FIXED_FIELD(code))
+      fields: fields.concat(EMPTY_FIXED_FIELD(code)),
     }));
-  }
+  };
 
   handleRemove(index) {
     this.setState(({ fields }) => ({
-      fields: [...fields.slice(0, index), ...fields.slice(index + 1)]
+      fields: [...fields.slice(0, index), ...fields.slice(index + 1)],
     }));
   }
 
@@ -62,13 +63,16 @@ class FixedField extends React.PureComponent<P, State> {
     const { headertype006, headertype007, headertype008 } = this.props;
     return (
       <React.Fragment>
-        {sortBy(fields, SORTED_BY.CODE).map(f => (
-          (f.code === TAGS._006) ? <Tag00X element={f} headingTypes={headertype006} {...this.props} />
-            : (f.code === TAGS._007) ? <Tag00X element={f} headingTypes={headertype007} {...this.props} />
-              : <Tag00X element={f} headingTypes={headertype008} {...this.props} />
-        ))}
-      </React.Fragment>);
-  }
+        {sortBy(fields, SORTED_BY.CODE).map(f => (f.code === TAGS._006 ? (
+          <Tag006 element={f} headingTypes={headertype006} {...this.props} />
+        ) : f.code === TAGS._007 ? (
+          <Tag007 element={f} headingTypes={headertype007} {...this.props} />
+        ) : (
+          <Tag00X element={f} headingTypes={headertype008} {...this.props} />
+        )))}
+      </React.Fragment>
+    );
+  };
 
   getActionButton(item) {
     return (
@@ -78,26 +82,28 @@ class FixedField extends React.PureComponent<P, State> {
           id={'clickable-add-'.concat(item.code)}
           onClick={this.handleAdd}
         >
-          {Localize({ key: 'cataloging.fixedfield.section.add.newtag', value: item.code })}
+          {Localize({
+            key: 'cataloging.fixedfield.section.add.newtag',
+            value: item.code,
+          })}
         </Button>
-      </div>);
+      </div>
+    );
   }
 
   render() {
-    return (
-      this.RenderField00X()
-    );
+    return this.RenderField00X();
   }
 }
 
-export default (connect(
-  ({ marccat: { data: {
-    headertype006,
-    headertype007,
-    headertype008 } }
+export default connect(
+  ({
+    marccat: {
+      data: { headertype006, headertype007, headertype008 },
+    },
   }) => ({
     headertype006,
     headertype007,
     headertype008,
-  }),
-)((FixedField)));
+  })
+)(FixedField);

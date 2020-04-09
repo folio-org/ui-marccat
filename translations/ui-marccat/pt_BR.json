@@ -61,7 +61,7 @@
     "button.new.bib": "Registro bibliográfico",
     "button.new.short.auth": "CTRL + A",
     "button.new.short.bib": "CTRL + B",
-    "button.resetAll": "Reiniciar tudo",
+    "button.resetAll": "Retirar filtros",
     "settings.single.record.overlay.rules": "Regras de sobreposição de registro único",
     "settings.local.authority.records": "Registros locais de autoridade",
     "settings.record.single.overlay.rules.text": "Ao importar um único registro MARC, não substitua esses campos bloqueados:",

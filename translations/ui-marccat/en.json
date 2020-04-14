@@ -65,6 +65,7 @@
   "indexes.title": "Indexes",
   "diacritic.title": "Diacritic",
   "cataloging.fixedfield.section.add.newtag": "Add {value}",
+  "cataloging.fixedfield.section.remove.newtag": "Remove {value}",
   "cataloging.variablefield.section.add.newtag": "Add new tag",
   "cataloging.accordion.fixedfield.label": "Control Fields (001, 003, 005)",
   "cataloging.accordion.fixedfield.editable.label": "Control Fields (006, 007, 008)",

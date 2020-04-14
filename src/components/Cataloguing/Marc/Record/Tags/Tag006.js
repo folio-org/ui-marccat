@@ -5,11 +5,9 @@ import { Field } from 'redux-form';
 import { Select, Row, Col } from '@folio/stripes-components';
 import { connect } from 'react-redux';
 import { isEmpty, last } from 'lodash';
-import { PreviousMap } from 'postcss';
 import { EMPTY_SPACED_STRING, REDUX } from '../../../../../config/constants';
 import { decamelizify, findParam } from '../../../../../shared';
 import type { Props, State } from '../../../../../flow/types.js.flow';
-
 import style from '../../../Style/index.css';
 import {
   dropDownValuesAction,
@@ -17,7 +15,6 @@ import {
   editDropDownValuesAction,
 } from '../../../Actions';
 import {
-  TAGS,
   VISUAL_RUNNING_TIME,
   RECORD_FIELD_STATUS,
   RECORD_ACTION,
@@ -25,7 +22,7 @@ import {
 import { MarcField } from '../..';
 import Tag00XInput from '../components/Tag00XInput';
 import HeaderTypeSelect from '../components/HeaderTypeSelect';
-import { formFieldValue } from '../../../../../redux/helpers/Selector';
+import MarcFieldFor006007 from '../../Form/Components/MarcFieldFor006007';
 
 type S = {
   expand: Boolean,
@@ -61,7 +58,7 @@ class Tag006 extends React.PureComponent<Props, S> {
     headerTypeCode = fixedField.headerTypeCode;
     let displayValue;
     if (fixedField.displayValue.includes('|')) {
-      displayValue = fixedField.displayValue.replace('|', '%7C');
+      displayValue = fixedField.displayValue.split('|').join('%7C');
     } else {
       displayValue = fixedField.displayValue;
     }
@@ -88,6 +85,7 @@ class Tag006 extends React.PureComponent<Props, S> {
       },
     } = this.props;
     let { headerTypeCode } = this.state;
+    const { isEditMode, firstAccess } = this.state;
     headerTypeCode = evt ? evt.target.value : fixedField.headerTypeCode;
     const payload = {
       value,
@@ -95,6 +93,7 @@ class Tag006 extends React.PureComponent<Props, S> {
       headerTypeCode,
       cb: r => this.handleDisplayValue(undefined, r),
     };
+    if (isEditMode && !firstAccess) element.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
     this.setState({ headerTypeCode });
     dispatch(dropDownValuesAction(payload));
   };
@@ -138,7 +137,7 @@ class Tag006 extends React.PureComponent<Props, S> {
     const { dispatch, change, fixedfields, element } = this.props;
     const { isEditMode, firstAccess } = this.state;
     dispatch(change(element.code, response.displayValue));
-    if (isEditMode && !firstAccess) element.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
+    // if (!firstAccess) element.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
     fixedfields.push(element);
     fixedfields
       .filter(f => f.code === element.code)
@@ -146,13 +145,19 @@ class Tag006 extends React.PureComponent<Props, S> {
   };
 
   prepareValue = (code, data, payload, headerTypeCode) => {
+    const { isEditMode } = this.state;
+    const { element } = this.props;
     if (payload.visualRunningTime === '') {
       payload.visualRunningTime = '---';
     }
     payload.code = code;
     payload.categoryCode = 1;
     payload.headerTypeCode = headerTypeCode;
-    payload.sequenceNumber = 0;
+    if (isEditMode && element.fixedField.keyNumber !== 0) {
+      payload.keyNumber = element.fixedField.keyNumber;
+    } else {
+      payload.keyNumber = 0;
+    }
   };
 
   RenderSelect = ({ element, ...props }) => {
@@ -222,11 +227,12 @@ class Tag006 extends React.PureComponent<Props, S> {
 
   render() {
     const { expand, headerTypeCode } = this.state;
-    const { element, headingTypes, values006 } = this.props;
+    const { element, headingTypes, values006, repeatname } = this.props;
     return (
-      <div className={style.fieldContainer} no-padding>
-        <MarcField
+      <div className={style.fieldContainer006_007} no-padding>
+        <MarcFieldFor006007
           {...this.props}
+          id={repeatname}
           prependIcon
           label={element.fixedField.code}
           name={element.fixedField.code}
@@ -242,6 +248,7 @@ class Tag006 extends React.PureComponent<Props, S> {
             {headingTypes && (
               <Field
                 {...this.props}
+                id={repeatname}
                 label={'Tag'.concat(element.fixedField.code)}
                 name={'Tag'.concat(element.fixedField.code)}
                 component={this.RenderSelect}

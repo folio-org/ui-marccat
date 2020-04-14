@@ -5,7 +5,6 @@ import { Field } from 'redux-form';
 import { Select, Row, Col } from '@folio/stripes-components';
 import { connect } from 'react-redux';
 import { isEmpty, last } from 'lodash';
-import { PreviousMap } from 'postcss';
 import { EMPTY_SPACED_STRING, REDUX } from '../../../../../config/constants';
 import { decamelizify, findParam } from '../../../../../shared';
 import type { Props, State } from '../../../../../flow/types.js.flow';
@@ -67,7 +66,7 @@ class Tag00X extends React.PureComponent<Props, S> {
     value = headerTypeCodeFromLeader ? leader.value : value;
     if (isEditMode) {
       if (fixedField.displayValue.includes('|')) {
-        displayValue = fixedField.displayValue.replace('|', '%7C');
+        displayValue = fixedField.displayValue.split('|').join('%7C');
       } else {
         displayValue = fixedField.displayValue;
       }

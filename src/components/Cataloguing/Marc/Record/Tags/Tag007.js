@@ -40,6 +40,7 @@ class Tag007 extends React.PureComponent<Props, S> {
       expand: false,
       headerTypeCode: 0,
       firstAccess: true,
+      touched: false
     };
     this.RenderSelect = this.RenderSelect.bind(this);
     this.RenderDropwDown = this.RenderDropwDown.bind(this);
@@ -89,6 +90,7 @@ class Tag007 extends React.PureComponent<Props, S> {
       },
     } = this.props;
     let { headerTypeCode } = this.state;
+    const { touched } = this.state;
     headerTypeCode = evt ? evt.target.value : fixedField.headerTypeCode;
     const payload = {
       value,
@@ -96,12 +98,12 @@ class Tag007 extends React.PureComponent<Props, S> {
       headerTypeCode,
       cb: r => this.handleDisplayValue(undefined, r),
     };
-    this.setState({ headerTypeCode });
+    this.setState({ touched: true, headerTypeCode });
     dispatch(dropDownValuesAction(payload));
   };
 
   handleDisplayValue = (e, data) => {
-    const { headerTypeCode } = this.state;
+    const { headerTypeCode, touched } = this.state;
     const {
       store,
       dispatch,
@@ -133,6 +135,7 @@ class Tag007 extends React.PureComponent<Props, S> {
       } else {
         payload[selected] = e.target.value;
       }
+      this.setState({ touched: true });
     }
     this.prepareValue(code, results, payload, headerTypeCode);
     const cb = r => this.execChange(r);
@@ -141,10 +144,10 @@ class Tag007 extends React.PureComponent<Props, S> {
 
   execChange = (response: Object): void => {
     const { dispatch, change, fixedfields, element } = this.props;
-    const { isEditMode, firstAccess } = this.state;
-    dispatch(change(element.code, response.displayValue));
-    if (isEditMode && !firstAccess) element.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
+    const { isEditMode, firstAccess, touched } = this.state;
+    if (isEditMode && !firstAccess && touched) element.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
     fixedfields.push(element);
+    dispatch(change(element.code, response.displayValue));
     fixedfields
       .filter(f => f.code === element.code)
       .map(f => (f.fixedField = response));

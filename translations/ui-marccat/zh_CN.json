@@ -123,5 +123,6 @@
     "cataloging.record.duplicate": "复制记录",
     "cataloging.fixedfield.section.add.newtag": "添加{value}",
     "search.actionmenu.duplicate.ebook": "复制为电子书",
-    "cataloging.accordion.fixedfield.editable.label": "控制字段（006,007,008）"
+    "cataloging.accordion.fixedfield.editable.label": "控制字段（006,007,008）",
+    "meta.title": "MARCcat"
 }

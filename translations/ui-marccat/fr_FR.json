@@ -123,5 +123,6 @@
     "cataloging.record.duplicate": "Duplicate Record",
     "cataloging.fixedfield.section.add.newtag": "Ajouter {value}",
     "search.actionmenu.duplicate.ebook": "Dupliquer comme livre électronique",
-    "cataloging.accordion.fixedfield.editable.label": "Champs de contrôle (006, 007, 008)"
+    "cataloging.accordion.fixedfield.editable.label": "Champs de contrôle (006, 007, 008)",
+    "meta.title": "MARCcat"
 }

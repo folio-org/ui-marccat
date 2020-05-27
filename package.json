@@ -77,7 +77,7 @@
     "prop-types-extra": "^1.1.0",
     "react-final-form": "^6.3.0",
     "react-hot-loader": "^4.3.12",
-    "react-intl": "^2.4.0",
+    "react-intl": "^4.5.1",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "redux-actions": "^2.2.1",

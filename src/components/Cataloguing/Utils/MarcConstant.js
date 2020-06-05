@@ -97,6 +97,7 @@ export const EMPTY_FIXED_FIELD = (code: String): Object => {
     mandatory: false,
     fieldStatus: RECORD_FIELD_STATUS.NEW,
     fixedField: {
+      keyNumber: 0,
       headerTypeCode: 0,
       code,
       displayValue: EMPTY_STRING,

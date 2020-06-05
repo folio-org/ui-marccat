@@ -50,14 +50,18 @@ import { formFieldValue, resolve } from '../../../../redux/helpers/Selector';
 import { TAGS, TAG_NOT_REPEATABLE } from '../../Utils/MarcConstant';
 import DataFieldForm from '../Form/DataField';
 import VariableFieldForm from '../Form/VariableField';
+import { validateTag } from '../../../../shared/utils/Function';
 
-class Record extends React.Component<Props, { callout: React.RefObject<Callout> }> {
+class Record extends React.Component<
+  Props,
+  { callout: React.RefObject<Callout> }
+> {
   constructor(props) {
     super(props);
     this.state = {
-      // isCreationMode: (findParam('mode') === RECORD_ACTION.CREATION_MODE),
-      isEditMode:  (findParam('mode') === RECORD_ACTION.EDIT_MODE),
-      isDuplicateMode:  (findParam('mode') === RECORD_ACTION.DUPLICATE_MODE),
+      isCreationMode: findParam('mode') === RECORD_ACTION.CREATION_MODE,
+      isEditMode: findParam('mode') === RECORD_ACTION.EDIT_MODE,
+      isDuplicateMode: findParam('mode') === RECORD_ACTION.DUPLICATE_MODE,
       mode: findParam('mode'),
       id: findParam('id'),
       submit: false,
@@ -70,6 +74,7 @@ class Record extends React.Component<Props, { callout: React.RefObject<Callout> 
     this.onDelete = this.onDelete.bind(this);
     this.saveRecord = this.saveRecord.bind(this);
     this.deleteRecord = this.deleteRecord.bind(this);
+    // this.checkForIndicators = this.checkForIndicators.bind(this);
   }
 
   // eslint-disable-next-line camelcase
@@ -81,16 +86,24 @@ class Record extends React.Component<Props, { callout: React.RefObject<Callout> 
       loadHeadertype,
       dispatch,
     } = this.props;
-    const { mode } = this.state;
-    if (mode === RECORD_ACTION.EDIT_MODE) {
+    const { isEditMode, isDuplicateMode } = this.state;
+    if (isEditMode || isDuplicateMode) {
       const { recordDetail } = this.props;
       const leaderEdit = recordDetail.leader;
-      editLoadLeaderData({ value: leaderEdit.value, code: leaderEdit.code, typeCode: '15' });
+      editLoadLeaderData({
+        value: leaderEdit.value,
+        code: leaderEdit.code,
+        typeCode: '15',
+      });
       loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
       dispatch(MarcAction.change008ByLeaderAction(leaderEdit.value));
     } else {
       const { leader } = emptyRecord.results;
-      loadLeaderData({ value: leader.value, code: leader.code, typeCode: '15' });
+      loadLeaderData({
+        value: leader.value,
+        code: leader.code,
+        typeCode: '15',
+      });
       loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
       dispatch(MarcAction.change008ByLeaderAction(leader.value));
     }
@@ -129,9 +142,9 @@ class Record extends React.Component<Props, { callout: React.RefObject<Callout> 
       item.fieldStatus = RECORD_FIELD_STATUS.NEW;
     } else {
       item.fieldStatus =
-      item.variableField.keyNumber > 0 || item.mandatory
-        ? RECORD_FIELD_STATUS.CHANGED
-        : RECORD_FIELD_STATUS.NEW;
+        item.variableField.keyNumber > 0 || item.mandatory
+          ? RECORD_FIELD_STATUS.CHANGED
+          : RECORD_FIELD_STATUS.NEW;
     }
     item.variableField.displayValue = heading.displayValue;
     const form: [] = formFieldValue(store, C.REDUX.FORM.VARIABLE_FORM, 'items');
@@ -229,12 +242,13 @@ class Record extends React.Component<Props, { callout: React.RefObject<Callout> 
     });
   };
 
-  saveRecord = async () => {
+  saveRecord = async e => {
+    e.stopPropagation();
     const {
       datastore: { emptyRecord },
       store: { getState },
     } = this.props;
-    const { deletedTag } = this.state;
+    const { deletedTag, isCreationMode, isDuplicateMode } = this.state;
     const formData = getState().form.dataFieldForm.values;
     const initialValues = getState().form.variableFieldForm.initial.items;
     let variableFormData = getState().form.variableFieldForm.values.items;
@@ -247,7 +261,7 @@ class Record extends React.Component<Props, { callout: React.RefObject<Callout> 
       ))
     );
 
-    if (deletedTag) variableFormData = union(variableFormData, initialValues);
+    if (!isDuplicateMode && deletedTag) variableFormData = union(variableFormData, initialValues);
 
     const bibliographicRecord = this.getCurrentRecord();
     bibliographicRecord.leader.value = formData.leader;
@@ -256,7 +270,14 @@ class Record extends React.Component<Props, { callout: React.RefObject<Callout> 
       id: 1,
       fields: filterMandatoryFields(emptyRecord.results.fields),
     };
-
+    if (!isCreationMode) {
+      if (formData.Tag006 !== null) {
+        emptyRecord.results.fields.map(f => (f.code === '006' ? bibliographicRecord.fields.push(f) : null));
+      }
+      if (formData.Tag007 !== null) {
+        emptyRecord.results.fields.map(f => (f.code === '007' ? bibliographicRecord.fields.push(f) : null));
+      }
+    }
     bibliographicRecord.fields = union(
       filterFixedFieldForSaveRecord(bibliographicRecord.fields),
       variableFormData
@@ -265,6 +286,14 @@ class Record extends React.Component<Props, { callout: React.RefObject<Callout> 
       bibliographicRecord.fields,
       SORTED_BY.CODE
     );
+    if (isCreationMode) {
+      if (formData.Tag006 === null) {
+        bibliographicRecord.fields.map((f, index) => (f.code === '006' ? bibliographicRecord.fields.splice(index, 1) : null));
+      }
+      if (formData.Tag007 === null) {
+        bibliographicRecord.fields.map((f, index) => (f.code === '007' ? bibliographicRecord.fields.splice(index, 1) : null));
+      }
+    }
     const payload = { bibliographicRecord, recordTemplate };
     this.setState({ submit: true });
 
@@ -363,6 +392,8 @@ class Record extends React.Component<Props, { callout: React.RefObject<Callout> 
       toggleFilterPane();
       return router.push('/marccat/search');
     }
+    // GET for check if the record is lock
+    // unlock
     return reset();
   };
 

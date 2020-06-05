@@ -172,6 +172,29 @@ export const emptyRecordAction = () => {
   };
 };
 
+export const lockRecordAction = (payload) => {
+  return {
+    type: ACTION.UPDATE,
+    data: {
+      path: ENDPOINT.LOCK_MARC_RECORD + payload.id,
+      type: 'lockedRecords',
+      params: `userName=${payload.user}&uuid=${payload.idLock}&type=R`
+    },
+    cb: payload.cb
+  };
+};
+
+export const checkIndValid = (payload) => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.CHECK_VALIDATE,
+      type: 'checkTagInd',
+      params: `ind1=${payload.ind1}&ind2=${payload.ind2}&tag=${payload.tag}`
+    },
+    cb: payload.cb
+  };
+};
 /**
  *
  * @param {*} id

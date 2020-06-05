@@ -27,6 +27,7 @@ import { MarcField } from '../..';
 import Tag00XInput from '../components/Tag00XInput';
 import HeaderTypeSelect from '../components/HeaderTypeSelect';
 import { formFieldValue } from '../../../../../redux/helpers/Selector';
+import { ACTION } from '../../../../../redux/actions';
 
 type S = {
   expand: Boolean,
@@ -37,9 +38,11 @@ class Tag007 extends React.PureComponent<Props, S> {
     super(props);
     this.state = {
       isEditMode: findParam('mode') === RECORD_ACTION.EDIT_MODE,
+      isCreationMode: findParam('mode') === RECORD_ACTION.CREATION_MODE,
       expand: false,
       headerTypeCode: 0,
       firstAccess: true,
+      touched: false
     };
     this.RenderSelect = this.RenderSelect.bind(this);
     this.RenderDropwDown = this.RenderDropwDown.bind(this);
@@ -61,21 +64,24 @@ class Tag007 extends React.PureComponent<Props, S> {
     let { headerTypeCode } = this.state;
     headerTypeCode = fixedField.headerTypeCode;
     let displayValue;
-    if (fixedField.displayValue.includes('|')) {
-      displayValue = fixedField.displayValue.replace('|', '%7C');
-    } else {
-      displayValue = fixedField.displayValue;
+    if (headerTypeCode !== 0) {
+      if (fixedField.displayValue.includes('|')) {
+        displayValue = fixedField.displayValue.split('|').join('%7C');
+      } else {
+        displayValue = fixedField.displayValue;
+      }
+      const payload = {
+        value,
+        code,
+        headerTypeCode,
+        displayValue,
+        cb: r => this.handleDisplayValue(undefined, r),
+      };
+      this.setState({ firstAccess: false, headerTypeCode });
+      dispatch(change('Tag007', headerTypeCode));
+      dispatch({ type: ACTION.SETTINGS, data:{ tagDel7 : '' } });
+      dispatch(editDropDownValuesAction(payload));
     }
-    const payload = {
-      value,
-      code,
-      headerTypeCode,
-      displayValue,
-      cb: r => this.handleDisplayValue(undefined, r),
-    };
-    this.setState({ firstAccess: false, headerTypeCode });
-    dispatch(change('Tag007', headerTypeCode));
-    dispatch(editDropDownValuesAction(payload));
   };
 
   onHandleChange = evt => {
@@ -89,6 +95,7 @@ class Tag007 extends React.PureComponent<Props, S> {
       },
     } = this.props;
     let { headerTypeCode } = this.state;
+    const { touched } = this.state;
     headerTypeCode = evt ? evt.target.value : fixedField.headerTypeCode;
     const payload = {
       value,
@@ -96,12 +103,13 @@ class Tag007 extends React.PureComponent<Props, S> {
       headerTypeCode,
       cb: r => this.handleDisplayValue(undefined, r),
     };
-    this.setState({ headerTypeCode });
+    this.setState({ touched: true, headerTypeCode });
+    dispatch({ type: ACTION.SETTINGS, data:{ tagDel7 : '' } });
     dispatch(dropDownValuesAction(payload));
   };
 
   handleDisplayValue = (e, data) => {
-    const { headerTypeCode } = this.state;
+    const { headerTypeCode, touched } = this.state;
     const {
       store,
       dispatch,
@@ -133,6 +141,7 @@ class Tag007 extends React.PureComponent<Props, S> {
       } else {
         payload[selected] = e.target.value;
       }
+      this.setState({ touched: true });
     }
     this.prepareValue(code, results, payload, headerTypeCode);
     const cb = r => this.execChange(r);
@@ -141,16 +150,18 @@ class Tag007 extends React.PureComponent<Props, S> {
 
   execChange = (response: Object): void => {
     const { dispatch, change, fixedfields, element } = this.props;
-    const { isEditMode, firstAccess } = this.state;
-    dispatch(change(element.code, response.displayValue));
-    if (isEditMode && !firstAccess) element.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
+    const { isCreationMode, firstAccess, touched } = this.state;
+    if (!isCreationMode && !firstAccess && touched && element.fieldStatus !== 'new') element.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
     fixedfields.push(element);
+    dispatch(change(element.code, response.displayValue));
     fixedfields
       .filter(f => f.code === element.code)
       .map(f => (f.fixedField = response));
   };
 
   prepareValue = (code, data, payload, headerTypeCode) => {
+    const { isEditMode } = this.state;
+    const { element } = this.props;
     if (payload.imageBitDepth === '') {
       payload.imageBitDepth = '---';
     }
@@ -160,6 +171,11 @@ class Tag007 extends React.PureComponent<Props, S> {
     if (payload.reductionRatioCode === '') {
       payload.reductionRatioCode = '---';
     }
+    if (isEditMode && element.fixedField.keyNumber !== 0) {
+      payload.keyNumber = element.fixedField.keyNumber;
+    } else {
+      payload.keyNumber = 0;
+    }
     payload.code = code;
     payload.categoryCode = 1;
     payload.headerTypeCode = headerTypeCode;
@@ -167,7 +183,7 @@ class Tag007 extends React.PureComponent<Props, S> {
   };
 
   RenderSelect = ({ element, ...props }) => {
-    const { isEditMode, firstAccess, headerTypeCode } = this.state;
+    const { isCreationMode, firstAccess, headerTypeCode } = this.state;
     return (
       <Field
         // Field props redux-form
@@ -180,7 +196,7 @@ class Tag007 extends React.PureComponent<Props, S> {
         onChange={this.onHandleChange}
         placeholder={'Select Heading types for '.concat(element.code)}
         value={
-          isEditMode && firstAccess && element.fieldStatus === 'unchanged'
+          !isCreationMode && firstAccess && (element.fieldStatus === 'unchanged' || element.fieldStatus === 'new')
             ? this.onHandleChangeFromEdit()
             : headerTypeCode
         }
@@ -236,9 +252,9 @@ class Tag007 extends React.PureComponent<Props, S> {
 
   render() {
     const { expand, headerTypeCode } = this.state;
-    const { element, headingTypes, values007 } = this.props;
+    const { element, headingTypes, values007, settings } = this.props;
     return (
-      <div className={style.fieldContainer} no-padding>
+      <div className={style.fieldContainer006_007} no-padding>
         <MarcField
           {...this.props}
           prependIcon
@@ -263,7 +279,7 @@ class Tag007 extends React.PureComponent<Props, S> {
                 headertypes={headingTypes.results.headingTypes}
               />
             )}
-            {!isEmpty(values007.results) &&
+            {!isEmpty(values007.results) && settings === '' &&
               this.RenderDropwDown(values007.results, element.fixedField.code)}
           </Col>
         </div>
@@ -275,10 +291,12 @@ class Tag007 extends React.PureComponent<Props, S> {
 const mapStateToProps = state => {
   const {
     marccat: {
+      settings,
       data: { emptyRecord, marcRecordDetail, headerTypeValues007 },
     },
   } = state;
   return {
+    settings: settings.tagDel7,
     values007: headerTypeValues007 ? headerTypeValues007.results : {},
     fixedfields:
       emptyRecord.results.fields || marcRecordDetail.bibliographicRecord.fields,

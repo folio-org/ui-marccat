@@ -3,6 +3,36 @@
   padding-top: 4px;
 }
 
+.fieldContainer006_007 {
+  margin-bottom: 15px;
+  border-radius: 8px;
+  background-color: #dcdcdc;
+  background-position: left top;
+  background-repeat: repeat;
+  padding: 15px;
+  padding-bottom: 15px;
+  width: 80%;
+
+  & [no-padding] {
+    padding-right: 0;
+  }
+
+  & .fieldWrapper {
+    display: flex;
+    align-content: center;
+    align-items: center;
+  }
+
+  & label {
+    padding-right: 16px;
+  }
+
+  & input {
+    flex: 1;
+    padding-left: 8px;
+  }
+}
+
 .fieldContainer {
   margin-bottom: 15px;
   border-radius: 8px;

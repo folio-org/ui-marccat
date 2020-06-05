@@ -50,6 +50,7 @@ export const ENDPOINT = {
   CHANGE_TAG_DISPLAY_VALUE_FROM_LEADER: '/fixed-fields-code-groups-by-leader',
   LOCK_MARC_RECORD: '/bibliographic-record/lock/',
   UNLOCK_MARC_RECORD: '/bibliographic-record/unlock/',
+  CHECK_VALIDATE: '/validateTag'
 };
 
 export const FILTER_NAME = {
@@ -59,11 +60,11 @@ export const FILTER_NAME = {
 
 
 export const SORT_TYPE = {
-  TITLE: 4,  // authority and bibliographic
+  TITLE: 0,  // authority and bibliographic
   UNIFORM_TITLE: 2096, // bibliographic only
-  NAME: 1003, // authority and bibliographic
+  NAME: 0, // authority and bibliographic
   AN: 54, // authority and bibliographic
-  SUBJECT: 21, // authority and bibliographic
+  SUBJECT: 0, // authority and bibliographic
   DATA1: 31, // bibliographic only
   DATE2: 2074 // bibliographic only
 };

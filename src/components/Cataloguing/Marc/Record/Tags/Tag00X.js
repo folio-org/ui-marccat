@@ -38,8 +38,10 @@ class Tag00X extends React.PureComponent<Props, S> {
     super(props);
     this.state = {
       isEditMode: findParam('mode') === RECORD_ACTION.EDIT_MODE,
+      isDuplicateMode: findParam('mode') === RECORD_ACTION.DUPLICATE_MODE,
       expand: false,
       headerTypeCode: 0,
+      firstAccess: true
     };
     this.RenderSelect = this.RenderSelect.bind(this);
     this.RenderDropwDown = this.RenderDropwDown.bind(this);
@@ -58,19 +60,20 @@ class Tag00X extends React.PureComponent<Props, S> {
         leader: { value },
       },
     } = this.props;
-    const { isEditMode } = this.state;
+    const { isEditMode, isDuplicateMode, firstAccess } = this.state;
     let { headerTypeCode } = this.state;
     let displayValue;
     headerTypeCode =
       headerTypeCodeFromLeader ||
       (evt ? evt.target.value : fixedField.headerTypeCode);
     value = headerTypeCodeFromLeader ? leader.value : value;
-    if (isEditMode) {
-      if (fixedField.displayValue.includes('|')) {
-        displayValue = fixedField.displayValue.replace('|', '%7C');
-      } else {
-        displayValue = fixedField.displayValue;
-      }
+
+    if (fixedField.displayValue.includes('|')) {
+      displayValue = fixedField.displayValue.split('|').join('%7C');
+    } else {
+      displayValue = fixedField.displayValue;
+    }
+    if (firstAccess && (isEditMode || isDuplicateMode)) {
       const payload = {
         value,
         code,
@@ -78,7 +81,7 @@ class Tag00X extends React.PureComponent<Props, S> {
         displayValue,
         cb: r => this.handleDisplayValue(undefined, r),
       };
-      this.setState({ headerTypeCode });
+      this.setState({ firstAccess: false, headerTypeCode });
       dispatch(editDropDownValuesAction(payload));
     } else {
       const payload = {
@@ -142,7 +145,8 @@ class Tag00X extends React.PureComponent<Props, S> {
   };
 
   prepareValue = (code, data, payload, headerTypeCode) => {
-    const { store } = this.props;
+    const { store, element } = this.props;
+    const { isEditMode } = this.state;
     if (headerTypeCode === 37 && payload.visualRunningTime === '') {
       payload.visualRunningTime = '---';
     }
@@ -157,6 +161,11 @@ class Tag00X extends React.PureComponent<Props, S> {
       REDUX.FORM.DATA_FIELD_FORM,
       TAGS._008
     ).substring(0, 6);
+    if (isEditMode && element.fixedField.keyNumber !== 0) {
+      payload.keyNumber = element.fixedField.keyNumber;
+    } else {
+      payload.keyNumber = 0;
+    }
     payload.code = code;
     payload.categoryCode = 1;
     payload.headerTypeCode = headerTypeCode;

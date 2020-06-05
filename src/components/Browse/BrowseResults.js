@@ -194,7 +194,7 @@ export class BrowseResults extends React.Component<Props, S> {
         browseRecords = [...browseRecords];
       }
     } else {
-      moreBrowseRecords = {};
+      moreBrowseRecords = [];
     }
     const browseFormatter = {
       countAuthorities: el => (
@@ -324,26 +324,25 @@ export class BrowseResults extends React.Component<Props, S> {
             const bottom =
               e.target.scrollHeight - e.target.scrollTop ===
               e.target.clientHeight;
-            if (bottom && browseRecords.length > 29) {
-              store.dispatch({
-                type: ACTION.SETTINGS,
-                data: { newBrowse: 'N' },
-              });
-              const cb = payload => {
-                this.setState({
-                  moreBrowseRecords: {
-                    ...payload.headings,
-                    ...moreBrowseRecords
-                  },
+            if (bottom) {
+              if (store.getState().form.searchForm.values.selectIndexes.substring(0, 2) === store.getState().marccat.browse.query.split(' ')[0]) {
+                const cb = payload => {
+                  this.setState({
+                    moreBrowseRecords:  moreBrowseRecords.concat(...payload.headings)
+                  });
+                };
+                const lastRecord = last(browseRecords).stringText;
+                const query = store
+                  .getState()
+                  .marccat.browse.query.split(' ')[0]
+                  .concat(' ')
+                  .concat(lastRecord);
+                store.dispatch({
+                  type: ACTION.SETTINGS,
+                  data: { newBrowse: 'N' },
                 });
-              };
-              const lastRecord = last(browseRecords).stringText;
-              const query = store
-                .getState()
-                .marccat.browse.query.split(' ')[0]
-                .concat(' ')
-                .concat(lastRecord);
-              store.dispatch(continueFetchingBrowse(query, cb));
+                store.dispatch(continueFetchingBrowse(query, cb));
+              }
             }
           }}
         >

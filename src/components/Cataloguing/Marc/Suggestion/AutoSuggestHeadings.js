@@ -10,7 +10,6 @@ import * as C from '../../../../config/constants';
 import {
   replaceAllinverted,
   replaceAll,
-  showValidationMessage,
 } from '../../Utils/MarcApiUtils';
 import { validateTag } from '../../../../shared/utils/Function';
 
@@ -75,7 +74,7 @@ function AutoSuggestHeadings(props) {
     );
     const cb = payload => setState({ suggestArray: payload.headings, fromShowHeadings: true });
     dispatch(triggerBrowseHeadingSuggestion(code, ind1, ind2, stringText, cb));
-    dispatch(change(C.FORM.VARIABLE_FORM, input.name, displayValue));
+    dispatch(change(C.REDUX.FORM.VARIABLE_FORM, input.name, displayValue));
     return suggestArray;
   };
 
@@ -92,7 +91,7 @@ function AutoSuggestHeadings(props) {
         });
         dispatch(triggerTagIndicatorsSuggestion(code, cb));
       }
-      dispatch(change(C.FORM.VARIABLE_FORM, input.name, event));
+      dispatch(change(C.REDUX.FORM.VARIABLE_FORM, input.name, event));
     }
     return suggestArray;
   };

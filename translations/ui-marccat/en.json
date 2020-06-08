@@ -78,6 +78,7 @@
   "cataloging.actions.add.field.below.shortcut": "ALT+ENTER",
   "cataloging.actions.add.field.above": "Add new field",
   "cataloging.actions.add.field.above.shortcut": "CTRL+ENTER",
+  "cataloging.fixedfield.section.remove.newtag": "Remove {value}",
   "cataloging.actions.copy": "Copy",
   "cataloging.actions.copy.shortcut": "CTRL+C",
   "cataloging.actions.paste": "Paste",

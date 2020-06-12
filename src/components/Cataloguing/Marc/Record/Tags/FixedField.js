@@ -1,9 +1,8 @@
 // @flow
 import * as React from 'react';
 import { Button } from '@folio/stripes/components';
-import { first, isEmpty, sortBy } from 'lodash';
+import { sortBy } from 'lodash';
 import { connect } from 'react-redux';
-import { registerField, reset, autofill, unregisterField } from 'redux-form';
 import {
   EMPTY_FIXED_FIELD,
   TAGS,
@@ -13,8 +12,7 @@ import {
 import Tag00X from './Tag00X';
 import { sort } from '../../../Utils/MarcApiUtils';
 import { Localize, findParam } from '../../../../../shared';
-import Tag006 from './Tag006';
-import Tag007 from './Tag007';
+import Tag006007 from './Tag006007';
 import { ACTION } from '../../../../../redux/actions';
 
 type P = {
@@ -32,8 +30,6 @@ class FixedField extends React.PureComponent<P, State> {
       inizialized: false,
       fields: sort(props.field),
       isCreationMode: findParam('mode') === RECORD_ACTION.CREATION_MODE,
-      is006Del:false,
-      is007Del: true,
     };
     // this.handleAdd = this.handleAdd.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
@@ -63,34 +59,26 @@ class FixedField extends React.PureComponent<P, State> {
   // };
 
   handleRemove = e => {
-    const { fields, is006Del, is007Del } = this.state;
     const { dispatch, change } = this.props;
     const code = e.currentTarget.name;
     dispatch(change(code, null));
     dispatch(change('Tag' + code, null));
     if (code === '006') {
       dispatch({ type: ACTION.SETTINGS, data:{ tagDel6: 'del' } });
-      this.setState({ is006Del: true });
     } else {
       dispatch({ type: ACTION.SETTINGS, data: { tagDel7: 'del' } });
-      this.setState({ is007Del: true });
     }
   }
 
   RenderField00X = () => {
-    const { fields, is006Del, is007Del } = this.state;
+    const { fields } = this.state;
     const { headertype006, headertype007, headertype008 } = this.props;
     return (
       <React.Fragment>
-        {sortBy(fields, SORTED_BY.CODE).map((f, index) => (f.code === TAGS._006 ? (
+        {sortBy(fields, SORTED_BY.CODE).map((f, index) => (f.code === TAGS._006 || f.code === TAGS._007 ? (
           <div>
             {this.getActionButton(f, index)}
-            <Tag006 element={f} headingTypes={headertype006} isDeleted={is006Del} {...this.props} />
-          </div>
-        ) : f.code === TAGS._007 ? (
-          <div>
-            {this.getActionButton(f, index)}
-            <Tag007 element={f} headingTypes={headertype007} isDeleted={is007Del} {...this.props} />
+            <Tag006007 element={f} headingTypes={f.code === TAGS._006 ? headertype006 : headertype007} {...this.props} />
           </div>
         ) : (
           <Tag00X element={f} headingTypes={headertype008} {...this.props} />

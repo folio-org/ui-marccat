@@ -5,8 +5,7 @@ import { Field } from 'redux-form';
 import { Select, Row, Col } from '@folio/stripes-components';
 import { connect } from 'react-redux';
 import { isEmpty, last } from 'lodash';
-import { PreviousMap } from 'postcss';
-import { EMPTY_SPACED_STRING, REDUX } from '../../../../../config/constants';
+import { EMPTY_SPACED_STRING } from '../../../../../config/constants';
 import { decamelizify, findParam } from '../../../../../shared';
 import type { Props, State } from '../../../../../flow/types.js.flow';
 import style from '../../../Style/index.css';
@@ -16,24 +15,23 @@ import {
   editDropDownValuesAction,
 } from '../../../Actions';
 import {
-  TAGS,
   IMAGE_BIT_DEPTH,
   REDUCTION_CRIT,
   INSPECTION_DATE,
   RECORD_FIELD_STATUS,
   RECORD_ACTION,
+  VISUAL_RUNNING_TIME,
 } from '../../../Utils/MarcConstant';
 import { MarcField } from '../..';
 import Tag00XInput from '../components/Tag00XInput';
 import HeaderTypeSelect from '../components/HeaderTypeSelect';
-import { formFieldValue } from '../../../../../redux/helpers/Selector';
 import { ACTION } from '../../../../../redux/actions';
 
 type S = {
   expand: Boolean,
 } & State;
 
-class Tag007 extends React.PureComponent<Props, S> {
+class Tag006007 extends React.PureComponent<Props, S> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -61,8 +59,7 @@ class Tag007 extends React.PureComponent<Props, S> {
         leader: { value },
       },
     } = this.props;
-    let { headerTypeCode } = this.state;
-    headerTypeCode = fixedField.headerTypeCode;
+    const headerTypeCode = fixedField.headerTypeCode;
     let displayValue;
     if (headerTypeCode !== 0) {
       if (fixedField.displayValue.includes('|')) {
@@ -78,8 +75,12 @@ class Tag007 extends React.PureComponent<Props, S> {
         cb: r => this.handleDisplayValue(undefined, r),
       };
       this.setState({ firstAccess: false, headerTypeCode });
-      dispatch(change('Tag007', headerTypeCode));
-      dispatch({ type: ACTION.SETTINGS, data:{ tagDel7 : '' } });
+      dispatch(change('Tag'.concat(code), headerTypeCode));
+      if (code === '007') {
+        dispatch({ type: ACTION.SETTINGS, data:{ tagDel7 : '' } });
+      } else {
+        dispatch({ type: ACTION.SETTINGS, data:{ tagDel6 : '' } });
+      }
       dispatch(editDropDownValuesAction(payload));
     }
   };
@@ -94,9 +95,7 @@ class Tag007 extends React.PureComponent<Props, S> {
         leader: { value },
       },
     } = this.props;
-    let { headerTypeCode } = this.state;
-    const { touched } = this.state;
-    headerTypeCode = evt ? evt.target.value : fixedField.headerTypeCode;
+    const headerTypeCode = evt ? evt.target.value : fixedField.headerTypeCode;
     const payload = {
       value,
       code,
@@ -104,12 +103,16 @@ class Tag007 extends React.PureComponent<Props, S> {
       cb: r => this.handleDisplayValue(undefined, r),
     };
     this.setState({ touched: true, headerTypeCode });
-    dispatch({ type: ACTION.SETTINGS, data:{ tagDel7 : '' } });
+    if (code === '007') {
+      dispatch({ type: ACTION.SETTINGS, data:{ tagDel7 : '' } });
+    } else {
+      dispatch({ type: ACTION.SETTINGS, data:{ tagDel6 : '' } });
+    }
     dispatch(dropDownValuesAction(payload));
   };
 
   handleDisplayValue = (e, data) => {
-    const { headerTypeCode, touched } = this.state;
+    const { headerTypeCode } = this.state;
     const {
       store,
       dispatch,
@@ -119,12 +122,37 @@ class Tag007 extends React.PureComponent<Props, S> {
     const payload = {};
     const fromStore = store.getState();
     let results;
-    if (fromStore.marccat.data.fixedfield007 === undefined || !e) {
+    if (code === '007') {
+      if (fromStore.marccat.data.fixedfield007 === undefined || !e) {
+        results = data.results || data;
+        Object.entries(results).map(([k, v]) => (payload[k] = v.defaultValue));
+        Object.entries(results).map(([k, v]) => dispatch(change(`Tag${code}-${headerTypeCode}-${k}`, v.defaultValue)));
+      } else {
+        results = fromStore.marccat.data.fixedfield007.results;
+        Object.entries(results).map(([k, v]) => {
+          if (k !== 'attributes' || k !== 'displayValue') {
+            payload[k] = v;
+          }
+          return payload;
+        });
+        const selected = last(e.target.name.split('-'));
+        if (
+          selected === IMAGE_BIT_DEPTH ||
+        selected === INSPECTION_DATE ||
+        selected === REDUCTION_CRIT
+        ) {
+          payload[selected] = e.target.value.trim();
+        } else {
+          payload[selected] = e.target.value;
+        }
+        this.setState({ touched: true });
+      }
+    } else if (fromStore.marccat.data.fixedfield006 === undefined || !e) {
       results = data.results || data;
       Object.entries(results).map(([k, v]) => (payload[k] = v.defaultValue));
       Object.entries(results).map(([k, v]) => dispatch(change(`Tag${code}-${headerTypeCode}-${k}`, v.defaultValue)));
     } else {
-      results = fromStore.marccat.data.fixedfield007.results;
+      results = fromStore.marccat.data.fixedfield006.results;
       Object.entries(results).map(([k, v]) => {
         if (k !== 'attributes' || k !== 'displayValue') {
           payload[k] = v;
@@ -132,11 +160,7 @@ class Tag007 extends React.PureComponent<Props, S> {
         return payload;
       });
       const selected = last(e.target.name.split('-'));
-      if (
-        selected === IMAGE_BIT_DEPTH ||
-        selected === INSPECTION_DATE ||
-        selected === REDUCTION_CRIT
-      ) {
+      if (selected === VISUAL_RUNNING_TIME) {
         payload[selected] = e.target.value.trim();
       } else {
         payload[selected] = e.target.value;
@@ -162,14 +186,23 @@ class Tag007 extends React.PureComponent<Props, S> {
   prepareValue = (code, data, payload, headerTypeCode) => {
     const { isEditMode } = this.state;
     const { element } = this.props;
-    if (payload.imageBitDepth === '') {
-      payload.imageBitDepth = '---';
-    }
-    if (payload.inspectionDate === '') {
-      payload.inspectionDate = '||||||';
-    }
-    if (payload.reductionRatioCode === '') {
-      payload.reductionRatioCode = '---';
+    if (code === '007') {
+      if (payload.imageBitDepth === '') {
+        payload.imageBitDepth = '---';
+      }
+      if (payload.inspectionDate === '') {
+        payload.inspectionDate = '||||||';
+      }
+      if (payload.reductionRatioCode === '') {
+        payload.reductionRatioCode = '---';
+      }
+      if (isEditMode && element.fixedField.keyNumber !== 0) {
+        payload.keyNumber = element.fixedField.keyNumber;
+      } else {
+        payload.keyNumber = 0;
+      }
+    } else if (payload.visualRunningTime === '') {
+      payload.visualRunningTime = '---';
     }
     if (isEditMode && element.fixedField.keyNumber !== 0) {
       payload.keyNumber = element.fixedField.keyNumber;
@@ -252,7 +285,11 @@ class Tag007 extends React.PureComponent<Props, S> {
 
   render() {
     const { expand, headerTypeCode } = this.state;
-    const { element, headingTypes, values007, settings } = this.props;
+    const { element, headingTypes, values006, values007, settings006, settings007 } = this.props;
+    const values =
+      element.code === '006'
+        ? values006
+        : values007;
     return (
       <div className={style.fieldContainer006_007} no-padding>
         <MarcField
@@ -279,8 +316,11 @@ class Tag007 extends React.PureComponent<Props, S> {
                 headertypes={headingTypes.results.headingTypes}
               />
             )}
-            {!isEmpty(values007.results) && settings === '' &&
-              this.RenderDropwDown(values007.results, element.fixedField.code)}
+            {(element.fixedField.code === '006' ?
+              (!isEmpty(values.results) && settings006 === '' &&
+              this.RenderDropwDown(values.results, element.fixedField.code)) :
+              (!isEmpty(values.results) && settings007 === '' &&
+              this.RenderDropwDown(values.results, element.fixedField.code))) }
           </Col>
         </div>
       </div>
@@ -292,15 +332,17 @@ const mapStateToProps = state => {
   const {
     marccat: {
       settings,
-      data: { emptyRecord, marcRecordDetail, headerTypeValues007 },
+      data: { emptyRecord, marcRecordDetail, headerTypeValues007, headerTypeValues006 },
     },
   } = state;
   return {
-    settings: settings.tagDel7,
+    settings006: settings.tagDel6,
+    settings007: settings.tagDel7,
     values007: headerTypeValues007 ? headerTypeValues007.results : {},
+    values006: headerTypeValues006 ? headerTypeValues006.results : {},
     fixedfields:
       emptyRecord.results.fields || marcRecordDetail.bibliographicRecord.fields,
   };
 };
 
-export default connect(mapStateToProps)(Tag007);
+export default connect(mapStateToProps)(Tag006007);

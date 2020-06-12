@@ -13,7 +13,7 @@ export default function Bracket({ htmlElement, position, isEnable, onClick }) {
   return (
     <Col xs={1}>
       <Element
-        className={getClass(position)}
+        className={getClass()}
         onClick={onClick}
       />
     </Col>

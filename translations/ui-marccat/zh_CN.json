@@ -31,7 +31,7 @@
     "settings.default.record.template": "默认记录模板",
     "button.add": "添加",
     "button.remove": "移除",
-    "browse.results.title": "接入点",
+    "browse.results.title": "检索点",
     "browse.record.create": "创建",
     "browse.actionmenu.export.mrc": "导出为.mrc文件（单个文件，多个记录）",
     "browse.actionmenu.export.csv": "导出为.csv文件（单个文件，多个记录）",
@@ -124,5 +124,6 @@
     "cataloging.fixedfield.section.add.newtag": "添加{value}",
     "search.actionmenu.duplicate.ebook": "复制为电子书",
     "cataloging.accordion.fixedfield.editable.label": "控制字段（006,007,008）",
-    "meta.title": "MARCcat"
+    "meta.title": "MARCcat",
+    "cataloging.fixedfield.section.remove.newtag": "Remove {value}"
 }

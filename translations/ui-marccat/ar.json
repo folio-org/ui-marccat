@@ -124,5 +124,6 @@
     "cataloging.fixedfield.section.add.newtag": "إضافة {value}",
     "search.actionmenu.duplicate.ebook": "نسخ ككتاب إلكتروني",
     "cataloging.accordion.fixedfield.editable.label": "حقول التحكم (006، 007، 008)",
-    "meta.title": "MARCcat"
+    "meta.title": "MARCcat",
+    "cataloging.fixedfield.section.remove.newtag": "إزالة {value}"
 }

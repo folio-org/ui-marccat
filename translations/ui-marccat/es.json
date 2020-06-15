@@ -124,5 +124,6 @@
     "cataloging.fixedfield.section.add.newtag": "Agregar {valor}.",
     "search.actionmenu.duplicate.ebook": "Duplicate as e-book",
     "cataloging.accordion.fixedfield.editable.label": "Control Fields (006, 007, 008)",
-    "meta.title": "MARCcat"
+    "meta.title": "MARCcat",
+    "cataloging.fixedfield.section.remove.newtag": "Remove {value}"
 }

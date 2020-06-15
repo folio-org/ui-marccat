@@ -53,8 +53,9 @@ export const resolveHistoryRequest = (data) => ({
  * @param {*} data
  * @param {*} error
  */
-export const executeEpicCallback = () => ({
-  type: ACTION.EXECUTE_CALLBACK_FIRED
+export const executeEpicCallback = (cb) => ({
+  type: ACTION.EXECUTE_CALLBACK_FIRED,
+  cb
 });
 
 /**

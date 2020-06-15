@@ -169,24 +169,9 @@ export const browseColMapper = {
   countAuthorities: 'Auths',
   countDocuments: 'Bibs',
 };
-export const resultsFormatterForAssociated = {
-  resultView: x => (x.recordView === 1 ? (
-    <AppIcon size="small" app="marccat" iconKey="marc-bib" />
-  ) : (
-    <AppIcon size="small" app="marccat" iconKey="marc-authority" />
-  )),
-  name: x => (
-    <span>
-      {x['100']}
-      {x['110']}
-      {x['111']}
-    </span>
-  ),
-  format: x => <span>{x.recordView === 1 && getFormat(x.leader)}</span>,
-  tagHighlighted: x => (
-    <span className={style.tagHighLighted}>{x.tagHighlighted}</span>
-  ),
-  subject: x => (
+
+const subjectTags = (x) => {
+  return (
     <span>
       {x['600']}
       {x['610']}
@@ -207,7 +192,28 @@ export const resultsFormatterForAssociated = {
       {x['657']}
       {x['658']}
       {x['662']}
+    </span>);
+};
+
+export const resultsFormatterForAssociated = {
+  resultView: x => (x.recordView === 1 ? (
+    <AppIcon size="small" app="marccat" iconKey="marc-bib" />
+  ) : (
+    <AppIcon size="small" app="marccat" iconKey="marc-authority" />
+  )),
+  name: x => (
+    <span>
+      {x['100']}
+      {x['110']}
+      {x['111']}
     </span>
+  ),
+  format: x => <span>{x.recordView === 1 && getFormat(x.leader)}</span>,
+  tagHighlighted: x => (
+    <span className={style.tagHighLighted}>{x.tagHighlighted}</span>
+  ),
+  subject: x => (
+    subjectTags(x)
   ),
 };
 
@@ -278,27 +284,7 @@ export const resultsFormatter = (
       <span className={style.tagHighLighted}>{x.tagHighlighted}</span>
     ),
     subject: x => (
-      <span>
-        {x['600']}
-        {x['610']}
-        {x['611']}
-        {x['630']}
-        {x['647']}
-        {x['648']}
-        {x['650']}
-        {x['651']}
-        {x['653']}
-        {x['654']}
-        {x['655']}
-        {x['651']}
-        {x['653']}
-        {x['654']}
-        {x['655']}
-        {x['656']}
-        {x['657']}
-        {x['658']}
-        {x['662']}
-      </span>
+      subjectTags(x)
     ),
   };
   return isAuthOnly && isBibsOnly ? all : isBib;

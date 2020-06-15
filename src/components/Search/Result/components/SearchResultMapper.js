@@ -48,6 +48,31 @@ export const columnMapper = (isBibsOnly: ?boolean, isAuthOnly: ?boolean = true) 
   return all;
 };
 
+const subjectTags = (x) => {
+  return (
+    <div>
+      { x['600']}
+      { x['610']}
+      { x['611']}
+      { x['630']}
+      { x['647']}
+      { x['648']}
+      { x['650']}
+      { x['651']}
+      { x['653']}
+      { x['654']}
+      { x['655']}
+      { x['651']}
+      { x['653']}
+      { x['654']}
+      { x['655']}
+      { x['656']}
+      { x['657']}
+      { x['658']}
+      { x['662']}
+    </div>);
+};
+
 export const columnMapperForAssociated = {
   'resultView': '',
   '245': '',
@@ -68,9 +93,9 @@ export const resultsFormatterForAssociated = {
   ),
   name: x => (
     <div>
-      { x['100'] && x['100'] }
-      { x['110'] && x['110'] }
-      { x['111'] && x['111'] }
+      { x['100']}
+      { x['110']}
+      { x['111']}
     </div>
   ),
   format: x => (
@@ -79,27 +104,7 @@ export const resultsFormatterForAssociated = {
     </div>
   ),
   subject: x => (
-    <div>
-      { x['600'] && x['600'] }
-      { x['610'] && x['610'] }
-      { x['611'] && x['611'] }
-      { x['630'] && x['630'] }
-      { x['647'] && x['647'] }
-      { x['648'] && x['648'] }
-      { x['650'] && x['650'] }
-      { x['651'] && x['651'] }
-      { x['653'] && x['653'] }
-      { x['654'] && x['654'] }
-      { x['655'] && x['655'] }
-      { x['651'] && x['651'] }
-      { x['653'] && x['653'] }
-      { x['654'] && x['654'] }
-      { x['655'] && x['655'] }
-      { x['656'] && x['656'] }
-      { x['657'] && x['657'] }
-      { x['658'] && x['658'] }
-      { x['662'] && x['662'] }
-    </div>
+    subjectTags(x)
   )
 };
 
@@ -110,16 +115,16 @@ export const resultsFormatter = (isBibsOnly: ?boolean = true, isAuthOnly: ?boole
     ),
     name: x => (
       <div>
-        { x['100'] && x['100'] }
-        { x['110'] && x['110'] }
-        { x['111'] && x['111'] }
+        { x['100']}
+        { x['110']}
+        { x['111']}
         { (x['130'] && !isBibsOnly) && x['130'] }
       </div>
     ),
     preferredTitle: x => (
       <div>
         { (x['130'] && isBibsOnly) && x['130'] }
-        { x['240'] && x['240'] }
+        { x['240']}
       </div>
     ),
     countDoc: x => (
@@ -135,16 +140,16 @@ export const resultsFormatter = (isBibsOnly: ?boolean = true, isAuthOnly: ?boole
     ),
     name: x => (
       <div>
-        { x['100'] && x['100'] }
-        { x['110'] && x['110'] }
-        { x['111'] && x['111'] }
+        { x['100']}
+        { x['110']}
+        { x['111']}
         { (x['130'] && !isBibsOnly) && x['130'] }
       </div>
     ),
     preferredTitle: x => (
       <div>
         { (x['130'] && isBibsOnly) && x['130'] }
-        { x['240'] && x['240'] }
+        { x['240']}
       </div>
     ),
     date1: x => (
@@ -169,27 +174,7 @@ export const resultsFormatter = (isBibsOnly: ?boolean = true, isAuthOnly: ?boole
       </div>
     ),
     subject: x => (
-      <div>
-        { x['600'] && x['600'] }
-        { x['610'] && x['610'] }
-        { x['611'] && x['611'] }
-        { x['630'] && x['630'] }
-        { x['647'] && x['647'] }
-        { x['648'] && x['648'] }
-        { x['650'] && x['650'] }
-        { x['651'] && x['651'] }
-        { x['653'] && x['653'] }
-        { x['654'] && x['654'] }
-        { x['655'] && x['655'] }
-        { x['651'] && x['651'] }
-        { x['653'] && x['653'] }
-        { x['654'] && x['654'] }
-        { x['655'] && x['655'] }
-        { x['656'] && x['656'] }
-        { x['657'] && x['657'] }
-        { x['658'] && x['658'] }
-        { x['662'] && x['662'] }
-      </div>
+      subjectTags(x)
     )
   };
   return all;

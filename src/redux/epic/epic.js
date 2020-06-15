@@ -3,6 +3,7 @@ import { from } from 'rxjs/observable/from';
 import { of } from 'rxjs/observable/of';
 import * as Resolver from '../helpers/Resolver';
 import { ACTION } from '../actions';
+import { ENDPOINT } from '../../config/constants';
 // import { ENDPOINT } from '../../config/constants';
 
 const initialState = {};
@@ -52,8 +53,9 @@ export const resolveHistoryRequest = (data) => ({
  * @param {*} data
  * @param {*} error
  */
-export const executeEpicCallback = () => ({
-  type: ACTION.EXECUTE_CALLBACK_FIRED
+export const executeEpicCallback = (cb) => ({
+  type: ACTION.EXECUTE_CALLBACK_FIRED,
+  cb
 });
 
 /**
@@ -159,7 +161,7 @@ export function epic(action$, { getState }) {
         .flatMap(response => {
           return of(
             resolveEpicRequest(data.type, data, response),
-            executeEpicCallback()
+            executeEpicCallback((cb) ? cb(response) : () => { })
           );
         }).catch(errors => of(rejectEpicRequest(errors)));
     });

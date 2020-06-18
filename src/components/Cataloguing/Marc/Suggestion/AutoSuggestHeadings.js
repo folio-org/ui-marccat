@@ -28,8 +28,8 @@ function AutoSuggestHeadings(props) {
     const { stringValidateMessage, showMessage } = state;
     if (e.target.form[1].defaultValue.length === 3) {
       const tagCode = e.target.form[1].defaultValue;
-      const ind1 = e.target.form[2].defaultValue === "" ? " " : e.target.form[2].defaultValue;
-      const ind2 = e.target.form[3].defaultValue === "" ? " " : e.target.form[3].defaultValue;
+      const ind1 = e.target.form[2].defaultValue === '' ? ' ' : e.target.form[2].defaultValue;
+      const ind2 = e.target.form[3].defaultValue === '' ? ' ' : e.target.form[3].defaultValue;
       const payload = {
         ind1,
         ind2,

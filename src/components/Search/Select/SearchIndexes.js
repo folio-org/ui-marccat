@@ -15,7 +15,7 @@ export default ({ ...props }) => {
     { label: 'ISSN', value: 'ISSN' },
     { label: 'Local id.Number (001)', value: 'NUMID', sortBy: SORT_TYPE.AN },
     { label: 'Id.Number (035)', value: 'OTHID', sortBy: SORT_TYPE.AN },
-    { label: 'All MARC fields', value: 'ALL' },
+    { label: 'All MARC fields', value: 'ALL', sortBy: SORT_TYPE.SUBJECT },
     { label: '________________________________', value: 'ALL', disabled: true },
     { label: 'Title series', value: 'TITSER', sortBy: SORT_TYPE.TITLE },
     { label: 'Name: Personal', value: 'NAMEP', sortBy: SORT_TYPE.NAME },

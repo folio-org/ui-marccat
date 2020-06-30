@@ -83,7 +83,7 @@
   "peerDependencies": {
     "@folio/stripes": "^4.0.0",
     "react": "*",
-    "react-intl": "~4.6.10",
+    "react-intl": "^4.5.1",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1"
   },

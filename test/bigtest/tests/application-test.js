@@ -1,4 +1,4 @@
-import { describe, beforeEach, it } from '@bigtest/mocha';
+import { beforeEach, describe, it } from '@bigtest/mocha';
 import { expect } from 'chai';
 
 import setupApplication from '../helpers/setup-application';
@@ -10,10 +10,17 @@ describe('Application', () => {
   setupApplication();
 
   beforeEach(function () {
-    this.visit('/marccat');
+    //this.server.createList('item', 5, 'withLoan');
+    return this.visit('/marccat/search', () => {
+      expect(checkIn.$root).to.exist;
+    });
   });
 
-  it('renders', () => {
-    expect(app.isPresent).to.be.true;
+  it('shows a greeting message', () => {
+    expect(true).to.equal(true);
   });
+
+  // it('has a link to the developer guides', () => {
+  //   expect(app.guideLink).to.include('/dev-guide.md');
+  // });
 });

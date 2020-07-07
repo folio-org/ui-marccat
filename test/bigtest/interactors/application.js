@@ -1,5 +1,10 @@
-import { interactor } from '@bigtest/interactor';
+import {
+  interactor,
+  text,
+  property
+} from '@bigtest/interactor';
 
-export default @interactor class ApplicationInteractor {
+// https://bigtestjs.io/guides/interactors/introduction/
+export default interactor(class ApplicationInteractor {
   static defaultScope = '#ModuleContainer';
-}
+});

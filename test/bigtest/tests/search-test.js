@@ -15,13 +15,13 @@ describeApplication('Search', () => {
 
   describe('fill search field', function () {
     beforeEach(async function () {
-      await searchInteractor.selectIndexes.selectOption('TITLE');
-      await searchInteractor.selectCondition.selectOption('CONTAINS');
-      await searchInteractor.searchTextArea.fill('1');
+      await searchInteractor.selectIndexes.selectOption('Title');
+      await searchInteractor.selectCondition.selectOption('Contains');
+      await searchInteractor.searchTextArea.fillAndSubmit('test');
     });
 
-    it('returns search results', () => {
-      expect(true).to.equal(true);
+    it('returns at least one search result', () => {
+      expect(searchInteractor.countResults).to.be.greaterThan(1);
     });
   });
 });

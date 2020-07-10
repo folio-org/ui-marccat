@@ -1,8 +1,7 @@
 import {
+  count,
   fillable,
   interactor,
-  text,
-  property,
   selectable
 } from '@bigtest/interactor';
 
@@ -19,9 +18,10 @@ const SelectInteractor = interactor(class SelectInteractor {
 const SearchFieldInteractor = interactor(class TextFieldInteractor {
   fill = fillable();
 
-  fillAndBlur(val) {
-    return this.fill(val)
-      .blur();
+  fillAndSubmit(val) {
+    return this
+      .fill(val)
+      .trigger('keydown', { which: 13, key: 'Enter' });
   }
 });
 
@@ -31,4 +31,5 @@ export default interactor(class SearchInteractor {
   selectIndexes = new SelectInteractor('#selectIndexes');
   selectCondition = new SelectInteractor('#selectCondition');
   searchTextArea = new SearchFieldInteractor('#searchTextArea');
+  countResults = count('[data-row-index]');
 });

@@ -1,13 +1,16 @@
 import { beforeEach, describe, it } from '@bigtest/mocha';
 import { expect } from 'chai';
 
-import { describeApplication } from '../helpers/describe-application';
+import setupApplication from '../helpers/setup-application';
 import SearchInteractor from '../interactors/search';
 
-describeApplication('Search', () => {
+describe('Search', () => {
+  setupApplication();
   const searchInteractor = new SearchInteractor();
 
   beforeEach(function () {
+    this.server.createList('mergedSearch', 1);
+
     return this.visit('/marccat/search', () => {
       expect(searchInteractor.$root).to.exist;
     });

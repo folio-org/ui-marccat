@@ -1,6 +1,6 @@
 // @flow
 import { union } from 'lodash';
-import { EMPTY_STRING, EMPTY_SPACED_STRING } from '../../../config/constants';
+import { EMPTY_STRING } from '../../../config/constants';
 
 export const RECORD_FIELD_STATUS = {
   NEW: 'new',

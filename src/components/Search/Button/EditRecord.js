@@ -1,10 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 // @flow
 import * as React from 'react';
-import { Button, PaneMenu, Icon } from '@folio/stripes/components';
+import { Button, Icon } from '@folio/stripes/components';
 import { connect } from 'react-redux';
-import { uuid } from '../../../shared/utils/Function';
-import { Localize, findParam, buildUrl } from '../../../shared';
+import { Localize, findParam } from '../../../shared';
 import { lockRecordAction } from '../../Cataloguing/Actions';
 
 const EditRecordButton = ({ ...props }) => {
@@ -24,11 +23,10 @@ const EditRecordButton = ({ ...props }) => {
     const { router, toggleFilterPane } = props;
     const id = findParam('id');
     toggleFilterPane();
-    // lockRecord(id);
+    lockRecord(id);
     router.push(`/marccat/cataloging?id=${id}&mode=edit`);
   };
 
-  const { detail, detailFromBrowse } = props;
   return (
     <Button
       {...props}

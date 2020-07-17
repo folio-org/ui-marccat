@@ -1,8 +1,8 @@
 /* eslint-disable no-sparse-arrays */
 // @flow
-import React, { Fragment } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { Pane, Icon, MultiColumnList, Button, PaneHeader } from '@folio/stripes/components';
+import { Pane, Icon, MultiColumnList, PaneHeader } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
 import type { Props } from '../../../../flow/types.js.flow';
 import {

@@ -5,7 +5,7 @@ import ClearHistory from './ClearHistory';
 import { resetHistoryAction } from '../Actions';
 import style from '../../../shared/lib/Style/Dropdown.css';
 import { ACTION } from '../../../redux/actions';
-import { SORT_TYPE, EMPTY_STRING } from '../../../config/constants';
+import { SORT_TYPE, EMPTY_STRING, FILTER_NAME } from '../../../config/constants';
 
 const PanelHistory = ({ ...props }) => {
   const { searchPerformed, recentHistory, totalBib, withMulticolumn } = props;

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 // @flow
 import * as React from 'react';
-import { Button, PaneMenu, Icon } from '@folio/stripes/components';
+import { Button, Icon } from '@folio/stripes/components';
 import { connect } from 'react-redux';
 import { Localize, findParam } from '../../../shared';
 import { duplicaRecordAction } from '../Actions';

@@ -7,15 +7,12 @@ import {
   AccordionSet,
   Callout,
   Row,
-  PaneMenu,
   Button,
   Col,
   Icon,
-  EmptyMessage,
   MenuSection,
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
-import { FormattedMessage } from 'react-intl';
 import { bindActionCreators } from 'redux';
 import { union, sortBy, includes } from 'lodash';
 import {
@@ -50,7 +47,6 @@ import { formFieldValue, resolve } from '../../../../redux/helpers/Selector';
 import { TAGS, TAG_NOT_REPEATABLE } from '../../Utils/MarcConstant';
 import DataFieldForm from '../Form/DataField';
 import VariableFieldForm from '../Form/VariableField';
-import { validateTag } from '../../../../shared/utils/Function';
 
 class Record extends React.Component<
   Props,
@@ -367,7 +363,7 @@ class Record extends React.Component<
   };
 
   handleClose = (checkCodeForSearch, idFromBibRecord) => {
-    const { id, submit } = this.state;
+    const { submit } = this.state;
     const { dispatch, router, toggleFilterPane, reset } = this.props;
     if (checkCodeForSearch === 'OK') {
       dispatch({
@@ -398,7 +394,6 @@ class Record extends React.Component<
   };
 
   actionMenu = (
-    { onToggle },
     { isEditMode } = this.state,
     { translate } = this.props
   ) => (

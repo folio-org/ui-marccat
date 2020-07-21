@@ -125,5 +125,5 @@
     "search.actionmenu.duplicate.ebook": "复制为电子书",
     "cataloging.accordion.fixedfield.editable.label": "控制字段（006,007,008）",
     "meta.title": "MARCcat",
-    "cataloging.fixedfield.section.remove.newtag": "Remove {value}"
+    "cataloging.fixedfield.section.remove.newtag": "删除{value}"
 }

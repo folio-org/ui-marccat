@@ -5,15 +5,21 @@ mirageOptions.serverType = 'miragejs';
 
 export default function setupApplication({
   scenarios,
+  permissions = {},
   hasAllPerms = true,
-  permissions = {}
+  modules,
+  translations,
+  currentUser,
 } = {}) {
   setupStripesCore({
     mirageOptions,
     scenarios,
     permissions,
+    modules,
+    translations,
     stripesConfig: {
-      hasAllPerms
-    }
+      hasAllPerms,
+    },
+    currentUser,
   });
 }

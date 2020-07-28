@@ -28,8 +28,8 @@ const SearchFieldInteractor = interactor(class TextFieldInteractor {
 // https://bigtestjs.io/guides/interactors/introduction/
 export default interactor(class SearchInteractor {
   static defaultScope = '#ModuleContainer';
-  selectIndexes = new SelectInteractor('#selectIndexes');
-  selectCondition = new SelectInteractor('#selectCondition');
-  searchTextArea = new SearchFieldInteractor('#searchTextArea');
+  selectIndexes = new SelectInteractor('[data-test-select-indexes]');
+  selectCondition = new SelectInteractor('[data-test-select-condition]');
+  searchTextArea = new SearchFieldInteractor('[data-test-search-text-area]');
   countResults = count('[data-row-index]');
 });

@@ -50,6 +50,7 @@ export default ({ ...props }) => {
     <Field
       name={name}
       id={id}
+      data-test-select-condition
       placeholder="Select condition..."
       component={Select}
       marginBottom0

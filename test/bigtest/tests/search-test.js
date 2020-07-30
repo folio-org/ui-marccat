@@ -20,7 +20,7 @@ describe('Search', () => {
     beforeEach(async function () {
       await searchInteractor.selectIndexes.selectOption('Title');
       await searchInteractor.selectCondition.selectOption('Contains');
-      await searchInteractor.searchTextArea.fillAndSubmit('1');
+      await searchInteractor.searchTextArea.fillAndSubmit('test');
     });
 
     it('returns at least one search result', () => {

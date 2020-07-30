@@ -5,6 +5,7 @@
 * Adding translations and icons to `package.json` `files` array.
 * CHANGELOG cleanup
 * Peer-dep cleanup: increment `@folio/stripes` to `^v4.0`, `react-intl` to `v4.5`.
+* Refactor from `bigtest/mirage` to `miragejs`.
 
 ## [2.0.0](https://github.com/folio-org/ui-marccat/releases/v2.0.0) (2019-10-09)
 [Full Changelog](https://github.com/folio-org/ui-marccat/compare/v1.3.0...v2.0.0)

@@ -7,7 +7,6 @@ import {
   Paneset,
   HotKeys,
   MenuSection,
-  Checkbox,
   Button,
   Icon,
 } from '@folio/stripes/components';
@@ -204,7 +203,6 @@ export class SearchResults extends React.Component<P, {}> {
   };
 
   actionMenu = (
-    { onToggle },
     { checkGroupLabels } = this.state,
     {
       data: { filter: { name, checked },

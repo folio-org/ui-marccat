@@ -10,7 +10,6 @@ import { decamelizify } from '../../../../shared/utils/Function';
 import style from '../../Style/index.css';
 import { change008ByLeaderAction } from '../../Actions';
 import HeaderTypeSelect from './components/HeaderTypeSelect';
-import { ACTION } from '../../../../redux/actions/Actions';
 
 type P = {
   readOnly: boolean,

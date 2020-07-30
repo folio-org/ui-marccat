@@ -1,8 +1,7 @@
 // @flow
 import React, { Fragment } from 'react';
-import { Button, Icon, MenuSection } from '@folio/stripes/components';
+import { Button, Icon } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
-import CheckboxIconButton from '../Button/OptionButton';
 import style from '../Style/Dropdown.css';
 
 export const generateDropdownMenu = (labels, withButton) => {

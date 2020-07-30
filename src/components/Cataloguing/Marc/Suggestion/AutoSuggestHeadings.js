@@ -1,7 +1,7 @@
 // @flow
 import React, { Fragment } from 'react';
 import { AutoSuggest, HotKeys, MessageBanner } from '@folio/stripes/components';
-import { injectProps, buildUrl, Localize } from '../../../../shared';
+import { injectProps, buildUrl } from '../../../../shared';
 import {
   triggerBrowseHeadingSuggestion,
   triggerTagIndicatorsSuggestion,
@@ -24,8 +24,7 @@ function AutoSuggestHeadings(props) {
   const [state, setState] = React.useState(initialState);
 
   const onFocus = async e => {
-    const { store, input } = props;
-    const { stringValidateMessage, showMessage } = state;
+    const { store } = props;
     if (e.target.form[1].defaultValue.length === 3) {
       const tagCode = e.target.form[1].defaultValue;
       const ind1 = e.target.form[2].defaultValue === '' ? ' ' : e.target.form[2].defaultValue;

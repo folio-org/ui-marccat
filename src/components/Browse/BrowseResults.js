@@ -7,7 +7,6 @@ import {
   Paneset,
   Icon,
   Button,
-  PaneMenu,
   MenuSection,
 } from '@folio/stripes/components';
 import { AppIcon } from '@folio/stripes-core';
@@ -75,7 +74,7 @@ export class BrowseResults extends React.Component<Props, S> {
   };
 
 
-  getActionMenu = (detail, items, { onToggle } = this.props) => (
+  getActionMenu = () => (
     <Fragment>
       <MenuSection>
         <EditRecordButton {...this.props} />
@@ -140,7 +139,6 @@ export class BrowseResults extends React.Component<Props, S> {
   };
 
   actionMenu = (
-    { onToggle },
     {
       data: {
         data: { emptyRecord },

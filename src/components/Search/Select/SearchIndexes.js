@@ -4,10 +4,10 @@ import * as React from 'react';
 import { Field } from 'redux-form';
 import { Select } from '@folio/stripes/components';
 import { ACTION } from '../../../redux/actions';
-import { SORT_TYPE, FILTER_NAME } from '../../../config/constants';
+import { SORT_TYPE, FILTER_NAME, SEARCH_SEGMENT } from '../../../config/constants';
 
 export default ({ ...props }) => {
-  const { rest, name, id } = props;
+  const { rest, name, id, segment } = props;
   const options = [
     { label: 'Title', value: 'TITLE', sortBy: SORT_TYPE.TITLE },
     { label: 'Name: All', value: 'NAME', sortBy: SORT_TYPE.NAME },
@@ -60,6 +60,23 @@ export default ({ ...props }) => {
     { label: 'Other Control No.', value: 'NN' },
   ];
 
+  const optAuthority = [
+    { label: 'Title', value: 'TI', sortBy: SORT_TYPE.TITLE },
+    { label: 'Name', value: 'NA', sortBy: SORT_TYPE.TITLE },
+    { label: 'Personal Name', value: 'NP' },
+    { label: 'Corporate Name', value: 'NC' },
+    { label: 'Conf./Meeting Name', value: 'NM' },
+    { label: 'Subject', value: 'SU' },
+    { label: 'Authority control number', value: 'AN' },
+    { label: 'LC Control number', value: 'LN' },
+    { label: 'ISBN', value: 'BN' },
+    { label: 'ISSN', value: 'SN' },
+    { label: 'Dewey Classification', value: 'DC' },
+    { label: 'LC Classification', value: 'LC' },
+    { label: 'Universal Decimal', value: 'UC' },
+    { label: 'Other Classification', value: 'OC' },
+  ];
+
   const disableSortOnAuthority = (sortType) => {
     const { store: { getState } } = props;
     const filter = getState().marccat.filter.filters;
@@ -75,13 +92,21 @@ export default ({ ...props }) => {
     dispatch({ type: ACTION.SETTINGS, data: { sortType } });
   };
 
+  const dynamicOptions = () => {
+    if (segment == SEARCH_SEGMENT.BIBLIOGRAPHIC) {
+      return options;
+    } else if (segment == SEARCH_SEGMENT.AUTHORITY) {
+      return optAuthority;
+    }
+  };
+
   return (
     <Field
       id={id}
       name={name}
       placeholder="Select a index..."
       component={Select}
-      dataOptions={options}
+      dataOptions={dynamicOptions()}
       marginBottom0
       onChange={(event) => {
         setSortStrategy(event);

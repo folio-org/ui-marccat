@@ -26,7 +26,7 @@ class RecordDetailPane extends React.Component {
     return (
       <Pane
         id="pane-details"
-        defaultWidth="35%"
+        defaultWidth="40%"
         renderHeader={renderProps => (
           <PaneHeader
             {...this.props}

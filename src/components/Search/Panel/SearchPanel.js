@@ -3,14 +3,22 @@
 // @flow
 import React, { Fragment } from 'react';
 import {
+  TextField,
   SearchField,
   AccordionSet,
   Accordion,
   FilterAccordionHeader,
   Row, Col,
+
+  ButtonGroup,
+  Button,
 } from '@folio/stripes/components';
 import { reduxForm, Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
+
+import { SearchAndSort } from '@folio/stripes/smart-components';
+
+
 import ResetButton from '../Filter/ResetButton';
 import type { Props } from '../../../flow/types.js.flow';
 import {
@@ -21,10 +29,11 @@ import {
   getFormatFilterQuery,
   transitionToParams
 } from '..';
+
 import { ACTION } from '../../../redux/actions/Actions';
 import { findYourQuery } from '../Filter';
 import { remapFilters, findParam } from '../../../shared';
-import { EMPTY_STRING } from '../../../config/constants';
+import { EMPTY_STRING, SEARCH_SEGMENT } from '../../../config/constants';
 import { historySearchAction, searchDetailAction } from '../Actions';
 import styles from '../Style/index.css';
 
@@ -36,6 +45,11 @@ type P = Props & {
 class SearchPanel extends React.Component<P, {}> {
   constructor(props: P) {
     super(props);
+
+    this.segment = findParam('segment');
+    if (this.segment == null) {
+      this.segment = SEARCH_SEGMENT.BIBLIOGRAPHIC;
+    }
     this.state = {
       isBrowseRequested: false,
       searchForm: [EMPTY_STRING],
@@ -43,7 +57,10 @@ class SearchPanel extends React.Component<P, {}> {
       counter: [{}],
       leftBracketEnable: false,
       rightBracketEnable: false,
+      segment: this.segment,
+      btnSubmitEnabled: false
     };
+
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleAddSearchForm = this.handleAddSearchForm.bind(this);
     this.handleRemoveSearchForm = this.handleRemoveSearchForm.bind(this);
@@ -70,19 +87,23 @@ class SearchPanel extends React.Component<P, {}> {
   handleKeyDown(e) {
     let { isBrowseRequested } = this.state;
     const { store, store: { getState }, dispatch, router } = this.props;
-    if (e.charCode === 13 || e.key === 'Enter') {
+
+    if (e.charCode === 13 || e.key === 'Enter' || e.type === 'click') {
       e.preventDefault();
       store.dispatch({ type: ACTION.CLOSE_PANELS, closePanels: true });
       store.dispatch({ type: ACTION.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
-      const inputValue = '"' + e.target.form[2].defaultValue + '"';
+
+      const form = getState().form.searchForm;
+      const inputValue = '"' + form.values.searchTextArea + '"';
+
       isBrowseRequested = false;
       let baseQuery;
       let indexForQuery;
       let conditionFilter;
       let indexFilter;
-      const form = getState().form.searchForm;
+
       const state = getState();
-      if (form.values) {
+      if (form.values && typeof (form.values.selectIndexes) !== 'undefined' && typeof (form.values.selectCondition) !== 'undefined') {
         if (form.values.selectIndexes) {
           indexFilter = form.values.selectIndexes;
         }
@@ -175,8 +196,19 @@ class SearchPanel extends React.Component<P, {}> {
 
   handleOnChange = () => {
     const { searchForm } = this.state;
+    const { store: { getState } } = this.props;
+    const form = getState().form.searchForm;
+
+    let bntEnabled = false;
+    if (typeof (form.values) !== 'undefined' && typeof (form.values.searchTextArea) !== 'undefined') {
+      if (form.values.searchTextArea.length > 0) {
+        bntEnabled = true;
+      }
+    }
+
     this.setState({
       searchForm,
+      btnSubmitEnabled: bntEnabled
     });
   };
 
@@ -199,11 +231,51 @@ class SearchPanel extends React.Component<P, {}> {
     );
   }
 
+  getFilterContainer = (segment, filterEnable) => {
+    if (segment == SEARCH_SEGMENT.BIBLIOGRAPHIC) {
+      return (
+        <FiltersContainer {...this.props} filterEnable={!!(filterEnable)} segment={segment} />
+      );
+    } else {
+      return null;
+    }
+  }
+
+  capitalize = (text) => {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
+
   render() {
     const { translate, ...rest } = this.props;
-    const { filterEnable, leftBracketEnable, rightBracketEnable } = this.state;
+    const { filterEnable, leftBracketEnable, rightBracketEnable, segment, btnSubmitEnabled } = this.state;
+    const menuNumOptions = [this.capitalize(SEARCH_SEGMENT.BIBLIOGRAPHIC), this.capitalize(SEARCH_SEGMENT.AUTHORITY)];
+
+    const menuOptions = menuNumOptions.map((text) => <Button
+      key={`${text}`}
+      to={`/marccat/search?segment=${text.toLowerCase()}`}
+      buttonStyle={`${segment === text.toLowerCase() ? 'primary' : 'default'}`}
+      id={`segment-navigation-${text}`}
+      onClick={() => this.setState({
+        segment: text.toLowerCase()
+      })}
+    >
+      <FormattedMessage id={text} />
+    </Button>);
+
     return (
       <Fragment>
+
+        <div data-test-inventory-instances>
+
+          <ButtonGroup
+            fullWidth
+            data-test-filters-navigation
+          >
+            {menuOptions}
+          </ButtonGroup>
+
+        </div>
+
         <AccordionSet>
           <Accordion
             {...rest}
@@ -229,6 +301,7 @@ class SearchPanel extends React.Component<P, {}> {
                           {...this.props}
                           id="selectIndexes"
                           name="selectIndexes"
+                          segment={segment}
                         />
                       </div>
                     </Col>
@@ -250,10 +323,24 @@ class SearchPanel extends React.Component<P, {}> {
                           id="searchTextArea"
                           name="searchTextArea"
                           fullWidth
-                          component={SearchField}
+                          component={TextField}
                           placeholder="Search..."
                         />
                       </div>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col xs={12}>
+                      <Button
+                        id="search-panel-btn-search"
+                        buttonStyle={btnSubmitEnabled ? 'primary' : 'default'}
+                        onClick={this.handleKeyDown}
+                        type="submit"
+                        disabled={!btnSubmitEnabled}
+                        fullWidth
+                      >
+                        {translate({ id: 'ui-marccat.search.searchButton' })}
+                      </Button>
                     </Col>
                   </Row>
                 </Col>
@@ -268,7 +355,7 @@ class SearchPanel extends React.Component<P, {}> {
               </Row>
             </form>
           </Accordion>
-          <FiltersContainer {...this.props} filterEnable={!!(filterEnable)} />
+          {this.getFilterContainer(segment, filterEnable)}
         </AccordionSet>
       </Fragment>
     );

@@ -4,6 +4,7 @@
 /* eslint-disable no-bitwise */
 // @flow
 import * as React from 'react';
+import { isObject } from 'lodash';
 import { Button } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 import queryString from 'querystring';
@@ -29,6 +30,15 @@ export const buildUrl = (state, url, params, withslash = false) => {
     .concat((withslash) ? url.concat('/') : url)
     .concat('?')
     .concat(params);
+};
+
+/**
+ *
+ * @param {response} string HTTP response body to parse
+ * @return object Parsed JSON or integer depending on response
+ */
+export const parseResponse = (response) => {
+  return Array.isArray(response) || isObject(response) || Number.isInteger(response) ? response : JSON.parse(response);
 };
 
 /**

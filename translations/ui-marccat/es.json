@@ -27,6 +27,7 @@
     "button.new": "Nuevo",
     "button.close": "Close",
     "button.cancel": "Cancel",
+    "button.saveAndClose": "Guardar y salir",
     "settings.field.groupings": "Field groupings",
     "settings.default.record.template": "Default record template",
     "button.add": "Añadir",

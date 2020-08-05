@@ -26,6 +26,7 @@
   "button.new.short.bib": "CTRL + B",
   "button.close": "Close",
   "button.cancel": "Cancel",
+  "button.saveAndClose": "Save and close",
   "button.new.tag": "Tag",
   "button.backto": "Close",
   "button.remove": "Remove",

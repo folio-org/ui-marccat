@@ -9,11 +9,11 @@ import { AppIcon } from '@folio/stripes-core';
 import RecordDetails from '../RecordDetails';
 import { injectProps } from '../../../../shared';
 import DuplicateRecord from '../../Button/DuplicateRecord';
-import { EditRecordButton, DuplicaRecordButton } from '../..';
+import { EditRecordButton } from '../..';
 
 class RecordDetailPane extends React.Component {
   // A simple action menu
-  getActionMenu = (detail, { onToggle } = this.props) => (
+  getActionMenu = () => (
     <Fragment>
       <EditRecordButton {...this.props} />
       <hr />

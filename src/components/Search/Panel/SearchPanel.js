@@ -322,6 +322,7 @@ class SearchPanel extends React.Component<P, {}> {
                           {...rest}
                           id="searchTextArea"
                           name="searchTextArea"
+                          data-test-search-text-area
                           fullWidth
                           component={TextField}
                           placeholder="Search..."

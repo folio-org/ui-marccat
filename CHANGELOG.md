@@ -5,6 +5,7 @@
 * Adding translations and icons to `package.json` `files` array.
 * CHANGELOG cleanup
 * Peer-dep cleanup: increment `@folio/stripes` to `^v4.0`, `react-intl` to `v4.5`.
+* Refactor from `bigtest/mirage` to `miragejs`.
 * Create buttons to separate the search by bibs/holds and authorities (UICAT-103)
 * Save and cancel buttons in the cataloguing worksheet like in Inventory (UICAT-104)
 

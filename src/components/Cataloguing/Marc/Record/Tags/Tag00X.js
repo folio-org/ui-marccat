@@ -5,7 +5,6 @@ import { Field } from 'redux-form';
 import { Select, Row, Col } from '@folio/stripes-components';
 import { connect } from 'react-redux';
 import { isEmpty, last } from 'lodash';
-import { PreviousMap } from 'postcss';
 import { EMPTY_SPACED_STRING, REDUX } from '../../../../../config/constants';
 import { decamelizify, findParam } from '../../../../../shared';
 import type { Props, State } from '../../../../../flow/types.js.flow';
@@ -54,8 +53,6 @@ class Tag00X extends React.PureComponent<Props, S> {
       dispatch,
       element: { code, fixedField },
       headerTypeCodeFromLeader,
-    } = this.props;
-    let {
       record: {
         leader: { value },
       },
@@ -66,7 +63,6 @@ class Tag00X extends React.PureComponent<Props, S> {
     headerTypeCode =
       headerTypeCodeFromLeader ||
       (evt ? evt.target.value : fixedField.headerTypeCode);
-    value = headerTypeCodeFromLeader ? leader.value : value;
 
     if (fixedField.displayValue.includes('|')) {
       displayValue = fixedField.displayValue.split('|').join('%7C');

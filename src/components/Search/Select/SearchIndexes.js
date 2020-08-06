@@ -104,6 +104,7 @@ export default ({ ...props }) => {
     <Field
       id={id}
       name={name}
+      data-test-select-indexes
       placeholder="Select a index..."
       component={Select}
       dataOptions={dynamicOptions()}

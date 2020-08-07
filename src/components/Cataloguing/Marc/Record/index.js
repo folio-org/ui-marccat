@@ -10,9 +10,9 @@ import {
   Button,
   Col,
   Icon,
-  MenuSection,
   PaneFooter
 } from '@folio/stripes/components';
+import { FormattedMessage } from 'react-intl';
 import { AppIcon } from '@folio/stripes-core';
 import { bindActionCreators } from 'redux';
 import { union, sortBy, includes } from 'lodash';
@@ -48,6 +48,7 @@ import { formFieldValue, resolve } from '../../../../redux/helpers/Selector';
 import { TAGS, TAG_NOT_REPEATABLE } from '../../Utils/MarcConstant';
 import DataFieldForm from '../Form/DataField';
 import VariableFieldForm from '../Form/VariableField';
+
 
 class Record extends React.Component<
   Props,

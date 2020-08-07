@@ -4,7 +4,6 @@
 import React, { Fragment } from 'react';
 import {
   TextField,
-  SearchField,
   AccordionSet,
   Accordion,
   FilterAccordionHeader,
@@ -15,8 +14,6 @@ import {
 } from '@folio/stripes/components';
 import { reduxForm, Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
-
-import { SearchAndSort } from '@folio/stripes/smart-components';
 
 
 import ResetButton from '../Filter/ResetButton';
@@ -232,7 +229,7 @@ class SearchPanel extends React.Component<P, {}> {
   }
 
   getFilterContainer = (segment, filterEnable) => {
-    if (segment == SEARCH_SEGMENT.BIBLIOGRAPHIC) {
+    if (segment === SEARCH_SEGMENT.BIBLIOGRAPHIC) {
       return (
         <FiltersContainer {...this.props} filterEnable={!!(filterEnable)} segment={segment} />
       );
@@ -250,18 +247,6 @@ class SearchPanel extends React.Component<P, {}> {
     const { filterEnable, leftBracketEnable, rightBracketEnable, segment, btnSubmitEnabled } = this.state;
     const menuNumOptions = [this.capitalize(SEARCH_SEGMENT.BIBLIOGRAPHIC), this.capitalize(SEARCH_SEGMENT.AUTHORITY)];
 
-    const menuOptions = menuNumOptions.map((text) => <Button
-      key={`${text}`}
-      to={`/marccat/search?segment=${text.toLowerCase()}`}
-      buttonStyle={`${segment === text.toLowerCase() ? 'primary' : 'default'}`}
-      id={`segment-navigation-${text}`}
-      onClick={() => this.setState({
-        segment: text.toLowerCase()
-      })}
-    >
-      <FormattedMessage id={text} />
-    </Button>);
-
     return (
       <Fragment>
 
@@ -271,7 +256,21 @@ class SearchPanel extends React.Component<P, {}> {
             fullWidth
             data-test-filters-navigation
           >
-            {menuOptions}
+            {
+              menuNumOptions.map((text) => (
+                <Button
+                  key={`${text}`}
+                  to={`/marccat/search?segment=${text.toLowerCase()}`}
+                  buttonStyle={`${segment === text.toLowerCase() ? 'primary' : 'default'}`}
+                  id={`segment-navigation-${text}`}
+                  onClick={() => this.setState({
+                    segment: text.toLowerCase()
+                  })}
+                >
+                  <FormattedMessage id={text} />
+                </Button>
+              ))
+            }
           </ButtonGroup>
 
         </div>

@@ -93,10 +93,12 @@ export default ({ ...props }) => {
   };
 
   const dynamicOptions = () => {
-    if (segment == SEARCH_SEGMENT.BIBLIOGRAPHIC) {
+    if (segment === SEARCH_SEGMENT.BIBLIOGRAPHIC) {
       return options;
-    } else if (segment == SEARCH_SEGMENT.AUTHORITY) {
+    } else if (segment === SEARCH_SEGMENT.AUTHORITY) {
       return optAuthority;
+    } else {
+      return '';
     }
   };
 

@@ -9,10 +9,10 @@ describe('Browse', () => {
   const searchInteractor = new SearchInteractor();
 
   beforeEach(function () {
-    this.server.create('fromTemplate', 1);
-    this.server.createList('browseSearch', 1);
+    this.server.create('fromTemplate');
+    this.server.create('browseSearch');
 
-    return this.visit('/marccat/browse', () => {
+    return this.visit('/marccat/search', () => {
       expect(searchInteractor.$root).to.exist;
     });
   });
@@ -24,7 +24,7 @@ describe('Browse', () => {
         await searchInteractor.searchTextArea.fillAndSubmit('test');
     });
 
-    it('returns browse result', () => {
+    it.only('returns browse result', () => {
         expect(searchInteractor.countResults).to.be.greaterThan(1);
     });
   });

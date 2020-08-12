@@ -1,6 +1,6 @@
 import { Factory } from 'miragejs';
 
-const NUM_OF_RESULTS = 2;
+const NUM_OF_RESULTS = 10;
 
 export default Factory.extend({
 	headings:[],

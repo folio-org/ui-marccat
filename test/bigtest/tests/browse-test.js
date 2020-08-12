@@ -24,7 +24,7 @@ describe('Browse', () => {
         await searchInteractor.searchTextArea.fillAndSubmit('test');
     });
 
-    it.only('returns browse result', () => {
+    it('returns browse result', () => {
         expect(searchInteractor.countResults).to.be.greaterThan(1);
     });
   });

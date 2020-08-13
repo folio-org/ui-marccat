@@ -56,6 +56,10 @@ describe('Search', () => {
       expect(searchInteractor.selectIndexes.optionCount).to.equal(15);
     });
 
+    it('should remove filter', () => {
+      expect(searchInteractor.filtersContainerPresent).to.be.false;
+    });
+
   });
 
 });

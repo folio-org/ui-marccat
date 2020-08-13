@@ -231,7 +231,7 @@ class SearchPanel extends React.Component<P, {}> {
   getFilterContainer = (segment, filterEnable) => {
     if (segment === SEARCH_SEGMENT.BIBLIOGRAPHIC) {
       return (
-        <FiltersContainer {...this.props} filterEnable={!!(filterEnable)} segment={segment} />
+        <FiltersContainer data-test-filters-container {...this.props} filterEnable={!!(filterEnable)} segment={segment} />
       );
     } else {
       return null;

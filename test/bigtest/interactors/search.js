@@ -3,7 +3,8 @@ import {
   fillable,
   interactor,
   selectable,
-  clickable
+  clickable,
+  isPresent
 } from '@bigtest/interactor';
 
 const SelectInteractor = interactor(class SelectInteractor {
@@ -45,4 +46,5 @@ export default interactor(class SearchInteractor {
   countResults = count('[data-row-index]');
   segmentAuthorityInteractor = new SegmentNavigationInteractor('#segment-navigation-Authority');
   buttonSearch = new SearchButtonInteractor('[data-test-btn-search]');
+  filtersContainerPresent = isPresent('[data-test-filters-container]');
 });

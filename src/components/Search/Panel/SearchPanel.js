@@ -338,6 +338,7 @@ class SearchPanel extends React.Component<P, {}> {
                         type="submit"
                         disabled={!btnSubmitEnabled}
                         fullWidth
+                        data-test-btn-search
                       >
                         {translate({ id: 'ui-marccat.search.searchButton' })}
                       </Button>

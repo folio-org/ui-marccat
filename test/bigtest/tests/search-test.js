@@ -28,4 +28,34 @@ describe('Search', () => {
       expect(searchInteractor.countResults).to.be.greaterThan(1);
     });
   });
+
+  describe('submit with the button', function () {
+    beforeEach(async function () {
+      await searchInteractor.selectIndexes.selectOption('Title');
+      await searchInteractor.selectCondition.selectOption('Contains');
+      await searchInteractor.searchTextArea.fill('test');
+      await searchInteractor.buttonSearch.click();
+    });
+
+    it('returns at least one search result', () => {
+      expect(searchInteractor.countResults).to.be.greaterThan(1);
+    });
+  });
+
+  describe('should test authority indexes', () => {
+
+    beforeEach(async function () {
+      await searchInteractor.segmentAuthorityInteractor.click();
+    });
+
+    it('should find no results', () => {
+      expect(searchInteractor.countResults).to.be.equals(0);
+    });
+
+    it('should change options of indexes', () => {
+      expect(searchInteractor.selectIndexes.optionCount).to.equal(15);
+    });
+
+  });
+
 });

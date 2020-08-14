@@ -28,4 +28,14 @@ describe('Search', () => {
       expect(searchInteractor.countResults).to.be.greaterThan(1);
     });
   });
+
+  describe('open detail result panel', function () {
+    beforeEach(async function () {
+      await searchInteractor.itemRowClick.rowClick();
+    });
+
+    it('returns detail result panel open', () => {
+      expect(searchInteractor.detailPanel.isPresentDetailPanel).to.be.true;
+    });
+  });
 });

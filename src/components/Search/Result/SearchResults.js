@@ -403,6 +403,7 @@ export class SearchResults extends React.Component<P, {}> {
           {detailPanelIsVisible && closePanels === false && (
             <RecordDetailPane
               {...this.props}
+              data-test-detail-panel
               firstMenu={firstMenu}
               detailPaneMeta={detailPaneMeta}
               detail={detail}

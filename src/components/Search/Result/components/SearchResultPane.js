@@ -103,7 +103,7 @@ class SearchResultPane extends React.Component<Props, {}> {
         ) : isReady ? (
           <MultiColumnList
             autosize
-            id="data-test-search-results-table"
+            data-test-search-results-table
             defaultWidth="fill"
             columnWidths={columnWidthMapper(bibsOnly, autOnly)}
             rowMetadata={['001', 'recordView']}
@@ -153,7 +153,7 @@ class SearchResultPane extends React.Component<Props, {}> {
           }}
         >
           <MultiColumnList
-            id="data-test-search-results-table"
+            data-test-search-results-table
             autosize
             defaultWidth="fill"
             columnWidths={columnWidthMapper(bibsOnly, autOnly)}

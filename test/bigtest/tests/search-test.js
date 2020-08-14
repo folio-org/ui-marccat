@@ -17,7 +17,7 @@ describe('Search', () => {
     });
   });
 
-  describe('fill search field', function () {
+  describe('fill search field and submit with the ENTER key', function () {
     beforeEach(async function () {
       await searchInteractor.selectIndexes.selectOption('Title');
       await searchInteractor.selectCondition.selectOption('Contains');
@@ -29,7 +29,7 @@ describe('Search', () => {
     });
   });
 
-  describe('submit with the button', function () {
+  describe('fill search field and submit with the button', function () {
     beforeEach(async function () {
       await searchInteractor.selectIndexes.selectOption('Title');
       await searchInteractor.selectCondition.selectOption('Contains');

@@ -139,17 +139,13 @@ export class BrowseResults extends React.Component<Props, S> {
   };
 
   actionMenu = (
-    {
-      data: {
-        data: { emptyRecord },
-      },
-    } = this.props
   ) => (
     <Fragment>
       <MenuSection label="Actions">
         <Button
           buttonStyle="primary"
-          disabled={!emptyRecord}
+          // eslint-disable-next-line
+          disabled={!this.props.datastore.emptyRecord}
           onClick={this.handleCreateRecord}
         >
           <Icon icon="plus-sign" size="small">

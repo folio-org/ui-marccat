@@ -4,28 +4,28 @@ import { expect } from 'chai';
 import setupApplication from '../helpers/setup-application';
 import SearchInteractor from '../interactors/search';
 
-describe('Search', () => {
+describe('Browse', () => {
   setupApplication();
   const searchInteractor = new SearchInteractor();
 
   beforeEach(function () {
     this.server.create('fromTemplate');
-    this.server.createList('mergedSearch', 1);
+    this.server.create('browseSearch');
 
     return this.visit('/marccat/search', () => {
       expect(searchInteractor.$root).to.exist;
     });
   });
 
-  describe('fill search field', function () {
+  describe('fill browse field', function () {
     beforeEach(async function () {
-      await searchInteractor.selectIndexes.selectOption('Title');
-      await searchInteractor.selectCondition.selectOption('Contains');
-      await searchInteractor.searchTextArea.fillAndSubmit('test');
+        await searchInteractor.selectIndexes.selectOption('Title');
+        await searchInteractor.selectCondition.selectOption('Browse');
+        await searchInteractor.searchTextArea.fillAndSubmit('test');
     });
 
-    it('returns at least one search result', () => {
-      expect(searchInteractor.countResults).to.be.greaterThan(1);
+    it('returns browse result', () => {
+        expect(searchInteractor.countResults).to.be.greaterThan(1);
     });
   });
 });

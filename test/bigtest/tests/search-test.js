@@ -9,7 +9,7 @@ describe('Search', () => {
   const searchInteractor = new SearchInteractor();
 
   beforeEach(function () {
-    this.server.create('fromTemplate', 1);
+    this.server.create('fromTemplate');
     this.server.createList('mergedSearch', 1);
 
     return this.visit('/marccat/search', () => {

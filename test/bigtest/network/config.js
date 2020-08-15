@@ -46,6 +46,10 @@ this.get('/marccat/mergedSearch', ({mergedSearches}) => {
 
 this.get('/marccat/countSearch', () => 2);
 
+this.get('/marccat/browse', ({browseSearches}) => {
+  return browseSearches.all();
+});
+
 // translation bundle passthrough
 this.pretender.get(`${__webpack_public_path__}translations/:rand.json`, this.pretender.passthrough); // eslint-disable-line
 

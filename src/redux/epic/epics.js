@@ -37,7 +37,7 @@ export const searchEpic = (action$, store) => action$.ofType(ACTION.SEARCH)
     of$(marccatActions.isfetchingSearchRequest(true, d.moreData, d.isFromCat)),
     getJSON(buildUrl(store.getState(), ENDPOINT.MERGED_SEARCH_URL, `lang=eng&ml=170&qbib=${d.queryBib}&qauth=${d.queryAuth}&from=${d.from}&to=${d.to}&dpo=1&sortBy=${d.isFromCat === 'Y' ? 54 : Selector.get(store, 'settings', 'sortType')}&sortOrder=0`), getHeaders(store.getState()))
       .map((record) => {
-        var aJsonResponse = parseResponse(record.response);
+        const aJsonResponse = parseResponse(record.response);
         return marccatActions.fetchSearchEngineRecords(
           d.queryBib,
           d.queryAuth,
@@ -51,8 +51,8 @@ export const searchEpic = (action$, store) => action$.ofType(ACTION.SEARCH)
           d.dataOld,
           d.oldBibArray,
           d.oldAuthArray
-        )
-        }).catch(e => of$(marccatActions.fetchFailure(e)))
+        );
+      }).catch(e => of$(marccatActions.fetchFailure(e)))
   ));
 
 export const searchDetailEpic = (action$, store) => action$.ofType(ACTION.DETAILS)

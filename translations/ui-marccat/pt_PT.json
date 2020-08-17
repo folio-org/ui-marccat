@@ -125,5 +125,20 @@
     "search.actionmenu.duplicate.ebook": "Duplicate as e-book",
     "cataloging.accordion.fixedfield.editable.label": "Control Fields (006, 007, 008)",
     "meta.title": "MARCcat",
-    "cataloging.fixedfield.section.remove.newtag": "Remove {value}"
+    "cataloging.fixedfield.section.remove.newtag": "Remove {value}",
+    "button.saveAndClose": "Save and close",
+    "authority.title": "Title",
+    "authority.name": "Name",
+    "authority.personalname": "Personal Name",
+    "authority.corporatename": "Corporate Name",
+    "authority.meetingname": "Conf./Meeting Name",
+    "authority.subject": "Subject",
+    "authority.authoritycontrolnumber": "Authority control number",
+    "authority.lccontrolnumber": "LC Control number",
+    "authority.isbn": "ISBN",
+    "authority.issn": "ISSN",
+    "authority.deweyclassification": "Dewey Classification",
+    "authority.lcclassification": "LC Classification",
+    "authority.universaldecimal": "Universal Decimal",
+    "authority.otherclassification": "Other Classification"
 }

@@ -2,11 +2,14 @@ import {
   count,
   fillable,
   interactor,
-  selectable
+  selectable,
+  clickable,
+  isPresent
 } from '@bigtest/interactor';
 
 const SelectInteractor = interactor(class SelectInteractor {
   selectOption = selectable();
+  optionCount = count('option');
 
   selectAndBlur(val) {
     return this
@@ -25,6 +28,15 @@ const SearchFieldInteractor = interactor(class TextFieldInteractor {
   }
 });
 
+const SegmentNavigationInteractor = interactor(class SegmentNavigationInteractor {
+  clickThrough = clickable();
+});
+
+const SearchButtonInteractor = interactor(class SearchButtonInteractor {
+  clickThrough = clickable();
+});
+
+
 // https://bigtestjs.io/guides/interactors/introduction/
 export default interactor(class SearchInteractor {
   static defaultScope = '#ModuleContainer';
@@ -32,4 +44,7 @@ export default interactor(class SearchInteractor {
   selectCondition = new SelectInteractor('[data-test-select-condition]');
   searchTextArea = new SearchFieldInteractor('[data-test-search-text-area]');
   countResults = count('[data-row-index]');
+  segmentAuthorityInteractor = new SegmentNavigationInteractor('#segment-navigation-Authority');
+  buttonSearch = new SearchButtonInteractor('[data-test-btn-search]');
+  filtersContainerPresent = isPresent('[data-test-filters-container]');
 });

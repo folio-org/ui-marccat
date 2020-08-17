@@ -2,7 +2,7 @@
 import * as React from 'react';
 import FilterGroups, { initialFilterState } from '@folio/stripes-components/lib/FilterGroups';
 import { ACTION } from '../../../redux/actions';
-import { EMPTY_STRING } from '../../../config/constants';
+import { EMPTY_STRING, SEARCH_SEGMENT } from '../../../config/constants';
 import type { Props } from '../../../flow/types.js.flow';
 
 import styles from './FiltersContainer.css';
@@ -12,12 +12,12 @@ export default class FiltersContainer extends React.Component<Props, {}> {
   constructor(props) {
     super(props);
     this.config = [
-      {
+      /* {
         label: 'Record Type',
         name: 'recordType',
         cql: 'record.name',
         values: ['Bibliographic records', 'Authority records'],
-      },
+      },*/
       {
         label: 'Suppressed',
         name: 'suppressedFilter',
@@ -68,18 +68,17 @@ export default class FiltersContainer extends React.Component<Props, {}> {
     const { filters } = this.state;
     const filterArray = [];
     Object.keys(filters).forEach((key) => filterArray.push(key + ':' + filters[key]));
-    const { filterEnable } = this.props;
+    const { filterEnable, segment } = this.props;
     const disableFilters = {};
     let { containsAuthFilter } = this.state;
-    if (filterArray.includes('recordType.Authority records:true')) {
+
+    if (segment === SEARCH_SEGMENT.AUTHORITY) {
       containsAuthFilter = true;
-      disableFilters.recordType = false;
       disableFilters.suppressedFilter = true;
       disableFilters.languageFilter = true;
       disableFilters.formatType = true;
     } else {
       containsAuthFilter = false;
-      disableFilters.recordType = true;
       disableFilters.suppressedFilter = true;
       disableFilters.languageFilter = true;
       disableFilters.formatType = true;

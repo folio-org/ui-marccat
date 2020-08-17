@@ -4,10 +4,10 @@ import * as React from 'react';
 import { Field } from 'redux-form';
 import { Select } from '@folio/stripes/components';
 import { ACTION } from '../../../redux/actions';
-import { SORT_TYPE, FILTER_NAME } from '../../../config/constants';
+import { SORT_TYPE, FILTER_NAME, SEARCH_SEGMENT } from '../../../config/constants';
 
 export default ({ ...props }) => {
-  const { rest, name, id } = props;
+  const { rest, name, id, segment, translate } = props;
   const options = [
     { label: 'Title', value: 'TITLE', sortBy: SORT_TYPE.TITLE },
     { label: 'Name: All', value: 'NAME', sortBy: SORT_TYPE.NAME },
@@ -60,6 +60,25 @@ export default ({ ...props }) => {
     { label: 'Other Control No.', value: 'NN' },
   ];
 
+  const optAuthority = () => {
+    return [
+      { label: translate({ id: 'ui-marccat.authority.title' }), value: 'TI', sortBy: SORT_TYPE.TITLE },
+      { label: translate({ id: 'ui-marccat.authority.name' }), value: 'NA', sortBy: SORT_TYPE.TITLE },
+      { label: translate({ id: 'ui-marccat.authority.personalname' }), value: 'NP' },
+      { label: translate({ id: 'ui-marccat.authority.corporatename' }), value: 'NC' },
+      { label: translate({ id: 'ui-marccat.authority.meetingname' }), value: 'NM' },
+      { label: translate({ id: 'ui-marccat.authority.subject' }), value: 'SU' },
+      { label: translate({ id: 'ui-marccat.authority.authoritycontrolnumber' }), value: 'AN' },
+      { label: translate({ id: 'ui-marccat.authority.lccontrolnumber' }), value: 'LN' },
+      { label: translate({ id: 'ui-marccat.authority.isbn' }), value: 'BN' },
+      { label: translate({ id: 'ui-marccat.authority.issn' }), value: 'SN' },
+      { label: translate({ id: 'ui-marccat.authority.deweyclassification' }), value: 'DC' },
+      { label: translate({ id: 'ui-marccat.authority.lcclassification' }), value: 'LC' },
+      { label: translate({ id: 'ui-marccat.authority.universaldecimal' }), value: 'UC' },
+      { label: translate({ id: 'ui-marccat.authority.otherclassification' }), value: 'OC' }
+    ];
+  };
+
   const disableSortOnAuthority = (sortType) => {
     const { store: { getState } } = props;
     const filter = getState().marccat.filter.filters;
@@ -75,6 +94,16 @@ export default ({ ...props }) => {
     dispatch({ type: ACTION.SETTINGS, data: { sortType } });
   };
 
+  const dynamicOptions = () => {
+    if (segment === SEARCH_SEGMENT.BIBLIOGRAPHIC) {
+      return options;
+    } else if (segment === SEARCH_SEGMENT.AUTHORITY) {
+      return optAuthority();
+    } else {
+      return '';
+    }
+  };
+
   return (
     <Field
       id={id}
@@ -82,7 +111,7 @@ export default ({ ...props }) => {
       data-test-select-indexes
       placeholder="Select a index..."
       component={Select}
-      dataOptions={options}
+      dataOptions={dynamicOptions()}
       marginBottom0
       onChange={(event) => {
         setSortStrategy(event);

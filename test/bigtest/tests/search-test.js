@@ -17,7 +17,7 @@ describe('Search', () => {
     });
   });
 
-  describe('fill search field', function () {
+  describe('fill search field and submit with the ENTER key', function () {
     beforeEach(async function () {
       await searchInteractor.selectIndexes.selectOption('Title');
       await searchInteractor.selectCondition.selectOption('Contains');
@@ -28,4 +28,38 @@ describe('Search', () => {
       expect(searchInteractor.countResults).to.be.greaterThan(1);
     });
   });
+
+  describe('fill search field and submit with the button', function () {
+    beforeEach(async function () {
+      await searchInteractor.selectIndexes.selectOption('Title');
+      await searchInteractor.selectCondition.selectOption('Contains');
+      await searchInteractor.searchTextArea.fill('test');
+      await searchInteractor.buttonSearch.click();
+    });
+
+    it('returns at least one search result', () => {
+      expect(searchInteractor.countResults).to.be.greaterThan(1);
+    });
+  });
+
+  describe('should test authority indexes', () => {
+
+    beforeEach(async function () {
+      await searchInteractor.segmentAuthorityInteractor.click();
+    });
+
+    it('should find no results', () => {
+      expect(searchInteractor.countResults).to.be.equals(0);
+    });
+
+    it('should change options of indexes', () => {
+      expect(searchInteractor.selectIndexes.optionCount).to.equal(15);
+    });
+
+    it('should remove filter', () => {
+      expect(searchInteractor.filtersContainerPresent).to.be.false;
+    });
+
+  });
+
 });

@@ -6,6 +6,8 @@
 * CHANGELOG cleanup
 * Peer-dep cleanup: increment `@folio/stripes` to `^v5.0`, `@folio/stripes-core` to `v6.01`, `react-intl` to `v4.5`.
 * Refactor from `bigtest/mirage` to `miragejs`.
+* Create buttons to separate the search by bibs/holds and authorities (UICAT-103)
+* Save and cancel buttons in the cataloguing worksheet like in Inventory (UICAT-104)
 * Add support for running `yarn start --mirage`.
 
 ## [2.0.0](https://github.com/folio-org/ui-marccat/releases/v2.0.0) (2019-10-09)

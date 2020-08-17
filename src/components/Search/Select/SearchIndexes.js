@@ -7,7 +7,7 @@ import { ACTION } from '../../../redux/actions';
 import { SORT_TYPE, FILTER_NAME, SEARCH_SEGMENT } from '../../../config/constants';
 
 export default ({ ...props }) => {
-  const { rest, name, id, segment } = props;
+  const { rest, name, id, segment, translate } = props;
   const options = [
     { label: 'Title', value: 'TITLE', sortBy: SORT_TYPE.TITLE },
     { label: 'Name: All', value: 'NAME', sortBy: SORT_TYPE.NAME },
@@ -60,22 +60,24 @@ export default ({ ...props }) => {
     { label: 'Other Control No.', value: 'NN' },
   ];
 
-  const optAuthority = [
-    { label: 'Title', value: 'TI', sortBy: SORT_TYPE.TITLE },
-    { label: 'Name', value: 'NA', sortBy: SORT_TYPE.TITLE },
-    { label: 'Personal Name', value: 'NP' },
-    { label: 'Corporate Name', value: 'NC' },
-    { label: 'Conf./Meeting Name', value: 'NM' },
-    { label: 'Subject', value: 'SU' },
-    { label: 'Authority control number', value: 'AN' },
-    { label: 'LC Control number', value: 'LN' },
-    { label: 'ISBN', value: 'BN' },
-    { label: 'ISSN', value: 'SN' },
-    { label: 'Dewey Classification', value: 'DC' },
-    { label: 'LC Classification', value: 'LC' },
-    { label: 'Universal Decimal', value: 'UC' },
-    { label: 'Other Classification', value: 'OC' },
-  ];
+  const optAuthority = () => {
+    return [
+      { label: translate({ id: 'ui-marccat.authority.title' }), value: 'TI', sortBy: SORT_TYPE.TITLE },
+      { label: translate({ id: 'ui-marccat.authority.name' }), value: 'NA', sortBy: SORT_TYPE.TITLE },
+      { label: translate({ id: 'ui-marccat.authority.personalname' }), value: 'NP' },
+      { label: translate({ id: 'ui-marccat.authority.corporatename' }), value: 'NC' },
+      { label: translate({ id: 'ui-marccat.authority.meetingname' }), value: 'NM' },
+      { label: translate({ id: 'ui-marccat.authority.subject' }), value: 'SU' },
+      { label: translate({ id: 'ui-marccat.authority.authoritycontrolnumber' }), value: 'AN' },
+      { label: translate({ id: 'ui-marccat.authority.lccontrolnumber' }), value: 'LN' },
+      { label: translate({ id: 'ui-marccat.authority.isbn' }), value: 'BN' },
+      { label: translate({ id: 'ui-marccat.authority.issn' }), value: 'SN' },
+      { label: translate({ id: 'ui-marccat.authority.deweyclassification' }), value: 'DC' },
+      { label: translate({ id: 'ui-marccat.authority.lcclassification' }), value: 'LC' },
+      { label: translate({ id: 'ui-marccat.authority.universaldecimal' }), value: 'UC' },
+      { label: translate({ id: 'ui-marccat.authority.otherclassification' }), value: 'OC' }
+    ];
+  };
 
   const disableSortOnAuthority = (sortType) => {
     const { store: { getState } } = props;
@@ -96,7 +98,7 @@ export default ({ ...props }) => {
     if (segment === SEARCH_SEGMENT.BIBLIOGRAPHIC) {
       return options;
     } else if (segment === SEARCH_SEGMENT.AUTHORITY) {
-      return optAuthority;
+      return optAuthority();
     } else {
       return '';
     }

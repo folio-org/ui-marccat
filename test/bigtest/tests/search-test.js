@@ -42,6 +42,19 @@ describe('Search', () => {
     });
   });
 
+  // describe('fill search field and click on item in a row', function () {
+  //   beforeEach(async function () {
+  //     await searchInteractor.selectIndexes.selectOption('Title');
+  //     await searchInteractor.selectCondition.selectOption('Contains');
+  //     await searchInteractor.searchTextArea.fillAndSubmit('test');
+  //     await searchInteractor.itemRowClick.click();
+  //   });
+
+  //   it('show detail for bib record', () => {
+  //     expect(searchInteractor.detailPanel).to.be.true;
+  //   });
+  // });
+
   describe('should test authority indexes', () => {
 
     beforeEach(async function () {
@@ -58,6 +71,17 @@ describe('Search', () => {
 
     it('should remove filter', () => {
       expect(searchInteractor.filtersContainerPresent).to.be.false;
+    });
+
+  });
+
+  describe('should test action buttton', () => {
+    beforeEach(async function () {
+      await searchInteractor.buttonAction.click();
+    });
+
+    it('show create new bib record avaiable', () => {
+      expect(searchInteractor.buttonNewBibRecord).to.be.true;
     });
 
   });

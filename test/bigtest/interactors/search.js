@@ -32,10 +32,13 @@ const SegmentNavigationInteractor = interactor(class SegmentNavigationInteractor
   clickThrough = clickable();
 });
 
-const SearchButtonInteractor = interactor(class SearchButtonInteractor {
+const ButtonInteractor = interactor(class ButtonInteractor {
   clickThrough = clickable();
 });
 
+const RowClickInteractor = interactor(class RowClickInteractor {
+  clickThrough = clickable();
+});
 
 // https://bigtestjs.io/guides/interactors/introduction/
 export default interactor(class SearchInteractor {
@@ -45,6 +48,10 @@ export default interactor(class SearchInteractor {
   searchTextArea = new SearchFieldInteractor('[data-test-search-text-area]');
   countResults = count('[data-row-index]');
   segmentAuthorityInteractor = new SegmentNavigationInteractor('#segment-navigation-Authority');
-  buttonSearch = new SearchButtonInteractor('[data-test-btn-search]');
+  buttonSearch = new ButtonInteractor('[data-test-btn-search]');
   filtersContainerPresent = isPresent('[data-test-filters-container]');
+  buttonAction = new ButtonInteractor('[data-test-action-button]');
+  buttonNewBibRecord = isPresent('[data-test-new-record-button]')
+  itemRowClick = new RowClickInteractor('[data-row-index]')
+  detailPanel = isPresent('#pane-details')
 });

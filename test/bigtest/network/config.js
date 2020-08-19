@@ -50,6 +50,16 @@ this.get('/marccat/browse', ({browseSearches}) => {
   return browseSearches.all();
 });
 
+this.get('/marccatbibliographic-record/000000000022', ({bibRecDetails}) => {
+  return bibRecDetails.all();
+});
+
+this.get('/marccat/searchVertical', ({detailsVertical}) => {
+  return detailsVertical.all();
+});
+
+
+
 // translation bundle passthrough
 this.pretender.get(`${__webpack_public_path__}translations/:rand.json`, this.pretender.passthrough); // eslint-disable-line
 

@@ -75,15 +75,4 @@ describe('Search', () => {
 
   });
 
-  describe('should test action buttton', () => {
-    beforeEach(async function () {
-      await searchInteractor.buttonAction.click();
-    });
-
-    it('show create new bib record avaiable', () => {
-      expect(searchInteractor.buttonNewBibRecord).to.be.true;
-    });
-
-  });
-
 });

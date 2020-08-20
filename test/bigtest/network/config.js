@@ -50,12 +50,12 @@ this.get('/marccat/browse', ({browseSearches}) => {
   return browseSearches.all();
 });
 
-this.get('/marccatbibliographic-record/000000000022', ({bibRecDetails}) => {
-  return bibRecDetails.all();
+this.get('/marccatbibliographic-record/000000000022', ({bibRecordDetails}) => {
+  return bibRecordDetails.all();
 });
 
-this.get('/marccat/searchVertical', ({detailsVertical}) => {
-  return detailsVertical.all();
+this.get('/marccat/searchVertical', ({verticalDetails}) => {
+  return verticalDetails.all();
 });
 
 

@@ -11,6 +11,8 @@ describe('Search', () => {
   beforeEach(function () {
     this.server.create('fromTemplate');
     this.server.createList('mergedSearch', 1);
+    this.server.create('bibRecordDetail');
+    this.server.create('verticalDetail');
 
     return this.visit('/marccat/search', () => {
       expect(searchInteractor.$root).to.exist;

@@ -4,7 +4,8 @@ import {
   interactor,
   selectable,
   clickable,
-  isPresent
+  isPresent,
+  isVisible
 } from '@bigtest/interactor';
 
 const SelectInteractor = interactor(class SelectInteractor {
@@ -51,5 +52,5 @@ export default interactor(class SearchInteractor {
   buttonSearch = new SearchButtonInteractor('[data-test-btn-search]');
   filtersContainerPresent = isPresent('[data-test-filters-container]');
   itemRowClick = new RowClickInteractor('[data-row-index]')
-  detailPanel = isPresent('[data-test-detail-search]')
+  detailPanel = isVisible('[data-test-detail-search]')
 });

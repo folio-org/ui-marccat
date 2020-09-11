@@ -275,24 +275,9 @@ class SearchPanel extends React.Component<P, {}> {
 
         </div>
 
-        <AccordionSet>
-          <Accordion
-            {...rest}
-            separator={false}
-            label={translate({ id: 'ui-marccat.navigator.search' })}
-            header={FilterAccordionHeader}
-          >
             <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}>
               <Row>
-                <Col xs={1}>
-                  <div
-                    className={(leftBracketEnable) ? styles.leftBracket : styles.leftBracketDisabled}
-                    onClick={() => this.setState({
-                      leftBracketEnable: !leftBracketEnable
-                    })}
-                  />
-                </Col>
-                <Col xs={10} className={styles.forwardBracket}>
+                <Col xs={12} className={styles.forwardBracket}>
                   <Row>
                     <Col xs={12}>
                       <div>
@@ -345,19 +330,9 @@ class SearchPanel extends React.Component<P, {}> {
                     </Col>
                   </Row>
                 </Col>
-                <Col xs={1}>
-                  <div
-                    className={(rightBracketEnable) ? styles.rightBracket : styles.rightBracketDisabled}
-                    onClick={() => this.setState({
-                      rightBracketEnable: !rightBracketEnable
-                    })}
-                  />
-                </Col>
               </Row>
             </form>
-          </Accordion>
           {this.getFilterContainer(segment, filterEnable)}
-        </AccordionSet>
       </Fragment>
     );
   }

@@ -9,15 +9,24 @@ export default function SearchPane(props) {
   return (
     <Paneset static>
       {filterPaneIsVisible &&
-      <Pane
-        defaultWidth="24%"
-        actionMenu={() => <PanelHistory {...props} />}
-        onClose={toggleFilterPane}
-        paneTitle={localized('searchAndFilter', false)}
-        paneSub={EMPTY_STRING}
-      >
-        {component}
-      </Pane>}
+        <Pane
+          defaultWidth={"320px"}
+          actionMenu={() => <PanelHistory {...props} />}
+          onClose={toggleFilterPane}
+          paneTitle={localized('searchAndFilter', false)}
+          paneSub={EMPTY_STRING}
+        >
+          {component}
+        </Pane>}
+      {!filterPaneIsVisible &&
+        <Pane
+          defaultWidth={"0px"}
+          actionMenu={() => <PanelHistory {...props} />}
+          onClose={toggleFilterPane}
+          paneTitle={localized('searchAndFilter', false)}
+          paneSub={EMPTY_STRING}
+        >
+        </Pane>}
       {children}
     </Paneset>
   );

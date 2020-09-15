@@ -125,5 +125,20 @@
     "search.actionmenu.duplicate.ebook": "نسخ ككتاب إلكتروني",
     "cataloging.accordion.fixedfield.editable.label": "حقول التحكم (006، 007، 008)",
     "meta.title": "MARCcat",
-    "cataloging.fixedfield.section.remove.newtag": "إزالة {value}"
+    "cataloging.fixedfield.section.remove.newtag": "إزالة {value}",
+    "button.saveAndClose": "حفظ وإغلاق",
+    "authority.title": "العنوان",
+    "authority.name": "الاسم",
+    "authority.personalname": "الاسم الشخصي",
+    "authority.corporatename": "الاسم المؤسسي",
+    "authority.meetingname": "اسم المؤتمر/الاجتماع",
+    "authority.subject": "الموضوع",
+    "authority.authoritycontrolnumber": "رقم تحكم الاستناد",
+    "authority.lccontrolnumber": "رقم تحكم مكتبة الكونغرس",
+    "authority.isbn": "ردمك",
+    "authority.issn": "ردمد",
+    "authority.deweyclassification": "تصنيف ديوي",
+    "authority.lcclassification": "تصنيف مكتبة الكونغرس",
+    "authority.universaldecimal": "العشري العالمي",
+    "authority.otherclassification": "تصنيف آخر"
 }

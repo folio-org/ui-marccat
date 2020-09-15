@@ -125,5 +125,20 @@
     "search.actionmenu.duplicate.ebook": "复制为电子书",
     "cataloging.accordion.fixedfield.editable.label": "控制字段（006,007,008）",
     "meta.title": "MARCcat",
-    "cataloging.fixedfield.section.remove.newtag": "删除{value}"
+    "cataloging.fixedfield.section.remove.newtag": "删除{value}",
+    "button.saveAndClose": "保存并关闭",
+    "authority.title": "题名",
+    "authority.name": "名称",
+    "authority.personalname": "个人名称",
+    "authority.corporatename": "团体名称",
+    "authority.meetingname": "会议名称",
+    "authority.subject": "主题",
+    "authority.authoritycontrolnumber": "规范控制号",
+    "authority.lccontrolnumber": "LC控制号",
+    "authority.isbn": "ISBN",
+    "authority.issn": "ISSN",
+    "authority.deweyclassification": "杜威分类法",
+    "authority.lcclassification": "LC分类法",
+    "authority.universaldecimal": "通用十进分类法",
+    "authority.otherclassification": "其他分类"
 }

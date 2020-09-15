@@ -125,5 +125,20 @@
     "search.actionmenu.duplicate.ebook": "Dupliquer comme livre électronique",
     "cataloging.accordion.fixedfield.editable.label": "Champs de contrôle (006, 007, 008)",
     "meta.title": "MARCcat",
-    "cataloging.fixedfield.section.remove.newtag": "Supprimer {value}"
+    "cataloging.fixedfield.section.remove.newtag": "Supprimer {value}",
+    "button.saveAndClose": "Sauvegarder et fermer",
+    "authority.title": "Titre",
+    "authority.name": "Nom",
+    "authority.personalname": "Nom personnel",
+    "authority.corporatename": "Nom de la société",
+    "authority.meetingname": "Nom de la réunion",
+    "authority.subject": "Sujet",
+    "authority.authoritycontrolnumber": "Numéro de contrôle d'autorité",
+    "authority.lccontrolnumber": "Numéro de contrôle LC",
+    "authority.isbn": "ISBN",
+    "authority.issn": "ISSN",
+    "authority.deweyclassification": "Classification Dewey",
+    "authority.lcclassification": "Classification LC",
+    "authority.universaldecimal": "Décimale universelle",
+    "authority.otherclassification": "Autre classification"
 }

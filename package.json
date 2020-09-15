@@ -1,6 +1,6 @@
 {
   "name": "@folio/marccat",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "FOLIO UI module for Cataloging",
   "repository": "folio-org/ui-marccat",
   "publishConfig": {
@@ -35,9 +35,9 @@
     "@bigtest/mocha": "^0.5.1",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^3.2.1",
-    "@folio/stripes": "^4.0.0",
+    "@folio/stripes": "^5.0.0",
     "@folio/stripes-cli": "^1.13.0",
-    "@folio/stripes-core": "^5.0.1",
+    "@folio/stripes-core": "^6.0.0",
     "@folio/stripes-react-hotkeys": "^3.0.6",
     "babel-eslint": "^10.0.2",
     "babel-loader": "^8.0.4",
@@ -86,7 +86,7 @@
     "redux-observable": "^0.15.0"
   },
   "peerDependencies": {
-    "@folio/stripes": "^4.0.0",
+    "@folio/stripes": "^5.0.0",
     "react": "*",
     "react-intl": "^4.5.1",
     "react-router": "^4.3.1",

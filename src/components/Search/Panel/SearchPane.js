@@ -21,7 +21,6 @@ export default function SearchPane(props) {
       {!filterPaneIsVisible &&
         <Pane
           defaultWidth={"0px"}
-          actionMenu={() => <PanelHistory {...props} />}
           onClose={toggleFilterPane}
           paneTitle={localized('searchAndFilter', false)}
           paneSub={EMPTY_STRING}

@@ -55,6 +55,59 @@ export const searchEpic = (action$, store) => action$.ofType(ACTION.SEARCH)
       }).catch(e => of$(marccatActions.fetchFailure(e)))
   ));
 
+// Para búsquedas Search
+export const searchBibEpic = (action$, store) => action$.ofType(ACTION.SEARCHBIB)
+  .switchMap((d) => concat$(
+    of$(marccatActions.isfetchingSearchRequest(true, d.moreData, d.isFromCat)),
+    getJSON(buildUrl(store.getState(), ENDPOINT.SEARCH_BIB_URL, `lang=eng&ml=170&q=${d.queryBib}&from=${d.from}&to=${d.to}&dpo=1&sortBy=${d.isFromCat === 'Y' ? 54 : Selector.get(store, 'settings', 'sortType')}&sortOrder=0`), getHeaders(store.getState()))
+      .map((record) => {
+        const aJsonResponse = parseResponse(record.response);
+        return marccatActions.fetchSearchEngineRecordsBibAut(
+          d.queryBib,
+          d.queryAuth,
+          d.to,
+          d.isFromCat,
+          d.moreData,
+          aJsonResponse.docs,
+          aJsonResponse.numFound,
+          [],
+          0,
+          d.dataOld,
+          d.oldBibArray,
+          d.oldAuthArray,
+          true,
+          false
+        );
+      }).catch(e => of$(marccatActions.fetchFailure(e)))
+  ));
+
+// Para búsquedas Authority
+export const searchAuthEpic = (action$, store) => action$.ofType(ACTION.SEARCHAUTH)
+  .switchMap((d) => concat$(
+    of$(marccatActions.isfetchingSearchRequest(true, d.moreData, d.isFromCat)),
+    getJSON(buildUrl(store.getState(), ENDPOINT.SEARCH_AUTH_URL, `lang=eng&ml=170&q=${d.queryAuth}&from=${d.from}&to=${d.to}&dpo=1&sortBy=${d.isFromCat === 'Y' ? 54 : Selector.get(store, 'settings', 'sortType')}&sortOrder=0`), getHeaders(store.getState()))
+    // getJSON(buildUrl(store.getState(), ENDPOINT.MERGED_SEARCH_URL, `lang=eng&ml=170&qbib=${d.queryBib}&qauth=${d.queryAuth}&from=${d.from}&to=${d.to}&dpo=1&sortBy=${d.isFromCat === 'Y' ? 54 : Selector.get(store, 'settings', 'sortType')}&sortOrder=0`), getHeaders(store.getState()))
+      .map((record) => {
+        const aJsonResponse = parseResponse(record.response);
+        return marccatActions.fetchSearchEngineRecordsBibAut(
+          d.queryBib,
+          d.queryAuth,
+          d.to,
+          d.isFromCat,
+          d.moreData,
+          [],
+          0,
+          aJsonResponse.docs,
+          aJsonResponse.numFound,
+          d.dataOld,
+          d.oldBibArray,
+          d.oldAuthArray,
+          false,
+          true
+        );
+      }).catch(e => of$(marccatActions.fetchFailure(e)))
+  ));
+
 export const searchDetailEpic = (action$, store) => action$.ofType(ACTION.DETAILS)
   .switchMap((d) => concat$(
     of$(marccatActions.isfetchingDetailsRequest(true)),

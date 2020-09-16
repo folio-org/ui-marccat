@@ -25,11 +25,12 @@ export const RESOURCE_TYPE = {
   OKAPI: 'OKAPI'
 };
 export const ENDPOINT = {
-
   DEFAULT_LANG_VIEW: 'lang=eng&view=1',
   DEV_VM_OKAPI_URL: 'http://okapi.atcult.it:9130/marccat',
   OKAPI_URL: state => `${state.okapi.url}/marccat`,
   MERGED_SEARCH_URL: '/mergedSearch',
+  SEARCH_AUTH_URL: '/searchAuth',
+  SEARCH_BIB_URL: '/search',
   SEARCH_URL: '/searchVertical',
   SEARCH_URL_JSON: '/search',
   TOTAL_COUNT_SEARCH_URL: '/countSearch',

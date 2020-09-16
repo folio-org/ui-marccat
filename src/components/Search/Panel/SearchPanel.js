@@ -4,11 +4,7 @@
 import React, { Fragment } from 'react';
 import {
   TextField,
-  AccordionSet,
-  Accordion,
-  FilterAccordionHeader,
   Row, Col,
-
   ButtonGroup,
   Button,
 } from '@folio/stripes/components';
@@ -52,8 +48,6 @@ class SearchPanel extends React.Component<P, {}> {
       searchForm: [EMPTY_STRING],
       filterEnable: true,
       counter: [{}],
-      leftBracketEnable: false,
-      rightBracketEnable: false,
       segment: this.segment,
       btnSubmitEnabled: false
     };
@@ -244,7 +238,7 @@ class SearchPanel extends React.Component<P, {}> {
 
   render() {
     const { translate, ...rest } = this.props;
-    const { filterEnable, leftBracketEnable, rightBracketEnable, segment, btnSubmitEnabled } = this.state;
+    const { filterEnable, segment, btnSubmitEnabled } = this.state;
     const menuNumOptions = [this.capitalize(SEARCH_SEGMENT.BIBLIOGRAPHIC), this.capitalize(SEARCH_SEGMENT.AUTHORITY)];
 
     return (
@@ -275,89 +269,64 @@ class SearchPanel extends React.Component<P, {}> {
 
         </div>
 
-        <AccordionSet>
-          <Accordion
-            {...rest}
-            separator={false}
-            label={translate({ id: 'ui-marccat.navigator.search' })}
-            header={FilterAccordionHeader}
-          >
-            <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}>
+        <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}>
+          <Row>
+            <Col xs={12} className={styles.forwardBracket}>
               <Row>
-                <Col xs={1}>
-                  <div
-                    className={(leftBracketEnable) ? styles.leftBracket : styles.leftBracketDisabled}
-                    onClick={() => this.setState({
-                      leftBracketEnable: !leftBracketEnable
-                    })}
-                  />
+                <Col xs={12}>
+                  <div>
+                    <SearchIndexes
+                      {...this.props}
+                      id="selectIndexes"
+                      name="selectIndexes"
+                      segment={segment}
+                    />
+                  </div>
                 </Col>
-                <Col xs={10} className={styles.forwardBracket}>
-                  <Row>
-                    <Col xs={12}>
-                      <div>
-                        <SearchIndexes
-                          {...this.props}
-                          id="selectIndexes"
-                          name="selectIndexes"
-                          segment={segment}
-                        />
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col xs={12}>
-                      <SearchConditions
-                        {...this.props}
-                        id="selectCondition"
-                        name="selectCondition"
-                      />
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col xs={12}>
-                      <div>
-                        <Field
-                          {...rest}
-                          id="searchTextArea"
-                          name="searchTextArea"
-                          data-test-search-text-area
-                          fullWidth
-                          component={TextField}
-                          placeholder="Search..."
-                        />
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col xs={12}>
-                      <Button
-                        id="search-panel-btn-search"
-                        buttonStyle={btnSubmitEnabled ? 'primary' : 'default'}
-                        onClick={this.handleKeyDown}
-                        type="submit"
-                        disabled={!btnSubmitEnabled}
-                        fullWidth
-                        data-test-btn-search
-                      >
-                        {translate({ id: 'ui-marccat.search.searchButton' })}
-                      </Button>
-                    </Col>
-                  </Row>
-                </Col>
-                <Col xs={1}>
-                  <div
-                    className={(rightBracketEnable) ? styles.rightBracket : styles.rightBracketDisabled}
-                    onClick={() => this.setState({
-                      rightBracketEnable: !rightBracketEnable
-                    })}
+              </Row>
+              <Row>
+                <Col xs={12}>
+                  <SearchConditions
+                    {...this.props}
+                    id="selectCondition"
+                    name="selectCondition"
                   />
                 </Col>
               </Row>
-            </form>
-          </Accordion>
-          {this.getFilterContainer(segment, filterEnable)}
-        </AccordionSet>
+              <Row>
+                <Col xs={12}>
+                  <div>
+                    <Field
+                      {...rest}
+                      id="searchTextArea"
+                      name="searchTextArea"
+                      data-test-search-text-area
+                      fullWidth
+                      component={TextField}
+                      placeholder="Search..."
+                    />
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={12}>
+                  <Button
+                    id="search-panel-btn-search"
+                    buttonStyle={btnSubmitEnabled ? 'primary' : 'default'}
+                    onClick={this.handleKeyDown}
+                    type="submit"
+                    disabled={!btnSubmitEnabled}
+                    fullWidth
+                    data-test-btn-search
+                  >
+                    {translate({ id: 'ui-marccat.search.searchButton' })}
+                  </Button>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </form>
+        {this.getFilterContainer(segment, filterEnable)}
       </Fragment>
     );
   }

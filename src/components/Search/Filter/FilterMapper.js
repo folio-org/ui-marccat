@@ -220,7 +220,7 @@ export const findYourQuery = {
   'LN-CONTAINS': 'AW ',
   'MUSP-CONTAINS': 'AW ',
   'NN-CONTAINS': 'AW ',
-  // Authority ESTEPI-TODO
+  // Authority
   'TI-CONTAINS': 'TI ',
   'NA-CONTAINS': 'NA ',
   'NP-CONTAINS': 'NW ',

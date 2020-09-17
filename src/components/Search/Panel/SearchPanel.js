@@ -245,6 +245,25 @@ class SearchPanel extends React.Component<P, {}> {
     });
   };
 
+  handleBtnResetAll = () => {
+    const { segment } = this.state;
+    this.changeSegment(segment);
+    // dispatch(resetFilterSearch());
+  };
+
+  renderBtnResetAll = () => {
+    const { btnSubmitEnabled } = this.state;
+    return (
+      <ResetButton
+        className={styles['mb-5']}
+        visible={btnSubmitEnabled}
+        onClick={this.handleBtnResetAll}
+        id="clickable-reset-all"
+        label={<FormattedMessage id="ui-marccat.button.resetAll" />}
+      />
+    );
+  }
+
   getFilterContainer = (segment, filterEnable) => {
     if (segment === SEARCH_SEGMENT.BIBLIOGRAPHIC) {
       return (
@@ -357,6 +376,8 @@ class SearchPanel extends React.Component<P, {}> {
                       >
                         {translate({ id: 'ui-marccat.search.searchButton' })}
                       </Button>
+
+                      {this.renderBtnResetAll()}
                     </Col>
                   </Row>
                 </Col>

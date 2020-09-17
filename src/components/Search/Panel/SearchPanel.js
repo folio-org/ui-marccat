@@ -280,32 +280,38 @@ class SearchPanel extends React.Component<P, {}> {
   render() {
     const { translate, ...rest } = this.props;
     const { filterEnable, segment, btnSubmitEnabled } = this.state;
-    const menuNumOptions = [this.capitalize(SEARCH_SEGMENT.BIBLIOGRAPHIC), this.capitalize(SEARCH_SEGMENT.AUTHORITY)];
+    const bibTxtLower = SEARCH_SEGMENT.BIBLIOGRAPHIC.toLowerCase();
+    const authTxtLower = SEARCH_SEGMENT.AUTHORITY.toLowerCase();
 
     return (
       <Fragment>
 
         <div data-test-inventory-instances>
-
           <ButtonGroup
             fullWidth
             data-test-filters-navigation
           >
-            {
-              menuNumOptions.map((text) => (
-                <Button
-                  key={`${text}`}
-                  to={`/marccat/search?segment=${text.toLowerCase()}`}
-                  buttonStyle={`${segment === text.toLowerCase() ? 'primary' : 'default'}`}
-                  id={`segment-navigation-${text}`}
-                  onClick={() => this.changeSegment(text.toLowerCase())}
-                >
-                  <FormattedMessage id={text} />
-                </Button>
-              ))
-            }
+            <Button
+              key={`${this.capitalize(SEARCH_SEGMENT.BIBLIOGRAPHIC)}`}
+              to={`/marccat/search?segment=${bibTxtLower}`}
+              buttonStyle={`${segment === bibTxtLower ? 'primary' : 'default'}`}
+              id={`segment-navigation-${this.capitalize(SEARCH_SEGMENT.BIBLIOGRAPHIC)}`}
+              onClick={() => this.changeSegment(bibTxtLower)}
+              data-test-btn-segment-bib
+            >
+              <FormattedMessage id={this.capitalize(SEARCH_SEGMENT.BIBLIOGRAPHIC)} />
+            </Button>
+            <Button
+              key={`${this.capitalize(SEARCH_SEGMENT.AUTHORITY)}`}
+              to={`/marccat/search?segment=${authTxtLower}`}
+              buttonStyle={`${segment === authTxtLower ? 'primary' : 'default'}`}
+              id={`segment-navigation-${this.capitalize(SEARCH_SEGMENT.AUTHORITY)}`}
+              onClick={() => this.changeSegment(authTxtLower)}
+              data-test-btn-segment-auth
+            >
+              <FormattedMessage id={this.capitalize(SEARCH_SEGMENT.AUTHORITY)} />
+            </Button>
           </ButtonGroup>
-
         </div>
 
         <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}>

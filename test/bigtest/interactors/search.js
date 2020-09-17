@@ -40,6 +40,14 @@ const ResetAllButtonInteractor = interactor(class ResetAllButtonInteractor {
   clickThrough = clickable();
 });
 
+const SegmentButtonBibInteractor = interactor(class SegmentButtonBibInteractor {
+  clickThrough = clickable();
+});
+
+const SegmentButtonAuthInteractor = interactor(class SegmentButtonAuthInteractor {
+  clickThrough = clickable();
+});
+
 // https://bigtestjs.io/guides/interactors/introduction/
 export default interactor(class SearchInteractor {
   static defaultScope = '#ModuleContainer';
@@ -51,4 +59,6 @@ export default interactor(class SearchInteractor {
   buttonSearch = new SearchButtonInteractor('[data-test-btn-search]');
   buttonResetAll = new ResetAllButtonInteractor('[data-test-btn-reset-all]');
   filtersContainerPresent = isPresent('[data-test-filters-container]');
+  segmentButtonBib = new SegmentButtonBibInteractor('[data-test-btn-segment-bib]');
+  segmentButtonAuth = new SegmentButtonAuthInteractor('[data-test-btn-segment-auth]');
 });

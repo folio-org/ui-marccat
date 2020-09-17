@@ -19,8 +19,9 @@ describe('Search', () => {
     });
   });
 
-  describe('fill search field and submit with the ENTER key', function () {
+  describe('fill Bib search field and submit with the ENTER key', function () {
     beforeEach(async function () {
+      await searchInteractor.segmentButtonBib.click();
       await searchInteractor.selectIndexes.selectOption('Title');
       await searchInteractor.selectCondition.selectOption('Contains');
       await searchInteractor.searchTextArea.fillAndSubmit('test');
@@ -31,8 +32,36 @@ describe('Search', () => {
     });
   });
 
-  describe('fill search field and submit with the button', function () {
+  describe('fill Bib search field and submit with the button', function () {
     beforeEach(async function () {
+      await searchInteractor.segmentButtonBib.click();
+      await searchInteractor.selectIndexes.selectOption('Title');
+      await searchInteractor.selectCondition.selectOption('Contains');
+      await searchInteractor.searchTextArea.fill('test');
+      await searchInteractor.buttonSearch.click();
+    });
+
+    it('returns at least one search result', () => {
+      expect(searchInteractor.countResults).to.be.greaterThan(1);
+    });
+  });
+
+  describe('fill Auth search field and submit with the ENTER key', function () {
+    beforeEach(async function () {
+      await searchInteractor.segmentButtonAuth.click();
+      await searchInteractor.selectIndexes.selectOption('Title');
+      await searchInteractor.selectCondition.selectOption('Contains');
+      await searchInteractor.searchTextArea.fillAndSubmit('test');
+    });
+
+    it('returns at least one search result', () => {
+      expect(searchInteractor.countResults).to.be.greaterThan(1);
+    });
+  });
+
+  describe('fill Auth search field and submit with the button', function () {
+    beforeEach(async function () {
+      await searchInteractor.segmentButtonAuth.click();
       await searchInteractor.selectIndexes.selectOption('Title');
       await searchInteractor.selectCondition.selectOption('Contains');
       await searchInteractor.searchTextArea.fill('test');

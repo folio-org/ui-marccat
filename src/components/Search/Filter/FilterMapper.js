@@ -220,6 +220,13 @@ export const findYourQuery = {
   'LN-CONTAINS': 'AW ',
   'MUSP-CONTAINS': 'AW ',
   'NN-CONTAINS': 'AW ',
+  // Authority
+  'TI-CONTAINS': 'TI ',
+  'NA-CONTAINS': 'NA ',
+  'NP-CONTAINS': 'NW ',
+  'TI-MATCH': 'TI ',
+  'NA-MATCH': 'TI ',
+  'NP-MATCH': 'TI '
 };
 
 export const findYourQueryFromBrowse = {

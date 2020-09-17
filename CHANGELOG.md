@@ -10,6 +10,8 @@
 * Save and cancel buttons in the cataloguing worksheet like in Inventory (UICAT-104)
 * Redesign search panel as the inventory search panel (UICAT-111)
 * Resize panels, sometimes panels are cut and is not possible to resize (UICAT-110)
+* Search authority records (UICAT-106)
+* Add option to reset all in the search (UICAT-112)
 * Add support for running `yarn start --mirage`.
 
 ## [2.0.0](https://github.com/folio-org/ui-marccat/releases/v2.0.0) (2019-10-09)

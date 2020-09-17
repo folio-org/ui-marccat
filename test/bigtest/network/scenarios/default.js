@@ -4,5 +4,7 @@
 export default function defaultScenario(server) {
   server.create('fromTemplate');
   server.createList('mergedSearch', 1);
+  server.createList('bibSearch', 1);
+  server.createList('authoritySearch', 1);
   server.create('browseSearch');
 }

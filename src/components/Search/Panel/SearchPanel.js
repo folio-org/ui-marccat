@@ -4,7 +4,11 @@
 import React, { Fragment } from 'react';
 import {
   TextField,
-  Row, Col,
+  AccordionSet,
+  Accordion,
+  FilterAccordionHeader,
+  Row,
+  Col,
   ButtonGroup,
   Button,
 } from '@folio/stripes/components';
@@ -27,7 +31,7 @@ import { ACTION } from '../../../redux/actions/Actions';
 import { findYourQuery } from '../Filter';
 import { remapFilters, findParam } from '../../../shared';
 import { EMPTY_STRING, SEARCH_SEGMENT } from '../../../config/constants';
-import { historySearchAction, searchDetailAction } from '../Actions';
+import { resetFilterSearch, historySearchAction, searchDetailAction } from '../Actions';
 import styles from '../Style/index.css';
 
 type P = Props & {
@@ -77,6 +81,7 @@ class SearchPanel extends React.Component<P, {}> {
 
   handleKeyDown(e) {
     let { isBrowseRequested } = this.state;
+    const { segment } = this.state;
     const { store, store: { getState }, dispatch, router } = this.props;
 
     if (e.charCode === 13 || e.key === 'Enter' || e.type === 'click') {
@@ -151,7 +156,12 @@ class SearchPanel extends React.Component<P, {}> {
             transitionToParams('q', bibQuery);
             dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
           } else {
-            dispatch({ type: ACTION.SEARCH, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
+            router.push('/marccat/search');
+            if (segment === SEARCH_SEGMENT.BIBLIOGRAPHIC) {
+              dispatch({ type: ACTION.SEARCHBIB, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
+            } else {
+              dispatch({ type: ACTION.SEARCHAUTH, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
+            }
             transitionToParams('q', authQuery);
             dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
             dispatch({ type: ACTION.TOTAL_AUTH_COUNT, query: authQuery });
@@ -222,6 +232,36 @@ class SearchPanel extends React.Component<P, {}> {
     );
   }
 
+  changeSegment = (segmentactive) => {
+    const { dispatch, reset } = this.props;
+    dispatch(reset('searchForm'));
+    dispatch(resetFilterSearch());
+    dispatch({ type: ACTION.CLOSE_PANELS, closePanels: true });
+    this.setState({
+      segment: segmentactive,
+      btnSubmitEnabled: false
+    });
+  };
+
+  handleBtnResetAll = () => {
+    const { segment } = this.state;
+    this.changeSegment(segment);
+  };
+
+  renderBtnResetAll = () => {
+    const { btnSubmitEnabled } = this.state;
+    return (
+      <ResetButton
+        className={styles['mb-5']}
+        visible={btnSubmitEnabled}
+        onClick={this.handleBtnResetAll}
+        id="clickable-reset-all"
+        label={<FormattedMessage id="ui-marccat.button.resetAll" />}
+        data-test-btn-reset-all
+      />
+    );
+  }
+
   getFilterContainer = (segment, filterEnable) => {
     if (segment === SEARCH_SEGMENT.BIBLIOGRAPHIC) {
       return (
@@ -239,34 +279,38 @@ class SearchPanel extends React.Component<P, {}> {
   render() {
     const { translate, ...rest } = this.props;
     const { filterEnable, segment, btnSubmitEnabled } = this.state;
-    const menuNumOptions = [this.capitalize(SEARCH_SEGMENT.BIBLIOGRAPHIC), this.capitalize(SEARCH_SEGMENT.AUTHORITY)];
+    const bibTxtLower = SEARCH_SEGMENT.BIBLIOGRAPHIC.toLowerCase();
+    const authTxtLower = SEARCH_SEGMENT.AUTHORITY.toLowerCase();
 
     return (
       <Fragment>
 
         <div data-test-inventory-instances>
-
           <ButtonGroup
             fullWidth
             data-test-filters-navigation
           >
-            {
-              menuNumOptions.map((text) => (
-                <Button
-                  key={`${text}`}
-                  to={`/marccat/search?segment=${text.toLowerCase()}`}
-                  buttonStyle={`${segment === text.toLowerCase() ? 'primary' : 'default'}`}
-                  id={`segment-navigation-${text}`}
-                  onClick={() => this.setState({
-                    segment: text.toLowerCase()
-                  })}
-                >
-                  <FormattedMessage id={text} />
-                </Button>
-              ))
-            }
+            <Button
+              key={`${this.capitalize(SEARCH_SEGMENT.BIBLIOGRAPHIC)}`}
+              to={`/marccat/search?segment=${bibTxtLower}`}
+              buttonStyle={`${segment === bibTxtLower ? 'primary' : 'default'}`}
+              id={`segment-navigation-${this.capitalize(SEARCH_SEGMENT.BIBLIOGRAPHIC)}`}
+              onClick={() => this.changeSegment(bibTxtLower)}
+              data-test-btn-segment-bib
+            >
+              <FormattedMessage id={this.capitalize(SEARCH_SEGMENT.BIBLIOGRAPHIC)} />
+            </Button>
+            <Button
+              key={`${this.capitalize(SEARCH_SEGMENT.AUTHORITY)}`}
+              to={`/marccat/search?segment=${authTxtLower}`}
+              buttonStyle={`${segment === authTxtLower ? 'primary' : 'default'}`}
+              id={`segment-navigation-${this.capitalize(SEARCH_SEGMENT.AUTHORITY)}`}
+              onClick={() => this.changeSegment(authTxtLower)}
+              data-test-btn-segment-auth
+            >
+              <FormattedMessage id={this.capitalize(SEARCH_SEGMENT.AUTHORITY)} />
+            </Button>
           </ButtonGroup>
-
         </div>
 
         <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}>
@@ -321,6 +365,7 @@ class SearchPanel extends React.Component<P, {}> {
                   >
                     {translate({ id: 'ui-marccat.search.searchButton' })}
                   </Button>
+                  {this.renderBtnResetAll()}
                 </Col>
               </Row>
             </Col>

@@ -44,6 +44,14 @@ this.get('/marccat/mergedSearch', ({mergedSearches}) => {
   return mergedSearches.all();
 });
 
+  this.get('/marccat/search', ({ bibSearches }) => {
+    return bibSearches.all();
+  });
+
+  this.get('/marccat/searchAuth', ({ authoritySearches }) => {
+    return authoritySearches.all();
+  });
+
 this.get('/marccat/countSearch', () => 2);
 
 this.get('/marccat/browse', ({browseSearches}) => {

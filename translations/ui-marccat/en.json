@@ -49,6 +49,8 @@
   "search.associated.bibliographic": "Associated bibliographic records",
   "search.history.title": "Recent Searches",
   "browse.results.title": "Access Point",
+  "browse.results.see": "See",
+  "browse.results.seefrom": "Seen From",
   "browse.record.create": "Create",
   "browse.actionmenu.export.mrc": "Export as .mrc file (single file, multiple records)",
   "browse.actionmenu.export.csv": "Export as .csv file (single file, multiple records)",

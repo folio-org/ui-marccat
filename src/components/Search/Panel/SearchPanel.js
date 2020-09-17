@@ -246,7 +246,6 @@ class SearchPanel extends React.Component<P, {}> {
   handleBtnResetAll = () => {
     const { segment } = this.state;
     this.changeSegment(segment);
-    // dispatch(resetFilterSearch());
   };
 
   renderBtnResetAll = () => {

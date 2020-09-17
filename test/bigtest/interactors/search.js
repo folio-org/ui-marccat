@@ -36,6 +36,9 @@ const SearchButtonInteractor = interactor(class SearchButtonInteractor {
   clickThrough = clickable();
 });
 
+const ResetAllButtonInteractor = interactor(class ResetAllButtonInteractor {
+  clickThrough = clickable();
+});
 
 // https://bigtestjs.io/guides/interactors/introduction/
 export default interactor(class SearchInteractor {
@@ -46,5 +49,6 @@ export default interactor(class SearchInteractor {
   countResults = count('[data-row-index]');
   segmentAuthorityInteractor = new SegmentNavigationInteractor('#segment-navigation-Authority');
   buttonSearch = new SearchButtonInteractor('[data-test-btn-search]');
+  buttonResetAll = new ResetAllButtonInteractor('[data-test-btn-reset-all]');
   filtersContainerPresent = isPresent('[data-test-filters-container]');
 });

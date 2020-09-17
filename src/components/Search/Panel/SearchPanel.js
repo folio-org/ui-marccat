@@ -258,6 +258,7 @@ class SearchPanel extends React.Component<P, {}> {
         onClick={this.handleBtnResetAll}
         id="clickable-reset-all"
         label={<FormattedMessage id="ui-marccat.button.resetAll" />}
+        data-test-btn-reset-all
       />
     );
   }

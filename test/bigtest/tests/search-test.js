@@ -45,7 +45,6 @@ describe('Search', () => {
   });
 
   describe('should test authority indexes', () => {
-
     beforeEach(async function () {
       await searchInteractor.segmentAuthorityInteractor.click();
     });
@@ -61,7 +60,19 @@ describe('Search', () => {
     it('should remove filter', () => {
       expect(searchInteractor.filtersContainerPresent).to.be.false;
     });
+  });
 
+  describe('fill search field and click reset all button', () => {
+    beforeEach(async function () {
+      await searchInteractor.selectIndexes.selectOption('Title');
+      await searchInteractor.selectCondition.selectOption('Contains');
+      await searchInteractor.searchTextArea.fill('test');
+      await searchInteractor.buttonResetAll.click();
+    });
+
+    it('search fields should be reset', function () {
+      expect(searchInteractor.searchTextArea.value).to.equal('');
+    });
   });
 
 });

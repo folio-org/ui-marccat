@@ -4,9 +4,6 @@
 import React, { Fragment } from 'react';
 import {
   TextField,
-  AccordionSet,
-  Accordion,
-  FilterAccordionHeader,
   Row,
   Col,
   ButtonGroup,

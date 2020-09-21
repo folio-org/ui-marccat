@@ -8,9 +8,9 @@ const NoResultsMessage = ({ ...props }: Props) => {
   const { translate, store } = props;
   const filterText = store.getState().form.searchForm.values.searchTextArea;
 
-  let query = translate({ id: 'ui-marccat.error.noresults.message' }) + '. ';
+  let query = `${translate({ id: 'ui-marccat.error.noresults.message' })}. `;
   if (filterText.length > 0) {
-    query = translate({ id: 'ui-marccat.error.noresultsfoundfor.message' }) + ' "' + filterText + '". ';
+    query = `${translate({ id: 'ui-marccat.error.noresultsfoundfor.message' })} "${filterText}". `;
   }
 
   return (

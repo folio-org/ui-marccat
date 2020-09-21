@@ -140,5 +140,7 @@
     "authority.deweyclassification": "Classificação Decimal de Dewey",
     "authority.lcclassification": "Classificação da LC",
     "authority.universaldecimal": "Classificação Decimal Universal",
-    "authority.otherclassification": "Outra Classificação"
+    "authority.otherclassification": "Outra Classificação",
+    "browse.results.see": "Ver",
+    "browse.results.seenfrom": "Visto de"
 }

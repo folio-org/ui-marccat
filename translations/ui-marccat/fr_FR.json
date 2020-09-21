@@ -140,5 +140,7 @@
     "authority.deweyclassification": "Classification Dewey",
     "authority.lcclassification": "Classification LC",
     "authority.universaldecimal": "Décimale universelle",
-    "authority.otherclassification": "Autre classification"
+    "authority.otherclassification": "Autre classification",
+    "browse.results.see": "See",
+    "browse.results.seenfrom": "Seen From"
 }

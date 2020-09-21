@@ -71,7 +71,7 @@
     "settings.default.record.template.bib.text": "书目记录，组织范围模板：",
     "search.record.new": "新增",
     "search.record.new.from.template": "利用範本新增（CTRL + N）",
-    "cataloging.variablefield.section.add.newtag": "添加新字段",
+    "cataloging.variablefield.section.add.newtag": "新增標籤",
     "cataloging.accordion.fixedfield.label": "控制字段（001,003,005）",
     "cataloging.accordion.variablefield.label": "变长字段",
     "cataloging.accordion.checkbox.label": "隐藏",
@@ -90,9 +90,9 @@
     "cataloging.record.tag.update.success": "字段{value}更新成功！",
     "cataloging.record.tag.update.failure": "更新字段{value}失败！",
     "cataloging.actions": "操作",
-    "cataloging.actions.add.field.below": "在下面添加新字段",
+    "cataloging.actions.add.field.below": "在下面新增欄位",
     "cataloging.actions.add.field.below.shortcut": "在下方增加新段位快速鍵（ALT+ENTER）",
-    "cataloging.actions.add.field.above": "在上方增加新段位",
+    "cataloging.actions.add.field.above": "在上方新增新欄位",
     "cataloging.actions.add.field.above.shortcut": "在上方增加新段位快速鍵（CTRL+ENTER）",
     "cataloging.actions.copy": "复制",
     "cataloging.actions.copy.shortcut": "CTRL + C",
@@ -140,5 +140,7 @@
     "authority.deweyclassification": "Dewey Classification",
     "authority.lcclassification": "LC Classification",
     "authority.universaldecimal": "Universal Decimal",
-    "authority.otherclassification": "Other Classification"
+    "authority.otherclassification": "Other Classification",
+    "browse.results.see": "See",
+    "browse.results.seenfrom": "Seen From"
 }

@@ -140,5 +140,9 @@
     "authority.deweyclassification": "杜威分类法",
     "authority.lcclassification": "LC分类法",
     "authority.universaldecimal": "通用十进分类法",
-    "authority.otherclassification": "其他分类"
+    "authority.otherclassification": "其他分类",
+    "browse.results.see": "See",
+    "browse.results.seenfrom": "Seen From",
+    "error.noresultsfoundfor.message": "No results found for",
+    "error.checkspellingfilters.message": "Please check your spelling and filters."
 }

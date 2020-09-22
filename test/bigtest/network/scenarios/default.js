@@ -7,4 +7,6 @@ export default function defaultScenario(server) {
   server.createList('bibSearch', 1);
   server.createList('authoritySearch', 1);
   server.create('browseSearch');
+  server.create('bibRecordDetail');
+  server.create('verticalDetail');
 }

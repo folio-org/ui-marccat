@@ -16,6 +16,7 @@ export default ({ ...props }) => {
         </Col>
         <Col xs={6}>
           <IconButton
+            data-test-clear-history
             key="icon-trash-history"
             icon="trash"
             badgeCount={searchPerformed}

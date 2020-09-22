@@ -223,8 +223,11 @@ export class SearchResults extends React.Component<P, {}> {
           })}
         </MenuSection>
         : null}
-      <MenuSection label="Actions">
+      <MenuSection
+        data-test-action-button
+        label="Actions">
         <Button
+          data-test-new-record-button
           buttonStyle="primary"
           disabled={!emptyRecord}
           onClick={this.handleCreateRecord}

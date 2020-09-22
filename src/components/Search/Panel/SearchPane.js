@@ -10,6 +10,7 @@ export default function SearchPane(props) {
     <Paneset static>
       {filterPaneIsVisible &&
         <Pane
+          data-test-history-search
           defaultWidth={"320px"}
           actionMenu={() => <PanelHistory {...props} />}
           onClose={toggleFilterPane}

@@ -13,6 +13,7 @@
 * Search authority records (UICAT-106)
 * Add option to reset all in the search (UICAT-112)
 * Add support for running `yarn start --mirage`.
+* Change the panel of "No results found" (UICAT-113)
 * Improve search and reset all buttons and remove unused imports (UICAT-112)
 
 ## [2.0.0](https://github.com/folio-org/ui-marccat/releases/v2.0.0) (2019-10-09)

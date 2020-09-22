@@ -225,7 +225,8 @@ export class SearchResults extends React.Component<P, {}> {
         : null}
       <MenuSection
         data-test-action-button
-        label="Actions">
+        label="Actions"
+      >
         <Button
           data-test-new-record-button
           buttonStyle="primary"

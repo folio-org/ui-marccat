@@ -11,7 +11,7 @@ export default function SearchPane(props) {
       {filterPaneIsVisible &&
         <Pane
           data-test-history-search
-          defaultWidth={"320px"}
+          defaultWidth="320px"
           actionMenu={() => <PanelHistory {...props} />}
           onClose={toggleFilterPane}
           paneTitle={localized('searchAndFilter', false)}
@@ -21,12 +21,11 @@ export default function SearchPane(props) {
         </Pane>}
       {!filterPaneIsVisible &&
         <Pane
-          defaultWidth={"0px"}
+          defaultWidth="0px"
           onClose={toggleFilterPane}
           paneTitle={localized('searchAndFilter', false)}
           paneSub={EMPTY_STRING}
-        >
-        </Pane>}
+        />}
       {children}
     </Paneset>
   );

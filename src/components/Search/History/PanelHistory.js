@@ -41,7 +41,7 @@ const PanelHistory = ({ ...props }) => {
         ) : (
           <Row>
             <MultiColumnList
-              id="hostory-recent-search"
+              id="history-recent-search"
               isEmptyMessage={(searchPerformed === 0) ? 'No Search performed' : ''}
               formatter={resultsFormatter}
               onRowClick={(e, meta) => {

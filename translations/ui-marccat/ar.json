@@ -143,6 +143,6 @@
     "authority.otherclassification": "تصنيف آخر",
     "browse.results.see": "انظر",
     "browse.results.seenfrom": "تمت رؤيته من",
-    "error.noresultsfoundfor.message": "No results found for",
-    "error.checkspellingfilters.message": "Please check your spelling and filters."
+    "error.noresultsfoundfor.message": "لم يتم العثور على نتائج لـ",
+    "error.checkspellingfilters.message": "يرجى التحقق من التهجئة والمنقحات."
 }

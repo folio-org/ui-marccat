@@ -4,9 +4,6 @@
 import React, { Fragment } from 'react';
 import {
   TextField,
-  AccordionSet,
-  Accordion,
-  FilterAccordionHeader,
   Row,
   Col,
   ButtonGroup,
@@ -277,10 +274,21 @@ class SearchPanel extends React.Component<P, {}> {
   }
 
   render() {
-    const { translate, ...rest } = this.props;
+    const { translate, store: { getState }, ...rest } = this.props;
     const { filterEnable, segment, btnSubmitEnabled } = this.state;
     const bibTxtLower = SEARCH_SEGMENT.BIBLIOGRAPHIC.toLowerCase();
     const authTxtLower = SEARCH_SEGMENT.AUTHORITY.toLowerCase();
+
+    if (!btnSubmitEnabled) {
+      const form = getState().form.searchForm;
+      if (typeof (form) !== 'undefined' && typeof (form.values) !== 'undefined' && typeof (form.values.searchTextArea) !== 'undefined') {
+        if (form.values.searchTextArea.length > 0) {
+          this.setState({
+            btnSubmitEnabled: true
+          });
+        }
+      }
+    }
 
     return (
       <Fragment>

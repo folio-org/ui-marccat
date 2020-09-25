@@ -39,6 +39,16 @@ describe('ActionMenu', () => {
     });
   });
 
+  describe('click on Action Menu on left panel for history search results', function () {
+    beforeEach(async function () {
+      await actionMenuInteractor.historyActionMenu.click();
+    });
+
+    it('no results come back because no research has been done yet', () => {
+      expect(actionMenuInteractor.historyResultCount).to.be.equal(0);
+    });
+  });
+
   describe('fill search field and click on Action Menu on left panel for history search results', function () {
     beforeEach(async function () {
       await searchInteractor.selectIndexes.selectOption('Title');
@@ -53,28 +63,39 @@ describe('ActionMenu', () => {
     
   });
 
-  // describe('fill search field and click on Action Menu on left panel for history search results and then click clear button', function () {
-  //   beforeEach(async function () {
-  //     await searchInteractor.selectIndexes.selectOption('Title');
-  //     await searchInteractor.selectCondition.selectOption('Contains');
-  //     await searchInteractor.searchTextArea.fillAndSubmit('test');
-  //     await actionMenuInteractor.historyActionMenu.click();
-  //     await actionMenuInteractor.historyClearButton.click();
-  //   });
 
-  //   it('returns the results and after clicking on clear history there will be no result', () => {
-  //     expect(actionMenuInteractor.historyResultCount).to.be.equal(0);
-  //   });
+
+  describe('fill search and browse, then click on Action Menu on left panel for history search results', function () {
+    beforeEach(async function () {
+      await searchInteractor.selectIndexes.selectOption('Title');
+      await searchInteractor.selectCondition.selectOption('Contains');
+      await searchInteractor.searchTextArea.fillAndSubmit('test');
+      await searchInteractor.selectIndexes.selectOption('Title');
+      await searchInteractor.selectCondition.selectOption('Browse');
+      await searchInteractor.searchTextArea.fillAndSubmit('test');
+      await actionMenuInteractor.historyActionMenu.click();
       
-  // });
+    });
 
-  describe('click on Action Menu on left panel for history search results', function () {
+    it('returns the results of search and browse search in history panel', () => {
+      expect(actionMenuInteractor.historyResultCount).to.be.equal(2);
+    });
+      
+  });
+
+  describe('click on Action Menu on left panel for history search results and then click clear button', function () {
     beforeEach(async function () {
       await actionMenuInteractor.historyActionMenu.click();
+      await actionMenuInteractor.historyClearButton.click();
     });
 
-    it('no results come back because no research has been done yet', () => {
+    it('returns the results and after clicking on clear history there will be no result', () => {
       expect(actionMenuInteractor.historyResultCount).to.be.equal(0);
     });
+      
   });
+
+  
+
+  
 });

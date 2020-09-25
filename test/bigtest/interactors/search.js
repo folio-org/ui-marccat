@@ -66,6 +66,6 @@ export default interactor(class SearchInteractor {
   filtersContainerPresent = isPresent('[data-test-filters-container]');
   segmentButtonBib = new SegmentButtonBibInteractor('[data-test-btn-segment-bib]');
   segmentButtonAuth = new SegmentButtonAuthInteractor('[data-test-btn-segment-auth]');
-  itemRowClick = new RowClickInteractor('[data-row-index]')
+  itemRowClick = new RowClickInteractor('[data-row-index="row-0"]')
   detailPanel = isVisible('[data-test-detail-search]')
 });

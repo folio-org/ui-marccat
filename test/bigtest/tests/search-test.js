@@ -13,6 +13,8 @@ describe('Search', () => {
     this.server.createList('mergedSearch', 1);
     this.server.createList('bibSearch', 1);
     this.server.createList('authoritySearch', 1);
+    this.server.create('bibRecordDetail');
+    this.server.create('verticalDetail');
 
     return this.visit('/marccat/search', () => {
       expect(searchInteractor.$root).to.exist;
@@ -103,5 +105,20 @@ describe('Search', () => {
       expect(searchInteractor.searchTextArea.value).to.equal('');
     });
   });
+
+  // THIS TEST NOT WORKS YET: "Cannot read property 'query' of undefined"
+  
+  // describe('fill search field and click on item in a row', function () {
+  //   beforeEach(async function () {
+  //     await searchInteractor.selectIndexes.selectOption('Title');
+  //     await searchInteractor.selectCondition.selectOption('Contains');
+  //     await searchInteractor.searchTextArea.fillAndSubmit('test');
+  //     await searchInteractor.itemRowClick.click();
+  //   });
+  
+  //   it('show detail for bib record', () => {
+  //     expect(searchInteractor.detailPanel).to.be.true;
+  //   });
+  // });
 
 });

@@ -23,7 +23,7 @@
     "diacritic.title": "Diacritic",
     "settings.general": "General",
     "settings.general.message": "These are your general app settings.",
-    "searchAndFilter": "Search & Filter",
+    "searchAndFilter": "검색 및 필터",
     "button.new": "New",
     "button.close": "Close",
     "button.cancel": "Cancel",
@@ -48,7 +48,7 @@
     "search.actionmenu.instances": "Instances",
     "search.actionmenu.authority.records": "Authority Records",
     "search.initial.message": "Enter search criteria to start search",
-    "error.noresults.message": "Search returned no results",
+    "error.noresults.message": "검색 결과가 없습니다.",
     "template.actionmenu.load": "Load template...",
     "template.actionmenu.load.shortcut": "CTRL+L",
     "template.actionmenu.organization": "Organization-wide",
@@ -141,8 +141,8 @@
     "authority.lcclassification": "LC Classification",
     "authority.universaldecimal": "Universal Decimal",
     "authority.otherclassification": "Other Classification",
-    "browse.results.see": "See",
-    "browse.results.seenfrom": "Seen From",
+    "browse.results.see": "보기",
+    "browse.results.seenfrom": "에서 본",
     "error.noresultsfoundfor.message": "No results found for",
     "error.checkspellingfilters.message": "Please check your spelling and filters."
 }

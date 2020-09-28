@@ -56,7 +56,7 @@ class RecordDetailPane extends React.Component {
             dispatch({ type: ACTION.CLOSE_PANELS, closePanels: true });
             return router.push('/marccat/search');
           }, 2000);
-        } if (statusCode === 423) {
+        } else if (statusCode === 423) {
           showValidationMessage(
             this.callout,
             translate({ id: 'ui-marccat.search.record.deletemodal.notdeletedrecordused' }),

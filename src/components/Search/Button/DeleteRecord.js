@@ -18,6 +18,7 @@ const DeleteRecordButton = ({ eHandleClickDelete, ...props }) => {
         {...props}
         buttonStyle="dropdownItem"
         onClick={() => handleClickDelete()}
+        data-test-btn-delete-record
       >
         <Icon icon="trash">{Localize({ key: 'cataloging.record.delete' })}</Icon>
       </Button>

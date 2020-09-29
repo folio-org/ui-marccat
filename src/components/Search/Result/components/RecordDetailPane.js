@@ -138,9 +138,8 @@ class RecordDetailPane extends React.Component {
         )}
 
         <ConfirmationModal
-          id="delete-confirmation-modal"
+          id="record-detail-delete-confirmation-modal"
           buttonStyle="danger"
-          data-test-delete-confirmation-modal
           open={modalDeleteShow}
           heading={
             <FormattedMessage id="ui-marccat.search.record.deletemodal.heading" />

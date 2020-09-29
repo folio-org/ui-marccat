@@ -5,8 +5,11 @@ import {
   selectable,
   clickable,
   isPresent,
-  isVisible
+  isVisible,
+  Interactor,
 } from '@bigtest/interactor';
+import ConfirmationModalInteractor from '@folio/stripes-components/lib/ConfirmationModal/tests/interactor';
+import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
 
 const SelectInteractor = interactor(class SelectInteractor {
   selectOption = selectable();
@@ -53,6 +56,8 @@ const RowClickInteractor = interactor(class RowClickInteractor {
   clickThrough = clickable();
 });
 
+
+
 // https://bigtestjs.io/guides/interactors/introduction/
 export default interactor(class SearchInteractor {
   static defaultScope = '#ModuleContainer';
@@ -68,4 +73,10 @@ export default interactor(class SearchInteractor {
   segmentButtonAuth = new SegmentButtonAuthInteractor('[data-test-btn-segment-auth]');
   itemRowClick = new RowClickInteractor('[data-row-index]')
   detailPanel = isVisible('[data-test-detail-search]')
+  // searchResultItem = collection('[data-row-index]');
+  searchResultItem = new Interactor('#data-test-search-results-table [data-row-inner="0"]');
+  recordDetailButtonDelete = new Interactor('[data-test-btn-delete-record]');
+  recordDetailConfirmModal = new ConfirmationModalInteractor('#record-detail-delete-confirmation-modal');
+  recordDetailConfirmButton = new ButtonInteractor('[data-test-confirmation-modal-confirm-button]');
+
 });

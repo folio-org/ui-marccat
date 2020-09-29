@@ -6,7 +6,7 @@ import SearchInteractor from '../interactors/search';
 
 describe('Search', () => {
   setupApplication();
-  const searchInteractor = new SearchInteractor();
+  const searchInteractor = new SearchInteractor({ timeout: 5000 });
 
   beforeEach(function () {
     this.server.create('fromTemplate');
@@ -106,8 +106,31 @@ describe('Search', () => {
     });
   });
 
+  describe('fill Bib search field, select one record and delete it', function () {
+    beforeEach(async function () {
+      await searchInteractor.segmentButtonBib.click();
+      await searchInteractor.selectIndexes.selectOption('Title');
+      await searchInteractor.selectCondition.selectOption('Contains');
+      await searchInteractor.searchTextArea.fill('test');
+      await searchInteractor.buttonSearch.click();
+      await searchInteractor.searchResultItem.click();
+      await searchInteractor.recordDetailButtonDelete.click();
+      await searchInteractor.recordDetailConfirmButton.click();
+    });
+
+    it('selected first record', () => {
+      expect(searchInteractor.searchResultItem.text).to.not.equal('');
+    });
+
+    it('should open dropdown menu', () => {
+      expect(searchInteractor.recordDetailConfirmModal.confirmButton.isPresent).to.be.true;
+    });
+
+  });
+
+
   // THIS TEST NOT WORKS YET: "Cannot read property 'query' of undefined"
-  
+
   // describe('fill search field and click on item in a row', function () {
   //   beforeEach(async function () {
   //     await searchInteractor.selectIndexes.selectOption('Title');
@@ -115,7 +138,7 @@ describe('Search', () => {
   //     await searchInteractor.searchTextArea.fillAndSubmit('test');
   //     await searchInteractor.itemRowClick.click();
   //   });
-  
+
   //   it('show detail for bib record', () => {
   //     expect(searchInteractor.detailPanel).to.be.true;
   //   });

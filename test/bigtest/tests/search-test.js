@@ -15,6 +15,7 @@ describe('Search', () => {
     this.server.createList('authoritySearch', 1);
     this.server.create('bibRecordDetail');
     this.server.create('verticalDetail');
+    this.server.create('bibRecordDelete');
 
     return this.visit('/marccat/search', () => {
       expect(searchInteractor.$root).to.exist;
@@ -114,6 +115,8 @@ describe('Search', () => {
       await searchInteractor.searchTextArea.fill('test');
       await searchInteractor.buttonSearch.click();
       await searchInteractor.searchResultItem.click();
+      await searchInteractor.recordDetailButtonDelete.click();
+      await searchInteractor.recordDetailCancelButton.click();
       await searchInteractor.recordDetailButtonDelete.click();
       await searchInteractor.recordDetailConfirmButton.click();
     });

@@ -77,6 +77,7 @@ export default interactor(class SearchInteractor {
   searchResultItem = new Interactor('#data-test-search-results-table [data-row-inner="0"]');
   recordDetailButtonDelete = new Interactor('[data-test-btn-delete-record]');
   recordDetailConfirmModal = new ConfirmationModalInteractor('#record-detail-delete-confirmation-modal');
+  recordDetailCancelButton = new ButtonInteractor('[data-test-confirmation-modal-cancel-button]');
   recordDetailConfirmButton = new ButtonInteractor('[data-test-confirmation-modal-confirm-button]');
 
 });

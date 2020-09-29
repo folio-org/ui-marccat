@@ -107,7 +107,7 @@ describe('Search', () => {
     });
   });
 
-  describe('fill Bib search field, select one record and delete it', function () {
+  describe('fill Bib search field, select one record', function () {
     beforeEach(async function () {
       await searchInteractor.segmentButtonBib.click();
       await searchInteractor.selectIndexes.selectOption('Title');
@@ -116,17 +116,11 @@ describe('Search', () => {
       await searchInteractor.buttonSearch.click();
       await searchInteractor.searchResultItem.click();
       await searchInteractor.recordDetailButtonDelete.click();
-      await searchInteractor.recordDetailCancelButton.click();
-      await searchInteractor.recordDetailButtonDelete.click();
       await searchInteractor.recordDetailConfirmButton.click();
     });
 
     it('selected first record', () => {
       expect(searchInteractor.searchResultItem.text).to.not.equal('');
-    });
-
-    it('should open dropdown menu', () => {
-      expect(searchInteractor.recordDetailConfirmModal.confirmButton.isPresent).to.be.true;
     });
 
   });

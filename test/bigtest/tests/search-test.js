@@ -15,7 +15,6 @@ describe('Search', () => {
     this.server.createList('authoritySearch', 1);
     this.server.create('bibRecordDetail');
     this.server.create('verticalDetail');
-    this.server.create('bibRecordDelete');
 
     return this.visit('/marccat/search', () => {
       expect(searchInteractor.$root).to.exist;
@@ -123,6 +122,22 @@ describe('Search', () => {
       expect(searchInteractor.searchResultItem.text).to.not.equal('');
     });
 
+    /* it('confirmation window is open', () => {
+      expect(searchInteractor.recordDetailConfirmModal).to.be.true;
+    });*/
+
+    /* describe('delete selected record', function () {
+      beforeEach(async function () {
+        await searchInteractor.recordDetailButtonDelete.click();
+        //await searchInteractor.recordDetailConfirmButton.click();
+        console.log('searchInteractor.recordDetailConfirmModal2:');
+        console.log(searchInteractor.recordDetailConfirmModal.confirmButton.isPresent);
+      });
+
+      it('confirmation window is open', () => {
+        expect(searchInteractor.recordDetailConfirmModal.confirmButton.isPresent).to.be.true;
+      });
+    });*/
   });
 
 

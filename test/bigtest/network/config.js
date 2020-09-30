@@ -67,8 +67,8 @@ export default function configure() {
   });
 
   // Delete record
-  this.get('/marccat/bibliographic-record/000000000042', ({ bibRecordDelete }) => {
-    return bibRecordDelete.all();
+  this.delete('/marccat/bibliographic-record/:id', () => {
+    return new Response(204, {}, '');
   });
 
   // translation bundle passthrough

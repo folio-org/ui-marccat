@@ -9,5 +9,4 @@ export default function defaultScenario(server) {
   server.create('browseSearch');
   server.create('bibRecordDetail');
   server.create('verticalDetail');
-  server.create('bibRecordDelete');
 }

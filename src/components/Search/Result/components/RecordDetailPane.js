@@ -44,7 +44,7 @@ class RecordDetailPane extends React.Component {
         statusCode = r.status;
       })
       .then(() => {
-        if (statusCode === 204) {
+        if (statusCode === 204 || statusCode === 200) {
           showValidationMessage(
             this.callout,
             translate({ id: 'ui-marccat.search.record.deletemodal.deletesuccess' }),

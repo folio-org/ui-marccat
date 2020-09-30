@@ -68,8 +68,8 @@ export default function configure() {
 
   // Delete record
   this.delete('/marccat/bibliographic-record/:id', () => {
-    return new Response(204, {}, '');
-  });
+    return new Response(204, {}, {});
+  }, 204);
 
   // translation bundle passthrough
   this.pretender.get(`${__webpack_public_path__}translations/:rand.json`, this.pretender.passthrough); // eslint-disable-line

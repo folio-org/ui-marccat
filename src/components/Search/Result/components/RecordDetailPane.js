@@ -31,7 +31,7 @@ class RecordDetailPane extends React.Component {
     let { statusCode } = this.state;
     const { detailPaneMeta, queryMoreBib, queryMoreAuth, dispatch, store, router, reset, translate } = this.props;
 
-    await del(
+    const resp = await del(
       buildUrl(
         store.getState(),
         C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + detailPaneMeta.meta['001'],
@@ -39,37 +39,47 @@ class RecordDetailPane extends React.Component {
       ),
       detailPaneMeta.meta['001'],
       store.getState()
-    )
-      .then(r => {
-        statusCode = r.status;
-      })
-      .then(() => {
-        if (statusCode === 204) {
-          showValidationMessage(
-            this.callout,
-            translate({ id: 'ui-marccat.search.record.deletemodal.deletesuccess' }),
-            'success'
-          );
-          setTimeout(() => {
-            reset();
-            dispatch({ type: ACTION.SEARCHBIB, isFromCat: 'N', moreData: 'N', queryBib: queryMoreBib, queryAuth: queryMoreAuth, from: '1', to: '30' });
-            dispatch({ type: ACTION.CLOSE_PANELS, closePanels: true });
-            return router.push('/marccat/search');
-          }, 2000);
-        } else if (statusCode === 423) {
-          showValidationMessage(
-            this.callout,
-            translate({ id: 'ui-marccat.search.record.deletemodal.notdeletedrecordused' }),
-            'error'
-          );
-        } else {
-          showValidationMessage(
-            this.callout,
-            translate({ id: 'ui-marccat.search.record.deletemodal.deletewrong' }),
-            'error'
-          );
-        }
-      });
+    );
+    statusCode = resp.status;
+    if (statusCode === 204) {
+      showValidationMessage(
+        this.callout,
+        translate({
+          id: 'ui-marccat.search.record.deletemodal.deletesuccess',
+        }),
+        'success'
+      );
+      setTimeout(() => {
+        reset();
+        dispatch({
+          type: ACTION.SEARCHBIB,
+          isFromCat: 'N',
+          moreData: 'N',
+          queryBib: queryMoreBib,
+          queryAuth: queryMoreAuth,
+          from: '1',
+          to: '30',
+        });
+        dispatch({ type: ACTION.CLOSE_PANELS, closePanels: true });
+        return router.push('/marccat/search');
+      }, 2000);
+    } else if (statusCode === 423) {
+      showValidationMessage(
+        this.callout,
+        translate({
+          id: 'ui-marccat.search.record.deletemodal.notdeletedrecordused',
+        }),
+        'error'
+      );
+    } else {
+      showValidationMessage(
+        this.callout,
+        translate({
+          id: 'ui-marccat.search.record.deletemodal.deletewrong',
+        }),
+        'error'
+      );
+    }
   };
 
   handleClickDelete = () => {

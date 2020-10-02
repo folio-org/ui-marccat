@@ -409,8 +409,8 @@ export class SearchResults extends React.Component<P, {}> {
             authorityResults={authorityResults}
             handleDetails={this.handleDetails}
             isReady={isReady}
-            autOnly={autOnly}
             bibsOnly={bibsOnly}
+            autOnly={autOnly}
             loading={loading}
             messageNoContent={messageNoContent}
           />
@@ -422,6 +422,8 @@ export class SearchResults extends React.Component<P, {}> {
               detail={detail}
               isFetchingDetail={isFetchingDetail}
               isReadyDetail={isReadyDetail}
+              bibsOnly={bibsOnly}
+              autOnly={autOnly}
               onClose={() => this.setState({ detailPanelIsVisible: false })}
               rightMenuEdit={<EditRecordButton {...this.props} />}
             />

@@ -28,27 +28,21 @@ class RecordDetailPane extends React.Component {
   }
 
   deleteRecord = async () => {
-    let { statusCode } = this.state;
-    const { detailPaneMeta, queryMoreBib, queryMoreAuth, dispatch, store, router, reset, translate } = this.props;
+    const { detailPaneMeta, queryMoreBib, queryMoreAuth, dispatch, store, router, reset, translate, bibsOnly } = this.props;
+    const endPoint = bibsOnly ? C.ENDPOINT.BIBLIOGRAPHIC_RECORD : C.ENDPOINT.AUTHORITY_RECORD;
 
     const resp = await del(
       buildUrl(
         store.getState(),
-        C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + detailPaneMeta.meta['001'],
+        endPoint + '/' + detailPaneMeta.meta['001'],
         C.ENDPOINT.DEFAULT_LANG_VIEW
       ),
       detailPaneMeta.meta['001'],
       store.getState()
     );
-    statusCode = resp.status;
+    const statusCode = resp.status;
     if (statusCode === 204) {
-      showValidationMessage(
-        this.callout,
-        translate({
-          id: 'ui-marccat.search.record.deletemodal.deletesuccess',
-        }),
-        'success'
-      );
+      showValidationMessage(this.callout, translate({ id: 'ui-marccat.search.record.deletemodal.deletesuccess' }), 'success');
       setTimeout(() => {
         reset();
         dispatch({
@@ -64,21 +58,12 @@ class RecordDetailPane extends React.Component {
         return router.push('/marccat/search');
       }, 2000);
     } else if (statusCode === 423) {
-      showValidationMessage(
-        this.callout,
-        translate({
-          id: 'ui-marccat.search.record.deletemodal.notdeletedrecordused',
-        }),
-        'error'
-      );
+      const msg423 = bibsOnly
+        ? translate({ id: 'ui-marccat.search.record.deletemodal.notdeletedrecordused.bib' })
+        : translate({ id: 'ui-marccat.search.record.deletemodal.notdeletedrecordused.auth' });
+      showValidationMessage(this.callout, msg423, 'error');
     } else {
-      showValidationMessage(
-        this.callout,
-        translate({
-          id: 'ui-marccat.search.record.deletemodal.deletewrong',
-        }),
-        'error'
-      );
+      showValidationMessage(this.callout, translate({ id: 'ui-marccat.search.record.deletemodal.deletewrong' }), 'error');
     }
   };
 
@@ -116,7 +101,7 @@ class RecordDetailPane extends React.Component {
   };
 
   render() {
-    const { translate, detailPaneMeta, detail, onClose } = this.props;
+    const { translate, detailPaneMeta, detail, onClose, bibsOnly } = this.props;
     const { modalDeleteShow } = this.state;
     return (
       <Pane
@@ -130,7 +115,7 @@ class RecordDetailPane extends React.Component {
             paneTitle={detailPaneMeta.title}
             paneSub={detailPaneMeta.subTitle}
             appIcon={
-              detailPaneMeta.title.startsWith('Bib') ? (
+              bibsOnly ? (
                 <AppIcon size="large" app="marccat" iconKey="marc-bib" />
               ) : (
                 <AppIcon size="large" app="marccat" iconKey="marc-authority" />

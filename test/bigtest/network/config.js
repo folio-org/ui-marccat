@@ -66,10 +66,15 @@ export default function configure() {
     return verticalDetails.all();
   });
 
-  // Delete record
+  // Delete Bib record
   this.delete('/marccat/bibliographic-record/:id', () => {
-    return new Response(204, {}, {});
+    return new Response(204);
   }, 204);
+
+  // Delete Auth record
+  this.delete('/marccat/authority-record/:id', () => {
+    return new Response(423, {}, {});
+  }, 423);
 
   // translation bundle passthrough
   this.pretender.get(`${__webpack_public_path__}translations/:rand.json`, this.pretender.passthrough); // eslint-disable-line

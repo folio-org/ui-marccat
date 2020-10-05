@@ -141,8 +141,8 @@
     "authority.lcclassification": "Classification LC",
     "authority.universaldecimal": "Décimale universelle",
     "authority.otherclassification": "Autre classification",
-    "browse.results.see": "See",
-    "browse.results.seenfrom": "Seen From",
+    "browse.results.see": "Voir",
+    "browse.results.seenfrom": "Vu de",
     "error.noresultsfoundfor.message": "Aucun résultat trouvé pour",
     "error.checkspellingfilters.message": "Please check your spelling and filters."
 }

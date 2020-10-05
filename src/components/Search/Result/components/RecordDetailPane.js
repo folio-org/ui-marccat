@@ -40,7 +40,7 @@ class RecordDetailPane extends React.Component {
       detailPaneMeta.meta['001'],
       store.getState()
     );
-    const statusCode = resp.status;
+    const statusCode = await resp.status;
     if (statusCode === 204) {
       showValidationMessage(this.callout, translate({ id: 'ui-marccat.search.record.deletemodal.deletesuccess' }), 'success');
       setTimeout(() => {

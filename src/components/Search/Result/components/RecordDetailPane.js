@@ -65,18 +65,14 @@ class RecordDetailPane extends React.Component {
     } else {
       showValidationMessage(this.callout, translate({ id: 'ui-marccat.search.record.deletemodal.deletewrong' }), 'error');
     }
+    this.setState({
+      modalDeleteShow: false,
+    });
   };
 
   handleClickDelete = () => {
     this.setState({
       modalDeleteShow: true,
-    });
-  };
-
-  modalConfirm = async () => {
-    await this.deleteRecord();
-    this.setState({
-      modalDeleteShow: false,
     });
   };
 
@@ -145,7 +141,7 @@ class RecordDetailPane extends React.Component {
               values={{ name: detailPaneMeta.subTitle }}
             />
           }
-          onConfirm={this.modalConfirm}
+          onConfirm={this.deleteRecord}
           onCancel={this.modalCancel}
           cancelLabel={translate({
             id: 'ui-marccat.search.record.deletemodal.cancel',

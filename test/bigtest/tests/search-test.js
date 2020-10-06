@@ -112,19 +112,4 @@ describe('Search', () => {
     });
   });
 
-  // THIS TEST NOT WORKS YET: "Cannot read property 'query' of undefined" - how do i get the row to click inside the MCL stripes???
-  
-  // describe('fill search field and click on item in a row', function () {
-  //   beforeEach(async function () {
-  //     await searchInteractor.selectIndexes.selectOption('Title');
-  //     await searchInteractor.selectCondition.selectOption('Contains');
-  //     await searchInteractor.searchTextArea.fillAndSubmit('test');
-  //     await searchInteractor.itemRowClick.click();
-  //   });
-  
-  //   it('show detail for bib record', () => {
-  //     expect(searchInteractor.detailPanel).to.be.true;
-  //   });
-  // });
-
 });

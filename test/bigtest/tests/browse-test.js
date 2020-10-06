@@ -41,18 +41,4 @@ describe('Browse', () => {
     });
   });
 
-  // THIS TEST NOT WORKS YET: " Cannot read property 'query' of undefined" - how do i get the row to click inside the MCL stripes???
-  // describe('fill browse field and click on item in MCL for browse details', function () {
-  //   beforeEach(async function () {
-  //     await searchInteractor.selectIndexes.selectOption('Title');
-  //     await searchInteractor.selectCondition.selectOption('Browse');
-  //     await searchInteractor.searchTextArea.fillAndSubmit('test');
-  //       await searchInteractor.itemRowClick.click();
-  //   });
-
-  //   it('returns browse details panel', () => {
-  //       expect(browseInteractor.browseDetailPanel).to.be.true;
-  //   });
-  // });
-
 });

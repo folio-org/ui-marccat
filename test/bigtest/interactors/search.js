@@ -71,7 +71,13 @@ export default interactor(class SearchInteractor {
   itemRowClick = new RowClickInteractor('[data-row-index="row-0"]')
   detailPanel = isVisible('[data-test-detail-search]')
   searchResultItem = new Interactor('#data-test-search-results-table [data-row-inner="0"]');
+  paneDetailsPresent = isPresent('#pane-details');
+  confirmDeleteModalPresent = isPresent('#record-detail-delete-confirmation-modal');
   recordDetailButtonDelete = new Interactor('[data-test-btn-delete-record]');
   recordDetailConfirmButton = new ButtonInteractor('[data-test-confirmation-modal-confirm-button]');
+
+  whenLoaded() {
+    return this.timeout(6000).when(() => this.isLoaded);
+  }
 
 });

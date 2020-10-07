@@ -106,6 +106,12 @@ describe('Search', () => {
     });
   });
 
+  describe('should test bib indexes', () => {
+    it('should change options of indexes', () => {
+      expect(searchInteractor.selectIndexes.optionCount).to.equal(50);
+    });
+  });
+
   describe('fill Bib search field, select one record', function () {
     beforeEach(async function () {
       await searchInteractor.segmentButtonBib.click();
@@ -113,19 +119,41 @@ describe('Search', () => {
       await searchInteractor.selectCondition.selectOption('Contains');
       await searchInteractor.searchTextArea.fill('test');
       await searchInteractor.buttonSearch.click();
-      await searchInteractor.searchResultItem.click();
-      await searchInteractor.recordDetailButtonDelete.click();
-      await searchInteractor.recordDetailConfirmButton.click();
     });
 
-    it('selected first record', () => {
+    it('search executed', () => {
       expect(searchInteractor.searchResultItem.text).to.not.equal('');
     });
-  });
 
-  describe('should test bib indexes', () => {
-    it('should change options of indexes', () => {
-      expect(searchInteractor.selectIndexes.optionCount).to.equal(50);
+    describe('select first record', function () {
+      beforeEach(async function () {
+        await searchInteractor.searchResultItem.click();
+      });
+
+      it('record selected', () => {
+        expect(searchInteractor.paneDetailsPresent).to.be.true;
+      });
+
+      describe('delete record', function () {
+        beforeEach(async function () {
+          await searchInteractor.recordDetailButtonDelete.click();
+        });
+
+        it('show delete confirmation', () => {
+          expect(searchInteractor.confirmDeleteModalPresent).to.be.true;
+        });
+
+        describe('confirmed delete record', function () {
+          beforeEach(async function () {
+            await searchInteractor.recordDetailConfirmButton.click();
+            await searchInteractor.whenLoaded();
+          });
+
+          it('record deleted', () => {
+            expect(searchInteractor.confirmDeleteModalPresent).to.be.false;
+          });
+        });
+      });
     });
   });
 

@@ -3,10 +3,12 @@ import { expect } from 'chai';
 
 import setupApplication from '../helpers/setup-application';
 import SearchInteractor from '../interactors/search';
+import BrowseInteractor from '../interactors/browse';
 
 describe('Browse', () => {
   setupApplication();
   const searchInteractor = new SearchInteractor();
+  const browseInteractor = new BrowseInteractor();
 
   beforeEach(function () {
     this.server.create('fromTemplate');
@@ -28,4 +30,15 @@ describe('Browse', () => {
         expect(searchInteractor.countResults).to.be.greaterThan(1);
     });
   });
+
+  describe('should test browse filters', () => {
+    beforeEach(async function () {
+      await searchInteractor.selectCondition.selectOption('Browse');
+    });
+
+    it('should disable all filter', () => {
+      expect(searchInteractor.filtersContainerPresent).to.be.false;
+    });
+  });
+
 });

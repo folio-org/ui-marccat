@@ -385,7 +385,7 @@ export class BrowseResults extends React.Component<Props, S> {
             {isFetchingBrowseDetails ? (
               <Icon icon="spinner-ellipsis" />
             ) : isReadyBrowseDetails ? (
-              <BrowseItemDetail {...this.props} />
+              <BrowseItemDetail data-test-browse-item-detail {...this.props} />
             ) : null}
           </Pane>
         )}

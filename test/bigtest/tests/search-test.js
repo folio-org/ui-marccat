@@ -124,3 +124,11 @@ describe('Search', () => {
   });
 
 });
+
+  describe('should test bib indexes', () => {
+      it('should change options of indexes', () => {
+      expect(searchInteractor.selectIndexes.optionCount).to.equal(50);
+    });
+  });
+
+});

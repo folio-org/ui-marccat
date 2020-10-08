@@ -19,6 +19,8 @@ import {
 } from './reducers/Reducer';
 import {
   searchEpic,
+  searchBibEpic,
+  searchAuthEpic,
   searchDetailEpic,
   countDocEpic,
   searchAssociatedBibRecords,
@@ -59,6 +61,8 @@ export const reducer = combineReducers({
 
 export const epics = combineEpics(
   searchEpic,
+  searchBibEpic,
+  searchAuthEpic,
   searchDetailEpic,
   countDocEpic,
   searchAssociatedBibRecords,

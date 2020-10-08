@@ -140,5 +140,9 @@
     "authority.deweyclassification": "Dewey Classification",
     "authority.lcclassification": "LC Classification",
     "authority.universaldecimal": "Universal Decimal",
-    "authority.otherclassification": "Other Classification"
+    "authority.otherclassification": "Other Classification",
+    "browse.results.see": "See",
+    "browse.results.seenfrom": "Seen From",
+    "error.noresultsfoundfor.message": "Ничего не найдено для",
+    "error.checkspellingfilters.message": "Please check your spelling and filters."
 }

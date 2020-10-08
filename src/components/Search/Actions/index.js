@@ -100,3 +100,13 @@ export const resetHistoryAction = () => {
     type: ACTION.HISTORY_CLEAR,
   };
 };
+
+/**
+ *
+ * @param {*} payload
+ */
+export const resetFilterSearch = () => {
+  return {
+    type: ACTION.FILTER_SEARCH_CLEAR,
+  };
+};

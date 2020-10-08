@@ -1,6 +1,6 @@
 .noResultsMessage {
   padding: 15px;
-  color: #8b0000;
+  color: rgba(0, 0, 0, 0.62);
   top: 0;
   bottom: 0;
   left: 0;
@@ -16,11 +16,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: -webkit-fill-available;
+  width: 100%;
 }
 
 .noResultsMessageLabelWrap {
-  font-size: 22px;
+  font-size: 1.3rem;
 }
 
 .noResultsMessageIcon,

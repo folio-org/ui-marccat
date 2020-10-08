@@ -16,6 +16,7 @@ export const DELETE = `${prefix}DELETE`;
 export const RESOLVE = `${prefix}RESOLVE`;
 export const REJECT = `${prefix}REJECT`;
 export const FILTERS = `${prefix}FILTER`;
+export const RESET = `${prefix}RESET`;
 export const LOCK = `${prefix}LOCK`;
 export const UNLOCK = `${prefix}UNLOCK`;
 export const SETTINGS = `${prefix}SETTINGS`;
@@ -24,6 +25,9 @@ export const HISTORY_CLEAR = `${prefix}REQUEST_HISTORY_CLEAR`;
 export const EXECUTE_CALLBACK = `${prefix}EXECUTE_CALLBACK`;
 export const EXECUTE_CALLBACK_FIRED = `${prefix}EXECUTE_CALLBACK_FIRED!!!!!`;
 export const SEARCH = `${prefix}SEARCH`;
+export const SEARCHBIB = `${prefix}SEARCHBIB`;
+export const SEARCHAUTH = `${prefix}SEARCHAUTH`;
+export const FILTER_SEARCH_CLEAR = `${prefix}REQUEST_FILTER_SEARCH_CLEAR`;
 export const SCAN = `${prefix}SCAN`;
 export const DETAILS = `${prefix}DETAILS`;
 export const DETAILS_BY_TITLE = `${prefix}DETAILS_BY_TITLE`;
@@ -80,6 +84,7 @@ export const ACTION = {
   RESOLVE,
   REJECT,
   FILTERS,
+  RESET,
   LOCK,
   UNLOCK,
   SETTINGS,
@@ -88,6 +93,9 @@ export const ACTION = {
   EXECUTE_CALLBACK,
   EXECUTE_CALLBACK_FIRED,
   SEARCH,
+  SEARCHBIB,
+  SEARCHAUTH,
+  FILTER_SEARCH_CLEAR,
   SCAN,
   DETAILS,
   DETAILS_BY_TITLE,

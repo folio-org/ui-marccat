@@ -223,8 +223,12 @@ export class SearchResults extends React.Component<P, {}> {
           })}
         </MenuSection>
         : null}
-      <MenuSection label="Actions">
+      <MenuSection
+        data-test-action-button
+        label="Actions"
+      >
         <Button
+          data-test-new-record-button
           buttonStyle="primary"
           disabled={!emptyRecord}
           onClick={this.handleCreateRecord}
@@ -260,8 +264,17 @@ export class SearchResults extends React.Component<P, {}> {
       closePanels,
       totalAuth,
       totalBib,
+      bibsOnlyFilter,
+      autOnlyFilter,
     } = this.props;
     let { bibliographicResults, authorityResults } = this.props;
+
+    if (bibsOnlyFilter) {
+      bibsOnly = bibsOnlyFilter;
+    }
+    if (autOnlyFilter) {
+      autOnly = autOnlyFilter;
+    }
 
     if (activeFilter) {
       const filterArray = [];
@@ -330,7 +343,7 @@ export class SearchResults extends React.Component<P, {}> {
       (bibsOnly === true && autOnly === true) ||
       (bibsOnly === false && autOnly === false)
     ) {
-      if (bibliographicResults && bibliographicResults.length > 0) {
+      if ((bibliographicResults && bibliographicResults.length > 0) || (authorityResults && authorityResults.length > 0)) {
         mergedRecord = [...authorityResults, ...bibliographicResults];
       }
     }
@@ -369,6 +382,7 @@ export class SearchResults extends React.Component<P, {}> {
     } else if (!bibsOnly && !autOnly) {
       message = messageAuth.concat('/').concat(messageBib);
     }
+
     const messageNoContent = (
       <FormattedMessage id="ui-marccat.search.initial.message" />
     );
@@ -472,6 +486,8 @@ export default connect(
     closePanels: panels.closePanels,
     totalBib: totalBibRecords.totalBibDoc,
     totalAuth: totalAuthRecords.totalAuthDoc,
+    bibsOnlyFilter: search.bibsOnlyFilter,
+    autOnlyFilter: search.autOnlyFilter
   }),
   dispatch => dispatch(emptyRecordAction())
 )(injectProps(SearchResults));

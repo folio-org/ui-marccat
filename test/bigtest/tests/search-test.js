@@ -11,14 +11,19 @@ describe('Search', () => {
   beforeEach(function () {
     this.server.create('fromTemplate');
     this.server.createList('mergedSearch', 1);
+    this.server.createList('bibSearch', 1);
+    this.server.createList('authoritySearch', 1);
+    this.server.create('bibRecordDetail');
+    this.server.create('verticalDetail');
 
     return this.visit('/marccat/search', () => {
       expect(searchInteractor.$root).to.exist;
     });
   });
 
-  describe('fill search field and submit with the ENTER key', function () {
+  describe('fill Bib search field and submit with the ENTER key', function () {
     beforeEach(async function () {
+      await searchInteractor.segmentButtonBib.click();
       await searchInteractor.selectIndexes.selectOption('Title');
       await searchInteractor.selectCondition.selectOption('Contains');
       await searchInteractor.searchTextArea.fillAndSubmit('test');
@@ -29,8 +34,36 @@ describe('Search', () => {
     });
   });
 
-  describe('fill search field and submit with the button', function () {
+  describe('fill Bib search field and submit with the button', function () {
     beforeEach(async function () {
+      await searchInteractor.segmentButtonBib.click();
+      await searchInteractor.selectIndexes.selectOption('Title');
+      await searchInteractor.selectCondition.selectOption('Contains');
+      await searchInteractor.searchTextArea.fill('test');
+      await searchInteractor.buttonSearch.click();
+    });
+
+    it('returns at least one search result', () => {
+      expect(searchInteractor.countResults).to.be.greaterThan(1);
+    });
+  });
+
+  describe('fill Auth search field and submit with the ENTER key', function () {
+    beforeEach(async function () {
+      await searchInteractor.segmentButtonAuth.click();
+      await searchInteractor.selectIndexes.selectOption('Title');
+      await searchInteractor.selectCondition.selectOption('Contains');
+      await searchInteractor.searchTextArea.fillAndSubmit('test');
+    });
+
+    it('returns at least one search result', () => {
+      expect(searchInteractor.countResults).to.be.greaterThan(1);
+    });
+  });
+
+  describe('fill Auth search field and submit with the button', function () {
+    beforeEach(async function () {
+      await searchInteractor.segmentButtonAuth.click();
       await searchInteractor.selectIndexes.selectOption('Title');
       await searchInteractor.selectCondition.selectOption('Contains');
       await searchInteractor.searchTextArea.fill('test');
@@ -43,7 +76,6 @@ describe('Search', () => {
   });
 
   describe('should test authority indexes', () => {
-
     beforeEach(async function () {
       await searchInteractor.segmentAuthorityInteractor.click();
     });
@@ -59,7 +91,25 @@ describe('Search', () => {
     it('should remove filter', () => {
       expect(searchInteractor.filtersContainerPresent).to.be.false;
     });
+  });
 
+  describe('fill search field and click reset all button', () => {
+    beforeEach(async function () {
+      await searchInteractor.selectIndexes.selectOption('Title');
+      await searchInteractor.selectCondition.selectOption('Contains');
+      await searchInteractor.searchTextArea.fill('test');
+      await searchInteractor.buttonResetAll.click();
+    });
+
+    it('search fields should be reset', function () {
+      expect(searchInteractor.searchTextArea.value).to.equal('');
+    });
+  });
+
+  describe('should test bib indexes', () => {
+      it('should change options of indexes', () => {
+      expect(searchInteractor.selectIndexes.optionCount).to.equal(50);
+    });
   });
 
 });

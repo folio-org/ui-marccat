@@ -81,12 +81,9 @@ export const renderColumn = (
     visibleCol = [
       'resultView',
       '001',
-      '245',
       'name',
-      'preferredTitle',
       'tagHighlighted',
       'countDoc',
-      'subject',
     ];
   }
   if (

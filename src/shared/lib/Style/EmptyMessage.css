@@ -2,7 +2,7 @@
 /* Empty Message */
 .emptyMessage {
   padding: 15px;
-  color: #222;
+  color: rgba(0, 0, 0, 0.62);
   top: 0;
   bottom: 0;
   left: 0;
@@ -21,7 +21,7 @@
 }
 
 .emptyMessageLabelWrap {
-  font-size: 22px;
+  font-size: 1.3rem;
 }
 
 .emptyMessageIcon,

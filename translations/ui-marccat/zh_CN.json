@@ -2,7 +2,7 @@
     "MARCcat": "MARC编目",
     "marccat": "MARC编目",
     "noResult": "找不到结果",
-    "initial.title": "选择筛选或输入搜索查询以显示结果",
+    "initial.title": "选择筛选条件或输入搜索查询以显示结果",
     "button.new.tag": "标签",
     "button.backto": "关闭",
     "navigator.search": "搜索",
@@ -140,5 +140,9 @@
     "authority.deweyclassification": "杜威分类法",
     "authority.lcclassification": "LC分类法",
     "authority.universaldecimal": "通用十进分类法",
-    "authority.otherclassification": "其他分类"
+    "authority.otherclassification": "其他分类",
+    "browse.results.see": "见",
+    "browse.results.seenfrom": "见自",
+    "error.noresultsfoundfor.message": "找不到结果",
+    "error.checkspellingfilters.message": "请检查拼写和筛选条件。"
 }

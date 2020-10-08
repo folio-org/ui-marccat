@@ -4,11 +4,8 @@
 import React, { Fragment } from 'react';
 import {
   TextField,
-  AccordionSet,
-  Accordion,
-  FilterAccordionHeader,
-  Row, Col,
-
+  Row,
+  Col,
   ButtonGroup,
   Button,
 } from '@folio/stripes/components';
@@ -31,7 +28,7 @@ import { ACTION } from '../../../redux/actions/Actions';
 import { findYourQuery } from '../Filter';
 import { remapFilters, findParam } from '../../../shared';
 import { EMPTY_STRING, SEARCH_SEGMENT } from '../../../config/constants';
-import { historySearchAction, searchDetailAction } from '../Actions';
+import { resetFilterSearch, historySearchAction, searchDetailAction } from '../Actions';
 import styles from '../Style/index.css';
 
 type P = Props & {
@@ -52,8 +49,6 @@ class SearchPanel extends React.Component<P, {}> {
       searchForm: [EMPTY_STRING],
       filterEnable: true,
       counter: [{}],
-      leftBracketEnable: false,
-      rightBracketEnable: false,
       segment: this.segment,
       btnSubmitEnabled: false
     };
@@ -83,6 +78,7 @@ class SearchPanel extends React.Component<P, {}> {
 
   handleKeyDown(e) {
     let { isBrowseRequested } = this.state;
+    const { segment } = this.state;
     const { store, store: { getState }, dispatch, router } = this.props;
 
     if (e.charCode === 13 || e.key === 'Enter' || e.type === 'click') {
@@ -157,7 +153,12 @@ class SearchPanel extends React.Component<P, {}> {
             transitionToParams('q', bibQuery);
             dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
           } else {
-            dispatch({ type: ACTION.SEARCH, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
+            router.push('/marccat/search');
+            if (segment === SEARCH_SEGMENT.BIBLIOGRAPHIC) {
+              dispatch({ type: ACTION.SEARCHBIB, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
+            } else {
+              dispatch({ type: ACTION.SEARCHAUTH, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
+            }
             transitionToParams('q', authQuery);
             dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
             dispatch({ type: ACTION.TOTAL_AUTH_COUNT, query: authQuery });
@@ -228,6 +229,36 @@ class SearchPanel extends React.Component<P, {}> {
     );
   }
 
+  changeSegment = (segmentactive) => {
+    const { dispatch, reset } = this.props;
+    dispatch(reset('searchForm'));
+    dispatch(resetFilterSearch());
+    dispatch({ type: ACTION.CLOSE_PANELS, closePanels: true });
+    this.setState({
+      segment: segmentactive,
+      btnSubmitEnabled: false
+    });
+  };
+
+  handleBtnResetAll = () => {
+    const { segment } = this.state;
+    this.changeSegment(segment);
+  };
+
+  renderBtnResetAll = () => {
+    const { btnSubmitEnabled } = this.state;
+    return (
+      <ResetButton
+        className={styles['mb-5']}
+        visible={btnSubmitEnabled}
+        onClick={this.handleBtnResetAll}
+        id="clickable-reset-all"
+        label={<FormattedMessage id="ui-marccat.button.resetAll" />}
+        data-test-btn-reset-all
+      />
+    );
+  }
+
   getFilterContainer = (segment, filterEnable) => {
     if (segment === SEARCH_SEGMENT.BIBLIOGRAPHIC) {
       return (
@@ -243,121 +274,112 @@ class SearchPanel extends React.Component<P, {}> {
   }
 
   render() {
-    const { translate, ...rest } = this.props;
-    const { filterEnable, leftBracketEnable, rightBracketEnable, segment, btnSubmitEnabled } = this.state;
-    const menuNumOptions = [this.capitalize(SEARCH_SEGMENT.BIBLIOGRAPHIC), this.capitalize(SEARCH_SEGMENT.AUTHORITY)];
+    const { translate, store: { getState }, ...rest } = this.props;
+    const { filterEnable, segment, btnSubmitEnabled } = this.state;
+    const bibTxtLower = SEARCH_SEGMENT.BIBLIOGRAPHIC.toLowerCase();
+    const authTxtLower = SEARCH_SEGMENT.AUTHORITY.toLowerCase();
+
+    if (!btnSubmitEnabled) {
+      const form = getState().form.searchForm;
+      if (typeof (form) !== 'undefined' && typeof (form.values) !== 'undefined' && typeof (form.values.searchTextArea) !== 'undefined') {
+        if (form.values.searchTextArea.length > 0) {
+          this.setState({
+            btnSubmitEnabled: true
+          });
+        }
+      }
+    }
 
     return (
       <Fragment>
 
         <div data-test-inventory-instances>
-
           <ButtonGroup
             fullWidth
             data-test-filters-navigation
           >
-            {
-              menuNumOptions.map((text) => (
-                <Button
-                  key={`${text}`}
-                  to={`/marccat/search?segment=${text.toLowerCase()}`}
-                  buttonStyle={`${segment === text.toLowerCase() ? 'primary' : 'default'}`}
-                  id={`segment-navigation-${text}`}
-                  onClick={() => this.setState({
-                    segment: text.toLowerCase()
-                  })}
-                >
-                  <FormattedMessage id={text} />
-                </Button>
-              ))
-            }
+            <Button
+              key={`${this.capitalize(SEARCH_SEGMENT.BIBLIOGRAPHIC)}`}
+              to={`/marccat/search?segment=${bibTxtLower}`}
+              buttonStyle={`${segment === bibTxtLower ? 'primary' : 'default'}`}
+              id={`segment-navigation-${this.capitalize(SEARCH_SEGMENT.BIBLIOGRAPHIC)}`}
+              onClick={() => this.changeSegment(bibTxtLower)}
+              data-test-btn-segment-bib
+            >
+              <FormattedMessage id={this.capitalize(SEARCH_SEGMENT.BIBLIOGRAPHIC)} />
+            </Button>
+            <Button
+              key={`${this.capitalize(SEARCH_SEGMENT.AUTHORITY)}`}
+              to={`/marccat/search?segment=${authTxtLower}`}
+              buttonStyle={`${segment === authTxtLower ? 'primary' : 'default'}`}
+              id={`segment-navigation-${this.capitalize(SEARCH_SEGMENT.AUTHORITY)}`}
+              onClick={() => this.changeSegment(authTxtLower)}
+              data-test-btn-segment-auth
+            >
+              <FormattedMessage id={this.capitalize(SEARCH_SEGMENT.AUTHORITY)} />
+            </Button>
           </ButtonGroup>
-
         </div>
 
-        <AccordionSet>
-          <Accordion
-            {...rest}
-            separator={false}
-            label={translate({ id: 'ui-marccat.navigator.search' })}
-            header={FilterAccordionHeader}
-          >
-            <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}>
+        <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}>
+          <Row>
+            <Col xs={12} className={styles.forwardBracket}>
               <Row>
-                <Col xs={1}>
-                  <div
-                    className={(leftBracketEnable) ? styles.leftBracket : styles.leftBracketDisabled}
-                    onClick={() => this.setState({
-                      leftBracketEnable: !leftBracketEnable
-                    })}
-                  />
+                <Col xs={12}>
+                  <div>
+                    <SearchIndexes
+                      {...this.props}
+                      id="selectIndexes"
+                      name="selectIndexes"
+                      segment={segment}
+                    />
+                  </div>
                 </Col>
-                <Col xs={10} className={styles.forwardBracket}>
-                  <Row>
-                    <Col xs={12}>
-                      <div>
-                        <SearchIndexes
-                          {...this.props}
-                          id="selectIndexes"
-                          name="selectIndexes"
-                          segment={segment}
-                        />
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col xs={12}>
-                      <SearchConditions
-                        {...this.props}
-                        id="selectCondition"
-                        name="selectCondition"
-                      />
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col xs={12}>
-                      <div>
-                        <Field
-                          {...rest}
-                          id="searchTextArea"
-                          name="searchTextArea"
-                          data-test-search-text-area
-                          fullWidth
-                          component={TextField}
-                          placeholder="Search..."
-                        />
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col xs={12}>
-                      <Button
-                        id="search-panel-btn-search"
-                        buttonStyle={btnSubmitEnabled ? 'primary' : 'default'}
-                        onClick={this.handleKeyDown}
-                        type="submit"
-                        disabled={!btnSubmitEnabled}
-                        fullWidth
-                        data-test-btn-search
-                      >
-                        {translate({ id: 'ui-marccat.search.searchButton' })}
-                      </Button>
-                    </Col>
-                  </Row>
-                </Col>
-                <Col xs={1}>
-                  <div
-                    className={(rightBracketEnable) ? styles.rightBracket : styles.rightBracketDisabled}
-                    onClick={() => this.setState({
-                      rightBracketEnable: !rightBracketEnable
-                    })}
+              </Row>
+              <Row>
+                <Col xs={12}>
+                  <SearchConditions
+                    {...this.props}
+                    id="selectCondition"
+                    name="selectCondition"
                   />
                 </Col>
               </Row>
-            </form>
-          </Accordion>
-          {this.getFilterContainer(segment, filterEnable)}
-        </AccordionSet>
+              <Row>
+                <Col xs={12}>
+                  <div>
+                    <Field
+                      {...rest}
+                      id="searchTextArea"
+                      name="searchTextArea"
+                      data-test-search-text-area
+                      fullWidth
+                      component={TextField}
+                      placeholder="Search..."
+                    />
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={12}>
+                  <Button
+                    id="search-panel-btn-search"
+                    buttonStyle={btnSubmitEnabled ? 'primary' : 'default'}
+                    onClick={this.handleKeyDown}
+                    type="submit"
+                    disabled={!btnSubmitEnabled}
+                    fullWidth
+                    data-test-btn-search
+                  >
+                    {translate({ id: 'ui-marccat.search.searchButton' })}
+                  </Button>
+                  {this.renderBtnResetAll()}
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </form>
+        {this.getFilterContainer(segment, filterEnable)}
       </Fragment>
     );
   }

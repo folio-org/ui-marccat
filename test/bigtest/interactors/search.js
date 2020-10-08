@@ -4,7 +4,8 @@ import {
   interactor,
   selectable,
   clickable,
-  isPresent
+  isPresent,
+  isVisible
 } from '@bigtest/interactor';
 
 const SelectInteractor = interactor(class SelectInteractor {
@@ -36,6 +37,21 @@ const SearchButtonInteractor = interactor(class SearchButtonInteractor {
   clickThrough = clickable();
 });
 
+const ResetAllButtonInteractor = interactor(class ResetAllButtonInteractor {
+  clickThrough = clickable();
+});
+
+const SegmentButtonBibInteractor = interactor(class SegmentButtonBibInteractor {
+  clickThrough = clickable();
+});
+
+const SegmentButtonAuthInteractor = interactor(class SegmentButtonAuthInteractor {
+  clickThrough = clickable();
+});
+
+const RowClickInteractor = interactor(class RowClickInteractor {
+  clickThrough = clickable();
+});
 
 // https://bigtestjs.io/guides/interactors/introduction/
 export default interactor(class SearchInteractor {
@@ -46,5 +62,10 @@ export default interactor(class SearchInteractor {
   countResults = count('[data-row-index]');
   segmentAuthorityInteractor = new SegmentNavigationInteractor('#segment-navigation-Authority');
   buttonSearch = new SearchButtonInteractor('[data-test-btn-search]');
+  buttonResetAll = new ResetAllButtonInteractor('[data-test-btn-reset-all]');
   filtersContainerPresent = isPresent('[data-test-filters-container]');
+  segmentButtonBib = new SegmentButtonBibInteractor('[data-test-btn-segment-bib]');
+  segmentButtonAuth = new SegmentButtonAuthInteractor('[data-test-btn-segment-auth]');
+  itemRowClick = new RowClickInteractor('[data-row-index="row-0"]')
+  detailPanel = isVisible('[data-test-detail-search]')
 });

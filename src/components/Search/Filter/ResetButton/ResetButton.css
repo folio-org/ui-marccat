@@ -2,9 +2,12 @@
  * Reset Button
  */
 
+.resetButtonWrap .button {
+  margin-left: -3px;
+}
+
 .resetButtonRoot .button {
   padding: 0 6px 0 3px;
-  background: none !important; /* Remove gray background color from disabled button */
 }
 
 /**

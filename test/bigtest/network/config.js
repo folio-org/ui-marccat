@@ -44,10 +44,26 @@ this.get('/marccat/mergedSearch', ({mergedSearches}) => {
   return mergedSearches.all();
 });
 
+  this.get('/marccat/search', ({ bibSearches }) => {
+    return bibSearches.all();
+  });
+
+  this.get('/marccat/searchAuth', ({ authoritySearches }) => {
+    return authoritySearches.all();
+  });
+
 this.get('/marccat/countSearch', () => 2);
 
 this.get('/marccat/browse', ({browseSearches}) => {
   return browseSearches.all();
+});
+
+this.get('/marccatbibliographic-record/000000000022', ({bibRecordDetails}) => {
+  return bibRecordDetails.all();
+});
+
+this.get('/marccat/searchVertical', ({verticalDetails}) => {
+  return verticalDetails.all();
 });
 
 // translation bundle passthrough

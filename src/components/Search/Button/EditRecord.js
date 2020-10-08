@@ -29,7 +29,6 @@ const EditRecordButton = ({ ...props }) => {
 
   return (
     <Button
-      {...props}
       buttonStyle="dropdownItem"
       onClick={() => handleClickEdit()}
     >

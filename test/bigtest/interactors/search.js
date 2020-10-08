@@ -7,6 +7,8 @@ import {
   isPresent,
   isVisible,
   Interactor,
+  collection,
+  action,
 } from '@bigtest/interactor';
 import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
 
@@ -55,7 +57,11 @@ const RowClickInteractor = interactor(class RowClickInteractor {
   clickThrough = clickable();
 });
 
-// https://bigtestjs.io/guides/interactors/introduction/
+const SearchResultsInteractor = interactor(class SearchResultsInteractor {
+  rows = count('[data-row-index]');
+  clickThrough = clickable('[data-row-inner="0"]');
+});
+
 export default interactor(class SearchInteractor {
   static defaultScope = '#ModuleContainer';
   selectIndexes = new SelectInteractor('[data-test-select-indexes]');
@@ -68,6 +74,7 @@ export default interactor(class SearchInteractor {
   filtersContainerPresent = isPresent('[data-test-filters-container]');
   segmentButtonBib = new SegmentButtonBibInteractor('[data-test-btn-segment-bib]');
   segmentButtonAuth = new SegmentButtonAuthInteractor('[data-test-btn-segment-auth]');
+  searchResults = new SearchResultsInteractor('#data-test-search-results-table');
   itemRowClick = new RowClickInteractor('[data-row-index="row-0"]')
   detailPanel = isVisible('[data-test-detail-search]')
   searchResultItem = new Interactor('#data-test-search-results-table [data-row-inner="0"]');

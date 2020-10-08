@@ -27,7 +27,6 @@ const DuplicateRecord = ({ ...props }) => {
   const { detail } = props;
   return (
     <Button
-      {...props}
       buttonStyle="dropdownItem"
       disabled={!detail}
       onClick={() => duplicaRecord()}

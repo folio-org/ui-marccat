@@ -349,7 +349,6 @@ class SearchPanel extends React.Component<P, {}> {
                 <Col xs={12}>
                   <div>
                     <Field
-                      {...rest}
                       id="searchTextArea"
                       name="searchTextArea"
                       data-test-search-text-area

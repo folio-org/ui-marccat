@@ -122,12 +122,12 @@ describe('Search', () => {
     });
 
     it('search executed', () => {
-      expect(searchInteractor.searchResultItem.text).to.not.equal('');
+      expect(searchInteractor.searchResults.rows).to.be.greaterThan(0);
     });
 
     describe('select first record', function () {
       beforeEach(async function () {
-        await searchInteractor.searchResultItem.click();
+        await searchInteractor.searchResults.clickThrough();
       });
 
       it('record selected', () => {
@@ -146,7 +146,6 @@ describe('Search', () => {
         describe('confirmed delete record', function () {
           beforeEach(async function () {
             await searchInteractor.recordDetailConfirmButton.click();
-            await searchInteractor.whenLoaded();
           });
 
           it('record deleted', () => {

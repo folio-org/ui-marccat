@@ -15,6 +15,7 @@ const DeleteRecordButton = ({ eHandleClickDelete, ...props }) => {
   return (
     <div>
       <Button
+        id="clickable-dropdown-delete-record"
         buttonStyle="dropdownItem"
         onClick={() => handleClickDelete()}
         data-test-btn-delete-record

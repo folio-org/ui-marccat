@@ -91,6 +91,7 @@ class RecordDetailPane extends React.Component {
         <DeleteRecordButton
           {...this.props}
           eHandleClickDelete={this.handleClickDelete}
+          id="data-test-record-detail-pane-delete"
         />
       </Fragment>
     );
@@ -119,6 +120,7 @@ class RecordDetailPane extends React.Component {
             }
             dismissible
             onClose={onClose}
+            id="data-test-search-detail-pane"
           />
         )}
       >

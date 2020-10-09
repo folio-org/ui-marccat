@@ -125,34 +125,20 @@ describe('Search', () => {
       expect(searchInteractor.searchResults.rows).to.be.greaterThan(0);
     });
 
-    describe('select first record', function () {
+    describe('select first record and delete', function () {
       beforeEach(async function () {
         await searchInteractor.searchResults.clickThrough();
+        await searchInteractor.detailPanelWhenLoaded();
+        await searchInteractor.headerDropdown.click();
+        await searchInteractor.headerDropdownMenu.clickDelete();
+        await searchInteractor.headerDropdownMenu.clickDelete();
+        await searchInteractor.recordDetailConfirmButton.click();
       });
 
-      it('record selected', () => {
+      it('record deleted', () => {
         expect(searchInteractor.paneDetailsPresent).to.be.true;
       });
 
-      describe('delete record', function () {
-        beforeEach(async function () {
-          await searchInteractor.recordDetailButtonDelete.click();
-        });
-
-        it('show delete confirmation', () => {
-          expect(searchInteractor.confirmDeleteModalPresent).to.be.true;
-        });
-
-        describe('confirmed delete record', function () {
-          beforeEach(async function () {
-            await searchInteractor.recordDetailConfirmButton.click();
-          });
-
-          it('record deleted', () => {
-            expect(searchInteractor.confirmDeleteModalPresent).to.be.false;
-          });
-        });
-      });
     });
   });
 

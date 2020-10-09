@@ -62,6 +62,15 @@ const SearchResultsInteractor = interactor(class SearchResultsInteractor {
   clickThrough = clickable('[data-row-inner="0"]');
 });
 
+@interactor class HeaderDropdown {
+  click = clickable('button');
+}
+
+@interactor class HeaderDropdownMenu {
+  isDeleteButtonPresent = isPresent('#clickable-dropdown-delete-record')
+  clickDelete = clickable('#clickable-dropdown-delete-record');
+}
+
 export default interactor(class SearchInteractor {
   static defaultScope = '#ModuleContainer';
   selectIndexes = new SelectInteractor('[data-test-select-indexes]');
@@ -79,12 +88,12 @@ export default interactor(class SearchInteractor {
   detailPanel = isVisible('[data-test-detail-search]')
   searchResultItem = new Interactor('#data-test-search-results-table [data-row-inner="0"]');
   paneDetailsPresent = isPresent('#pane-details');
+  headerDropdown = new HeaderDropdown('#paneHeaderdata-test-search-detail-pane [data-pane-header-actions-dropdown]');
+  headerDropdownMenu = new HeaderDropdownMenu();
   confirmDeleteModalPresent = isPresent('#record-detail-delete-confirmation-modal');
-  recordDetailButtonDelete = new Interactor('[data-test-btn-delete-record]');
   recordDetailConfirmButton = new ButtonInteractor('[data-test-confirmation-modal-confirm-button]');
 
-  whenLoaded() {
-    return this.timeout(6000).when(() => this.isLoaded);
+  detailPanelWhenLoaded() {
+    return this.when(() => this.paneDetailsPresent === true).timeout(5000);
   }
-
 });

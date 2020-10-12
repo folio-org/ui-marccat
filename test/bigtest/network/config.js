@@ -58,7 +58,7 @@ this.get('/marccat/browse', ({browseSearches}) => {
   return browseSearches.all();
 });
 
-this.get('/marccatbibliographic-record/000000000022', ({bibRecordDetails}) => {
+this.get('/marccatbibliographic-record/000000000042', ({bibRecordDetails}) => {
   return bibRecordDetails.all();
 });
 

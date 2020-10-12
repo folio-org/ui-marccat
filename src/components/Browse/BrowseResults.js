@@ -141,8 +141,9 @@ export class BrowseResults extends React.Component<Props, S> {
   actionMenu = (
   ) => (
     <Fragment>
-      <MenuSection label="Actions">
+      <MenuSection id="data-test-browse-action-menu" label="Actions">
         <Button
+          data-test-browse-new-button
           buttonStyle="primary"
           // eslint-disable-next-line
           disabled={!this.props.datastore.emptyRecord}
@@ -347,6 +348,7 @@ export class BrowseResults extends React.Component<Props, S> {
           ) : isReadyBrowse ? (
             <MultiColumnList
               {...this.props}
+              id="data-test-browse-results"
               contentData={browseRecords}
               isEmptyMessage={C.EMPTY_STRING}
               formatter={browseFormatter}
@@ -374,6 +376,7 @@ export class BrowseResults extends React.Component<Props, S> {
         </Pane>
         {isNewSearch === 'N' && browseDetailPanelIsVisible && !rowClicked && (
           <Pane
+            id="data-test-browse-pane-detail"
             dismissible
             defaultWidth="30%"
             paneTitle={translate({ id: 'ui-marccat.browse.results.title' })}
@@ -385,13 +388,13 @@ export class BrowseResults extends React.Component<Props, S> {
             {isFetchingBrowseDetails ? (
               <Icon icon="spinner-ellipsis" />
             ) : isReadyBrowseDetails ? (
-              <BrowseItemDetail data-test-browse-item-detail {...this.props} />
+              <BrowseItemDetail {...this.props} />
             ) : null}
           </Pane>
         )}
         {isNewSearch === 'N' && browseDetailPanelIsVisible && isPanelOpen && (
           <Pane
-            id="pane-details"
+            id="associated-pane-details"
             defaultWidth="20%"
             paneTitle={
               <FormattedMessage id="ui-marccat.search.record.preview" />

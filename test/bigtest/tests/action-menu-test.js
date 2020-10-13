@@ -29,8 +29,33 @@ describe('ActionMenu', () => {
     });
   });
 
-  describe('should test action buttton', () => {
+  describe('should test action buttton for Auths', () => {
     beforeEach(async function () {
+      await actionMenuInteractor.segmentButtonAuth.click();
+      await actionMenuInteractor.buttonAction.click();
+    });
+
+    it('show create new auth record avaiable', () => {
+      expect(actionMenuInteractor.buttonNewBibRecord).to.be.true;
+    });
+
+  });
+
+  describe('click on Action and show aviable button for New Auth Record', function () {
+    beforeEach(async function () {
+      await actionMenuInteractor.buttonAction.click();
+      await actionMenuInteractor.headerDropdown.click();
+      await actionMenuInteractor.headerDropdownMenu.clickNew();
+    });
+
+    it('return button New Auth NOT disabled ', () => {
+      expect(actionMenuInteractor.newBibRecDisabled).to.be.false;
+    });
+  });
+
+  describe('should test action buttton for Bibs', () => {
+    beforeEach(async function () {
+      await actionMenuInteractor.segmentButtonBib.click();
       await actionMenuInteractor.buttonAction.click();
     });
 

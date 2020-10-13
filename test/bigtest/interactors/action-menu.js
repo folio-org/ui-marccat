@@ -31,6 +31,8 @@ export default interactor(class ActionMenuInteractor {
   associatedBrowseActionMenuSection = isPresent('#data-test-browse-action-menu');
   associatedButtonNew = property('[data-test-browse-new-button]', 'disabled');
 
+  segmentButtonBib = new ActionButtonInteractor('[data-test-btn-segment-bib]');
+  segmentButtonAuth = new ActionButtonInteractor('[data-test-btn-segment-auth]');
   headerDropdown = new HeaderDropdown('#paneHeaderdata-test-search-result-pane [data-pane-header-actions-dropdown]');
   headerDropdownMenu = new HeaderDropdownMenu();
   isNewEditPanelPresent = isPresent('[data-test-new-edit-record]');

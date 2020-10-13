@@ -276,7 +276,7 @@ class SearchPanel extends React.Component<P, {}> {
   }
 
   render() {
-    const { translate, store: { getState }, ...rest } = this.props;
+    const { translate, store: { getState } } = this.props;
     const { filterEnable, segment, btnSubmitEnabled } = this.state;
     const bibTxtLower = SEARCH_SEGMENT.BIBLIOGRAPHIC.toLowerCase();
     const authTxtLower = SEARCH_SEGMENT.AUTHORITY.toLowerCase();

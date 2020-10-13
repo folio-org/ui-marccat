@@ -39,6 +39,7 @@ export const ENDPOINT = {
   BROWSE_NEXT_PAGE: '/next-page',
   VIEW_TEMPLATE_URL: '/record-templates',
   EMPTY_RECORD_URL: '/bibliographic-record/from-template/',
+  EMPTY_RECORD_AUTH_URL: '/authority-record/from-template/',
   DUPLICATE_RECORD_URL: '/bibliographic-record/duplicate',
   FIXED_FIELD_CODE_GROUPS_URL: '/fixed-fields-code-groups',
   HEADER_TYPES_URL: '/header-types',

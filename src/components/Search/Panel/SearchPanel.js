@@ -28,7 +28,7 @@ import { ACTION } from '../../../redux/actions/Actions';
 import { findYourQuery } from '../Filter';
 import { remapFilters, findParam } from '../../../shared';
 import { EMPTY_STRING, SEARCH_SEGMENT } from '../../../config/constants';
-import { resetFilterSearch, historySearchAction, searchDetailAction } from '../Actions';
+import { resetFilterSearch, segmentActive, historySearchAction, searchDetailAction } from '../Actions';
 import styles from '../Style/index.css';
 
 type P = Props & {
@@ -232,7 +232,7 @@ class SearchPanel extends React.Component<P, {}> {
   changeSegment = (segmentactive) => {
     const { dispatch, reset } = this.props;
     dispatch(reset('searchForm'));
-    dispatch(resetFilterSearch());
+    dispatch(resetFilterSearch(segmentactive));
     dispatch({ type: ACTION.CLOSE_PANELS, closePanels: true });
     this.setState({
       segment: segmentactive,
@@ -260,6 +260,8 @@ class SearchPanel extends React.Component<P, {}> {
   }
 
   getFilterContainer = (segment, filterEnable) => {
+    const { dispatch } = this.props;
+    dispatch(segmentActive(segment));
     if (segment === SEARCH_SEGMENT.BIBLIOGRAPHIC) {
       return (
         <FiltersContainer data-test-filters-container {...this.props} filterEnable={!!(filterEnable)} segment={segment} />
@@ -349,7 +351,6 @@ class SearchPanel extends React.Component<P, {}> {
                 <Col xs={12}>
                   <div>
                     <Field
-                      {...rest}
                       id="searchTextArea"
                       name="searchTextArea"
                       data-test-search-text-area

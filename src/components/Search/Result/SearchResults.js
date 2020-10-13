@@ -25,7 +25,7 @@ import {
   AssociatedRecordPane,
 } from './components';
 import { EditRecordButton } from '..';
-import { emptyRecordAction } from '../../Cataloguing/Actions';
+import { emptyRecordAction, emptyRecordAuthAction } from '../../Cataloguing/Actions';
 import { searchDetailAction } from '../Actions';
 import * as C from '../../../config/constants';
 import CheckBox from '../../../shared/lib/Button/CheckBox';
@@ -78,10 +78,17 @@ export class SearchResults extends React.Component<P, {}> {
     const {
       router,
       toggleFilterPane,
-      datastore: { emptyRecord },
+      datastore: { emptyRecord, emptyRecordAuth },
+      data: { search: { segment } }
     } = this.props;
+
+    const emptyRecordAux =
+      segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC
+        ? emptyRecord
+        : emptyRecordAuth;
+
     toggleFilterPane();
-    router.push(`/marccat/cataloging?id=${emptyRecord.results.id}&mode=new`);
+    router.push(`/marccat/cataloging?id=${emptyRecordAux.results.id}&mode=new`);
   };
 
   openDetailFromCataloguing = () => {
@@ -409,8 +416,8 @@ export class SearchResults extends React.Component<P, {}> {
             authorityResults={authorityResults}
             handleDetails={this.handleDetails}
             isReady={isReady}
-            autOnly={autOnly}
             bibsOnly={bibsOnly}
+            autOnly={autOnly}
             loading={loading}
             messageNoContent={messageNoContent}
           />
@@ -422,6 +429,8 @@ export class SearchResults extends React.Component<P, {}> {
               detail={detail}
               isFetchingDetail={isFetchingDetail}
               isReadyDetail={isReadyDetail}
+              bibsOnly={bibsOnly}
+              autOnly={autOnly}
               onClose={() => this.setState({ detailPanelIsVisible: false })}
               rightMenuEdit={<EditRecordButton {...this.props} />}
             />
@@ -445,6 +454,13 @@ export class SearchResults extends React.Component<P, {}> {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    dispatch: dispatch(emptyRecordAction()),
+    dispatchAuth: dispatch(emptyRecordAuthAction()),
+  };
+};
 
 export default connect(
   ({
@@ -487,7 +503,7 @@ export default connect(
     totalBib: totalBibRecords.totalBibDoc,
     totalAuth: totalAuthRecords.totalAuthDoc,
     bibsOnlyFilter: search.bibsOnlyFilter,
-    autOnlyFilter: search.autOnlyFilter
+    autOnlyFilter: search.autOnlyFilter,
   }),
-  dispatch => dispatch(emptyRecordAction())
+  mapDispatchToProps
 )(injectProps(SearchResults));

@@ -44,6 +44,18 @@ describe('ActionMenu', () => {
     it('return button New NOT disabled ', () => {
       expect(actionMenuInteractor.newBibRecDisabled).to.be.false;
     });
+
+    describe('click on new record button', function () {
+      beforeEach(async function () {
+        await actionMenuInteractor.newRecordButton.click();
+      });
+
+      it('new button clicked ', () => {
+        expect(actionMenuInteractor.newBibRecDisabled).to.be.false;
+      });
+
+    });
+
   });
 
   describe('click on Action Menu on left panel for history search results', function () {

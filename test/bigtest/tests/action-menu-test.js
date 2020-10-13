@@ -14,11 +14,15 @@ describe('ActionMenu', () => {
 
   beforeEach(function () {
     this.server.create('fromTemplate');
+    this.server.create('fromAuthTemplate');
     this.server.create('browseSearch');
     this.server.createList('bibSearch', 1);
     this.server.createList('authoritySearch', 1);
     this.server.create('bibRecordDetail');
     this.server.create('verticalDetail');
+    this.server.create('headerType');
+    this.server.create('fixedFieldsCodeGroup');
+    this.server.create('fixedFieldsCodeGroupsByLeader');
 
     return this.visit('/marccat/search', () => {
       expect(actionMenuInteractor.$root).to.exist;
@@ -39,22 +43,24 @@ describe('ActionMenu', () => {
   describe('click on Action and show aviable button for New Bib Record', function () {
     beforeEach(async function () {
       await actionMenuInteractor.buttonAction.click();
+      await actionMenuInteractor.headerDropdown.click();
+      await actionMenuInteractor.headerDropdownMenu.clickNew();
     });
 
     it('return button New NOT disabled ', () => {
       expect(actionMenuInteractor.newBibRecDisabled).to.be.false;
     });
 
-    describe('click on new record button', function () {
+    /* describe('click on new button', function () {
       beforeEach(async function () {
-        await actionMenuInteractor.newRecordButton.click();
+        await actionMenuInteractor.headerDropdown.click();
+        await actionMenuInteractor.headerDropdownMenu.clickNew();
       });
 
-      it('new button clicked ', () => {
-        expect(actionMenuInteractor.newBibRecDisabled).to.be.false;
+      it('New button clicked ', () => {
+        expect(actionMenuInteractor.headerDropdownMenu.isNewButtonPresent).to.be.false;
       });
-
-    });
+    });*/
 
   });
 
@@ -129,6 +135,5 @@ describe('ActionMenu', () => {
     });
 
   });
-
 
 });

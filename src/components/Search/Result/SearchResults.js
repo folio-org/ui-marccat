@@ -239,6 +239,7 @@ export class SearchResults extends React.Component<P, {}> {
           buttonStyle="primary"
           disabled={!emptyRecord}
           onClick={this.handleCreateRecord}
+          id="clickable-dropdown-new-record"
         >
           <Icon icon="plus-sign" size="small">
             {Localize({ key: 'search.record.new' })}

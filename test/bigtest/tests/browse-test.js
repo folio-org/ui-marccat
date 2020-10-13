@@ -13,6 +13,10 @@ describe('Browse', () => {
   beforeEach(function () {
     this.server.create('fromTemplate');
     this.server.create('browseSearch');
+    this.server.createList('bibSearch', 1);
+    this.server.createList('authoritySearch', 1);
+    this.server.create('bibRecordDetail');
+    this.server.create('verticalDetail');
 
     return this.visit('/marccat/search', () => {
       expect(searchInteractor.$root).to.exist;
@@ -27,7 +31,7 @@ describe('Browse', () => {
     });
 
     it('returns browse result', () => {
-        expect(searchInteractor.countResults).to.be.greaterThan(1);
+        expect(browseInteractor.countResults).to.be.greaterThan(1);
     });
   });
 
@@ -38,6 +42,39 @@ describe('Browse', () => {
 
     it('should disable all filter', () => {
       expect(searchInteractor.filtersContainerPresent).to.be.false;
+    });
+  });
+
+  describe('fill browse field and click on item in MCL for browse details', function () {
+    beforeEach(async function () {
+      await searchInteractor.selectIndexes.selectOption('Title');
+      await searchInteractor.selectCondition.selectOption('Browse');
+      await searchInteractor.searchTextArea.fillAndSubmit('test');
+      await browseInteractor.itemRowClick.click();
+    });
+
+    it('returns browse details panel is present', () => {
+      expect(browseInteractor.presentBrowseDetailPanel).to.be.true;
+    });
+    it('returns browse details panel is visible', () => {
+      expect(browseInteractor.presentBrowseDetailPanel).to.be.true;
+    });
+  });
+
+  describe('fill browse field and click on item in MCL for browse details and then click on associated record for marc details', function () {
+    beforeEach(async function () {
+      await searchInteractor.selectIndexes.selectOption('Title');
+      await searchInteractor.selectCondition.selectOption('Browse');
+      await searchInteractor.searchTextArea.fillAndSubmit('test');
+      await browseInteractor.itemRowClick.click();
+      await browseInteractor.associatedItem.click();
+    });
+
+    it('returns browse details panel is visible', () => {
+      expect(browseInteractor.visibleAssociatedPaneDetails).to.be.true;
+    });
+    it('returns browse details panel is present', () => {
+      expect(browseInteractor.presentAssociatedPaneDetails).to.be.true;
     });
   });
 

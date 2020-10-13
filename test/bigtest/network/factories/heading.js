@@ -4,12 +4,12 @@ import faker from 'faker';
 faker.seed(1);
 
 export default Factory.extend({
-    
+
         "headingNumber": 13,
-        "stringText": faker.lorem.sentence(),
+        "stringText": "Test Browse",
         "countAuthorities": 0,
         "countDocuments": 2,
         "crossReferences": [],
         "countTitleNameDocuments": 0
-   
+
 });

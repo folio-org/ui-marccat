@@ -176,7 +176,6 @@ export const emptyRecordAuthAction = () => {
   return {
     type: ACTION.QUERY,
     data: {
-      // path: ENDPOINT.EMPTY_RECORD_AUTH_URL + 1,
       path: ENDPOINT.EMPTY_RECORD_URL + 1,
       type: 'emptyRecordAuth',
       params: ENDPOINT.DEFAULT_LANG_VIEW,

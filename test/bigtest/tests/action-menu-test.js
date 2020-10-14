@@ -44,13 +44,23 @@ describe('ActionMenu', () => {
   describe('click on Action and show aviable button for New Auth Record', function () {
     beforeEach(async function () {
       await actionMenuInteractor.buttonAction.click();
-      await actionMenuInteractor.headerDropdown.click();
-      await actionMenuInteractor.headerDropdownMenu.clickNew();
     });
 
     it('return button New Auth NOT disabled ', () => {
       expect(actionMenuInteractor.newBibRecDisabled).to.be.false;
     });
+
+    describe('click on new button', function () {
+      beforeEach(async function () {
+        await actionMenuInteractor.headerDropdown.click();
+        await actionMenuInteractor.headerDropdownMenu.clickNew();
+      });
+
+      it('New button clicked ', () => {
+        expect(actionMenuInteractor.isCancelInstanceEdition).to.be.true;
+      });
+    });
+
   });
 
   describe('should test action buttton for Bibs', () => {
@@ -68,24 +78,22 @@ describe('ActionMenu', () => {
   describe('click on Action and show aviable button for New Bib Record', function () {
     beforeEach(async function () {
       await actionMenuInteractor.buttonAction.click();
-      await actionMenuInteractor.headerDropdown.click();
-      await actionMenuInteractor.headerDropdownMenu.clickNew();
     });
 
     it('return button New NOT disabled ', () => {
       expect(actionMenuInteractor.newBibRecDisabled).to.be.false;
     });
 
-    /* describe('click on new button', function () {
+    describe('click on new button', function () {
       beforeEach(async function () {
         await actionMenuInteractor.headerDropdown.click();
         await actionMenuInteractor.headerDropdownMenu.clickNew();
       });
 
       it('New button clicked ', () => {
-        expect(actionMenuInteractor.headerDropdownMenu.isNewButtonPresent).to.be.false;
+        expect(actionMenuInteractor.isCancelInstanceEdition).to.be.true;
       });
-    });*/
+    });
 
   });
 

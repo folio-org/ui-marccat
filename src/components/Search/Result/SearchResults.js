@@ -88,7 +88,11 @@ export class SearchResults extends React.Component<P, {}> {
         : emptyRecordAuth;
 
     toggleFilterPane();
-    router.push(`/marccat/cataloging?id=${emptyRecordAux.results.id}&mode=new`);
+    router.push({
+      pathname: '/marccat/cataloging',
+      search: `?id=${emptyRecordAux.results.id}&mode=new`,
+      state: { id: emptyRecordAux.results.id, mode: 'new' },
+    });
   };
 
   openDetailFromCataloguing = () => {

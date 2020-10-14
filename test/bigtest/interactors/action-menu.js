@@ -35,6 +35,6 @@ export default interactor(class ActionMenuInteractor {
   segmentButtonAuth = new ActionButtonInteractor('[data-test-btn-segment-auth]');
   headerDropdown = new HeaderDropdown('#paneHeaderdata-test-search-result-pane [data-pane-header-actions-dropdown]');
   headerDropdownMenu = new HeaderDropdownMenu();
-  isNewEditPanelPresent = isPresent('[data-test-new-edit-record]');
+  isCancelInstanceEdition = isPresent('#cancel-instance-edition');
 
 });

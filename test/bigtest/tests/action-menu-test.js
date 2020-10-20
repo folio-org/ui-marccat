@@ -41,7 +41,7 @@ describe('ActionMenu', () => {
 
   });
 
-  describe('click on Action and show aviable button for New Auth Record', function () {
+  describe('click on Action and show available button for New Auth Record', function () {
     beforeEach(async function () {
       await actionMenuInteractor.buttonAction.click();
     });
@@ -75,7 +75,7 @@ describe('ActionMenu', () => {
 
   });
 
-  describe('click on Action and show aviable button for New Bib Record', function () {
+  describe('click on Action and show available button for New Bib Record', function () {
     beforeEach(async function () {
       await actionMenuInteractor.buttonAction.click();
     });

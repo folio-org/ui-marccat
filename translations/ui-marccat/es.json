@@ -143,6 +143,6 @@
     "authority.otherclassification": "Other Classification",
     "browse.results.see": "See",
     "browse.results.seenfrom": "Seen From",
-    "error.noresultsfoundfor.message": "No results found for",
-    "error.checkspellingfilters.message": "Please check your spelling and filters."
+    "error.noresultsfoundfor.message": "No se encontraron resultados para",
+    "error.checkspellingfilters.message": "Por favor revise su ortografía y filtros."
 }

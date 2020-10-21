@@ -78,19 +78,46 @@ export default function configure() {
     return verticalDetails.all();
   });
 
-  this.get('/marccat/header-types', ({ headerTypes }) => {
-    return headerTypes.all();
+  this.get('/marccat/header-types', ({ headerTypes, header007Types, header008Types }, request) => {
+    const code = request.queryParams.code;
+    if (code === '008') {
+      return header008Types.all();
+    } else if (code === '007') {
+      return header007Types.all();
+    } else {
+      return headerTypes.all();
+    }
   });
 
   this.options('/marccat/header-types', () => {
     return new Response(200);
   });
 
-  this.get('/marccat/fixed-fields-code-groups', ({ fixedFieldsCodeGroups }) => {
-    return fixedFieldsCodeGroups.all();
+  this.get('/marccat/fixed-fields-code-groups', ({ fixedFieldsCodeGroups, fixedFieldsCode31Groups }, request) => {
+    const code = request.queryParams.code;
+    const headerTypeCode = request.queryParams.headerTypeCode;
+    if (code === '008' && headerTypeCode === '31') {
+      return fixedFieldsCode31Groups.all();
+    } else {
+      return fixedFieldsCodeGroups.all();
+    }
   });
 
   this.options('/marccat/fixed-fields-code-groups', () => {
+    return new Response(200);
+  });
+
+  this.get('/marccat/auth-fixed-fields-code-groups', ({ authFixedFieldsCodeGroups, authFixedFieldsCode008Groups }, request) => {
+    const code = request.queryParams.code;
+    const headerTypeCode = request.queryParams.headerTypeCode;
+    if (code === '008' && headerTypeCode === '10') {
+      return authFixedFieldsCode008Groups.all();
+    } else { // code 000 headerTypeCode 9
+      return authFixedFieldsCodeGroups.all();
+    }
+  });
+
+  this.options('/marccat/auth-fixed-fields-code-groups', () => {
     return new Response(200);
   });
 

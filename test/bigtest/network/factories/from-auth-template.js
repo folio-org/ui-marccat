@@ -48,7 +48,7 @@ export default Factory.extend({
       'fieldStatus':'unchanged',
       'fixedField':{
         'categoryCode':1,
-        'headerTypeCode':31,
+        'headerTypeCode':10,
         'code':'008',
         'displayValue':'200729 n annnnabbn n2ann und u',
         'sequenceNumber':0,

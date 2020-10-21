@@ -156,4 +156,33 @@ describe('Search', () => {
     });
   });
 
+  describe('fill Auth search field, select one record', function () {
+    beforeEach(async function () {
+      await searchInteractor.segmentButtonAuth.click();
+      await searchInteractor.selectIndexes.selectOption('Title');
+      await searchInteractor.selectCondition.selectOption('Contains');
+      await searchInteractor.searchTextArea.fill('test');
+      await searchInteractor.buttonSearch.click();
+    });
+
+    it('search executed', () => {
+      expect(searchInteractor.searchResults.rows).to.be.greaterThan(0);
+    });
+
+    describe('select first record and try to delete it', function () {
+      beforeEach(async function () {
+        await searchInteractor.searchResults.clickThrough();
+        await searchInteractor.detailPanelWhenLoaded();
+        await searchInteractor.headerDropdown.click();
+        await searchInteractor.headerDropdownMenu.clickDelete();
+        await searchInteractor.recordDetailConfirmButton.click();
+      });
+
+      it('record cannot be deleted', () => {
+        expect(searchInteractor.paneDetailsPresent).to.be.true;
+      });
+
+    });
+  });
+
 });

@@ -128,14 +128,13 @@ describe('Search', () => {
     describe('select first record and cancel delete', function () {
       beforeEach(async function () {
         await searchInteractor.searchResults.clickThrough();
-        await searchInteractor.detailPanelWhenLoaded();
         await searchInteractor.headerDropdown.click();
         await searchInteractor.headerDropdownMenu.clickDelete();
         await searchInteractor.recordDetailCancelButton.click();
       });
 
       it('delete canceled', () => {
-        expect(searchInteractor.paneDetailsPresent).to.be.true;
+        expect(searchInteractor.detailPanelPresent).to.be.true;
       });
 
     });
@@ -143,14 +142,13 @@ describe('Search', () => {
     describe('select first record and delete', function () {
       beforeEach(async function () {
         await searchInteractor.searchResults.clickThrough();
-        await searchInteractor.detailPanelWhenLoaded();
         await searchInteractor.headerDropdown.click();
         await searchInteractor.headerDropdownMenu.clickDelete();
         await searchInteractor.recordDetailConfirmButton.click();
       });
 
       it('record deleted', () => {
-        expect(searchInteractor.paneDetailsPresent).to.be.true;
+        expect(searchInteractor.detailPanelPresent).to.be.true;
       });
 
     });
@@ -172,14 +170,13 @@ describe('Search', () => {
     describe('select first record and try to delete it', function () {
       beforeEach(async function () {
         await searchInteractor.searchResults.clickThrough();
-        await searchInteractor.detailPanelWhenLoaded();
         await searchInteractor.headerDropdown.click();
         await searchInteractor.headerDropdownMenu.clickDelete();
         await searchInteractor.recordDetailConfirmButton.click();
       });
 
       it('record cannot be deleted', () => {
-        expect(searchInteractor.paneDetailsPresent).to.be.true;
+        expect(searchInteractor.detailPanelPresent).to.be.true;
       });
     });
   });

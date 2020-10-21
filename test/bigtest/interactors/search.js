@@ -6,9 +6,7 @@ import {
   clickable,
   isPresent,
   isVisible,
-  Interactor,
-  collection,
-  action,
+  Interactor
 } from '@bigtest/interactor';
 import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
 
@@ -53,10 +51,6 @@ const SegmentButtonAuthInteractor = interactor(class SegmentButtonAuthInteractor
   clickThrough = clickable();
 });
 
-const RowClickInteractor = interactor(class RowClickInteractor {
-  clickThrough = clickable();
-});
-
 const SearchResultsInteractor = interactor(class SearchResultsInteractor {
   rows = count('[data-row-index]');
   clickThrough = clickable('[data-row-inner="0"]');
@@ -83,8 +77,11 @@ export default interactor(class SearchInteractor {
   filtersContainerPresent = isPresent('[data-test-filters-container]');
   segmentButtonBib = new SegmentButtonBibInteractor('[data-test-btn-segment-bib]');
   segmentButtonAuth = new SegmentButtonAuthInteractor('[data-test-btn-segment-auth]');
+  itemRowClick = new Interactor('#data-test-search-results-table [data-row-inner="0"]');
+
+  detailPanelVisible = isVisible('#record-pane-details');
+  detailPanelPresent = isPresent('#record-pane-details');
   searchResults = new SearchResultsInteractor('#data-test-search-results-table');
-  itemRowClick = new RowClickInteractor('[data-row-index="row-0"]')
   detailPanel = isVisible('[data-test-detail-search]')
   searchResultItem = new Interactor('#data-test-search-results-table [data-row-inner="0"]');
   paneDetailsPresent = isPresent('#pane-details');

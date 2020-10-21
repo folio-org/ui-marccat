@@ -104,7 +104,7 @@ class RecordDetailPane extends React.Component {
     const { modalDeleteShow } = this.state;
     return (
       <Pane
-        id="pane-details"
+        id="record-pane-details"
         defaultWidth="40%"
         renderHeader={renderProps => (
           <PaneHeader

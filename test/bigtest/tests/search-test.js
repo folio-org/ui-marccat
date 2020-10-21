@@ -30,7 +30,7 @@ describe('Search', () => {
     });
 
     it('returns at least one search result', () => {
-      expect(searchInteractor.countResults).to.be.greaterThan(1);
+      expect(searchInteractor.countResults).to.be.greaterThan(0);
     });
   });
 
@@ -44,7 +44,7 @@ describe('Search', () => {
     });
 
     it('returns at least one search result', () => {
-      expect(searchInteractor.countResults).to.be.greaterThan(1);
+      expect(searchInteractor.countResults).to.be.greaterThan(0);
     });
   });
 
@@ -181,7 +181,6 @@ describe('Search', () => {
       it('record cannot be deleted', () => {
         expect(searchInteractor.paneDetailsPresent).to.be.true;
       });
-
     });
   });
 

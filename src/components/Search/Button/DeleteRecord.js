@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Localize } from '../../../shared';
 // import { lockRecordAction } from '../../Cataloguing/Actions';
 
-const DeleteRecordButton = ({ eHandleClickDelete, ...props }) => {
+const DeleteRecordButton = ({ eHandleClickDelete }) => {
 
   const handleClickDelete = () => {
     eHandleClickDelete();

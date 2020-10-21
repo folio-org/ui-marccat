@@ -80,7 +80,7 @@ export default function configure() {
     return browseSearches.all();
   });
 
-  this.get('/marccat/bibliographic-record/000000000042', ({ bibRecordDetails }) => {
+  this.get('/marccat/bibliographic-record/:id', ({ bibRecordDetails }) => {
     return bibRecordDetails.all();
   });
 

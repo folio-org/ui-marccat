@@ -41,22 +41,27 @@ class RecordDetailPane extends React.Component {
       store.getState()
     );
     const statusCode = resp.status;
+    this.setState({
+      modalDeleteShow: false,
+    });
     if (statusCode === 204) {
       showValidationMessage(this.callout, translate({ id: 'ui-marccat.search.record.deletemodal.deletesuccess' }), 'success');
-      reset();
-      dispatch({
-        type: ACTION.SEARCHBIB,
-        isFromCat: 'N',
-        moreData: 'N',
-        queryBib: queryMoreBib,
-        queryAuth: queryMoreAuth,
-        from: '1',
-        to: '30',
+      return new Promise(() => {
+        setTimeout(() => {
+          reset();
+          dispatch({
+            type: ACTION.SEARCHBIB,
+            isFromCat: 'N',
+            moreData: 'N',
+            queryBib: queryMoreBib,
+            queryAuth: queryMoreAuth,
+            from: '1',
+            to: '30',
+          });
+          dispatch({ type: ACTION.CLOSE_PANELS, closePanels: true });
+          router.push('/marccat/search');
+        }, 2000);
       });
-      setTimeout(() => {
-        dispatch({ type: ACTION.CLOSE_PANELS, closePanels: true });
-        return router.push('/marccat/search');
-      }, 2000);
     } else if (statusCode === 423) {
       const msg423 = bibsOnly
         ? translate({ id: 'ui-marccat.search.record.deletemodal.notdeletedrecordused.bib' })
@@ -65,9 +70,6 @@ class RecordDetailPane extends React.Component {
     } else {
       showValidationMessage(this.callout, translate({ id: 'ui-marccat.search.record.deletemodal.deletewrong' }), 'error');
     }
-    this.setState({
-      modalDeleteShow: false,
-    });
   };
 
   handleClickDelete = () => {

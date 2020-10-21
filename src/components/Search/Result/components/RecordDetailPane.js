@@ -43,17 +43,17 @@ class RecordDetailPane extends React.Component {
     const statusCode = resp.status;
     if (statusCode === 204) {
       showValidationMessage(this.callout, translate({ id: 'ui-marccat.search.record.deletemodal.deletesuccess' }), 'success');
+      reset();
+      dispatch({
+        type: ACTION.SEARCHBIB,
+        isFromCat: 'N',
+        moreData: 'N',
+        queryBib: queryMoreBib,
+        queryAuth: queryMoreAuth,
+        from: '1',
+        to: '30',
+      });
       setTimeout(() => {
-        reset();
-        dispatch({
-          type: ACTION.SEARCHBIB,
-          isFromCat: 'N',
-          moreData: 'N',
-          queryBib: queryMoreBib,
-          queryAuth: queryMoreAuth,
-          from: '1',
-          to: '30',
-        });
         dispatch({ type: ACTION.CLOSE_PANELS, closePanels: true });
         return router.push('/marccat/search');
       }, 2000);

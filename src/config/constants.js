@@ -42,6 +42,7 @@ export const ENDPOINT = {
   EMPTY_RECORD_AUTH_URL: '/authority-record/from-template/',
   DUPLICATE_RECORD_URL: '/bibliographic-record/duplicate',
   FIXED_FIELD_CODE_GROUPS_URL: '/fixed-fields-code-groups',
+  AUTH_FIXED_FIELD_CODE_GROUPS_URL: '/auth-fixed-fields-code-groups',
   HEADER_TYPES_URL: '/header-types',
   CREATE_HEADING_URL: '/create-heading',
   CHANGE_DISPLAY_VALUE: '/bibliographic-record/fixed-field-display-value',

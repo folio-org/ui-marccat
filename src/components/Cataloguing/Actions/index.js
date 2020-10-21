@@ -1,14 +1,15 @@
-import { ENDPOINT } from '../../../config/constants';
+import { ENDPOINT, SEARCH_SEGMENT } from '../../../config/constants';
 import { ACTION } from '../../../redux/actions/Actions';
 
 // MARC action creator utility
 
 
 export const leaderDropdownAction = (payload) => {
+  const endPoint = (payload.segment === SEARCH_SEGMENT.AUTHORITY) ? ENDPOINT.AUTH_FIXED_FIELD_CODE_GROUPS_URL : ENDPOINT.FIXED_FIELD_CODE_GROUPS_URL;
   return {
     type: ACTION.QUERY,
     data: {
-      path: ENDPOINT.FIXED_FIELD_CODE_GROUPS_URL,
+      path: endPoint,
       type: 'leaderData',
       params: `value=${payload.value}&code=${payload.code}&headerTypeCode=${payload.typeCode}&lang=eng`,
     },

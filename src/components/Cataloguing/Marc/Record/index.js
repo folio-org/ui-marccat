@@ -84,13 +84,15 @@ class Record extends React.Component<
   // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
     const {
-      datastore: { emptyRecord },
+      datastore: { emptyRecord, emptyRecordAuth },
+      data: { search: { segment } },
       editLoadLeaderData,
       loadLeaderData,
       loadHeadertype,
       dispatch,
     } = this.props;
     const { isEditMode, isDuplicateMode } = this.state;
+    const emptyRecordAux = segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC ? emptyRecord : emptyRecordAuth;
     if (isEditMode || isDuplicateMode) {
       const { recordDetail } = this.props;
       const leaderEdit = recordDetail.leader;
@@ -102,11 +104,12 @@ class Record extends React.Component<
       loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
       dispatch(MarcAction.change008ByLeaderAction(leaderEdit.value));
     } else {
-      const { leader } = emptyRecord.results;
+      const { leader } = emptyRecordAux.results;
       loadLeaderData({
         value: leader.value,
         code: leader.code,
         typeCode: '15',
+        segment
       });
       loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
       dispatch(MarcAction.change008ByLeaderAction(leader.value));
@@ -115,12 +118,14 @@ class Record extends React.Component<
 
   getCurrentRecord = (): Object => {
     const {
-      datastore: { emptyRecord, recordDuplicate },
+      datastore: { emptyRecord, emptyRecordAuth, recordDuplicate },
+      data: { search: { segment } },
       recordDetail,
     } = this.props;
     const { mode } = this.state;
+    const emptyRecordAux = segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC ? emptyRecord : emptyRecordAuth;
 
-    if (mode === RECORD_ACTION.CREATION_MODE) return Object.assign({}, emptyRecord.results);
+    if (mode === RECORD_ACTION.CREATION_MODE) return Object.assign({}, emptyRecordAux.results);
     else if (mode === RECORD_ACTION.EDIT_MODE) return Object.assign({}, recordDetail);
     else return Object.assign({}, recordDuplicate.results.bibliographicRecord);
   };
@@ -249,13 +254,15 @@ class Record extends React.Component<
   saveRecord = async e => {
     e.stopPropagation();
     const {
-      datastore: { emptyRecord },
+      datastore: { emptyRecord, emptyRecordAuth },
+      data: { search: { segment } },
       store: { getState },
     } = this.props;
     const { deletedTag, isCreationMode, isDuplicateMode } = this.state;
     const formData = getState().form.dataFieldForm.values;
     const initialValues = getState().form.variableFieldForm.initial.items;
     let variableFormData = getState().form.variableFieldForm.values.items;
+    const emptyRecordAux = segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC ? emptyRecord : emptyRecordAuth;
 
     // to remove
     variableFormData.map(
@@ -272,14 +279,14 @@ class Record extends React.Component<
 
     const recordTemplate: RecordTemplate<Type> = {
       id: 1,
-      fields: filterMandatoryFields(emptyRecord.results.fields),
+      fields: filterMandatoryFields(emptyRecordAux.results.fields),
     };
     if (!isCreationMode) {
       if (formData.Tag006 !== null) {
-        emptyRecord.results.fields.map(f => (f.code === '006' ? bibliographicRecord.fields.push(f) : null));
+        emptyRecordAux.results.fields.map(f => (f.code === '006' ? bibliographicRecord.fields.push(f) : null));
       }
       if (formData.Tag007 !== null) {
-        emptyRecord.results.fields.map(f => (f.code === '007' ? bibliographicRecord.fields.push(f) : null));
+        emptyRecordAux.results.fields.map(f => (f.code === '007' ? bibliographicRecord.fields.push(f) : null));
       }
     }
     bibliographicRecord.fields = union(
@@ -505,7 +512,7 @@ class Record extends React.Component<
   }
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators(
+const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
     loadHeadertype: (tag: []) => _ => {
       tag.forEach(t => dispatch(MarcAction.headertypeAction(t)));

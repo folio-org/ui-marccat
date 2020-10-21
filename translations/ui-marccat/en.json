@@ -75,6 +75,7 @@
   "cataloging.variablefield.section.add.newtag": "Add new tag",
   "cataloging.accordion.fixedfield.label": "Control Fields (001, 003, 005)",
   "cataloging.accordion.fixedfield.editable.label": "Control Fields (006, 007, 008)",
+  "cataloging.accordion.fixedfield.editable.label.auth": "Control Fields (008)",
   "cataloging.accordion.variablefield.label": "Variable Fields",
   "cataloging.accordion.checkbox.label": "Suppress",
   "cataloging.checkbox.label": "Suppress From Discovery",

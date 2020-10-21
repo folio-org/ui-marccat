@@ -30,7 +30,7 @@ describe('Search', () => {
     });
 
     it('returns at least one search result', () => {
-      expect(searchInteractor.countResults).to.be.greaterThan(1);
+      expect(searchInteractor.countResults).to.be.greaterThan(0);
     });
   });
 
@@ -44,7 +44,7 @@ describe('Search', () => {
     });
 
     it('returns at least one search result', () => {
-      expect(searchInteractor.countResults).to.be.greaterThan(1);
+      expect(searchInteractor.countResults).to.be.greaterThan(0);
     });
   });
 
@@ -109,6 +109,23 @@ describe('Search', () => {
   describe('should test bib indexes', () => {
       it('should change options of indexes', () => {
       expect(searchInteractor.selectIndexes.optionCount).to.equal(50);
+    });
+  });
+
+  describe('fill Bib search field and select first record in table results', function () {
+    beforeEach(async function () {
+      await searchInteractor.segmentButtonBib.click();
+      await searchInteractor.selectIndexes.selectOption('Title');
+      await searchInteractor.selectCondition.selectOption('Contains');
+      await searchInteractor.searchTextArea.fillAndSubmit('test');
+      await searchInteractor.itemRowClick.click();
+    });
+
+    it('detail panel for bib record details is present', () => {
+      expect(searchInteractor.detailPanelPresent).to.be.true;
+    });
+    it('show detail panel for bib record details', () => {
+      expect(searchInteractor.detailPanelVisible).to.be.true;
     });
   });
 

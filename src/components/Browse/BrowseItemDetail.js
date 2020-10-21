@@ -42,7 +42,7 @@ export class BrowseItemDetail extends React.Component<P, {
     }
     const { recordDetailsArray } = this.state;
     return (
-      <AccordionSet>
+      <AccordionSet id="data-test-accordion-set-browse">
         {isAuthority &&
           <Accordion
             separator={false}
@@ -74,17 +74,19 @@ export class BrowseItemDetail extends React.Component<P, {
           {
             (authorityDetails === undefined) || (recordDetailsArray.length === 0) ?
               <Accordion
+                id="data-test-accordion-no-associated-auth-rec"
                 separator={false}
                 header={FilterAccordionHeader}
                 label="Non associated Authority record"
-                displayWhenOpen={<Button buttonStyle="default">Create Authority Record</Button>}
+                displayWhenOpen={<Button id="data-test-button-create-auth-from-browse" buttonStyle="default">Create Authority Record</Button>}
               /> : null
           }
           <Accordion
+            id="data-test-accordion-associated-bib-rec"
             separator={false}
             header={FilterAccordionHeader}
             label="Associated Bibliographic records"
-            displayWhenOpen={<Button buttonStyle="default">Options</Button>}
+            displayWhenOpen={<Button id="data-test-button-option" buttonStyle="default">Options</Button>}
           >
             <MultiColumnList
               id="bib-associated"

@@ -18,8 +18,9 @@ function BrowseAssociatedItemDetail({ translate, ...props }: P) {
     const tag245 = getTag245(recordDetailsArray);
     const title245 = getTitle245(recordDetailsArray);
     return (
-      <AccordionSet>
+      <AccordionSet id="data-test-accordion-set-associated-details">
         <Accordion
+          id="data-test-accordion-bib-associated-details"
           separator={false}
           header={FilterAccordionHeader}
           label={translate({ id: 'ui-marccat.search.details.bibliographic' })}

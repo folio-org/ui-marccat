@@ -155,7 +155,7 @@ class SearchResultPane extends React.Component<Props, {}> {
           }}
         >
           <MultiColumnList
-            id="data-test-search-results-table"
+            id="data-test-search-results-table-more-results"
             autosize
             defaultWidth="fill"
             columnWidths={columnWidthMapper(bibsOnly, autOnly)}

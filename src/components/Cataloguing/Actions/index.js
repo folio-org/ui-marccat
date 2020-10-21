@@ -172,6 +172,17 @@ export const emptyRecordAction = () => {
   };
 };
 
+export const emptyRecordAuthAction = () => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.EMPTY_RECORD_URL + 1,
+      type: 'emptyRecordAuth',
+      params: ENDPOINT.DEFAULT_LANG_VIEW,
+    },
+  };
+};
+
 export const lockRecordAction = (payload) => {
   return {
     type: ACTION.UPDATE,

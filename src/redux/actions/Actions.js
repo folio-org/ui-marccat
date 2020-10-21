@@ -28,6 +28,7 @@ export const SEARCH = `${prefix}SEARCH`;
 export const SEARCHBIB = `${prefix}SEARCHBIB`;
 export const SEARCHAUTH = `${prefix}SEARCHAUTH`;
 export const FILTER_SEARCH_CLEAR = `${prefix}REQUEST_FILTER_SEARCH_CLEAR`;
+export const FILTER_SEGMENT_ACTIVE = `${prefix}REQUEST_FILTER_SEGMENT_ACTIVE`;
 export const SCAN = `${prefix}SCAN`;
 export const DETAILS = `${prefix}DETAILS`;
 export const DETAILS_BY_TITLE = `${prefix}DETAILS_BY_TITLE`;
@@ -96,6 +97,7 @@ export const ACTION = {
   SEARCHBIB,
   SEARCHAUTH,
   FILTER_SEARCH_CLEAR,
+  FILTER_SEGMENT_ACTIVE,
   SCAN,
   DETAILS,
   DETAILS_BY_TITLE,

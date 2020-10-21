@@ -14,19 +14,58 @@ describe('ActionMenu', () => {
 
   beforeEach(function () {
     this.server.create('fromTemplate');
+    this.server.create('fromAuthTemplate');
     this.server.create('browseSearch');
     this.server.createList('bibSearch', 1);
     this.server.createList('authoritySearch', 1);
     this.server.create('bibRecordDetail');
     this.server.create('verticalDetail');
+    this.server.create('headerType');
+    this.server.create('fixedFieldsCodeGroup');
+    this.server.create('fixedFieldsCodeGroupsByLeader');
 
     return this.visit('/marccat/search', () => {
       expect(actionMenuInteractor.$root).to.exist;
     });
   });
 
-  describe('should test action buttton', () => {
+  describe('should test action buttton for Auths', () => {
     beforeEach(async function () {
+      await actionMenuInteractor.segmentButtonAuth.click();
+      await actionMenuInteractor.buttonAction.click();
+    });
+
+    it('show create new auth record avaiable', () => {
+      expect(actionMenuInteractor.buttonNewBibRecord).to.be.true;
+    });
+
+  });
+
+  describe('click on Action and show available button for New Auth Record', function () {
+    beforeEach(async function () {
+      await actionMenuInteractor.buttonAction.click();
+    });
+
+    it('return button New Auth NOT disabled ', () => {
+      expect(actionMenuInteractor.newBibRecDisabled).to.be.false;
+    });
+
+    describe('click on new button', function () {
+      beforeEach(async function () {
+        await actionMenuInteractor.headerDropdown.click();
+        await actionMenuInteractor.headerDropdownMenu.clickNew();
+      });
+
+      it('New button clicked ', () => {
+        expect(actionMenuInteractor.isCancelInstanceEdition).to.be.true;
+      });
+    });
+
+  });
+
+  describe('should test action buttton for Bibs', () => {
+    beforeEach(async function () {
+      await actionMenuInteractor.segmentButtonBib.click();
       await actionMenuInteractor.buttonAction.click();
     });
 
@@ -36,7 +75,7 @@ describe('ActionMenu', () => {
 
   });
 
-  describe('click on Action and show aviable button for New Bib Record', function () {
+  describe('click on Action and show available button for New Bib Record', function () {
     beforeEach(async function () {
       await actionMenuInteractor.buttonAction.click();
     });
@@ -44,6 +83,18 @@ describe('ActionMenu', () => {
     it('return button New NOT disabled ', () => {
       expect(actionMenuInteractor.newBibRecDisabled).to.be.false;
     });
+
+    describe('click on new button', function () {
+      beforeEach(async function () {
+        await actionMenuInteractor.headerDropdown.click();
+        await actionMenuInteractor.headerDropdownMenu.clickNew();
+      });
+
+      it('New button clicked ', () => {
+        expect(actionMenuInteractor.isCancelInstanceEdition).to.be.true;
+      });
+    });
+
   });
 
   describe('click on Action Menu on left panel for history search results', function () {
@@ -117,6 +168,5 @@ describe('ActionMenu', () => {
     });
 
   });
-
 
 });

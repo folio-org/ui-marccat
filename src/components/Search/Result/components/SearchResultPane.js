@@ -73,6 +73,7 @@ class SearchResultPane extends React.Component<Props, {}> {
               mergedRecord && mergedRecord.length > 0 ? message : messageNoContent
             }
             appIcon={<AppIcon app={C.META.ICON_TITLE} />}
+            id="data-test-search-result-pane"
           />
         )}
         firstMenu={firstMenu}
@@ -129,6 +130,7 @@ class SearchResultPane extends React.Component<Props, {}> {
               actionMenu={actionMenu}
               paneSub={message}
               appIcon={<AppIcon app={C.META.ICON_TITLE} />}
+              id="data-test-search-result-pane"
             />
           )}
           firstMenu={firstMenu}

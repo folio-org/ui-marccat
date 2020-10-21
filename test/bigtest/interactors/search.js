@@ -92,6 +92,7 @@ export default interactor(class SearchInteractor {
   headerDropdownMenu = new HeaderDropdownMenu();
   confirmDeleteModalPresent = isPresent('#record-detail-delete-confirmation-modal');
   recordDetailConfirmButton = new ButtonInteractor('[data-test-confirmation-modal-confirm-button]');
+  recordDetailCancelButton = new ButtonInteractor('[data-test-confirmation-modal-cancel-button]');
 
   detailPanelWhenLoaded() {
     return this.when(() => this.paneDetailsPresent === true).timeout(5000);

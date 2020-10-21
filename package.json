@@ -83,7 +83,7 @@
     "react-final-form": "^6.3.0",
     "react-hot-loader": "^4.3.12",
     "redux-actions": "^2.2.1",
-    "redux-observable": "^0.15.0"
+    "redux-observable": "^0.19.0"
   },
   "peerDependencies": {
     "@folio/stripes": "^5.0.0",

@@ -60,8 +60,14 @@ class Record extends React.Component<
       isCreationMode: findParam('mode') === RECORD_ACTION.CREATION_MODE,
       isEditMode: findParam('mode') === RECORD_ACTION.EDIT_MODE,
       isDuplicateMode: findParam('mode') === RECORD_ACTION.DUPLICATE_MODE,
-      mode: findParam('mode'),
-      id: findParam('id'),
+      mode:
+        findParam('mode') !== null
+          ? findParam('mode')
+          : props.location.state.mode,
+      id:
+        findParam('id') !== null
+          ? findParam('id')
+          : props.location.state.id,
       submit: false,
       deletedTag: false,
       statusCode: '',

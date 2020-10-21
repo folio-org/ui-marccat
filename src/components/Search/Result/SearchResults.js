@@ -25,7 +25,7 @@ import {
   AssociatedRecordPane,
 } from './components';
 import { EditRecordButton } from '..';
-import { emptyRecordAction } from '../../Cataloguing/Actions';
+import { emptyRecordAction, emptyRecordAuthAction } from '../../Cataloguing/Actions';
 import { searchDetailAction } from '../Actions';
 import * as C from '../../../config/constants';
 import CheckBox from '../../../shared/lib/Button/CheckBox';
@@ -78,10 +78,21 @@ export class SearchResults extends React.Component<P, {}> {
     const {
       router,
       toggleFilterPane,
-      datastore: { emptyRecord },
+      datastore: { emptyRecord, emptyRecordAuth },
+      data: { search: { segment } }
     } = this.props;
+
+    const emptyRecordAux =
+      segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC
+        ? emptyRecord
+        : emptyRecordAuth;
+
     toggleFilterPane();
-    router.push(`/marccat/cataloging?id=${emptyRecord.results.id}&mode=new`);
+    router.push({
+      pathname: '/marccat/cataloging',
+      search: `?id=${emptyRecordAux.results.id}&mode=new`,
+      state: { id: emptyRecordAux.results.id, mode: 'new' },
+    });
   };
 
   openDetailFromCataloguing = () => {
@@ -232,6 +243,7 @@ export class SearchResults extends React.Component<P, {}> {
           buttonStyle="primary"
           disabled={!emptyRecord}
           onClick={this.handleCreateRecord}
+          id="clickable-dropdown-new-record"
         >
           <Icon icon="plus-sign" size="small">
             {Localize({ key: 'search.record.new' })}
@@ -448,6 +460,13 @@ export class SearchResults extends React.Component<P, {}> {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    dispatch: dispatch(emptyRecordAction()),
+    dispatchAuth: dispatch(emptyRecordAuthAction()),
+  };
+};
+
 export default connect(
   ({
     marccat: {
@@ -489,7 +508,7 @@ export default connect(
     totalBib: totalBibRecords.totalBibDoc,
     totalAuth: totalAuthRecords.totalAuthDoc,
     bibsOnlyFilter: search.bibsOnlyFilter,
-    autOnlyFilter: search.autOnlyFilter
+    autOnlyFilter: search.autOnlyFilter,
   }),
-  dispatch => dispatch(emptyRecordAction())
+  mapDispatchToProps
 )(injectProps(SearchResults));

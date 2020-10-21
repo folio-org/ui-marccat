@@ -40,7 +40,19 @@ export default function configure() {
     return fromTemplates.all();
   });
 
-  this.get('/marccat/mergedSearch', ({mergedSearches}) => {
+  this.options('marccat/bibliographic-record/fixed-field-display-value', () => {
+    return new Response(200);
+  });
+
+  this.post('marccat/bibliographic-record/fixed-field-display-value', () => {
+    return new Response(201);
+  }, 201);
+
+  this.get('/marccat/authority-record/from-template/1', ({ fromAuthTemplates }) => {
+    return fromAuthTemplates.all();
+  });
+
+  this.get('/marccat/mergedSearch', ({ mergedSearches }) => {
     return mergedSearches.all();
   });
 
@@ -54,18 +66,6 @@ export default function configure() {
 
   this.get('/marccat/countSearch', () => 2);
 
-  this.get('/marccat/browse', ({ browseSearches }) => {
-    return browseSearches.all();
-  });
-
-  this.get('/marccatbibliographic-record/000000000022', ({ bibRecordDetails }) => {
-    return bibRecordDetails.all();
-  });
-
-  this.get('/marccat/searchVertical', ({ verticalDetails }) => {
-    return verticalDetails.all();
-  });
-
   // Delete Bib record
   this.delete('/marccat/bibliographic-record/:id', () => {
     return new Response(204);
@@ -75,6 +75,42 @@ export default function configure() {
   this.delete('/marccat/authority-record/:id', () => {
     return new Response(423, {}, {});
   }, 423);
+
+  this.get('/marccat/browse', ({ browseSearches }) => {
+    return browseSearches.all();
+  });
+
+  this.get('/marccatbibliographic-record/000000000042', ({ bibRecordDetails }) => {
+    return bibRecordDetails.all();
+  });
+
+  this.get('/marccat/searchVertical', ({ verticalDetails }) => {
+    return verticalDetails.all();
+  });
+
+  this.get('/marccat/header-types', ({ headerTypes }) => {
+    return headerTypes.all();
+  });
+
+  this.options('/marccat/header-types', () => {
+    return new Response(200);
+  });
+
+  this.get('/marccat/fixed-fields-code-groups', ({ fixedFieldsCodeGroups }) => {
+    return fixedFieldsCodeGroups.all();
+  });
+
+  this.options('/marccat/fixed-fields-code-groups', () => {
+    return new Response(200);
+  });
+
+  this.get('/marccat/fixed-fields-code-groups-by-leader', ({ fixedFieldsCodeGroupsByLeaders }) => {
+    return fixedFieldsCodeGroupsByLeaders.all();
+  });
+
+  this.options('/marccat/fixed-fields-code-groups-by-leader', () => {
+    return new Response(200);
+  });
 
   // translation bundle passthrough
   this.pretender.get(`${__webpack_public_path__}translations/:rand.json`, this.pretender.passthrough); // eslint-disable-line

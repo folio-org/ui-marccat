@@ -19,6 +19,7 @@ export type CreateHeadingAction = {} & Action
 export type ChangeDisplayValueAction = {} & Action
 export type SaveRecordAction = {} & Action
 export type EmptyRecordAction = {} & Action
+export type EmptyRecordAuthAction = {} & Action
 export type CreateRecordAction = {} & Action
 export type DeleteRecordAction = {} & Action
 export type DropDownValuesAction = {} & Action
@@ -35,6 +36,7 @@ export type Actions = {
   changeDisplayValueAction: ChangeDisplayValueAction,
   saveRecordAction: SaveRecordAction,
   emptyRecordAction: EmptyRecordAction,
+  emptyRecordAuthAction: EmptyRecordAuthAction,
   createRecordAction: CreateRecordAction,
   deleteRecordAction: DeleteRecordAction,
   dropDownValuesAction: DropDownValuesAction,

@@ -68,6 +68,12 @@ export function searchEngineReducer(state = { isLoading, isReady }, action) {
     };
   case ACTION.FILTER_SEARCH_CLEAR:
     return {
+      segment: action.segment
+    };
+  case ACTION.FILTER_SEGMENT_ACTIVE:
+    return {
+      ...state,
+      segment: action.segment
     };
   default:
     return state;

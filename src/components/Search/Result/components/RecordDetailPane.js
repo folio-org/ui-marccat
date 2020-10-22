@@ -59,7 +59,7 @@ class RecordDetailPane extends React.Component {
             to: '30',
           });
           dispatch({ type: ACTION.CLOSE_PANELS, closePanels: true });
-          router.push('/marccat/search');
+          return router.push('/marccat/search');
         }, 2000);
       });
     } else if (statusCode === 423) {

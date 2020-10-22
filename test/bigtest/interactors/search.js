@@ -8,6 +8,7 @@ import {
   isVisible,
   Interactor
 } from '@bigtest/interactor';
+import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
 
 const SelectInteractor = interactor(class SelectInteractor {
   selectOption = selectable();
@@ -50,6 +51,20 @@ const SegmentButtonAuthInteractor = interactor(class SegmentButtonAuthInteractor
   clickThrough = clickable();
 });
 
+const SearchResultsInteractor = interactor(class SearchResultsInteractor {
+  rows = count('[data-row-index]');
+  clickThrough = clickable('[data-row-inner="0"]');
+});
+
+@interactor class HeaderDropdown {
+  click = clickable('button');
+}
+
+@interactor class HeaderDropdownMenu {
+  isDeleteButtonPresent = isPresent('#clickable-dropdown-delete-record')
+  clickDelete = clickable('#clickable-dropdown-delete-record');
+}
+
 export default interactor(class SearchInteractor {
   static defaultScope = '#ModuleContainer';
   selectIndexes = new SelectInteractor('[data-test-select-indexes]');
@@ -63,6 +78,14 @@ export default interactor(class SearchInteractor {
   segmentButtonBib = new SegmentButtonBibInteractor('[data-test-btn-segment-bib]');
   segmentButtonAuth = new SegmentButtonAuthInteractor('[data-test-btn-segment-auth]');
   itemRowClick = new Interactor('#data-test-search-results-table [data-row-inner="0"]');
-  detailPanelVisible = isVisible('#record-pane-details');
+
   detailPanelPresent = isPresent('#record-pane-details');
+  searchResults = new SearchResultsInteractor('#data-test-search-results-table');
+  detailPanel = isVisible('[data-test-detail-search]')
+  searchResultItem = new Interactor('#data-test-search-results-table [data-row-inner="0"]');
+  headerDropdown = new HeaderDropdown('#paneHeaderdata-test-search-detail-pane [data-pane-header-actions-dropdown]');
+  headerDropdownMenu = new HeaderDropdownMenu();
+  confirmDeleteModalPresent = isPresent('#record-detail-delete-confirmation-modal');
+  recordDetailConfirmButton = new ButtonInteractor('[data-test-confirmation-modal-confirm-button]');
+  recordDetailCancelButton = new ButtonInteractor('[data-test-confirmation-modal-cancel-button]');
 });

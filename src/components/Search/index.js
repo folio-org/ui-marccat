@@ -9,6 +9,7 @@ export { default as InventoryPluggableButton } from './Button/Inventory';
 export { default as CreateRecordButton } from './Button/CreateRecord';
 export { default as DuplicaRecordButton } from './Button/DuplicaRecord';
 export { default as EditRecordButton } from './Button/EditRecord';
+export { default as DeleteRecordButton } from './Button/DeleteRecord';
 
 export { FiltersContainer } from './Filter';
 export {

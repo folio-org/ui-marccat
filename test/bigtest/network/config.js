@@ -66,11 +66,21 @@ export default function configure() {
 
   this.get('/marccat/countSearch', () => 2);
 
+  // Delete Bib record
+  this.delete('/marccat/bibliographic-record/:id', () => {
+    return new Response(204);
+  }, 204);
+
+  // Delete Auth record
+  this.delete('/marccat/authority-record/:id', () => {
+    return new Response(423, {}, {});
+  }, 423);
+
   this.get('/marccat/browse', ({ browseSearches }) => {
     return browseSearches.all();
   });
 
-  this.get('/marccatbibliographic-record/000000000042', ({ bibRecordDetails }) => {
+  this.get('/marccat/bibliographic-record/:id', ({ bibRecordDetails }) => {
     return bibRecordDetails.all();
   });
 

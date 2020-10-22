@@ -46,7 +46,7 @@ class RecordDetailPane extends React.Component {
     });
     if (statusCode === 204) {
       showValidationMessage(this.callout, translate({ id: 'ui-marccat.search.record.deletemodal.deletesuccess' }), 'success');
-      return new Promise(() => {
+      const promise = new Promise((resolve) => {
         setTimeout(() => {
           reset();
           dispatch({
@@ -59,8 +59,9 @@ class RecordDetailPane extends React.Component {
             to: '30',
           });
           dispatch({ type: ACTION.CLOSE_PANELS, closePanels: true });
-          return router.push('/marccat/search');
+          resolve(true);
         }, 2000);
+        promise.then(router.push('/marccat/search'));
       });
     } else if (statusCode === 423) {
       const msg423 = bibsOnly

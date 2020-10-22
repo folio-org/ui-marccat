@@ -4,7 +4,6 @@ import * as React from 'react';
 import { Button, Icon } from '@folio/stripes/components';
 import { connect } from 'react-redux';
 import { Localize } from '../../../shared';
-// import { lockRecordAction } from '../../Cataloguing/Actions';
 
 const DeleteRecordButton = ({ eHandleClickDelete }) => {
 

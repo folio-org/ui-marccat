@@ -47,7 +47,7 @@ class RecordDetails extends React.Component<P, {}> {
         <Accordion
           separator={false}
           header={FilterAccordionHeader}
-          label={checkDetailsInRow !== checkDetailsBibRec ? translate({ id: 'ui-marccat.search.details.bibliographic' }) : translate({ id: 'ui-marccat.search.details.authority' })}
+          label={detailPaneMeta.title.startsWith('Bib') ? translate({ id: 'ui-marccat.search.details.bibliographic' }) : translate({ id: 'ui-marccat.search.details.authority' })}
         >
           {tags && tags.filter(t => parseInt(t.key, 10) < 10).map((t: FixedFields<String, String, String, Array>) => (
             <React.Fragment>

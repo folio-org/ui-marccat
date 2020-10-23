@@ -15,6 +15,7 @@
 * Add support for running `yarn start --mirage`.
 * Change the panel of "No results found" (UICAT-113)
 * Improve search and reset all buttons and remove unused imports (UICAT-112)
+* Add button to delete authorites (UICAT-115)
 * Create new authority using a template by default (UICAT-114)
 
 ## [2.0.0](https://github.com/folio-org/ui-marccat/releases/v2.0.0) (2019-10-09)

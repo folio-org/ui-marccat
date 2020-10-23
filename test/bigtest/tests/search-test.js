@@ -30,7 +30,7 @@ describe('Search', () => {
     });
 
     it('returns at least one search result', () => {
-      expect(searchInteractor.countResults).to.be.greaterThan(1);
+      expect(searchInteractor.countResults).to.be.greaterThan(0);
     });
   });
 
@@ -44,7 +44,7 @@ describe('Search', () => {
     });
 
     it('returns at least one search result', () => {
-      expect(searchInteractor.countResults).to.be.greaterThan(1);
+      expect(searchInteractor.countResults).to.be.greaterThan(0);
     });
   });
 
@@ -107,8 +107,77 @@ describe('Search', () => {
   });
 
   describe('should test bib indexes', () => {
-      it('should change options of indexes', () => {
+    it('should change options of indexes', () => {
       expect(searchInteractor.selectIndexes.optionCount).to.equal(50);
+    });
+  });
+
+  describe('fill Bib search field, select one record', function () {
+    beforeEach(async function () {
+      await searchInteractor.segmentButtonBib.click();
+      await searchInteractor.selectIndexes.selectOption('Title');
+      await searchInteractor.selectCondition.selectOption('Contains');
+      await searchInteractor.searchTextArea.fill('test');
+      await searchInteractor.buttonSearch.click();
+    });
+
+    it('search executed', () => {
+      expect(searchInteractor.searchResults.rows).to.be.greaterThan(0);
+    });
+
+    describe('select first record and cancel delete', function () {
+      beforeEach(async function () {
+        await searchInteractor.searchResults.clickThrough();
+        await searchInteractor.headerDropdown.click();
+        await searchInteractor.headerDropdownMenu.clickDelete();
+        await searchInteractor.recordDetailCancelButton.click();
+      });
+
+      it('delete canceled', () => {
+        expect(searchInteractor.detailPanelPresent).to.be.true;
+      });
+
+    });
+
+    describe('select first record and delete', function () {
+      beforeEach(async function () {
+        await searchInteractor.searchResults.clickThrough();
+        await searchInteractor.headerDropdown.click();
+        await searchInteractor.headerDropdownMenu.clickDelete();
+        await searchInteractor.recordDetailConfirmButton.click();
+      });
+
+      it('record deleted', () => {
+        expect(searchInteractor.detailPanelPresent).to.be.true;
+      });
+
+    });
+  });
+
+  describe('fill Auth search field, select one record', function () {
+    beforeEach(async function () {
+      await searchInteractor.segmentButtonAuth.click();
+      await searchInteractor.selectIndexes.selectOption('Title');
+      await searchInteractor.selectCondition.selectOption('Contains');
+      await searchInteractor.searchTextArea.fill('test');
+      await searchInteractor.buttonSearch.click();
+    });
+
+    it('search executed', () => {
+      expect(searchInteractor.searchResults.rows).to.be.greaterThan(0);
+    });
+
+    describe('select first record and try to delete it', function () {
+      beforeEach(async function () {
+        await searchInteractor.searchResults.clickThrough();
+        await searchInteractor.headerDropdown.click();
+        await searchInteractor.headerDropdownMenu.clickDelete();
+        await searchInteractor.recordDetailConfirmButton.click();
+      });
+
+      it('record cannot be deleted', () => {
+        expect(searchInteractor.detailPanelPresent).to.be.true;
+      });
     });
   });
 

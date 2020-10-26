@@ -144,5 +144,13 @@
     "browse.results.see": "See",
     "browse.results.seenfrom": "Seen From",
     "error.noresultsfoundfor.message": "No results found for",
-    "error.checkspellingfilters.message": "Please check your spelling and filters."
+    "error.checkspellingfilters.message": "Please check your spelling and filters.",
+    "search.record.deletemodal.heading": "Please confirm this action",
+    "search.record.deletemodal.cancel": "Cancel",
+    "search.record.deletemodal.delete": "Delete",
+    "search.record.deletemodal.message": "Registry <strong>{name}</strong> will be <strong>deleted</strong>.",
+    "search.record.deletemodal.deletesuccess": "Record successfully deleted",
+    "search.record.deletemodal.deletewrong": "Failed: something went wrong",
+    "search.record.deletemodal.notdeletedrecordused.bib": "The bibliographic record could not be deleted because it is being used",
+    "search.record.deletemodal.notdeletedrecordused.auth": "The authority record could not be deleted because it is being used in bibliographic records"
 }

@@ -144,5 +144,13 @@
     "browse.results.see": "Ver",
     "browse.results.seenfrom": "Visto de",
     "error.noresultsfoundfor.message": "Nenhum resultado encontrado para",
-    "error.checkspellingfilters.message": "Verifique a ortografia e os filtros."
+    "error.checkspellingfilters.message": "Verifique a ortografia e os filtros.",
+    "search.record.deletemodal.heading": "Por favor, confirme esta ação",
+    "search.record.deletemodal.cancel": "Cancelar",
+    "search.record.deletemodal.delete": "Excluir",
+    "search.record.deletemodal.message": "O registro <strong>{name}</strong> será <strong>excluído</strong>.",
+    "search.record.deletemodal.deletesuccess": "Registro excluído com sucesso",
+    "search.record.deletemodal.deletewrong": "Falha: algo deu errado",
+    "search.record.deletemodal.notdeletedrecordused.bib": "O registro bibliográfico não pôde ser excluído porque está sendo usado",
+    "search.record.deletemodal.notdeletedrecordused.auth": "O registro de autoridade não pôde ser excluído porque está sendo usado em registros bibliográficos"
 }

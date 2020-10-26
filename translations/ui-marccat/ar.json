@@ -144,5 +144,13 @@
     "browse.results.see": "انظر",
     "browse.results.seenfrom": "تمت رؤيته من",
     "error.noresultsfoundfor.message": "لم يتم العثور على نتائج لـ",
-    "error.checkspellingfilters.message": "يرجى التحقق من التهجئة والمنقحات."
+    "error.checkspellingfilters.message": "يرجى التحقق من التهجئة والمنقحات.",
+    "search.record.deletemodal.heading": "يرجى تأكيد هذا الإجراء",
+    "search.record.deletemodal.cancel": "إلغاء",
+    "search.record.deletemodal.delete": "حذف",
+    "search.record.deletemodal.message": "سيتم <strong>حذف</strong> السجل <strong>{name}</strong>.",
+    "search.record.deletemodal.deletesuccess": "تم حذف التسجيلة بنجاح",
+    "search.record.deletemodal.deletewrong": "فشل: حدث خطأ ما",
+    "search.record.deletemodal.notdeletedrecordused.bib": "تعذر حذف التسجيلة البيبلوغرافية لأنها قيد الاستخدام",
+    "search.record.deletemodal.notdeletedrecordused.auth": "تعذر حذف تسجيلة الاستناد حيث أنها قيد الاستخدام في تسجيلات بيبلوغرافية"
 }

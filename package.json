@@ -164,68 +164,69 @@
         "displayName": "UI: MARCcat module is enabled"
       },
       {
-        "permissionName": "ui-marccat.view.search.records",
-        "displayName": "MARCcat: Can search and view search results",
+        "permissionName": "settings.marccat.enabled",
+        "displayName": "Settings (MARCcat): display list of settings pages",
         "subPermissions": [
-          "module.marccat.enabled"
+          "settings.enabled"
+        ]
+      },
+      {
+        "permissionName": "ui-marccat.all",
+        "displayName": "MARCcat: All permissions",
+        "subPermissions": [
+          "ui-marccat.create-new-bibliographic-record.view",
+          "ui-marccat.search-and-browse-records.view",
+          "ui-marccat.edit-delete-records.view",
+          "ui-marccat.duplicate-records.view"
+        ]
+      },
+      {
+        "permissionName": "ui-marccat.create-new-bibliographic-record.view",
+        "displayName": "MARCcat: Can create a new bibliographic record starting from template",
+        "subPermissions": [
+          "marccat.bibliographic-record.from-template.item.get",
+          "marccat.fixed-fields-code-groups-by-leader.collection.get",
+          "marccat.fixed-fields-code-groups.collection.get",
+          "marccat.header-types.collection.get",
+          "marccat.bibliographic-record.fixed-field-display-value.item.post",
+          "marccat.filteredTagsList.collection.get",
+          "marccat.filteredTag.item.get",
+          "marccat.validateTag.item.get",
+          "marccat.create-heading.item.post",
+          "marccat.bibliographic-record.item.post",
+          "marccat.mergedSearch.collection.get",
+          "marccat.bibliographic-record.item.get"
         ],
         "visible": true
       },
       {
-        "permissionName": "ui-marccat.view.search.detail",
-        "displayName": "MARCcat: Can view details of search results",
+        "permissionName": "ui-marccat.search-and-browse-records.view",
+        "displayName": "MARCcat: Can search and browse results with details",
         "subPermissions": [
-          "ui-marccat.view.search.records",
-          "module.marccat.enabled"
+          "marccat.search.collection.get",
+          "marccat.searchVertical.collection.get",
+          "marccat.countSearch.item.get",
+          "marccat.bibliographic-record.item.get",
+          "marccat.browse.collection.get",
+          "marccat.next-page.collection.get"
         ],
         "visible": true
       },
       {
-        "permissionName": "ui-marccat.view.browse.records",
-        "displayName": "MARCcat: Can search and view browse results",
+        "permissionName": "ui-marccat.edit-delete-records.view",
+        "displayName": "MARCcat: Can edit or delete records",
         "subPermissions": [
-          "module.marccat.enabled"
+          "ui-marccat.create-new-bibliographic-record.view",
+          "marccat.bibliographic-record.item.delete"
         ],
         "visible": true
       },
       {
-        "permissionName": "ui-marccat.view.browse.detail",
-        "displayName": "MARCcat: Can view details of search results",
+        "permissionName": "ui-marccat.duplicate-records.view",
+        "displayName": "MARCcat: Can duplicate records",
         "subPermissions": [
-          "ui-marccat.view.browse.records",
-          "module.marccat.enabled"
-        ],
-        "visible": true
-      },
-      {
-        "permissionName": "ui-marccat.settings.field-groupings",
-        "displayName": "Settings (MARCcat): Can set up field group",
-        "subPermissions": [
-          "module.marccat.enabled"
-        ],
-        "visible": true
-      },
-      {
-        "permissionName": "ui-marccat.settings.default.template",
-        "displayName": "Settings (MARCcat): Can choose a default template",
-        "subPermissions": [
-          "module.marccat.enabled"
-        ],
-        "visible": true
-      },
-      {
-        "permissionName": "ui-marccat.settings.local.authority,records",
-        "displayName": "Settings (MARCcat): Can setup local authority records",
-        "subPermissions": [
-          "module.marccat.enabled"
-        ],
-        "visible": true
-      },
-      {
-        "permissionName": "ui-marccat.settings.record.overlayrules",
-        "displayName": "Settings (MARCcat): Can setting up rules for record overlay",
-        "subPermissions": [
-          "module.marccat.enabled"
+          "ui-marccat.create-new-bibliographic-record.view",
+          "marccat.bibliographic-record.duplicate.item.get"
         ],
         "visible": true
       }

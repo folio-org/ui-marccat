@@ -542,7 +542,7 @@ const mapDispatchToProps = (dispatch, ownProps) => bindActionCreators(
   {
     loadHeadertype: (tag: []) => _ => {
       tag.forEach(t => {
-        if (ownProps.data.search.segment === C.SEARCH_SEGMENT.AUTHORITY && t === TAGS._008) {
+        if ((ownProps.data.search.segment === C.SEARCH_SEGMENT.AUTHORITY) && (t === TAGS._008)) {
           dispatch(MarcAction.authHeadertypeAction(t));
         } else {
           dispatch(MarcAction.headertypeAction(t));

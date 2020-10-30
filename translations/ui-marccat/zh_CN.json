@@ -144,5 +144,13 @@
     "browse.results.see": "见",
     "browse.results.seenfrom": "见自",
     "error.noresultsfoundfor.message": "找不到结果",
-    "error.checkspellingfilters.message": "请检查拼写和筛选条件。"
+    "error.checkspellingfilters.message": "请检查拼写和筛选条件。",
+    "search.record.deletemodal.heading": "Please confirm this action",
+    "search.record.deletemodal.cancel": "Cancel",
+    "search.record.deletemodal.delete": "Delete",
+    "search.record.deletemodal.message": "Registry <strong>{name}</strong> will be <strong>deleted</strong>.",
+    "search.record.deletemodal.deletesuccess": "Record successfully deleted",
+    "search.record.deletemodal.deletewrong": "Failed: something went wrong",
+    "search.record.deletemodal.notdeletedrecordused.bib": "The bibliographic record could not be deleted because it is being used",
+    "search.record.deletemodal.notdeletedrecordused.auth": "The authority record could not be deleted because it is being used in bibliographic records"
 }

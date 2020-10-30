@@ -96,6 +96,16 @@ describe('Search', () => {
           });
         });
 
+        describe('push cancel button', function () {
+          beforeEach(async function () {
+            await recordInteractor.cancelButton.click();
+          });
+
+          it('filter page loaded', () => {
+            expect(recordInteractor.segmentButtonBib.isButtonVisible).to.be.true;
+          });
+        });
+
       });
 
     });
@@ -137,6 +147,16 @@ describe('Search', () => {
 
           it('008 section clicked', () => {
             expect(recordInteractor.tag008ButtonPresent).to.be.true;
+          });
+        });
+
+        describe('push save button', function () {
+          beforeEach(async function () {
+            await recordInteractor.saveButton.click();
+          });
+
+          it('filter page loaded', () => {
+            expect(recordInteractor.saveButtonPresent).to.be.true;
           });
         });
 

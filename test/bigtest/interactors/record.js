@@ -44,4 +44,7 @@ export default interactor(class RecordInteractor {
   tag007ButtonPresent = isPresent('#field007btndown');
   tag008Button = new ButtonInteractor('#field008btndown');
   tag008ButtonPresent = isPresent('#field008btndown');
+  cancelButton = new ButtonInteractor('#cancel-instance-edition');
+  saveButton = new ButtonInteractor('#clickable-save-instance');
+  saveButtonPresent = isPresent('#clickable-save-instance');
 });

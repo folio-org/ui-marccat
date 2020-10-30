@@ -247,7 +247,8 @@ class Tag00X extends React.PureComponent<Props, S> {
       element,
       headingTypes,
       values008,
-      headerTypeCodeFromLeader
+      headerTypeCodeFromLeader,
+      data: { search: { segment } }
     } = this.props;
     return (
       <div className={style.fieldContainer} no-padding>
@@ -266,14 +267,16 @@ class Tag00X extends React.PureComponent<Props, S> {
         >
           <Col xs={12}>
             {headingTypes && (
-              <Field
-                {...this.props}
-                label={'Tag'.concat(element.fixedField.code)}
-                name={'Tag'.concat(element.fixedField.code)}
-                component={this.RenderSelect}
-                typeCode={headerTypeCodeFromLeader || headerTypeCode}
-                headertypes={headingTypes.results.headingTypes}
-              />
+              <div className={segment === SEARCH_SEGMENT.AUTHORITY ? style.hidden : null}>
+                <Field
+                  {...this.props}
+                  label={'Tag'.concat(element.fixedField.code)}
+                  name={'Tag'.concat(element.fixedField.code)}
+                  component={this.RenderSelect}
+                  typeCode={headerTypeCodeFromLeader || headerTypeCode}
+                  headertypes={headingTypes.results.headingTypes}
+                />
+              </div>
             )}
             {!isEmpty(values008.results) &&
               this.RenderDropwDown(values008.results, element.fixedField.code)}

@@ -111,7 +111,6 @@ class Record extends React.Component<
         typeCode: '15',
         segment
       });
-      // loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
       if (segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC) {
         loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
         dispatch(MarcAction.change008ByLeaderAction(leader.value));

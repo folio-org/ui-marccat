@@ -123,6 +123,8 @@
   "cataloging.record.create": "Create Record",
   "cataloging.record.delete": "Delete Record",
   "cataloging.record.duplicate": "Duplicate Record",
+  "cataloging.record.newmonograph": "New Monograph",
+  "cataloging.record.newauthority": "New Authority",
   "cataloging.record.create.success": "Record create succesfully!",
   "cataloging.record.create.failure": "Save record failed!",
   "cataloging.record.delete.success": "Delete record with id ={value} succesfully!",

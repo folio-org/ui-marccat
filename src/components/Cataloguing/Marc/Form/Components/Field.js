@@ -32,6 +32,7 @@ export default class MarcField extends React.Component<P, {}> {
         size="medium"
         disabled={props.disbledIcon}
         onClick={onClick}
+        id={`${props.name}BtnDown`}
       />
     </div>
   );

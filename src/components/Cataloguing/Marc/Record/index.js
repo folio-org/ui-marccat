@@ -111,8 +111,19 @@ class Record extends React.Component<
         typeCode: '15',
         segment
       });
-      loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
-      dispatch(MarcAction.change008ByLeaderAction(leader.value));
+      // loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
+      if (segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC) {
+        loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
+        dispatch(MarcAction.change008ByLeaderAction(leader.value));
+      } else {
+        loadHeadertype([TAGS._008]);
+        const playParams = {
+          value: leader.value,
+          code: '008',
+          typeCode: '10',
+        };
+        dispatch(MarcAction.change008ActionAuth(playParams));
+      }
     }
   }
 
@@ -311,7 +322,7 @@ class Record extends React.Component<
     await post(
       buildUrl(
         getState(),
-        C.ENDPOINT.BIBLIOGRAPHIC_RECORD,
+        segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC ? C.ENDPOINT.BIBLIOGRAPHIC_RECORD : C.ENDPOINT.AUTHORITY_RECORD,
         C.ENDPOINT.DEFAULT_LANG_VIEW
       ),
       payload,
@@ -464,9 +475,13 @@ class Record extends React.Component<
   };
 
   render() {
-    const { leaderData } = this.props;
+    const { leaderData, translate, data: { search: { segment } } } = this.props;
     const { isEditMode, id } = this.state;
     const bibliographicRecord = this.getCurrentRecord();
+
+    const paneTitle = segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC
+      ? isEditMode ? translate({ id: 'ui-marccat.cataloging.record.edit' }) : translate({ id: 'ui-marccat.cataloging.record.newmonograph' })
+      : isEditMode ? translate({ id: 'ui-marccat.cataloging.record.edit' }) : translate({ id: 'ui-marccat.cataloging.record.newauthority' });
 
     return !leaderData ? (
       <Icon icon="spinner-ellipsis" />
@@ -475,11 +490,7 @@ class Record extends React.Component<
         <Paneset static>
           <Pane
             defaultWidth="fullWidth"
-            paneTitle={
-              bibliographicRecord && isEditMode
-                ? 'Edit Record'
-                : 'New Monograph'
-            }
+            paneTitle={paneTitle}
             paneSub={'id. ' + bibliographicRecord.id || id}
             appIcon={<AppIcon app={C.META.ICON_TITLE} />}
             lastMenu={this.lastMenu()}
@@ -512,10 +523,31 @@ class Record extends React.Component<
   }
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators(
+function mapStateToProps({ marccat: { data, search: { segment } } }) {
+  const toProps = segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC
+    ? {
+      emptyRecord: data.results,
+      recordDetail: resolve(data, 'marcRecordDetail').bibliographicRecord,
+      leaderData: resolve(data, 'leaderData'),
+    }
+    : {
+      emptyRecordAuth: data.results,
+      recordDetail: resolve(data, 'marcRecordDetail').bibliographicRecord,
+      leaderData: resolve(data, 'leaderData'),
+    };
+  return toProps;
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => bindActionCreators(
   {
     loadHeadertype: (tag: []) => _ => {
-      tag.forEach(t => dispatch(MarcAction.headertypeAction(t)));
+      tag.forEach(t => {
+        if (ownProps.data.search.segment === C.SEARCH_SEGMENT.AUTHORITY && t === TAGS._008) {
+          dispatch(MarcAction.authHeadertypeAction(t));
+        } else {
+          dispatch(MarcAction.headertypeAction(t));
+        }
+      });
     },
     editLoadLeaderData: payload => _ => {
       dispatch(MarcAction.editLeaderDropdownAction(payload));
@@ -528,10 +560,6 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
 );
 
 export default connect(
-  ({ marccat: { data } }) => ({
-    emptyRecord: data.results,
-    recordDetail: resolve(data, 'marcRecordDetail').bibliographicRecord,
-    leaderData: resolve(data, 'leaderData'),
-  }),
+  mapStateToProps,
   mapDispatchToProps
 )(injectProps(Record));

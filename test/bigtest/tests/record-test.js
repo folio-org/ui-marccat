@@ -47,13 +47,13 @@ describe('Search', () => {
       expect(recordInteractor.segmentButtonBib.isButtonVisible).to.be.true;
     });
 
-    describe('click New Record', function () {
+    describe('click New Bibliographic Record', function () {
       beforeEach(async function () {
         await recordInteractor.headerDropdown.click();
         await recordInteractor.headerDropdownMenu.clickNew();
       });
 
-      it('record template is loaded', () => {
+      it('Bibliographic record template is loaded', () => {
         expect(recordInteractor.headerDropdownMenu.isNewButtonPresent).to.be.false;
       });
 
@@ -65,6 +65,81 @@ describe('Search', () => {
         it('Leader section clicked', () => {
           expect(recordInteractor.leaderButtonPresent).to.be.true;
         });
+
+        describe('click 006 section', function () {
+          beforeEach(async function () {
+            await recordInteractor.tag006Button.click();
+          });
+
+          it('006 section clicked', () => {
+            expect(recordInteractor.tag006ButtonPresent).to.be.true;
+          });
+        });
+
+        describe('click 007 section', function () {
+          beforeEach(async function () {
+            await recordInteractor.tag007Button.click();
+          });
+
+          it('007 section clicked', () => {
+            expect(recordInteractor.tag007ButtonPresent).to.be.true;
+          });
+        });
+
+        describe('click 008 section', function () {
+          beforeEach(async function () {
+            await recordInteractor.tag008Button.click();
+          });
+
+          it('008 section clicked', () => {
+            expect(recordInteractor.tag008ButtonPresent).to.be.true;
+          });
+        });
+
+      });
+
+    });
+
+  });
+
+  describe('In filter, select Authority', function () {
+    beforeEach(async function () {
+      await recordInteractor.segmentButtonAuth.click();
+    });
+
+    it('Authority selected', () => {
+      expect(recordInteractor.segmentButtonBib.isButtonVisible).to.be.true;
+    });
+
+    describe('click New Authority Record', function () {
+      beforeEach(async function () {
+        await recordInteractor.headerDropdown.click();
+        await recordInteractor.headerDropdownMenu.clickNew();
+      });
+
+      it('Authority record template is loaded', () => {
+        expect(recordInteractor.headerDropdownMenu.isNewButtonPresent).to.be.false;
+      });
+
+      describe('click Leader section', function () {
+        beforeEach(async function () {
+          await recordInteractor.leaderButton.click();
+        });
+
+        it('Leader section clicked', () => {
+          expect(recordInteractor.leaderButtonPresent).to.be.true;
+        });
+
+        describe('click 008 section', function () {
+          beforeEach(async function () {
+            await recordInteractor.tag008Button.click();
+          });
+
+          it('008 section clicked', () => {
+            expect(recordInteractor.tag008ButtonPresent).to.be.true;
+          });
+        });
+
       });
 
     });

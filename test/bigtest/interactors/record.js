@@ -36,6 +36,12 @@ export default interactor(class RecordInteractor {
   headerDropdown = new HeaderDropdown('#paneHeaderdata-test-search-result-pane [data-pane-header-actions-dropdown]');
   headerDropdownMenu = new HeaderDropdownMenu();
   dismissButton = new DismissButtonInteractor('[data-test-pane-header-dismiss-button]');
-  leaderButton = new ButtonInteractor('#leaderBtnDown');
-  leaderButtonPresent = isPresent('#leaderBtnDown');
+  leaderButton = new ButtonInteractor('#fieldleaderbtndown');
+  leaderButtonPresent = isPresent('#fieldleaderbtndown');
+  tag006Button = new ButtonInteractor('#field006btndown');
+  tag006ButtonPresent = isPresent('#field006btndown');
+  tag007Button = new ButtonInteractor('#field007btndown');
+  tag007ButtonPresent = isPresent('#field007btndown');
+  tag008Button = new ButtonInteractor('#field008btndown');
+  tag008ButtonPresent = isPresent('#field008btndown');
 });

@@ -479,6 +479,10 @@ class Record extends React.Component<
     const { isEditMode, id } = this.state;
     const bibliographicRecord = this.getCurrentRecord();
 
+    const childProps = { ...this.props };
+    delete childProps.emptyRecord;
+    delete childProps.emptyRecordAuth;
+
     const paneTitle = segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC
       ? isEditMode ? translate({ id: 'ui-marccat.cataloging.record.edit' }) : translate({ id: 'ui-marccat.cataloging.record.newmonograph' })
       : isEditMode ? translate({ id: 'ui-marccat.cataloging.record.edit' }) : translate({ id: 'ui-marccat.cataloging.record.newauthority' });
@@ -502,12 +506,12 @@ class Record extends React.Component<
               <Col xs={12} sm={6} md={8} lg={8}>
                 <AccordionSet>
                   <DataFieldForm
-                    {...this.props}
+                    {...childProps}
                     leaderData={leaderData}
                     record={bibliographicRecord}
                   />
                   <VariableFieldForm
-                    {...this.props}
+                    {...childProps}
                     fields={filterVariableFields(bibliographicRecord.fields)}
                     onCreate={this.onCreate}
                     onDelete={this.onDelete}

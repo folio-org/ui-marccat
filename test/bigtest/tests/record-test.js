@@ -16,6 +16,7 @@ describe('Search', () => {
     this.server.createList('authoritySearch', 1);
     this.server.create('browseSearch');
     this.server.create('bibRecordDetail');
+    this.server.create('authRecordDetail');
     this.server.create('verticalDetail');
     this.server.create('headerType');
     this.server.create('header007Type');
@@ -32,6 +33,7 @@ describe('Search', () => {
     this.server.create('filterTagValue');
     this.server.create('createHeadingValue');
     this.server.create('createBibRecordValue');
+    this.server.create('createAuthRecordValue');
 
     return this.visit('/marccat/search', () => {
       expect(recordInteractor.$root).to.exist;

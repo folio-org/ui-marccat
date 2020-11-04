@@ -32,12 +32,15 @@ const EditRecordButton = ({ ...props }) => {
   };
 
   return (
-    <Button
-      buttonStyle="dropdownItem"
-      onClick={() => handleClickEdit()}
-    >
-      <Icon icon="edit">{Localize({ key: 'cataloging.record.edit' })}</Icon>
-    </Button>
+    <div>
+      <Button
+        id="clickable-dropdown-edit-record"
+        buttonStyle="dropdownItem"
+        onClick={() => handleClickEdit()}
+      >
+        <Icon icon="edit">{Localize({ key: 'cataloging.record.edit' })}</Icon>
+      </Button>
+    </div>
   );
 };
 

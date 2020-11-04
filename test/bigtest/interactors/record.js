@@ -29,12 +29,23 @@ const DismissButtonInteractor = interactor(class DismissButtonInteractor {
   clickNew = clickable('#clickable-dropdown-new-record');
 }
 
+@interactor class HeaderDropdownDetail {
+  click = clickable('button');
+}
+
+@interactor class HeaderDropdownDetailMenu {
+  isEditButtonPresent = isPresent('#clickable-dropdown-edit-record')
+  clickEdit = clickable('#clickable-dropdown-edit-record');
+}
+
 export default interactor(class RecordInteractor {
   static defaultScope = '#ModuleContainer';
   segmentButtonBib = new SegmentButtonBibInteractor('[data-test-btn-segment-bib]');
   segmentButtonAuth = new SegmentButtonAuthInteractor('[data-test-btn-segment-auth]');
   headerDropdown = new HeaderDropdown('#paneHeaderdata-test-search-result-pane [data-pane-header-actions-dropdown]');
   headerDropdownMenu = new HeaderDropdownMenu();
+  headerDropdownDetail = new HeaderDropdownDetail('#paneHeaderdata-test-search-detail-pane [data-pane-header-actions-dropdown]');
+  headerDropdownDetailMenu = new HeaderDropdownDetailMenu();
   dismissButton = new DismissButtonInteractor('[data-test-pane-header-dismiss-button]');
   leaderButton = new ButtonInteractor('#fieldleaderbtndown');
   leaderButtonPresent = isPresent('#fieldleaderbtndown');

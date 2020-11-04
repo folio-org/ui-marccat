@@ -40,16 +40,17 @@ class SearchPanel extends React.Component<P, {}> {
   constructor(props: P) {
     super(props);
 
-    this.segment = findParam('segment');
-    if (this.segment == null) {
-      this.segment = SEARCH_SEGMENT.BIBLIOGRAPHIC;
-    }
+    const { data: { search: { segment } } } = props;
+    const paramSegment = findParam('segment');
+
     this.state = {
       isBrowseRequested: false,
       searchForm: [EMPTY_STRING],
       filterEnable: true,
       counter: [{}],
-      segment: this.segment,
+      segment: segment === undefined
+        ? paramSegment === null ? SEARCH_SEGMENT.BIBLIOGRAPHIC : paramSegment
+        : segment,
       btnSubmitEnabled: false
     };
 
@@ -62,14 +63,27 @@ class SearchPanel extends React.Component<P, {}> {
 
 
   componentDidMount() {
+    const { store: { getState } } = this.props;
+    const { btnSubmitEnabled } = this.state;
     const id = findParam('id') || findParam('savedId') || findParam('recordid');
+    if (!btnSubmitEnabled) {
+      const form = getState().form.searchForm;
+      if (typeof (form) !== 'undefined' && typeof (form.values) !== 'undefined' && typeof (form.values.searchTextArea) !== 'undefined') {
+        if (form.values.searchTextArea.length > 0) {
+          this.setState({
+            btnSubmitEnabled: true
+          });
+        }
+      }
+    }
     if (id) this.handleSearchFromCataloging(id);
   }
 
   handleSearchFromCataloging = (id) => {
     const { dispatch } = this.props;
+    const { segment } = this.state;
     dispatch({ type: ACTION.SEARCH, isFromCat: 'Y', moreData: 'N', queryBib: `AN "${id}"`, queryAuth: `AN "${id}"`, from: '1', to: '30' });
-    dispatch(searchDetailAction(id));
+    dispatch(searchDetailAction(id, segment));
     // this.handleSearchHistory({ recordType: 'all', query: `AN "${id}"`, index: 'AN', found: 1, num:1 });
     // const inputValue = '"' + e.target.form[2].defaultValue + '"';
     // indexFilter = form.values.selectIndexes;
@@ -136,7 +150,7 @@ class SearchPanel extends React.Component<P, {}> {
             filterEnable: false
           });
         } else if (!isBrowseRequested) {
-          router.push('/marccat/search');
+          router.push(`/marccat/search?segment=${segment}`);
           this.setState({
             filterEnable: true
           });
@@ -153,7 +167,7 @@ class SearchPanel extends React.Component<P, {}> {
             transitionToParams('q', bibQuery);
             dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
           } else {
-            router.push('/marccat/search');
+            router.push(`/marccat/search?segment=${segment}`);
             if (segment === SEARCH_SEGMENT.BIBLIOGRAPHIC) {
               dispatch({ type: ACTION.SEARCHBIB, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
             } else {
@@ -276,21 +290,10 @@ class SearchPanel extends React.Component<P, {}> {
   }
 
   render() {
-    const { translate, store: { getState } } = this.props;
+    const { translate } = this.props;
     const { filterEnable, segment, btnSubmitEnabled } = this.state;
     const bibTxtLower = SEARCH_SEGMENT.BIBLIOGRAPHIC.toLowerCase();
     const authTxtLower = SEARCH_SEGMENT.AUTHORITY.toLowerCase();
-
-    if (!btnSubmitEnabled) {
-      const form = getState().form.searchForm;
-      if (typeof (form) !== 'undefined' && typeof (form.values) !== 'undefined' && typeof (form.values.searchTextArea) !== 'undefined') {
-        if (form.values.searchTextArea.length > 0) {
-          this.setState({
-            btnSubmitEnabled: true
-          });
-        }
-      }
-    }
 
     return (
       <Fragment>

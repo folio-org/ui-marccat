@@ -77,6 +77,7 @@ class Tag00X extends React.PureComponent<Props, S> {
         headerTypeCode,
         displayValue,
         cb: r => this.handleDisplayValue(undefined, r),
+        segment
       };
       this.setState({ firstAccess: false, headerTypeCode });
       dispatch(editDropDownValuesAction(payload));

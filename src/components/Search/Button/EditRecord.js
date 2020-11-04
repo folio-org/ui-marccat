@@ -24,7 +24,11 @@ const EditRecordButton = ({ ...props }) => {
     const id = findParam('id');
     toggleFilterPane();
     // lockRecord(id);
-    router.push(`/marccat/cataloging?id=${id}&mode=edit`);
+    router.push({
+      pathname: '/marccat/cataloging',
+      search: `?id=${id}&mode=edit`,
+      state: { id, mode: 'edit' },
+    });
   };
 
   return (

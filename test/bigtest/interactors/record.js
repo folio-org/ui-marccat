@@ -2,7 +2,9 @@ import {
   interactor,
   clickable,
   isPresent,
-  isVisible
+  isVisible,
+  selectable,
+  Interactor
 } from '@bigtest/interactor';
 import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
 
@@ -38,6 +40,10 @@ const DismissButtonInteractor = interactor(class DismissButtonInteractor {
   clickEdit = clickable('#clickable-dropdown-edit-record');
 }
 
+@interactor class Type006Interactor {
+  selectVal = selectable('#Tag006');
+}
+
 export default interactor(class RecordInteractor {
   static defaultScope = '#ModuleContainer';
   segmentButtonBib = new SegmentButtonBibInteractor('[data-test-btn-segment-bib]');
@@ -58,4 +64,6 @@ export default interactor(class RecordInteractor {
   cancelButton = new ButtonInteractor('#cancel-instance-edition');
   saveButton = new ButtonInteractor('#clickable-save-instance');
   saveButtonPresent = isPresent('#clickable-save-instance');
+  selectType006 = selectable('#Tag006');
+  selectType006Interactor = new Interactor('#Tag006');
 });

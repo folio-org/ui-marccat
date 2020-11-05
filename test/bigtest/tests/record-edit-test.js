@@ -74,6 +74,37 @@ describe('Record Edit', () => {
           expect(recordInteractor.headerDropdownDetailMenu.isEditButtonPresent).to.be.false;
         });
 
+        describe('click 006 section', function () {
+          beforeEach(async function () {
+            await recordInteractor.tag006Button.click();
+          });
+
+          it('006 section clicked', () => {
+            expect(recordInteractor.tag006ButtonPresent).to.be.true;
+          });
+
+          describe('change 006 value', function () {
+            beforeEach(async function () {
+              await recordInteractor.selectType006('006 - Book');
+            });
+
+            it('006 value changed', () => {
+              expect(recordInteractor.selectType006Interactor.value).to.equal('16');
+            });
+          });
+
+        });
+
+        describe('push save button', function () {
+          beforeEach(async function () {
+            await recordInteractor.saveButton.click();
+          });
+
+          it('filter page loaded', () => {
+            expect(recordInteractor.saveButtonPresent).to.be.true;
+          });
+        });
+
       });
 
     });
@@ -110,6 +141,17 @@ describe('Record Edit', () => {
 
         it('Record edition page loaded', () => {
           expect(recordInteractor.headerDropdownDetailMenu.isEditButtonPresent).to.be.false;
+        });
+
+        describe('push save button', function () {
+          beforeEach(async function () {
+            await recordInteractor.saveButton.click();
+          });
+
+          it('filter page loaded', () => {
+            expect(recordInteractor.saveButtonPresent).to.be.true;
+          });
+
         });
 
       });

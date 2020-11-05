@@ -95,6 +95,27 @@ describe('Record Edit', () => {
 
         });
 
+        describe('click 008 section', function () {
+          beforeEach(async function () {
+            await recordInteractor.tag008Button.click();
+          });
+
+          it('008 section clicked', () => {
+            expect(recordInteractor.tag008ButtonPresent).to.be.true;
+          });
+
+          describe('change 008 value', function () {
+            beforeEach(async function () {
+              await recordInteractor.bibSelectType008('Alaska');
+            });
+
+            it('008 value changed', () => {
+              expect(recordInteractor.bibSelectType008Interactor.value).to.equal('aku');
+            });
+          });
+
+        });
+
         describe('push save button', function () {
           beforeEach(async function () {
             await recordInteractor.saveButton.click();

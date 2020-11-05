@@ -66,4 +66,8 @@ export default interactor(class RecordInteractor {
   saveButtonPresent = isPresent('#clickable-save-instance');
   selectType006 = selectable('#Tag006');
   selectType006Interactor = new Interactor('#Tag006');
+  bibSelectType008 = selectable('#Tag008-0-placeOfPublication');
+  bibSelectType008Interactor = new Interactor('#Tag008-0-placeOfPublication');
+  authSelectType008 = selectable('#Tag008-0-subjectDescriptor');
+  authSelectType008Interactor = new Interactor('#Tag008-0-subjectDescriptor');
 });

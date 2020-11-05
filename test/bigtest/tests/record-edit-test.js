@@ -48,6 +48,7 @@ describe('Record Edit', () => {
       await searchInteractor.selectIndexes.selectOption('Title');
       await searchInteractor.selectCondition.selectOption('Contains');
       await searchInteractor.searchTextArea.fill('test');
+      await recordInteractor.filterSupressedChk.clickThrough();
       await searchInteractor.buttonSearch.click();
     });
 

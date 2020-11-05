@@ -44,6 +44,10 @@ const DismissButtonInteractor = interactor(class DismissButtonInteractor {
   selectVal = selectable('#Tag006');
 }
 
+const CheckBoxInteractor = interactor(class CheckBoxInteractor {
+  clickThrough = clickable();
+});
+
 export default interactor(class RecordInteractor {
   static defaultScope = '#ModuleContainer';
   segmentButtonBib = new SegmentButtonBibInteractor('[data-test-btn-segment-bib]');
@@ -72,4 +76,6 @@ export default interactor(class RecordInteractor {
   bibSelectType008Interactor = new Interactor('#Tag008-0-placeOfPublication');
   authSelectType008 = selectable('#Tag008-0-subjectDescriptor');
   authSelectType008Interactor = new Interactor('#Tag008-0-subjectDescriptor');
+  filterSupressedChk = new CheckBoxInteractor('#clickable-filter-suppressed-filter-no');
+
 });

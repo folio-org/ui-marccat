@@ -49,6 +49,7 @@ describe('Record Edit', () => {
       await searchInteractor.selectCondition.selectOption('Contains');
       await searchInteractor.searchTextArea.fill('test');
       await recordInteractor.filterSupressedChk.clickThrough();
+      await recordInteractor.filterAllTypeChk.clickThrough();
       await searchInteractor.buttonSearch.click();
     });
 

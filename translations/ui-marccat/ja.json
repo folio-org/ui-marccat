@@ -75,7 +75,7 @@
     "cataloging.accordion.fixedfield.label": "Control Fields (001, 003, 005)",
     "cataloging.accordion.variablefield.label": "Variable Fields",
     "cataloging.accordion.checkbox.label": "Suppress",
-    "cataloging.checkbox.label": "Suppress From Discovery",
+    "cataloging.checkbox.label": "ディスカバリーから除外する",
     "cataloging.record.edit": "Edit Record",
     "cataloging.record.create": "Create Record",
     "cataloging.record.delete": "Delete Record",

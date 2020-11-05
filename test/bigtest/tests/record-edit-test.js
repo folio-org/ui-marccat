@@ -95,6 +95,27 @@ describe('Record Edit', () => {
 
         });
 
+        describe('click 007 section', function () {
+          beforeEach(async function () {
+            await recordInteractor.tag007Button.click();
+          });
+
+          it('007 section clicked', () => {
+            expect(recordInteractor.tag007ButtonPresent).to.be.true;
+          });
+
+          describe('change 007 value', function () {
+            beforeEach(async function () {
+              await recordInteractor.selectType007('007 - Map');
+            });
+
+            it('007 value changed', () => {
+              expect(recordInteractor.selectType007Interactor.value).to.equal('24');
+            });
+          });
+
+        });
+
         describe('click 008 section', function () {
           beforeEach(async function () {
             await recordInteractor.tag008Button.click();

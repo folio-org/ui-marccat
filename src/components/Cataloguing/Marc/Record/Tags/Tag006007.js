@@ -53,6 +53,7 @@ class Tag006007 extends React.PureComponent<Props, S> {
       dispatch,
       change,
       element: { code, fixedField },
+      data: { search: { segment } }
     } = this.props;
     const {
       record: {
@@ -73,6 +74,7 @@ class Tag006007 extends React.PureComponent<Props, S> {
         headerTypeCode,
         displayValue,
         cb: r => this.handleDisplayValue(undefined, r),
+        segment
       };
       this.setState({ firstAccess: false, headerTypeCode });
       dispatch(change('Tag'.concat(code), headerTypeCode));

@@ -148,7 +148,7 @@
     "search.record.deletemodal.heading": "Veuillez confirmer cette action",
     "search.record.deletemodal.cancel": "Annuler",
     "search.record.deletemodal.delete": "Supprimer",
-    "search.record.deletemodal.message": "Registry <strong>{name}</strong> will be <strong>deleted</strong>.",
+    "search.record.deletemodal.message": "Le registre <strong> {name} </strong> sera <strong> supprimé </strong> .",
     "search.record.deletemodal.deletesuccess": "Enregistrement supprimé avec succès",
     "search.record.deletemodal.deletewrong": "Échec: une erreur s'est produite",
     "search.record.deletemodal.notdeletedrecordused.bib": "La notice bibliographique n'a pas pu être supprimée car elle est utilisée",

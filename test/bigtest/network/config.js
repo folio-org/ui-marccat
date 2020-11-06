@@ -229,6 +229,15 @@ export default function configure() {
     return new Response(204);
   });
 
+  // For duplicateRecord
+  this.post('/marccat/bibliographic-record/duplicate', ({ duplicateBibRecordValues }) => {
+    return duplicateBibRecordValues.all();
+  }, 201);
+
+  this.options('/marccat/bibliographic-record/duplicate', () => {
+    return new Response(204);
+  });
+
   // translation bundle passthrough
   this.pretender.get(`${__webpack_public_path__}translations/:rand.json`, this.pretender.passthrough); // eslint-disable-line
 

@@ -38,6 +38,8 @@ const DismissButtonInteractor = interactor(class DismissButtonInteractor {
 @interactor class HeaderDropdownDetailMenu {
   isEditButtonPresent = isPresent('#clickable-dropdown-edit-record')
   clickEdit = clickable('#clickable-dropdown-edit-record');
+  isDuplicateButtonPresent = isPresent('#clickable-dropdown-duplicate-record')
+  clickDuplicate = clickable('#clickable-dropdown-duplicate-record');
 }
 
 @interactor class Type006Interactor {

@@ -27,4 +27,5 @@ export default function defaultScenario(server) {
   server.create('createHeadingValue');
   server.create('createBibRecordValue');
   server.create('createAuthRecordValue');
+  server.create('duplicateBibRecordValue');
 }

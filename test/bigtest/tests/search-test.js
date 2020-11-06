@@ -21,6 +21,19 @@ describe('Search', () => {
     });
   });
 
+  describe('fill Bib search field width ISBN and submit with the ENTER key', function () {
+    beforeEach(async function () {
+      await searchInteractor.segmentButtonBib.click();
+      await searchInteractor.selectIndexes.selectOption('ISBN');
+      await searchInteractor.selectCondition.selectOption('Begins with');
+      await searchInteractor.searchTextArea.fillAndSubmit('test');
+    });
+
+    it('returns at least one search result', () => {
+      expect(searchInteractor.countResults).to.be.greaterThan(0);
+    });
+  });
+
   describe('fill Bib search field and submit with the ENTER key', function () {
     beforeEach(async function () {
       await searchInteractor.segmentButtonBib.click();

@@ -137,6 +137,26 @@ describe('Record Edit', () => {
             });
           });
 
+          describe('change 008 date first publication value', function () {
+            beforeEach(async function () {
+              await recordInteractor.dateFirstPubType008.fill('2019');
+            });
+
+            it('008 date first publication value changed', () => {
+              expect(recordInteractor.dateFirstPubType008.value).to.equal('2019');
+            });
+          });
+
+          describe('change 008 date last publication value', function () {
+            beforeEach(async function () {
+              await recordInteractor.dateLastPubType008.fill('2020');
+            });
+
+            it('008 date last publication value changed', () => {
+              expect(recordInteractor.dateLastPubType008.value).to.equal('2020');
+            });
+          });
+
         });
 
         describe('push save button', function () {

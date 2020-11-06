@@ -56,7 +56,6 @@ class SearchPanel extends React.Component<P, {}> {
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
-    this.handleResetAllButton = this.handleResetAllButton.bind(this);
   }
 
 
@@ -205,25 +204,6 @@ class SearchPanel extends React.Component<P, {}> {
       btnSubmitEnabled: bntEnabled
     });
   };
-
-  handleResetAllButton = () => {
-    const { dispatch, reset } = this.props;
-    dispatch({ type: ACTION.FILTERS, payload: {}, filterName: '', isChecked: false });
-    dispatch(reset('searchForm'));
-    transitionToParams('filter', 'false');
-  };
-
-  renderResetButton = () => {
-    return (
-      <ResetButton
-        className={styles['mb-5']}
-        visible
-        onClick={this.handleResetAllButton}
-        id="clickable-reset-all"
-        label={<FormattedMessage id="ui-marccat.button.resetAll" />}
-      />
-    );
-  }
 
   changeSegment = (segmentactive) => {
     const { dispatch, reset } = this.props;

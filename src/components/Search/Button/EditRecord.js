@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { Button, Icon } from '@folio/stripes/components';
 import { connect } from 'react-redux';
+import { IfPermission } from '@folio/stripes-core';
 import { Localize, findParam } from '../../../shared';
 // import { lockRecordAction } from '../../Cataloguing/Actions';
 
@@ -32,6 +33,7 @@ const EditRecordButton = ({ ...props }) => {
   };
 
   return (
+    <IfPermission perm="ui-marccat.edit-delete-records.view">
     <div>
       <Button
         id="clickable-dropdown-edit-record"
@@ -41,6 +43,7 @@ const EditRecordButton = ({ ...props }) => {
         <Icon icon="edit">{Localize({ key: 'cataloging.record.edit' })}</Icon>
       </Button>
     </div>
+    </IfPermission>
   );
 };
 

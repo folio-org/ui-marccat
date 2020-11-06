@@ -10,6 +10,7 @@ import {
   Button,
   Icon,
 } from '@folio/stripes/components';
+import { IfPermission } from '@folio/stripes-core';
 import { ACTION } from '../../../redux/actions';
 import type { Props } from '../../../flow/types.js.flow';
 import {
@@ -29,6 +30,7 @@ import { emptyRecordAction, emptyRecordAuthAction } from '../../Cataloguing/Acti
 import { searchDetailAction } from '../Actions';
 import * as C from '../../../config/constants';
 import CheckBox from '../../../shared/lib/Button/CheckBox';
+
 
 type P = Props & {
   headings: Array<any>,
@@ -239,17 +241,19 @@ export class SearchResults extends React.Component<P, {}> {
         data-test-action-button
         label="Actions"
       >
-        <Button
-          data-test-new-record-button
-          buttonStyle="primary"
-          disabled={!emptyRecord}
-          onClick={this.handleCreateRecord}
-          id="clickable-dropdown-new-record"
-        >
-          <Icon icon="plus-sign" size="small">
-            {Localize({ key: 'search.record.new' })}
-          </Icon>
-        </Button>
+        <IfPermission perm="ui-marccat.create-new-bibliographic-record.view">
+          <Button
+            data-test-new-record-button
+            buttonStyle="primary"
+            disabled={!emptyRecord}
+            onClick={this.handleCreateRecord}
+            id="clickable-dropdown-new-record"
+          >
+            <Icon icon="plus-sign" size="small">
+              {Localize({ key: 'search.record.new' })}
+            </Icon>
+          </Button>
+        </IfPermission>
       </MenuSection>
     </Fragment>
   );

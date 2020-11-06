@@ -13,6 +13,7 @@ import { reduxForm, Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 
 
+import { IfPermission } from '@folio/stripes-core';
 import ResetButton from '../Filter/ResetButton';
 import type { Props } from '../../../flow/types.js.flow';
 import {
@@ -322,64 +323,65 @@ class SearchPanel extends React.Component<P, {}> {
             </Button>
           </ButtonGroup>
         </div>
-
-        <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}>
-          <Row>
-            <Col xs={12} className={styles.forwardBracket}>
-              <Row>
-                <Col xs={12}>
-                  <div>
-                    <SearchIndexes
+        <IfPermission perm="ui-marccat.search-and-browse-records.view">
+          <form name="searchForm" onKeyDown={this.handleKeyDown} onChange={this.handleOnChange}>
+            <Row>
+              <Col xs={12} className={styles.forwardBracket}>
+                <Row>
+                  <Col xs={12}>
+                    <div>
+                      <SearchIndexes
+                        {...this.props}
+                        id="selectIndexes"
+                        name="selectIndexes"
+                        segment={segment}
+                      />
+                    </div>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12}>
+                    <SearchConditions
                       {...this.props}
-                      id="selectIndexes"
-                      name="selectIndexes"
-                      segment={segment}
+                      id="selectCondition"
+                      name="selectCondition"
                     />
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={12}>
-                  <SearchConditions
-                    {...this.props}
-                    id="selectCondition"
-                    name="selectCondition"
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={12}>
-                  <div>
-                    <Field
-                      id="searchTextArea"
-                      name="searchTextArea"
-                      data-test-search-text-area
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12}>
+                    <div>
+                      <Field
+                        id="searchTextArea"
+                        name="searchTextArea"
+                        data-test-search-text-area
+                        fullWidth
+                        component={TextField}
+                        placeholder="Search..."
+                      />
+                    </div>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12}>
+                    <Button
+                      id="search-panel-btn-search"
+                      buttonStyle={btnSubmitEnabled ? 'primary' : 'default'}
+                      onClick={this.handleKeyDown}
+                      type="submit"
+                      disabled={!btnSubmitEnabled}
                       fullWidth
-                      component={TextField}
-                      placeholder="Search..."
-                    />
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={12}>
-                  <Button
-                    id="search-panel-btn-search"
-                    buttonStyle={btnSubmitEnabled ? 'primary' : 'default'}
-                    onClick={this.handleKeyDown}
-                    type="submit"
-                    disabled={!btnSubmitEnabled}
-                    fullWidth
-                    data-test-btn-search
-                  >
-                    {translate({ id: 'ui-marccat.search.searchButton' })}
-                  </Button>
-                  {this.renderBtnResetAll()}
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </form>
+                      data-test-btn-search
+                    >
+                      {translate({ id: 'ui-marccat.search.searchButton' })}
+                    </Button>
+                    {this.renderBtnResetAll()}
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </form>
+        </IfPermission>
         {this.getFilterContainer(segment, filterEnable)}
       </Fragment>
     );

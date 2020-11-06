@@ -56,8 +56,6 @@ class SearchPanel extends React.Component<P, {}> {
     };
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.handleAddSearchForm = this.handleAddSearchForm.bind(this);
-    this.handleRemoveSearchForm = this.handleRemoveSearchForm.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleResetAllButton = this.handleResetAllButton.bind(this);
   }
@@ -190,22 +188,6 @@ class SearchPanel extends React.Component<P, {}> {
     const { dispatch } = this.props;
     dispatch(historySearchAction(payload));
   };
-
-  handleAddSearchForm = () => {
-    const { searchForm, counter } = this.state;
-    this.setState({
-      searchForm: searchForm.concat([{ name: counter.length }]),
-      counter: counter.concat([{}]),
-    });
-  }
-
-  handleRemoveSearchForm = (e, idx) => {
-    const { searchForm } = this.state;
-    delete searchForm[idx];
-    this.setState({
-      searchForm,
-    });
-  }
 
   handleOnChange = () => {
     const { searchForm } = this.state;

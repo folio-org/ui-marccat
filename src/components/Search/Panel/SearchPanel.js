@@ -48,7 +48,6 @@ class SearchPanel extends React.Component<P, {}> {
       isBrowseRequested: false,
       searchForm: [EMPTY_STRING],
       filterEnable: true,
-      counter: [{}],
       segment: segment === undefined
         ? paramSegment === null ? SEARCH_SEGMENT.BIBLIOGRAPHIC : paramSegment
         : segment,

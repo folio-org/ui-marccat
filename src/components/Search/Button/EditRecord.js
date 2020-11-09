@@ -34,15 +34,15 @@ const EditRecordButton = ({ ...props }) => {
 
   return (
     <IfPermission perm="ui-marccat.edit-delete-records.view">
-    <div>
-      <Button
-        id="clickable-dropdown-edit-record"
-        buttonStyle="dropdownItem"
-        onClick={() => handleClickEdit()}
-      >
-        <Icon icon="edit">{Localize({ key: 'cataloging.record.edit' })}</Icon>
-      </Button>
-    </div>
+      <div>
+        <Button
+          id="clickable-dropdown-edit-record"
+          buttonStyle="dropdownItem"
+          onClick={() => handleClickEdit()}
+        >
+          <Icon icon="edit">{Localize({ key: 'cataloging.record.edit' })}</Icon>
+        </Button>
+      </div>
     </IfPermission>
   );
 };

@@ -381,11 +381,6 @@ class Record extends React.Component<
             translate({ id: 'ui-marccat.search.record.deletemodal.deletesuccess' }),
             'success'
           );
-        } else if (statusCode === 423) {
-          const msg423 = segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC
-            ? translate({ id: 'ui-marccat.search.record.deletemodal.notdeletedrecordused.bib' })
-            : translate({ id: 'ui-marccat.search.record.deletemodal.notdeletedrecordused.auth' });
-          showValidationMessage(this.callout, msg423, 'error');
         } else {
           showValidationMessage(
             this.callout,

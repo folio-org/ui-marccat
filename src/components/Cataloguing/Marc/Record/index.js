@@ -292,6 +292,7 @@ class Record extends React.Component<
     if (!isDuplicateMode && deletedTag) variableFormData = union(variableFormData, initialValues);
 
     const bibliographicRecord = this.getCurrentRecord();
+    const authorityRecord = this.getCurrentRecord();
     bibliographicRecord.leader.value = formData.leader;
 
     const recordTemplate: RecordTemplate<Type> = {
@@ -322,7 +323,7 @@ class Record extends React.Component<
         bibliographicRecord.fields.map((f, index) => (f.code === '007' ? bibliographicRecord.fields.splice(index, 1) : null));
       }
     }
-    const payload = { bibliographicRecord, recordTemplate };
+    const payload = segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC ? { bibliographicRecord, recordTemplate } : { authorityRecord, recordTemplate };
     this.setState({ submit: true });
 
     await post(

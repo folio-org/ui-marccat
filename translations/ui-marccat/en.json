@@ -37,6 +37,7 @@
   "search.result": "Search Result",
   "search.indexes": "Indexes",
   "search.searchButton": "Search",
+  "search.searchLabel": "Search...",
   "search.scanButton": "Scan",
   "search.clear": "Clear",
   "search.refreshButton": "Refresh",

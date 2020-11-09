@@ -82,4 +82,7 @@ export default interactor(class RecordInteractor {
   dateLastPubType008 = new Interactor('#Tag008-0-dateLastPublication');
   filterSupressedChk = new CheckBoxInteractor('#clickable-filter-language-filter-english');
   filterAllTypeChk = new CheckBoxInteractor('#clickable-filter-format-type-all-text');
+  btnDeleteRecord = new ButtonInteractor('#clickable-detail-delete-record');
+  btnDeleteRecordPresent = isPresent('#clickable-detail-delete-record');
+
 });

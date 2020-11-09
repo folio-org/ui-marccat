@@ -224,4 +224,56 @@ describe('Record Edit', () => {
 
   });
 
+  describe('In filter, select Bibliographic and search records for delete one', function () {
+    beforeEach(async function () {
+      await recordInteractor.segmentButtonBib.click();
+      await searchInteractor.selectIndexes.selectOption('Title');
+      await searchInteractor.selectCondition.selectOption('Contains');
+      await searchInteractor.searchTextArea.fill('test');
+      await recordInteractor.filterSupressedChk.clickThrough();
+      await recordInteractor.filterAllTypeChk.clickThrough();
+      await searchInteractor.buttonSearch.click();
+    });
+
+    it('Bibliographic search executed', () => {
+      expect(searchInteractor.countResults).to.be.greaterThan(0);
+    });
+
+    describe('select first record', function () {
+      beforeEach(async function () {
+        await searchInteractor.searchResults.clickThrough();
+      });
+
+      it('Record detail loaded', () => {
+        expect(recordInteractor.headerDropdownDetailMenu.isEditButtonPresent).to.be.true;
+      });
+
+
+      describe('Click edit record button', function () {
+        beforeEach(async function () {
+          await recordInteractor.headerDropdownDetail.click();
+          await recordInteractor.headerDropdownDetailMenu.clickEdit();
+        });
+
+        it('Record edition page loaded', () => {
+          expect(recordInteractor.headerDropdownDetailMenu.isEditButtonPresent).to.be.false;
+        });
+
+        describe('Click delete record button', function () {
+          beforeEach(async function () {
+            await recordInteractor.btnDeleteRecord.click();
+          });
+
+          it('delete button pushed', () => {
+            expect(recordInteractor.btnDeleteRecordPresent).to.be.true;
+          });
+
+        });
+
+      });
+
+    });
+
+  });
+
 });

@@ -321,7 +321,7 @@ class SearchPanel extends React.Component<P, {}> {
                         data-test-search-text-area
                         fullWidth
                         component={TextField}
-                        placeholder="Search..."
+                        placeholder={translate({ id: 'ui-marccat.search.searchLabel' })}
                       />
                     </div>
                   </Col>

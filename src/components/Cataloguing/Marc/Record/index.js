@@ -56,18 +56,14 @@ class Record extends React.Component<
 > {
   constructor(props) {
     super(props);
+    const modeParam = findParam('mode') !== null ? findParam('mode') : props.location.state.mode;
+    const idParam = findParam('id') !== null ? findParam('id') : props.location.state.id;
     this.state = {
-      isCreationMode: findParam('mode') === RECORD_ACTION.CREATION_MODE,
-      isEditMode: findParam('mode') === RECORD_ACTION.EDIT_MODE,
-      isDuplicateMode: findParam('mode') === RECORD_ACTION.DUPLICATE_MODE,
-      mode:
-        findParam('mode') !== null
-          ? findParam('mode')
-          : props.location.state.mode,
-      id:
-        findParam('id') !== null
-          ? findParam('id')
-          : props.location.state.id,
+      isCreationMode: modeParam === RECORD_ACTION.CREATION_MODE,
+      isEditMode: modeParam === RECORD_ACTION.EDIT_MODE,
+      isDuplicateMode: modeParam === RECORD_ACTION.DUPLICATE_MODE,
+      mode: modeParam,
+      id: idParam,
       submit: false,
       deletedTag: false,
       statusCode: '',
@@ -435,6 +431,7 @@ class Record extends React.Component<
     return (
       (isEditMode) ? (
         <Button
+          id="clickable-detail-delete-record"
           buttonStyle="primary"
           buttonClass={style.rightPosition}
           onClick={this.deleteRecord}

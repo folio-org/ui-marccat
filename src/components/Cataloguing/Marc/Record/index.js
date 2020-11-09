@@ -361,7 +361,7 @@ class Record extends React.Component<
 
   deleteRecord = async () => {
     let { statusCode } = this.state;
-    const { recordDetail, store, router, reset, translate, data: { search: { segment } } } = this.props;
+    const { recordDetail, store, router, reset, translate, toggleFilterPane, data: { search: { segment } } } = this.props;
     await del(
       buildUrl(
         store.getState(),
@@ -381,6 +381,11 @@ class Record extends React.Component<
             translate({ id: 'ui-marccat.search.record.deletemodal.deletesuccess' }),
             'success'
           );
+        } else if (statusCode === 423) {
+          const msg423 = segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC
+            ? translate({ id: 'ui-marccat.search.record.deletemodal.notdeletedrecordused.bib' })
+            : translate({ id: 'ui-marccat.search.record.deletemodal.notdeletedrecordused.auth' });
+          showValidationMessage(this.callout, msg423, 'error');
         } else {
           showValidationMessage(
             this.callout,
@@ -390,6 +395,7 @@ class Record extends React.Component<
         }
         setTimeout(() => {
           reset();
+          toggleFilterPane();
           return router.push('/marccat/search');
         }, 2000);
       });

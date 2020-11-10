@@ -365,7 +365,9 @@ class Record extends React.Component<
     await del(
       buildUrl(
         store.getState(),
-        segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC ? C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + recordDetail.id : C.ENDPOINT.AUTHORITY_RECORD + '/' + recordDetail.id,
+        segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC
+          ? `${C.ENDPOINT.BIBLIOGRAPHIC_RECORD}/${recordDetail.id}`
+          : `${C.ENDPOINT.AUTHORITY_RECORD}/${recordDetail.id}`,
         C.ENDPOINT.DEFAULT_LANG_VIEW
       ),
       recordDetail.id,
@@ -375,19 +377,32 @@ class Record extends React.Component<
         statusCode = r.status;
       })
       .then(() => {
-        if (statusCode === 204) {
+        switch (statusCode) {
+        case 204: {
           showValidationMessage(
             this.callout,
             translate({ id: 'ui-marccat.search.record.deletemodal.deletesuccess' }),
             'success'
           );
-        } else {
+          break;
+        }
+        case 423: {
+          const msg423 = segment === C.SEARCH_SEGMENT.AUTHORITY
+            ? translate({ id: 'ui-marccat.search.record.deletemodal.notdeletedrecordused.bib' })
+            : translate({ id: 'ui-marccat.search.record.deletemodal.notdeletedrecordused.auth' });
+          showValidationMessage(this.callout, msg423, 'error');
+          break;
+        }
+        default: {
           showValidationMessage(
             this.callout,
             translate({ id: 'ui-marccat.search.record.deletemodal.deletewrong' }),
             'error'
           );
+          break;
         }
+        }
+
         setTimeout(() => {
           reset();
           toggleFilterPane();
@@ -492,9 +507,8 @@ class Record extends React.Component<
     delete childProps.emptyRecord;
     delete childProps.emptyRecordAuth;
 
-    const paneTitle = segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC
-      ? isEditMode ? translate({ id: 'ui-marccat.cataloging.record.edit' }) : translate({ id: 'ui-marccat.cataloging.record.newmonograph' })
-      : isEditMode ? translate({ id: 'ui-marccat.cataloging.record.edit' }) : translate({ id: 'ui-marccat.cataloging.record.newauthority' });
+    const paneTitle = isEditMode ? translate({ id: 'ui-marccat.cataloging.record.edit' })
+      : segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC ? translate({ id: 'ui-marccat.cataloging.record.newmonograph' }) : translate({ id: 'ui-marccat.cataloging.record.newauthority' });
 
     return !leaderData ? (
       <Icon icon="spinner-ellipsis" />

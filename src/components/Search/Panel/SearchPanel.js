@@ -65,12 +65,10 @@ class SearchPanel extends React.Component<P, {}> {
     const id = findParam('id') || findParam('savedId') || findParam('recordid');
     if (!btnSubmitEnabled) {
       const form = getState().form.searchForm;
-      if (typeof (form) !== 'undefined' && typeof (form.values) !== 'undefined' && typeof (form.values.searchTextArea) !== 'undefined') {
-        if (form.values.searchTextArea.length > 0) {
-          this.setState({
-            btnSubmitEnabled: true
-          });
-        }
+      if (form?.values?.searchTextArea?.length) {
+        this.setState({
+          btnSubmitEnabled: true
+        });
       }
     }
     if (id) this.handleSearchFromCataloging(id);

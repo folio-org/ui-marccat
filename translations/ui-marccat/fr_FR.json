@@ -152,5 +152,5 @@
     "search.record.deletemodal.deletesuccess": "Enregistrement supprimé avec succès",
     "search.record.deletemodal.deletewrong": "Échec: une erreur s'est produite",
     "search.record.deletemodal.notdeletedrecordused.bib": "La notice bibliographique n'a pas pu être supprimée car elle est utilisée",
-    "search.record.deletemodal.notdeletedrecordused.auth": "The authority record could not be deleted because it is being used in bibliographic records"
+    "search.record.deletemodal.notdeletedrecordused.auth": "La notice d'autorité ne peut être supprimée car elle est utilisée dans une notice bibliographique"
 }

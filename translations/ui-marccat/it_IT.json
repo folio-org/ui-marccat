@@ -47,7 +47,7 @@
     "search.actionmenu.holdings": "Holdings",
     "search.actionmenu.instances": "Istanze",
     "search.actionmenu.authority.records": "Record di autorità",
-    "search.initial.message": "Inserisci i criteri di ricerca per avviare la ricerca",
+    "search.initial.message": "Scegli i criteri per avviare la ricerca",
     "error.noresults.message": "La ricerca non ha prodotto risultati",
     "template.actionmenu.load": "Carica modello ...",
     "template.actionmenu.load.shortcut": "CTRL + L",

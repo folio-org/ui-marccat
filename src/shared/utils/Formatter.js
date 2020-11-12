@@ -7,6 +7,7 @@ import { getFieldPosition, getFormat, getMicroformat } from './Mapper';
 import style from '../../components/Search/Style/index.css';
 import { unionSortAndDedupe } from '../../components/Cataloguing/Utils/MarcApiUtils';
 
+
 export const columnMapper = (
   isBibsOnly: ?boolean,
   isAuthOnly: ?boolean = true
@@ -53,6 +54,8 @@ export const columnMapper = (
   }
   return mapper;
 };
+
+
 export const renderColumn = (
   isBibsOnly: ?boolean,
   isAuthOnly: ?boolean = true,
@@ -76,6 +79,7 @@ export const renderColumn = (
       'date2',
       'format',
     ];
+    return visibleCol;
   }
   if (isAuthOnly === true && isBibsOnly === false) {
     visibleCol = [
@@ -212,6 +216,36 @@ export const resultsFormatterForAssociated = {
   subject: x => (
     subjectTags(x)
   ),
+};
+export const authDetailsResultFormatter = () => {
+  const authDetails = {
+    resultView: x => (<AppIcon size="small" app="marccat" iconKey="marc-bib" />),
+    countDoc: x => <span>{x.recordView === -1 && x.countDoc}</span>,
+    tagHighlighted: x => (
+      <span className={style.tagHighLighted}>{x.tagHighlighted}</span>
+    ),
+  };
+  return authDetails;
+};
+
+export const authDetailsColumnMapper = () => {
+  const authDetailsMapper = {
+    'resultView': '',
+    'sampleId': '',
+    'username': '',
+    'surname': '',
+  };
+  return authDetailsMapper;
+};
+
+export const authDetailsRenderColumn = () => {
+  const authDetailsVisibleCol = [
+    'resultView',
+    'sampleId',
+    'username',
+    'surname',
+  ];
+  return authDetailsVisibleCol;
 };
 
 export const resultsFormatter = (

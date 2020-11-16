@@ -5,7 +5,7 @@ import { Field } from 'redux-form';
 import { Select, Row, Col } from '@folio/stripes-components';
 import { connect } from 'react-redux';
 import { isEmpty, last } from 'lodash';
-import { EMPTY_SPACED_STRING, REDUX } from '../../../../../config/constants';
+import { EMPTY_SPACED_STRING, REDUX, SEARCH_SEGMENT } from '../../../../../config/constants';
 import { decamelizify, findParam } from '../../../../../shared';
 import type { Props, State } from '../../../../../flow/types.js.flow';
 
@@ -56,6 +56,7 @@ class Tag00X extends React.PureComponent<Props, S> {
       record: {
         leader: { value },
       },
+      data: { search: { segment } }
     } = this.props;
     const { isEditMode, isDuplicateMode, firstAccess } = this.state;
     let { headerTypeCode } = this.state;
@@ -85,6 +86,7 @@ class Tag00X extends React.PureComponent<Props, S> {
         code,
         headerTypeCode,
         cb: r => this.handleDisplayValue(undefined, r),
+        segment
       };
       this.setState({ headerTypeCode });
       dispatch(dropDownValuesAction(payload));
@@ -98,6 +100,7 @@ class Tag00X extends React.PureComponent<Props, S> {
       dispatch,
       change,
       element: { code },
+      data: { search: { segment } }
     } = this.props;
     const payload = {};
     const fromStore = store.getState();
@@ -127,7 +130,7 @@ class Tag00X extends React.PureComponent<Props, S> {
     }
     this.prepareValue(code, results, payload, headerTypeCode);
     const cb = r => this.execChange(r);
-    dispatch(changeDisplayValueAction(payload, cb));
+    dispatch(changeDisplayValueAction(payload, cb, segment));
   };
 
   execChange = (response: Object): void => {
@@ -245,6 +248,7 @@ class Tag00X extends React.PureComponent<Props, S> {
       headingTypes,
       values008,
       headerTypeCodeFromLeader,
+      data: { search: { segment } }
     } = this.props;
     return (
       <div className={style.fieldContainer} no-padding>
@@ -263,14 +267,16 @@ class Tag00X extends React.PureComponent<Props, S> {
         >
           <Col xs={12}>
             {headingTypes && (
-              <Field
-                {...this.props}
-                label={'Tag'.concat(element.fixedField.code)}
-                name={'Tag'.concat(element.fixedField.code)}
-                component={this.RenderSelect}
-                typeCode={headerTypeCodeFromLeader || headerTypeCode}
-                headertypes={headingTypes.results.headingTypes}
-              />
+              <div className={segment === SEARCH_SEGMENT.AUTHORITY ? style.hidden : null}>
+                <Field
+                  {...this.props}
+                  label={'Tag'.concat(element.fixedField.code)}
+                  name={'Tag'.concat(element.fixedField.code)}
+                  component={this.RenderSelect}
+                  typeCode={headerTypeCodeFromLeader || headerTypeCode}
+                  headertypes={headingTypes.results.headingTypes}
+                />
+              </div>
             )}
             {!isEmpty(values008.results) &&
               this.RenderDropwDown(values008.results, element.fixedField.code)}
@@ -284,16 +290,19 @@ class Tag00X extends React.PureComponent<Props, S> {
 const mapStateToProps = state => {
   const {
     marccat: {
-      data: { emptyRecord, marcRecordDetail, headerTypeValues008 },
+      data: { emptyRecord, emptyRecordAuth, marcRecordDetail, headerTypeValues008 },
+      search: { segment }
     },
   } = state;
+  const remptyRecordAux = segment === SEARCH_SEGMENT.BIBLIOGRAPHIC
+    ? emptyRecord.results.fields || marcRecordDetail.bibliographicRecord.fields
+    : emptyRecordAuth.results.fields || marcRecordDetail.bibliographicRecord.fields;
   return {
     values008: headerTypeValues008 ? headerTypeValues008.results : {},
     headerTypeCodeFromLeader: headerTypeValues008
       ? headerTypeValues008.results.headerTypeCode
       : undefined,
-    fixedfields:
-      emptyRecord.results.fields || marcRecordDetail.bibliographicRecord.fields,
+    fixedfields: remptyRecordAux,
   };
 };
 

@@ -21,8 +21,12 @@ describe('ActionMenu', () => {
     this.server.create('bibRecordDetail');
     this.server.create('verticalDetail');
     this.server.create('headerType');
+    this.server.create('header007Type');
+    this.server.create('header008Type');
     this.server.create('fixedFieldsCodeGroup');
+    this.server.create('fixedFieldsCode31Group');
     this.server.create('fixedFieldsCodeGroupsByLeader');
+    this.server.create('authFixedFieldsCodeGroup');
 
     return this.visit('/marccat/search', () => {
       expect(actionMenuInteractor.$root).to.exist;

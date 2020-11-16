@@ -5,6 +5,6 @@ export default ApplicationSerializer.extend({
   serialize(...args) {
     const json = ApplicationSerializer.prototype.serialize.apply(this, args);
 
-    return json.fixedFieldsCodeGroupsByLeaders[0];
+    return json.createBibRecordValues[0];
   }
 });

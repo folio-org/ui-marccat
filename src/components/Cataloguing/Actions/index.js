@@ -1,14 +1,15 @@
-import { ENDPOINT } from '../../../config/constants';
+import { ENDPOINT, SEARCH_SEGMENT } from '../../../config/constants';
 import { ACTION } from '../../../redux/actions/Actions';
 
 // MARC action creator utility
 
 
 export const leaderDropdownAction = (payload) => {
+  const endPoint = (payload.segment === SEARCH_SEGMENT.AUTHORITY) ? ENDPOINT.AUTH_FIXED_FIELD_CODE_GROUPS_URL : ENDPOINT.FIXED_FIELD_CODE_GROUPS_URL;
   return {
     type: ACTION.QUERY,
     data: {
-      path: ENDPOINT.FIXED_FIELD_CODE_GROUPS_URL,
+      path: endPoint,
       type: 'leaderData',
       params: `value=${payload.value}&code=${payload.code}&headerTypeCode=${payload.typeCode}&lang=eng`,
     },
@@ -127,11 +128,12 @@ export const createHeadingAction = (id, payload) => {
  *
  * @param {*} payload
  */
-export const changeDisplayValueAction = (payload, cb) => {
+export const changeDisplayValueAction = (payload, cb, segment) => {
+  const endPoint = (segment === SEARCH_SEGMENT.AUTHORITY) ? ENDPOINT.AUTH_CHANGE_DISPLAY_VALUE : ENDPOINT.CHANGE_DISPLAY_VALUE;
   return {
     type: ACTION.CREATE,
     data: {
-      path: ENDPOINT.CHANGE_DISPLAY_VALUE,
+      path: endPoint,
       type: `fixedfield${payload.code}`,
       params: ENDPOINT.DEFAULT_LANG_VIEW,
     },
@@ -176,7 +178,7 @@ export const emptyRecordAuthAction = () => {
   return {
     type: ACTION.QUERY,
     data: {
-      path: ENDPOINT.EMPTY_RECORD_URL + 1,
+      path: ENDPOINT.EMPTY_RECORD_AUTH_URL + 1,
       type: 'emptyRecordAuth',
       params: ENDPOINT.DEFAULT_LANG_VIEW,
     },
@@ -235,6 +237,17 @@ export const headertypeAction = (tag) => {
   };
 };
 
+export const authHeadertypeAction = (tag) => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.AUTH_HEADER_TYPES_URL,
+      type: `headertype${tag}`,
+      params: `code=${tag}&lang=eng`,
+    },
+  };
+};
+
 export const editDropDownValuesAction = (payload) => {
   return {
     type: ACTION.QUERY,
@@ -250,10 +263,11 @@ export const editDropDownValuesAction = (payload) => {
 };
 
 export const dropDownValuesAction = (payload) => {
+  const endPoint = (payload.segment === SEARCH_SEGMENT.AUTHORITY) ? ENDPOINT.AUTH_FIXED_FIELD_CODE_GROUPS_URL : ENDPOINT.FIXED_FIELD_CODE_GROUPS_URL;
   return {
     type: ACTION.QUERY,
     data: {
-      path: ENDPOINT.FIXED_FIELD_CODE_GROUPS_URL,
+      path: endPoint,
       type: `headerTypeValues${payload.code}`,
       key: payload.code,
       id: payload.code,
@@ -275,6 +289,16 @@ export const change008ByLeaderAction = (payload) => {
   };
 };
 
+export const change008ActionAuth = (payload) => {
+  return {
+    type: ACTION.QUERY,
+    data: {
+      path: ENDPOINT.AUTH_FIXED_FIELD_CODE_GROUPS_URL,
+      type: 'headerTypeValues008',
+      params: `value=${payload.value}&code=${payload.code}&headerTypeCode=${payload.typeCode}&lang=eng`,
+    },
+  };
+};
 
 /**
  *

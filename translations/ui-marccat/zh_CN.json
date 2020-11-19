@@ -152,5 +152,8 @@
     "search.record.deletemodal.deletesuccess": "记录删除成功",
     "search.record.deletemodal.deletewrong": "失败：出了点问题",
     "search.record.deletemodal.notdeletedrecordused.bib": "书目记录无法删除，因为它正被使用",
-    "search.record.deletemodal.notdeletedrecordused.auth": "规范记录无法删除，因为它已在书目记录中使用"
+    "search.record.deletemodal.notdeletedrecordused.auth": "规范记录无法删除，因为它已在书目记录中使用",
+    "cataloging.accordion.fixedfield.editable.label.auth": "Control Fields (008)",
+    "cataloging.record.newmonograph": "New Monograph",
+    "cataloging.record.newauthority": "New Authority"
 }

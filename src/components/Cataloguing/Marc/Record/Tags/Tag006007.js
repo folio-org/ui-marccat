@@ -118,6 +118,7 @@ class Tag006007 extends React.PureComponent<Props, S> {
       dispatch,
       change,
       element: { code },
+      data: { search: { segment } }
     } = this.props;
     const payload = {};
     const fromStore = store.getState();
@@ -169,7 +170,7 @@ class Tag006007 extends React.PureComponent<Props, S> {
     }
     this.prepareValue(code, results, payload, headerTypeCode);
     const cb = r => this.execChange(r);
-    dispatch(changeDisplayValueAction(payload, cb));
+    dispatch(changeDisplayValueAction(payload, cb, segment));
   };
 
   execChange = (response: Object): void => {
@@ -243,7 +244,6 @@ class Tag006007 extends React.PureComponent<Props, S> {
       element: { code },
     } = this.props;
     const sortedData = Object.values(data).sort((x, y) => x.name > y.name);
-    console.log(headerTypeCode);
     return (
       <Row>
         {sortedData.map((field, idx) => (field.name === REDUCTION_CRIT ||

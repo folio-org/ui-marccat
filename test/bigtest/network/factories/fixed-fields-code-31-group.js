@@ -1,7 +1,6 @@
 import { Factory } from 'miragejs';
 
 export default Factory.extend({
-  'headerTypeCode':31,
   'results':{
     'dateFirstPublication':{
       'name':'dateFirstPublication',

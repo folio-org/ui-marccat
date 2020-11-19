@@ -1,13 +1,11 @@
 // @flow
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { AccordionSet, Col, Row, FilterAccordionHeader, Accordion } from '@folio/stripes/components';
-import { MultiColumnList } from '@folio/stripes/components';
+import { AccordionSet, Col, Row, FilterAccordionHeader, Accordion, MultiColumnList } from '@folio/stripes/components';
 import InventoryPluggableButton from '../Button/Inventory';
 import type { Props } from '../../../flow/types.js.flow';
 import AssociatedBib from './AssociatedBib';
 import { ACTION } from '../../../redux/actions';
-
 import { mapFields } from '../Utils/SearchUtils';
 import { FixedFields } from '../../Cataloguing/Models/model';
 import { SUBFIELD_CHARACTER } from '../../Cataloguing/Utils/MarcConstant';
@@ -88,6 +86,7 @@ class RecordDetails extends React.Component<P, {}> {
 
   inventoryButton = (segment, translate) => {
 
+    const { listData } = this.state;
     if (segment === SEARCH_SEGMENT.BIBLIOGRAPHIC) {
       return (
         <InventoryPluggableButton {...this.props} className={style.inventoryButton} buttonLabel={translate({ id: 'ui-marccat.search.goto.inventory' })} />
@@ -97,7 +96,7 @@ class RecordDetails extends React.Component<P, {}> {
         <MultiColumnList
           id="dui-marccat.search.goto.inventory"
           rowMetadata={['001', 'recordView']}
-          contentData={this.state.listData}
+          contentData={listData}
           formatter={authDetailsResultFormatter()}
           columnMapping={authDetailsColumnMapper()}
           visibleColumns={authDetailsRenderColumn()}

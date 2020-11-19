@@ -220,10 +220,6 @@ export const resultsFormatterForAssociated = {
 export const authDetailsResultFormatter = () => {
   const authDetails = {
     resultView: x => (<AppIcon size="small" app="marccat" iconKey="marc-bib" />),
-    countDoc: x => <span>{x.recordView === -1 && x.countDoc}</span>,
-    tagHighlighted: x => (
-      <span className={style.tagHighLighted}>{x.tagHighlighted}</span>
-    ),
   };
   return authDetails;
 };

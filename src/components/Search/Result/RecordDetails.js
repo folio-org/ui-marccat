@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { AccordionSet, Col, Row, FilterAccordionHeader, Accordion, MultiColumnList } from '@folio/stripes/components';
+import { AccordionSet, Col, Row, FilterAccordionHeader, Accordion } from '@folio/stripes/components';
 import InventoryPluggableButton from '../Button/Inventory';
 import type { Props } from '../../../flow/types.js.flow';
 import AssociatedBib from './AssociatedBib';
@@ -11,11 +11,7 @@ import { FixedFields } from '../../Cataloguing/Models/model';
 import { SUBFIELD_CHARACTER } from '../../Cataloguing/Utils/MarcConstant';
 import { SEARCH_SEGMENT } from '../../../config/constants';
 import style from '../Style/index.css';
-import {
-  authDetailsColumnMapper,
-  authDetailsRenderColumn,
-  authDetailsResultFormatter,
-} from '../../../shared/utils/Formatter';
+
 
 type P = Props & {
   items: Array<any>,
@@ -24,22 +20,7 @@ type P = Props & {
 class RecordDetails extends React.Component<P, {}> {
   render() {
     const { store: { dispatch }, detailPaneMeta, checkDetailsInRow, translate, checkDetailsBibRec, data: { search: { segment } } } = this.props;
-    const list = [
-      {
-        sampleId: 'a',
-        username: 'Jon',
-        surname: 'Mugica',
-        year: 1973
-      }, {
-        sampleId: 'b',
-        username: 'Ander',
-        surname: 'Recalde',
-        year: 1997
-      }
-    ];
-    this.state = {
-      listData : list
-    };
+
     // eslint-disable-next-line no-unused-vars
     const currentDatail = detailPaneMeta.detail[0];
     dispatch({ type: ACTION.SETTINGS, data: { currentDatail } });
@@ -86,23 +67,12 @@ class RecordDetails extends React.Component<P, {}> {
 
   inventoryButton = (segment, translate) => {
 
-    const { listData } = this.state;
     if (segment === SEARCH_SEGMENT.BIBLIOGRAPHIC) {
       return (
         <InventoryPluggableButton {...this.props} className={style.inventoryButton} buttonLabel={translate({ id: 'ui-marccat.search.goto.inventory' })} />
       );
     } else {
-      return (
-        <MultiColumnList
-          id="dui-marccat.search.goto.inventory"
-          rowMetadata={['001', 'recordView']}
-          contentData={listData}
-          formatter={authDetailsResultFormatter()}
-          columnMapping={authDetailsColumnMapper()}
-          visibleColumns={authDetailsRenderColumn()}
-        />
-
-      );
+      return null;
     }
   }
 }

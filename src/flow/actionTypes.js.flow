@@ -12,6 +12,7 @@ export type Reducer<S, A = Action> = {
 } & Reducer<S, A>
 
 export type HeaderTypeAction = {} & Action
+export type authHeadertypeAction = {} & Action
 export type AutoSuggestionAction = {} & Action
 export type LeaderAction = {} & Action
 export type FixedFieldByLeaderAction = {} & Action
@@ -29,6 +30,7 @@ export type TypeCodeAction = {} & Action
 
 export type Actions = {
   headerType: HeaderTypeAction,
+  authHeaderType: authHeadertypeAction
   autoSuggestionAction: AutoSuggestionAction,
   leaderAction: LeaderAction,
   fixedFieldByLeaderAction: FixedFieldByLeaderAction,

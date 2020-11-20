@@ -14,6 +14,7 @@ import { sort } from '../../../Utils/MarcApiUtils';
 import { Localize, findParam } from '../../../../../shared';
 import Tag006007 from './Tag006007';
 import { ACTION } from '../../../../../redux/actions';
+import { SEARCH_SEGMENT } from '../../../../../config/constants';
 
 type P = {
   handleOnChange: () => void,
@@ -72,17 +73,17 @@ class FixedField extends React.PureComponent<P, State> {
 
   RenderField00X = () => {
     const { fields } = this.state;
-    const { headertype006, headertype007, headertype008 } = this.props;
+    const { headertype006, headertype007, headertype008, data: { search: { segment } } } = this.props;
     return (
       <React.Fragment>
-        {sortBy(fields, SORTED_BY.CODE).map((f, index) => (f.code === TAGS._006 || f.code === TAGS._007 ? (
-          <div>
-            {this.getActionButton(f, index)}
-            <Tag006007 element={f} headingTypes={f.code === TAGS._006 ? headertype006 : headertype007} {...this.props} />
-          </div>
-        ) : (
-          <Tag00X element={f} headingTypes={headertype008} {...this.props} />
-        )))}
+        {sortBy(fields, SORTED_BY.CODE).map((f, index) => (f.code === TAGS._006 || f.code === TAGS._007
+          ? (segment === SEARCH_SEGMENT.BIBLIOGRAPHIC ?
+            <div>
+              {this.getActionButton(f, index)}
+              <Tag006007 element={f} headingTypes={f.code === TAGS._006 ? headertype006 : headertype007} {...this.props} />
+            </div> : null)
+          : (<Tag00X element={f} headingTypes={headertype008} {...this.props} />)
+        ))}
       </React.Fragment>
     );
   };

@@ -84,13 +84,15 @@ class Record extends React.Component<
   // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
     const {
-      datastore: { emptyRecord },
+      datastore: { emptyRecord, emptyRecordAuth },
+      data: { search: { segment } },
       editLoadLeaderData,
       loadLeaderData,
       loadHeadertype,
       dispatch,
     } = this.props;
     const { isEditMode, isDuplicateMode } = this.state;
+    const emptyRecordAux = segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC ? emptyRecord : emptyRecordAuth;
     if (isEditMode || isDuplicateMode) {
       const { recordDetail } = this.props;
       const leaderEdit = recordDetail.leader;
@@ -102,25 +104,38 @@ class Record extends React.Component<
       loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
       dispatch(MarcAction.change008ByLeaderAction(leaderEdit.value));
     } else {
-      const { leader } = emptyRecord.results;
+      const { leader } = emptyRecordAux.results;
       loadLeaderData({
         value: leader.value,
         code: leader.code,
         typeCode: '15',
+        segment
       });
-      loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
-      dispatch(MarcAction.change008ByLeaderAction(leader.value));
+      if (segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC) {
+        loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
+        dispatch(MarcAction.change008ByLeaderAction(leader.value));
+      } else {
+        loadHeadertype([TAGS._008]);
+        const playParams = {
+          value: leader.value,
+          code: '008',
+          typeCode: '10',
+        };
+        dispatch(MarcAction.change008ActionAuth(playParams));
+      }
     }
   }
 
   getCurrentRecord = (): Object => {
     const {
-      datastore: { emptyRecord, recordDuplicate },
+      datastore: { emptyRecord, emptyRecordAuth, recordDuplicate },
+      data: { search: { segment } },
       recordDetail,
     } = this.props;
     const { mode } = this.state;
+    const emptyRecordAux = segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC ? emptyRecord : emptyRecordAuth;
 
-    if (mode === RECORD_ACTION.CREATION_MODE) return Object.assign({}, emptyRecord.results);
+    if (mode === RECORD_ACTION.CREATION_MODE) return Object.assign({}, emptyRecordAux.results);
     else if (mode === RECORD_ACTION.EDIT_MODE) return Object.assign({}, recordDetail);
     else return Object.assign({}, recordDuplicate.results.bibliographicRecord);
   };
@@ -249,13 +264,15 @@ class Record extends React.Component<
   saveRecord = async e => {
     e.stopPropagation();
     const {
-      datastore: { emptyRecord },
+      datastore: { emptyRecord, emptyRecordAuth },
+      data: { search: { segment } },
       store: { getState },
     } = this.props;
     const { deletedTag, isCreationMode, isDuplicateMode } = this.state;
     const formData = getState().form.dataFieldForm.values;
     const initialValues = getState().form.variableFieldForm.initial.items;
     let variableFormData = getState().form.variableFieldForm.values.items;
+    const emptyRecordAux = segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC ? emptyRecord : emptyRecordAuth;
 
     // to remove
     variableFormData.map(
@@ -272,14 +289,14 @@ class Record extends React.Component<
 
     const recordTemplate: RecordTemplate<Type> = {
       id: 1,
-      fields: filterMandatoryFields(emptyRecord.results.fields),
+      fields: filterMandatoryFields(emptyRecordAux.results.fields),
     };
     if (!isCreationMode) {
       if (formData.Tag006 !== null) {
-        emptyRecord.results.fields.map(f => (f.code === '006' ? bibliographicRecord.fields.push(f) : null));
+        emptyRecordAux.results.fields.map(f => (f.code === '006' ? bibliographicRecord.fields.push(f) : null));
       }
       if (formData.Tag007 !== null) {
-        emptyRecord.results.fields.map(f => (f.code === '007' ? bibliographicRecord.fields.push(f) : null));
+        emptyRecordAux.results.fields.map(f => (f.code === '007' ? bibliographicRecord.fields.push(f) : null));
       }
     }
     bibliographicRecord.fields = union(
@@ -304,7 +321,7 @@ class Record extends React.Component<
     await post(
       buildUrl(
         getState(),
-        C.ENDPOINT.BIBLIOGRAPHIC_RECORD,
+        segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC ? C.ENDPOINT.BIBLIOGRAPHIC_RECORD : C.ENDPOINT.AUTHORITY_RECORD,
         C.ENDPOINT.DEFAULT_LANG_VIEW
       ),
       payload,
@@ -457,9 +474,17 @@ class Record extends React.Component<
   };
 
   render() {
-    const { leaderData } = this.props;
+    const { leaderData, translate, data: { search: { segment } } } = this.props;
     const { isEditMode, id } = this.state;
     const bibliographicRecord = this.getCurrentRecord();
+
+    const childProps = { ...this.props };
+    delete childProps.emptyRecord;
+    delete childProps.emptyRecordAuth;
+
+    const paneTitle = segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC
+      ? isEditMode ? translate({ id: 'ui-marccat.cataloging.record.edit' }) : translate({ id: 'ui-marccat.cataloging.record.newmonograph' })
+      : isEditMode ? translate({ id: 'ui-marccat.cataloging.record.edit' }) : translate({ id: 'ui-marccat.cataloging.record.newauthority' });
 
     return !leaderData ? (
       <Icon icon="spinner-ellipsis" />
@@ -468,11 +493,7 @@ class Record extends React.Component<
         <Paneset static>
           <Pane
             defaultWidth="fullWidth"
-            paneTitle={
-              bibliographicRecord && isEditMode
-                ? 'Edit Record'
-                : 'New Monograph'
-            }
+            paneTitle={paneTitle}
             paneSub={'id. ' + bibliographicRecord.id || id}
             appIcon={<AppIcon app={C.META.ICON_TITLE} />}
             lastMenu={this.lastMenu()}
@@ -484,12 +505,12 @@ class Record extends React.Component<
               <Col xs={12} sm={6} md={8} lg={8}>
                 <AccordionSet>
                   <DataFieldForm
-                    {...this.props}
+                    {...childProps}
                     leaderData={leaderData}
                     record={bibliographicRecord}
                   />
                   <VariableFieldForm
-                    {...this.props}
+                    {...childProps}
                     fields={filterVariableFields(bibliographicRecord.fields)}
                     onCreate={this.onCreate}
                     onDelete={this.onDelete}
@@ -505,10 +526,31 @@ class Record extends React.Component<
   }
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators(
+function mapStateToProps({ marccat: { data, search: { segment } } }) {
+  const toProps = segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC
+    ? {
+      emptyRecord: data.results,
+      recordDetail: resolve(data, 'marcRecordDetail').bibliographicRecord,
+      leaderData: resolve(data, 'leaderData'),
+    }
+    : {
+      emptyRecordAuth: data.results,
+      recordDetail: resolve(data, 'marcRecordDetail').bibliographicRecord,
+      leaderData: resolve(data, 'leaderData'),
+    };
+  return toProps;
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => bindActionCreators(
   {
     loadHeadertype: (tag: []) => _ => {
-      tag.forEach(t => dispatch(MarcAction.headertypeAction(t)));
+      tag.forEach(t => {
+        if (ownProps.data.search.segment === C.SEARCH_SEGMENT.AUTHORITY) {
+          dispatch(MarcAction.authHeadertypeAction(t));
+        } else {
+          dispatch(MarcAction.headertypeAction(t));
+        }
+      });
     },
     editLoadLeaderData: payload => _ => {
       dispatch(MarcAction.editLeaderDropdownAction(payload));
@@ -521,10 +563,6 @@ const mapDispatchToProps = dispatch => bindActionCreators(
 );
 
 export default connect(
-  ({ marccat: { data } }) => ({
-    emptyRecord: data.results,
-    recordDetail: resolve(data, 'marcRecordDetail').bibliographicRecord,
-    leaderData: resolve(data, 'leaderData'),
-  }),
+  mapStateToProps,
   mapDispatchToProps
 )(injectProps(Record));

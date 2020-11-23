@@ -116,6 +116,24 @@ export const fetchSearchEngineRecordsBibAut = (queryBib, queryAuth, to, isFromCa
   autOnlyFilter
 });
 
+export const fetchSearchEngineRecordsBibAutDetails = (queryBib, queryAuth, to, isFromCat, moreData, bibliographicResults, bibCounter, authorityResults, authCounter, dataOld, oldBibArray, oldAuthArray, bibsOnlyFilter, autOnlyFilter) => ({
+  type: ACTION.RECORD_SUCCESS,
+  queryBib,
+  queryAuth,
+  to,
+  isFromCat,
+  moreData,
+  bibliographicResults,
+  bibCounter,
+  authorityResults,
+  authCounter,
+  dataOld,
+  oldBibArray,
+  oldAuthArray,
+  bibsOnlyFilter,
+  autOnlyFilter
+});
+
 export const fetchBrowseDetail = (results, counter, isAuthority) => ({
   type: ACTION.DETAILS_BROWSE_SUCCESS,
   payload: results,

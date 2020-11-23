@@ -1,8 +1,7 @@
 // @flow
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { AccordionSet, Col, Row, FilterAccordionHeader, Accordion } from '@folio/stripes/components';
-import { MultiColumnList } from '@folio/stripes/components';
+import { AccordionSet, Col, Row, FilterAccordionHeader, Accordion, MultiColumnList } from '@folio/stripes/components';
 import InventoryPluggableButton from '../Button/Inventory';
 import type { Props } from '../../../flow/types.js.flow';
 import AssociatedBib from './AssociatedBib';
@@ -13,11 +12,7 @@ import { FixedFields } from '../../Cataloguing/Models/model';
 import { SUBFIELD_CHARACTER } from '../../Cataloguing/Utils/MarcConstant';
 import { SEARCH_SEGMENT } from '../../../config/constants';
 import style from '../Style/index.css';
-import {
-  authDetailsColumnMapper,
-  authDetailsRenderColumn,
-  authDetailsResultFormatter,
-} from '../../../shared/utils/Formatter';
+import { resultsFormatterForAssociated, columnMapperForAssociated, remapForAssociatedBibList } from '../../../shared';
 
 type P = Props & {
   items: Array<any>,
@@ -26,22 +21,6 @@ type P = Props & {
 class RecordDetails extends React.Component<P, {}> {
   render() {
     const { store: { dispatch }, detailPaneMeta, checkDetailsInRow, translate, checkDetailsBibRec, data: { search: { segment } } } = this.props;
-    const list = [
-      {
-        sampleId: 'a',
-        username: 'Jon',
-        surname: 'Mugica',
-        year: 1973
-      }, {
-        sampleId: 'b',
-        username: 'Ander',
-        surname: 'Recalde',
-        year: 1997
-      }
-    ];
-    this.state = {
-      listData : list
-    };
     // eslint-disable-next-line no-unused-vars
     const currentDatail = detailPaneMeta.detail[0];
     dispatch({ type: ACTION.SETTINGS, data: { currentDatail } });
@@ -93,16 +72,32 @@ class RecordDetails extends React.Component<P, {}> {
         <InventoryPluggableButton {...this.props} className={style.inventoryButton} buttonLabel={translate({ id: 'ui-marccat.search.goto.inventory' })} />
       );
     } else {
+      const { browseDetails } = this.props;
+      const resultRemapped = (browseDetails && browseDetails.length > 0)
+        ? remapForAssociatedBibList(browseDetails)
+        : undefined;
       return (
         <MultiColumnList
           id="dui-marccat.search.goto.inventory"
+          columnWidths={
+            {
+              'resultView': '20%',
+              '245': '50%',
+              'name': '20%',
+              'format': '10%'
+            }
+          }
           rowMetadata={['001', 'recordView']}
-          contentData={this.state.listData}
-          formatter={authDetailsResultFormatter()}
-          columnMapping={authDetailsColumnMapper()}
-          visibleColumns={authDetailsRenderColumn()}
+          contentData={resultRemapped}
+          formatter={resultsFormatterForAssociated}
+          columnMapping={columnMapperForAssociated}
+          visibleColumns={[
+            'resultView',
+            '245',
+            'name',
+            'format'
+          ]}
         />
-
       );
     }
   }
@@ -113,6 +108,7 @@ export default (connect(
     items: state.marccat.details.records,
     checkDetailsInRow: state.marccat.details.recordType,
     checkDetailsBibRec: state.marccat.associatedRecords.recordType,
-    recorDetaild: state.marccat.data.marcRecordDetail
+    recorDetaild: state.marccat.data.marcRecordDetail,
+    browseDetails: state.marccat.browseDetails.results,
   }), () => ({})
 )(RecordDetails));

@@ -63,7 +63,6 @@ export default function configure() {
   this.get('/marccat/searchAuth', ({ authoritySearches }) => {
     return authoritySearches.all();
   });
-
   this.get('/marccat/countSearch', () => 2);
 
   // Delete Bib record

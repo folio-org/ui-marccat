@@ -217,36 +217,6 @@ export const resultsFormatterForAssociated = {
     subjectTags(x)
   ),
 };
-export const authDetailsResultFormatter = () => {
-  const authDetails = {
-    resultView: x => (<AppIcon size="small" app="marccat" iconKey="marc-bib" />),
-    countDoc: x => <span>{x.recordView === -1 && x.countDoc}</span>,
-    tagHighlighted: x => (
-      <span className={style.tagHighLighted}>{x.tagHighlighted}</span>
-    ),
-  };
-  return authDetails;
-};
-
-export const authDetailsColumnMapper = () => {
-  const authDetailsMapper = {
-    'resultView': '',
-    'sampleId': '',
-    'username': '',
-    'surname': '',
-  };
-  return authDetailsMapper;
-};
-
-export const authDetailsRenderColumn = () => {
-  const authDetailsVisibleCol = [
-    'resultView',
-    'sampleId',
-    'username',
-    'surname',
-  ];
-  return authDetailsVisibleCol;
-};
 
 export const resultsFormatter = (
   isBibsOnly: ?boolean = true,

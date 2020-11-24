@@ -50,7 +50,6 @@ export const ENDPOINT = {
   AUTH_CHANGE_DISPLAY_VALUE: '/authority-record/fixed-field-display-value',
   BIBLIOGRAPHIC_RECORD: '/bibliographic-record',
   AUTHORITY_RECORD: '/authority-record',
-  AUTHORITY_RECORD_DETAILS: 'authority-record-details',
   SUGGEST_TAG_INDICATORS: '/filteredTag',
   SUGGEST_TAG_CODE: '/filteredTagsList',
   HEADING_BY_TAG: '/headings-by-tag',

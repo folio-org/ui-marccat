@@ -7,6 +7,7 @@ import { getFieldPosition, getFormat, getMicroformat } from './Mapper';
 import style from '../../components/Search/Style/index.css';
 import { unionSortAndDedupe } from '../../components/Cataloguing/Utils/MarcApiUtils';
 
+
 export const columnMapper = (
   isBibsOnly: ?boolean,
   isAuthOnly: ?boolean = true
@@ -53,6 +54,8 @@ export const columnMapper = (
   }
   return mapper;
 };
+
+
 export const renderColumn = (
   isBibsOnly: ?boolean,
   isAuthOnly: ?boolean = true,
@@ -76,6 +79,7 @@ export const renderColumn = (
       'date2',
       'format',
     ];
+    return visibleCol;
   }
   if (isAuthOnly === true && isBibsOnly === false) {
     visibleCol = [

@@ -222,7 +222,7 @@ describe('Record Edit', () => {
           describe('push add new field', function () {
             beforeEach(async function () {
               await recordInteractor.variableActionMenu(0).click();
-              await recordInteractor.variableTextArea.fill('245');
+              await recordInteractor.variableTextArea.fill('042');
               await recordInteractor.variableTextArea01.fill('1');
               await recordInteractor.variableTextArea02.fill('0');
               await recordInteractor.saveVariableButton(0).click();

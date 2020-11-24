@@ -173,6 +173,8 @@ describe('Search', () => {
       await searchInteractor.selectIndexes.selectOption('Title');
       await searchInteractor.selectCondition.selectOption('Contains');
       await searchInteractor.searchTextArea.fill('test');
+      await searchInteractor.searchTextArea.fill('');
+      await searchInteractor.searchTextArea.fill('test');
       await searchInteractor.buttonSearch.click();
     });
 

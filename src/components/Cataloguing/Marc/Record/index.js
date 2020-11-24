@@ -300,10 +300,10 @@ class Record extends React.Component<
       fields: filterMandatoryFields(emptyRecordAux.results.fields),
     };
     if (!isCreationMode) {
-      if (formData.Tag006 !== null) {
+      if (segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC && formData.Tag006 !== null) {
         emptyRecordAux.results.fields.map(f => (f.code === '006' ? bibliographicRecord.fields.push(f) : null));
       }
-      if (formData.Tag007 !== null) {
+      if (segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC && formData.Tag007 !== null) {
         emptyRecordAux.results.fields.map(f => (f.code === '007' ? bibliographicRecord.fields.push(f) : null));
       }
     }
@@ -316,10 +316,10 @@ class Record extends React.Component<
       SORTED_BY.CODE
     );
     if (isCreationMode) {
-      if (formData.Tag006 === null) {
+      if (segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC && formData.Tag006 === null) {
         bibliographicRecord.fields.map((f, index) => (f.code === '006' ? bibliographicRecord.fields.splice(index, 1) : null));
       }
-      if (formData.Tag007 === null) {
+      if (segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC && formData.Tag007 === null) {
         bibliographicRecord.fields.map((f, index) => (f.code === '007' ? bibliographicRecord.fields.splice(index, 1) : null));
       }
     }

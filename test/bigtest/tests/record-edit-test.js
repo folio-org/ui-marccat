@@ -210,8 +210,8 @@ describe('Record Edit', () => {
         describe('push edit variable field', function () {
           beforeEach(async function () {
             await recordInteractor.variableField(0).click();
-            await recordInteractor.searchTextArea01.fill('1');
-            await recordInteractor.searchTextArea02.fill('0');
+            await recordInteractor.variableTextArea01.fill('1');
+            await recordInteractor.variableTextArea02.fill('0');
             await recordInteractor.saveVariableButton(0).click();
           });
 
@@ -219,22 +219,37 @@ describe('Record Edit', () => {
             expect(recordInteractor.saveVariableButton(0).isPresent).to.be.false;
           });
 
-          describe('push delete variable field', function () {
+          describe('push add new field', function () {
             beforeEach(async function () {
-              await recordInteractor.deleteVariableButton(1).click();
+              await recordInteractor.variableActionMenu(0).click();
+              await recordInteractor.variableTextArea.fill('245');
+              await recordInteractor.variableTextArea01.fill('1');
+              await recordInteractor.variableTextArea02.fill('0');
+              await recordInteractor.saveVariableButton(0).click();
             });
 
-            it('variable field deleted', () => {
-              expect(recordInteractor.variableField(1).isPresent).to.be.true;
+            it('new field created', () => {
+              expect(recordInteractor.saveVariableButton(0).isPresent).to.be.false;
             });
 
-            describe('push save button', function () {
+            describe('push delete variable field', function () {
               beforeEach(async function () {
-                await recordInteractor.saveButton.click();
+                await recordInteractor.deleteVariableButton(4).click();
               });
 
-              it('filter page loaded', () => {
-                expect(recordInteractor.saveButtonPresent).to.be.true;
+              it('variable field deleted', () => {
+                expect(recordInteractor.variableField(4).isPresent).to.be.true;
+              });
+
+              describe('push save button', function () {
+                beforeEach(async function () {
+                  await recordInteractor.saveButton.click();
+                });
+
+                it('filter page loaded', () => {
+                  expect(recordInteractor.saveButtonPresent).to.be.true;
+                });
+
               });
 
             });

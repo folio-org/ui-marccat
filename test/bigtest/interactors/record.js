@@ -91,9 +91,11 @@ export default interactor(class RecordInteractor {
   btnDeleteRecord = new ButtonInteractor('#clickable-detail-delete-record');
   btnDeleteRecordPresent = isPresent('#clickable-detail-delete-record');
   variableField = collection('[data-test-clickable-edit-variable-field]');
-  searchTextArea01 = new VariableFieldInteractor('[name="items[0].variableField.ind1"]');
-  searchTextArea02 = new VariableFieldInteractor('[name="items[0].variableField.ind2"]');
+  variableTextArea = new VariableFieldInteractor('[name="items[0].variableField.code"]');
+  variableTextArea01 = new VariableFieldInteractor('[name="items[0].variableField.ind1"]');
+  variableTextArea02 = new VariableFieldInteractor('[name="items[0].variableField.ind2"]');
   saveVariableButton = collection('[data-test-clickable-save-variable-field]');
   deleteVariableButton = collection('[data-test-clickable-delete-variable-field]');
+  variableActionMenu = collection('[class*=dropdownContainerMenuItem]');
 
 });

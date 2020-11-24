@@ -219,13 +219,24 @@ describe('Record Edit', () => {
             expect(recordInteractor.saveVariableButton(0).isPresent).to.be.false;
           });
 
-          describe('push save button', function () {
+          describe('push delete variable field', function () {
             beforeEach(async function () {
-              await recordInteractor.saveButton.click();
+              await recordInteractor.deleteVariableButton(1).click();
             });
 
-            it('filter page loaded', () => {
-              expect(recordInteractor.saveButtonPresent).to.be.true;
+            it('variable field deleted', () => {
+              expect(recordInteractor.variableField(1).isPresent).to.be.true;
+            });
+
+            describe('push save button', function () {
+              beforeEach(async function () {
+                await recordInteractor.saveButton.click();
+              });
+
+              it('filter page loaded', () => {
+                expect(recordInteractor.saveButtonPresent).to.be.true;
+              });
+
             });
 
           });

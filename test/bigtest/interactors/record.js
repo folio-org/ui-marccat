@@ -94,5 +94,6 @@ export default interactor(class RecordInteractor {
   searchTextArea01 = new VariableFieldInteractor('[name="items[0].variableField.ind1"]');
   searchTextArea02 = new VariableFieldInteractor('[name="items[0].variableField.ind2"]');
   saveVariableButton = collection('[data-test-clickable-save-variable-field]');
+  deleteVariableButton = collection('[data-test-clickable-delete-variable-field]');
 
 });

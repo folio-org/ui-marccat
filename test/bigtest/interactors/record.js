@@ -84,5 +84,4 @@ export default interactor(class RecordInteractor {
   filterAllTypeChk = new CheckBoxInteractor('#clickable-filter-format-type-all-text');
   btnDeleteRecord = new ButtonInteractor('#clickable-detail-delete-record');
   btnDeleteRecordPresent = isPresent('#clickable-detail-delete-record');
-
 });

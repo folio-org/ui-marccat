@@ -6,38 +6,22 @@ import InventoryPluggableButton from '../Button/Inventory';
 import type { Props } from '../../../flow/types.js.flow';
 import AssociatedBib from './AssociatedBib';
 import { ACTION } from '../../../redux/actions';
-
 import { mapFields } from '../Utils/SearchUtils';
 import { FixedFields } from '../../Cataloguing/Models/model';
 import { SUBFIELD_CHARACTER } from '../../Cataloguing/Utils/MarcConstant';
-
+import { SEARCH_SEGMENT } from '../../../config/constants';
 import style from '../Style/index.css';
+
 
 type P = Props & {
   items: Array<any>,
 }
 
 class RecordDetails extends React.Component<P, {}> {
-  constructor(props: P) {
-    super(props);
-    const id = props.detailPaneMeta.meta['001'];
-    let mergedResults;
-    let detailSelected;
-    if (props.data.search.dataOld !== undefined) {
-      mergedResults = [...props.data.search.bibliographicResults, ...props.data.search.oldBibArray];
-      detailSelected = mergedResults.filter(item => id === item.data.fields[0]['001']);
-    } else {
-      detailSelected = props.data.search.bibliographicResults.filter(item => id === item.data.fields[0]['001']);
-    }
-    this.state = {
-      detail: detailSelected
-    };
-  }
-
   render() {
-    const { store: { dispatch }, detailPaneMeta, checkDetailsInRow, translate, checkDetailsBibRec } = this.props;
+    const { store: { dispatch }, detailPaneMeta, checkDetailsInRow, translate, checkDetailsBibRec, data: { search: { segment } } } = this.props;
+
     // eslint-disable-next-line no-unused-vars
-    const { detail } = this.state;
     const currentDatail = detailPaneMeta.detail[0];
     dispatch({ type: ACTION.SETTINGS, data: { currentDatail } });
 
@@ -72,14 +56,27 @@ class RecordDetails extends React.Component<P, {}> {
               </Row>
             </React.Fragment>
           ))}
-          <InventoryPluggableButton {...this.props} className={style.inventoryButton} buttonLabel={translate({ id: 'ui-marccat.search.goto.inventory' })} />
+          {this.inventoryButton(segment, translate)}
+
         </Accordion>
         {checkDetailsBibRec === checkDetailsInRow &&
           <AssociatedBib {...this.props} />}
       </AccordionSet>
     );
   }
+
+  inventoryButton = (segment, translate) => {
+
+    if (segment === SEARCH_SEGMENT.BIBLIOGRAPHIC) {
+      return (
+        <InventoryPluggableButton {...this.props} className={style.inventoryButton} buttonLabel={translate({ id: 'ui-marccat.search.goto.inventory' })} />
+      );
+    } else {
+      return null;
+    }
+  }
 }
+
 export default (connect(
   state => ({
     items: state.marccat.details.records,

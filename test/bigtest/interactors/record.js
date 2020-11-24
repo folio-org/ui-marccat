@@ -4,7 +4,9 @@ import {
   isPresent,
   isVisible,
   selectable,
-  Interactor
+  Interactor,
+  fillable,
+  collection
 } from '@bigtest/interactor';
 import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interactor';
 
@@ -50,6 +52,10 @@ const CheckBoxInteractor = interactor(class CheckBoxInteractor {
   clickThrough = clickable();
 });
 
+const VariableFieldInteractor = interactor(class TextFieldInteractor {
+  fill = fillable();
+});
+
 export default interactor(class RecordInteractor {
   static defaultScope = '#ModuleContainer';
   segmentButtonBib = new SegmentButtonBibInteractor('[data-test-btn-segment-bib]');
@@ -84,4 +90,9 @@ export default interactor(class RecordInteractor {
   filterAllTypeChk = new CheckBoxInteractor('#clickable-filter-format-type-all-text');
   btnDeleteRecord = new ButtonInteractor('#clickable-detail-delete-record');
   btnDeleteRecordPresent = isPresent('#clickable-detail-delete-record');
+  variableField = collection('[data-test-clickable-edit-variable-field]');
+  searchTextArea01 = new VariableFieldInteractor('[name="items[0].variableField.ind1"]');
+  searchTextArea02 = new VariableFieldInteractor('[name="items[0].variableField.ind2"]');
+  saveVariableButton = collection('[data-test-clickable-save-variable-field]');
+
 });

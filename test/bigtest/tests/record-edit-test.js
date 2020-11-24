@@ -207,13 +207,27 @@ describe('Record Edit', () => {
           expect(recordInteractor.headerDropdownDetailMenu.isEditButtonPresent).to.be.false;
         });
 
-        describe('push save button', function () {
+        describe('push edit variable field', function () {
           beforeEach(async function () {
-            await recordInteractor.saveButton.click();
+            await recordInteractor.variableField(0).click();
+            await recordInteractor.searchTextArea01.fill('1');
+            await recordInteractor.searchTextArea02.fill('0');
+            await recordInteractor.saveVariableButton(0).click();
           });
 
-          it('filter page loaded', () => {
-            expect(recordInteractor.saveButtonPresent).to.be.true;
+          it('variable field edited', () => {
+            expect(recordInteractor.saveVariableButton(0).isPresent).to.be.false;
+          });
+
+          describe('push save button', function () {
+            beforeEach(async function () {
+              await recordInteractor.saveButton.click();
+            });
+
+            it('filter page loaded', () => {
+              expect(recordInteractor.saveButtonPresent).to.be.true;
+            });
+
           });
 
         });

@@ -152,5 +152,8 @@
     "search.record.deletemodal.deletesuccess": "Registro excluído com sucesso",
     "search.record.deletemodal.deletewrong": "Falha: algo deu errado",
     "search.record.deletemodal.notdeletedrecordused.bib": "O registro bibliográfico não pôde ser excluído porque está sendo usado",
-    "search.record.deletemodal.notdeletedrecordused.auth": "O registro de autoridade não pôde ser excluído porque está sendo usado em registros bibliográficos"
+    "search.record.deletemodal.notdeletedrecordused.auth": "O registro de autoridade não pôde ser excluído porque está sendo usado em registros bibliográficos",
+    "cataloging.accordion.fixedfield.editable.label.auth": "Campos de controle (008)",
+    "cataloging.record.newmonograph": "Nova Monografia",
+    "cataloging.record.newauthority": "Nova Autoridade"
 }

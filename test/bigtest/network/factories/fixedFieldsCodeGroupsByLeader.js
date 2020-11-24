@@ -3,14 +3,24 @@ import { Factory } from 'miragejs';
 export default Factory.extend({
   'headerTypeCode':31,
   'results':{
+    'dateFirstPublication':{
+      'name':'dateFirstPublication',
+      'defaultValue':'    ',
+      'dropdownSelect':[
+
+      ]
+    },
+    'dateLastPublication':{
+      'name':'dateLastPublication',
+      'defaultValue':'    ',
+      'dropdownSelect':[
+
+      ]
+    },
     'dateTypeCode':{
       'name':'dateTypeCode',
       'defaultValue':'s',
       'dropdownSelect':[
-        {
-          'value':'|',
-          'label':'No attempt to code'
-        },
         {
           'value':'b',
           'label':'No dates given; B.C. date involved'
@@ -66,6 +76,10 @@ export default Factory.extend({
         {
           'value':'u',
           'label':'Continuing resource: status unknown'
+        },
+        {
+          'value':'|',
+          'label':'No attempt to code'
         }
       ]
     },
@@ -1416,10 +1430,6 @@ export default Factory.extend({
           'label':'No illustration'
         },
         {
-          'value':'|',
-          'label':'No attempt to code'
-        },
-        {
           'value':'a',
           'label':'Illustrations'
         },
@@ -1478,6 +1488,10 @@ export default Factory.extend({
         {
           'value':'p',
           'label':'Illuminations'
+        },
+        {
+          'value':'|',
+          'label':'No attempt to code'
         }
       ]
     },
@@ -1490,10 +1504,6 @@ export default Factory.extend({
           'label':'No illustration'
         },
         {
-          'value':'|',
-          'label':'No attempt to code'
-        },
-        {
           'value':'a',
           'label':'Illustrations'
         },
@@ -1552,6 +1562,10 @@ export default Factory.extend({
         {
           'value':'p',
           'label':'Illuminations'
+        },
+        {
+          'value':'|',
+          'label':'No attempt to code'
         }
       ]
     },
@@ -1564,10 +1578,6 @@ export default Factory.extend({
           'label':'No illustration'
         },
         {
-          'value':'|',
-          'label':'No attempt to code'
-        },
-        {
           'value':'a',
           'label':'Illustrations'
         },
@@ -1626,6 +1636,10 @@ export default Factory.extend({
         {
           'value':'p',
           'label':'Illuminations'
+        },
+        {
+          'value':'|',
+          'label':'No attempt to code'
         }
       ]
     },
@@ -1638,10 +1652,6 @@ export default Factory.extend({
           'label':'No illustration'
         },
         {
-          'value':'|',
-          'label':'No attempt to code'
-        },
-        {
           'value':'a',
           'label':'Illustrations'
         },
@@ -1700,6 +1710,10 @@ export default Factory.extend({
         {
           'value':'p',
           'label':'Illuminations'
+        },
+        {
+          'value':'|',
+          'label':'No attempt to code'
         }
       ]
     },
@@ -1710,10 +1724,6 @@ export default Factory.extend({
         {
           'value':' ',
           'label':'Unknown or not specified'
-        },
-        {
-          'value':'|',
-          'label':'No attempt to code'
         },
         {
           'value':'a',
@@ -1754,6 +1764,10 @@ export default Factory.extend({
         {
           'value':'v',
           'label':'School material at second level [OBSOLETE]'
+        },
+        {
+          'value':'|',
+          'label':'No attempt to code'
         }
       ]
     },
@@ -1764,10 +1778,6 @@ export default Factory.extend({
         {
           'value':' ',
           'label':'None of the following'
-        },
-        {
-          'value':'|',
-          'label':'No attempt to code'
         },
         {
           'value':'a',
@@ -1804,6 +1814,10 @@ export default Factory.extend({
         {
           'value':'s',
           'label':'Electronic'
+        },
+        {
+          'value':'|',
+          'label':'No attempt to code'
         }
       ]
     },
@@ -1816,10 +1830,6 @@ export default Factory.extend({
           'label':'No specified nature of contents'
         },
         {
-          'value':'|',
-          'label':'No attempt to code'
-        },
-        {
           'value':'2',
           'label':'Offprints'
         },
@@ -1926,6 +1936,10 @@ export default Factory.extend({
         {
           'value':'z',
           'label':'Treaties'
+        },
+        {
+          'value':'|',
+          'label':'No attempt to code'
         }
       ]
     },
@@ -1938,10 +1952,6 @@ export default Factory.extend({
           'label':'No specified nature of contents'
         },
         {
-          'value':'|',
-          'label':'No attempt to code'
-        },
-        {
           'value':'2',
           'label':'Offprints'
         },
@@ -2048,6 +2058,10 @@ export default Factory.extend({
         {
           'value':'z',
           'label':'Treaties'
+        },
+        {
+          'value':'|',
+          'label':'No attempt to code'
         }
       ]
     },
@@ -2060,10 +2074,6 @@ export default Factory.extend({
           'label':'No specified nature of contents'
         },
         {
-          'value':'|',
-          'label':'No attempt to code'
-        },
-        {
           'value':'2',
           'label':'Offprints'
         },
@@ -2170,6 +2180,10 @@ export default Factory.extend({
         {
           'value':'z',
           'label':'Treaties'
+        },
+        {
+          'value':'|',
+          'label':'No attempt to code'
         }
       ]
     },
@@ -2182,10 +2196,6 @@ export default Factory.extend({
           'label':'No specified nature of contents'
         },
         {
-          'value':'|',
-          'label':'No attempt to code'
-        },
-        {
           'value':'2',
           'label':'Offprints'
         },
@@ -2292,6 +2302,10 @@ export default Factory.extend({
         {
           'value':'z',
           'label':'Treaties'
+        },
+        {
+          'value':'|',
+          'label':'No attempt to code'
         }
       ]
     },
@@ -2302,10 +2316,6 @@ export default Factory.extend({
         {
           'value':' ',
           'label':'Not a government publication'
-        },
-        {
-          'value':'|',
-          'label':'No attempt to code'
         },
         {
           'value':'a',
@@ -2346,6 +2356,10 @@ export default Factory.extend({
         {
           'value':'z',
           'label':'Other'
+        },
+        {
+          'value':'|',
+          'label':'No attempt to code'
         }
       ]
     },
@@ -2354,16 +2368,16 @@ export default Factory.extend({
       'defaultValue':'0',
       'dropdownSelect':[
         {
-          'value':'|',
-          'label':'No attempt to code'
-        },
-        {
           'value':'0',
           'label':'Not a conference publication'
         },
         {
           'value':'1',
           'label':'Conference publication'
+        },
+        {
+          'value':'|',
+          'label':'No attempt to code'
         }
       ]
     },
@@ -2372,16 +2386,16 @@ export default Factory.extend({
       'defaultValue':'0',
       'dropdownSelect':[
         {
-          'value':'|',
-          'label':'No attempt to code'
-        },
-        {
           'value':'0',
           'label':'Not a festschrift'
         },
         {
           'value':'1',
           'label':'Festschrift'
+        },
+        {
+          'value':'|',
+          'label':'No attempt to code'
         }
       ]
     },
@@ -2390,16 +2404,16 @@ export default Factory.extend({
       'defaultValue':'0',
       'dropdownSelect':[
         {
-          'value':'|',
-          'label':'No attempt to code'
-        },
-        {
           'value':'0',
           'label':'No index'
         },
         {
           'value':'1',
           'label':'Index present'
+        },
+        {
+          'value':'|',
+          'label':'No attempt to code'
         }
       ]
     },
@@ -2407,10 +2421,6 @@ export default Factory.extend({
       'name':'bookLiteraryFormTypeCode',
       'defaultValue':'u',
       'dropdownSelect':[
-        {
-          'value':'|',
-          'label':'No attempt to code'
-        },
         {
           'value':'0',
           'label':'Non-fiction'
@@ -2458,6 +2468,10 @@ export default Factory.extend({
         {
           'value':'u',
           'label':'Unknown'
+        },
+        {
+          'value':'|',
+          'label':'No attempt to code'
         }
       ]
     },
@@ -2468,10 +2482,6 @@ export default Factory.extend({
         {
           'value':' ',
           'label':'No biographical material'
-        },
-        {
-          'value':'|',
-          'label':'No attempt to code'
         },
         {
           'value':'a',
@@ -2488,6 +2498,10 @@ export default Factory.extend({
         {
           'value':'d',
           'label':'Contains biographical information'
+        },
+        {
+          'value':'|',
+          'label':'No attempt to code'
         }
       ]
     },
@@ -4450,10 +4464,6 @@ export default Factory.extend({
           'label':'Record not modified'
         },
         {
-          'value':'|',
-          'label':'No attempt to code'
-        },
-        {
           'value':'d',
           'label':'Dashed-on information omitted'
         },
@@ -4472,6 +4482,10 @@ export default Factory.extend({
         {
           'value':'x',
           'label':'Missing characters'
+        },
+        {
+          'value':'|',
+          'label':'No attempt to code'
         }
       ]
     },
@@ -4482,10 +4496,6 @@ export default Factory.extend({
         {
           'value':' ',
           'label':'Library of Congress cataloguing'
-        },
-        {
-          'value':'|',
-          'label':'No attempt to code'
         },
         {
           'value':'a',
@@ -4518,6 +4528,10 @@ export default Factory.extend({
         {
           'value':'u',
           'label':'Unknown source of cataloguing'
+        },
+        {
+          'value':'|',
+          'label':'No attempt to code'
         }
       ]
     }

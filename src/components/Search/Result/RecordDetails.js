@@ -6,18 +6,15 @@ import InventoryPluggableButton from '../Button/Inventory';
 import type { Props } from '../../../flow/types.js.flow';
 import AssociatedBib from './AssociatedBib';
 import { ACTION } from '../../../redux/actions';
-
 import { mapFields } from '../Utils/SearchUtils';
 import { FixedFields } from '../../Cataloguing/Models/model';
 import { SUBFIELD_CHARACTER } from '../../Cataloguing/Utils/MarcConstant';
 import { SEARCH_SEGMENT } from '../../../config/constants';
 import style from '../Style/index.css';
 import { resultsFormatterForAssociated, columnMapperForAssociated, remapForAssociatedBibList } from '../../../shared';
-
 type P = Props & {
   items: Array<any>,
 }
-
 class RecordDetails extends React.Component<P, {}> {
   render() {
     const { store: { dispatch }, detailPaneMeta, checkDetailsInRow, translate, checkDetailsBibRec, data: { search: { segment } } } = this.props;

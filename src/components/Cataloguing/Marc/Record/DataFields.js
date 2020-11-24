@@ -5,9 +5,10 @@ import { Localize } from '../../../../shared/utils/Function';
 import FixedField from './Tags/FixedField';
 import BaseTag00X from './Tags/BaseTag00X';
 import Leader from './Leader';
+import { SEARCH_SEGMENT } from '../../../../config/constants';
 
 export default ({ ...props }) => {
-  const { record, leaderData } = props;
+  const { record, leaderData, data: { search: { segment } } } = props;
   return (
     <React.Fragment>
       <Accordion label="Leader" id="Leader">
@@ -29,7 +30,9 @@ export default ({ ...props }) => {
       </Accordion>
       <Accordion
         id="control-field-dynamic"
-        label={Localize({ key: 'cataloging.accordion.fixedfield.editable.label' })}
+        label={segment === SEARCH_SEGMENT.BIBLIOGRAPHIC
+          ? Localize({ key: 'cataloging.accordion.fixedfield.editable.label' })
+          : Localize({ key: 'cataloging.accordion.fixedfield.editable.label.auth' })}
       >
         <FixedField
           {...props}

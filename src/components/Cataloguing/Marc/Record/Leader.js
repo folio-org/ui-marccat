@@ -57,6 +57,7 @@ class Leader extends React.PureComponent<P, S> {
     const selectedValue = e.target.value;
     const selectedName = last((e.target.id).split(SEPARATOR));
     switch (selectedName) {
+    case 'recordStatusCode': this.replaceAt(leaderVal, 5, selectedValue); break;
     case 'itemRecordStatusCode': this.replaceAt(leaderVal, 5, selectedValue); break;
     case 'itemRecordTypeCode': this.replaceAt(leaderVal, 6, selectedValue); break;
     case 'itemBibliographicLevelCode': this.replaceAt(leaderVal, 7, selectedValue); break;

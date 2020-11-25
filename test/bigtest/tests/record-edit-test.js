@@ -135,38 +135,114 @@ describe('Record Edit', () => {
             it('008 value changed', () => {
               expect(recordInteractor.bibSelectType008Interactor.value).to.equal('aku');
             });
-          });
 
-          describe('change 008 date first publication value', function () {
-            beforeEach(async function () {
-              await recordInteractor.dateFirstPubType008.fill('2019');
+            describe('change 008 date first publication value', function () {
+              beforeEach(async function () {
+                await recordInteractor.dateFirstPubType008.fill('2019');
+              });
+
+              it('008 date first publication value changed', () => {
+                expect(recordInteractor.dateFirstPubType008.value).to.equal('2019');
+              });
+
+              describe('change 008 date last publication value', function () {
+                beforeEach(async function () {
+                  await recordInteractor.dateLastPubType008.fill('2020');
+                });
+
+                it('008 date last publication value changed', () => {
+                  expect(recordInteractor.dateLastPubType008.value).to.equal('2020');
+                });
+              });
+
             });
 
-            it('008 date first publication value changed', () => {
-              expect(recordInteractor.dateFirstPubType008.value).to.equal('2019');
-            });
-          });
-
-          describe('change 008 date last publication value', function () {
-            beforeEach(async function () {
-              await recordInteractor.dateLastPubType008.fill('2020');
-            });
-
-            it('008 date last publication value changed', () => {
-              expect(recordInteractor.dateLastPubType008.value).to.equal('2020');
-            });
           });
 
         });
 
-        describe('push save button', function () {
+        describe('push add new duplicate field', function () {
           beforeEach(async function () {
-            await recordInteractor.saveButton.click();
+            await recordInteractor.variableActionMenu(0).click();
+            await recordInteractor.variableTextArea.fill('245');
+            await recordInteractor.variableTextArea01.fill('1');
+            await recordInteractor.variableTextArea02.fill('0');
+            await recordInteractor.saveVariableButton(0).click();
           });
 
-          it('filter page loaded', () => {
-            expect(recordInteractor.saveButtonPresent).to.be.true;
+          it('can not create duplicate field', () => {
+            expect(recordInteractor.saveVariableButton(0).isPresent).to.be.false;
           });
+
+          describe('push add new field', function () {
+            beforeEach(async function () {
+              await recordInteractor.variableActionMenu(0).click();
+              await recordInteractor.variableTextArea.fill('042');
+              await recordInteractor.variableTextArea01.fill('1');
+              await recordInteractor.variableTextArea02.fill('0');
+              await recordInteractor.variableTextArea03.fill('$aTest1');
+              await recordInteractor.saveVariableButton(0).click();
+            });
+
+            it('new field created', () => {
+              expect(recordInteractor.saveVariableButton(0).isPresent).to.be.false;
+            });
+
+            describe('push add new field', function () {
+              beforeEach(async function () {
+                await recordInteractor.variableActionMenu(0).click();
+                await recordInteractor.variableTextArea.fill('045');
+                await recordInteractor.variableTextArea01.fill('1');
+                await recordInteractor.variableTextArea02.fill('0');
+                await recordInteractor.variableTextArea03.fill('$aTest2');
+                await recordInteractor.saveVariableButton(0).click();
+              });
+
+              it('new field created', () => {
+                expect(recordInteractor.saveVariableButton(0).isPresent).to.be.false;
+              });
+
+              describe('push edit variable field', function () {
+                beforeEach(async function () {
+                  await recordInteractor.variableField(0).click();
+                  await recordInteractor.variableTextArea01.fill('1');
+                  await recordInteractor.variableTextArea02.fill('0');
+                  await recordInteractor.variableTextArea03.fill('$aTest3');
+                  await recordInteractor.saveVariableButton(0).click();
+                });
+
+                it('variable field edited', () => {
+                  expect(recordInteractor.saveVariableButton(0).isPresent).to.be.false;
+                });
+
+                describe('push delete variable field', function () {
+                  beforeEach(async function () {
+                    await recordInteractor.deleteVariableButton(2).click();
+                  });
+
+                  it('variable field deleted', () => {
+                    expect(recordInteractor.variableField(2).isPresent).to.be.true;
+                  });
+
+                  describe('push save button', function () {
+                    beforeEach(async function () {
+                      await recordInteractor.saveButton.click();
+                    });
+
+                    it('filter page loaded', () => {
+                      expect(recordInteractor.saveButtonPresent).to.be.true;
+                    });
+
+                  });
+
+                });
+
+              });
+
+            });
+
+          });
+
         });
 
       });
@@ -207,15 +283,16 @@ describe('Record Edit', () => {
           expect(recordInteractor.headerDropdownDetailMenu.isEditButtonPresent).to.be.false;
         });
 
-        describe('push edit variable field', function () {
+        describe('push add new duplicate field', function () {
           beforeEach(async function () {
-            await recordInteractor.variableField(0).click();
+            await recordInteractor.variableActionMenu(0).click();
+            await recordInteractor.variableTextArea.fill('245');
             await recordInteractor.variableTextArea01.fill('1');
             await recordInteractor.variableTextArea02.fill('0');
             await recordInteractor.saveVariableButton(0).click();
           });
 
-          it('variable field edited', () => {
+          it('can not create duplicate field', () => {
             expect(recordInteractor.saveVariableButton(0).isPresent).to.be.false;
           });
 
@@ -225,6 +302,7 @@ describe('Record Edit', () => {
               await recordInteractor.variableTextArea.fill('042');
               await recordInteractor.variableTextArea01.fill('1');
               await recordInteractor.variableTextArea02.fill('0');
+              await recordInteractor.variableTextArea03.fill('$aTest1');
               await recordInteractor.saveVariableButton(0).click();
             });
 
@@ -232,22 +310,53 @@ describe('Record Edit', () => {
               expect(recordInteractor.saveVariableButton(0).isPresent).to.be.false;
             });
 
-            describe('push delete variable field', function () {
+            describe('push add new field', function () {
               beforeEach(async function () {
-                await recordInteractor.deleteVariableButton(4).click();
+                await recordInteractor.variableActionMenu(0).click();
+                await recordInteractor.variableTextArea.fill('045');
+                await recordInteractor.variableTextArea01.fill('1');
+                await recordInteractor.variableTextArea02.fill('0');
+                await recordInteractor.variableTextArea03.fill('$aTest2');
+                await recordInteractor.saveVariableButton(0).click();
               });
 
-              it('variable field deleted', () => {
-                expect(recordInteractor.variableField(4).isPresent).to.be.true;
+              it('new field created', () => {
+                expect(recordInteractor.saveVariableButton(0).isPresent).to.be.false;
               });
 
-              describe('push save button', function () {
+              describe('push edit variable field', function () {
                 beforeEach(async function () {
-                  await recordInteractor.saveButton.click();
+                  await recordInteractor.variableField(0).click();
+                  await recordInteractor.variableTextArea01.fill('1');
+                  await recordInteractor.variableTextArea02.fill('0');
+                  await recordInteractor.variableTextArea03.fill('$aTest3');
+                  await recordInteractor.saveVariableButton(0).click();
                 });
 
-                it('filter page loaded', () => {
-                  expect(recordInteractor.saveButtonPresent).to.be.true;
+                it('variable field edited', () => {
+                  expect(recordInteractor.saveVariableButton(0).isPresent).to.be.false;
+                });
+
+                describe('push delete variable field', function () {
+                  beforeEach(async function () {
+                    await recordInteractor.deleteVariableButton(2).click();
+                  });
+
+                  it('variable field deleted', () => {
+                    expect(recordInteractor.variableField(2).isPresent).to.be.true;
+                  });
+
+                  describe('push save button', function () {
+                    beforeEach(async function () {
+                      await recordInteractor.saveButton.click();
+                    });
+
+                    it('filter page loaded', () => {
+                      expect(recordInteractor.saveButtonPresent).to.be.true;
+                    });
+
+                  });
+
                 });
 
               });
@@ -276,6 +385,56 @@ describe('Record Edit', () => {
     });
 
     it('Bibliographic search executed', () => {
+      expect(searchInteractor.countResults).to.be.greaterThan(0);
+    });
+
+    describe('select first record', function () {
+      beforeEach(async function () {
+        await searchInteractor.searchResults.clickThrough();
+      });
+
+      it('Record detail loaded', () => {
+        expect(recordInteractor.headerDropdownDetailMenu.isEditButtonPresent).to.be.true;
+      });
+
+
+      describe('Click edit record button', function () {
+        beforeEach(async function () {
+          await recordInteractor.headerDropdownDetail.click();
+          await recordInteractor.headerDropdownDetailMenu.clickEdit();
+        });
+
+        it('Record edition page loaded', () => {
+          expect(recordInteractor.headerDropdownDetailMenu.isEditButtonPresent).to.be.false;
+        });
+
+        describe('Click delete record button', function () {
+          beforeEach(async function () {
+            await recordInteractor.btnDeleteRecord.click();
+          });
+
+          it('delete button pushed', () => {
+            expect(recordInteractor.btnDeleteRecordPresent).to.be.true;
+          });
+
+        });
+
+      });
+
+    });
+
+  });
+
+  describe('In filter, select Authority and search records for delete one', function () {
+    beforeEach(async function () {
+      await recordInteractor.segmentButtonAuth.click();
+      await searchInteractor.selectIndexes.selectOption('Title');
+      await searchInteractor.selectCondition.selectOption('Contains');
+      await searchInteractor.searchTextArea.fill('test');
+      await searchInteractor.buttonSearch.click();
+    });
+
+    it('Authority search executed', () => {
       expect(searchInteractor.countResults).to.be.greaterThan(0);
     });
 

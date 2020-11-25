@@ -94,6 +94,7 @@ export default interactor(class RecordInteractor {
   variableTextArea = new VariableFieldInteractor('[name="items[0].variableField.code"]');
   variableTextArea01 = new VariableFieldInteractor('[name="items[0].variableField.ind1"]');
   variableTextArea02 = new VariableFieldInteractor('[name="items[0].variableField.ind2"]');
+  variableTextArea03 = new VariableFieldInteractor('[name="items[0].variableField.displayValue"]');
   saveVariableButton = collection('[data-test-clickable-save-variable-field]');
   deleteVariableButton = collection('[data-test-clickable-delete-variable-field]');
   variableActionMenu = collection('[class*=dropdownContainerMenuItem]');

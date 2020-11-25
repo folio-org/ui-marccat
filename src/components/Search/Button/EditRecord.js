@@ -25,17 +25,24 @@ const EditRecordButton = ({ ...props }) => {
     const id = findParam('id');
     toggleFilterPane();
     // lockRecord(id);
-    router.push(`/marccat/cataloging?id=${id}&mode=edit`);
+    router.push({
+      pathname: '/marccat/cataloging',
+      search: `?id=${id}&mode=edit`,
+      state: { id, mode: 'edit' },
+    });
   };
 
   return (
     <IfPermission perm="ui-marccat.edit-delete-records.view">
-      <Button
-        buttonStyle="dropdownItem"
-        onClick={() => handleClickEdit()}
-      >
-        <Icon icon="edit">{Localize({ key: 'cataloging.record.edit' })}</Icon>
-      </Button>
+      <div>
+        <Button
+          id="clickable-dropdown-edit-record"
+          buttonStyle="dropdownItem"
+          onClick={() => handleClickEdit()}
+        >
+          <Icon icon="edit">{Localize({ key: 'cataloging.record.edit' })}</Icon>
+        </Button>
+      </div>
     </IfPermission>
   );
 };

@@ -1,4 +1,4 @@
-import { ENDPOINT } from '../../../config/constants';
+import { ENDPOINT, SEARCH_SEGMENT } from '../../../config/constants';
 import { ACTION } from '../../../redux/actions';
 
 /**
@@ -48,11 +48,12 @@ export const getTemplateByIdAction = (id) => {
  *
  * @param {*} payload
  */
-export const searchDetailAction = (id) => {
+export const searchDetailAction = (id, segment) => {
+  const endPoint = (segment === SEARCH_SEGMENT.AUTHORITY) ? ENDPOINT.AUTHORITY_RECORD + '/' + id : ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id;
   return {
     type: ACTION.QUERY,
     data: {
-      path: ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + id,
+      path: endPoint,
       id,
       panelOpen: true,
       type: 'marcRecordDetail',

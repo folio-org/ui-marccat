@@ -9,6 +9,7 @@ export default function defaultScenario(server) {
   server.createList('authoritySearch', 1);
   server.create('browseSearch');
   server.create('bibRecordDetail');
+  server.create('authRecordDetail');
   server.create('verticalDetail');
   server.create('headerType');
   server.create('header007Type');
@@ -26,4 +27,5 @@ export default function defaultScenario(server) {
   server.create('createHeadingValue');
   server.create('createBibRecordValue');
   server.create('createAuthRecordValue');
+  server.create('duplicateBibRecordValue');
 }

@@ -17,10 +17,11 @@ export const leaderDropdownAction = (payload) => {
 };
 
 export const editLeaderDropdownAction = (payload) => {
+  const endPoint = (payload.segment === SEARCH_SEGMENT.AUTHORITY) ? ENDPOINT.AUTH_FIXED_FIELD_CODE_GROUPS_URL : ENDPOINT.FIXED_FIELD_CODE_GROUPS_URL;
   return {
     type: ACTION.QUERY,
     data: {
-      path: ENDPOINT.FIXED_FIELD_CODE_GROUPS_URL,
+      path: endPoint,
       type: 'leaderData',
       params: `leader=${payload.value}&code=${payload.code}&headerTypeCode=${15}&lang=eng&valueField=${payload.value}`,
     },
@@ -249,10 +250,11 @@ export const authHeadertypeAction = (tag) => {
 };
 
 export const editDropDownValuesAction = (payload) => {
+  const endPoint = (payload.segment === SEARCH_SEGMENT.AUTHORITY) ? ENDPOINT.AUTH_FIXED_FIELD_CODE_GROUPS_URL : ENDPOINT.FIXED_FIELD_CODE_GROUPS_URL;
   return {
     type: ACTION.QUERY,
     data: {
-      path: ENDPOINT.FIXED_FIELD_CODE_GROUPS_URL,
+      path: endPoint,
       type: `headerTypeValues${payload.code}`,
       key: payload.code,
       id: payload.code,

@@ -11,9 +11,11 @@ const DuplicateRecord = ({ ...props }) => {
     const { router, toggleFilterPane } = props;
     setTimeout(() => {
       toggleFilterPane();
-      router.push(
-        `/marccat/cataloging?id=${response.bibliographicRecord.id}&mode=duplicate`
-      );
+      router.push({
+        pathname: '/marccat/cataloging',
+        search: `?id=${response.bibliographicRecord.id}&mode=duplicate`,
+        state: { id: response.bibliographicRecord.id, mode: 'duplicate' },
+      });
     }, 3000);
   };
 
@@ -27,6 +29,7 @@ const DuplicateRecord = ({ ...props }) => {
   const { detail } = props;
   return (
     <Button
+      id="clickable-dropdown-duplicate-record"
       buttonStyle="dropdownItem"
       disabled={!detail}
       onClick={() => duplicaRecord()}

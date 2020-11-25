@@ -85,7 +85,7 @@ export const searchBibEpic = (action$, store) => action$.ofType(ACTION.SEARCHBIB
 export const searchAuthEpic = (action$, store) => action$.ofType(ACTION.SEARCHAUTH)
   .switchMap((d) => concat$(
     of$(marccatActions.isfetchingSearchRequest(true, d.moreData, d.isFromCat)),
-    getJSON(buildUrl(store.getState(), ENDPOINT.SEARCH_AUTH_URL, `lang=eng&ml=170&q=${d.queryAuth}&from=${d.from}&to=${d.to}&dpo=1&sortBy=${d.isFromCat === 'Y' ? 54 : Selector.get(store, 'settings', 'sortType')}&sortOrder=0`), getHeaders(store.getState()))
+    getJSON(buildUrl(store.getState(), ENDPOINT.SEARCH_AUTH_URL, `lang=eng&ml=170&q=${d.queryBib}&from=${d.from}&to=${d.to}&dpo=1&sortBy=${d.isFromCat === 'Y' ? 54 : Selector.get(store, 'settings', 'sortType')}&sortOrder=0`), getHeaders(store.getState()))
       .map((record) => {
         const aJsonResponse = parseResponse(record.response);
         return marccatActions.fetchSearchEngineRecordsBibAut(

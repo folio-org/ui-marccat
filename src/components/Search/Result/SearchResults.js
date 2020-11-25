@@ -174,6 +174,17 @@ export class SearchResults extends React.Component<P, {}> {
 
     dispatch({ type: ACTION.DETAILS, query: id, recordType: meta.recordView });
     if (isAuthorityRecord(meta)) {
+      const baseQuery = data.search.authorityResults[0].queryForAssociatedDoc;
+      dispatch({
+        type: ACTION.AUTH_DETAILS_BROWSE,
+        query: baseQuery,
+        isAuthority: true,
+      });
+      dispatch({
+        type: ACTION.DETAILS_BROWSE,
+        query: baseQuery,
+        isAuthority: true,
+      });
       dispatch({
         type: ACTION.ASSOCIATED_BIB_REC,
         query: meta.queryForBibs,

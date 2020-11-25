@@ -131,9 +131,10 @@ export class SearchResults extends React.Component<P, {}> {
       store: { dispatch },
       data,
       router,
+      data: { search: { segment } }
     } = this.props;
     const id = meta['001'];
-    dispatch(searchDetailAction(id));
+    dispatch(searchDetailAction(id, segment));
     dispatch({ type: ACTION.CLOSE_PANELS, closePanels: false });
     let mergedResults;
     let detailSelected;

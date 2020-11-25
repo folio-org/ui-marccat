@@ -56,18 +56,14 @@ class Record extends React.Component<
 > {
   constructor(props) {
     super(props);
+    const modeParam = findParam('mode') !== null ? findParam('mode') : props.location.state.mode;
+    const idParam = findParam('id') !== null ? findParam('id') : props.location.state.id;
     this.state = {
-      isCreationMode: findParam('mode') === RECORD_ACTION.CREATION_MODE,
-      isEditMode: findParam('mode') === RECORD_ACTION.EDIT_MODE,
-      isDuplicateMode: findParam('mode') === RECORD_ACTION.DUPLICATE_MODE,
-      mode:
-        findParam('mode') !== null
-          ? findParam('mode')
-          : props.location.state.mode,
-      id:
-        findParam('id') !== null
-          ? findParam('id')
-          : props.location.state.id,
+      isCreationMode: modeParam === RECORD_ACTION.CREATION_MODE,
+      isEditMode: modeParam === RECORD_ACTION.EDIT_MODE,
+      isDuplicateMode: modeParam === RECORD_ACTION.DUPLICATE_MODE,
+      mode: modeParam,
+      id: idParam,
       submit: false,
       deletedTag: false,
       statusCode: '',
@@ -100,9 +96,20 @@ class Record extends React.Component<
         value: leaderEdit.value,
         code: leaderEdit.code,
         typeCode: '15',
+        segment
       });
-      loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
-      dispatch(MarcAction.change008ByLeaderAction(leaderEdit.value));
+      if (segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC) {
+        loadHeadertype([TAGS._006, TAGS._007, TAGS._008]);
+        dispatch(MarcAction.change008ByLeaderAction(leaderEdit.value));
+      } else {
+        loadHeadertype([TAGS._008]);
+        const playParams = {
+          value: leaderEdit.value,
+          code: '008',
+          typeCode: '10',
+        };
+        dispatch(MarcAction.change008ActionAuth(playParams));
+      }
     } else {
       const { leader } = emptyRecordAux.results;
       loadLeaderData({
@@ -285,6 +292,7 @@ class Record extends React.Component<
     if (!isDuplicateMode && deletedTag) variableFormData = union(variableFormData, initialValues);
 
     const bibliographicRecord = this.getCurrentRecord();
+    const authorityRecord = this.getCurrentRecord();
     bibliographicRecord.leader.value = formData.leader;
 
     const recordTemplate: RecordTemplate<Type> = {
@@ -292,10 +300,10 @@ class Record extends React.Component<
       fields: filterMandatoryFields(emptyRecordAux.results.fields),
     };
     if (!isCreationMode) {
-      if (formData.Tag006 !== null) {
+      if (segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC && formData.Tag006 !== null) {
         emptyRecordAux.results.fields.map(f => (f.code === '006' ? bibliographicRecord.fields.push(f) : null));
       }
-      if (formData.Tag007 !== null) {
+      if (segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC && formData.Tag007 !== null) {
         emptyRecordAux.results.fields.map(f => (f.code === '007' ? bibliographicRecord.fields.push(f) : null));
       }
     }
@@ -308,14 +316,14 @@ class Record extends React.Component<
       SORTED_BY.CODE
     );
     if (isCreationMode) {
-      if (formData.Tag006 === null) {
+      if (segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC && formData.Tag006 === null) {
         bibliographicRecord.fields.map((f, index) => (f.code === '006' ? bibliographicRecord.fields.splice(index, 1) : null));
       }
-      if (formData.Tag007 === null) {
+      if (segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC && formData.Tag007 === null) {
         bibliographicRecord.fields.map((f, index) => (f.code === '007' ? bibliographicRecord.fields.splice(index, 1) : null));
       }
     }
-    const payload = { bibliographicRecord, recordTemplate };
+    const payload = segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC ? { bibliographicRecord, recordTemplate } : { authorityRecord, recordTemplate };
     this.setState({ submit: true });
 
     await post(
@@ -353,11 +361,13 @@ class Record extends React.Component<
 
   deleteRecord = async () => {
     let { statusCode } = this.state;
-    const { recordDetail, store, router, reset } = this.props;
+    const { recordDetail, store, router, reset, translate, toggleFilterPane, data: { search: { segment } } } = this.props;
     await del(
       buildUrl(
         store.getState(),
-        C.ENDPOINT.BIBLIOGRAPHIC_RECORD + '/' + recordDetail.id,
+        segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC
+          ? `${C.ENDPOINT.BIBLIOGRAPHIC_RECORD}/${recordDetail.id}`
+          : `${C.ENDPOINT.AUTHORITY_RECORD}/${recordDetail.id}`,
         C.ENDPOINT.DEFAULT_LANG_VIEW
       ),
       recordDetail.id,
@@ -367,21 +377,35 @@ class Record extends React.Component<
         statusCode = r.status;
       })
       .then(() => {
-        if (statusCode === 204) {
+        switch (statusCode) {
+        case 204: {
           showValidationMessage(
             this.callout,
-            'Record successfully deleted',
+            translate({ id: 'ui-marccat.search.record.deletemodal.deletesuccess' }),
             'success'
           );
-        } else {
+          break;
+        }
+        case 423: {
+          const msg423 = segment === C.SEARCH_SEGMENT.AUTHORITY
+            ? translate({ id: 'ui-marccat.search.record.deletemodal.notdeletedrecordused.bib' })
+            : translate({ id: 'ui-marccat.search.record.deletemodal.notdeletedrecordused.auth' });
+          showValidationMessage(this.callout, msg423, 'error');
+          break;
+        }
+        default: {
           showValidationMessage(
             this.callout,
-            'Failed: something went wrong',
+            translate({ id: 'ui-marccat.search.record.deletemodal.deletewrong' }),
             'error'
           );
+          break;
         }
+        }
+
         setTimeout(() => {
           reset();
+          toggleFilterPane();
           return router.push('/marccat/search');
         }, 2000);
       });
@@ -389,7 +413,7 @@ class Record extends React.Component<
 
   handleClose = (checkCodeForSearch, idFromBibRecord) => {
     const { submit } = this.state;
-    const { dispatch, router, toggleFilterPane, reset } = this.props;
+    const { dispatch, router, toggleFilterPane, reset, data: { search: { segment } } } = this.props;
     if (checkCodeForSearch === 'OK') {
       dispatch({
         type: ACTION.FILTERS,
@@ -400,8 +424,8 @@ class Record extends React.Component<
       reset();
       toggleFilterPane();
       return submit
-        ? router.push(`/marccat/search?savedId=${idFromBibRecord}`)
-        : router.push('/marccat/search');
+        ? router.push(`/marccat/search?segment=${segment}&savedId=${idFromBibRecord}`)
+        : router.push(`/marccat/search?segment=${segment}`);
     } else if (checkCodeForSearch === undefined) {
       dispatch({
         type: ACTION.FILTERS,
@@ -411,7 +435,7 @@ class Record extends React.Component<
       });
       reset();
       toggleFilterPane();
-      return router.push('/marccat/search');
+      return router.push(`/marccat/search?segment=${segment}`);
     }
     // GET for check if the record is lock
     // unlock
@@ -424,6 +448,7 @@ class Record extends React.Component<
     return (
       (isEditMode) ? (
         <Button
+          id="clickable-detail-delete-record"
           buttonStyle="primary"
           buttonClass={style.rightPosition}
           onClick={this.deleteRecord}
@@ -482,9 +507,8 @@ class Record extends React.Component<
     delete childProps.emptyRecord;
     delete childProps.emptyRecordAuth;
 
-    const paneTitle = segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC
-      ? isEditMode ? translate({ id: 'ui-marccat.cataloging.record.edit' }) : translate({ id: 'ui-marccat.cataloging.record.newmonograph' })
-      : isEditMode ? translate({ id: 'ui-marccat.cataloging.record.edit' }) : translate({ id: 'ui-marccat.cataloging.record.newauthority' });
+    const paneTitle = isEditMode ? translate({ id: 'ui-marccat.cataloging.record.edit' })
+      : segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC ? translate({ id: 'ui-marccat.cataloging.record.newmonograph' }) : translate({ id: 'ui-marccat.cataloging.record.newauthority' });
 
     return !leaderData ? (
       <Icon icon="spinner-ellipsis" />
@@ -535,7 +559,7 @@ function mapStateToProps({ marccat: { data, search: { segment } } }) {
     }
     : {
       emptyRecordAuth: data.results,
-      recordDetail: resolve(data, 'marcRecordDetail').bibliographicRecord,
+      recordDetail: resolve(data, 'marcRecordDetail').authorityRecord,
       leaderData: resolve(data, 'leaderData'),
     };
   return toProps;

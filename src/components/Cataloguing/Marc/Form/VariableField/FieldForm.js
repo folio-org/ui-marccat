@@ -428,6 +428,7 @@ class FieldForm extends React.Component {
       return (
         <div style={{ display: 'flex' }}>
           <Button
+            data-test-clickable-save-variable-field
             disabled={pristine || submitting || invalid}
             marginBottom0
             id={`clickable-save-${this.marcTagRowTestingId}-${item.rowIndex}`}
@@ -439,6 +440,7 @@ class FieldForm extends React.Component {
             Save
           </Button>
           <Button
+            data-test-clickable-cancel-variable-field
             marginBottom0
             id={`clickable-cancel-${this.marcTagRowTestingId}-${item.rowIndex}`}
             onClick={() => this.onCancel(fields, item.rowIndex)}
@@ -457,6 +459,7 @@ class FieldForm extends React.Component {
           <FormattedMessage id="stripes-components.editThisItem">
             {ariaLabel => (
               <IconButton
+                data-test-clickable-edit-variable-field
                 icon="edit"
                 size="small"
                 id={`clickable-edit-${this.marcTagRowTestingId}-${item.rowIndex}`}
@@ -473,6 +476,7 @@ class FieldForm extends React.Component {
           <FormattedMessage id="stripes-components.deleteThisItem">
             {ariaLabel => (
               <IconButton
+                data-test-clickable-delete-variable-field
                 icon="trash"
                 size="small"
                 id={`clickable-delete-${this.marcTagRowTestingId}-${item.rowIndex}`}

@@ -41,6 +41,10 @@ export default function configure() {
     return fromTemplates.all();
   });
 
+  this.options('/marccat/bibliographic-record/from-template/1', () => {
+    return new Response(204);
+  });
+
   this.options('/marccat/bibliographic-record/fixed-field-display-value', () => {
     return new Response(200);
   });
@@ -55,6 +59,10 @@ export default function configure() {
     return fromAuthTemplates.all();
   });
 
+  this.options('/marccat/authority-record/from-template/1', () => {
+    return new Response(204);
+  });
+
   this.options('/marccat/authority-record/fixed-field-display-value', () => {
     return new Response(200);
   });
@@ -67,6 +75,10 @@ export default function configure() {
   // FOR searchs...
   this.get('/marccat/mergedSearch', ({ mergedSearches }) => {
     return mergedSearches.all();
+  });
+
+  this.options('/marccat/mergedSearch', () => {
+    return new Response(204);
   });
 
   this.get('/marccat/search', ({ bibSearches }) => {
@@ -95,6 +107,10 @@ export default function configure() {
 
   this.get('/marccat/bibliographic-record/:id', ({ bibRecordDetails }) => {
     return bibRecordDetails.all();
+  });
+
+  this.get('/marccat/authority-record/:id', ({ authRecordDetails }) => {
+    return authRecordDetails.all();
   });
 
   this.get('/marccat/searchVertical', ({ verticalDetails }) => {
@@ -210,6 +226,15 @@ export default function configure() {
   }, 201);
 
   this.options('/marccat/authority-record', () => {
+    return new Response(204);
+  });
+
+  // For duplicateRecord
+  this.post('/marccat/bibliographic-record/duplicate', ({ duplicateBibRecordValues }) => {
+    return duplicateBibRecordValues.all();
+  }, 201);
+
+  this.options('/marccat/bibliographic-record/duplicate', () => {
     return new Response(204);
   });
 

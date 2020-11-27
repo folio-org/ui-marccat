@@ -101,3 +101,7 @@ export const SEARCH_SEGMENT = {
   BIBLIOGRAPHIC: 'bibliographic',
   AUTHORITY: 'authority'
 };
+
+export const TYPECODE_9 = '9';
+export const TYPECODE_10 = '10';
+export const TYPECODE_15 = '15';

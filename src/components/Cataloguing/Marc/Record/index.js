@@ -95,7 +95,7 @@ class Record extends React.Component<
       editLoadLeaderData({
         value: leaderEdit.value,
         code: leaderEdit.code,
-        typeCode: '15',
+        typeCode: segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC ? C.TYPECODE_15 : C.TYPECODE_9,
         segment
       });
       if (segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC) {
@@ -106,7 +106,7 @@ class Record extends React.Component<
         const playParams = {
           value: leaderEdit.value,
           code: '008',
-          typeCode: '10',
+          typeCode: C.TYPECODE_10,
         };
         dispatch(MarcAction.change008ActionAuth(playParams));
       }
@@ -115,7 +115,7 @@ class Record extends React.Component<
       loadLeaderData({
         value: leader.value,
         code: leader.code,
-        typeCode: '15',
+        typeCode: segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC ? C.TYPECODE_15 : C.TYPECODE_9,
         segment
       });
       if (segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC) {
@@ -126,7 +126,7 @@ class Record extends React.Component<
         const playParams = {
           value: leader.value,
           code: '008',
-          typeCode: '10',
+          typeCode: C.TYPECODE_10,
         };
         dispatch(MarcAction.change008ActionAuth(playParams));
       }
@@ -341,6 +341,9 @@ class Record extends React.Component<
       .then(r => {
         const checkCodeForSearch = r.statusCode;
         if (r.statusCode === 'OK') {
+          setTimeout(() => {
+            this.handleClose(checkCodeForSearch, bibliographicRecord.id);
+          }, 2000);
           showValidationMessage(
             this.callout,
             'Record saved correctly!',
@@ -353,9 +356,6 @@ class Record extends React.Component<
             'error'
           );
         }
-        setTimeout(() => {
-          this.handleClose(checkCodeForSearch, bibliographicRecord.id);
-        }, 2000);
       });
   };
 

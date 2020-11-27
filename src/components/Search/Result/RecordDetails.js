@@ -12,6 +12,7 @@ import { SUBFIELD_CHARACTER } from '../../Cataloguing/Utils/MarcConstant';
 import { SEARCH_SEGMENT } from '../../../config/constants';
 import style from '../Style/index.css';
 import { resultsFormatterForAssociated, columnMapperForAssociated, remapForAssociatedBibList } from '../../../shared';
+
 type P = Props & {
   items: Array<any>,
 }

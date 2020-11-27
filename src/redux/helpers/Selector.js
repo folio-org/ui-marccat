@@ -117,5 +117,10 @@ export const resolve = (data, key) => {
  * @returns
  */
 export const get = (store, reducer, prop) => {
-  return store.getState().marccat[reducer][prop];
+  const sortBy = store.getState().marccat[reducer][prop];
+  if (sortBy === undefined) {
+    return 0;
+  }
+  return sortBy;
 };
+

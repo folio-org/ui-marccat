@@ -8,11 +8,10 @@ import {
   Col,
   ButtonGroup,
   Button,
+  Callout,
 } from '@folio/stripes/components';
 import { reduxForm, Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
-
-
 import { IfPermission } from '@folio/stripes-core';
 import ResetButton from '../Filter/ResetButton';
 import type { Props } from '../../../flow/types.js.flow';
@@ -31,13 +30,14 @@ import { remapFilters, findParam } from '../../../shared';
 import { EMPTY_STRING, SEARCH_SEGMENT } from '../../../config/constants';
 import { resetFilterSearch, segmentActive, historySearchAction, searchDetailAction } from '../Actions';
 import styles from '../Style/index.css';
+import { showValidationMessage } from '../../Cataloguing/Utils/MarcApiUtils';
 
 type P = Props & {
   inputErrorCheck: string,
   translate: Function,
 }
 
-class SearchPanel extends React.Component<P, {}> {
+class SearchPanel extends React.Component<P, {callout: React.RefObject<Callout> }> {
   constructor(props: P) {
     super(props);
 
@@ -54,6 +54,7 @@ class SearchPanel extends React.Component<P, {}> {
       btnSubmitEnabled: false
     };
 
+    this.callout = React.createRef();
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
   }
@@ -88,7 +89,7 @@ class SearchPanel extends React.Component<P, {}> {
   handleKeyDown(e) {
     let { isBrowseRequested } = this.state;
     const { segment } = this.state;
-    const { store, store: { getState }, dispatch, router } = this.props;
+    const { store, store: { getState }, dispatch, router, translate } = this.props;
 
     if (e.charCode === 13 || e.key === 'Enter' || e.type === 'click') {
       e.preventDefault();
@@ -162,20 +163,41 @@ class SearchPanel extends React.Component<P, {}> {
             transitionToParams('q', bibQuery);
             dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
           } else {
+            let enableDispatch = true;
             router.push(`/marccat/search?segment=${segment}`);
             if (segment === SEARCH_SEGMENT.BIBLIOGRAPHIC) {
               dispatch({ type: ACTION.SEARCHBIB, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
             } else {
-              dispatch({ type: ACTION.SEARCHAUTH, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
+              if (indexForQuery === 'AN ') {
+                if (this.isNumeric(form.values.searchTextArea) === false) {
+                  enableDispatch = false;
+                  showValidationMessage(
+                    this.callout,
+                    translate({ id: 'ui-marccat.search.invaliddata' }),
+                    'error'
+                  );
+                } else {
+                  dispatch({ type: ACTION.SEARCHAUTH, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
+                }
+              } else {
+                dispatch({ type: ACTION.SEARCHAUTH, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
+              }
+
+              if (enableDispatch === true) {
+                transitionToParams('q', authQuery);
+                dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
+                dispatch({ type: ACTION.TOTAL_AUTH_COUNT, query: authQuery });
+                this.handleSearchHistory({ recordType: 'all', query: bibQuery, index: indexForQuery, found: 0, sortStrategy: state.marccat.settings.sortType, record: {} });
+              }
             }
-            transitionToParams('q', authQuery);
-            dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
-            dispatch({ type: ACTION.TOTAL_AUTH_COUNT, query: authQuery });
-            this.handleSearchHistory({ recordType: 'all', query: bibQuery, index: indexForQuery, found: 0, sortStrategy: state.marccat.settings.sortType, record: {} });
           }
         }
       }
     }
+  }
+
+  isNumeric = (string) => {
+    return !Number.isNaN(Number(string));
   }
 
   handleComplexQuery = () => {};
@@ -345,6 +367,7 @@ class SearchPanel extends React.Component<P, {}> {
           </form>
         </IfPermission>
         {this.getFilterContainer(segment, filterEnable)}
+        <Callout ref={this.callout} />
       </Fragment>
     );
   }

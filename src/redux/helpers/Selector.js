@@ -123,4 +123,3 @@ export const get = (store, reducer, prop) => {
   }
   return sortBy;
 };
-

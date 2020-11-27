@@ -341,6 +341,9 @@ class Record extends React.Component<
       .then(r => {
         const checkCodeForSearch = r.statusCode;
         if (r.statusCode === 'OK') {
+          setTimeout(() => {
+            this.handleClose(checkCodeForSearch, bibliographicRecord.id);
+          }, 2000);
           showValidationMessage(
             this.callout,
             'Record saved correctly!',
@@ -353,9 +356,6 @@ class Record extends React.Component<
             'error'
           );
         }
-        setTimeout(() => {
-          this.handleClose(checkCodeForSearch, bibliographicRecord.id);
-        }, 2000);
       });
   };
 

@@ -297,7 +297,7 @@ export const change008ActionAuth = (payload) => {
     data: {
       path: ENDPOINT.AUTH_FIXED_FIELD_CODE_GROUPS_URL,
       type: 'headerTypeValues008',
-      params: `value=${payload.value}&code=${payload.code}&headerTypeCode=${payload.typeCode}&lang=eng`,
+      params: `leader=${payload.value}&code=${payload.code}&headerTypeCode=${payload.typeCode}&lang=eng`,
     },
   };
 };

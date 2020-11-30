@@ -163,14 +163,12 @@ class SearchPanel extends React.Component<P, {callout: React.RefObject<Callout> 
             transitionToParams('q', bibQuery);
             dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
           } else {
-            let enableDispatch = true;
             router.push(`/marccat/search?segment=${segment}`);
             if (segment === SEARCH_SEGMENT.BIBLIOGRAPHIC) {
               dispatch({ type: ACTION.SEARCHBIB, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
             } else {
               if (indexForQuery === 'AN ') {
                 if (this.isNumeric(form.values.searchTextArea) === false) {
-                  enableDispatch = false;
                   showValidationMessage(
                     this.callout,
                     translate({ id: 'ui-marccat.search.invaliddata' }),
@@ -178,17 +176,17 @@ class SearchPanel extends React.Component<P, {callout: React.RefObject<Callout> 
                   );
                 } else {
                   dispatch({ type: ACTION.SEARCHAUTH, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
+                  transitionToParams('q', authQuery);
+                  dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
+                  dispatch({ type: ACTION.TOTAL_AUTH_COUNT, query: authQuery });
                 }
               } else {
                 dispatch({ type: ACTION.SEARCHAUTH, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
-              }
-
-              if (enableDispatch === true) {
                 transitionToParams('q', authQuery);
                 dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
                 dispatch({ type: ACTION.TOTAL_AUTH_COUNT, query: authQuery });
-                this.handleSearchHistory({ recordType: 'all', query: bibQuery, index: indexForQuery, found: 0, sortStrategy: state.marccat.settings.sortType, record: {} });
               }
+                this.handleSearchHistory({ recordType: 'all', query: bibQuery, index: indexForQuery, found: 0, sortStrategy: state.marccat.settings.sortType, record: {} });
             }
           }
         }

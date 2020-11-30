@@ -186,7 +186,7 @@ class SearchPanel extends React.Component<P, {callout: React.RefObject<Callout> 
                 dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
                 dispatch({ type: ACTION.TOTAL_AUTH_COUNT, query: authQuery });
               }
-                this.handleSearchHistory({ recordType: 'all', query: bibQuery, index: indexForQuery, found: 0, sortStrategy: state.marccat.settings.sortType, record: {} });
+              this.handleSearchHistory({ recordType: 'all', query: bibQuery, index: indexForQuery, found: 0, sortStrategy: state.marccat.settings.sortType, record: {} });
             }
           }
         }

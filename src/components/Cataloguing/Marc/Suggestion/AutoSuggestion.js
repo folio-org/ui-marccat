@@ -3,7 +3,7 @@ import * as React from 'react';
 import { AutoSuggest } from '@folio/stripes/components';
 import { triggerTagIndicatorsSuggestion, triggerTagCodeSuggestion } from '../../Actions';
 import { injectProps } from '../../../../shared';
-import { REDUX } from '../../../../config/constants';
+import { REDUX, SEARCH_SEGMENT } from '../../../../config/constants';
 
 function AutoSuggestion(props) {
   const initialState = {
@@ -14,8 +14,8 @@ function AutoSuggestion(props) {
   const onFocus = (e) => {
     e.preventDefault();
     const { tagCodeArray } = state;
-    const { dispatch, input } = props;
-    if (e.target.form[1].defaultValue.length === 3) {
+    const { dispatch, input, data: { search: { segment } } } = props;
+    if (segment !== SEARCH_SEGMENT.AUTHORITY && e.target.form[1].defaultValue.length === 3) {
       const tagCode = e.target.form[1].defaultValue;
       if (input.name === 'items[0].variableField.ind1') {
         const cb = (payload) => setState({ tagCodeArray:  payload.ind1 });
@@ -29,8 +29,9 @@ function AutoSuggestion(props) {
   };
 
   const onChange = (digit) => {
-    const { dispatch, change, input } = props;
-    if (input.name === 'items[0].variableField.code' && digit && digit !== '') {
+    const { dispatch, change, input, data: { search: { segment } } } = props;
+    if (segment !== SEARCH_SEGMENT.AUTHORITY
+      && input.name === 'items[0].variableField.code' && digit && digit !== '') {
       const cb = (payload) => setState({ tagCodeArray: payload.tags });
       dispatch(triggerTagCodeSuggestion((digit.length > 3) ? digit.trim() : digit, cb));
       dispatch(change(REDUX.FORM.VARIABLE_FORM, input.name, (digit.length > 3) ? digit.trim() : digit));

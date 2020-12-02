@@ -24,8 +24,8 @@ function AutoSuggestHeadings(props) {
   const [state, setState] = React.useState(initialState);
 
   const onFocus = async e => {
-    const { store } = props;
-    if (e.target.form[1].defaultValue.length === 3) {
+    const { store, data: { search: { segment } } } = props;
+    if (segment !== C.SEARCH_SEGMENT.AUTHORITY && e.target.form[1].defaultValue.length === 3) {
       const tagCode = e.target.form[1].defaultValue;
       const ind1 = e.target.form[2].defaultValue === '' ? ' ' : e.target.form[2].defaultValue;
       const ind2 = e.target.form[3].defaultValue === '' ? ' ' : e.target.form[3].defaultValue;
@@ -52,7 +52,6 @@ function AutoSuggestHeadings(props) {
           stringValidateMessage:'', showMessage: false
         });
       }
-      // console.log('CHECK_TAG: ', data);
     }
   };
 
@@ -79,11 +78,11 @@ function AutoSuggestHeadings(props) {
 
   const onChange = event => {
     const { suggestArray } = state;
-    const { dispatch, store, change, input } = props;
+    const { dispatch, store, change, input, data: { search: { segment } } } = props;
     if (event && event !== undefined && event !== '') {
       const code = store.getState().form.variableFieldForm.values.items[0]
         .variableField.code;
-      if (event === '$' && code.length === 3) {
+      if (segment !== C.SEARCH_SEGMENT.AUTHORITY && event === '$' && code.length === 3) {
         const cb = payload => setState({
           suggestArray: payload.subfields,
           fromShowHeadings: false,

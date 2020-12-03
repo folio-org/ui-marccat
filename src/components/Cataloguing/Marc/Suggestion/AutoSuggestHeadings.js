@@ -24,8 +24,8 @@ function AutoSuggestHeadings(props) {
   const [state, setState] = React.useState(initialState);
 
   const onFocus = async e => {
-    const { store, data: { search: { segment } } } = props;
-    if (segment !== C.SEARCH_SEGMENT.AUTHORITY && e.target.form[1].defaultValue.length === 3) {
+    const { store } = props;
+    if (e.target.form[1].defaultValue.length === 3) {
       const tagCode = e.target.form[1].defaultValue;
       const ind1 = e.target.form[2].defaultValue === '' ? ' ' : e.target.form[2].defaultValue;
       const ind2 = e.target.form[3].defaultValue === '' ? ' ' : e.target.form[3].defaultValue;
@@ -78,11 +78,11 @@ function AutoSuggestHeadings(props) {
 
   const onChange = event => {
     const { suggestArray } = state;
-    const { dispatch, store, change, input, data: { search: { segment } } } = props;
+    const { dispatch, store, change, input } = props;
     if (event && event !== undefined && event !== '') {
       const code = store.getState().form.variableFieldForm.values.items[0]
         .variableField.code;
-      if (segment !== C.SEARCH_SEGMENT.AUTHORITY && event === '$' && code.length === 3) {
+      if (event === '$' && code.length === 3) {
         const cb = payload => setState({
           suggestArray: payload.subfields,
           fromShowHeadings: false,
@@ -103,7 +103,7 @@ function AutoSuggestHeadings(props) {
   };
 
   const { suggestArray, fromShowHeadings, stringValidateMessage, showMessage } = state;
-  const { input } = props;
+  const { input, data: { search: { segment } } } = props;
   input.value = replaceAll(input.value);
   const remappedSuggestArray = [];
   if (suggestArray && suggestArray.length > 0 && fromShowHeadings === false) {
@@ -133,8 +133,8 @@ function AutoSuggestHeadings(props) {
         <AutoSuggest
           {...props}
           items={remappedSuggestArray}
-          onChange={onChange}
-          onFocus={onFocus}
+          onChange={segment !== C.SEARCH_SEGMENT.AUTHORITY ? onChange : null}
+          onFocus={segment !== C.SEARCH_SEGMENT.AUTHORITY ? onFocus : null}
           name={input.name}
           renderOption={item => (item ? item.value : '')}
           renderValue={item => (item ? item.value : '')}

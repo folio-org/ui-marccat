@@ -221,7 +221,7 @@ class Record extends React.Component<
         showValidationMessage(
           this.callout,
           Localize({
-            key: 'cataloging.record.tag.create.success',
+            key: 'cataloging.record.tag.create.one.success',
             value: item.code,
           }),
           C.VALIDATION_MESSAGE_TYPE.SUCCESS
@@ -230,7 +230,7 @@ class Record extends React.Component<
         showValidationMessage(
           this.callout,
           Localize({
-            key: 'cataloging.record.tag.create.failure',
+            key: 'cataloging.record.tag.create.one.failure',
             value: item.code,
           }),
           C.VALIDATION_MESSAGE_TYPE.ERROR
@@ -246,7 +246,7 @@ class Record extends React.Component<
       showValidationMessage(
         this.callout,
         Localize({
-          key: 'cataloging.record.tag.create.failure',
+          key: 'cataloging.record.tag.create.one.failure',
           value: item.code,
         }),
         C.VALIDATION_MESSAGE_TYPE.ERROR

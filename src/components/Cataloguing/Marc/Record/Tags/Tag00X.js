@@ -136,10 +136,11 @@ class Tag00X extends React.PureComponent<Props, S> {
 
   execChange = (response: Object): void => {
     const { dispatch, change, fixedfields, element } = this.props;
+    const fixedfieldsAux = fixedfields.filter(f => f.code !== '008');
     dispatch(change(element.code, response.displayValue));
     element.fieldStatus = RECORD_FIELD_STATUS.CHANGED;
-    fixedfields.push(element);
-    fixedfields
+    fixedfieldsAux.push(element);
+    fixedfieldsAux
       .filter(f => f.code === element.code)
       .map(f => (f.fixedField = response));
   };

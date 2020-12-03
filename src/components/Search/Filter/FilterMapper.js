@@ -75,6 +75,16 @@ export const findYourQuery = {
   'LN-START': 'LN ',
   'MUSP-START': 'PN ',
   'NN-START': 'NN ',
+  // Authorities START key
+  'TI-START': 'TI ',
+  'NA-START': 'NA ',
+  'NP-START': 'NP ',
+  'NC-START': 'NC ',
+  'NM-START': 'NM ',
+  'SU-START': 'SU ',
+  'AN-START': 'AN ',
+  'BN-START': 'BN ',
+  'SN-START': 'SN ',
   // FOR EXACT-MATCH  KEY
   'TITLE-MATCH': 'TI ',
   'NAME-MATCH': 'NA ',
@@ -123,6 +133,16 @@ export const findYourQuery = {
   'LN-MATCH': 'LN ',
   'MUSP-MATCH': 'PN ',
   'NN-MATCH': 'NN ',
+  // Authorities MATCH key
+  'TI-MATCH': 'TI ',
+  'NA-MATCH': 'NA ',
+  'NP-MATCH': 'NP ',
+  'NC-MATCH': 'NC ',
+  'NM-MATCH': 'NM ',
+  'SU-MATCH': 'SU ',
+  'AN-MATCH': 'AN ',
+  'BN-MATCH': 'BN ',
+  'SN-MATCH': 'SN ',
   // FOR BROWSE KEY
   'TITLE-BROWSE': 'TI ',
   'NAME-BROWSE': 'NA ',
@@ -171,6 +191,16 @@ export const findYourQuery = {
   'LN-BROWSE': 'LN ',
   'MUSP-BROWSE': 'PN ',
   'NN-BROWSE': 'NN ',
+  // Authorities BROWSE key
+  'TI-BROWSE': 'TI ',
+  'NA-BROWSE': 'NA ',
+  'NP-BROWSE': 'NP ',
+  'NC-BROWSE': 'NC ',
+  'NM-BROWSE': 'NM ',
+  'SU-BROWSE': 'SU ',
+  'AN-BROWSE': 'AN ',
+  'BN-BROWSE': 'BN ',
+  'SN-BROWSE': 'SN ',
   // FOR CONTAINS KEY
   'TITLE-CONTAINS': 'TW ',
   'NAME-CONTAINS': 'NW ',
@@ -220,13 +250,16 @@ export const findYourQuery = {
   'LN-CONTAINS': 'AW ',
   'MUSP-CONTAINS': 'AW ',
   'NN-CONTAINS': 'AW ',
-  // Authority
+  // Authorities CONTAINS key
   'TI-CONTAINS': 'TI ',
   'NA-CONTAINS': 'NA ',
-  'NP-CONTAINS': 'NW ',
-  'TI-MATCH': 'TI ',
-  'NA-MATCH': 'TI ',
-  'NP-MATCH': 'TI '
+  'NP-CONTAINS': 'NP ',
+  'NC-CONTAINS': 'NC ',
+  'NM-CONTAINS': 'NM ',
+  'SU-CONTAINS': 'SU ',
+  'AN-CONTAINS': 'AN ',
+  'BN-CONTAINS': 'BN ',
+  'SN-CONTAINS': 'SN ',
 };
 
 export const findYourQueryFromBrowse = {

@@ -34,6 +34,7 @@
   "button.remove": "Remove",
   "button.resetAll": "Reset all",
   "navigator.search": "Search",
+  "search.invaliddata": "Invalid data type, numbers expected!",
   "search.result": "Search Result",
   "search.indexes": "Indexes",
   "search.searchButton": "Search",

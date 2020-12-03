@@ -5,6 +5,7 @@ import setupApplication from '../helpers/setup-application';
 import RecordInteractor from '../interactors/record';
 
 describe('Search', () => {
+  
   setupApplication();
   const recordInteractor = new RecordInteractor();
 

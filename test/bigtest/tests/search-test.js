@@ -5,6 +5,7 @@ import setupApplication from '../helpers/setup-application';
 import SearchInteractor from '../interactors/search';
 
 describe('Search', () => {
+  
   setupApplication();
   const searchInteractor = new SearchInteractor();
 

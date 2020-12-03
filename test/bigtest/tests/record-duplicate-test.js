@@ -6,6 +6,7 @@ import RecordInteractor from '../interactors/record';
 import SearchInteractor from '../interactors/search';
 
 describe('Record Duplicate', () => {
+  
   setupApplication();
   const recordInteractor = new RecordInteractor();
   const searchInteractor = new SearchInteractor();

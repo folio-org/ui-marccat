@@ -6,6 +6,7 @@ import SearchInteractor from '../interactors/search';
 import BrowseInteractor from '../interactors/browse';
 
 describe('Browse', () => {
+  
   setupApplication();
   const searchInteractor = new SearchInteractor();
   const browseInteractor = new BrowseInteractor();

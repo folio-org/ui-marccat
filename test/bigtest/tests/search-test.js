@@ -16,8 +16,7 @@ describe('Search', () => {
     this.server.createList('authoritySearch', 1);
     this.server.create('bibRecordDetail');
     this.server.create('verticalDetail');
-
-
+    this.server.createList('noResultSearch', 1);
 
     return this.visit('/marccat/search', () => {
       expect(searchInteractor.$root).to.exist;

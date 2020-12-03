@@ -3,7 +3,8 @@ import {
     property,
     clickable,
     isPresent,
-    count
+    count,
+    isVisible
 } from '@bigtest/interactor';
 
 const ActionButtonInteractor = interactor(class ButtonInteractor {

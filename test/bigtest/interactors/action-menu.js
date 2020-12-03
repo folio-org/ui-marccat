@@ -30,6 +30,7 @@ export default interactor(class ActionMenuInteractor {
   newBibRecDisabled = property('[data-test-new-record-button]', 'disabled');
   associatedBrowseActionMenuSection = isPresent('#data-test-browse-action-menu');
   associatedButtonNew = property('[data-test-browse-new-button]', 'disabled');
+  associatedButtonNewPresent = isPresent('[data-test-browse-new-button]');
 
   segmentButtonBib = new ActionButtonInteractor('[data-test-btn-segment-bib]');
   segmentButtonAuth = new ActionButtonInteractor('[data-test-btn-segment-auth]');

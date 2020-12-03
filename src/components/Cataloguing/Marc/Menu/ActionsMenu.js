@@ -40,6 +40,7 @@ export default class ActionsMenu extends React.Component<P, {}> {
         onToggle={this.onToggle}
       >
         <Button
+          data-test-action-menu-variable-field
           buttonStyle="primary"
           data-role="toggle"
           aria-haspopup="true"
@@ -51,6 +52,7 @@ export default class ActionsMenu extends React.Component<P, {}> {
           />
         </Button>
         <DropdownMenu
+          id="dropdown-action-variable-field"
           data-role="menu"
           aria-label="show-action-variable-fields"
           onToggle={this.onToggle}

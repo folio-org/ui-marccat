@@ -6,8 +6,10 @@ export default function defaultScenario(server) {
   server.create('fromAuthTemplate');
   server.createList('mergedSearch', 1);
   server.createList('bibSearch', 1);
+  server.createList('noResultSearch', 1);
   server.createList('authoritySearch', 1);
   server.create('browseSearch');
+  server.createList('noResultBrowse', 1);
   server.create('bibRecordDetail');
   server.create('authRecordDetail');
   server.create('verticalDetail');
@@ -24,6 +26,8 @@ export default function defaultScenario(server) {
   server.create('authFixedFieldDisplayValue');
   server.create('filterTagsListsValue');
   server.create('filterTagValue');
+  server.create('validateTag');
+  server.create('errorValidateTag');
   server.create('createHeadingValue');
   server.create('createBibRecordValue');
   server.create('createAuthRecordValue');

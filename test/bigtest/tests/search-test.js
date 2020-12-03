@@ -5,7 +5,7 @@ import setupApplication from '../helpers/setup-application';
 import SearchInteractor from '../interactors/search';
 
 describe('Search', () => {
-  
+
   setupApplication();
   const searchInteractor = new SearchInteractor();
 
@@ -17,8 +17,29 @@ describe('Search', () => {
     this.server.create('bibRecordDetail');
     this.server.create('verticalDetail');
 
+
+
     return this.visit('/marccat/search', () => {
       expect(searchInteractor.$root).to.exist;
+    });
+  });
+
+  describe('try search with no results', function () {
+    beforeEach(async function () {
+      await searchInteractor.segmentButtonBib.click();
+      await searchInteractor.selectIndexes.selectOption('Title');
+      await searchInteractor.selectCondition.selectOption('Contains');
+      await searchInteractor.searchTextArea.fillAndSubmit('a');
+  });
+
+    it('show loading search data icon', () => {
+      expect(searchInteractor.loadingResults).to.be.true;
+    });
+    it('show no message result', () => {
+      expect(searchInteractor.noResultSearchMessage).to.be.true;
+    });
+    it('show search icon in no result message', () => {
+      expect(searchInteractor.iconsSearchNoResultMessage).to.be.true;
     });
   });
 
@@ -41,6 +62,10 @@ describe('Search', () => {
       await searchInteractor.selectIndexes.selectOption('Title');
       await searchInteractor.selectCondition.selectOption('Contains');
       await searchInteractor.searchTextArea.fillAndSubmit('test');
+    });
+
+    it('loading icon is visible while results load', () => {
+      expect(searchInteractor.loadingResults).to.be.true;
     });
 
     it('returns at least one search result', () => {
@@ -107,7 +132,7 @@ describe('Search', () => {
     });
   });
 
-  
+
   describe('should test authority control number searches', () => {
     beforeEach(async function () {
       await searchInteractor.segmentButtonAuth.click();
@@ -121,7 +146,7 @@ describe('Search', () => {
       await searchInteractor.searchTextArea.fill('test');
       await searchInteractor.buttonSearch.click();
     });
-    
+
     it('Control number should find results', () => {
       expect(searchInteractor.countResults).to.be.greaterThan(1);
     });

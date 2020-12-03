@@ -98,5 +98,9 @@ export default interactor(class RecordInteractor {
   saveVariableButton = collection('[data-test-clickable-save-variable-field]');
   deleteVariableButton = collection('[data-test-clickable-delete-variable-field]');
   variableActionMenu = collection('[class*=dropdownContainerMenuItem]');
-
+  selectItemRecordStatusInteractor = new Interactor('#Leader-itemRecordStatusCode');
+  leaderAccordionContentVisible = isVisible('#leader');
+  leaderAccordionContentPresent = isPresent('#leader');
+  btnLeaderAccordion = new ButtonInteractor('#accordion-toggle-button-Leader');
+  messageBannerValidateTag = isPresent('#message-banner-wrong-tag');
 });

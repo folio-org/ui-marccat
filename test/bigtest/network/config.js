@@ -81,14 +81,19 @@ export default function configure() {
     return new Response(204);
   });
 
-  this.get('/marccat/search', ({ bibSearches }) => {
-    return bibSearches.all();
+  this.get('/marccat/search', ({ bibSearches, noResultSearches }, request) => {
+    const query = request.queryParams.q;
+    if (query === 'TW "a"') {
+      return noResultSearches.all();
+    } else{
+      return bibSearches.all();
+    }
   });
 
   this.get('/marccat/searchAuth', ({ authoritySearches }) => {
     return authoritySearches.all();
   });
-  this.get('/marccat/countSearch', () => 2);
+  this.get('/marccat/countSearch', () => 0);
 
   // Delete Bib record
   this.delete('/marccat/bibliographic-record/:id', () => {
@@ -100,8 +105,13 @@ export default function configure() {
     return new Response(423, {}, {});
   }, 423);
 
-  this.get('/marccat/browse', ({ browseSearches }) => {
-    return browseSearches.all();
+  this.get('/marccat/browse', ({ browseSearches, noResultBrowses }, request) => {
+    const query = request.queryParams.query;
+    if (query === 'TI "a"') {
+      return noResultBrowses.all();
+    } else{
+      return browseSearches.all();
+    }
   });
 
   this.get('/marccat/bibliographic-record/:id', ({ bibRecordDetails }) => {
@@ -199,6 +209,14 @@ export default function configure() {
 
   this.get('/marccat/filteredTag', ({ filterTagValues }) => {
     return filterTagValues.all();
+  });
+
+  // For validateTag
+  this.get('/marccat/validateTag', ({ validateTags, errorValidateTags }, request) => {
+    const ind1 = request.queryParams.ind1;
+    if (ind1 === '0') {
+      return validateTags.all();
+    }
   });
 
   // For createHeading

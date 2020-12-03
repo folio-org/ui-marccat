@@ -14,9 +14,9 @@ const NoResultsMessage = ({ ...props }: Props) => {
   }
 
   return (
-    <div className={css.noResultsMessage}>
+    <div id="no-result-message" className={css.noResultsMessage}>
       <div className={css.noResultsMessageLabelWrap}>
-        <Icon iconRootClass={css.noResultsMessageIcon} icon="search" />
+        <Icon id="icon-search-no-result-message" iconRootClass={css.noResultsMessageIcon} icon="search" />
         <span className={css.noResultsMessageLabel}>
           {query}
           { translate({

@@ -127,7 +127,7 @@ function AutoSuggestHeadings(props) {
     <HotKeys keyMap={keys} handlers={handlers}>
       <Fragment>
         {showMessage &&
-        <MessageBanner show={showMessage} type="warning">
+        <MessageBanner id="message-banner-wrong-tag" show={showMessage} type="warning">
           {stringValidateMessage}
         </MessageBanner>
         }

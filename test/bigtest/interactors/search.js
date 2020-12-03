@@ -88,4 +88,8 @@ export default interactor(class SearchInteractor {
   confirmDeleteModalPresent = isPresent('#record-detail-delete-confirmation-modal');
   recordDetailConfirmButton = new ButtonInteractor('[data-test-confirmation-modal-confirm-button]');
   recordDetailCancelButton = new ButtonInteractor('[data-test-confirmation-modal-cancel-button]');
+
+  loadingResults = isVisible('#loading-pane-data-result');
+  noResultSearchMessage = isVisible('#no-result-message');
+  iconsSearchNoResultMessage = isVisible('#icon-search-no-result-message')
 });

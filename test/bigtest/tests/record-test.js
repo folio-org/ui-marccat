@@ -3,11 +3,13 @@ import { expect } from 'chai';
 
 import setupApplication from '../helpers/setup-application';
 import RecordInteractor from '../interactors/record';
+import ActionMenuInteractor from '../interactors/action-menu';
 
 describe('Search', () => {
-  
+
   setupApplication();
   const recordInteractor = new RecordInteractor();
+  const actionMenuInteractor = new ActionMenuInteractor();
 
   beforeEach(function () {
     this.server.create('fromTemplate');
@@ -65,8 +67,20 @@ describe('Search', () => {
           await recordInteractor.leaderButton.click();
         });
 
+        it('Leader Accordion content present', () => {
+          expect(recordInteractor.leaderAccordionContentPresent).to.be.true;
+        });
+
+        it('Leader accordion content visible', () => {
+          expect(recordInteractor.leaderAccordionContentVisible).to.be.true;
+        });
+
         it('Leader section clicked', () => {
           expect(recordInteractor.leaderButtonPresent).to.be.true;
+        });
+
+        it('leader item status record ', () => {
+          expect(recordInteractor.selectItemRecordStatusInteractor.value).to.equal('n');
         });
 
         describe('click 006 section', function () {
@@ -109,6 +123,34 @@ describe('Search', () => {
           });
         });
 
+      });
+
+      describe('click action for dropdown actions in variable field section', function () {
+        beforeEach(async function () {
+          await actionMenuInteractor.actionButtonVariableField.click();
+        });
+
+        it('dropdown menu actions is present', () => {
+          expect(actionMenuInteractor.dropdownActionsVariableFieldPresent).to.be.true;
+        });
+
+        it('dropdown menu actions is visible', () => {
+          expect(actionMenuInteractor.dropdownActionsVariableFieldVisible).to.be.true;
+        });
+      });
+
+      describe('insert correct indicators for new tag 100', function () {
+        beforeEach(async function () {
+          await recordInteractor.variableActionMenu(0).click();
+          await recordInteractor.variableTextArea.fill('100');
+          await recordInteractor.variableTextArea01.fill('0');
+          await recordInteractor.variableTextArea02.fill('0');
+          // await recordInteractor.variableTextArea03.(); // click or focus in
+        });
+
+        it('message banner wrong value in tag or indicator is not visible', () => {
+          expect(recordInteractor.messageBannerValidateTag).to.be.false;
+        });
       });
 
     });

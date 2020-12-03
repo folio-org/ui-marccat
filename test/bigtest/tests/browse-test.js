@@ -6,7 +6,7 @@ import SearchInteractor from '../interactors/search';
 import BrowseInteractor from '../interactors/browse';
 
 describe('Browse', () => {
-  
+
   setupApplication();
   const searchInteractor = new SearchInteractor();
   const browseInteractor = new BrowseInteractor();
@@ -18,9 +18,27 @@ describe('Browse', () => {
     this.server.createList('authoritySearch', 1);
     this.server.create('bibRecordDetail');
     this.server.create('verticalDetail');
+    this.server.createList('noResultBrowse', 1);
 
     return this.visit('/marccat/search', () => {
       expect(searchInteractor.$root).to.exist;
+    });
+  });
+
+    describe('browsing with no results', function () {
+      beforeEach(async function () {
+        await searchInteractor.selectIndexes.selectOption('Title');
+        await searchInteractor.selectCondition.selectOption('Browse');
+        await searchInteractor.searchTextArea.fillAndSubmit('a');
+  });
+    it('show loading browse data icon', () => {
+      expect(browseInteractor.iconLoadingBrowseResult).to.be.true;
+    });
+    it('show no message result', () => {
+      expect(searchInteractor.noResultSearchMessage).to.be.true;
+    });
+    it('show search icon in no result message', () => {
+      expect(searchInteractor.iconsSearchNoResultMessage).to.be.true;
     });
   });
 

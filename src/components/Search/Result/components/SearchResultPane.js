@@ -98,7 +98,7 @@ class SearchResultPane extends React.Component<Props, {}> {
         }}
       >
         {isFetching ? (
-          <Icon icon="spinner-ellipsis" />
+          <Icon id="loading-pane-data-result" icon="spinner-ellipsis" />
         ) : !isFetching && noResults && mergedRecord.length === 0 ? (
           <NoResultsMessage {...this.props} />
         ) : isReady ? (

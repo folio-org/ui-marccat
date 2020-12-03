@@ -38,4 +38,8 @@ export default interactor(class ActionMenuInteractor {
   headerDropdownMenu = new HeaderDropdownMenu();
   isCancelInstanceEdition = isPresent('#cancel-instance-edition');
 
+  actionButtonVariableField = new ActionButtonInteractor('[data-test-action-menu-variable-field]')
+  dropdownActionsVariableFieldPresent = isPresent('#dropdown-action-variable-field')
+  dropdownActionsVariableFieldVisible = isVisible('#dropdown-action-variable-field')
+
 });

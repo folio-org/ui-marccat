@@ -24,4 +24,5 @@ import {
     buttonOptionVisible = isVisible('#data-test-button-option');
     accordionAssBibDetailsVisible = isVisible('#data-test-accordion-bib-associated-details');
     accordSetAssociatedBrowseVisible = isVisible('#data-test-accordion-set-associated-details');
+    iconLoadingBrowseResult = isVisible('#loading-browse-result-icon');
   });

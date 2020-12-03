@@ -342,7 +342,7 @@ export class BrowseResults extends React.Component<Props, S> {
           }}
         >
           {isFetchingBrowse ? (
-            <Icon icon="spinner-ellipsis" />
+            <Icon id="loading-browse-result-icon" icon="spinner-ellipsis" />
           ) : !isFetchingBrowse && noResults ? (
             <NoResultsMessage {...this.props} />
           ) : isReadyBrowse ? (

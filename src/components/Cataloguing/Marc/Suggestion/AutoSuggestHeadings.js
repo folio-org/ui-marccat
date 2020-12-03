@@ -133,8 +133,8 @@ function AutoSuggestHeadings(props) {
         <AutoSuggest
           {...props}
           items={remappedSuggestArray}
-          onChange={segment !== C.SEARCH_SEGMENT.AUTHORITY ? onChange : null}
-          onFocus={segment !== C.SEARCH_SEGMENT.AUTHORITY ? onFocus : null}
+          onChange={segment !== C.SEARCH_SEGMENT.AUTHORITY ? onChange : () => { }}
+          onFocus={segment !== C.SEARCH_SEGMENT.AUTHORITY ? onFocus : () => { }}
           name={input.name}
           renderOption={item => (item ? item.value : '')}
           renderValue={item => (item ? item.value : '')}

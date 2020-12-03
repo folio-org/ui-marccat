@@ -46,8 +46,8 @@ function AutoSuggestion(props) {
       {...props}
       items={remappedCodeSuggest}
       name={input.name}
-      onFocus={segment !== SEARCH_SEGMENT.AUTHORITY ? onFocus : null}
-      onChange={segment !== SEARCH_SEGMENT.AUTHORITY ? onChange : null}
+      onFocus={segment !== SEARCH_SEGMENT.AUTHORITY ? onFocus : () => { }}
+      onChange={segment !== SEARCH_SEGMENT.AUTHORITY ? onChange : () => { }}
       renderOption={(item) => ((item) ? item.value : ' ')}
       renderValue={(item) => ((item) ? item.value : ' ')}
       valueKey="value"

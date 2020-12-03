@@ -106,6 +106,27 @@ describe('Search', () => {
     });
   });
 
+  
+  describe('should test authority control number searches', () => {
+    beforeEach(async function () {
+      await searchInteractor.segmentButtonAuth.click();
+      await searchInteractor.selectIndexes.selectOption('Authority control number');
+      await searchInteractor.selectCondition.selectOption('Contains');
+      await searchInteractor.searchTextArea.fill('1');
+      await searchInteractor.buttonSearch.click();
+      await searchInteractor.segmentButtonAuth.click();
+      await searchInteractor.selectIndexes.selectOption('Authority control number');
+      await searchInteractor.selectCondition.selectOption('Contains');
+      await searchInteractor.searchTextArea.fill('test');
+      await searchInteractor.buttonSearch.click();
+    });
+    
+    it('Control number should find results', () => {
+      expect(searchInteractor.countResults).to.be.greaterThan(1);
+    });
+  });
+
+
   describe('fill search field and click reset all button', () => {
     beforeEach(async function () {
       await searchInteractor.selectIndexes.selectOption('Title');

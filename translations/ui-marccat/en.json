@@ -132,7 +132,7 @@
   "cataloging.record.delete.success": "Delete record with id ={value} succesfully!",
   "cataloging.record.delete.failure": "Delete record with id ={value} failed!",
   "cataloging.record.tag.create.success": "Tag {value} create succesfully!",
-  "cataloging.record.tag.create.one.success": "Tag create succesfully!",
+  "cataloging.record.tag.create.one.success": "Tag created succesfully!",
   "cataloging.record.tag.create.failure": "Save Tag {value} failed!",
   "cataloging.record.tag.create.one.failure": "Save Tag failed!",
   "cataloging.record.tag.update.success": "Tag {value} update succesfully!",

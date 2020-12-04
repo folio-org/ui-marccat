@@ -165,7 +165,7 @@ class SearchPanel extends React.Component<P, {callout: React.RefObject<Callout> 
           } else {
             router.push(`/marccat/search?segment=${segment}`);
             if (segment === SEARCH_SEGMENT.BIBLIOGRAPHIC) {
-              //HACER AQUI
+              // HACER AQUI
               if (indexForQuery === 'AN ') {
                 if (this.isNumeric(form.values.searchTextArea) === false) {
                   showValidationMessage(
@@ -173,10 +173,10 @@ class SearchPanel extends React.Component<P, {callout: React.RefObject<Callout> 
                     translate({ id: 'ui-marccat.search.invaliddata' }),
                     'error'
                   );
-                }else{
+                } else {
                   dispatch({ type: ACTION.SEARCHBIB, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
                 }
-              }else{
+              } else {
                 dispatch({ type: ACTION.SEARCHBIB, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
               }
             } else {

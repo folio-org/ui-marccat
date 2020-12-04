@@ -99,7 +99,7 @@ describe('Search', () => {
     });
 
     it('should change options of indexes', () => {
-      expect(searchInteractor.selectIndexes.optionCount).to.equal(15);
+      expect(searchInteractor.selectIndexes.optionCount).to.equal(11);
     });
 
     it('should remove filter', () => {
@@ -143,7 +143,7 @@ describe('Search', () => {
 
   describe('should test bib indexes', () => {
     it('should change options of indexes', () => {
-      expect(searchInteractor.selectIndexes.optionCount).to.equal(50);
+      expect(searchInteractor.selectIndexes.optionCount).to.equal(49);
     });
   });
 

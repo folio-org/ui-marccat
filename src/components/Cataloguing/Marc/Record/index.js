@@ -221,8 +221,7 @@ class Record extends React.Component<
         showValidationMessage(
           this.callout,
           Localize({
-            key: 'cataloging.record.tag.create.success',
-            value: item.code,
+            key: 'cataloging.record.tag.create.one.success'
           }),
           C.VALIDATION_MESSAGE_TYPE.SUCCESS
         );
@@ -230,8 +229,7 @@ class Record extends React.Component<
         showValidationMessage(
           this.callout,
           Localize({
-            key: 'cataloging.record.tag.create.failure',
-            value: item.code,
+            key: 'cataloging.record.tag.create.one.failure'
           }),
           C.VALIDATION_MESSAGE_TYPE.ERROR
         );
@@ -246,8 +244,7 @@ class Record extends React.Component<
       showValidationMessage(
         this.callout,
         Localize({
-          key: 'cataloging.record.tag.create.failure',
-          value: item.code,
+          key: 'cataloging.record.tag.create.one.failure'
         }),
         C.VALIDATION_MESSAGE_TYPE.ERROR
       );
@@ -405,8 +402,9 @@ class Record extends React.Component<
 
         setTimeout(() => {
           reset();
+          router.push(`/marccat/search?segment=${segment}&action=delete`);
           toggleFilterPane();
-          return router.push('/marccat/search');
+          return router.push(`/marccat/search?segment=${segment}`);
         }, 2000);
       });
   };

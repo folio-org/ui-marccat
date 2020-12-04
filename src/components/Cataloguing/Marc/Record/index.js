@@ -402,8 +402,9 @@ class Record extends React.Component<
 
         setTimeout(() => {
           reset();
+          router.push(`/marccat/search?segment=${segment}&action=delete`);
           toggleFilterPane();
-          return router.push('/marccat/search');
+          return router.push(`/marccat/search?segment=${segment}`);
         }, 2000);
       });
   };

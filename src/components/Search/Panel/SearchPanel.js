@@ -64,6 +64,7 @@ class SearchPanel extends React.Component<P, {callout: React.RefObject<Callout> 
     const { store: { getState } } = this.props;
     const { btnSubmitEnabled } = this.state;
     const id = findParam('id') || findParam('savedId') || findParam('recordid');
+    const action = findParam('action');
     if (!btnSubmitEnabled) {
       const form = getState().form.searchForm;
       if (form?.values?.searchTextArea?.length) {
@@ -73,6 +74,7 @@ class SearchPanel extends React.Component<P, {callout: React.RefObject<Callout> 
       }
     }
     if (id) this.handleSearchFromCataloging(id);
+    if (action === 'delete') { this.executeSearch(); }
   }
 
   handleSearchFromCataloging = (id) => {
@@ -80,114 +82,111 @@ class SearchPanel extends React.Component<P, {callout: React.RefObject<Callout> 
     const { segment } = this.state;
     dispatch({ type: ACTION.SEARCH, isFromCat: 'Y', moreData: 'N', queryBib: `AN "${id}"`, queryAuth: `AN "${id}"`, from: '1', to: '30' });
     dispatch(searchDetailAction(id, segment));
-    // this.handleSearchHistory({ recordType: 'all', query: `AN "${id}"`, index: 'AN', found: 1, num:1 });
-    // const inputValue = '"' + e.target.form[2].defaultValue + '"';
-    // indexFilter = form.values.selectIndexes;
-    // conditionFilter = form.values.selectCondition;
   };
 
   handleKeyDown(e) {
+    if (e.charCode === 13 || e.key === 'Enter' || e.type === 'click') {
+      e.preventDefault();
+      this.executeSearch();
+    }
+  }
+
+  executeSearch() {
     let { isBrowseRequested } = this.state;
     const { segment } = this.state;
     const { store, store: { getState }, dispatch, router, translate } = this.props;
 
-    if (e.charCode === 13 || e.key === 'Enter' || e.type === 'click') {
-      e.preventDefault();
-      store.dispatch({ type: ACTION.CLOSE_PANELS, closePanels: true });
-      store.dispatch({ type: ACTION.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
+    store.dispatch({ type: ACTION.CLOSE_PANELS, closePanels: true });
+    store.dispatch({ type: ACTION.CLOSE_ASSOCIATED_DETAILS, openPanel: false });
 
-      const form = getState().form.searchForm;
-      const inputValue = '"' + form.values.searchTextArea + '"';
+    const form = getState().form.searchForm;
+    const inputValue = '"' + form.values.searchTextArea + '"';
 
-      isBrowseRequested = false;
-      let baseQuery;
-      let indexForQuery;
-      let conditionFilter;
-      let indexFilter;
+    isBrowseRequested = false;
+    let baseQuery;
+    let indexForQuery;
+    let conditionFilter;
+    let indexFilter;
 
-      const state = getState();
-      if (form.values && typeof (form.values.selectIndexes) !== 'undefined' && typeof (form.values.selectCondition) !== 'undefined') {
-        if (form.values.selectIndexes) {
-          indexFilter = form.values.selectIndexes;
+    const state = getState();
+    if (form.values && typeof (form.values.selectIndexes) !== 'undefined' && typeof (form.values.selectCondition) !== 'undefined') {
+      if (form.values.selectIndexes) {
+        indexFilter = form.values.selectIndexes;
+      }
+      if (form.values.selectCondition) {
+        conditionFilter = form.values.selectCondition;
+        indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
+        baseQuery = indexForQuery + inputValue;
+        baseQuery = (conditionFilter === 'MATCH') ? baseQuery + '!' : baseQuery;
+      } else {
+        baseQuery = inputValue;
+      }
+
+      let bibQuery = baseQuery;
+      const authQuery = baseQuery;
+      transitionToParams('q', bibQuery);
+
+      if (state.marccat.filter && state.marccat.filter.filters) {
+        const { languageFilter, formatType } = remapFilters(state.marccat.filter.filters);
+        if (languageFilter && languageFilter.length) {
+          bibQuery += ' AND ( ' + getLanguageFilterQuery(languageFilter) + ' ) ';
         }
-        if (form.values.selectCondition) {
-          conditionFilter = form.values.selectCondition;
-          indexForQuery = findYourQuery[indexFilter.concat('-').concat(conditionFilter)];
-          baseQuery = indexForQuery + inputValue;
-          baseQuery = (conditionFilter === 'MATCH') ? baseQuery + '!' : baseQuery;
-        } else {
-          baseQuery = inputValue;
+        if (formatType && formatType.length) {
+          bibQuery += ' AND ( ' + getFormatFilterQuery(formatType) + ' ) ';
         }
-        // } else {
-        //   baseQuery = inputValue;
-        //   return null;
-        // }
-        let bibQuery = baseQuery;
-        const authQuery = baseQuery;
+      }
+      if (conditionFilter === 'BROWSE') {
+        isBrowseRequested = true;
+        store.dispatch({ type: ACTION.SETTINGS, data: { newBrowse: 'Y' } });
+        store.dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query: bibQuery });
+        this.handleSearchHistory({ recordType: 'browse', query: bibQuery, index: indexForQuery + conditionFilter, found: 0 });
+        router.push('/marccat/browse');
         transitionToParams('q', bibQuery);
-
-        if (state.marccat.filter && state.marccat.filter.filters) {
-          const { languageFilter, formatType } = remapFilters(state.marccat.filter.filters);
-          if (languageFilter && languageFilter.length) {
-            bibQuery += ' AND ( ' + getLanguageFilterQuery(languageFilter) + ' ) ';
-          }
-          if (formatType && formatType.length) {
-            bibQuery += ' AND ( ' + getFormatFilterQuery(formatType) + ' ) ';
-          }
-        }
-        if (conditionFilter === 'BROWSE') {
-          isBrowseRequested = true;
-          store.dispatch({ type: ACTION.SETTINGS, data: { newBrowse: 'Y' } });
-          store.dispatch({ type: ACTION.BROWSE_FIRST_PAGE, query: bibQuery });
-          this.handleSearchHistory({ recordType: 'browse', query: bibQuery, index: indexForQuery + conditionFilter, found: 0 });
-          router.push('/marccat/browse');
+        this.setState({
+          filterEnable: false
+        });
+      } else if (!isBrowseRequested) {
+        router.push(`/marccat/search?segment=${segment}`);
+        this.setState({
+          filterEnable: true
+        });
+        if (indexForQuery === 'BN '
+        || indexForQuery === 'SN '
+        || indexForQuery === 'PU '
+        || indexForQuery === 'LL '
+        || indexForQuery === 'BC '
+        || indexForQuery === 'CP '
+        || indexForQuery === 'PP '
+        || indexForQuery === 'PW ') {
+          dispatch({ type: ACTION.SEARCH, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: EMPTY_STRING, from: '1', to: '30' });
+          this.handleSearchHistory({ recordType: 'biblio', query: bibQuery, index: indexForQuery, found: 0, sortStrategy: state.marccat.settings.sortType });
           transitionToParams('q', bibQuery);
-          this.setState({
-            filterEnable: false
-          });
-        } else if (!isBrowseRequested) {
+          dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
+        } else {
           router.push(`/marccat/search?segment=${segment}`);
-          this.setState({
-            filterEnable: true
-          });
-          if (indexForQuery === 'BN '
-          || indexForQuery === 'SN '
-          || indexForQuery === 'PU '
-          || indexForQuery === 'LL '
-          || indexForQuery === 'BC '
-          || indexForQuery === 'CP '
-          || indexForQuery === 'PP '
-          || indexForQuery === 'PW ') {
-            dispatch({ type: ACTION.SEARCH, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: EMPTY_STRING, from: '1', to: '30' });
-            this.handleSearchHistory({ recordType: 'biblio', query: bibQuery, index: indexForQuery, found: 0, sortStrategy: state.marccat.settings.sortType });
-            transitionToParams('q', bibQuery);
-            dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
+          if (segment === SEARCH_SEGMENT.BIBLIOGRAPHIC) {
+            dispatch({ type: ACTION.SEARCHBIB, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
           } else {
-            router.push(`/marccat/search?segment=${segment}`);
-            if (segment === SEARCH_SEGMENT.BIBLIOGRAPHIC) {
-              dispatch({ type: ACTION.SEARCHBIB, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
-            } else {
-              if (indexForQuery === 'AN ') {
-                if (this.isNumeric(form.values.searchTextArea) === false) {
-                  showValidationMessage(
-                    this.callout,
-                    translate({ id: 'ui-marccat.search.invaliddata' }),
-                    'error'
-                  );
-                } else {
-                  dispatch({ type: ACTION.SEARCHAUTH, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
-                  transitionToParams('q', authQuery);
-                  dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
-                  dispatch({ type: ACTION.TOTAL_AUTH_COUNT, query: authQuery });
-                }
+            if (indexForQuery === 'AN ') {
+              if (this.isNumeric(form.values.searchTextArea) === false) {
+                showValidationMessage(
+                  this.callout,
+                  translate({ id: 'ui-marccat.search.invaliddata' }),
+                  'error'
+                );
               } else {
                 dispatch({ type: ACTION.SEARCHAUTH, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
                 transitionToParams('q', authQuery);
                 dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
                 dispatch({ type: ACTION.TOTAL_AUTH_COUNT, query: authQuery });
               }
-              this.handleSearchHistory({ recordType: 'all', query: bibQuery, index: indexForQuery, found: 0, sortStrategy: state.marccat.settings.sortType, record: {} });
+            } else {
+              dispatch({ type: ACTION.SEARCHAUTH, isFromCat: 'N', moreData: 'N', queryBib: bibQuery, queryAuth: authQuery, from: '1', to: '30' });
+              transitionToParams('q', authQuery);
+              dispatch({ type: ACTION.TOTAL_BIB_COUNT, query: bibQuery });
+              dispatch({ type: ACTION.TOTAL_AUTH_COUNT, query: authQuery });
             }
+            this.handleSearchHistory({ recordType: 'all', query: bibQuery, index: indexForQuery, found: 0, sortStrategy: state.marccat.settings.sortType, record: {} });
           }
         }
       }

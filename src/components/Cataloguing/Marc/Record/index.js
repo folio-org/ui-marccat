@@ -28,7 +28,6 @@ import {
   injectProps,
   buildUrl,
   findParam,
-  Localize,
   post,
   del,
 } from '../../../../shared';

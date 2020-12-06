@@ -148,7 +148,7 @@ class Record extends React.Component<
   };
 
   onCreate = (item, _state) => {
-    const { store } = this.props;
+    const { store, translate } = this.props;
     const { isDuplicateMode } = this.state;
     const {
       variableField: { code, ind1, ind2, displayValue },
@@ -180,10 +180,7 @@ class Record extends React.Component<
     if (length > 1 && isNotRepetableField) {
       showValidationMessage(
         this.callout,
-        Localize({
-          key: 'cataloging.record.tag.duplicate.error',
-          value: item.code,
-        }),
+        translate({ id: 'ui-marccat.cataloging.record.tag.duplicate.one.error' }),
         C.VALIDATION_MESSAGE_TYPE.ERROR
       );
       return form.splice(0, 1);
@@ -195,7 +192,7 @@ class Record extends React.Component<
 
   // TODO FIXME
   asyncCreateHeading = async (item, heading) => {
-    const { store } = this.props;
+    const { store, translate } = this.props;
     const { isDuplicateMode } = this.state;
     try {
       const response = await post(
@@ -220,17 +217,13 @@ class Record extends React.Component<
       if (response.status === 201) {
         showValidationMessage(
           this.callout,
-          Localize({
-            key: 'cataloging.record.tag.create.one.success'
-          }),
+          translate({ id: 'ui-marccat.cataloging.record.tag.create.one.success' }),
           C.VALIDATION_MESSAGE_TYPE.SUCCESS
         );
       } else {
         showValidationMessage(
           this.callout,
-          Localize({
-            key: 'cataloging.record.tag.create.one.failure'
-          }),
+          translate({ id: 'ui-marccat.cataloging.record.tag.create.one.failure' }),
           C.VALIDATION_MESSAGE_TYPE.ERROR
         );
         const form: [] = formFieldValue(
@@ -243,9 +236,7 @@ class Record extends React.Component<
     } catch (exception) {
       showValidationMessage(
         this.callout,
-        Localize({
-          key: 'cataloging.record.tag.create.one.failure'
-        }),
+        translate({ id: 'ui-marccat.cataloging.record.tag.create.one.failure' }),
         C.VALIDATION_MESSAGE_TYPE.ERROR
       );
     }

@@ -191,14 +191,14 @@ class Record extends React.Component<
 
   // TODO FIXME
   asyncCreateHeading = async (item, heading) => {
-    const { store, translate } = this.props;
+    const { store, translate, data: { search: { segment } } } = this.props;
     const { isDuplicateMode } = this.state;
     try {
       const response = await post(
         buildUrl(
           store.getState(),
           C.ENDPOINT.CREATE_HEADING_URL,
-          C.ENDPOINT.DEFAULT_LANG_VIEW
+          segment === C.SEARCH_SEGMENT.BIBLIOGRAPHIC ? C.ENDPOINT.DEFAULT_LANG_VIEW : C.ENDPOINT.DEFAULT_LANG_VIEW_AUTH
         ),
         heading,
         store.getState()
@@ -298,8 +298,16 @@ class Record extends React.Component<
       filterFixedFieldForSaveRecord(bibliographicRecord.fields),
       variableFormData
     );
+    authorityRecord.fields = union(
+      filterFixedFieldForSaveRecord(authorityRecord.fields),
+      variableFormData
+    );
     bibliographicRecord.fields = sortBy(
       bibliographicRecord.fields,
+      SORTED_BY.CODE
+    );
+    authorityRecord.fields = sortBy(
+      authorityRecord.fields,
       SORTED_BY.CODE
     );
     if (isCreationMode) {

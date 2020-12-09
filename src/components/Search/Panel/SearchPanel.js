@@ -221,7 +221,6 @@ class SearchPanel extends React.Component<P, {callout: React.RefObject<Callout> 
     const { searchForm } = this.state;
     const { store: { getState } } = this.props;
     const form = getState().form.searchForm;
-
     let bntEnabled = false;
     if (typeof (form.values) !== 'undefined' && typeof (form.values.searchTextArea) !== 'undefined') {
       if (form.values.searchTextArea.length > 0) {

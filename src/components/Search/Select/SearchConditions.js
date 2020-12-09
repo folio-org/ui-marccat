@@ -37,6 +37,8 @@ export default ({ ...props }) => {
         selectedIndex === 'NAMETN' ||
         selectedIndex === 'NAMETT' ||
         selectedIndex === 'NAMEP')) {
+      const condition = store.getState().form.searchForm.values.selectCondition;
+      if (condition !== null && condition === 'BROWSE') store.getState().form.searchForm.values.selectCondition = 'START';
       options.map(x => (x.value === 'BROWSE' ? options.splice(x, 1) : null));
       remappedOptions.push(options);
     } else if (selectedIndex === 'NAMETN' ||

@@ -165,7 +165,6 @@ class SearchPanel extends React.Component<P, {callout: React.RefObject<Callout> 
           } else {
             router.push(`/marccat/search?segment=${segment}`);
             if (segment === SEARCH_SEGMENT.BIBLIOGRAPHIC) {
-              // HACER AQUI
               if (indexForQuery === 'AN ') {
                 if (this.isNumeric(form.values.searchTextArea) === false) {
                   showValidationMessage(

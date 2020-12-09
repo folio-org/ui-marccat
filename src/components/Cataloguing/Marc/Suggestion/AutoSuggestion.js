@@ -3,7 +3,7 @@ import * as React from 'react';
 import { AutoSuggest } from '@folio/stripes/components';
 import { triggerTagIndicatorsSuggestion, triggerTagCodeSuggestion } from '../../Actions';
 import { injectProps } from '../../../../shared';
-import { REDUX } from '../../../../config/constants';
+import { REDUX, SEARCH_SEGMENT } from '../../../../config/constants';
 
 function AutoSuggestion(props) {
   const initialState = {
@@ -38,7 +38,7 @@ function AutoSuggestion(props) {
   };
 
   const { tagCodeArray } = state;
-  const { input } = props;
+  const { input, data: { search: { segment } } } = props;
   const remappedCodeSuggest = [];
   tagCodeArray.map(elem => remappedCodeSuggest.push(Object.assign({}, { value: elem, label: elem })));
   return (
@@ -46,8 +46,8 @@ function AutoSuggestion(props) {
       {...props}
       items={remappedCodeSuggest}
       name={input.name}
-      onFocus={onFocus}
-      onChange={onChange}
+      onFocus={segment !== SEARCH_SEGMENT.AUTHORITY ? onFocus : () => { }}
+      onChange={segment !== SEARCH_SEGMENT.AUTHORITY ? onChange : () => { }}
       renderOption={(item) => ((item) ? item.value : ' ')}
       renderValue={(item) => ((item) ? item.value : ' ')}
       valueKey="value"

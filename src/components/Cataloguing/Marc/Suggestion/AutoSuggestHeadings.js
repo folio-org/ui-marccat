@@ -52,7 +52,6 @@ function AutoSuggestHeadings(props) {
           stringValidateMessage:'', showMessage: false
         });
       }
-      // console.log('CHECK_TAG: ', data);
     }
   };
 
@@ -104,7 +103,7 @@ function AutoSuggestHeadings(props) {
   };
 
   const { suggestArray, fromShowHeadings, stringValidateMessage, showMessage } = state;
-  const { input } = props;
+  const { input, data: { search: { segment } } } = props;
   input.value = replaceAll(input.value);
   const remappedSuggestArray = [];
   if (suggestArray && suggestArray.length > 0 && fromShowHeadings === false) {
@@ -134,8 +133,8 @@ function AutoSuggestHeadings(props) {
         <AutoSuggest
           {...props}
           items={remappedSuggestArray}
-          onChange={onChange}
-          onFocus={onFocus}
+          onChange={segment !== C.SEARCH_SEGMENT.AUTHORITY ? onChange : () => { }}
+          onFocus={segment !== C.SEARCH_SEGMENT.AUTHORITY ? onFocus : () => { }}
           name={input.name}
           renderOption={item => (item ? item.value : '')}
           renderValue={item => (item ? item.value : '')}

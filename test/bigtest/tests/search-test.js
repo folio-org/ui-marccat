@@ -106,15 +106,17 @@ describe('Search', () => {
       expect(searchInteractor.filtersContainerPresent).to.be.false;
     });
   });
-
+  
   describe('should test Local Id number searches', () => {
     beforeEach(async function () {
+      await searchInteractor.segmentButtonBib.click();
       await searchInteractor.selectIndexes.selectOption('Local id.Number (001)');
-      await searchInteractor.selectCondition.selectOption('Contains');
+      await searchInteractor.selectCondition.selectOption('Begins with');
       await searchInteractor.searchTextArea.fill('1');
       await searchInteractor.buttonSearch.click();
+      await searchInteractor.segmentButtonBib.click();
       await searchInteractor.selectIndexes.selectOption('Local id.Number (001)');
-      await searchInteractor.selectCondition.selectOption('Contains');
+      await searchInteractor.selectCondition.selectOption('Begins with');
       await searchInteractor.searchTextArea.fill('test');
       await searchInteractor.buttonSearch.click();
     });

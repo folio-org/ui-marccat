@@ -99,14 +99,32 @@ describe('Search', () => {
     });
 
     it('should change options of indexes', () => {
-      expect(searchInteractor.selectIndexes.optionCount).to.equal(15);
+      expect(searchInteractor.selectIndexes.optionCount).to.equal(11);
     });
 
     it('should remove filter', () => {
       expect(searchInteractor.filtersContainerPresent).to.be.false;
     });
   });
-
+  
+  describe('should test Local Id number searches', () => {
+    beforeEach(async function () {
+      await searchInteractor.segmentButtonBib.click();
+      await searchInteractor.selectIndexes.selectOption('Local id.Number (001)');
+      await searchInteractor.selectCondition.selectOption('Begins with');
+      await searchInteractor.searchTextArea.fill('1');
+      await searchInteractor.buttonSearch.click();
+      await searchInteractor.segmentButtonBib.click();
+      await searchInteractor.selectIndexes.selectOption('Local id.Number (001)');
+      await searchInteractor.selectCondition.selectOption('Begins with');
+      await searchInteractor.searchTextArea.fill('test');
+      await searchInteractor.buttonSearch.click();
+    });
+    
+    it('Control number should find results', () => {
+      expect(searchInteractor.countResults).to.be.greaterThan(1);
+    });
+  });
   
   describe('should test authority control number searches', () => {
     beforeEach(async function () {
@@ -143,7 +161,7 @@ describe('Search', () => {
 
   describe('should test bib indexes', () => {
     it('should change options of indexes', () => {
-      expect(searchInteractor.selectIndexes.optionCount).to.equal(50);
+      expect(searchInteractor.selectIndexes.optionCount).to.equal(49);
     });
   });
 

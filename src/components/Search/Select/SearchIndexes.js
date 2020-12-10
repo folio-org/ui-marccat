@@ -43,7 +43,7 @@ export default ({ ...props }) => {
     { label: 'Publisher Name', value: 'PN' },
     { label: 'Publisher Place', value: 'PP' },
     { label: 'Publisher Keyword', value: 'PW' },
-    { label: 'Other Class. (Canada)', value: 'CC' },
+    // { label: 'Other Class. (Canada)', value: 'CC' },
     { label: 'Other Classification', value: 'OC' },
     { label: 'NLC Classed Catalogue', value: 'ZC' },
     { label: 'NAL Subject Category', value: 'SC' },
@@ -69,13 +69,13 @@ export default ({ ...props }) => {
       { label: translate({ id: 'ui-marccat.authority.meetingname' }), value: 'NM' },
       { label: translate({ id: 'ui-marccat.authority.subject' }), value: 'SU' },
       { label: translate({ id: 'ui-marccat.authority.authoritycontrolnumber' }), value: 'AN' },
-      { label: translate({ id: 'ui-marccat.authority.lccontrolnumber' }), value: 'LN' },
+      // { label: translate({ id: 'ui-marccat.authority.lccontrolnumber' }), value: 'LN' },
       { label: translate({ id: 'ui-marccat.authority.isbn' }), value: 'BN' },
       { label: translate({ id: 'ui-marccat.authority.issn' }), value: 'SN' },
       { label: translate({ id: 'ui-marccat.authority.deweyclassification' }), value: 'DC' },
-      { label: translate({ id: 'ui-marccat.authority.lcclassification' }), value: 'LC' },
-      { label: translate({ id: 'ui-marccat.authority.universaldecimal' }), value: 'UC' },
-      { label: translate({ id: 'ui-marccat.authority.otherclassification' }), value: 'OC' }
+      // { label: translate({ id: 'ui-marccat.authority.lcclassification' }), value: 'LC' },
+      // { label: translate({ id: 'ui-marccat.authority.universaldecimal' }), value: 'UC' },
+      // { label: translate({ id: 'ui-marccat.authority.otherclassification' }), value: 'OC' }
     ];
   };
 

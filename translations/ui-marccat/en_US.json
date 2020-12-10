@@ -6,6 +6,7 @@
     "button.new.tag": "Tag",
     "button.backto": "Close",
     "navigator.search": "Search",
+    "search.invaliddata": "Invalid data type, numbers expected!",
     "search.result": "Search Result",
     "search.indexes": "Indexes",
     "search.searchButton": "Search",

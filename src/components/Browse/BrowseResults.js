@@ -227,7 +227,7 @@ export class BrowseResults extends React.Component<Props, S> {
                         id="refType1"
                         style={{ fontWeight: 'bold', margin: 0, padding: 0 }}
                       >
-                        {translate({ id: 'ui-marccat.browse.results.see' })`:`}
+                        {translate({ id: 'ui-marccat.browse.results.see' })}
                       </span>
                       {element.stringText}
                     </Button>
@@ -247,7 +247,7 @@ export class BrowseResults extends React.Component<Props, S> {
                         id="textSpanRefType2"
                         style={{ fontWeight: 'bold', margin: 0, padding: 0 }}
                       >
-                        {translate({ id: 'ui-marccat.browse.results.seenfrom' })`:`}
+                        {translate({ id: 'ui-marccat.browse.results.seenfrom' })}
                       </span>
                       {element.stringText}
                     </Button>

@@ -192,6 +192,7 @@ describe('Search', () => {
 
     });
 
+    
     describe('select first record and delete', function () {
       beforeEach(async function () {
         await searchInteractor.searchResults.clickThrough();

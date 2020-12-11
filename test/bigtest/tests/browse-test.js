@@ -79,6 +79,20 @@ describe('Browse', () => {
 
   });
 
+  describe('should test title for name searches', () => {
+    beforeEach(async function () {
+      await searchInteractor.segmentButtonBib.click();
+      await searchInteractor.selectIndexes.selectOption('Name/Title for Name');
+      await searchInteractor.selectCondition.selectOption('Browse');
+      await searchInteractor.searchTextArea.fill('test');
+      await searchInteractor.buttonSearch.click();
+    });
+    
+    it('Title for name should find results', () => {
+      expect(searchInteractor.countResults).to.be.greaterThan(0);
+    });
+  });
+
   describe('fill browse field and click on item in MCL for browse details and then click on associated record for marc details', function () {
     beforeEach(async function () {
       await searchInteractor.selectIndexes.selectOption('Title');

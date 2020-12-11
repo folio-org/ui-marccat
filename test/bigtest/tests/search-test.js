@@ -62,6 +62,7 @@ describe('Search', () => {
     });
   });
 
+
   describe('fill Auth search field and submit with the ENTER key', function () {
     beforeEach(async function () {
       await searchInteractor.segmentButtonAuth.click();
@@ -125,6 +126,20 @@ describe('Search', () => {
       expect(searchInteractor.countResults).to.be.greaterThan(1);
     });
   });
+
+  describe('should test PW searches', () => {
+    beforeEach(async function () {
+      await searchInteractor.segmentButtonBib.click();
+      await searchInteractor.selectIndexes.selectOption('Publisher Keyword');
+      await searchInteractor.selectCondition.selectOption('Contains');
+      await searchInteractor.searchTextArea.fill('test');
+      await searchInteractor.buttonSearch.click();
+    });
+    
+    it('PW should find results', () => {
+      expect(searchInteractor.countResults).to.be.greaterThan(1);
+    });
+  });
   
   describe('should test authority control number searches', () => {
     beforeEach(async function () {
@@ -144,7 +159,8 @@ describe('Search', () => {
       expect(searchInteractor.countResults).to.be.greaterThan(1);
     });
   });
-
+  
+ 
 
   describe('fill search field and click reset all button', () => {
     beforeEach(async function () {

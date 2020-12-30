@@ -155,5 +155,10 @@
     "search.record.deletemodal.notdeletedrecordused.auth": "La notice d'autorité ne peut être supprimée car elle est utilisée dans une notice bibliographique",
     "cataloging.accordion.fixedfield.editable.label.auth": "Control Fields (008)",
     "cataloging.record.newmonograph": "Nouvelle monographie",
-    "cataloging.record.newauthority": "New Authority"
+    "cataloging.record.newauthority": "New Authority",
+    "search.searchLabel": "Rechercher",
+    "search.invaliddata": "Invalid data type, numbers expected!",
+    "cataloging.record.tag.create.one.success": "Tag created succesfully!",
+    "cataloging.record.tag.create.one.failure": "Save Tag failed!",
+    "cataloging.record.tag.duplicate.one.error": "The tag is already present! It's not repetable"
 }

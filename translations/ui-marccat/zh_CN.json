@@ -153,7 +153,12 @@
     "search.record.deletemodal.deletewrong": "失败：出了点问题",
     "search.record.deletemodal.notdeletedrecordused.bib": "书目记录无法删除，因为它正被使用",
     "search.record.deletemodal.notdeletedrecordused.auth": "规范记录无法删除，因为它已在书目记录中使用",
-    "cataloging.accordion.fixedfield.editable.label.auth": "Control Fields (008)",
-    "cataloging.record.newmonograph": "New Monograph",
-    "cataloging.record.newauthority": "New Authority"
+    "cataloging.accordion.fixedfield.editable.label.auth": "控制字段（008）",
+    "cataloging.record.newmonograph": "新建专著",
+    "cataloging.record.newauthority": "新建规范",
+    "search.searchLabel": "搜索...",
+    "search.invaliddata": "无效的数据类型，预期为数字！",
+    "cataloging.record.tag.create.one.success": "标签创建成功！",
+    "cataloging.record.tag.create.one.failure": "保存标签失败！",
+    "cataloging.record.tag.duplicate.one.error": "标签已经存在！不可重复"
 }

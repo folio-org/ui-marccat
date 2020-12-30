@@ -155,5 +155,10 @@
     "search.record.deletemodal.notdeletedrecordused.auth": "O registro de autoridade não pôde ser excluído porque está sendo usado em registros bibliográficos",
     "cataloging.accordion.fixedfield.editable.label.auth": "Campos de controle (008)",
     "cataloging.record.newmonograph": "Nova Monografia",
-    "cataloging.record.newauthority": "Nova Autoridade"
+    "cataloging.record.newauthority": "Nova Autoridade",
+    "search.searchLabel": "Pesquisar...",
+    "search.invaliddata": "Tipo de dados inválidos = informe números!",
+    "cataloging.record.tag.create.one.success": "Tag criada com sucesso!",
+    "cataloging.record.tag.create.one.failure": "Erro ao salvar a tag!",
+    "cataloging.record.tag.duplicate.one.error": "A tag já está presente! Não é repetível"
 }

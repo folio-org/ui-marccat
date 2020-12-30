@@ -155,5 +155,10 @@
     "search.record.deletemodal.notdeletedrecordused.auth": "تعذر حذف تسجيلة الاستناد حيث أنها قيد الاستخدام في تسجيلات بيبلوغرافية",
     "cataloging.accordion.fixedfield.editable.label.auth": "حقول التحكم (008)",
     "cataloging.record.newmonograph": "أفرودة جديدة",
-    "cataloging.record.newauthority": "استناد جديد"
+    "cataloging.record.newauthority": "استناد جديد",
+    "search.searchLabel": "بحث...",
+    "search.invaliddata": "نوع بيانات غير صالح، من المتوقع استخدام أرقام!",
+    "cataloging.record.tag.create.one.success": "تم إنشاء الوسم بنجاح!",
+    "cataloging.record.tag.create.one.failure": "فشل حفظ الوسم!",
+    "cataloging.record.tag.duplicate.one.error": "الوسم موجود بالفعل! الوسم غير قابل للتكرار"
 }

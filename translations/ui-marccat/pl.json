@@ -5,7 +5,7 @@
     "initial.title": "Choose a filter or enter search query to show results",
     "button.new.tag": "Tag",
     "button.backto": "Close",
-    "navigator.search": "Search",
+    "navigator.search": "Szukaj",
     "search.result": "Search Result",
     "search.indexes": "Indexes",
     "search.searchButton": "Search",
@@ -47,7 +47,7 @@
     "search.actionmenu.holdings": "Holdings",
     "search.actionmenu.instances": "Instances",
     "search.actionmenu.authority.records": "Authority Records",
-    "search.initial.message": "Enter search criteria to start search",
+    "search.initial.message": "Wprowadź kryteria wyszukiwania, aby rozpocząć wyszukiwanie",
     "error.noresults.message": "Search returned no results",
     "template.actionmenu.load": "Load template...",
     "template.actionmenu.load.shortcut": "CTRL+L",
@@ -89,7 +89,7 @@
     "search.history.title": "Recent Searches",
     "cataloging.record.tag.update.success": "Tag {value} update succesfully!",
     "cataloging.record.tag.update.failure": "Update tag {value} failed!",
-    "cataloging.actions": "Actions",
+    "cataloging.actions": "Akcje",
     "cataloging.actions.add.field.below": "Add new field below",
     "cataloging.actions.add.field.below.shortcut": "ALT+ENTER",
     "cataloging.actions.add.field.above": "Add new field",
@@ -155,5 +155,10 @@
     "search.record.deletemodal.notdeletedrecordused.auth": "The authority record could not be deleted because it is being used in bibliographic records",
     "cataloging.accordion.fixedfield.editable.label.auth": "Control Fields (008)",
     "cataloging.record.newmonograph": "New Monograph",
-    "cataloging.record.newauthority": "New Authority"
+    "cataloging.record.newauthority": "New Authority",
+    "search.searchLabel": "Search...",
+    "search.invaliddata": "Invalid data type, numbers expected!",
+    "cataloging.record.tag.create.one.success": "Tag created succesfully!",
+    "cataloging.record.tag.create.one.failure": "Save Tag failed!",
+    "cataloging.record.tag.duplicate.one.error": "The tag is already present! It's not repetable"
 }

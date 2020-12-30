@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 // @flow
-import * as React from 'react';
+import React, { useState } from 'react';
 import { Button, Icon } from '@folio/stripes/components';
 import { connect } from 'react-redux';
 import { Localize, findParam } from '../../../shared';
 import { duplicaRecordAction } from '../Actions';
 
 const DuplicateRecord = ({ ...props }) => {
+  const [buttonEnabled, setEnabled] = useState(true);
   const onDuplicate = (response) => {
     const { router, toggleFilterPane } = props;
     setTimeout(() => {
@@ -20,10 +21,13 @@ const DuplicateRecord = ({ ...props }) => {
   };
 
   const duplicaRecord = () => {
-    const id = findParam('id') || findParam('savedId');
-    const { store } = props;
-    const cb = r => onDuplicate(r);
-    store.dispatch(duplicaRecordAction(id, cb));
+    if (buttonEnabled) {
+      setEnabled(false);
+      const id = findParam('id') || findParam('savedId');
+      const { store } = props;
+      const cb = r => onDuplicate(r);
+      store.dispatch(duplicaRecordAction(id, cb));
+    }
   };
 
   const { detail } = props;
